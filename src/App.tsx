@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import data from "../content/portfolio.json";
 
 type Status = "hot" | "active" | "quiet" | "seed";
@@ -8,7 +8,7 @@ const statusLabel: Record<Status, string> = {
   hot: "Hot now",
   active: "In flight",
   quiet: "Quieter",
-  seed: "Seed / fill in",
+  seed: "Seed",
 };
 
 const cellStateLabel: Record<CellState, string> = {
@@ -24,20 +24,55 @@ type VisualCell = {
   state: string;
 };
 
-function projectName(id: string) {
-  return data.projects.find((p) => p.id === id)?.name ?? id;
+type Project = (typeof data.projects)[number];
+
+const OPEN_PRIORITY = [
+  "product-ui",
+  "website",
+  "landing",
+  "funnel",
+  "social",
+  "deck",
+  "meta-ads",
+  "print",
+] as const;
+
+function visualsOf(project: Project) {
+  return project.visuals as Record<string, VisualCell>;
 }
 
-function cellFor(projectId: string, columnId: string): VisualCell | null {
-  const project = data.projects.find((p) => p.id === projectId);
-  if (!project) return null;
-  const visuals = project.visuals as Record<string, VisualCell>;
-  return visuals[columnId] ?? null;
+function cellFor(project: Project, columnId: string): VisualCell | null {
+  return visualsOf(project)[columnId] ?? null;
 }
+
+function liveCount(project: Project) {
+  return Object.values(visualsOf(project)).filter((c) => c.state === "live")
+    .length;
+}
+
+function primaryOpen(project: Project): { columnId: string; cell: VisualCell } | null {
+  const visuals = visualsOf(project);
+  for (const id of OPEN_PRIORITY) {
+    const cell = visuals[id];
+    if (cell?.state === "live" && cell.url) {
+      return { columnId: id, cell };
+    }
+  }
+  return null;
+}
+
+const MAX_COMPARE = 5;
 
 export default function App() {
   const [tocOpen, setTocOpen] = useState(false);
   const [active, setActive] = useState("intro");
+  const [openProjectId, setOpenProjectId] = useState<string | null>(
+    data.projects[0]?.id ?? null,
+  );
+  const [compareIds, setCompareIds] = useState<string[]>(() =>
+    data.projects.map((p) => p.id).slice(0, MAX_COMPARE),
+  );
+  const [pendingJump, setPendingJump] = useState<string | null>(null);
 
   useEffect(() => {
     const sections = Array.from(
@@ -58,31 +93,55 @@ export default function App() {
 
   const toc = [
     { id: "intro", label: "Intro" },
-    { id: "now", label: "Now" },
-    {
-      id: "projects",
-      label: "Projects",
-      children: data.projects.map((p) => ({
-        id: `project-${p.id}`,
-        label: p.name,
-      })),
-    },
-    {
-      id: "compare",
-      label: "Compare",
-      children: data.columns.map((c) => ({
-        id: `column-${c.id}`,
-        label: c.name,
-      })),
-    },
-    { id: "general", label: "General" },
-    { id: "how-to-update", label: "Update" },
+    { id: "projects", label: "Projects" },
+    { id: "compare", label: "Compare" },
+    { id: "craft", label: "Craft" },
   ];
 
   const jump = (id: string) => {
     setTocOpen(false);
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   };
+
+  useEffect(() => {
+    if (!pendingJump) return;
+    const id = pendingJump;
+    setPendingJump(null);
+    // Wait a frame so hidden project details can mount before scrolling.
+    requestAnimationFrame(() => jump(id));
+  }, [pendingJump, openProjectId]);
+
+  const openProject = (id: string) => {
+    setOpenProjectId(id);
+    setPendingJump(`project-${id}`);
+  };
+
+  const toggleCompare = (id: string) => {
+    setCompareIds((prev) => {
+      const selected = new Set(prev);
+      if (selected.has(id)) {
+        if (selected.size <= 2) return prev;
+        selected.delete(id);
+      } else {
+        if (selected.size >= MAX_COMPARE) return prev;
+        selected.add(id);
+      }
+      return data.projects.map((p) => p.id).filter((pid) => selected.has(pid));
+    });
+  };
+
+  const comparedProjects = useMemo(
+    () => data.projects.filter((p) => compareIds.includes(p.id)),
+    [compareIds],
+  );
+
+  const latestByProject = useMemo(() => {
+    const map = new Map<string, (typeof data.now)[number]>();
+    for (const n of data.now) {
+      if (!map.has(n.projectId)) map.set(n.projectId, n);
+    }
+    return map;
+  }, []);
 
   return (
     <div className="shell">
@@ -94,42 +153,34 @@ export default function App() {
         aria-expanded={tocOpen}
         onClick={() => setTocOpen((v) => !v)}
       >
-        {tocOpen ? "Close" : "Contents"}
+        {tocOpen ? "Close" : "Menu"}
       </button>
 
-      <aside className={`toc ${tocOpen ? "open" : ""}`} aria-label="Table of contents">
+      <aside className={`toc ${tocOpen ? "open" : ""}`} aria-label="Site menu">
         <p className="toc-brand">{data.site.brand}</p>
         <nav>
           {toc.map((item) => (
-            <div key={item.id} className="toc-group">
-              <a
-                href={`#${item.id}`}
-                className={active === item.id ? "on" : ""}
-                onClick={(e) => {
-                  e.preventDefault();
-                  jump(item.id);
-                }}
-              >
-                {item.label}
-              </a>
-              {"children" in item && item.children
-                ? item.children.map((c) => (
-                    <a
-                      key={c.id}
-                      href={`#${c.id}`}
-                      className={`toc-child ${active === c.id ? "on" : ""}`}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        jump(c.id);
-                      }}
-                    >
-                      {c.label}
-                    </a>
-                  ))
-                : null}
-            </div>
+            <a
+              key={item.id}
+              href={`#${item.id}`}
+              className={
+                active === item.id ||
+                (item.id === "projects" && active.startsWith("project-"))
+                  ? "on"
+                  : ""
+              }
+              onClick={(e) => {
+                e.preventDefault();
+                jump(item.id);
+              }}
+            >
+              {item.label}
+            </a>
           ))}
         </nav>
+        <p className="toc-hint">
+          Browse ideas, then compare the same craft columns across them.
+        </p>
       </aside>
 
       <main className="main">
@@ -140,8 +191,6 @@ export default function App() {
           <h1 className="brand-hero">{data.site.brand}</h1>
           <p className="tagline">{data.site.tagline}</p>
           <p className="lede">{data.site.forWhom}</p>
-          <p className="support">{data.site.intro}</p>
-          <p className="support muted">{data.site.howToNav}</p>
           <div className="hero-cta">
             <a
               href="#projects"
@@ -160,43 +209,77 @@ export default function App() {
                 jump("compare");
               }}
             >
-              Compare columns
+              Compare side by side
             </a>
           </div>
         </header>
 
-        <section className="section now" id="now" data-section>
-          <p className="section-kicker">Now</p>
-          <h2>Newest without digging</h2>
-          <ol className="now-list">
-            {data.now.map((n) => (
-              <li key={`${n.date}-${n.projectId}`}>
-                <time dateTime={n.date}>{n.date}</time>
-                <div>
-                  <a href={`#project-${n.projectId}`}>{projectName(n.projectId)}</a>
-                  <p>{n.text}</p>
-                </div>
-              </li>
-            ))}
-          </ol>
-        </section>
-
         <section className="section" id="projects" data-section>
           <p className="section-kicker">Projects</p>
-          <h2>Each idea, same columns</h2>
+          <h2>Five ideas, one studio</h2>
           <p className="section-lede">
-            Concept first. Then Website → Landing → Funnel → Meta ads → Product
-            UI → Deck → Print → Social.
+            Scan the index, open one for the story and live links, then use
+            Compare when you want the same craft column across projects.
           </p>
 
+          <ol className="project-index" aria-label="Project index">
+            {data.projects.map((p, i) => {
+              const live = liveCount(p);
+              const open = primaryOpen(p);
+              const isOpen = openProjectId === p.id;
+              return (
+                <li key={p.id} className={isOpen ? "is-active" : ""}>
+                  <button
+                    type="button"
+                    className="index-row"
+                    aria-expanded={isOpen}
+                    aria-controls={`project-${p.id}`}
+                    onClick={() => openProject(p.id)}
+                  >
+                    <span className="index-num">{String(i + 1).padStart(2, "0")}</span>
+                    <span className="index-main">
+                      <span className="index-title">
+                        {p.name}
+                        {p.aka ? <em> · {p.aka}</em> : null}
+                      </span>
+                      <span className="index-line">{p.oneLiner}</span>
+                    </span>
+                    <span className="index-meta">
+                      <span className={`badge badge-${p.status}`}>
+                        {statusLabel[p.status as Status]}
+                      </span>
+                      <span className="live-count">
+                        {live > 0 ? `${live} live` : "No live yet"}
+                      </span>
+                    </span>
+                  </button>
+                  {open ? (
+                    <a
+                      className="index-open"
+                      href={open.cell.url!}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Open
+                    </a>
+                  ) : null}
+                </li>
+              );
+            })}
+          </ol>
+
           {data.projects.map((p) => {
-            const visuals = p.visuals as Record<string, VisualCell>;
+            const visuals = visualsOf(p);
+            const open = primaryOpen(p);
+            const latest = latestByProject.get(p.id);
+            const isOpen = openProjectId === p.id;
             return (
               <article
                 key={p.id}
-                className="project"
+                className={`project-detail ${isOpen ? "is-open" : ""}`}
                 id={`project-${p.id}`}
                 data-section
+                hidden={!isOpen}
               >
                 <div className="project-head">
                   <h3>{p.name}</h3>
@@ -206,39 +289,53 @@ export default function App() {
                 </div>
                 {p.aka ? <p className="aka">Also known as {p.aka}</p> : null}
                 <p className="one-liner">{p.oneLiner}</p>
-
-                <h4>Business concept</h4>
                 <p className="body">{p.summary}</p>
-                <div className="meta-row">
-                  <p>
-                    <span className="meta-label">Latest</span>
-                    {p.latest}
-                  </p>
-                  <p>
-                    <span className="meta-label">Updated</span>
-                    {p.updated}
-                  </p>
+
+                <div className="detail-actions">
+                  {open ? (
+                    <a
+                      className="action-primary"
+                      href={open.cell.url!}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Open {open.cell.label}
+                    </a>
+                  ) : (
+                    <span className="fill-in">No live link yet</span>
+                  )}
+                  <button
+                    type="button"
+                    className={`action-ghost ${compareIds.includes(p.id) ? "is-on" : ""}`}
+                    onClick={() => toggleCompare(p.id)}
+                    disabled={
+                      !compareIds.includes(p.id) && compareIds.length >= MAX_COMPARE
+                    }
+                  >
+                    {compareIds.includes(p.id) ? "In compare" : "Add to compare"}
+                  </button>
                 </div>
 
-                <h4>Visual columns</h4>
-                <div className="column-grid">
+                {latest ? (
+                  <p className="latest-note">
+                    <span className="meta-label">Latest</span>
+                    {latest.text}
+                  </p>
+                ) : null}
+
+                <h4>Visual stack</h4>
+                <ul className="stack-list">
                   {data.columns.map((col) => {
                     const cell = visuals[col.id];
                     if (!cell) return null;
                     const state = cell.state as CellState;
                     return (
-                      <div
-                        key={`${p.id}-${col.id}`}
-                        className={`column-cell state-${state}`}
-                      >
-                        <div className="column-cell-head">
-                          <span className="kind-chip">{col.name}</span>
-                          <span className={`cell-state cell-state-${state}`}>
-                            {cellStateLabel[state]}
-                          </span>
-                        </div>
-                        <strong>{cell.label}</strong>
-                        <span className="cell-detail">{cell.detail}</span>
+                      <li key={col.id} className={`stack-row state-${state}`}>
+                        <span className="stack-col">{col.name}</span>
+                        <span className={`cell-state cell-state-${state}`}>
+                          {cellStateLabel[state]}
+                        </span>
+                        <span className="stack-label">{cell.label}</span>
                         {cell.url ? (
                           <a
                             className="surface-link"
@@ -246,15 +343,17 @@ export default function App() {
                             target="_blank"
                             rel="noreferrer"
                           >
-                            Open live
+                            Open
                           </a>
-                        ) : state === "na" ? null : (
-                          <span className="fill-in">Link Fill in</span>
+                        ) : state === "na" ? (
+                          <span className="fill-in quiet">—</span>
+                        ) : (
+                          <span className="fill-in">Fill in</span>
                         )}
-                      </div>
+                      </li>
                     );
                   })}
-                </div>
+                </ul>
 
                 {p.code.length > 0 ? (
                   <>
@@ -282,71 +381,113 @@ export default function App() {
           })}
         </section>
 
-        <section className="section" id="compare" data-section>
+        <section className="section compare-section" id="compare" data-section>
           <p className="section-kicker">Compare</p>
-          <h2>One column, every project</h2>
+          <h2>Same columns, side by side</h2>
           <p className="section-lede">
-            Same artifact type side-by-side — update once in JSON, it shows here.
+            Pick up to {MAX_COMPARE} projects. Rows are craft types — scan Live /
+            Fill in / N/A, then open anything that ships.
           </p>
 
-          {data.columns.map((col) => (
-            <div
-              key={col.id}
-              className="lens"
-              id={`column-${col.id}`}
-              data-section
-            >
-              <h3>{col.name}</h3>
-              <p className="section-lede tight">{col.blurb}</p>
-              <div className="lens-grid">
-                {data.projects.map((p) => {
-                  const cell = cellFor(p.id, col.id);
-                  if (!cell) return null;
-                  const state = cell.state as CellState;
-                  const inner = (
-                    <>
+          <div className="compare-picker" role="group" aria-label="Projects to compare">
+            {data.projects.map((p) => {
+              const on = compareIds.includes(p.id);
+              return (
+                <button
+                  key={p.id}
+                  type="button"
+                  className={`pick-chip ${on ? "is-on" : ""}`}
+                  aria-pressed={on}
+                  onClick={() => toggleCompare(p.id)}
+                  disabled={!on && compareIds.length >= MAX_COMPARE}
+                >
+                  {p.name}
+                </button>
+              );
+            })}
+          </div>
+          <p className="compare-count">
+            Comparing {comparedProjects.length} of {data.projects.length}
+            {comparedProjects.length < 2
+              ? " — keep at least two selected."
+              : null}
+          </p>
+
+          <div className="matrix-scroller" tabIndex={0} aria-label="Comparison matrix">
+            <table className="matrix">
+              <thead>
+                <tr>
+                  <th scope="col" className="matrix-corner">
+                    Column
+                  </th>
+                  {comparedProjects.map((p) => (
+                    <th scope="col" key={p.id}>
+                      <span className="matrix-project">{p.name}</span>
                       <span className={`badge badge-${p.status}`}>
-                        {p.name}
+                        {statusLabel[p.status as Status]}
                       </span>
-                      <span className={`cell-state cell-state-${state}`}>
-                        {cellStateLabel[state]}
-                      </span>
-                      <strong>{cell.label}</strong>
-                      <span>{cell.detail}</span>
-                    </>
-                  );
-                  if (cell.url) {
-                    return (
-                      <a
-                        key={`${col.id}-${p.id}`}
-                        className={`lens-item state-${state}`}
-                        href={cell.url}
-                        target="_blank"
-                        rel="noreferrer"
+                      <button
+                        type="button"
+                        className="matrix-jump"
+                        onClick={() => openProject(p.id)}
                       >
-                        {inner}
-                      </a>
-                    );
-                  }
-                  return (
-                    <div
-                      key={`${col.id}-${p.id}`}
-                      className={`lens-item state-${state} inert`}
-                    >
-                      {inner}
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          ))}
+                        View project
+                      </button>
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {data.columns.map((col) => (
+                  <tr key={col.id}>
+                    <th scope="row">
+                      <span className="matrix-col-name">{col.name}</span>
+                      <span className="matrix-col-blurb">{col.blurb}</span>
+                    </th>
+                    {comparedProjects.map((p) => {
+                      const cell = cellFor(p, col.id);
+                      if (!cell) {
+                        return (
+                          <td key={`${col.id}-${p.id}`} className="state-na">
+                            —
+                          </td>
+                        );
+                      }
+                      const state = cell.state as CellState;
+                      return (
+                        <td key={`${col.id}-${p.id}`} className={`state-${state}`}>
+                          <span className={`cell-state cell-state-${state}`}>
+                            {cellStateLabel[state]}
+                          </span>
+                          <strong>{cell.label}</strong>
+                          {cell.url ? (
+                            <a
+                              className="surface-link"
+                              href={cell.url}
+                              target="_blank"
+                              rel="noreferrer"
+                            >
+                              Open live
+                            </a>
+                          ) : state === "na" ? null : (
+                            <span className="fill-in">Link Fill in</span>
+                          )}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </section>
 
-        <section className="section" id="general" data-section>
-          <p className="section-kicker">General</p>
-          <h2>Non-visual craft</h2>
+        <section className="section" id="craft" data-section>
+          <p className="section-kicker">Craft</p>
+          <h2>Non-visual work</h2>
           <p className="section-lede">
-            Skills, agents, and reusable patterns — not in the visual columns.
+            Skills, agents, and reusable patterns — kept out of the visual
+            columns on purpose.
           </p>
 
           <h3 className="subhead">Skills</h3>
@@ -383,26 +524,25 @@ export default function App() {
               </li>
             ))}
           </ul>
-        </section>
 
-        <section className="section last" id="how-to-update" data-section>
-          <p className="section-kicker">For Alexandra</p>
-          <h2>Keep it current</h2>
-          <p className="body">{data.updateHint}</p>
-          <ul className="plain-list house-list">
-            <li>
-              <strong>Visuals</strong>
-              <span>{data.housekeeping.visualsHome}</span>
-            </li>
-            <li>
-              <strong>Code & non-visual</strong>
-              <span>{data.housekeeping.nonVisualHome}</span>
-            </li>
-            <li>
-              <strong>Retire old stuff</strong>
-              <span>{data.housekeeping.retireOld}</span>
-            </li>
-          </ul>
+          <div className="update-block">
+            <h3 className="subhead">Keep it current</h3>
+            <p className="body">{data.updateHint}</p>
+            <ul className="plain-list house-list">
+              <li>
+                <strong>Visuals</strong>
+                <span>{data.housekeeping.visualsHome}</span>
+              </li>
+              <li>
+                <strong>Code & non-visual</strong>
+                <span>{data.housekeeping.nonVisualHome}</span>
+              </li>
+              <li>
+                <strong>Retire old stuff</strong>
+                <span>{data.housekeeping.retireOld}</span>
+              </li>
+            </ul>
+          </div>
         </section>
 
         <footer className="foot">
