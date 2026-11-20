@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Scrollback — Millennial nostalgia by year</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  <meta name="description" content="Pick your generation and years. Relive the websites, objects, and visual style of millennial formative eras." />
+  <meta property="og:title" content="Scrollback — Millennial nostalgia by year" />
+  <meta property="og:description" content="Choose your years, then explore researched websites, objects, and style from that stretch of the millennial internet." />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#0a0a0a" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body data-era="dialup">
+  <a class="skip-link" href="#stage-landing">Skip to content</a>
+  <a class="studio-back" href="/">← Vargas Studio</a>
+  <div class="wrap">
+    <!-- LANDING -->
+    <section id="stage-landing" class="hero stage is-active" aria-label="Scrollback home">
+      <div class="hero-visual" aria-hidden="true">
+        <div class="crt">
+          <div class="crt-screen">
+            <div>C:\SCROLLBACK&gt; open era.exe</div>
+            <div class="dim">loading buddy list………… ok</div>
+            <div class="dim">mounting mix CD…………… ok</div>
+            <div class="dim">restoring Top 8…………… ok</div>
+            <div>ready <span class="blink"></span></div>
+          </div>
+        </div>
+      </div>
+      <p class="step-kicker">Nostalgia, dated properly</p>
+      <h1 class="brand">Scrollback</h1>
+      <p class="hero-copy">
+        <strong>Millennial years, reconstructed.</strong>
+        Say when you came of age—then open the websites, the objects, and the look that belonged to those years.
+      </p>
+      <div class="cta-row">
+        <button class="btn btn-primary" type="button" data-go="years">Enter your years</button>
+        <button class="btn btn-ghost" type="button" data-go="generation">Pick generation</button>
+        <button class="btn btn-ghost" type="button" id="surprise-me" aria-label="Jump to a random millennial era">Surprise me</button>
+      </div>
+      <div class="hero-meta" id="hero-meta">
+        <span><i class="dot" aria-hidden="true"></i> Gen locked: Millennials</span>
+        <span>Catalog: 1995–2012</span>
+        <span>Lenses: Web · Things · Style</span>
+      </div>
+    </section>
+
+    <!-- GENERATION -->
+    <section id="stage-generation" class="stage" aria-label="Choose generation">
+      <div class="topbar">
+        <div class="mark">Scrollback</div>
+        <button class="btn btn-ghost" type="button" data-go="landing">Back</button>
+      </div>
+      <p class="step-kicker">Step 01 · Generation</p>
+      <h2>Who’s coming through?</h2>
+      <p class="lede">We’re shipping Millennials first—born roughly 1981 to 1996—the cohort that grew up between dial-up and the first smartphones.</p>
+      <div class="gen-grid" id="gen-grid"></div>
+      <div class="cta-row" style="margin-top:1.5rem">
+        <button class="btn btn-primary" type="button" id="continue-years" disabled>Continue to years</button>
+      </div>
+    </section>
+
+    <!-- YEARS -->
+    <section id="stage-years" class="stage" aria-label="Choose years">
+      <div class="topbar">
+        <div class="mark">Scrollback</div>
+        <button class="btn btn-ghost" type="button" data-go="generation">Back</button>
+      </div>
+      <p class="step-kicker">Step 02 · Years</p>
+      <h2>Which stretch of time?</h2>
+      <p class="lede">Use your birth year and we’ll estimate formative years (about ages 14–20), or set the range yourself inside 1995–2012.</p>
+
+      <div class="year-panel">
+        <div class="year-modes" role="tablist" aria-label="Year mode">
+          <button class="chip is-active" type="button" data-mode="birth">From birth year</button>
+          <button class="chip" type="button" data-mode="range">Pick years directly</button>
+        </div>
+
+        <div id="mode-birth" class="slider-block">
+          <label>
+            <span>Birth year</span>
+            <strong id="birth-label">1990</strong>
+          </label>
+          <input id="birth-year" type="range" min="1981" max="1996" value="1990" />
+          <div class="year-modes" style="margin-top:0.75rem" aria-label="Millennial cohort shortcuts">
+            <button class="chip" type="button" data-birth="1984">Early millennial · ~1984</button>
+            <button class="chip" type="button" data-birth="1992">Late millennial · ~1992</button>
+          </div>
+          <p class="lede" style="margin:0.65rem 0 0;font-size:0.88rem">
+            Early (~1981–1988) hit dial-up/AIM harder; late (~1989–1996) hit MySpace/Tumblr harder.
+          </p>
+        </div>
+
+        <div id="mode-range" class="range-pair hidden">
+          <div class="slider-block">
+            <label>
+              <span>From</span>
+              <strong id="from-label">2004</strong>
+            </label>
+            <input id="year-from" type="range" min="1995" max="2012" value="2004" />
+          </div>
+          <div class="slider-block">
+            <label>
+              <span>To</span>
+              <strong id="to-label">2007</strong>
+            </label>
+            <input id="year-to" type="range" min="1995" max="2012" value="2007" />
+          </div>
+        </div>
+
+        <div class="preview-pill" id="year-preview" aria-live="polite"></div>
+
+        <p class="step-kicker" style="margin-top:1.35rem">Or jump an era band</p>
+        <div class="year-modes" id="era-jumps" aria-label="Era shortcuts"></div>
+
+        <div class="cta-row" style="margin-top:1.25rem">
+          <button class="btn btn-primary" type="button" id="open-results">Open this era</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESULTS -->
+    <section id="stage-results" class="stage" aria-label="Era results">
+      <div class="topbar">
+        <div class="mark">Scrollback</div>
+        <div class="cta-row">
+          <button class="btn btn-ghost" type="button" id="copy-share">Copy link</button>
+          <button class="btn btn-ghost" type="button" data-go="years">Change years</button>
+          <button class="btn" type="button" data-go="landing">Start over</button>
+        </div>
+      </div>
+
+      <div class="era-banner" id="era-banner"></div>
+      <div class="era-digest" id="era-digest" aria-label="Three-lens era digest"></div>
+
+      <div class="tabs" role="tablist" aria-label="Nostalgia lenses">
+        <button class="tab is-active" type="button" data-lens="websites" role="tab" aria-selected="true" title="Keyboard: 1">Websites</button>
+        <button class="tab" type="button" data-lens="items" role="tab" aria-selected="false" title="Keyboard: 2">Items</button>
+        <button class="tab" type="button" data-lens="style" role="tab" aria-selected="false" title="Keyboard: 3">Style</button>
+      </div>
+      <p class="lens-hint" id="lens-hint">Lenses · keys <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> · Esc backs up</p>
+
+      <label class="search-bar">
+        <span class="step-kicker" style="margin:0">Filter this lens</span>
+        <input id="lens-filter" type="search" placeholder="e.g. MySpace, Razr, chrome…" autocomplete="off" />
+      </label>
+      <p id="filter-empty" class="lede hidden" style="margin-top:0.5rem">No matches in this lens—try another word or clear the filter.</p>
+
+      <div id="lens-websites" class="lens is-active" role="tabpanel"></div>
+      <div id="lens-items" class="lens" role="tabpanel"></div>
+      <div id="lens-style" class="lens" role="tabpanel"></div>
+
+      <div class="research" id="research"></div>
+    </section>
+
+    <footer class="footer">
+      Scrollback · Millennial catalog v1 · Researched timelines for websites, objects, and aesthetics · Other generations next
+    </footer>
+  </div>
+
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

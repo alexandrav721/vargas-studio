@@ -64,7 +64,7 @@
     {
       "date": "2026-11-20",
       "projectId": "nostalgia",
-      "text": "Nostalgia / Scrollback explorer mapped; live publish URL Fill in."
+      "text": "Scrollback explorer hosted in-studio at /projects/nostalgia/ for friend review."
     },
     {
       "date": "2026-11-18",
@@ -81,13 +81,13 @@
       "status": "active",
       "updated": "2026-11-20",
       "summary": "Pick your generation and years, then explore formative websites, physical items, and style eras (roughly 1995–2012). Working product name: Scrollback. Dated nostalgia — not vague vibes.",
-      "latest": "Vite explorer + researched catalog in Origin lumen-d678/nostalgia. Public friend URL still Fill in.",
+      "latest": "Scrollback explorer is live inside Vargas Studio at /projects/nostalgia/. Origin lumen-d678/nostalgia remains the research/source home.",
       "visuals": {
         "website": {
           "label": "Scrollback explorer",
-          "detail": "Year-range picker → websites / items / style tabs.",
-          "url": null,
-          "state": "fill-in"
+          "detail": "Year-range picker → websites / items / style tabs — hosted in this studio.",
+          "url": "/projects/nostalgia/",
+          "state": "live"
         },
         "landing": {
           "label": "Campaign landing",
@@ -110,8 +110,8 @@
         "product-ui": {
           "label": "Explorer UI",
           "detail": "Same Scrollback app — the product is the year-dated catalog UI.",
-          "url": null,
-          "state": "fill-in"
+          "url": "/projects/nostalgia/",
+          "state": "live"
         },
         "deck": {
           "label": "Story / pitch board",

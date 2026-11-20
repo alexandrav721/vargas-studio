@@ -1,0 +1,19 @@
+{
+  "name": "scrollback",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Millennial nostalgia by year — websites, items, and style",
+  "scripts": {
+    "start": "python3 -m http.server 8765 --bind 127.0.0.1",
+    "dev": "python3 -m http.server 8765 --bind 127.0.0.1",
+    "sync:catalog": "node scripts/sync-catalog-data.mjs",
+    "verify": "node scripts/verify.mjs http://127.0.0.1:8765",
+    "verify:live": "node scripts/verify.mjs",
+    "e2e": "node scripts/e2e-smoke.mjs http://127.0.0.1:8765",
+    "e2e:live": "node scripts/e2e-smoke.mjs"
+  },
+  "optionalDependencies": {
+    "puppeteer-core": "^24.2.0"
+  }
+}
