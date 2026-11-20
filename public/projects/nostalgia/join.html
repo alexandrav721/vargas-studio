@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Scrollback — Join the waitlist</title>
+  <meta name="description" content="Join the Scrollback waitlist — Feel 2001–2004, buy era-only finds, talk with people who get it." />
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg0: #07090d; --bg1: #10161f; --ink: #e8eef7; --muted: #93a0b4;
+      --line: rgba(232,238,247,.14); --brand: #7dffb3; --brand-2: #ffd36a;
+      --panel: rgba(16,22,31,.78); --display: "Syne", sans-serif;
+      --body: "IBM Plex Sans", sans-serif; --mono: "IBM Plex Mono", monospace; --radius: 2px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; min-height: 100vh; color: var(--ink); font-family: var(--body);
+      background:
+        radial-gradient(ellipse at 18% 0%, rgba(125,255,179,.13), transparent 45%),
+        radial-gradient(ellipse at 90% 10%, rgba(255,211,106,.1), transparent 40%),
+        linear-gradient(165deg, var(--bg0), var(--bg1));
+      line-height: 1.55;
+    }
+    .studio-back {
+      position: fixed; top: .65rem; left: .65rem; z-index: 40;
+      padding: .45rem .8rem; border: 1px solid rgba(232,238,247,.28); border-radius: var(--radius);
+      background: #0c121a; color: #e8eef7; font: 500 .72rem/1 var(--mono);
+      letter-spacing: .06em; text-transform: uppercase; text-decoration: none;
+    }
+    .wrap { width: min(100% - 2rem, 720px); margin: 0 auto; padding: 4.5rem 0 4rem; }
+    nav.top {
+      display: flex; flex-wrap: wrap; gap: .7rem 1.1rem; margin-bottom: 2.2rem;
+      font-size: .72rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase;
+    }
+    nav.top a { color: var(--muted); text-decoration: none; }
+    nav.top a:hover, nav.top a[aria-current="page"] { color: var(--brand); }
+    .kicker { margin: 0 0 .65rem; font-size: .72rem; letter-spacing: .18em; text-transform: uppercase; color: var(--brand-2); font-weight: 700; }
+    h1 { margin: 0; font-family: var(--display); font-weight: 800; font-size: clamp(2.2rem, 7vw, 3.4rem); letter-spacing: -.04em; line-height: .95; }
+    .lede { margin: .9rem 0 0; color: var(--muted); max-width: 36rem; }
+    .pillars { display: flex; flex-wrap: wrap; gap: .45rem; margin-top: 1rem; }
+    .pillars span {
+      font-family: var(--mono); font-size: .7rem; letter-spacing: .08em; text-transform: uppercase;
+      padding: .35rem .6rem; border: 1px solid var(--line); background: var(--panel);
+    }
+    .steps { margin-top: 1.75rem; display: grid; gap: .85rem; }
+    .step {
+      padding: 1.05rem 1.15rem; border-left: 3px solid var(--brand);
+      background: var(--panel); border: 1px solid var(--line); border-left-width: 3px; border-left-color: var(--brand);
+    }
+    .step strong { display: block; font-family: var(--display); font-size: 1.15rem; margin-bottom: .35rem; }
+    .step p { margin: 0; color: var(--muted); }
+    .btn {
+      display: inline-flex; margin-top: .9rem; padding: .75rem 1.15rem; border: none;
+      background: var(--brand); color: #07100c; font: 700 .92rem var(--body); cursor: pointer; border-radius: var(--radius);
+    }
+    .btn-ghost { background: transparent; color: var(--ink); border: 1px solid rgba(232,238,247,.28); }
+    .form { display: grid; gap: .7rem; margin-top: .85rem; max-width: 420px; }
+    .form input {
+      padding: .8rem 1rem; border: 1px solid var(--line); border-radius: var(--radius);
+      background: #0a1018; color: var(--ink); font: inherit;
+    }
+    .msg { color: var(--brand); margin: .5rem 0 0; }
+    .fine { margin-top: 1.25rem; font-size: .85rem; color: var(--muted); }
+  </style>
+</head>
+<body>
+  <a class="studio-back" href="/">← Vargas Studio</a>
+  <div class="wrap">
+    <nav class="top" aria-label="Scrollback">
+      <a href="./">Explorer</a>
+      <a href="./landing.html">Landing</a>
+      <a href="./join.html" aria-current="page">Waitlist</a>
+      <a href="./ads.html">Meta ads</a>
+      <a href="./story.html">Story</a>
+    </nav>
+
+    <p class="kicker">Meta destination · soft waitlist demo</p>
+    <h1>Come home to 2001–2004</h1>
+    <p class="lede">
+      Scrollback is a website that feels like that era again — Feel it, buy products from that time only, and talk with people who get those years.
+      Drop your email for early access. <strong>Join / Sign Up only</strong> — not Shop Now.
+    </p>
+    <div class="pillars"><span>Feel</span><span>Buy era-only</span><span>Talk</span></div>
+
+    <div class="steps" id="funnel">
+      <div class="step" data-step="1">
+        <strong>Hook</strong>
+        <p>You always want to go home — to that feeling from 2001–2004. One site. Dated properly.</p>
+        <button class="btn" type="button" id="to2">Why Scrollback →</button>
+      </div>
+      <div class="step" data-step="2" hidden>
+        <strong>Why</strong>
+        <p>Feel the era energy · buy era-only finds (not costume Y2K) · talk with people who lived those years. No explaining required.</p>
+        <button class="btn" type="button" id="to3">Join waitlist →</button>
+      </div>
+      <div class="step" data-step="3" hidden>
+        <strong>Email</strong>
+        <form class="form" id="join-form">
+          <input type="email" name="email" required placeholder="you@email.com" autocomplete="email" />
+          <button class="btn" type="submit">Join the waitlist</button>
+        </form>
+      </div>
+      <div class="step" data-step="4" hidden>
+        <strong>You’re on the list</strong>
+        <p class="msg">Thanks — we’ll write when Feel · Buy · Talk opens for early access.</p>
+        <p class="fine">This studio demo stores nothing server-side. Production waitlist (if private) may live separately.</p>
+        <a class="btn btn-ghost" href="./ads.html" style="text-decoration:none;margin-top:1rem">See Meta ads →</a>
+      </div>
+    </div>
+  </div>
+  <script>
+    const q = new URLSearchParams(location.search);
+    const src = q.get('src') || 'direct';
+    document.title += ' · ' + src;
+    const show = (n) => document.querySelectorAll('.step').forEach((s) => { s.hidden = s.dataset.step !== String(n); });
+    document.getElementById('to2').onclick = () => show(2);
+    document.getElementById('to3').onclick = () => show(3);
+    document.getElementById('join-form').onsubmit = (e) => { e.preventDefault(); show(4); };
+  </script>
+</body>
+</html>

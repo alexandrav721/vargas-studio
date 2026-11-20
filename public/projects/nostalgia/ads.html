@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Scrollback — Meta ads gallery</title>
+  <meta name="description" content="Friend pack: romantic home + fun Meta carousels for Scrollback. Clarity and Lizzie-era as earlier chapters." />
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg0: #07090d;
+      --bg1: #10161f;
+      --ink: #e8eef7;
+      --muted: #93a0b4;
+      --line: rgba(232, 238, 247, 0.14);
+      --brand: #7dffb3;
+      --brand-2: #ffd36a;
+      --warm: #ff9b7a;
+      --panel: rgba(16, 22, 31, 0.78);
+      --display: "Syne", "Arial Narrow", sans-serif;
+      --body: "IBM Plex Sans", "Segoe UI", sans-serif;
+      --mono: "IBM Plex Mono", ui-monospace, monospace;
+      --radius: 2px;
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: var(--body);
+      background:
+        radial-gradient(ellipse at 12% 0%, rgba(125, 255, 179, 0.14), transparent 42%),
+        radial-gradient(ellipse at 88% 8%, rgba(255, 155, 122, 0.12), transparent 40%),
+        linear-gradient(165deg, var(--bg0), var(--bg1) 55%, #0a1018);
+      line-height: 1.5;
+    }
+    .studio-back {
+      position: fixed; top: 0.65rem; left: 0.65rem; z-index: 50;
+      display: inline-flex; align-items: center; gap: 0.35rem;
+      padding: 0.45rem 0.8rem; border: 1px solid rgba(232, 238, 247, 0.28);
+      border-radius: var(--radius); background: #0c121a; color: #e8eef7;
+      font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.06em;
+      text-decoration: none; text-transform: uppercase;
+    }
+    .studio-back:hover { border-color: var(--brand); color: var(--brand); }
+    .wrap { width: min(100% - 2rem, 1100px); margin: 0 auto; padding: 4.5rem 0 4rem; }
+    nav.top {
+      display: flex; flex-wrap: wrap; gap: 0.7rem 1.1rem; margin-bottom: 2.2rem;
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+    }
+    nav.top a { color: var(--muted); text-decoration: none; }
+    nav.top a:hover, nav.top a[aria-current="page"] { color: var(--brand); }
+    .kicker {
+      margin: 0 0 0.65rem; font-size: 0.72rem; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--brand-2); font-weight: 700;
+    }
+    h1.brand {
+      margin: 0; font-family: var(--display); font-weight: 800;
+      font-size: clamp(2.4rem, 8vw, 4.2rem); letter-spacing: -0.04em; line-height: 0.95;
+    }
+    .lede { margin: 0.9rem 0 0; max-width: 40rem; color: var(--muted); font-size: 1.05rem; }
+    .pillars {
+      display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.1rem;
+    }
+    .pillars span {
+      font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.08em;
+      text-transform: uppercase; padding: 0.35rem 0.65rem; border: 1px solid var(--line);
+      color: var(--ink); background: var(--panel);
+    }
+    .filters {
+      position: sticky; top: 0; z-index: 30; display: flex; flex-wrap: wrap; gap: 0.5rem;
+      margin: 2rem 0 1.25rem; padding: 0.75rem 0; background: linear-gradient(180deg, rgba(7,9,13,0.96), rgba(7,9,13,0.88));
+      border-bottom: 1px solid var(--line); backdrop-filter: blur(8px);
+    }
+    .filters button {
+      appearance: none; cursor: pointer; border: 1px solid var(--line);
+      background: transparent; color: var(--muted); font: 600 0.78rem/1 var(--body);
+      letter-spacing: 0.08em; text-transform: uppercase; padding: 0.55rem 0.85rem;
+      transition: color 0.2s var(--ease), border-color 0.2s var(--ease), background 0.2s var(--ease);
+    }
+    .filters button:hover { color: var(--ink); border-color: rgba(232,238,247,0.35); }
+    .filters button.is-active { color: #07100c; background: var(--brand); border-color: var(--brand); }
+    .filters button[data-tier="secondary"].is-active { background: var(--brand-2); border-color: var(--brand-2); color: #1a1208; }
+    .chapter { display: none; animation: rise 0.45s var(--ease); }
+    .chapter.is-active { display: block; }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: none; }
+    }
+    .chapter-head { margin-bottom: 1.25rem; }
+    .chapter-head h2 {
+      margin: 0; font-family: var(--display); font-size: clamp(1.5rem, 3.5vw, 2rem);
+      letter-spacing: -0.02em;
+    }
+    .chapter-head p { margin: 0.55rem 0 0; color: var(--muted); max-width: 42rem; }
+    .badge {
+      display: inline-block; margin-bottom: 0.45rem; font-family: var(--mono);
+      font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--brand);
+    }
+    .badge.archive { color: var(--brand-2); }
+    /* One-by-one frame pager (not a jammed strip) */
+    .carousel {
+      --stage: min(100%, 520px);
+      display: grid;
+      gap: 1rem;
+      justify-items: center;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+    .carousel-stage {
+      position: relative;
+      width: var(--stage);
+      border: 1px solid var(--line);
+      background: var(--panel);
+      overflow: hidden;
+      touch-action: pan-y;
+    }
+    .carousel-track {
+      display: flex;
+      width: 100%;
+      transition: transform 0.38s var(--ease);
+      will-change: transform;
+    }
+    .slide {
+      flex: 0 0 100%;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: inherit;
+      font: inherit;
+      text-align: left;
+      cursor: zoom-in;
+    }
+    .slide img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      background: #0a1018;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+    .slide figcaption {
+      padding: 0.85rem 1rem 1rem;
+      border-top: 1px solid var(--line);
+    }
+    .slide .job {
+      display: block; font-family: var(--mono); font-size: 0.65rem;
+      letter-spacing: 0.12em; text-transform: uppercase; color: var(--brand-2); margin-bottom: 0.3rem;
+    }
+    .slide .cap { display: block; font-size: 0.95rem; color: var(--ink); }
+    .carousel-controls {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 0.75rem; width: 100%; flex-wrap: wrap;
+    }
+    .carousel-controls .pager {
+      display: flex; gap: 0.45rem; align-items: center;
+    }
+    .carousel-controls button {
+      appearance: none; border: 1px solid var(--line); background: transparent;
+      color: var(--ink); font: 600 0.78rem/1 var(--mono); letter-spacing: 0.06em;
+      text-transform: uppercase; padding: 0.55rem 0.8rem; cursor: pointer;
+      transition: border-color 0.2s var(--ease), color 0.2s var(--ease);
+    }
+    .carousel-controls button:hover:not(:disabled) {
+      border-color: var(--brand); color: var(--brand);
+    }
+    .carousel-controls button:disabled {
+      opacity: 0.35; cursor: default;
+    }
+    .carousel-counter {
+      font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.08em;
+      color: var(--muted); min-width: 4.5rem; text-align: center;
+    }
+    .carousel-dots {
+      display: flex; flex-wrap: wrap; gap: 0.4rem; justify-content: center; width: 100%;
+    }
+    .carousel-dots button {
+      width: 0.55rem; height: 0.55rem; padding: 0; border-radius: 999px;
+      border: 1px solid rgba(232,238,247,0.35); background: transparent; cursor: pointer;
+    }
+    .carousel-dots button[aria-current="true"] {
+      background: var(--brand); border-color: var(--brand); width: 1.15rem;
+    }
+    .carousel-hint {
+      margin: 0; font-size: 0.78rem; color: var(--muted); text-align: center;
+    }
+    .note {
+      margin-top: 1.5rem; padding: 1rem 1.1rem; border-left: 3px solid var(--brand);
+      background: rgba(16, 22, 31, 0.65); color: var(--muted); max-width: 48rem;
+    }
+    .note strong { color: var(--ink); }
+    .cta-row { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.5rem; }
+    .btn {
+      display: inline-flex; align-items: center; padding: 0.8rem 1.2rem;
+      border: 1px solid transparent; background: var(--brand); color: #07100c;
+      font: 700 0.92rem var(--body); text-decoration: none; border-radius: var(--radius);
+    }
+    .btn-ghost {
+      background: transparent; color: var(--ink); border-color: rgba(232, 238, 247, 0.28);
+    }
+    .btn:hover { filter: brightness(1.05); }
+    /* Lightbox */
+    .lb {
+      position: fixed; inset: 0; z-index: 100; display: none; place-items: center;
+      padding: 1.25rem; background: rgba(4, 6, 10, 0.88); backdrop-filter: blur(6px);
+    }
+    .lb.is-open { display: grid; }
+    .lb-panel {
+      width: min(100%, 720px); background: #0c121a; border: 1px solid var(--line);
+      box-shadow: 0 24px 80px rgba(0,0,0,0.45);
+    }
+    .lb-panel img { display: block; width: 100%; aspect-ratio: 1; object-fit: contain; background: #05070b; }
+    .lb-meta { padding: 0.9rem 1rem 1.1rem; display: flex; gap: 0.75rem; align-items: center; justify-content: space-between; flex-wrap: wrap; }
+    .lb-meta p { margin: 0; color: var(--muted); font-size: 0.92rem; }
+    .lb-nav { display: flex; gap: 0.45rem; }
+    .lb-nav button, .lb-close {
+      appearance: none; border: 1px solid var(--line); background: transparent;
+      color: var(--ink); font: 600 0.78rem/1 var(--mono); letter-spacing: 0.06em;
+      text-transform: uppercase; padding: 0.5rem 0.7rem; cursor: pointer;
+    }
+    .lb-close:hover, .lb-nav button:hover { border-color: var(--brand); color: var(--brand); }
+  </style>
+</head>
+<body>
+  <a class="studio-back" href="/">← Vargas Studio</a>
+  <div class="wrap">
+    <nav class="top" aria-label="Scrollback">
+      <a href="./">Explorer</a>
+      <a href="./landing.html">Landing</a>
+      <a href="./join.html">Waitlist</a>
+      <a href="./ads.html" aria-current="page">Meta ads</a>
+      <a href="./story.html">Story</a>
+    </nav>
+
+    <p class="kicker">Meta creative pack · friend review</p>
+    <h1 class="brand">Scrollback ads</h1>
+    <p class="lede">
+      Real Meta frames for a website that feels like <strong>2001–2004</strong> again —
+      Feel the era, buy era-only finds, talk with people who get those years.
+      Honest waitlist CTA (no fake Shop Now).
+    </p>
+    <div class="pillars" aria-label="Offer pillars">
+      <span>Feel</span><span>Buy era-only</span><span>Talk</span>
+    </div>
+
+    <div class="filters" role="tablist" aria-label="Ad chapters">
+      <button type="button" class="is-active" role="tab" aria-selected="true" data-chapter="romantic" data-tier="primary">Romantic home</button>
+      <button type="button" role="tab" aria-selected="false" data-chapter="fun" data-tier="primary">Fun</button>
+      <button type="button" role="tab" aria-selected="false" data-chapter="clarity" data-tier="secondary">Clarity · earlier</button>
+      <button type="button" role="tab" aria-selected="false" data-chapter="lizzie" data-tier="secondary">Lizzie-era · earlier</button>
+    </div>
+
+    <!-- Romantic (primary) -->
+    <section class="chapter is-active" id="ch-romantic" data-chapter="romantic" aria-label="Romantic home carousel">
+      <div class="chapter-head">
+        <span class="badge">Primary · ship pack</span>
+        <h2>You always want to go home</h2>
+        <p>Soft, warm longing — that era felt like home. Photoreal thrift / living-room stills. Six 1:1 frames.</p>
+      </div>
+      <div class="carousel" data-set="romantic" data-index="0">
+      <div class="carousel-stage">
+        <div class="carousel-track">
+        <button class="slide" type="button" data-src="./ads/romantic-home/01-home-hook.png" data-cap="You always want to go home. · Feel · Buy · Talk">
+          <img src="./ads/romantic-home/01-home-hook.png" alt="Scrollback romantic ad 01 — home hook" loading="lazy" width="1080" height="1080" />
+          <figcaption><span class="job">01 · Hook</span><span class="cap">You always want to go home.</span></figcaption>
+        </button>
+        <button class="slide" type="button" data-src="./ads/romantic-home/02-feel-home.png" data-cap="That era felt like home.">
+          <img src="./ads/romantic-home/02-feel-home.png" alt="Scrollback romantic ad 02 — feel" loading="lazy" width="1080" height="1080" />
+          <figcaption><span class="job">02 · Feel</span><span class="cap">That era felt like home.</span></figcaption>
+        </button>
+        <button class="slide" type="button" data-src="./ads/romantic-home/03-buy-finds.png" data-cap="Bring the objects home. Era-dated finds.">
+          <img src="./ads/romantic-home/03-buy-finds.png" alt="Scrollback romantic ad 03 — buy" loading="lazy" width="1080" height="1080" />
+          <figcaption><span class="job">03 · Buy</span><span class="cap">Bring the objects home.</span></figcaption>
+        </button>
+        <button class="slide" type="button" data-src="./ads/romantic-home/04-talk-home.png" data-cap="People who miss that home too.">
+          <img src="./ads/romantic-home/04-talk-home.png" alt="Scrollback romantic ad 04 — talk" loading="lazy" width="1080" height="1080" />
+          <figcaption><span class="job">04 · Talk</span><span class="cap">People who miss that home too.</span></figcaption>
+        </button>
+        <button class="slide" type="button" data-src="./ads/romantic-home/05-who-home.png" data-cap="If 2001–2004 was home for you…">
+          <img src="./ads/romantic-home/05-who-home.png" alt="Scrollback romantic ad 05 — who" loading="lazy" width="1080" height="1080" />
+          <figcaption><span class="job">05 · Who</span><span class="cap">If 2001–2004 was home…</span></figcaption>
+        </button>
+        <button class="slide" type="button" data-src="./ads/romantic-home/06-cta-home.png" data-cap="Come home to 2001–2004 · Join the waitlist">
+          <img src="./ads/romantic-home/06-cta-home.png" alt="Scrollback romantic ad 06 — CTA" loading="lazy" width="1080" height="1080" />
+          <figcaption><span class="job">06 · CTA</span><span class="cap">Join the waitlist — Feel · Buy · Talk</span></figcaption>
+        </button>
+        </div>
+      </div>
+      <div class="carousel-controls">
+        <div class="pager">
+          <button type="button" class="prev" aria-label="Previous frame">← Prev</button>
+          <button type="button" class="next" aria-label="Next frame">Next →</button>
+        </div>
+        <span class="carousel-counter" aria-live="polite">1 / 6</span>
+      </div>
+      <div class="carousel-dots" role="tablist" aria-label="Frames">
+          <button type="button" data-i="0" aria-label="Frame 1" aria-current="true"></button>
+          <button type="button" data-i="1" aria-label="Frame 2"></button>
+          <button type="button" data-i="2" aria-label="Frame 3"></button>
+          <button type="button" data-i="3" aria-label="Frame 4"></button>
+          <button type="button" data-i="4" aria-label="Frame 5"></button>
+          <button type="button" data-i="5" aria-label="Frame 6"></button>
+      </div>
+      <p class="carousel-hint">One frame at a time · arrows / swipe · click to enlarge</p>
+    </div>
+    </section>
+
+    <!-- Fun (primary) -->
+    <section class="chapter" id="ch-fun" data-chapter="fun" aria-label="Fun carousel" hidden>
+      <div class="chapter-head">
+        <span class="badge">Primary · ship pack</span>
+        <h2>Wanna hit a website that feels like 2003 again?</h2>
+        <p>Early-2000s mall / after-school joy. Bright jelly accents on real objects. Six 1:1 frames.</p>
+      </div>
+      <div class="carousel" data-set="fun" data-index="0">
+      <div class="carousel-stage">
+        <div class="carousel-track">
+        <button class="slide" type="button" data-src="./ads/fun/01-offer.png" data-cap="Wanna hit a website that feels like 2003 again?">
+          <img src="./ads/fun/01-offer.png" alt="Scrollback fun ad 01 — offer" loading="lazy" width="1080" height="1080" />
+          <figcaption><span class="job">01 · Hook</span><span class="cap">Feel like 2003 again?</span></figcaption>
+        </button>
+        <button class="slide" type="button" data-src="./ads/fun/02-feel.png" data-cap="Come play in 2003.">
+          <img src="./ads/fun/02-feel.png" alt="Scrollback fun ad 02 — feel" loading="lazy" width="1080" height="1080" />
+          <figcaption><span class="job">02 · Feel</span><span class="cap">Come play in 2003.</span></figcaption>
+        </button>
+        <button class="slide" type="button" data-src="./ads/fun/03-buy.png" data-cap="Real era stuff. Not costume.">
+          <img src="./ads/fun/03-buy.png" alt="Scrollback fun ad 03 — buy" loading="lazy" width="1080" height="1080" />
+          <figcaption><span class="job">03 · Buy</span><span class="cap">Real era stuff. Not costume.</span></figcaption>
+        </button>
+        <button class="slide" type="button" data-src="./ads/fun/04-talk.png" data-cap="Hang with people who still get it.">
+          <img src="./ads/fun/04-talk.png" alt="Scrollback fun ad 04 — talk" loading="lazy" width="1080" height="1080" />
+          <figcaption><span class="job">04 · Talk</span><span class="cap">People who still get it.</span></figcaption>
+        </button>
+        <button class="slide" type="button" data-src="./ads/fun/05-who.png" data-cap="Junior high ~2001–2004?">
+          <img src="./ads/fun/05-who.png" alt="Scrollback fun ad 05 — who" loading="lazy" width="1080" height="1080" />
+          <figcaption><span class="job">05 · Who</span><span class="cap">Junior high ~2001–2004?</span></figcaption>
+        </button>
+        <button class="slide" type="button" data-src="./ads/fun/06-cta.png" data-cap="Join the waitlist — shop 2001–2004 finds">
+          <img src="./ads/fun/06-cta.png" alt="Scrollback fun ad 06 — CTA" loading="lazy" width="1080" height="1080" />
+          <figcaption><span class="job">06 · CTA</span><span class="cap">Join — Feel · Buy · Talk</span></figcaption>
+        </button>
+        </div>
+      </div>
+      <div class="carousel-controls">
+        <div class="pager">
+          <button type="button" class="prev" aria-label="Previous frame">← Prev</button>
+          <button type="button" class="next" aria-label="Next frame">Next →</button>
+        </div>
+        <span class="carousel-counter" aria-live="polite">1 / 6</span>
+      </div>
+      <div class="carousel-dots" role="tablist" aria-label="Frames">
+          <button type="button" data-i="0" aria-label="Frame 1" aria-current="true"></button>
+          <button type="button" data-i="1" aria-label="Frame 2"></button>
+          <button type="button" data-i="2" aria-label="Frame 3"></button>
+          <button type="button" data-i="3" aria-label="Frame 4"></button>
+          <button type="button" data-i="4" aria-label="Frame 5"></button>
+          <button type="button" data-i="5" aria-label="Frame 6"></button>
+      </div>
+      <p class="carousel-hint">One frame at a time · arrows / swipe · click to enlarge</p>
+    </div>
+    </section>
+
+    <!-- Clarity (secondary) -->
+    <section class="chapter" id="ch-clarity" data-chapter="clarity" aria-label="Clarity carousel" hidden>
+      <div class="chapter-head">
+        <span class="badge archive">Earlier chapter · not current best</span>
+        <h2>Clarity rebuild</h2>
+        <p>Offer-first clarity pass that locked Feel / Buy / Talk. Kept for history — romantic + fun are the friend ship pack.</p>
+      </div>
+      <div class="carousel" data-set="clarity" data-index="0">
+      <div class="carousel-stage">
+        <div class="carousel-track">
+        <button class="slide" type="button" data-src="./ads/clarity/01-offer.png" data-cap="Want a website that feels like 2001–2004 again?">
+          <img src="./ads/clarity/01-offer.png" alt="Scrollback clarity ad 01" loading="lazy" width="1080" height="1080" />
+          <figcaption><span class="job">01 · Offer</span><span class="cap">Website that feels like 2001–2004</span></figcaption>
+        </button>
+        <button class="slide" type="button" data-src="./ads/clarity/02-feel.png" data-cap="Feel it again.">
+          <img src="./ads/clarity/02-feel.png" alt="Scrollback clarity ad 02" loading="lazy" width="1080" height="1080" />
+          <figcaption><span class="job">02 · Feel</span><span class="cap">Feel it again.</span></figcaption>
+        </button>
+        <button class="slide" type="button" data-src="./ads/clarity/03-buy.png" data-cap="Buy from that time only.">
+          <img src="./ads/clarity/03-buy.png" alt="Scrollback clarity ad 03" loading="lazy" width="1080" height="1080" />
+          <figcaption><span class="job">03 · Buy</span><span class="cap">Era-dated finds.</span></figcaption>
+        </button>
+        <button class="slide" type="button" data-src="./ads/clarity/04-talk.png" data-cap="Talk with people who get 2001–2004.">
+          <img src="./ads/clarity/04-talk.png" alt="Scrollback clarity ad 04" loading="lazy" width="1080" height="1080" />
+          <figcaption><span class="job">04 · Talk</span><span class="cap">People who get those years.</span></figcaption>
+        </button>
+        <button class="slide" type="button" data-src="./ads/clarity/05-who.png" data-cap="If junior high was ~2001–2004…">
+          <img src="./ads/clarity/05-who.png" alt="Scrollback clarity ad 05" loading="lazy" width="1080" height="1080" />
+          <figcaption><span class="job">05 · Who</span><span class="cap">Junior high ~2001–2004</span></figcaption>
+        </button>
+        <button class="slide" type="button" data-src="./ads/clarity/06-cta.png" data-cap="Join the waitlist — Feel · Buy · Talk">
+          <img src="./ads/clarity/06-cta.png" alt="Scrollback clarity ad 06" loading="lazy" width="1080" height="1080" />
+          <figcaption><span class="job">06 · CTA</span><span class="cap">Join the waitlist</span></figcaption>
+        </button>
+        </div>
+      </div>
+      <div class="carousel-controls">
+        <div class="pager">
+          <button type="button" class="prev" aria-label="Previous frame">← Prev</button>
+          <button type="button" class="next" aria-label="Next frame">Next →</button>
+        </div>
+        <span class="carousel-counter" aria-live="polite">1 / 6</span>
+      </div>
+      <div class="carousel-dots" role="tablist" aria-label="Frames">
+          <button type="button" data-i="0" aria-label="Frame 1" aria-current="true"></button>
+          <button type="button" data-i="1" aria-label="Frame 2"></button>
+          <button type="button" data-i="2" aria-label="Frame 3"></button>
+          <button type="button" data-i="3" aria-label="Frame 4"></button>
+          <button type="button" data-i="4" aria-label="Frame 5"></button>
+          <button type="button" data-i="5" aria-label="Frame 6"></button>
+      </div>
+      <p class="carousel-hint">One frame at a time · arrows / swipe · click to enlarge</p>
+    </div>
+    </section>
+
+    <!-- Lizzie-era (secondary) -->
+    <section class="chapter" id="ch-lizzie" data-chapter="lizzie" aria-label="Lizzie-era carousel" hidden>
+      <div class="chapter-head">
+        <span class="badge archive">Earlier chapter · not current best</span>
+        <h2>Lizzie-era / after-school TV</h2>
+        <p>Evokes 2001–2004 tween cable culture — no forged Disney marks or character likenesses. Eight frames; explorer-leaning offer before Feel·Buy·Talk locked.</p>
+      </div>
+      <div class="carousel" data-set="lizzie" data-index="0">
+      <div class="carousel-stage">
+        <div class="carousel-track">
+        <button class="slide" type="button" data-src="./ads/lizzie-era/01-afterschool-tv.png" data-cap="After-school TV hit different.">
+          <img src="./ads/lizzie-era/01-afterschool-tv.png" alt="Scrollback Lizzie-era ad 01" loading="lazy" width="1080" height="1080" />
+          <figcaption><span class="job">01</span><span class="cap">After-school TV hit different.</span></figcaption>
+        </button>
+        <button class="slide" type="button" data-src="./ads/lizzie-era/02-mall-accessories.png" data-cap="Butterfly clips. Plastic choker.">
+          <img src="./ads/lizzie-era/02-mall-accessories.png" alt="Scrollback Lizzie-era ad 02" loading="lazy" width="1080" height="1080" />
+          <figcaption><span class="job">02</span><span class="cap">Butterfly clips. That locker fit.</span></figcaption>
+        </button>
+        <button class="slide" type="button" data-src="./ads/lizzie-era/03-inner-narrator.png" data-cap="Your brain had a cartoon narrator.">
+          <img src="./ads/lizzie-era/03-inner-narrator.png" alt="Scrollback Lizzie-era ad 03" loading="lazy" width="1080" height="1080" />
+          <figcaption><span class="job">03</span><span class="cap">Cartoon narrator energy.</span></figcaption>
+        </button>
+        <button class="slide" type="button" data-src="./ads/lizzie-era/04-era-objects.png" data-cap="Flip phone. Click wheel.">
+          <img src="./ads/lizzie-era/04-era-objects.png" alt="Scrollback Lizzie-era ad 04" loading="lazy" width="1080" height="1080" />
+          <figcaption><span class="job">04</span><span class="cap">Era objects.</span></figcaption>
+        </button>
+        <button class="slide" type="button" data-src="./ads/lizzie-era/05-parallel-web.png" data-cap="Buddy list + virtual pets.">
+          <img src="./ads/lizzie-era/05-parallel-web.png" alt="Scrollback Lizzie-era ad 05" loading="lazy" width="1080" height="1080" />
+          <figcaption><span class="job">05</span><span class="cap">Buddy list + virtual pets.</span></figcaption>
+        </button>
+        <button class="slide" type="button" data-src="./ads/lizzie-era/06-style-look.png" data-cap="Colorblock. Rhinestones. Mixed prints.">
+          <img src="./ads/lizzie-era/06-style-look.png" alt="Scrollback Lizzie-era ad 06" loading="lazy" width="1080" height="1080" />
+          <figcaption><span class="job">06</span><span class="cap">The junior-high Y2K look.</span></figcaption>
+        </button>
+        <button class="slide" type="button" data-src="./ads/lizzie-era/07-year-hook.png" data-cap="What year was your junior high?">
+          <img src="./ads/lizzie-era/07-year-hook.png" alt="Scrollback Lizzie-era ad 07" loading="lazy" width="1080" height="1080" />
+          <figcaption><span class="job">07</span><span class="cap">What year was your junior high?</span></figcaption>
+        </button>
+        <button class="slide" type="button" data-src="./ads/lizzie-era/08-email-cta.png" data-cap="Drop your email — unlock your era">
+          <img src="./ads/lizzie-era/08-email-cta.png" alt="Scrollback Lizzie-era ad 08" loading="lazy" width="1080" height="1080" />
+          <figcaption><span class="job">08 · CTA</span><span class="cap">Unlock your era.</span></figcaption>
+        </button>
+        </div>
+      </div>
+      <div class="carousel-controls">
+        <div class="pager">
+          <button type="button" class="prev" aria-label="Previous frame">← Prev</button>
+          <button type="button" class="next" aria-label="Next frame">Next →</button>
+        </div>
+        <span class="carousel-counter" aria-live="polite">1 / 8</span>
+      </div>
+      <div class="carousel-dots" role="tablist" aria-label="Frames">
+          <button type="button" data-i="0" aria-label="Frame 1" aria-current="true"></button>
+          <button type="button" data-i="1" aria-label="Frame 2"></button>
+          <button type="button" data-i="2" aria-label="Frame 3"></button>
+          <button type="button" data-i="3" aria-label="Frame 4"></button>
+          <button type="button" data-i="4" aria-label="Frame 5"></button>
+          <button type="button" data-i="5" aria-label="Frame 6"></button>
+          <button type="button" data-i="6" aria-label="Frame 7"></button>
+          <button type="button" data-i="7" aria-label="Frame 8"></button>
+      </div>
+      <p class="carousel-hint">One frame at a time · arrows / swipe · click to enlarge</p>
+    </div>
+    </section>
+
+    <p class="note">
+      <strong>Destination:</strong> ads point at the in-studio waitlist —
+      <a href="./join.html" style="color:var(--brand)">/projects/nostalgia/join.html</a>.
+      Sign Up / Join only — not Shop Now while capture is email-only.
+    </p>
+    <div class="cta-row">
+      <a class="btn" href="./join.html">Open waitlist</a>
+      <a class="btn btn-ghost" href="./landing.html">Campaign landing</a>
+      <a class="btn btn-ghost" href="./">Explorer</a>
+    </div>
+  </div>
+
+  <div class="lb" id="lightbox" role="dialog" aria-modal="true" aria-label="Ad preview" hidden>
+    <div class="lb-panel">
+      <img id="lb-img" src="" alt="" />
+      <div class="lb-meta">
+        <p id="lb-cap"></p>
+        <div class="lb-nav">
+          <button type="button" id="lb-prev" aria-label="Previous">←</button>
+          <button type="button" id="lb-next" aria-label="Next">→</button>
+          <button type="button" class="lb-close" id="lb-close">Esc</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const tabs = [...document.querySelectorAll('.filters button')];
+    const chapters = [...document.querySelectorAll('.chapter')];
+    const lb = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lb-img');
+    const lbCap = document.getElementById('lb-cap');
+    let items = [];
+    let idx = 0;
+
+    function showChapter(id) {
+      chapters.forEach((ch) => {
+        const on = ch.dataset.chapter === id;
+        ch.classList.toggle('is-active', on);
+        ch.hidden = !on;
+      });
+      tabs.forEach((btn) => {
+        const on = btn.dataset.chapter === id;
+        btn.classList.toggle('is-active', on);
+        btn.setAttribute('aria-selected', on ? 'true' : 'false');
+      });
+      const car = document.querySelector('.chapter.is-active .carousel');
+      if (car) syncCarousel(car);
+    }
+
+    tabs.forEach((btn) => btn.addEventListener('click', () => showChapter(btn.dataset.chapter)));
+
+    function syncCarousel(car) {
+      const track = car.querySelector('.carousel-track');
+      const slides = [...car.querySelectorAll('.slide')];
+      const n = slides.length;
+      let i = Math.max(0, Math.min(n - 1, Number(car.dataset.index) || 0));
+      car.dataset.index = String(i);
+      track.style.transform = 'translateX(-' + (i * 100) + '%)';
+      const counter = car.querySelector('.carousel-counter');
+      if (counter) counter.textContent = (i + 1) + ' / ' + n;
+      car.querySelectorAll('.carousel-dots button').forEach((d, di) => {
+        d.setAttribute('aria-current', di === i ? 'true' : 'false');
+      });
+      const prev = car.querySelector('.prev');
+      const next = car.querySelector('.next');
+      if (prev) prev.disabled = false;
+      if (next) next.disabled = false;
+    }
+
+    function go(car, delta) {
+      const n = car.querySelectorAll('.slide').length;
+      let i = Number(car.dataset.index) || 0;
+      i = (i + delta + n) % n;
+      car.dataset.index = String(i);
+      syncCarousel(car);
+    }
+
+    function goTo(car, i) {
+      car.dataset.index = String(i);
+      syncCarousel(car);
+    }
+
+    document.querySelectorAll('.carousel').forEach((car) => {
+      car.querySelector('.prev')?.addEventListener('click', () => go(car, -1));
+      car.querySelector('.next')?.addEventListener('click', () => go(car, 1));
+      car.querySelectorAll('.carousel-dots button').forEach((d) => {
+        d.addEventListener('click', () => goTo(car, Number(d.dataset.i)));
+      });
+
+      const stage = car.querySelector('.carousel-stage');
+      let x0 = null;
+      let swiped = false;
+      stage.addEventListener('pointerdown', (e) => {
+        x0 = e.clientX;
+        swiped = false;
+        stage.setPointerCapture?.(e.pointerId);
+      });
+      stage.addEventListener('pointerup', (e) => {
+        if (x0 == null) return;
+        const dx = e.clientX - x0;
+        x0 = null;
+        if (Math.abs(dx) < 40) return;
+        swiped = true;
+        go(car, dx < 0 ? 1 : -1);
+      });
+      stage.addEventListener('pointercancel', () => { x0 = null; });
+      stage.addEventListener('click', (e) => {
+        if (!swiped) return;
+        e.preventDefault();
+        e.stopPropagation();
+        swiped = false;
+      }, true);
+
+      syncCarousel(car);
+    });
+
+    addEventListener('keydown', (e) => {
+      if (lb.classList.contains('is-open')) return;
+      const car = document.querySelector('.chapter.is-active .carousel');
+      if (!car) return;
+      if (e.key === 'ArrowLeft') { e.preventDefault(); go(car, -1); }
+      if (e.key === 'ArrowRight') { e.preventDefault(); go(car, 1); }
+    });
+
+    function activeSlides() {
+      const ch = document.querySelector('.chapter.is-active');
+      return [...(ch ? ch.querySelectorAll('.slide') : [])];
+    }
+
+    function openLb(i) {
+      items = activeSlides();
+      idx = i;
+      paintLb();
+      lb.hidden = false;
+      lb.classList.add('is-open');
+    }
+
+    function closeLb() {
+      lb.classList.remove('is-open');
+      lb.hidden = true;
+    }
+
+    function paintLb() {
+      const t = items[idx];
+      if (!t) return;
+      lbImg.src = t.dataset.src;
+      lbImg.alt = t.querySelector('img')?.alt || '';
+      lbCap.textContent = t.dataset.cap || '';
+    }
+
+    document.querySelectorAll('.slide').forEach((slide) => {
+      slide.addEventListener('click', () => {
+        const list = activeSlides();
+        openLb(list.indexOf(slide));
+      });
+    });
+
+    document.getElementById('lb-close').onclick = closeLb;
+    document.getElementById('lb-prev').onclick = () => { idx = (idx - 1 + items.length) % items.length; paintLb(); };
+    document.getElementById('lb-next').onclick = () => { idx = (idx + 1) % items.length; paintLb(); };
+    lb.addEventListener('click', (e) => { if (e.target === lb) closeLb(); });
+    addEventListener('keydown', (e) => {
+      if (!lb.classList.contains('is-open')) return;
+      if (e.key === 'Escape') closeLb();
+      if (e.key === 'ArrowLeft') document.getElementById('lb-prev').click();
+      if (e.key === 'ArrowRight') document.getElementById('lb-next').click();
+    });
+
+    const hash = location.hash.replace('#', '');
+    if (['romantic', 'fun', 'clarity', 'lizzie'].includes(hash)) showChapter(hash);
+  </script>
+</body>
+</html>

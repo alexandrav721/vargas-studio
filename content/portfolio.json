@@ -74,7 +74,7 @@
     {
       "date": "2026-11-20",
       "projectId": "nostalgia",
-      "text": "Scrollback explorer live at /projects/nostalgia/."
+      "text": "Scrollback Meta ads gallery + waitlist + landing in-studio — romantic & fun ship pack; clarity/Lizzie as earlier chapters."
     }
   ],
   "projects": [
@@ -83,34 +83,34 @@
       "name": "Nostalgia Project",
       "aka": "Scrollback",
       "oneLiner": "Millennial nostalgia by year — websites, items, and style.",
-      "status": "active",
+      "status": "hot",
       "updated": "2026-11-20",
-      "summary": "Pick your generation and years, then explore formative websites, physical items, and style eras (roughly 1995–2012). Working product name: Scrollback. Dated nostalgia — not vague vibes.",
-      "latest": "Scrollback explorer is live inside Vargas Studio at /projects/nostalgia/. Origin lumen-d678/nostalgia remains the research/source home.",
+      "summary": "Pick your generation and years, then explore formative websites, physical items, and style eras (roughly 1995–2012). Working product name: Scrollback. Offer: Feel 2001–2004 · buy era-only · talk with people who get it. Dated nostalgia — not vague vibes.",
+      "latest": "In-studio Meta ads gallery (romantic + fun ship pack; clarity / Lizzie-era as earlier chapters), campaign landing, soft waitlist join, and Feel/Buy/Talk story board — plus the explorer at /projects/nostalgia/.",
       "visuals": {
         "website": {
           "label": "Scrollback explorer",
-          "detail": "Year-range picker → websites / items / style tabs — hosted in this studio.",
+          "detail": "Year-range picker → websites / items / style. Era feel + era-only buys + talk — Feel · Buy · Talk.",
           "url": "/projects/nostalgia/",
           "state": "live"
         },
         "landing": {
           "label": "Campaign landing",
-          "detail": "No dedicated campaign page yet — the explorer hero is the entry.",
-          "url": null,
-          "state": "na"
+          "detail": "Short Meta destination — Feel · Buy · Talk + honest waitlist CTA.",
+          "url": "/projects/nostalgia/landing.html",
+          "state": "live"
         },
         "funnel": {
           "label": "Waitlist / join",
-          "detail": "Demand capture not shipped yet.",
-          "url": null,
-          "state": "na"
+          "detail": "Soft multi-step join demo in-studio (hook → why → email). Production scrollback.apps.grok.bot may still be private.",
+          "url": "/projects/nostalgia/join.html",
+          "state": "live"
         },
         "meta-ads": {
           "label": "Meta creative pack",
-          "detail": "No Meta frames yet for Scrollback.",
-          "url": null,
-          "state": "na"
+          "detail": "Romantic home + Fun primary carousels; Clarity + Lizzie-era as earlier chapters. Real image frames.",
+          "url": "/projects/nostalgia/ads.html",
+          "state": "live"
         },
         "product-ui": {
           "label": "Explorer UI",
@@ -120,9 +120,9 @@
         },
         "deck": {
           "label": "Story / pitch board",
-          "detail": "No separate deck — the year tabs carry the narrative.",
-          "url": null,
-          "state": "na"
+          "detail": "Feel · Buy · Talk + romantic vs fun tone lanes — keyboard storyboard.",
+          "url": "/projects/nostalgia/story.html",
+          "state": "live"
         },
         "print": {
           "label": "Print / physical",
