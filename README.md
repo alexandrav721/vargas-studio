@@ -22,6 +22,8 @@ npm run dev
 
 Open http://127.0.0.1:5177
 
+Restitch, Plan this make: http://127.0.0.1:5177/restitch.html
+
 ## Build
 
 ```bash

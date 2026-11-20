@@ -53,6 +53,11 @@
   "now": [
     {
       "date": "2026-11-20",
+      "projectId": "restitch",
+      "text": "Restitch — Plan this make for one sleeveless top. Stand-in drawing and the four typed numbers are labeled mocked."
+    },
+    {
+      "date": "2026-11-20",
       "projectId": "loop",
       "text": "Loop live columns filled — website, landing, funnel, social on celebrateloop.com."
     },
@@ -73,6 +78,234 @@
     }
   ],
   "projects": [
+    {
+      "id": "restitch",
+      "name": "Restitch",
+      "aka": null,
+      "oneLiner": "Thrift-flip planner — the photo names the shape, you bring the tape.",
+      "status": "active",
+      "updated": "2026-11-20",
+      "summary": "Restitch does not generate a pattern. A photo the sewer can use names the silhouette. Measurements are numbers they type. Restitch writes an original make-plan and links out to patterns the designer gives away. This sample is one sleeveless woven top. No account, no checkout, no PDF.",
+      "latest": "Plan this make is on this site. The flat-lay is an original stand-in drawing. The four body numbers are mocked until a real top is measured.",
+      "visuals": {
+        "website": {
+          "label": "Plan this make",
+          "detail": "The sample screen is the product home — one garment, no second site.",
+          "url": "restitch.html",
+          "state": "live"
+        },
+        "landing": {
+          "label": "Campaign landing",
+          "detail": "No campaign page. The sample is the share.",
+          "url": null,
+          "state": "na"
+        },
+        "funnel": {
+          "label": "Waitlist / account",
+          "detail": "No account, no checkout, no email capture.",
+          "url": null,
+          "state": "na"
+        },
+        "meta-ads": {
+          "label": "Meta creative pack",
+          "detail": "No ad frames in this sample.",
+          "url": null,
+          "state": "na"
+        },
+        "product-ui": {
+          "label": "Plan this make",
+          "detail": "Shape from the photo. Size from numbers you type. Plan in Restitch’s words.",
+          "url": "restitch.html",
+          "state": "live"
+        },
+        "deck": {
+          "label": "Story / pitch board",
+          "detail": "No deck. The screen is the sample.",
+          "url": null,
+          "state": "na"
+        },
+        "print": {
+          "label": "Print / PDF",
+          "detail": "No generated or hosted PDF. Patterns stay on the designer’s site.",
+          "url": null,
+          "state": "na"
+        },
+        "social": {
+          "label": "Social",
+          "detail": "No feed embedded, and no scraped frames.",
+          "url": null,
+          "state": "na"
+        }
+      },
+      "code": [
+        {
+          "label": "vargas-studio",
+          "summary": "Plan this make sample lives in this share site. Friend-facing copy is in content/portfolio.json.",
+          "url": "https://github.com/alexandrav721/vargas-studio"
+        }
+      ],
+      "plan": {
+        "title": "Plan this make",
+        "kicker": "Restitch",
+        "lede": "One thrifted sleeveless top, laid flat. The drawing names the silhouette. The measurements are numbers you would type — these four are stand-ins, and they are marked mocked.",
+        "homeLabel": "Vargas Studio",
+        "disclaimer": "Restitch wrote these steps. The measurements are yours. The patterns open on the designer’s site. This is not a copy of a brand’s pattern.",
+        "photo": {
+          "kicker": "Sample photo",
+          "badge": "Mocked stand-in",
+          "sheetLabel": "US Letter",
+          "alt": "Stand-in line drawing of a sleeveless top with a wide neckline and a straight hem, laid flat beside a US letter sheet.",
+          "caption": "Original stand-in drawing, not a photograph. It stands in until Alexandra photographs a real flat-lay. The letter sheet is in the frame so a later version could scale from it. This sample does not measure the sheet.",
+          "secondUpload": "Another photo does not run. This sample is one garment."
+        },
+        "measurements": {
+          "label": "You measured these",
+          "badge": "Mocked",
+          "note": "Stand-in numbers until Alexandra measures a real top. The drawing did not produce them.",
+          "items": [
+            { "name": "Full bust", "value": "36 in" },
+            { "name": "Waist", "value": "29 in" },
+            { "name": "Hip", "value": "40 in" },
+            { "name": "Height", "value": "5 ft 6 in" }
+          ]
+        },
+        "read": {
+          "title": "Read",
+          "badge": "Real",
+          "chips": ["From this photo", "Back unknown"],
+          "body": "Sleeveless woven top. Wide neckline. No zipper in the photo. Straight hem. Fabric guess: midweight woven. Confidence is “from this photo,” and the back is marked unknown."
+        },
+        "measureNext": {
+          "title": "Measure next",
+          "badge": "Real",
+          "groups": [
+            {
+              "label": "On the body",
+              "items": [
+                "Full bust",
+                "Waist",
+                "Hip",
+                "Back waist length",
+                "Shoulder to shoulder"
+              ]
+            },
+            {
+              "label": "On the shirt, flat",
+              "items": [
+                "Bust width",
+                "Neckline width",
+                "Neckline depth",
+                "Body length",
+                "Armhole depth"
+              ]
+            }
+          ],
+          "body": "The four numbers above are stand-ins for what you would type. They are not a finished size. Still take this tape list — the photo fixed the shape and the tape fixes the size. This page does not print centimeters from the photo."
+        },
+        "make": {
+          "title": "Make plan",
+          "badge": "Real",
+          "steps": [
+            "Compare a free tank’s finished bust to the flat bust of this shirt times two.",
+            "Lengthen or shorten at the marked line.",
+            "Lower or raise the neckline on the pattern, then cut a muslin and check the armhole and the neckline gap.",
+            "Sew shoulders, attach a neck facing, sew the sides, hem."
+          ],
+          "notes": [
+            {
+              "label": "Notions",
+              "text": "Thread, lightweight interfacing for the facing."
+            },
+            {
+              "label": "Fabric",
+              "text": "Linen or cotton with no stretch, prewashed."
+            }
+          ]
+        },
+        "patterns": {
+          "title": "Patterns, on their sites",
+          "intro": "These are patterns the designer gives away. The file stays on that site. Restitch does not host it.",
+          "cards": [
+            {
+              "name": "Helen’s Closet free patterns",
+              "detail": "Horizon Tank and Luna Tank were $0 on 20 November 2026. The file stays on Helen’s Closet’s site.",
+              "url": "https://helensclosetpatterns.com/collections/free-patterns",
+              "linkLabel": "Open Helen’s Closet"
+            },
+            {
+              "name": "Mood Sewciety free library",
+              "detail": "Free sewing patterns. The file stays on Mood Sewciety’s site.",
+              "url": "https://blog.moodfabrics.com/category/free-sewing-patterns/",
+              "linkLabel": "Open Mood Sewciety"
+            },
+            {
+              "name": "Core T-Shirt",
+              "detail": "Closet Core’s free crew-neck tee, the knit cousin of this woven top. The file stays on their site.",
+              "url": "https://closetcorepatterns.com/products/core-t-shirt-free-pattern",
+              "linkLabel": "Open Closet Core"
+            },
+            {
+              "name": "Schnittfund",
+              "detail": "An index of checked free patterns, for a wider search. Schnittfund does not host the file. The download stays on the designer’s site.",
+              "url": "https://schnittfund.com/en",
+              "linkLabel": "Open Schnittfund"
+            }
+          ]
+        },
+        "absent": {
+          "title": "Left off on purpose",
+          "items": [
+            "Pattern pieces",
+            "A graded or hosted PDF",
+            "A brand name on the garment",
+            "A price for this plan",
+            "A chat that will invent a measurement"
+          ]
+        },
+        "ledger": {
+          "title": "Real and mocked",
+          "intro": "What this one sample actually is.",
+          "columns": ["On this page", "Status", "What that means"],
+          "rows": [
+            {
+              "item": "Layout of Plan this make",
+              "status": "Real",
+              "detail": "One flow, one garment, on this share site."
+            },
+            {
+              "item": "Stand-in drawing",
+              "status": "Mocked",
+              "detail": "Original drawing until Alexandra photographs a real flat-lay."
+            },
+            {
+              "item": "Full bust 36 in, waist 29 in, hip 40 in, height 5 ft 6 in",
+              "status": "Mocked",
+              "detail": "Labeled “you measured these.” Stand-in numbers, not a readout from the photo."
+            },
+            {
+              "item": "Read, the tape list, and the make-plan",
+              "status": "Real",
+              "detail": "Written for this one top. Not a live model."
+            },
+            {
+              "item": "Links to Helen’s Closet, Mood Sewciety, Closet Core, and Schnittfund",
+              "status": "Real",
+              "detail": "Each opens the designer’s own page. Nothing is rehosted here."
+            },
+            {
+              "item": "Disclaimer",
+              "status": "Real",
+              "detail": "On this page, in Restitch’s words."
+            },
+            {
+              "item": "A second upload, accounts, payment, a generated PDF, centimeter readouts, a live model",
+              "status": "Mocked",
+              "detail": "Named so they are not mistaken for something that runs. They are not tools on this screen."
+            }
+          ]
+        }
+      }
+    },
     {
       "id": "nostalgia",
       "name": "Nostalgia Project",
