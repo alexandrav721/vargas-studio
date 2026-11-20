@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LOOP — Stop buying what friends already own</title>
+  <meta name="description" content="You don’t know what your friends own — until you Loop. Join the waitlist. Ask your circle. Dual-confirm the Handshake." />
+  <meta property="og:title" content="LOOP — What your friends already own" />
+  <meta property="og:description" content="Stop buying what your friends already own. Join the founding waitlist." />
+  <meta property="og:type" content="website" />
+  <meta name="robots" content="index,follow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+  <link rel="stylesheet" href="ad.css" />
+</head>
+<body class="site-bg ad-landing">
+  <a class="studio-back" href="/" style="position:fixed;top:12px;left:12px;z-index:60;font:600 11px/1 Outfit,system-ui,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.75);text-decoration:none;background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.18);padding:.55rem .8rem">← Vargas Studio</a>
+  <a class="skip" href="#waitlist">Skip to waitlist</a>
+
+  <header class="site-header ad-header" id="top">
+    <a class="wordmark" href="../index.html" aria-label="LOOP home">
+      <span class="wordmark-mark" aria-hidden="true">L</span>
+      LOOP
+    </a>
+    <a class="nav-cta ad-header-cta" href="#waitlist">
+      Join waitlist
+      <svg viewBox="0 0 12 12" aria-hidden="true"><path fill="currentColor" d="M2.2 4.2 6 8l3.8-3.8-.9-.9L6 6.2 3.1 3.3z"/></svg>
+    </a>
+  </header>
+
+  <main class="ad-main">
+    <section class="ad-hero" aria-label="Hero">
+      <div class="ad-hero-copy">
+        <p class="eyebrow">Friends share · privately</p>
+        <p class="ad-brand" aria-hidden="true">LOOP</p>
+        <h1>
+          <span class="line1">Stop buying what</span>
+          <span class="line2 grad-text">friends already own.</span>
+        </h1>
+        <p class="support">
+          You don’t know what your friends own — until you Loop.
+          See what your circle will share. Ask. Dual-confirm the Handshake.
+        </p>
+        <div class="btn-row">
+          <a class="btn" href="#waitlist">Join the waitlist</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="ad-proof reveal" aria-label="How Loop works">
+      <p class="eyebrow yellow">Circle intelligence</p>
+      <h2>Ask · share · Handshake</h2>
+      <p class="lede">Friend inventory is invisible — everyone rebuys. Loop makes what your people already own visible to the circle, then both sides confirm.</p>
+      <ul class="ad-beats">
+        <li><strong>Borrow</strong> what Mia already has</li>
+        <li><strong>Share</strong> the beautiful idle thing</li>
+        <li><strong>Dual-confirm</strong> — trust between friends</li>
+      </ul>
+    </section>
+
+    <section class="cta-band reveal" id="waitlist" aria-labelledby="cta-title">
+      <h2 id="cta-title">Get in with your circle.</h2>
+      <p>Founding waitlist — signal borrow or share. One email when your circle opens.</p>
+
+      <form class="waitlist" id="waitlist-form" novalidate>
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="you@email.com" required />
+
+        <span id="signal-label">I’m here to</span>
+        <div class="signal-row" role="group" aria-labelledby="signal-label">
+          <button type="button" class="chip-btn" data-signal="Borrow" aria-pressed="false">Borrow</button>
+          <button type="button" class="chip-btn" data-signal="Share" aria-pressed="false">Share</button>
+          <button type="button" class="chip-btn" data-signal="Both" aria-pressed="true">Both</button>
+        </div>
+        <input type="hidden" name="signal" id="signal" value="Both" />
+
+        <div class="hp" aria-hidden="true">
+          <label for="company">Company</label>
+          <input id="company" name="company" type="text" tabindex="-1" autocomplete="off" />
+        </div>
+
+        <div class="submit-row">
+          <button class="btn btn-join" type="submit">Join the waitlist</button>
+        </div>
+        <p class="msg" id="waitlist-msg" role="status">No spam. Invite the friends you’d actually Loop with.</p>
+      </form>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2026 Loop Max Your Stuff LLC</p>
+    <ul class="links">
+      <li><a href="../privacy/">Privacy</a></li>
+      <li><a href="../terms/">Terms</a></li>
+      <li><a href="mailto:hello@celebrateloop.com">Contact</a></li>
+    </ul>
+  </footer>
+
+  <script src="ad.js" defer></script>
+</body>
+</html>

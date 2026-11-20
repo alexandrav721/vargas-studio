@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>LOOP — Stop buying what friends already own</title>
+<meta name="description" content="Friends-first borrow and lend. Dual-confirm Handshake. Join the waitlist."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;700&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="styles.css"/>
+</head>
+<body class="site-bg">
+<a class="studio-back" href="/">← Vargas Studio</a>
+<header class="site-header">
+  <a class="wordmark" href="index.html"><span class="wordmark-mark">L</span> LOOP</a>
+  <nav class="nav-links">
+    <a href="#about">About</a>
+    <a href="ad/">Landing</a>
+    <a href="ads/">Meta ads</a>
+    <a class="nav-cta" href="#waitlist">Get Started</a>
+  </nav>
+</header>
+<main>
+<section class="hero">
+  <div class="hero-copy">
+    <p class="eyebrow">Friends share · privately</p>
+    <h1>Stop buying what <span class="grad-text">friends already own.</span></h1>
+    <p class="support">Your circle already has the coat, the host gift, the weekend bag — you just can’t see it. Loop turns <strong>“I should ask someone”</strong> into <strong>“Maya’s got it.”</strong></p>
+    <div class="btn-row">
+      <a class="btn" href="#waitlist">Join the waitlist</a>
+      <a class="btn btn-ghost" href="#about">See how it works</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="phone-frame"><img src="shots/01-club-door.png" alt="Loop club door"/></div>
+  </div>
+</section>
+<section class="section" id="about">
+  <div class="section-head"><h2>Trust that moves between friends.</h2><p class="lede">Ask · share · dual-confirm Handshake — not a public marketplace.</p></div>
+  <div class="feature-grid">
+    <article class="glass feature"><h3>Circle brain</h3><p>Friends-first feed. Only what people you trust are willing to share.</p></article>
+    <article class="glass feature"><h3>Ask your people</h3><p>Empty shelf becomes a soft ask — before another cart checkout.</p></article>
+    <article class="glass feature"><h3>Share idle beauty</h3><p>Publish one idle thing. Generosity is the default.</p></article>
+    <article class="glass feature"><h3>Sticker Handshake</h3><p>Both sides confirm. Ritual climax between friends.</p></article>
+  </div>
+</section>
+<section class="section">
+  <div class="ritual">
+    <div>
+      <p class="eyebrow yellow">Earn trust · not streaks</p>
+      <h2>Dual-confirm. Friends only.</h2>
+      <p class="lede">Approve · meet where you already feel safe · both tap confirm. Activation is the first Handshake.</p>
+    </div>
+    <div class="phones">
+      <div class="phone-frame"><img src="shots/08-needs-you-approve.png" alt="Needs you approve"/></div>
+      <div class="phone-frame"><img src="shots/06-sticker-handshake.png" alt="Handshake"/></div>
+    </div>
+  </div>
+</section>
+<section class="section">
+  <div class="section-head"><h2>Proof it’s an app</h2></div>
+  <div class="gallery-rail">
+    <figure class="gallery-card"><div class="phone-frame"><img src="shots/01-club-door.png" alt="Club door"/></div><h3>Club door</h3></figure>
+    <figure class="gallery-card"><div class="phone-frame"><img src="shots/04-list-lend.png" alt="List to share"/></div><h3>List to share</h3></figure>
+    <figure class="gallery-card"><div class="phone-frame"><img src="shots/06-sticker-handshake.png" alt="Handshake"/></div><h3>Handshake</h3></figure>
+  </div>
+</section>
+<section class="cta-band" id="waitlist">
+  <h2>Join with your circle.</h2>
+  <p>Founding waitlist — signal borrow or share, then invite the friends you’d actually Loop with.</p>
+  <form class="waitlist" id="waitlist-form" novalidate>
+    <label for="email">Email</label>
+    <input id="email" name="email" type="email" required placeholder="you@email.com"/>
+    <span id="signal-label">I’m here to</span>
+    <div class="signal-row" role="group" aria-labelledby="signal-label">
+      <button type="button" class="chip-btn" data-signal="Borrow">Borrow</button>
+      <button type="button" class="chip-btn" data-signal="Share">Share</button>
+      <button type="button" class="chip-btn" data-signal="Both" aria-pressed="true">Both</button>
+    </div>
+    <input type="hidden" name="signal" id="signal" value="Both"/>
+    <div class="hp" aria-hidden="true"><input name="company" tabindex="-1" autocomplete="off"/></div>
+    <div class="submit-row"><button class="btn btn-join" type="submit">Join the waitlist</button></div>
+    <p class="msg" id="waitlist-msg">One email when your circle opens. No spam.</p>
+  </form>
+</section>
+</main>
+<footer class="site-footer"><p>© 2026 Loop Max Your Stuff LLC · Friend demo hosted in Vargas Studio</p></footer>
+<script src="app.js" defer></script>
+</body></html>
