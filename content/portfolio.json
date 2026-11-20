@@ -5,8 +5,8 @@
     "owner": "Alexandra Vargas",
     "role": "Designer",
     "forWhom": "Friends — one link to see what she can build, project by project.",
-    "intro": "Alexandra designs and ships product ideas in Cursor. Every project uses the same visual columns so you can compare craft side-by-side. Skills, agents, and code notes live under General — not in the visual grid.",
-    "howToNav": "Projects show concept + the visual columns. Compare stacks one column across all projects. General holds non-visual craft."
+    "intro": "Alexandra designs and ships product ideas in Cursor. Browse the project index, open one for the story and live links, then compare the same visual columns side by side.",
+    "howToNav": "Projects = index + detail. Compare = pick projects and scan a craft matrix. Craft holds skills and agents outside the visual grid."
   },
   "columns": [
     {
