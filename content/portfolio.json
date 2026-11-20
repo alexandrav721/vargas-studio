@@ -54,7 +54,7 @@
     {
       "date": "2026-11-20",
       "projectId": "restitch",
-      "text": "Restitch — Plan this make for one sleeveless top. Stand-in drawing and the four typed numbers are labeled mocked."
+      "text": "Restitch — upload a garment photo, pick a skill, type your tape, and save the flip in the browser closet."
     },
     {
       "date": "2026-11-20",
@@ -85,12 +85,12 @@
       "oneLiner": "Thrift-flip planner — the photo names the shape, you bring the tape.",
       "status": "active",
       "updated": "2026-11-20",
-      "summary": "Restitch does not generate a pattern. A photo the sewer can use names the silhouette. Measurements are numbers they type. Restitch writes an original make-plan and links out to patterns the designer gives away. This sample is one sleeveless woven top. No account, no checkout, no PDF.",
-      "latest": "Plan this make is on this site. The flat-lay is an original stand-in drawing. The four body numbers are mocked until a real top is measured.",
+      "summary": "Restitch does not generate a pattern. Upload a photo and the page reads average color, brightness, and aspect from that file, then offers no-sew, hand, and machine flips for the skill you pick. Body numbers are what you type. The closet stays in this browser. No account, no checkout, no PDF.",
+      "latest": "Plan this make runs on this site. A different photo is a different read. Measurements and saved flips stay in the browser.",
       "visuals": {
         "website": {
           "label": "Plan this make",
-          "detail": "The sample screen is the product home — one garment, no second site.",
+          "detail": "The working flip flow is the product home — upload, read, plan, closet.",
           "url": "restitch.html",
           "state": "live"
         },
@@ -114,7 +114,7 @@
         },
         "product-ui": {
           "label": "Plan this make",
-          "detail": "Shape from the photo. Size from numbers you type. Plan in Restitch’s words.",
+          "detail": "Upload a photo. Color and shape come from that file. Size comes from numbers you type.",
           "url": "restitch.html",
           "state": "live"
         },
@@ -147,16 +147,16 @@
       "plan": {
         "title": "Plan this make",
         "kicker": "Restitch",
-        "lede": "One thrifted sleeveless top, laid flat. The drawing names the silhouette. The measurements are numbers you would type — these four are stand-ins, and they are marked mocked.",
+        "lede": "Upload the garment. Restitch reads average color, brightness, and aspect from that file and writes flips for the skill you pick. You type the tape. A visual guess stays labeled. There is no pattern PDF.",
         "homeLabel": "Vargas Studio",
-        "disclaimer": "Restitch wrote these steps. The measurements are yours. The patterns open on the designer’s site. This is not a copy of a brand’s pattern.",
+        "disclaimer": "Restitch wrote these steps from the photo you uploaded and the skill you picked. Measurements are the ones you typed. A visual guess is not a size. Technique links leave this page. This is not a pattern.",
         "photo": {
           "kicker": "Sample photo",
           "badge": "Mocked stand-in",
           "sheetLabel": "US Letter",
           "alt": "Stand-in line drawing of a sleeveless top with a wide neckline and a straight hem, laid flat beside a US letter sheet.",
-          "caption": "Original stand-in drawing, not a photograph. It stands in until Alexandra photographs a real flat-lay. The letter sheet is in the frame so a later version could scale from it. This sample does not measure the sheet.",
-          "secondUpload": "Another photo does not run. This sample is one garment."
+          "caption": "The before image is the photo you upload. Restitch does not substitute a drawing.",
+          "secondUpload": "A second photo runs. It is a new read, not this one again."
         },
         "measurements": {
           "label": "You measured these",
@@ -264,33 +264,28 @@
         },
         "ledger": {
           "title": "Real and mocked",
-          "intro": "What this one sample actually is.",
+          "intro": "What Plan this make does on this page.",
           "columns": ["On this page", "Status", "What that means"],
           "rows": [
             {
-              "item": "Layout of Plan this make",
+              "item": "Upload, pixel read, skill, and closet",
               "status": "Real",
-              "detail": "One flow, one garment, on this share site."
+              "detail": "The photo you choose is drawn on a canvas. Color, brightness, and aspect come from that file. Skill changes the flips. Save keeps the project in this browser."
             },
             {
-              "item": "Stand-in drawing",
+              "item": "Body measurements",
+              "status": "Real",
+              "detail": "Only numbers you type. The photo does not fill them in and does not produce cut-ready centimeters."
+            },
+            {
+              "item": "Cloth and silhouette",
               "status": "Mocked",
-              "detail": "Original drawing until Alexandra photographs a real flat-lay."
+              "detail": "Labeled visual guess. A hue and an aspect are not a fiber test or a size."
             },
             {
-              "item": "Full bust 36 in, waist 29 in, hip 40 in, height 5 ft 6 in",
-              "status": "Mocked",
-              "detail": "Labeled “you measured these.” Stand-in numbers, not a readout from the photo."
-            },
-            {
-              "item": "Read, the tape list, and the make-plan",
+              "item": "Technique links",
               "status": "Real",
-              "detail": "Written for this one top. Not a live model."
-            },
-            {
-              "item": "Links to Helen’s Closet, Mood Sewciety, Closet Core, and Schnittfund",
-              "status": "Real",
-              "detail": "Each opens the designer’s own page. Nothing is rehosted here."
+              "detail": "A step can open a public technique page. Restitch does not host a pattern file."
             },
             {
               "item": "Disclaimer",
@@ -298,9 +293,9 @@
               "detail": "On this page, in Restitch’s words."
             },
             {
-              "item": "A second upload, accounts, payment, a generated PDF, centimeter readouts, a live model",
+              "item": "Accounts, payment, a generated PDF, centimeter readouts from the photo",
               "status": "Mocked",
-              "detail": "Named so they are not mistaken for something that runs. They are not tools on this screen."
+              "detail": "Not on this page. A second photo does run. It gets its own read."
             }
           ]
         }
