@@ -473,6 +473,84 @@ a:hover {
   letter-spacing: 0.04em;
 }
 
+.column-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 0.75rem;
+  margin: 0 0 1.5rem;
+}
+
+.column-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.35rem;
+  padding: 0.95rem 1rem 1.05rem;
+  border-top: 1px solid color-mix(in srgb, var(--fog) 18%, transparent);
+  background: color-mix(in srgb, var(--ink-2) 55%, transparent);
+}
+
+.column-cell-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.column-cell strong {
+  font-family: var(--display);
+  font-size: 1.02rem;
+  font-weight: 600;
+  color: var(--paper);
+}
+
+.cell-detail {
+  color: var(--mist);
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+
+.cell-state {
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--mist);
+}
+
+.cell-state-live {
+  color: var(--citrus);
+}
+
+.cell-state-fill-in {
+  color: var(--warm);
+}
+
+.cell-state-na {
+  color: var(--danger-quiet);
+}
+
+.column-cell.state-na,
+.lens-item.state-na {
+  opacity: 0.55;
+}
+
+.lens-item.inert {
+  cursor: default;
+}
+
+.lens-item.inert:hover {
+  transform: none;
+  border-color: color-mix(in srgb, var(--fog) 18%, transparent);
+  background: color-mix(in srgb, var(--ink-2) 55%, transparent);
+}
+
+.house-list {
+  margin-top: 1rem;
+}
+
 .body {
   margin: 0 0 1.25rem;
   color: var(--paper);

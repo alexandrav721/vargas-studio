@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import data from "../content/portfolio.json";
 
 type Status = "hot" | "active" | "quiet" | "seed";
+type CellState = "live" | "fill-in" | "na";
 
 const statusLabel: Record<Status, string> = {
   hot: "Hot now",
@@ -10,15 +11,28 @@ const statusLabel: Record<Status, string> = {
   seed: "Seed / fill in",
 };
 
-const surfaceKindLabel: Record<string, string> = {
-  website: "Website",
-  funnel: "Funnel",
-  "meta-ads": "Meta ads",
-  mockup: "Mock-up",
+const cellStateLabel: Record<CellState, string> = {
+  live: "Live",
+  "fill-in": "Fill in",
+  na: "N/A",
+};
+
+type VisualCell = {
+  label: string;
+  detail: string;
+  url: string | null;
+  state: string;
 };
 
 function projectName(id: string) {
   return data.projects.find((p) => p.id === id)?.name ?? id;
+}
+
+function cellFor(projectId: string, columnId: string): VisualCell | null {
+  const project = data.projects.find((p) => p.id === projectId);
+  if (!project) return null;
+  const visuals = project.visuals as Record<string, VisualCell>;
+  return visuals[columnId] ?? null;
 }
 
 export default function App() {
@@ -54,9 +68,12 @@ export default function App() {
       })),
     },
     {
-      id: "lenses",
-      label: "Lenses",
-      children: data.lenses.map((l) => ({ id: `lens-${l.id}`, label: l.name })),
+      id: "compare",
+      label: "Compare",
+      children: data.columns.map((c) => ({
+        id: `column-${c.id}`,
+        label: c.name,
+      })),
     },
     { id: "general", label: "General" },
     { id: "how-to-update", label: "Update" },
@@ -127,16 +144,6 @@ export default function App() {
           <p className="support muted">{data.site.howToNav}</p>
           <div className="hero-cta">
             <a
-              href="#now"
-              onClick={(e) => {
-                e.preventDefault();
-                jump("now");
-              }}
-            >
-              What’s new
-            </a>
-            <a
-              className="ghost"
               href="#projects"
               onClick={(e) => {
                 e.preventDefault();
@@ -144,6 +151,16 @@ export default function App() {
               }}
             >
               Browse projects
+            </a>
+            <a
+              className="ghost"
+              href="#compare"
+              onClick={(e) => {
+                e.preventDefault();
+                jump("compare");
+              }}
+            >
+              Compare columns
             </a>
           </div>
         </header>
@@ -166,122 +183,160 @@ export default function App() {
 
         <section className="section" id="projects" data-section>
           <p className="section-kicker">Projects</p>
-          <h2>Each idea, one scroll</h2>
+          <h2>Each idea, same columns</h2>
           <p className="section-lede">
-            Concept → surfaces (site, funnel, Meta ads, mock-ups) → code.
+            Concept first. Then Website → Landing → Funnel → Meta ads → Product
+            UI → Deck → Print → Social.
           </p>
 
-          {data.projects.map((p) => (
-            <article
-              key={p.id}
-              className="project"
-              id={`project-${p.id}`}
+          {data.projects.map((p) => {
+            const visuals = p.visuals as Record<string, VisualCell>;
+            return (
+              <article
+                key={p.id}
+                className="project"
+                id={`project-${p.id}`}
+                data-section
+              >
+                <div className="project-head">
+                  <h3>{p.name}</h3>
+                  <span className={`badge badge-${p.status}`}>
+                    {statusLabel[p.status as Status]}
+                  </span>
+                </div>
+                {p.aka ? <p className="aka">Also known as {p.aka}</p> : null}
+                <p className="one-liner">{p.oneLiner}</p>
+
+                <h4>Business concept</h4>
+                <p className="body">{p.summary}</p>
+                <div className="meta-row">
+                  <p>
+                    <span className="meta-label">Latest</span>
+                    {p.latest}
+                  </p>
+                  <p>
+                    <span className="meta-label">Updated</span>
+                    {p.updated}
+                  </p>
+                </div>
+
+                <h4>Visual columns</h4>
+                <div className="column-grid">
+                  {data.columns.map((col) => {
+                    const cell = visuals[col.id];
+                    if (!cell) return null;
+                    const state = cell.state as CellState;
+                    return (
+                      <div
+                        key={`${p.id}-${col.id}`}
+                        className={`column-cell state-${state}`}
+                      >
+                        <div className="column-cell-head">
+                          <span className="kind-chip">{col.name}</span>
+                          <span className={`cell-state cell-state-${state}`}>
+                            {cellStateLabel[state]}
+                          </span>
+                        </div>
+                        <strong>{cell.label}</strong>
+                        <span className="cell-detail">{cell.detail}</span>
+                        {cell.url ? (
+                          <a
+                            className="surface-link"
+                            href={cell.url}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            Open live
+                          </a>
+                        ) : state === "na" ? null : (
+                          <span className="fill-in">Link Fill in</span>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {p.code.length > 0 ? (
+                  <>
+                    <h4>Code</h4>
+                    <ul className="artifact-list">
+                      {p.code.map((c) => (
+                        <li key={c.url}>
+                          <strong>{c.label}</strong>
+                          <span>{c.summary}</span>
+                          <a
+                            className="surface-link"
+                            href={c.url}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            Repo
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                ) : null}
+              </article>
+            );
+          })}
+        </section>
+
+        <section className="section" id="compare" data-section>
+          <p className="section-kicker">Compare</p>
+          <h2>One column, every project</h2>
+          <p className="section-lede">
+            Same artifact type side-by-side — update once in JSON, it shows here.
+          </p>
+
+          {data.columns.map((col) => (
+            <div
+              key={col.id}
+              className="lens"
+              id={`column-${col.id}`}
               data-section
             >
-              <div className="project-head">
-                <h3>{p.name}</h3>
-                <span className={`badge badge-${p.status}`}>
-                  {statusLabel[p.status as Status]}
-                </span>
-              </div>
-              {p.aka ? <p className="aka">Also known as {p.aka}</p> : null}
-              <p className="one-liner">{p.oneLiner}</p>
-
-              <h4>Business concept</h4>
-              <p className="body">{p.summary}</p>
-              <div className="meta-row">
-                <p>
-                  <span className="meta-label">Latest</span>
-                  {p.latest}
-                </p>
-                <p>
-                  <span className="meta-label">Updated</span>
-                  {p.updated}
-                </p>
-              </div>
-
-              <h4>Website, funnel, ads & mock-ups</h4>
-              <ul className="artifact-list">
-                {p.surfaces.map((s) => (
-                  <li key={`${p.id}-${s.kind}-${s.label}`}>
-                    <strong>
-                      <span className="kind-chip">
-                        {surfaceKindLabel[s.kind] ?? s.kind}
-                      </span>{" "}
-                      {s.label}
-                    </strong>
-                    <span>{s.detail}</span>
-                    {s.url ? (
+              <h3>{col.name}</h3>
+              <p className="section-lede tight">{col.blurb}</p>
+              <div className="lens-grid">
+                {data.projects.map((p) => {
+                  const cell = cellFor(p.id, col.id);
+                  if (!cell) return null;
+                  const state = cell.state as CellState;
+                  const inner = (
+                    <>
+                      <span className={`badge badge-${p.status}`}>
+                        {p.name}
+                      </span>
+                      <span className={`cell-state cell-state-${state}`}>
+                        {cellStateLabel[state]}
+                      </span>
+                      <strong>{cell.label}</strong>
+                      <span>{cell.detail}</span>
+                    </>
+                  );
+                  if (cell.url) {
+                    return (
                       <a
-                        className="surface-link"
-                        href={s.url}
+                        key={`${col.id}-${p.id}`}
+                        className={`lens-item state-${state}`}
+                        href={cell.url}
                         target="_blank"
                         rel="noreferrer"
                       >
-                        Open
+                        {inner}
                       </a>
-                    ) : (
-                      <span className="fill-in">Link Fill in</span>
-                    )}
-                  </li>
-                ))}
-              </ul>
-
-              {p.code.length > 0 ? (
-                <>
-                  <h4>Code</h4>
-                  <ul className="artifact-list">
-                    {p.code.map((c) => (
-                      <li key={c.url}>
-                        <strong>{c.label}</strong>
-                        <span>{c.summary}</span>
-                        <a
-                          className="surface-link"
-                          href={c.url}
-                          target="_blank"
-                          rel="noreferrer"
-                        >
-                          Repo
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </>
-              ) : null}
-            </article>
-          ))}
-        </section>
-
-        <section className="section" id="lenses" data-section>
-          <p className="section-kicker">Lenses</p>
-          <h2>Same shape, side by side</h2>
-          <p className="section-lede">
-            Compare ads, waitlists, and landings across projects.
-          </p>
-
-          {data.lenses.map((lens) => (
-            <div
-              key={lens.id}
-              className="lens"
-              id={`lens-${lens.id}`}
-              data-section
-            >
-              <h3>{lens.name}</h3>
-              <p className="section-lede tight">{lens.blurb}</p>
-              <div className="lens-grid">
-                {lens.items.map((item) => (
-                  <a
-                    key={`${lens.id}-${item.projectId}-${item.title}`}
-                    className="lens-item"
-                    href={`#project-${item.projectId}`}
-                  >
-                    <span className={`badge badge-${item.status}`}>
-                      {projectName(item.projectId)}
-                    </span>
-                    <strong>{item.title}</strong>
-                    <span>{item.detail}</span>
-                  </a>
-                ))}
+                    );
+                  }
+                  return (
+                    <div
+                      key={`${col.id}-${p.id}`}
+                      className={`lens-item state-${state} inert`}
+                    >
+                      {inner}
+                    </div>
+                  );
+                })}
               </div>
             </div>
           ))}
@@ -289,7 +344,10 @@ export default function App() {
 
         <section className="section" id="general" data-section>
           <p className="section-kicker">General</p>
-          <h2>Skills, agents & craft</h2>
+          <h2>Non-visual craft</h2>
+          <p className="section-lede">
+            Skills, agents, and reusable patterns — not in the visual columns.
+          </p>
 
           <h3 className="subhead">Skills</h3>
           <ul className="plain-list">
@@ -331,10 +389,20 @@ export default function App() {
           <p className="section-kicker">For Alexandra</p>
           <h2>Keep it current</h2>
           <p className="body">{data.updateHint}</p>
-          <p className="support muted">
-            Gaps labeled “Fill in” are honest placeholders — drop live URLs or
-            media when ready. Keep non-public workstreams off this site.
-          </p>
+          <ul className="plain-list house-list">
+            <li>
+              <strong>Visuals</strong>
+              <span>{data.housekeeping.visualsHome}</span>
+            </li>
+            <li>
+              <strong>Code & non-visual</strong>
+              <span>{data.housekeeping.nonVisualHome}</span>
+            </li>
+            <li>
+              <strong>Retire old stuff</strong>
+              <span>{data.housekeeping.retireOld}</span>
+            </li>
+          </ul>
         </section>
 
         <footer className="foot">
