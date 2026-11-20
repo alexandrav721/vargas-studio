@@ -1,188 +1,318 @@
 {
   "site": {
     "brand": "Vargas Studio",
-    "tagline": "Business ideas built with Cursor",
+    "tagline": "A portfolio of business ideas built with Cursor",
     "owner": "Alexandra Vargas",
     "role": "Designer",
-    "forWhom": "Friends — one link to see what she’s building, and what is in flight.",
-    "intro": "Alexandra designs and ships product ideas in Cursor: landings, ads, waitlists, apps, and agents. This page is a clear map of the real workstreams — not a pitch deck.",
-    "howToNav": "Use the table of contents to jump. Projects are the ideas. Lenses compare the same artifact type across ideas. Now shows what’s newest."
+    "forWhom": "Friends — one link to see what she can build: concepts, funnels, ads, and craft.",
+    "intro": "Alexandra designs and ships product ideas in Cursor — landings, Meta funnels, waitlists, apps, agents, and reusable craft. This page is her public portfolio of active workstreams.",
+    "howToNav": "Jump via the table of contents. Each project: concept → website / funnel / Meta ads / mock-ups → code. General covers skills, agents, and reusable craft."
   },
   "now": [
     {
       "date": "2026-11-20",
       "projectId": "scrolll",
-      "text": "Scrolll Meta join funnel + “Earn for your attention” copy (no locked 50% claims)."
+      "text": "Get Paid to Scroll — Meta join funnel + “Earn for your attention” copy."
     },
     {
       "date": "2026-11-20",
       "projectId": "loop",
-      "text": "CelebrateLoop site still hot — waitlist, onboarding, ad landing, Weekline crew wall."
+      "text": "Loop live on celebrateloop.com — waitlist, onboarding, Meta ad landing."
     },
     {
-      "date": "2026-11-19",
-      "projectId": "smudge",
-      "text": "Smudge / craft-hang demand slice + investor pitch; publish visibility still a live gate."
+      "date": "2026-11-20",
+      "projectId": "nostalgia",
+      "text": "Nostalgia Project (Scrollback) — millennial nostalgia by year catalog + explorer."
     },
     {
       "date": "2026-11-18",
-      "projectId": "lumen",
-      "text": "Lumen GTM visual packs (story, first-ad, deck) + Change Cube stakeholder templates."
+      "projectId": "habit-game",
+      "text": "Habit game / Lumen — Dream Life Studio, stuck games, conversion lab, Nightcrew."
     }
   ],
   "projects": [
     {
+      "id": "nostalgia",
+      "name": "Nostalgia Project",
+      "aka": "Scrollback",
+      "oneLiner": "Millennial nostalgia by year — websites, items, and style.",
+      "status": "active",
+      "updated": "2026-11-20",
+      "summary": "Pick your generation and years, then explore formative websites, physical items, and style eras from that stretch of time. Working product name in-repo: Scrollback. Dense researched catalog (roughly 1995–2012) with tabs for websites, items, and style — dated nostalgia, not vague vibes.",
+      "latest": "Standalone Vite explorer in Origin lumen-d678/nostalgia with researched catalog data. Public friend URL still Fill in.",
+      "surfaces": [
+        {
+          "kind": "website",
+          "label": "Explorer (Scrollback)",
+          "detail": "Year-range picker → websites / items / style tabs. Local Vite app in-repo.",
+          "url": null
+        },
+        {
+          "kind": "mockup",
+          "label": "Research catalog",
+          "detail": "Researched millennial formative websites + objects (GeoCities → Webkinz era).",
+          "url": null
+        },
+        {
+          "kind": "funnel",
+          "label": "Meta / waitlist",
+          "detail": "Fill in — demand test not shipped yet.",
+          "url": null
+        },
+        {
+          "kind": "meta-ads",
+          "label": "Meta ads",
+          "detail": "Fill in — no Meta pack linked yet.",
+          "url": null
+        }
+      ],
+      "code": [
+        {
+          "label": "Origin · lumen-d678/nostalgia",
+          "summary": "Scrollback Vite app + catalog JSON + research docs.",
+          "url": "https://origin.cursor.com/git/alexandra-vargas/lumen-d678"
+        }
+      ]
+    },
+    {
       "id": "scrolll",
-      "name": "Scrolll",
+      "name": "Get Paid to Scroll",
+      "aka": "Scrolll",
       "oneLiner": "Doomscroll — but earn for your attention.",
       "status": "hot",
       "updated": "2026-11-20",
-      "summary": "A fairness-forward scroll product. Marketing story: everyday people and creators earn for attention; marketers buy reach on Scrolll inventory. Includes a Meta-attributed multi-step email join funnel and an interactive story deck.",
-      "latest": "Join funnel at /scrolll/join (Meta src), consumer copy softened to “Earn for your attention / fair split TBD.” Waitlist API hardened.",
-      "artifacts": [
-        { "label": "Marketing landing", "detail": "/scrolll + for-you / advertise / for-creators" },
-        { "label": "Story deck", "detail": "/scrolll/deck — keyboard + fullscreen beats" },
-        { "label": "Meta ads", "detail": "Frames + join?src=meta destination" },
-        { "label": "Waitlist", "detail": "Multi-step email funnel → Postgres / PGlite" }
+      "summary": "A fairness-forward scroll product. Everyday people and creators earn for attention; marketers buy reach on Scrolll inventory. Brand story + Meta-attributed multi-step email join funnel + interactive story deck.",
+      "latest": "Join funnel at /scrolll/join (Meta src). Consumer copy: “Earn for your attention / fair split TBD.” Waitlist API hardened. Public share URL still Fill in.",
+      "surfaces": [
+        {
+          "kind": "website",
+          "label": "Marketing site",
+          "detail": "/scrolll plus for-you / advertise / for-creators role pages.",
+          "url": null
+        },
+        {
+          "kind": "funnel",
+          "label": "Meta join funnel",
+          "detail": "Multi-step email: hook → why → email → thanks. Destination: /scrolll/join?src=meta.",
+          "url": null
+        },
+        {
+          "kind": "meta-ads",
+          "label": "Meta ad frames",
+          "detail": "Headline pack: Doomscroll. Earn for attention. Points into the join funnel.",
+          "url": null
+        },
+        {
+          "kind": "mockup",
+          "label": "Story deck",
+          "detail": "/scrolll/deck — keyboard + fullscreen narrative beats.",
+          "url": null
+        }
       ],
-      "links": [
-        { "label": "Origin monorepo", "url": "https://origin.cursor.com/git/alexandra-vargas/lumen-d678" }
-      ],
-      "repos": ["alexandra-vargas/lumen-d678 (Origin)"]
+      "code": [
+        {
+          "label": "Origin · lumen-d678 (/scrolll)",
+          "summary": "Marketing routes, join funnel, deck, waitlist API.",
+          "url": "https://origin.cursor.com/git/alexandra-vargas/lumen-d678"
+        }
+      ]
     },
     {
       "id": "loop",
       "name": "Loop",
+      "aka": null,
       "oneLiner": "Stop buying what friends already own.",
       "status": "hot",
       "updated": "2026-11-20",
       "summary": "Friends-first borrow / lend / pass-on. Circle inventory stays private; the ritual climax is a dual-confirm Handshake — not a public marketplace. Brand: Loop Max Your Stuff LLC · celebrateloop.com.",
-      "latest": "Heavy activity on celebrateloop-site: splash waitlist, onboarding marketing site, dedicated ad landing, phone shot gallery, plus Weekline experiment in-repo.",
-      "artifacts": [
-        { "label": "Splash waitlist", "detail": "Root index — “closet the size of your building”" },
-        { "label": "Onboarding site", "detail": "loop-onboarding-site — club door → Handshake story" },
-        { "label": "Ad landing", "detail": "loop-onboarding-site/ad — Meta-ready short page" },
-        { "label": "Mobile app", "detail": "Expo IG-shaped Loop (Feed / Explore / Add / Activity / Profile)" },
-        { "label": "Web inventory", "detail": "ecoinventory2026 — circular home inventory platform" },
-        { "label": "Earlier waitlist", "detail": "loop-waitlist + ChatGPT Sites handoff notes" }
+      "latest": "Live splash waitlist, onboarding marketing site, Meta-ready ad landing, phone proof gallery, plus Expo mobile and web inventory repos.",
+      "surfaces": [
+        {
+          "kind": "website",
+          "label": "celebrateloop.com",
+          "detail": "Splash waitlist — “closet the size of your building.”",
+          "url": "https://celebrateloop.com/"
+        },
+        {
+          "kind": "funnel",
+          "label": "Onboarding site",
+          "detail": "Club door → Handshake story → waitlist signal chips.",
+          "url": "https://celebrateloop.com/onboarding"
+        },
+        {
+          "kind": "meta-ads",
+          "label": "Meta ad landing",
+          "detail": "Short hero, Ask · share · Handshake, waitlist CTA.",
+          "url": "https://celebrateloop.com/ad"
+        },
+        {
+          "kind": "mockup",
+          "label": "Phone proof gallery + IG",
+          "detail": "Onboarding phone shots; Instagram @loopmaxyourstuff.",
+          "url": "https://www.instagram.com/loopmaxyourstuff/"
+        }
       ],
-      "links": [
-        { "label": "celebrateloop-site", "url": "https://github.com/alexandrav721/celebrateloop-site" },
-        { "label": "Instagram", "url": "https://www.instagram.com/loopmaxyourstuff/" }
-      ],
-      "repos": [
-        "alexandrav721/celebrateloop-site",
-        "alexandrav721/Loop",
-        "alexandrav721/ecoinventory2026",
-        "alexandrav721/loop-waitlist",
-        "alexandrav721/loop-fresh-take"
+      "code": [
+        {
+          "label": "celebrateloop-site",
+          "summary": "Marketing splash, onboarding, ad landing, Weekline experiment.",
+          "url": "https://github.com/alexandrav721/celebrateloop-site"
+        },
+        {
+          "label": "Loop (Expo)",
+          "summary": "IG-shaped mobile: Feed / Explore / Add / Activity / Profile.",
+          "url": "https://github.com/alexandrav721/Loop"
+        },
+        {
+          "label": "ecoinventory2026",
+          "summary": "Circular home inventory web platform.",
+          "url": "https://github.com/alexandrav721/ecoinventory2026"
+        },
+        {
+          "label": "loop-waitlist",
+          "summary": "Earlier ChatGPT Sites waitlist handoff.",
+          "url": "https://github.com/alexandrav721/loop-waitlist"
+        }
       ]
     },
     {
-      "id": "lumen",
-      "name": "Lumen",
+      "id": "planner-book",
+      "name": "Planner and Book",
+      "aka": null,
+      "oneLiner": "Physical goal planner + illustrated book — print craft meets premium unlock.",
+      "status": "active",
+      "updated": "2026-11-18",
+      "summary": "A product lane for people who want goals on paper and a beautiful book in hand: a free printable Physical Goal Planner (Print → PDF), a premium illustrated book unlock, and related planner craft experiments (including a crew week planner prototype). Sits beside the Habit game — same world, different artifact.",
+      "latest": "Lumen /planner printable sample + premium book sneak / waitlist framing. Weekline crew-wall planner prototype lives under celebrateloop-site.",
+      "surfaces": [
+        {
+          "kind": "website",
+          "label": "Physical Goal Planner",
+          "detail": "Free printable sample — Print → PDF (Lumen /planner).",
+          "url": null
+        },
+        {
+          "kind": "website",
+          "label": "Premium book sneak",
+          "detail": "Illustrated book unlock + planner waitlist (premium lane).",
+          "url": null
+        },
+        {
+          "kind": "mockup",
+          "label": "Weekline crew wall",
+          "detail": "Goal-first crew week planner — handbill / flyer energy, Live NYC Parks.",
+          "url": "https://celebrateloop.com/weekline"
+        },
+        {
+          "kind": "meta-ads",
+          "label": "Meta ads",
+          "detail": "Fill in — dedicated Meta pack for planner/book not linked yet.",
+          "url": null
+        },
+        {
+          "kind": "funnel",
+          "label": "Planner / book waitlist",
+          "detail": "Premium waitlist framing in Lumen; durable public capture Fill in.",
+          "url": null
+        }
+      ],
+      "code": [
+        {
+          "label": "Origin · lumen-d678 (/planner)",
+          "summary": "Printable planner + premium book sneak / waitlist UI.",
+          "url": "https://origin.cursor.com/git/alexandra-vargas/lumen-d678"
+        },
+        {
+          "label": "celebrateloop-site/weekline-app",
+          "summary": "Crew week canvas prototype (related planner experiment).",
+          "url": "https://github.com/alexandrav721/celebrateloop-site"
+        }
+      ]
+    },
+    {
+      "id": "habit-game",
+      "name": "Habit game",
+      "aka": "Lumen",
       "oneLiner": "Psychology-powered goal game — chic, streaky follow-through.",
       "status": "active",
       "updated": "2026-11-18",
-      "summary": "Name season and annual goals, check in daily, protect a streak, and play short “stuck games” when you drift. Dream Life Studio places a selfie into dream scenes before committing a vision. Conversion lab scores landing copy without live A/B traffic. Premium (AI coach, book, SMS journal) is waitlist-only for now.",
-      "latest": "Product lives mainly in Origin lumen-d678. GTM packs (story, first-ad, prototype, investor deck) redesigned as presentable HTML in change-cube. GitHub alexandrav721/Lumen is still a thin stub.",
-      "artifacts": [
-        { "label": "App routes", "detail": "/ · /lab · /discover · /planner · /stuck · /today" },
-        { "label": "Nightcrew agent", "detail": "Overnight research + landing variants orchestrator" },
-        { "label": "GTM outputs", "detail": "Deck, story, first-ad, prototype, brief HTML" },
-        { "label": "Fill in", "detail": "Public live URL for friends — confirm when ready" }
+      "summary": "Name season and annual goals, check in daily, protect a streak, and play short “stuck games” when you drift. Dream Life Studio places a selfie into dream scenes before committing a vision. Conversion lab scores landing copy without live A/B traffic. Premium AI coach / SMS journal is waitlist-only for now.",
+      "latest": "Product in Origin lumen-d678. Habitica-lab experiments + Nightcrew overnight agent. GitHub alexandrav721/Lumen is still a thin public stub. Public friend URL Fill in.",
+      "surfaces": [
+        {
+          "kind": "website",
+          "label": "Marketing + lab",
+          "detail": "Pinned landing variant + /lab conversion scoring.",
+          "url": null
+        },
+        {
+          "kind": "mockup",
+          "label": "Dream Life Studio + stuck games",
+          "detail": "/discover dream scenes; /stuck psychology game playroom; /today daily loop.",
+          "url": null
+        },
+        {
+          "kind": "meta-ads",
+          "label": "GTM first-ad board",
+          "detail": "Designed HTML first-ad pack (go/no-go framing) from GTM Alexandra workflow.",
+          "url": null
+        },
+        {
+          "kind": "funnel",
+          "label": "Premium waitlist",
+          "detail": "AI coach / SMS journal gated; free forever tier separate.",
+          "url": null
+        }
       ],
-      "links": [
-        { "label": "Origin lumen-d678", "url": "https://origin.cursor.com/git/alexandra-vargas/lumen-d678" },
-        { "label": "GitHub stub", "url": "https://github.com/alexandrav721/Lumen" }
-      ],
-      "repos": ["alexandra-vargas/lumen-d678 (Origin)", "alexandrav721/Lumen"]
-    },
-    {
-      "id": "smudge",
-      "name": "Smudge",
-      "oneLiner": "Handmade craft portal — neon DIY lanes, messy on purpose.",
-      "status": "active",
-      "updated": "2026-11-19",
-      "summary": "A craft community product with distinct metaphors (stamp booths, radar drop, look lab, friendship contracts) — not one recycled card grid. Includes Classic / Adult audience toggle, investor pitch, and a public demand-test slice (craft-hang).",
-      "latest": "Pitch Smudge-native; /want demand ad live in app. Publish-as-public still noted as the sharing gate for demand tests.",
-      "artifacts": [
-        { "label": "Product shells", "detail": "Home, Play, Look Lab, Hang, Want, Pitch" },
-        { "label": "Demand ad", "detail": "/want — Yes I want this + optional email" },
-        { "label": "Investor deck", "detail": "/pitch + PDF handout" },
-        { "label": "craft-hang", "detail": "Standalone Vite marketing slice for public publish" }
-      ],
-      "links": [
-        { "label": "In lumen-d678", "url": "https://origin.cursor.com/git/alexandra-vargas/lumen-d678" }
-      ],
-      "repos": ["alexandra-vargas/lumen-d678/smudge", "alexandra-vargas/lumen-d678/craft-hang"]
-    },
-    {
-      "id": "weekline",
-      "name": "Weekline",
-      "oneLiner": "Goal-first crew week planner with handbill energy.",
-      "status": "active",
-      "updated": "2026-11-17",
-      "summary": "Social prototype: pick a crew goal, zone, radius, budget → week canvas. Live NYC Parks events plus editorial allowlists for life goals (fitness, friends, network, job, love).",
-      "latest": "Direction C “Crew wall” in celebrateloop-site/weekline-app. Six crews (Cheap Thrills, Dateline, Move Pack, …).",
-      "artifacts": [
-        { "label": "Crew week canvas", "detail": "Mon–Sun slots with provenance links" },
-        { "label": "Goal calendar", "detail": "Seeking classes/meetups by life goal" },
-        { "label": "Live Parks", "detail": "NYC Open Data upcoming 14 days" }
-      ],
-      "links": [
-        { "label": "Inside celebrateloop-site", "url": "https://github.com/alexandrav721/celebrateloop-site" }
-      ],
-      "repos": ["alexandrav721/celebrateloop-site/weekline-app"]
-    },
-    {
-      "id": "change-cube",
-      "name": "Change Cube",
-      "oneLiner": "Carve-out deal workspace: documents → findings → cubes → analyses.",
-      "status": "quiet",
-      "updated": "2026-11-18",
-      "summary": "Collaborative transaction-strategy loop for carve-out / separation deals. Browser workspace plus an Agent SDK orchestrator with sample diligence packs.",
-      "latest": "Stakeholder PM intake templates as printable HTML/PDF. GTM Alexandra agent also lives in this Origin environment.",
-      "artifacts": [
-        { "label": "Web UI", "detail": "Project Northwind sample workspace" },
-        { "label": "Agent SDK", "detail": "change-cube orchestrator + subagents" },
-        { "label": "PM templates", "detail": "Benefits, BRD, demo redline, kickoff, cost honesty" }
-      ],
-      "links": [
-        { "label": "Origin change-cube", "url": "https://origin.cursor.com/git/alexandra-vargas/change-cube" }
-      ],
-      "repos": ["alexandra-vargas/change-cube (Origin)"]
+      "code": [
+        {
+          "label": "Origin · lumen-d678",
+          "summary": "Main Habit game / Lumen product, labs, Nightcrew.",
+          "url": "https://origin.cursor.com/git/alexandra-vargas/lumen-d678"
+        },
+        {
+          "label": "GitHub · Lumen (stub)",
+          "summary": "Thin public repo — Fill in when product ships there.",
+          "url": "https://github.com/alexandrav721/Lumen"
+        }
+      ]
     }
   ],
   "lenses": [
     {
       "id": "ads",
       "name": "Ads",
-      "blurb": "Demand creatives and ad landings — compare the hook side-by-side.",
+      "blurb": "Demand creatives and Meta ad landings — compare the hook side-by-side.",
       "items": [
         {
           "projectId": "scrolll",
           "title": "Meta → earn for attention",
-          "detail": "Meta pack frames + /scrolll/join?src=meta. Headline: Doomscroll. Earn for attention.",
+          "detail": "Meta pack frames + /scrolll/join?src=meta.",
           "status": "hot"
         },
         {
           "projectId": "loop",
           "title": "Stop buying what friends already own",
-          "detail": "loop-onboarding-site/ad — short hero, Ask · share · Handshake, waitlist CTA.",
+          "detail": "celebrateloop.com/ad — short hero + Handshake CTA.",
           "status": "hot"
         },
         {
-          "projectId": "lumen",
+          "projectId": "habit-game",
           "title": "GTM first-ad board",
-          "detail": "Designed HTML first-ad pack from Alexandra GTM (go/no-go framing).",
+          "detail": "Designed HTML first-ad pack from Alexandra GTM.",
           "status": "active"
         },
         {
-          "projectId": "smudge",
-          "title": "Want this? demand strip",
-          "detail": "/want Yes CTA + optional email; totals via sample /api/want.",
-          "status": "active"
+          "projectId": "nostalgia",
+          "title": "Meta pack",
+          "detail": "Fill in — not shipped yet.",
+          "status": "seed"
+        },
+        {
+          "projectId": "planner-book",
+          "title": "Planner / book ads",
+          "detail": "Fill in — dedicated Meta pack not linked yet.",
+          "status": "seed"
         }
       ]
     },
@@ -199,20 +329,20 @@
         },
         {
           "projectId": "loop",
-          "title": "Splash + onboarding + Sites",
-          "detail": "Supabase waitlist on splash; onboarding signal chips; earlier ChatGPT Sites waitlist.",
+          "title": "Splash + onboarding",
+          "detail": "celebrateloop.com waitlist + onboarding signal chips.",
           "status": "hot"
         },
         {
-          "projectId": "lumen",
+          "projectId": "habit-game",
           "title": "Premium waitlist-only",
-          "detail": "AI coach / book / SMS journal gated; free forever tier separate.",
+          "detail": "AI coach / SMS journal gated; free forever separate.",
           "status": "active"
         },
         {
-          "projectId": "smudge",
-          "title": "Want counter",
-          "detail": "Demand votes (sample counter resets on redeploy) — Fill in durable list if needed.",
+          "projectId": "planner-book",
+          "title": "Planner / book waitlist",
+          "detail": "Premium book + planner framing; public capture Fill in.",
           "status": "seed"
         }
       ]
@@ -223,33 +353,33 @@
       "blurb": "Marketing and onboarding surfaces friends can open.",
       "items": [
         {
+          "projectId": "loop",
+          "title": "celebrateloop.com",
+          "detail": "Live splash + onboarding + ad landing.",
+          "status": "hot"
+        },
+        {
           "projectId": "scrolll",
           "title": "Scrolll marketing site",
-          "detail": "Brand-first /scrolll with role pages and contrast story graphics.",
+          "detail": "Brand-first /scrolll with role pages — public URL Fill in.",
           "status": "hot"
         },
         {
-          "projectId": "loop",
-          "title": "CelebrateLoop + onboarding",
-          "detail": "Instrument Serif splash; Fraunces/Outfit onboarding with phone proof gallery.",
-          "status": "hot"
-        },
-        {
-          "projectId": "lumen",
+          "projectId": "habit-game",
           "title": "Lumen marketing + lab",
-          "detail": "Pinned landing variant + conversion lab + Dream Life Studio entry.",
+          "detail": "Pinned landing + conversion lab — public URL Fill in.",
           "status": "active"
         },
         {
-          "projectId": "smudge",
-          "title": "Smudge home + craft-hang",
-          "detail": "Issue masthead energy; public craft-hang for demand publish.",
+          "projectId": "nostalgia",
+          "title": "Scrollback explorer",
+          "detail": "Year-dated nostalgia UI — public URL Fill in.",
           "status": "active"
         },
         {
-          "projectId": "weekline",
-          "title": "Crew wall",
-          "detail": "Handbill / flyer / sticker-wall prototype UI.",
+          "projectId": "planner-book",
+          "title": "Planner sample + Weekline",
+          "detail": "Printable planner; crew wall at celebrateloop.com/weekline.",
           "status": "active"
         }
       ]
@@ -259,11 +389,11 @@
     "skills": [
       {
         "name": "Editorial product design",
-        "detail": "Serif display + tight sans, atmospheric gradients, one-composition heroes — Loop, Lumen, Scrolll, Smudge."
+        "detail": "Serif display + tight sans, atmospheric gradients, one-composition heroes — Loop, Habit game, Get Paid to Scroll, Nostalgia."
       },
       {
         "name": "Demand testing",
-        "detail": "First-ad boards, Meta destinations, want counters, waitlist heat — ship the test before the full app."
+        "detail": "First-ad boards, Meta destinations, waitlist heat — ship the test before the full app."
       },
       {
         "name": "Agent orchestration",
@@ -273,7 +403,7 @@
     "agents": [
       {
         "name": "GTM Alexandra",
-        "detail": "Reusable co-pilot: fuzzy idea → brief → story → prototype → first-ad → deck. Cursor skills /alexandra-gtm + children. Lives in change-cube/gtm-alexandra.",
+        "detail": "Reusable co-pilot: fuzzy idea → brief → story → prototype → first-ad → deck. Cursor skills /alexandra-gtm + children. Human go/no-go checkpoints.",
         "status": "active"
       },
       {
@@ -289,7 +419,7 @@
       },
       {
         "name": "Conversion lab pattern",
-        "detail": "Score landing copy without live A/B traffic (Lumen /lab)."
+        "detail": "Score landing copy without live A/B traffic (Habit game /lab)."
       },
       {
         "name": "Fancy Farm brand book",
@@ -297,5 +427,5 @@
       }
     ]
   },
-  "updateHint": "Edit content/portfolio.json — names, status, latest, artifacts, links. Brand lives under site.brand. Then rebuild and republish."
+  "updateHint": "Edit content/portfolio.json — concept, surfaces (website / funnel / meta-ads / mockup), code links. Brand under site.brand. Keep non-public workstreams off this site. Then rebuild and republish."
 }

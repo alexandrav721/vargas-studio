@@ -10,6 +10,13 @@ const statusLabel: Record<Status, string> = {
   seed: "Seed / fill in",
 };
 
+const surfaceKindLabel: Record<string, string> = {
+  website: "Website",
+  funnel: "Funnel",
+  "meta-ads": "Meta ads",
+  mockup: "Mock-up",
+};
+
 function projectName(id: string) {
   return data.projects.find((p) => p.id === id)?.name ?? id;
 }
@@ -110,14 +117,22 @@ export default function App() {
 
       <main className="main">
         <header className="hero" id="intro" data-section>
-          <p className="eyebrow">{data.site.owner} · {data.site.role}</p>
+          <p className="eyebrow">
+            {data.site.owner} · {data.site.role}
+          </p>
           <h1 className="brand-hero">{data.site.brand}</h1>
           <p className="tagline">{data.site.tagline}</p>
           <p className="lede">{data.site.forWhom}</p>
           <p className="support">{data.site.intro}</p>
           <p className="support muted">{data.site.howToNav}</p>
           <div className="hero-cta">
-            <a href="#now" onClick={(e) => { e.preventDefault(); jump("now"); }}>
+            <a
+              href="#now"
+              onClick={(e) => {
+                e.preventDefault();
+                jump("now");
+              }}
+            >
               What’s new
             </a>
             <a
@@ -153,7 +168,7 @@ export default function App() {
           <p className="section-kicker">Projects</p>
           <h2>Each idea, one scroll</h2>
           <p className="section-lede">
-            Real workstreams from her repos — not invented filler.
+            Concept → surfaces (site, funnel, Meta ads, mock-ups) → code.
           </p>
 
           {data.projects.map((p) => (
@@ -169,7 +184,10 @@ export default function App() {
                   {statusLabel[p.status as Status]}
                 </span>
               </div>
+              {p.aka ? <p className="aka">Also known as {p.aka}</p> : null}
               <p className="one-liner">{p.oneLiner}</p>
+
+              <h4>Business concept</h4>
               <p className="body">{p.summary}</p>
               <div className="meta-row">
                 <p>
@@ -181,23 +199,54 @@ export default function App() {
                   {p.updated}
                 </p>
               </div>
-              <h4>Key artifacts</h4>
+
+              <h4>Website, funnel, ads & mock-ups</h4>
               <ul className="artifact-list">
-                {p.artifacts.map((a) => (
-                  <li key={a.label}>
-                    <strong>{a.label}</strong>
-                    <span>{a.detail}</span>
+                {p.surfaces.map((s) => (
+                  <li key={`${p.id}-${s.kind}-${s.label}`}>
+                    <strong>
+                      <span className="kind-chip">
+                        {surfaceKindLabel[s.kind] ?? s.kind}
+                      </span>{" "}
+                      {s.label}
+                    </strong>
+                    <span>{s.detail}</span>
+                    {s.url ? (
+                      <a
+                        className="surface-link"
+                        href={s.url}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        Open
+                      </a>
+                    ) : (
+                      <span className="fill-in">Link Fill in</span>
+                    )}
                   </li>
                 ))}
               </ul>
-              {p.links.length > 0 ? (
-                <p className="out-links">
-                  {p.links.map((l) => (
-                    <a key={l.url} href={l.url} target="_blank" rel="noreferrer">
-                      {l.label}
-                    </a>
-                  ))}
-                </p>
+
+              {p.code.length > 0 ? (
+                <>
+                  <h4>Code</h4>
+                  <ul className="artifact-list">
+                    {p.code.map((c) => (
+                      <li key={c.url}>
+                        <strong>{c.label}</strong>
+                        <span>{c.summary}</span>
+                        <a
+                          className="surface-link"
+                          href={c.url}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          Repo
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </>
               ) : null}
             </article>
           ))}
@@ -240,7 +289,7 @@ export default function App() {
 
         <section className="section" id="general" data-section>
           <p className="section-kicker">General</p>
-          <h2>Outside any one project</h2>
+          <h2>Skills, agents & craft</h2>
 
           <h3 className="subhead">Skills</h3>
           <ul className="plain-list">
@@ -283,8 +332,8 @@ export default function App() {
           <h2>Keep it current</h2>
           <p className="body">{data.updateHint}</p>
           <p className="support muted">
-            Working brand name is easy to rename. Gaps labeled “Fill in” are
-            honest placeholders — drop media or confirm live URLs when ready.
+            Gaps labeled “Fill in” are honest placeholders — drop live URLs or
+            media when ready. Keep non-public workstreams off this site.
           </p>
         </section>
 

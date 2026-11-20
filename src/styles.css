@@ -425,12 +425,52 @@ a:hover {
   color: var(--danger-quiet);
 }
 
+.aka {
+  margin: 0 0 0.35rem;
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--mist);
+}
+
 .one-liner {
   font-family: var(--display);
   font-style: italic;
   font-size: 1.15rem;
   color: var(--fog);
   margin: 0 0 1rem;
+}
+
+.kind-chip {
+  display: inline-block;
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--citrus);
+  margin-right: 0.35rem;
+}
+
+.surface-link {
+  display: inline-block;
+  margin-top: 0.2rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--warm);
+  text-decoration: none;
+  border-bottom: 1px solid color-mix(in srgb, var(--warm) 45%, transparent);
+}
+
+.surface-link:hover {
+  color: var(--citrus);
+  border-bottom-color: var(--citrus);
+}
+
+.fill-in {
+  display: inline-block;
+  margin-top: 0.2rem;
+  font-size: 0.8rem;
+  color: var(--danger-quiet);
+  letter-spacing: 0.04em;
 }
 
 .body {
