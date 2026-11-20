@@ -54,22 +54,27 @@
     {
       "date": "2026-11-20",
       "projectId": "loop",
-      "text": "Loop live columns filled — website, landing, funnel, social on celebrateloop.com."
+      "text": "Loop columns refreshed to live celebrateloop.com + in-studio onboarding, Meta ads, and Handshake story."
     },
     {
       "date": "2026-11-20",
       "projectId": "scrolll",
-      "text": "Get Paid to Scroll — Meta join funnel + earn-for-attention copy (public URL Fill in)."
+      "text": "Scrolll friend demos hosted at /projects/scrolll/ — site, Meta join funnel, deck, ad frames."
+    },
+    {
+      "date": "2026-11-20",
+      "projectId": "planner-book",
+      "text": "Planner + book shop, printable sample, and Weekline crew wall hosted in-studio."
+    },
+    {
+      "date": "2026-11-20",
+      "projectId": "habit-game",
+      "text": "Lumen marketing, lab, product UI, first-ad board, and premium waitlist hosted at /projects/lumen/."
     },
     {
       "date": "2026-11-20",
       "projectId": "nostalgia",
-      "text": "Scrollback explorer hosted in-studio at /projects/nostalgia/ for friend review."
-    },
-    {
-      "date": "2026-11-18",
-      "projectId": "habit-game",
-      "text": "Habit game / Lumen columns mapped from Origin work; friend URLs Fill in."
+      "text": "Scrollback explorer live at /projects/nostalgia/."
     }
   ],
   "projects": [
@@ -91,7 +96,7 @@
         },
         "landing": {
           "label": "Campaign landing",
-          "detail": "No dedicated campaign page yet.",
+          "detail": "No dedicated campaign page yet — the explorer hero is the entry.",
           "url": null,
           "state": "na"
         },
@@ -99,13 +104,13 @@
           "label": "Waitlist / join",
           "detail": "Demand capture not shipped yet.",
           "url": null,
-          "state": "fill-in"
+          "state": "na"
         },
         "meta-ads": {
           "label": "Meta creative pack",
-          "detail": "No Meta frames linked yet.",
+          "detail": "No Meta frames yet for Scrollback.",
           "url": null,
-          "state": "fill-in"
+          "state": "na"
         },
         "product-ui": {
           "label": "Explorer UI",
@@ -115,7 +120,7 @@
         },
         "deck": {
           "label": "Story / pitch board",
-          "detail": "No deck yet.",
+          "detail": "No separate deck — the year tabs carry the narrative.",
           "url": null,
           "state": "na"
         },
@@ -148,43 +153,43 @@
       "status": "hot",
       "updated": "2026-11-20",
       "summary": "Fairness-forward scroll product. People and creators earn for attention; marketers buy reach on Scrolll inventory. Brand story + Meta join funnel + interactive story deck.",
-      "latest": "Join funnel at /scrolll/join?src=meta. Copy: “Earn for your attention / fair split TBD.” Public share URL Fill in.",
+      "latest": "Friend-facing marketing, join funnel, deck, and Meta frames hosted at /projects/scrolll/ (sourced from Origin lumen-d678/scrolll copy).",
       "visuals": {
         "website": {
           "label": "Scrolll marketing site",
-          "detail": "/scrolll plus for-you / advertise / for-creators.",
-          "url": null,
-          "state": "fill-in"
+          "detail": "Home + for-you / creators / advertise — Doom Pay fairness story.",
+          "url": "/projects/scrolll/",
+          "state": "live"
         },
         "landing": {
           "label": "Meta destination",
-          "detail": "Join entry for Meta traffic — /scrolll/join?src=meta.",
-          "url": null,
-          "state": "fill-in"
+          "detail": "Join entry for Meta traffic — /projects/scrolll/join.html?src=meta.",
+          "url": "/projects/scrolll/join.html?src=meta",
+          "state": "live"
         },
         "funnel": {
           "label": "Multi-step join",
-          "detail": "Hook → why → email → thanks. Soft-success on duplicates.",
-          "url": null,
-          "state": "fill-in"
+          "detail": "Hook → why → email → thanks. Soft-success on submit.",
+          "url": "/projects/scrolll/join.html",
+          "state": "live"
         },
         "meta-ads": {
           "label": "Meta frames",
           "detail": "Headline pack: Doomscroll. Earn for attention.",
-          "url": null,
-          "state": "fill-in"
+          "url": "/projects/scrolll/ads.html",
+          "state": "live"
         },
         "product-ui": {
           "label": "Product app",
-          "detail": "Core scroll product UI not friend-published yet.",
+          "detail": "Core scroll feed UI not friend-published yet — marketing + deck stand in.",
           "url": null,
-          "state": "fill-in"
+          "state": "na"
         },
         "deck": {
           "label": "Story deck",
-          "detail": "/scrolll/deck — keyboard + fullscreen narrative beats.",
-          "url": null,
-          "state": "fill-in"
+          "detail": "Keyboard + click narrative beats — fairness inversion story.",
+          "url": "/projects/scrolll/deck.html",
+          "state": "live"
         },
         "print": {
           "label": "Print / physical",
@@ -214,43 +219,43 @@
       "oneLiner": "Stop buying what friends already own.",
       "status": "hot",
       "updated": "2026-11-20",
-      "summary": "Friends-first borrow / lend / pass-on. Circle inventory stays private; climax is a dual-confirm Handshake — not a public marketplace. Brand: Loop Max Your Stuff LLC · celebrateloop.com.",
-      "latest": "Live website, onboarding funnel, Meta ad landing, Instagram. Expo mobile + inventory repos in Code.",
+      "summary": "Neighborhood borrow / lend / inventory. Live product on celebrateloop.com (sample inventory, community browse). Friends-first Handshake story + Meta creatives also hosted in-studio.",
+      "latest": "Live site rebuilt: website + /demo product + /community + /ads creatives. Onboarding funnel and Meta ad landing hosted at /projects/loop/.",
       "visuals": {
         "website": {
           "label": "celebrateloop.com",
-          "detail": "Splash waitlist — “closet the size of your building.”",
+          "detail": "OPENING IN THE FINANCIAL DISTRICT — organize what you have, discover what’s around you.",
           "url": "https://celebrateloop.com/",
           "state": "live"
         },
         "landing": {
           "label": "Meta ad landing",
-          "detail": "Short hero, Ask · share · Handshake, waitlist CTA.",
-          "url": "https://celebrateloop.com/ad",
+          "detail": "Short hero + waitlist — Ask · share · Handshake. Hosted in-studio (live /ad retired).",
+          "url": "/projects/loop/ad/",
           "state": "live"
         },
         "funnel": {
           "label": "Onboarding funnel",
-          "detail": "Club door → Handshake story → waitlist signal chips.",
-          "url": "https://celebrateloop.com/onboarding",
+          "detail": "Club door → Handshake story → waitlist signal chips. Hosted in-studio.",
+          "url": "/projects/loop/",
           "state": "live"
         },
         "meta-ads": {
           "label": "Meta creatives",
-          "detail": "Ad landing is live; still-frame creative pack Fill in (drop images into media/).",
-          "url": "https://celebrateloop.com/ad",
-          "state": "fill-in"
+          "detail": "Five 1080×1350 frames — umbrellas, hours, pile, earns, ask your block.",
+          "url": "https://celebrateloop.com/ads",
+          "state": "live"
         },
         "product-ui": {
-          "label": "Loop Expo app",
-          "detail": "IG-shaped mobile: Feed / Explore / Add / Activity / Profile. Public demo Fill in.",
-          "url": null,
-          "state": "fill-in"
+          "label": "Sample inventory",
+          "detail": "Try a sample household — no account needed. Live on celebrateloop.com/demo.",
+          "url": "https://celebrateloop.com/demo",
+          "state": "live"
         },
         "deck": {
           "label": "Handshake story",
           "detail": "Onboarding narrative doubles as the product story board.",
-          "url": "https://celebrateloop.com/onboarding",
+          "url": "/projects/loop/",
           "state": "live"
         },
         "print": {
@@ -260,8 +265,8 @@
           "state": "na"
         },
         "social": {
-          "label": "Instagram",
-          "detail": "@loopmaxyourstuff — organic proof + phone shots.",
+          "label": "Instagram + community",
+          "detail": "@loopmaxyourstuff · neighborhood shelves at /community.",
           "url": "https://www.instagram.com/loopmaxyourstuff/",
           "state": "live"
         }
@@ -295,51 +300,51 @@
       "aka": null,
       "oneLiner": "Physical goal planner + illustrated book — print craft meets premium unlock.",
       "status": "active",
-      "updated": "2026-11-18",
-      "summary": "Goals on paper and a beautiful book in hand: free printable Physical Goal Planner, premium illustrated book unlock, plus related planner experiments (Weekline crew wall). Sits beside the Habit game — same world, different artifact.",
-      "latest": "Weekline live at celebrateloop.com/weekline. Lumen /planner + book sneak still need public URLs.",
+      "updated": "2026-11-20",
+      "summary": "Goals on paper and a beautiful book in hand: free printable Physical Goal Planner, premium illustrated book unlock, plus Weekline crew wall. Sits beside the Habit game — same world, different artifact.",
+      "latest": "Shop + printable Season Chapter sample + Weekline crew wall hosted at /projects/planner/ (from Origin /planner + /shop).",
       "visuals": {
         "website": {
-          "label": "Planner home",
-          "detail": "Physical Goal Planner entry (Lumen /planner) — Print → PDF.",
-          "url": null,
-          "state": "fill-in"
+          "label": "Planner + book shop",
+          "detail": "Physical Goal Planner entry + It Was Always You book sneak.",
+          "url": "/projects/planner/",
+          "state": "live"
         },
         "landing": {
-          "label": "Book / planner offer landing",
-          "detail": "Dedicated campaign page Fill in.",
-          "url": null,
-          "state": "fill-in"
+          "label": "Book / planner offer",
+          "detail": "Shop page carries both offers — book unlock + print kit notify.",
+          "url": "/projects/planner/",
+          "state": "live"
         },
         "funnel": {
           "label": "Planner / book waitlist",
-          "detail": "Premium waitlist framing in Lumen; durable public capture Fill in.",
-          "url": null,
-          "state": "fill-in"
+          "detail": "Email capture for book unlock and physical kit notify.",
+          "url": "/projects/planner/",
+          "state": "live"
         },
         "meta-ads": {
           "label": "Meta creatives",
-          "detail": "Dedicated Meta pack not linked yet.",
+          "detail": "Dedicated Meta pack not built yet for planner/book.",
           "url": null,
-          "state": "fill-in"
+          "state": "na"
         },
         "product-ui": {
           "label": "Weekline crew wall",
-          "detail": "Goal-first crew week planner — handbill energy, Live NYC Parks.",
-          "url": "https://celebrateloop.com/weekline",
+          "detail": "Goal-first crew week planner — handbill energy, undated return tickets.",
+          "url": "/projects/planner/weekline.html",
           "state": "live"
         },
         "deck": {
           "label": "Story / pitch",
-          "detail": "No dedicated deck yet.",
+          "detail": "No dedicated deck — shop + printable carry the story.",
           "url": null,
           "state": "na"
         },
         "print": {
           "label": "Planner PDF + book sneak",
-          "detail": "Free printable sample + premium illustrated book unlock visuals.",
-          "url": null,
-          "state": "fill-in"
+          "detail": "Free printable Season Chapter sample + Chapter One sneak peek.",
+          "url": "/projects/planner/print.html",
+          "state": "live"
         },
         "social": {
           "label": "Social",
@@ -367,45 +372,45 @@
       "aka": "Lumen",
       "oneLiner": "Psychology-powered goal game — chic, streaky follow-through.",
       "status": "active",
-      "updated": "2026-11-18",
+      "updated": "2026-11-20",
       "summary": "Name season and annual goals, check in daily, protect a streak, play short stuck games when you drift. Dream Life Studio places a selfie into dream scenes. Conversion lab scores landing copy without live A/B. Premium AI coach / SMS journal is waitlist-only.",
-      "latest": "Product in Origin lumen-d678. Public friend URL Fill in. GitHub Lumen stub is thin.",
+      "latest": "Friend demos at /projects/lumen/ — marketing, pinned landing, conversion lab, product UI shell, GTM first-ad board, premium waitlist.",
       "visuals": {
         "website": {
-          "label": "Lumen marketing + lab",
-          "detail": "Pinned landing variant + /lab conversion scoring.",
-          "url": null,
-          "state": "fill-in"
+          "label": "Lumen marketing",
+          "detail": "Brand home + Today / Stuck / Dream Life story.",
+          "url": "/projects/lumen/",
+          "state": "live"
         },
         "landing": {
           "label": "Pinned marketing landing",
-          "detail": "Lab-selected landing variant for friends.",
-          "url": null,
-          "state": "fill-in"
+          "detail": "Follow-through hero — free forever core, premium gated.",
+          "url": "/projects/lumen/landing.html",
+          "state": "live"
         },
         "funnel": {
           "label": "Premium waitlist",
           "detail": "AI coach / SMS journal gated; free forever separate.",
-          "url": null,
-          "state": "fill-in"
+          "url": "/projects/lumen/waitlist.html",
+          "state": "live"
         },
         "meta-ads": {
           "label": "GTM first-ad board",
           "detail": "Designed HTML first-ad pack (go/no-go framing).",
-          "url": null,
-          "state": "fill-in"
+          "url": "/projects/lumen/ads.html",
+          "state": "live"
         },
         "product-ui": {
-          "label": "Dream Life · stuck · today",
-          "detail": "/discover dream scenes; /stuck playroom; /today daily loop.",
-          "url": null,
-          "state": "fill-in"
+          "label": "Today · Stuck · Dream",
+          "detail": "Interactive friend shell of the daily loop.",
+          "url": "/projects/lumen/product.html",
+          "state": "live"
         },
         "deck": {
-          "label": "GTM story + deck",
-          "detail": "Visual story / investor deck packs from GTM Alexandra workflow.",
-          "url": null,
-          "state": "fill-in"
+          "label": "Conversion lab",
+          "detail": "Score landing variants without live A/B — Hook / Clarity / Desire / Friction / Proof.",
+          "url": "/projects/lumen/lab.html",
+          "state": "live"
         },
         "print": {
           "label": "Print / physical",
@@ -428,7 +433,7 @@
         },
         {
           "label": "GitHub · Lumen (stub)",
-          "summary": "Thin public repo — Fill in when product ships there.",
+          "summary": "Thin public repo — expand when the product ships there.",
           "url": "https://github.com/alexandrav721/Lumen"
         }
       ]
@@ -472,7 +477,7 @@
       },
       {
         "name": "Fancy Farm brand book",
-        "detail": "Logo / brand explorations inside lumen-d678 — Fill in if its own venture."
+        "detail": "Logo / brand explorations inside lumen-d678 — own venture when ready."
       }
     ]
   },

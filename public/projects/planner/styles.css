@@ -1,0 +1,21 @@
+
+:root{--ink:#1c1917;--chalk:#f7f3ee;--sage:#5f7a6b;--deep:#3f5548;--mute:#78716c;--display:"Fraunces",Georgia,serif;--sans:"Source Sans 3",system-ui,sans-serif}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(165deg,#e8ece8,#f7f3ee 48%,#ebe4da);color:var(--ink);font-family:var(--sans);line-height:1.55}
+.studio-back{position:fixed;top:12px;left:12px;z-index:40;font:600 11px/1 var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--mute);text-decoration:none;background:#fff;border:1px solid rgba(28,25,23,.12);padding:.55rem .8rem}
+.wrap{width:min(100% - 2rem,900px);margin:0 auto;padding:5rem 0 4rem}
+nav.top{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:2rem;font-size:.8rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+nav.top a{color:var(--deep);text-decoration:none}
+.brand{font-family:var(--display);font-size:clamp(2.4rem,6vw,3.8rem);margin:0;color:var(--deep)}
+.lede{color:var(--mute);max-width:38rem}
+.btn{display:inline-flex;padding:.8rem 1.25rem;border-radius:999px;background:var(--deep);color:var(--chalk);font:700 .95rem var(--sans);text-decoration:none;border:none;cursor:pointer;margin:.35rem .35rem 0 0}
+.btn-ghost{background:transparent;color:var(--deep);border:1px solid rgba(63,85,72,.35)}
+.panel{margin-top:1.5rem;padding:1.5rem;border-radius:1.25rem;background:rgba(247,243,238,.92);border:1px solid rgba(28,25,23,.1)}
+.panel h2{font-family:var(--display);margin:0 0 .5rem}
+.panel h3{font-family:var(--display);margin:1.25rem 0 .4rem}
+.line{margin-top:.5rem;height:2.5rem;border-bottom:1px solid rgba(28,25,23,.25)}
+.week{display:grid;grid-template-columns:repeat(7,1fr);gap:.4rem;margin-top:1rem;text-align:center;font-size:.85rem}
+.week div{border:1px solid rgba(28,25,23,.15);border-radius:10px;padding:.75rem .25rem}
+.sneak{font-family:var(--display);font-style:italic;font-size:1.25rem;margin:0}
+.weekline{display:grid;gap:.65rem;margin-top:1.25rem}
+.chip{display:flex;justify-content:space-between;gap:1rem;padding:.85rem 1rem;border-radius:14px;background:#fff;border:1px dashed rgba(28,25,23,.2)}
+@media print{.studio-back,nav.top,.no-print{display:none!important}body{background:#fff}.wrap{padding:0;width:100%}}

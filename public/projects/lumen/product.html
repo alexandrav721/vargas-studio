@@ -1,0 +1,25 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Lumen — product UI</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;700&family=Fraunces:opsz,wght@9..144,700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="styles.css"/></head><body>
+<a class="studio-back" href="/">← Vargas Studio</a><div class="wrap"><nav class="top"><a href="index.html">Home</a><a href="landing.html">Landing</a><a href="lab.html">Lab</a><a href="product.html">Product UI</a><a href="ads.html">First-ad</a><a href="waitlist.html">Waitlist</a></nav>
+<p class="kicker">Friend product demo</p>
+<h1 class="brand" style="font-size:clamp(2.2rem,6vw,3.4rem)">Today · Stuck · Dream</h1>
+<p class="lede">Interactive shell of the daily loop — check in, name the obstacle, peek a dream scene.</p>
+<div class="phone"><div class="phone-inner" id="ui">
+  <p style="font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:#c9a227">Today</p>
+  <h2 style="font-family:var(--display);margin:.4rem 0 0;font-size:1.6rem">Season goal</h2>
+  <p style="color:rgba(244,241,234,.7);font-size:.9rem">Ship the friend portfolio without backlog debt.</p>
+  <button class="btn" style="width:100%;justify-content:center;margin-top:1.25rem" type="button" id="checkin">Check in ✓</button>
+  <button class="btn btn-ghost" style="width:100%;justify-content:center" type="button" id="stuck">I’m stuck</button>
+  <button class="btn btn-ghost" style="width:100%;justify-content:center" type="button" id="dream">Dream Life</button>
+  <p id="status" style="margin-top:1rem;font-size:.85rem;color:#c9a227"></p>
+</div></div>
+<script>
+const s=document.getElementById('status');
+checkin.onclick=()=>s.textContent='Streak protected · next action under two minutes.';
+stuck.onclick=()=>s.textContent='Stuck game: name the fog → pick one activity → return ticket ready.';
+dream.onclick=()=>s.textContent='Dream scene pinned · today’s vote bridges dream → action.';
+</script>
+</div></body></html>
