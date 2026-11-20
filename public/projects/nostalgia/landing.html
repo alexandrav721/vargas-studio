@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Scrollback — Campaign landing</title>
+  <meta name="description" content="Short Meta destination for Scrollback: Feel · Buy era-only · Talk. Join the waitlist." />
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg0: #07090d; --bg1: #121018; --ink: #f4f0e6; --muted: #b7ae9a;
+      --line: rgba(244,240,230,.14); --brand: #b8ff00; --brand-2: #ff00aa;
+      --display: "Syne", sans-serif; --body: "IBM Plex Sans", sans-serif; --mono: "IBM Plex Mono", monospace;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; min-height: 100vh; color: var(--ink); font-family: var(--body);
+      background:
+        radial-gradient(ellipse at 20% 10%, rgba(184,255,0,.16), transparent 45%),
+        radial-gradient(ellipse at 85% 0%, rgba(255,0,170,.12), transparent 40%),
+        linear-gradient(180deg, #0a0a0a, #121018 60%, #0a0a0a);
+      line-height: 1.5;
+    }
+    .studio-back {
+      position: fixed; top: .65rem; left: .65rem; z-index: 40;
+      padding: .45rem .8rem; border: 1px solid rgba(244,240,230,.28); background: #0c0c10;
+      color: var(--ink); font: 500 .72rem/1 var(--mono); letter-spacing: .06em;
+      text-transform: uppercase; text-decoration: none;
+    }
+    .hero {
+      min-height: 100vh; width: min(100% - 2rem, 720px); margin: 0 auto;
+      display: flex; flex-direction: column; justify-content: center; padding: 5rem 0 3rem;
+    }
+    nav.top {
+      display: flex; flex-wrap: wrap; gap: .7rem 1.1rem; margin-bottom: 2rem;
+      font-size: .72rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase;
+    }
+    nav.top a { color: var(--muted); text-decoration: none; }
+    nav.top a:hover, nav.top a[aria-current="page"] { color: var(--brand); }
+    .kicker { margin: 0 0 .7rem; font-size: .72rem; letter-spacing: .18em; text-transform: uppercase; color: var(--brand-2); font-weight: 700; }
+    h1 {
+      margin: 0; font-family: var(--display); font-weight: 800;
+      font-size: clamp(2.8rem, 10vw, 4.6rem); letter-spacing: -.04em; line-height: .92;
+    }
+    .tag { margin: .85rem 0 0; font-size: clamp(1.05rem, 2.4vw, 1.35rem); color: var(--brand); font-weight: 600; max-width: 28rem; }
+    .lede { margin: 1rem 0 0; color: var(--muted); max-width: 34rem; font-size: 1.05rem; }
+    .cta-row { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1.75rem; }
+    .btn {
+      display: inline-flex; padding: .85rem 1.25rem; background: var(--brand); color: #0a0a0a;
+      font: 700 .95rem var(--body); text-decoration: none; border: 1px solid transparent;
+    }
+    .btn-ghost { background: transparent; color: var(--ink); border-color: rgba(244,240,230,.3); }
+    .stack { margin-top: 2.5rem; display: grid; gap: .75rem; }
+    .stack div {
+      padding: .9rem 1rem; border: 1px solid var(--line); background: rgba(18,16,24,.7);
+    }
+    .stack strong { font-family: var(--display); display: block; margin-bottom: .2rem; }
+    .stack span { color: var(--muted); font-size: .95rem; }
+  </style>
+</head>
+<body>
+  <a class="studio-back" href="/">← Vargas Studio</a>
+  <div class="hero">
+    <nav class="top" aria-label="Scrollback">
+      <a href="./">Explorer</a>
+      <a href="./landing.html" aria-current="page">Landing</a>
+      <a href="./join.html">Waitlist</a>
+      <a href="./ads.html">Meta ads</a>
+      <a href="./story.html">Story</a>
+    </nav>
+
+    <p class="kicker">Meta campaign destination</p>
+    <h1>Scrollback</h1>
+    <p class="tag">A website that feels like 2001–2004 again.</p>
+    <p class="lede">
+      Feel the era. Buy products from that time only — dated properly, not costume.
+      Talk with people who get those years. Join the waitlist; no fake shop button.
+    </p>
+    <div class="cta-row">
+      <a class="btn" href="./join.html?src=meta">Join the waitlist</a>
+      <a class="btn btn-ghost" href="./">Open the explorer</a>
+    </div>
+
+    <div class="stack" aria-label="Offer pillars">
+      <div><strong>Feel</strong><span>Early-2000s web & after-school energy — on purpose.</span></div>
+      <div><strong>Buy</strong><span>Era-only finds. Flip phones, jelly clips, CDs — dated properly.</span></div>
+      <div><strong>Talk</strong><span>Same jokes. Same longing. Zero explaining.</span></div>
+    </div>
+  </div>
+</body>
+</html>
