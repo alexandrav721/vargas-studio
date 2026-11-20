@@ -1092,20 +1092,15 @@ export function describeGarment(stats: ImageStats): GarmentRead {
 export function recipesFor(stats: ImageStats, skill: Skill): Recipe[] {
   const family = familyOf(stats);
   const hue = hueBand(stats.hue, stats.saturation);
-  const pool = RECIPES.filter((recipe) => {
-    if (!recipe.families.includes(family)) return false;
-    if (!recipe.skills.includes(skill)) return false;
-    if (!recipe.hues.includes("any") && !recipe.hues.includes(hue)) return false;
-    if (skill === "beginner" && recipe.difficulty !== "beginner") return false;
-    if (skill === "intermediate" && recipe.difficulty === "advanced") return false;
-    if (skill === "advanced" && recipe.difficulty === "beginner") return false;
-    return true;
-  });
+  const pool = RECIPES.filter((recipe) => recipe.families.includes(family));
 
   const score = (recipe: Recipe) => {
     let value = 0;
-    if (recipe.hues.includes(hue)) value += recipe.hues.includes("any") ? 4 : 10;
-    if (recipe.difficulty === skill) value += 3;
+    if (recipe.hues.includes(hue)) value += recipe.hues.includes("any") ? 4 : 12;
+    else if (!recipe.hues.includes("any")) value -= 8;
+    if (recipe.skills.includes(skill)) value += 8;
+    if (recipe.difficulty === skill) value += 5;
+    if (skill === "beginner" && recipe.difficulty === "advanced") value -= 3;
     return value;
   };
 
@@ -1119,27 +1114,34 @@ export function recipesFor(stats: ImageStats, skill: Skill): Recipe[] {
   const picked: Recipe[] = [];
   for (const method of methods) {
     const options = pool
-      .filter((recipe) => recipe.method === method && !picked.includes(recipe))
+      .filter((recipe) => recipe.method === method)
       .sort((a, b) => score(b) - score(a) || a.id.localeCompare(b.id));
-    const best = options[0];
-    if (best) picked.push(best);
+    if (options[0]) picked.push(options[0]);
   }
+  return picked;
+}
 
-  if (picked.length < 2) {
-    const rest = pool
-      .filter((recipe) => !picked.includes(recipe))
-      .sort((a, b) => score(b) - score(a) || a.id.localeCompare(b.id));
-    for (const recipe of rest) {
-      if (picked.length >= 3) break;
-      picked.push(recipe);
-    }
+function stepForSkill(step: Step, skill: Skill, writtenForSkill: boolean): Step {
+  if (writtenForSkill) return step;
+  if (skill === "beginner") {
+    return {
+      ...step,
+      text: `Keep this simple. ${step.text} If the cloth fights you, stop and pin again.`,
+    };
   }
-
-  return picked.slice(0, 3);
+  if (skill === "advanced") {
+    return {
+      ...step,
+      text: `${step.text} Press along the grain the cloth already has. Do not cut a new pattern piece to get there.`,
+    };
+  }
+  return { ...step, text: `Use the cloth that is already in the garment. ${step.text}` };
 }
 
 export function stepsFor(recipe: Recipe, skill: Skill): Step[] {
-  return recipe.steps[skill] ?? recipe.steps[recipe.difficulty] ?? [];
+  const writtenForSkill = Boolean(recipe.steps[skill]);
+  const base = recipe.steps[skill] ?? recipe.steps[recipe.difficulty] ?? Object.values(recipe.steps)[0] ?? [];
+  return base.map((step) => stepForSkill(step, skill, writtenForSkill));
 }
 
 export async function analyzeOntoCanvas(
