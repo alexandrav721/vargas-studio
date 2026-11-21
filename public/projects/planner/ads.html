@@ -1,0 +1,96 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Planner and Book · Meta ads</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,550&family=Source+Sans+3:wght@500;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="styles.css"/>
+<style>
+.kick{font-size:.75rem;letter-spacing:.18em;text-transform:uppercase;color:var(--sage);font-weight:700;margin:0}
+.angles{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.5rem}
+.angles button{appearance:none;border:1px solid rgba(63,85,72,.35);background:transparent;color:var(--deep);font:700 .8rem var(--sans);letter-spacing:.06em;text-transform:uppercase;padding:.55rem .9rem;border-radius:999px;cursor:pointer}
+.angles button[aria-pressed="true"]{background:var(--deep);color:var(--chalk);border-color:var(--deep)}
+.stage{display:grid;grid-template-columns:minmax(0,420px) minmax(0,1fr);gap:1.5rem;margin-top:1.25rem;align-items:start}
+.frame{margin:0;border-radius:1rem;overflow:hidden;border:1px solid rgba(28,25,23,.12);background:#fff}
+.frame img{display:block;width:100%;aspect-ratio:4/5;height:auto}
+.controls{display:flex;justify-content:space-between;align-items:center;gap:.75rem;margin-top:.75rem}
+.controls button{appearance:none;border:1px solid rgba(63,85,72,.35);background:#fff;color:var(--deep);font:700 .85rem var(--sans);padding:.55rem .9rem;border-radius:999px;cursor:pointer}
+.controls button:disabled{opacity:.4;cursor:default}
+.count{font:700 .85rem var(--sans);color:var(--mute)}
+.copy{margin-top:0}
+.copy dl{margin:0;display:grid;gap:.9rem}
+.copy dt{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);font-weight:700}
+.copy dd{margin:.2rem 0 0}
+.copy .hl{font-family:var(--display);font-size:1.35rem;color:var(--deep)}
+.cta{display:inline-block;background:#e4e6eb;color:#1c1917;font-weight:700;padding:.35rem .8rem;border-radius:6px;font-size:.9rem}
+.copy a{color:var(--deep)}
+.angle-note{font-size:.95rem;color:#4a443e;border-left:3px solid var(--sage);padding-left:.8rem;margin:0}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th,td{text-align:left;padding:.55rem .4rem;border-bottom:1px solid rgba(28,25,23,.12);vertical-align:top}
+th{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
+.tablewrap{overflow-x:auto}
+@media (max-width:760px){.stage{grid-template-columns:1fr}}
+</style></head><body>
+<a class="studio-back" href="/">← Vargas Studio</a><div class="wrap"><nav class="top"><a href="index.html">Shop</a><a href="print.html">Printable</a><a href="weekline.html">Weekline</a><a href="ads.html" aria-current="page">Meta ads</a><a href="deck.html">Deck</a><a href="social.html">Social</a></nav>
+<p class="kick">Meta creative pack · 4:5 frames</p>
+<h1 class="brand">Planner ads</h1>
+<p class="lede">Three reasons people buy paper planners, one angle each. Most ads point to the free Season Chapter printable, so the CTA is an honest <strong>Download</strong>. Nothing here has run yet.</p>
+
+<div class="angles" role="group" aria-label="Angle">
+  <button type="button" data-jump="0" aria-pressed="true">A · Paper remembers</button>
+  <button type="button" data-jump="2" aria-pressed="false">B · No backlog debt</button>
+  <button type="button" data-jump="4" aria-pressed="false">C · Phone down</button>
+</div>
+
+<div class="stage">
+  <div>
+    <figure class="frame"><img id="img" src="ads/01-hand.png" width="1080" height="1350" alt=""/></figure>
+    <div class="controls">
+      <button type="button" id="prev" aria-label="Previous frame">← Prev</button>
+      <span class="count" id="count" aria-live="polite">1 / 6</span>
+      <button type="button" id="next" aria-label="Next frame">Next →</button>
+    </div>
+    <p class="lede" style="font-size:.85rem;text-align:center;margin:.5rem auto 0">Arrow keys work too · <a id="dl" href="ads/01-hand.png" download>Download PNG</a></p>
+  </div>
+  <div class="panel copy" style="margin-top:0">
+    <p class="angle-note" id="why"></p>
+    <dl style="margin-top:1rem">
+      <div><dt>Primary text</dt><dd id="primary"></dd></div>
+      <div><dt>Headline</dt><dd class="hl" id="headline"></dd></div>
+      <div><dt>CTA button</dt><dd><span class="cta" id="cta"></span></dd></div>
+      <div><dt>Destination</dt><dd><a id="dest" href="print.html"></a></dd></div>
+    </dl>
+  </div>
+</div>
+
+<div class="panel">
+  <h2>Two-week test</h2>
+  <p class="lede">Rough plan, not results. Thresholds are set before launch so the numbers decide.</p>
+  <div class="tablewrap"><table>
+    <tr><th>Angle</th><th>Budget</th><th>Measure</th><th>Keep if</th></tr>
+    <tr><td>A · Paper remembers</td><td>$60</td><td>Cost per printable visit</td><td>CTR ≥ 1% and visit cost ≤ $0.80</td></tr>
+    <tr><td>B · No backlog debt</td><td>$60</td><td>Cost per printable visit</td><td>CTR ≥ 1% and visit cost ≤ $0.80</td></tr>
+    <tr><td>C · Phone down</td><td>$60</td><td>Shop visits → book interest</td><td>Book sign-ups ≥ 10% of visits, once the form saves</td></tr>
+  </table></div>
+  <p class="lede" style="font-size:.85rem">Thresholds are assumptions, not benchmarks. The shop’s book form is a demo today and saves nothing, so angle C needs a real list before it runs. Research and sources: <a href="notes.md">notes.md</a>.</p>
+</div>
+</div>
+<script>
+const F=[
+ {img:'01-hand',angle:0,why:'Angle A · Paper remembers. People choose paper because writing by hand feels like it sticks. A 2021 University of Tokyo study backs a small version of that.',primary:'Your goal deserves more than a notes app. The Season Chapter is a free printable: one goal, one next move, room for real life. Print it tonight and write it by hand.',headline:'Write the goal by hand',cta:'Download',dest:'print.html',label:'/projects/planner/print.html'},
+ {img:'02-next-move',angle:0,why:'Angle A · payoff. Specific next steps beat good intentions (Gollwitzer & Sheeran, 2006, 94 studies).',primary:'Not every project at once. Name the one that matters, then pick this week’s size: small, full or rest. Free and undated.',headline:'One goal. One next move.',cta:'Download',dest:'print.html',label:'/projects/planner/print.html'},
+ {img:'03-missed-week',angle:1,why:'Angle B · No backlog debt. Dated planners leave empty pages after a gap. Undated planners are a whole category for this reason (Passion Planner sells undated editions).',primary:'Most planners count the days you missed. This one has no dates to miss. Undated pages, plus a return ticket for when life gets in the way.',headline:'Missed a week? Don’t redo it.',cta:'Download',dest:'print.html',label:'/projects/planner/print.html'},
+ {img:'04-return-ticket',angle:1,why:'Angle B · payoff. The return ticket is the planner’s own feature: continue, shrink, pause or revise.',primary:'After a gap, pick one: continue, shrink, pause or revise. Never rebuild missing days. Free Season Chapter printable.',headline:'Come back where you are',cta:'Download',dest:'print.html',label:'/projects/planner/print.html'},
+ {img:'05-phone-down',angle:2,why:'Angle C · Phone down. Papier’s CEO links its 2025 growth to people choosing not to let their lives go fully digital (Modern Retail, Dec 2025).',primary:'Lumen is the daily game. The book and the physical planner are the deeper companions: same psychology, paper you can hold.',headline:'Goals on paper. A book in hand.',cta:'Learn more',dest:'index.html',label:'/projects/planner/'},
+ {img:'06-book',angle:2,why:'Angle C · the book. The line on the frame is the Chapter One sneak already on the shop page.',primary:'It Was Always You, illustrated edition by Johanna J. 37 chapters across five parts. Read the Chapter One sneak peek.',headline:'“You have always been bright.”',cta:'Learn more',dest:'index.html',label:'/projects/planner/'}
+];
+let i=Math.max(0,Math.min(5,(parseInt(new URLSearchParams(location.search).get('frame'))||1)-1));
+const $=id=>document.getElementById(id);
+function show(){const f=F[i];$('img').src='ads/'+f.img+'.png';$('img').alt='Ad frame '+(i+1)+': '+f.headline;$('dl').href='ads/'+f.img+'.png';
+$('count').textContent=(i+1)+' / '+F.length;$('why').textContent=f.why;$('primary').textContent=f.primary;$('headline').textContent=f.headline;$('cta').textContent=f.cta;$('dest').href=f.dest;$('dest').textContent=f.label;
+$('prev').disabled=i===0;$('next').disabled=i===F.length-1;
+document.querySelectorAll('[data-jump]').forEach(b=>b.setAttribute('aria-pressed',String(F[+b.dataset.jump].angle===f.angle)));}
+$('prev').onclick=()=>{if(i>0){i--;show()}};$('next').onclick=()=>{if(i<F.length-1){i++;show()}};
+document.querySelectorAll('[data-jump]').forEach(b=>b.onclick=()=>{i=+b.dataset.jump;show()});
+addEventListener('keydown',e=>{if(e.key==='ArrowLeft')$('prev').click();if(e.key==='ArrowRight')$('next').click();});
+show();
+</script>
+</body></html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=1080"/>
+<title>Season Chapter carousel · render source</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,550&family=Source+Sans+3:wght@500;700&display=swap" rel="stylesheet"/>
+<style>
+:root{--ink:#1c1917;--chalk:#f7f3ee;--sage:#5f7a6b;--deep:#3f5548;--mute:#6b645e;--gold:#c9a227;--display:"Fraunces",Georgia,serif;--sans:"Source Sans 3",system-ui,sans-serif}
+*{box-sizing:border-box}html,body{margin:0}
+body{width:1080px;height:1350px;overflow:hidden;font-family:var(--sans);color:var(--ink)}
+.studio-back{position:fixed;top:12px;left:12px;z-index:40;font:600 11px/1 var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--mute);text-decoration:none;background:#fff;border:1px solid rgba(28,25,23,.12);padding:.55rem .8rem}
+body.render .studio-back{display:none}
+.s{display:none;width:1080px;height:1350px;padding:96px 88px 0;flex-direction:column;background:linear-gradient(165deg,#e8ece8,#f7f3ee 48%,#ebe4da)}
+.s.on{display:flex}.dark{background:#1c1917;color:var(--chalk)}
+.k{font:700 28px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--deep)}
+.dark .k{color:var(--gold)}
+h1{font:700 112px/1.0 var(--display);letter-spacing:-.02em;margin:34px 0 0;color:var(--deep)}
+.dark h1{color:var(--chalk)}
+.sub{font:500 40px/1.3 var(--sans);margin:30px 0 0;color:#3d3833;max-width:880px}
+.dark .sub{color:rgba(247,243,238,.86)}
+.art{flex:1;display:flex;flex-direction:column;justify-content:center;gap:22px}
+.line{font:500 36px/1.2 var(--sans);color:var(--mute);border-bottom:3px solid rgba(28,25,23,.25);padding:0 0 70px}
+.chips{display:flex;gap:24px}
+.chip{flex:1;border:3px solid rgba(28,25,23,.2);border-radius:28px;padding:34px 20px;background:#fff;text-align:center}
+.chip b{display:block;font:700 54px/1 var(--display);color:var(--deep)}
+.chip span{display:block;margin-top:14px;font:500 30px/1.25 var(--sans);color:#4a443e}
+.obs{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.obs div{background:#fff;border:3px dashed rgba(63,85,72,.45);border-radius:22px;padding:28px;font:700 36px/1.15 var(--display);color:var(--deep)}
+.t div{background:transparent;border-color:rgba(201,162,39,.7);color:#f7f3ee;font-size:48px}
+.foot{height:118px;margin:0 -88px;padding:0 88px;display:flex;align-items:center;justify-content:space-between;border-top:2px solid rgba(28,25,23,.12);font:700 30px/1 var(--sans);color:var(--mute)}
+.dark .foot{border-color:rgba(247,243,238,.16);color:rgba(247,243,238,.75)}
+.foot b{font-family:var(--display);font-size:36px;color:var(--deep)}
+.dark .foot b{color:var(--chalk)}
+.pill{background:var(--gold);color:#1c1917;padding:18px 30px;border-radius:999px;font:700 30px/1 var(--sans)}
+</style></head><body>
+<a class="studio-back" href="/">← Vargas Studio</a>
+
+<section class="s dark" id="s1">
+  <div class="k">Season Chapter · 1 / 5</div>
+  <h1>Start a season goal in five minutes.</h1>
+  <p class="sub">A pen, one printed sheet, three questions.</p>
+  <div class="art">
+    <svg width="904" height="300" viewBox="0 0 904 300" aria-hidden="true">
+      <rect x="0" y="20" width="560" height="270" rx="18" fill="#f7f3ee"/>
+      <text x="36" y="80" font-family="Fraunces" font-weight="700" font-size="44" fill="#3f5548">Season Chapter</text>
+      <g stroke="#1c1917" stroke-opacity=".28" stroke-width="3"><line x1="36" y1="150" x2="524" y2="150"/><line x1="36" y1="210" x2="524" y2="210"/><line x1="36" y1="260" x2="400" y2="260"/></g>
+      <path d="M640 150h200m-50-50 50 50-50 50" fill="none" stroke="#c9a227" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+  <div class="foot"><b>Planner and Book</b><span>Swipe →</span></div>
+</section>
+
+<section class="s" id="s2">
+  <div class="k">Step 1 · 2 / 5</div>
+  <h1>Name one goal.</h1>
+  <p class="sub">Not every project at once. The one that means something.</p>
+  <div class="art">
+    <div class="line">This season I am moving…</div>
+    <div class="line">Because…</div>
+  </div>
+  <div class="foot"><b>Planner and Book</b><span>Swipe →</span></div>
+</section>
+
+<section class="s" id="s3">
+  <div class="k">Step 2 · 3 / 5</div>
+  <h1>Pick this week’s size.</h1>
+  <p class="sub">Then write one physical move. Low energy? Keep it under two minutes.</p>
+  <div class="art">
+    <div class="chips">
+      <div class="chip"><b>Small</b><span>Under two minutes</span></div>
+      <div class="chip"><b>Full</b><span>The real session</span></div>
+      <div class="chip"><b>Rest</b><span>Planned, not skipped</span></div>
+    </div>
+  </div>
+  <div class="foot"><b>Planner and Book</b><span>Swipe →</span></div>
+</section>
+
+<section class="s" id="s4">
+  <div class="k">Step 3 · 4 / 5</div>
+  <h1>Name what gets in the way.</h1>
+  <p class="sub">Circle one. The sheet gives you an activity for it.</p>
+  <div class="art">
+    <div class="obs"><div>Inherited voice</div><div>Loyalty guilt</div><div>Attention stolen</div><div>No clear next step</div><div>Perfection stall</div><div>Energy crash</div></div>
+  </div>
+  <div class="foot"><b>Planner and Book</b><span>Swipe →</span></div>
+</section>
+
+<section class="s dark" id="s5">
+  <div class="k">When you miss a week · 5 / 5</div>
+  <h1>Take a return ticket.</h1>
+  <p class="sub">Continue, shrink, pause or revise. Never rebuild the missing days.</p>
+  <div class="art">
+    <div class="obs t"><div>Continue</div><div>Shrink</div><div>Pause</div><div>Revise</div></div>
+    <p style="font:italic 550 50px/1.2 var(--display);margin:24px 0 0;color:#f7f3ee">The sheet is undated. It waits for you.</p>
+  </div>
+  <div class="foot"><b>Free printable · link in bio</b><span class="pill">Season Chapter</span></div>
+</section>
+
+<script>
+const q=new URLSearchParams(location.search);document.getElementById('s'+(q.get('slide')||'1'))?.classList.add('on');
+if(q.has('render'))document.body.classList.add('render');
+</script>
+</body></html>

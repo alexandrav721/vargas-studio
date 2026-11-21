@@ -1,0 +1,46 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Scrolll — Social graphics</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="styles.css"/>
+<style>
+.gal{display:grid;gap:1.25rem;margin-top:1.5rem}
+@media(min-width:760px){.gal.three{grid-template-columns:1fr 1fr 1fr}.gal.wide{grid-template-columns:1.6fr 1fr}}
+figure{margin:0;background:var(--panel);border:1px solid rgba(231,238,245,.1);border-radius:18px;padding:.75rem}
+figure img{display:block;width:100%;height:auto;border-radius:10px}
+figcaption{display:flex;justify-content:space-between;gap:.5rem;align-items:center;margin-top:.6rem;font-size:.85rem;color:var(--mute)}
+figcaption a{font-weight:700;white-space:nowrap}
+h2{font-family:var(--display);font-size:1.6rem;margin:3rem 0 .25rem}
+.cap{color:var(--mute);margin:0;max-width:40rem}
+.copy{margin-top:1rem;padding:1rem 1.1rem;border-left:3px solid var(--pay);background:rgba(18,27,38,.8);font-size:.95rem;max-width:40rem}
+</style></head><body>
+<a class="studio-back" href="/">← Vargas Studio</a><div class="wrap"><nav class="top" aria-label="Scrolll">
+<a href="index.html">Home</a><a href="for-you.html">For you</a><a href="for-creators.html">Creators</a>
+<a href="advertise.html">Advertise</a><a href="join.html">Join</a><a href="app.html">App</a><a href="deck.html">Deck</a><a href="ads.html">Meta ads</a><a href="print.html">Print</a><a href="social.html" aria-current="page">Social</a>
+</nav>
+<p class="kicker">Organic social kit</p>
+<h1 class="brand" style="font-size:clamp(2.2rem,7vw,3.5rem)">How Scrolll pays, in one picture.</h1>
+<p class="lede">An explainer in three sizes and a five-slide carousel. No made-up numbers: the split stays TBD, disclosed before you earn.</p>
+
+<h2>Explainer</h2>
+<p class="cap">Scroll → seen = counted → split. Five-second read.</p>
+<div class="gal wide">
+  <figure><img src="social/explainer-wide.png" alt="Explainer: When an ad runs, you get paid. 1 Scroll, 2 Seen = counted, 3 Split it." width="1600" height="900" loading="lazy"/><figcaption>Wide 1600×900 · deck, site<a href="social/explainer-wide.png" download>Download</a></figcaption></figure>
+  <figure><img src="social/explainer-square.png" alt="Square version of the explainer" width="1080" height="1080" loading="lazy"/><figcaption>Square 1080 · feed<a href="social/explainer-square.png" download>Download</a></figcaption></figure>
+</div>
+<div class="gal three" style="margin-top:1.25rem">
+  <figure><img src="social/explainer-story.png" alt="Story version of the explainer" width="1080" height="1920" loading="lazy"/><figcaption>Story 1080×1920<a href="social/explainer-story.png" download>Download</a></figcaption></figure>
+</div>
+
+<h2>Carousel · 5 slides</h2>
+<p class="cap">4:5 (1080×1350). Hook → labeled ads → what counts → the split → you choose.</p>
+<div class="gal three">
+  <figure><img src="social/carousel-1.png" alt="Slide 1: They sell your eyes." width="1080" height="1350" loading="lazy"/><figcaption>1 · Hook<a href="social/carousel-1.png" download>Download</a></figcaption></figure>
+  <figure><img src="social/carousel-2.png" alt="Slide 2: Ads say Sponsored. Always." width="1080" height="1350" loading="lazy"/><figcaption>2 · Labeled<a href="social/carousel-2.png" download>Download</a></figcaption></figure>
+  <figure><img src="social/carousel-3.png" alt="Slide 3: Seen = counted. Half on screen for 1 second." width="1080" height="1350" loading="lazy"/><figcaption>3 · Counted<a href="social/carousel-3.png" download>Download</a></figcaption></figure>
+  <figure><img src="social/carousel-4.png" alt="Slide 4: Every seen ad gets split. You, creator, Scrolll." width="1080" height="1350" loading="lazy"/><figcaption>4 · Split<a href="social/carousel-4.png" download>Download</a></figcaption></figure>
+  <figure><img src="social/carousel-5.png" alt="Slide 5: You pick the ads. Or none. Join early access." width="1080" height="1350" loading="lazy"/><figcaption>5 · Choose + join<a href="social/carousel-5.png" download>Download</a></figcaption></figure>
+</div>
+<div class="copy"><strong>Caption to post with it</strong><br/>Your feed already sells your attention. Scrolll splits each seen ad with you. Split disclosed before you earn. Early access: link in bio.</div>
+<p class="cap" style="margin-top:1.5rem">Sources: <a href="social/explainer.html?size=square">explainer.html</a> (<code>?size=square|wide|story</code>) and <a href="social/carousel.html?slide=1">carousel.html</a> (<code>?slide=1–5</code>).</p>
+</div></body></html>

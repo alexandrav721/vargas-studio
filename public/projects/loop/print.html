@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Loop print</title>
+<meta name="description" content="A tear-off flyer and a 4×6 card for the Financial District launch. Print-ready PDFs.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap">
+<style>
+  :root{--ink:#17221c;--cream:#faf9f5;--sage:#566354;--lime:#d8ff64;--line:#dddfda}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:Archivo,system-ui,sans-serif;background:var(--cream);color:var(--ink);padding:72px 16px 80px}
+  .studio-back{position:fixed;top:12px;left:12px;z-index:40;font:600 12px/1 Archivo,system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#5F5A54;text-decoration:none;background:#fff;border:1px solid #E5E1DC;padding:.55rem .75rem}
+  .wrap{max-width:1080px;margin:0 auto}
+  h1{font-weight:600;font-size:clamp(2.4rem,7vw,4rem);letter-spacing:-.04em;line-height:.95}
+  h1 em{font-family:"Instrument Serif",Georgia,serif;font-weight:400;color:var(--sage)}
+  .lede{color:var(--sage);margin-top:14px;max-width:52ch;line-height:1.55}
+  .piece{margin-top:56px;padding-top:28px;border-top:1px solid var(--line);display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:start}
+  .piece h2{font-weight:600;font-size:1.6rem;letter-spacing:-.02em}
+  .meta{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:var(--sage);margin-top:6px}
+  .piece ul{list-style:none;margin-top:18px;display:grid;gap:8px;color:var(--ink);line-height:1.45}
+  .piece li::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--sage);margin:0 10px 2px 0}
+  .btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:.8rem 1.2rem;border-radius:999px;background:var(--ink);color:var(--cream);text-decoration:none;font-weight:600;font-size:.95rem}
+  .btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--ink)}
+  .shots{display:grid;gap:16px}
+  .shots img{display:block;width:100%;height:auto;border-radius:6px;box-shadow:0 10px 32px rgba(23,34,28,.16);background:#fff}
+  .shots figcaption{font-size:.8rem;color:var(--sage);margin-top:6px}
+  .note{margin-top:56px;padding:20px;border-radius:14px;background:#fff;border:1px solid var(--line);color:var(--sage);line-height:1.55;font-size:.95rem}
+  .note b{color:var(--ink)}
+  @media(max-width:760px){.piece{grid-template-columns:1fr;gap:24px}.piece .shots{order:-1}}
+</style>
+</head>
+<body>
+<a class="studio-back" href="/">← Vargas Studio</a>
+<main class="wrap">
+  <h1>Loop <em>on paper</em></h1>
+  <p class="lede">For lobby boards, laundry rooms and coffee shop corkboards in the Financial District. One line, one QR code, one place to go.</p>
+
+  <section class="piece">
+    <div>
+      <h2>Tear-off flyer</h2>
+      <p class="meta">US Letter · 8.5 × 11 in</p>
+      <ul>
+        <li>Nine tear-off tabs with the web address</li>
+        <li>QR code opens celebrateloop.com (tested)</li>
+        <li>Prints fine on a home printer, white paper</li>
+      </ul>
+      <div class="btns">
+        <a class="btn" href="print/loop-flyer.pdf" download>Download PDF</a>
+        <a class="btn ghost" href="print/flyer.html">Open HTML</a>
+      </div>
+    </div>
+    <figure class="shots"><img src="print/preview-flyer.png" width="1082" height="1400" alt="Flyer: Before you buy it, check your block. Borrow it, buy it, earn from yours. QR code and tear-off tabs."></figure>
+  </section>
+
+  <section class="piece">
+    <div>
+      <h2>Card</h2>
+      <p class="meta">4 × 6 in · two sides</p>
+      <ul>
+        <li>Front: Max your stuff.</li>
+        <li>Back: QR code and the web address</li>
+        <li>For counters, tip jars and the doorman’s desk</li>
+      </ul>
+      <div class="btns">
+        <a class="btn" href="print/loop-card.pdf" download>Download PDF</a>
+        <a class="btn ghost" href="print/card.html">Open HTML</a>
+      </div>
+    </div>
+    <div class="shots">
+      <figure><img src="print/preview-card-front.png" width="1200" height="800" alt="Card front: Max your stuff. Borrow it. Buy it. Earn from yours."><figcaption>Front</figcaption></figure>
+      <figure><img src="print/preview-card-back.png" width="1200" height="800" alt="Card back: Before you buy it, check your block, with a QR code."><figcaption>Back</figcaption></figure>
+    </div>
+  </section>
+
+  <p class="note"><b>Printing.</b> Flyer: print at 100% (“actual size”), then cut along the dashed lines between tabs. Card: the PDF is exactly 6 × 4 in with no bleed, so ask the print shop to add 1/8 in bleed to the dark front, or print it on cardstock and trim.</p>
+</main>
+</body>
+</html>

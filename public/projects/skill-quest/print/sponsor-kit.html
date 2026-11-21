@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Skill Quest Sponsor Kit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+@page{size:Letter;margin:0}
+:root{--bg:#F6F1E7;--sf:#FFFFFF;--tx:#161412;--ac:#C7391F;--hi:#F5B82E;--teal:#1F7A6B;--track:#EDE5D4}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:#ccc}
+body{font-family:"Bricolage Grotesque",sans-serif;color:var(--tx);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.page{width:8.5in;height:11in;margin:0 auto;background:var(--bg);padding:.55in .6in .5in;position:relative;overflow:hidden;page-break-after:always;display:flex;flex-direction:column}
+@media screen{.page{margin:24px auto;box-shadow:0 2px 12px rgba(0,0,0,.25)}}
+.brand{display:flex;align-items:center;gap:8px;font:800 15pt "Bricolage Grotesque"}
+h1{font:800 44pt/.98 "Bricolage Grotesque";letter-spacing:-.02em;margin-top:.28in}
+h1 em{font-style:normal;color:var(--ac)}
+.lede{font:500 14pt/1.35 "Bricolage Grotesque";margin-top:.14in;max-width:6.2in}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:.22in;margin-top:.32in}
+.box{background:var(--sf);border:2.5px solid var(--tx);border-radius:12px;padding:.18in .2in;box-shadow:4px 4px 0 var(--tx)}
+.box h2{font:700 9.5pt "JetBrains Mono";letter-spacing:.04em;margin-bottom:.08in}
+.box li{list-style:none;font:500 11.5pt/1.35 "Bricolage Grotesque";padding-left:.2in;position:relative;margin-top:.06in}
+.box li:before{content:"";position:absolute;left:0;top:.08in;width:.09in;height:.09in;background:var(--ac);border:1.5px solid var(--tx);border-radius:2px}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:.16in;margin-top:.26in}
+.step{border-top:3px solid var(--tx);padding-top:.08in}
+.step b{font:700 9pt "JetBrains Mono";color:var(--ac)}
+.step p{font:700 12pt/1.25 "Bricolage Grotesque";margin-top:.04in}
+.price{margin-top:.3in;background:var(--hi);border:2.5px solid var(--tx);border-radius:12px;padding:.2in .24in;display:grid;grid-template-columns:auto 1fr;gap:.24in;align-items:center;box-shadow:4px 4px 0 var(--tx)}
+.price .big{font:800 40pt/1 "Bricolage Grotesque"}
+.price p{font:500 11.5pt/1.35 "Bricolage Grotesque"}
+.honest{margin-top:.22in;font:500 10.5pt/1.4 "Bricolage Grotesque";max-width:7.2in}
+.foot{margin-top:auto;display:flex;justify-content:space-between;font:700 9pt "JetBrains Mono";border-top:2px solid var(--tx);padding-top:.1in}
+/* page 2: cards */
+.p2 h1{font-size:28pt;margin-top:.16in}
+.p2 .lede{font-size:11.5pt}
+.grid{display:grid;grid-template-columns:repeat(3,2.25in);grid-auto-rows:3.15in;gap:.2in;justify-content:center;margin-top:.22in}
+.c{background:var(--sf);border:2px solid var(--tx);border-radius:12px;padding:.13in .14in;display:flex;flex-direction:column;position:relative}
+.c:after{content:"";position:absolute;inset:-.1in;border:1px dashed #8a837a;border-radius:16px;pointer-events:none}
+.c .t{display:flex;justify-content:space-between;font:700 7.5pt "JetBrains Mono"}
+.rar{display:flex;gap:4px}.rar i{display:inline-block;width:.1in;height:.1in;border:1.2px solid var(--tx);border-radius:2px}
+.line{border-bottom:1.5px solid var(--tx);height:.32in;font:700 7pt "JetBrains Mono";padding-top:.02in;color:#4D4741}
+.c .nmline{height:.42in;margin-top:.06in}
+.s{display:grid;grid-template-columns:.62in 1fr .3in;gap:.05in;align-items:center;margin-top:.1in;font:700 7.5pt "JetBrains Mono"}
+.s .tr{height:.13in;border:1.2px solid var(--tx);border-radius:9px;background:repeating-linear-gradient(90deg,transparent 0 calc(10% - 1px),#C9C1B3 calc(10% - 1px) 10%)}
+.s .n{border-bottom:1.2px solid var(--tx);height:.16in}
+.pass{display:flex;justify-content:space-between;align-items:center;margin-top:.16in;font:700 7.5pt "JetBrains Mono"}.pass .rar i{width:.14in;height:.14in}
+.fix{margin-top:auto;font:700 7pt "JetBrains Mono";color:#4D4741}
+.fix div{border-bottom:1px solid #8a837a;height:.2in}
+</style>
+</head>
+<body>
+
+<section class="page">
+  <div class="brand"><svg width="22" height="26" viewBox="0 0 24 28" aria-hidden="true"><g transform="rotate(-8 12 16)"><rect x="1" y="3" width="22" height="24" rx="4" fill="#C7391F" stroke="#161412" stroke-width="2"/><path d="M12 9l2 4.5 4.8.4-3.7 3 1.2 4.7L12 19l-4.3 2.6 1.2-4.7-3.7-3 4.8-.4z" fill="#F5B82E"/></g></svg>SKILL QUEST · SPONSOR KIT</div>
+  <h1>Host a weekly skill battle <em>on your tool</em></h1>
+  <p class="lede">Skill Quest is a game that teaches beginners to build Claude skills. Each week, one battle: everyone's skill runs the same hidden tasks, gets scored, and lands on a leaderboard. You pick the theme. Builders spend the week learning your tool.</p>
+
+  <div class="cols">
+    <div class="box"><h2>YOU GET</h2><ul>
+      <li>A battle named for your tool: “Best skill built with ___”</li>
+      <li>Your logo and prize on the battle page and every result card</li>
+      <li>A results recap for your team: top skills, where builders got stuck, what they asked for</li>
+      <li>Permission to share the winning skills (builders opt in)</li>
+    </ul></div>
+    <div class="box"><h2>WHAT STAYS FAIR</h2><ul>
+      <li>Same hidden tasks for every entry</li>
+      <li>AI judge with a published rubric, plus community votes</li>
+      <li>Your tool gets no special treatment from the judge</li>
+      <li>Every builder sees why they got their score</li>
+    </ul></div>
+  </div>
+
+  <div class="steps">
+    <div class="step"><b>WEEK 0</b><p>We agree the theme, rules and your prize</p></div>
+    <div class="step"><b>WEEK 1</b><p>Battle runs for 7 days</p></div>
+    <div class="step"><b>WEEK 2</b><p>Winners announced, your recap delivered</p></div>
+  </div>
+
+  <div class="price">
+    <div class="big">$500</div>
+    <p><strong>Founding sponsor, Battle #1.</strong> You fund the prize on top. Later battles are priced once there's real reach data to show you.</p>
+  </div>
+
+  <p class="honest"><strong>Where we are, honestly:</strong> pre-launch. Battle #0 runs by hand to test the scoring; Battle #1 is the first public battle. There are no audience numbers yet, and that's why the price is low.</p>
+
+  <div class="foot"><span>SKILL QUEST</span><span>vargas-studio.pages.dev/projects/skill-quest/landing/</span></div>
+</section>
+
+<section class="page p2">
+  <div class="brand"><svg width="22" height="26" viewBox="0 0 24 28" aria-hidden="true"><g transform="rotate(-8 12 16)"><rect x="1" y="3" width="22" height="24" rx="4" fill="#C7391F" stroke="#161412" stroke-width="2"/><path d="M12 9l2 4.5 4.8.4-3.7 3 1.2 4.7L12 19l-4.3 2.6 1.2-4.7-3.7-3 4.8-.4z" fill="#F5B82E"/></g></svg>SKILL QUEST · BATTLE #0 CARDS</div>
+  <h1>Print, cut, <em>score by hand</em></h1>
+  <p class="lede">For an in-person Battle #0 or a meetup. Run each skill on the same 5 tasks, give it 0–100 on each stat, and write the top fix. Cut along the dashed lines.</p>
+  <div class="grid">
+    <!-- 6 identical blank cards -->
+    <div class="c"><div class="t"><span class="rar"><i></i><i></i><i></i></span><span>#____</span></div><div class="line nmline">SKILL NAME</div><div class="line">BUILDER</div><div class="s"><span>POWER</span><span class="tr"></span><span class="n"></span></div><div class="s"><span>SPEED</span><span class="tr"></span><span class="n"></span></div><div class="s"><span>CLARITY</span><span class="tr"></span><span class="n"></span></div><div class="pass">TASKS PASSED <span class="rar"><i></i><i></i><i></i><i></i><i></i></span></div><div class="fix">TOP FIX<div></div><div></div></div></div>
+    <div class="c"><div class="t"><span class="rar"><i></i><i></i><i></i></span><span>#____</span></div><div class="line nmline">SKILL NAME</div><div class="line">BUILDER</div><div class="s"><span>POWER</span><span class="tr"></span><span class="n"></span></div><div class="s"><span>SPEED</span><span class="tr"></span><span class="n"></span></div><div class="s"><span>CLARITY</span><span class="tr"></span><span class="n"></span></div><div class="pass">TASKS PASSED <span class="rar"><i></i><i></i><i></i><i></i><i></i></span></div><div class="fix">TOP FIX<div></div><div></div></div></div>
+    <div class="c"><div class="t"><span class="rar"><i></i><i></i><i></i></span><span>#____</span></div><div class="line nmline">SKILL NAME</div><div class="line">BUILDER</div><div class="s"><span>POWER</span><span class="tr"></span><span class="n"></span></div><div class="s"><span>SPEED</span><span class="tr"></span><span class="n"></span></div><div class="s"><span>CLARITY</span><span class="tr"></span><span class="n"></span></div><div class="pass">TASKS PASSED <span class="rar"><i></i><i></i><i></i><i></i><i></i></span></div><div class="fix">TOP FIX<div></div><div></div></div></div>
+    <div class="c"><div class="t"><span class="rar"><i></i><i></i><i></i></span><span>#____</span></div><div class="line nmline">SKILL NAME</div><div class="line">BUILDER</div><div class="s"><span>POWER</span><span class="tr"></span><span class="n"></span></div><div class="s"><span>SPEED</span><span class="tr"></span><span class="n"></span></div><div class="s"><span>CLARITY</span><span class="tr"></span><span class="n"></span></div><div class="pass">TASKS PASSED <span class="rar"><i></i><i></i><i></i><i></i><i></i></span></div><div class="fix">TOP FIX<div></div><div></div></div></div>
+    <div class="c"><div class="t"><span class="rar"><i></i><i></i><i></i></span><span>#____</span></div><div class="line nmline">SKILL NAME</div><div class="line">BUILDER</div><div class="s"><span>POWER</span><span class="tr"></span><span class="n"></span></div><div class="s"><span>SPEED</span><span class="tr"></span><span class="n"></span></div><div class="s"><span>CLARITY</span><span class="tr"></span><span class="n"></span></div><div class="pass">TASKS PASSED <span class="rar"><i></i><i></i><i></i><i></i><i></i></span></div><div class="fix">TOP FIX<div></div><div></div></div></div>
+    <div class="c"><div class="t"><span class="rar"><i></i><i></i><i></i></span><span>#____</span></div><div class="line nmline">SKILL NAME</div><div class="line">BUILDER</div><div class="s"><span>POWER</span><span class="tr"></span><span class="n"></span></div><div class="s"><span>SPEED</span><span class="tr"></span><span class="n"></span></div><div class="s"><span>CLARITY</span><span class="tr"></span><span class="n"></span></div><div class="pass">TASKS PASSED <span class="rar"><i></i><i></i><i></i><i></i><i></i></span></div><div class="fix">TOP FIX<div></div><div></div></div></div>
+  </div>
+  <div class="foot"><span>RARITY: COLOR 1 BOX = COMMON, 2 = RARE, 3 = EPIC</span><span>SKILL QUEST</span></div>
+</section>
+
+</body>
+</html>

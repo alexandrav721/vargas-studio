@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Skill Quest Print</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F6F1E7;--sf:#FFFFFF;--tx:#161412;--muted:#4D4741;--ac:#C7391F}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--tx);font:17px/1.5 "Bricolage Grotesque",sans-serif}
+.studio-back{position:fixed;top:12px;left:12px;z-index:40;font:700 12px/1 "JetBrains Mono",monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--tx);text-decoration:none;background:var(--sf);border:2px solid var(--tx);border-radius:8px;padding:8px 10px}
+.wrap{max-width:1040px;margin:0 auto;padding:72px 16px 64px}
+h1{font:800 clamp(34px,6vw,56px)/1 "Bricolage Grotesque";letter-spacing:-.02em}
+h1 em{font-style:normal;color:var(--ac)}
+.lede{color:var(--muted);margin:14px 0 24px;max-width:62ch}
+.btn{display:inline-block;font:700 17px "Bricolage Grotesque";background:var(--ac);color:#fff;border:2.5px solid var(--tx);border-radius:10px;padding:12px 18px;box-shadow:4px 4px 0 var(--tx);text-decoration:none}
+.pages{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:36px}
+figure img{width:100%;height:auto;display:block;border:2px solid var(--tx);border-radius:6px;box-shadow:5px 5px 0 var(--tx);background:#fff}
+figcaption{margin-top:12px;font-size:16px}
+figcaption b{display:block;font:700 13px "JetBrains Mono";letter-spacing:.04em}
+@media (max-width:700px){.pages{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<a class="studio-back" href="/">← Studio</a>
+<div class="wrap">
+  <h1>Skill Quest <em>print kit</em></h1>
+  <p class="lede">Two US Letter pages. One gets the first money in; the other runs Battle #0 by hand.</p>
+  <a class="btn" href="sponsor-kit.pdf" download>Download PDF (2 pages)</a>
+  <div class="pages">
+    <figure><img src="page-1.png" alt="Sponsor one-pager: host a weekly skill battle on your tool, founding price $500" width="816" height="1056"><figcaption><b>PAGE 1 · SPONSOR ONE-PAGER</b>Send it with sponsor outreach, the first test in the money plan.</figcaption></figure>
+    <figure><img src="page-2.png" alt="Six blank skill cards to print, cut and score by hand" width="816" height="1056"><figcaption><b>PAGE 2 · BATTLE #0 CARDS</b>Six blank cards to score by hand at a meetup.</figcaption></figure>
+  </div>
+</div>
+</body>
+</html>

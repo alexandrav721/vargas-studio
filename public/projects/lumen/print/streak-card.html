@@ -1,0 +1,155 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Lumen — Season streak card (print)</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet"/>
+<style>
+@page{size:letter;margin:0}
+:root{--ink:#12151c;--paper:#faf8f3;--lumen:#c9a227;--gold-ink:#7a5f10;--sage-ink:#3f6650;--line:#c9c3b5;--soft:#4b5160;--display:"Fraunces",Georgia,serif;--sans:"DM Sans",system-ui,sans-serif}
+*{box-sizing:border-box;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+html,body{margin:0}
+body{background:#2a2f38;font-family:var(--sans);color:var(--ink)}
+.studio-back{position:fixed;top:12px;left:12px;z-index:40;font:600 11px/1 var(--sans);letter-spacing:.1em;text-transform:uppercase;color:rgba(244,241,234,.85);text-decoration:none;background:rgba(18,21,28,.9);border:1px solid rgba(244,241,234,.2);padding:.55rem .8rem}
+.sheet{width:8.5in;height:11in;margin:.5in auto;background:var(--paper);padding:.5in .55in;position:relative;overflow:hidden;page-break-after:always;break-after:page}
+.sheet:last-child{page-break-after:auto;break-after:auto}
+@media print{body{background:#fff}.studio-back{display:none}.sheet{margin:0}}
+body.solo .studio-back{display:none}body.solo .sheet{margin:0}body.solo{background:var(--paper)}
+.kicker{font:700 9pt/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--sage-ink);margin:0}
+h1{font:700 34pt/1 var(--display);letter-spacing:-.02em;margin:.12in 0 .06in}
+.sub{font:500 12pt/1.35 var(--sans);color:var(--soft);margin:0}
+.mark{position:absolute;top:.5in;right:.55in;text-align:right}
+.mark b{font:700 18pt/1 var(--display);display:block}
+.mark span{font:700 7.5pt/1 var(--sans);letter-spacing:.18em;text-transform:uppercase;color:var(--gold-ink)}
+.field{margin-top:.22in}
+.field label{display:block;font:700 8.5pt/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--soft)}
+.field .ln{border-bottom:1.2pt solid var(--ink);height:.36in}
+.row2{display:grid;grid-template-columns:1fr 1.9in;gap:.3in}
+.body{display:grid;grid-template-columns:4.15in 1fr;gap:.32in;margin-top:.28in}
+/* grid */
+.grid{display:grid;grid-template-columns:.42in repeat(7,.5in);gap:.06in;align-items:center}
+.grid .h{font:700 7.5pt/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--soft);text-align:center}
+.grid .w{font:700 8.5pt/1 var(--sans);color:var(--soft)}
+.box{width:.5in;height:.44in;border:1.2pt solid var(--ink);border-radius:5pt;position:relative;background:#fff}
+.box.m66{border-color:var(--gold-ink);border-width:2pt}
+.box.m66::after{content:"66";position:absolute;right:3pt;top:2pt;font:700 7pt/1 var(--sans);color:var(--gold-ink)}
+.gridnote{font:500 8.5pt/1.35 var(--sans);color:var(--soft);margin:.12in 0 0}
+/* side */
+h2{font:700 15pt/1.1 var(--display);margin:0 0 .08in}
+.side section{margin-bottom:.26in}
+.ifthen p{font:500 11pt/1.2 var(--sans);margin:.1in 0 0}
+.ifthen .ln{border-bottom:1pt solid var(--ink);height:.3in}
+.tickets{display:flex;gap:.1in;margin-top:.1in}
+.ticket{flex:1;height:.62in;border:1.2pt dashed var(--gold-ink);border-radius:6pt;display:flex;align-items:center;justify-content:center;position:relative;background:#fffaf0}
+.ticket span{font:700 7pt/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--gold-ink)}
+.ticket::before,.ticket::after{content:"";position:absolute;top:50%;width:10pt;height:10pt;border-radius:50%;background:var(--paper);border:1.2pt dashed var(--gold-ink);transform:translateY(-50%)}
+.ticket::before{left:-6pt}.ticket::after{right:-6pt}
+.rules{list-style:none;padding:0;margin:.06in 0 0}
+.rules li{font:500 10pt/1.35 var(--sans);padding:.05in 0 .05in .26in;position:relative}
+.rules li svg{position:absolute;left:0;top:.07in}
+.stucklist{font:500 9.5pt/1.55 var(--sans);color:var(--ink);margin:.06in 0 0;padding:0;list-style:none;display:grid;grid-template-columns:1fr 1fr;column-gap:.12in}
+.foot{position:absolute;left:.55in;right:.55in;bottom:.4in;display:flex;justify-content:space-between;gap:.3in;font:500 7.5pt/1.35 var(--sans);color:var(--soft);border-top:.8pt solid var(--line);padding-top:.08in}
+/* page 2 */
+.cards{display:grid;grid-template-columns:repeat(2,3.6in);grid-auto-rows:2.62in;gap:0;margin:.2in auto 0;width:7.2in}
+.card{border:1pt dashed #8a8475;padding:.2in .24in;position:relative;background:#fff}
+.card .k{font:700 7.5pt/1 var(--sans);letter-spacing:.18em;text-transform:uppercase;color:var(--sage-ink)}
+.card h3{font:700 17pt/1.05 var(--display);margin:.08in 0 .02in}
+.card .g{font:700 10pt/1 var(--sans);color:var(--gold-ink);margin:0 0 .1in}
+.card ol{margin:0;padding-left:.2in;font:500 10pt/1.35 var(--sans)}
+.card ol li{margin-bottom:.03in}
+.card .done{position:absolute;left:.24in;right:.24in;bottom:.18in;display:flex;align-items:center;gap:.08in;font:700 8pt/1 var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--soft)}
+.card .done i{display:inline-block;width:.18in;height:.18in;border:1.2pt solid var(--ink);border-radius:3pt}
+.cut{display:flex;align-items:center;gap:.08in;font:700 8pt/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--soft);margin-top:.16in}
+</style></head><body>
+<a class="studio-back" href="/">← Vargas Studio</a>
+
+<!-- PAGE 1: fridge card -->
+<div class="sheet" id="p1">
+  <p class="kicker">Lumen · fridge card</p>
+  <h1>Season streak card</h1>
+  <p class="sub">One season goal. 13 weeks. A streak that forgives.</p>
+  <div class="mark"><b>Lumen</b><span>Free forever core</span></div>
+
+  <div class="row2">
+    <div class="field"><label>This season I am moving…</label><div class="ln"></div></div>
+    <div class="field"><label>Start day</label><div class="ln"></div></div>
+  </div>
+
+  <div class="body">
+    <div>
+      <div class="grid" aria-label="91 check-in boxes, 13 weeks of 7 days">
+        <span></span><span class="h">1</span><span class="h">2</span><span class="h">3</span><span class="h">4</span><span class="h">5</span><span class="h">6</span><span class="h">7</span>
+        <!-- rows inserted by script -->
+      </div>
+      <p class="gridnote">Fill a box for every check-in. Undated: start any day, skip no row.<br/>
+      <b style="color:var(--gold-ink)">66</b> = day 66, the median in one habit study. People ranged from 18 to 254 days.</p>
+    </div>
+
+    <div class="side">
+      <section class="ifthen">
+        <h2>My if-then</h2>
+        <p>When</p><div class="ln"></div>
+        <p>I will</p><div class="ln"></div>
+        <p class="gridnote" style="margin-top:.08in">Pick a cue you already have: coffee, keys, lunch. Make the move small.</p>
+      </section>
+      <section>
+        <h2>Return tickets</h2>
+        <p class="gridnote" style="margin:0">Missed a day? Punch one. The streak stays.</p>
+        <div class="tickets"><div class="ticket"><span>Ticket 1</span></div><div class="ticket"><span>Ticket 2</span></div><div class="ticket"><span>Ticket 3</span></div></div>
+      </section>
+      <section>
+        <h2>House rules</h2>
+        <ul class="rules">
+          <li><svg width="12" height="12" viewBox="0 0 12 12"><rect x="1" y="1" width="10" height="10" rx="2" fill="none" stroke="#12151c" stroke-width="1.5"/><path d="M3 6.2l2 2 4-4.4" fill="none" stroke="#12151c" stroke-width="1.6"/></svg>Small counts. Two minutes is a check-in.</li>
+          <li><svg width="12" height="12" viewBox="0 0 12 12"><rect x="1" y="1" width="10" height="10" rx="2" fill="none" stroke="#7a5f10" stroke-width="1.5" stroke-dasharray="2 1.5"/></svg>One miss: punch a ticket. No backlog debt.</li>
+          <li><svg width="12" height="12" viewBox="0 0 12 12"><circle cx="6" cy="6" r="4.5" fill="none" stroke="#3f6650" stroke-width="1.5"/><path d="M6 3.5v3l2 1" fill="none" stroke="#3f6650" stroke-width="1.5"/></svg>Two misses in a row: play a Stuck game today.</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Stuck? Name the fog</h2>
+        <ul class="stucklist"><li>Inherited voice</li><li>Loyalty guilt</li><li>Attention stolen</li><li>No clear next step</li><li>Perfection stall</li><li>Energy crash</li></ul>
+        <p class="gridnote">Games on the pocket cards, page 2.</p>
+      </section>
+    </div>
+  </div>
+
+  <div class="foot"><span>Lumen · psychology-powered goal game. Concept print, not a product yet.</span><span>Ideas from research on if-then plans, habit timing and broken streaks.</span></div>
+</div>
+
+<!-- PAGE 2: stuck game pocket cards -->
+<div class="sheet" id="p2">
+  <p class="kicker">Lumen · pocket cards</p>
+  <h1 style="font-size:28pt">Stuck games</h1>
+  <p class="sub">Cut out. Keep one in your wallet. Name the fog, play one, check in.</p>
+  <div class="cut"><svg width="18" height="12" viewBox="0 0 18 12"><circle cx="3.5" cy="3" r="2.4" fill="none" stroke="#4b5160" stroke-width="1.3"/><circle cx="3.5" cy="9" r="2.4" fill="none" stroke="#4b5160" stroke-width="1.3"/><path d="M5.5 4.2L17 9.5M5.5 7.8L17 2.5" stroke="#4b5160" stroke-width="1.3"/></svg>Cut on the dashed lines</div>
+  <div class="cards">
+    <div class="card"><span class="k">Stuck game 1</span><h3>Inherited voice</h3><p class="g">Whose line is it?</p>
+      <ol><li>Write the sentence stopping you.</li><li>Whose words were they first?</li><li>Rewrite it in your own voice.</li><li>Do one 2-minute move.</li></ol>
+      <div class="done"><i></i>Back in · check in</div></div>
+    <div class="card"><span class="k">Stuck game 2</span><h3>Loyalty guilt</h3><p class="g">Both, not either</p>
+      <ol><li>Name who you fear letting down.</li><li>Write how your goal helps them too.</li><li>Give them 10 minutes. Then 10 to you.</li></ol>
+      <div class="done"><i></i>Back in · check in</div></div>
+    <div class="card"><span class="k">Stuck game 3</span><h3>Attention stolen</h3><p class="g">Other room, 10 minutes</p>
+      <ol><li>Phone goes in another room.</li><li>Set a 10-minute timer.</li><li>Count 3, 2, 1. Start the first line.</li></ol>
+      <div class="done"><i></i>Back in · check in</div></div>
+    <div class="card"><span class="k">Stuck game 4</span><h3>No clear next step</h3><p class="g">Film-able move</p>
+      <ol><li>Write the next step.</li><li>Could someone film you doing it? If not, shrink it.</li><li>Shrink until it takes 2 minutes. Do it.</li></ol>
+      <div class="done"><i></i>Back in · check in</div></div>
+    <div class="card"><span class="k">Stuck game 5</span><h3>Perfection stall</h3><p class="g">Ugly first draft</p>
+      <ol><li>Set 5 minutes.</li><li>Make a deliberately bad version.</li><li>Fix one thing. Stop there.</li></ol>
+      <div class="done"><i></i>Back in · check in</div></div>
+    <div class="card"><span class="k">Stuck game 6</span><h3>Energy crash</h3><p class="g">Tiny or rest</p>
+      <ol><li>Pick one, out loud:</li><li>Tiny: the 2-minute version, now.</li><li>Rest: punch a return ticket. Sleep.</li></ol>
+      <div class="done"><i></i>Back in · check in</div></div>
+  </div>
+  <div class="foot"><span>Lumen · Stuck games. Concept print, not a product yet.</span><span>Naming the obstacle and planning the response comes from research on mental contrasting and if-then plans.</span></div>
+</div>
+
+<script>
+const g=document.querySelector('#p1 .grid');
+for(let w=1;w<=13;w++){
+  const l=document.createElement('span');l.className='w';l.textContent='W'+w;g.appendChild(l);
+  for(let d=1;d<=7;d++){const b=document.createElement('span');b.className='box';const n=(w-1)*7+d;if(n===66)b.classList.add('m66');b.title='Day '+n;g.appendChild(b);}
+}
+const p=new URLSearchParams(location.search).get('page');
+if(p){document.body.classList.add('solo');document.querySelectorAll('.sheet').forEach(s=>{if(s.id!=='p'+p)s.remove();});}
+</script>
+</body></html>

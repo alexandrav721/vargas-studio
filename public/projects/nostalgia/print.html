@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Scrollback — Print</title>
+  <meta name="description" content="Printable Scrollback year cards for 2001–2004 and a 2001–2004 bingo sheet, built from the catalog. US Letter PDF." />
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg0: #07090d; --bg1: #121018; --ink: #f4f0e6; --muted: #b7ae9a;
+      --line: rgba(244,240,230,.14); --brand: #b8ff00; --brand-2: #ff00aa;
+      --display: "Syne", sans-serif; --body: "IBM Plex Sans", sans-serif; --mono: "IBM Plex Mono", monospace;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; min-height: 100vh; color: var(--ink); font-family: var(--body); line-height: 1.5;
+      background:
+        radial-gradient(ellipse at 20% 0%, rgba(184,255,0,.12), transparent 45%),
+        linear-gradient(180deg, #0a0a0a, #121018 60%, #0a0a0a);
+    }
+    .studio-back {
+      position: fixed; top: .65rem; left: .65rem; z-index: 40;
+      padding: .45rem .8rem; border: 1px solid rgba(244,240,230,.28); background: #0c0c10;
+      color: var(--ink); font: 500 .72rem/1 var(--mono); letter-spacing: .06em;
+      text-transform: uppercase; text-decoration: none;
+    }
+    .wrap { width: min(100% - 2rem, 980px); margin: 0 auto; padding: 4.5rem 0 4rem; }
+    nav.top { display: flex; flex-wrap: wrap; gap: .7rem 1.1rem; margin-bottom: 2rem; font-size: .72rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; }
+    nav.top a { color: var(--muted); text-decoration: none; }
+    nav.top a:hover, nav.top a[aria-current="page"] { color: var(--brand); }
+    .kicker { margin: 0 0 .7rem; font-size: .72rem; letter-spacing: .18em; text-transform: uppercase; color: var(--brand-2); font-weight: 700; }
+    h1 { margin: 0; font: 800 clamp(2.2rem, 8vw, 3.6rem)/.95 var(--display); letter-spacing: -.04em; }
+    .lede { margin: 1rem 0 0; color: var(--muted); max-width: 36rem; font-size: 1.05rem; }
+    .cta-row { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1.5rem; }
+    .btn { display: inline-flex; padding: .85rem 1.25rem; background: var(--brand); color: #0a0a0a; font: 700 .95rem var(--body); text-decoration: none; border: 1px solid transparent; }
+    .btn-ghost { background: transparent; color: var(--ink); border-color: rgba(244,240,230,.3); }
+    .sheets { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr)); gap: 1.5rem; margin-top: 2.5rem; }
+    figure { margin: 0; border: 1px solid var(--line); background: rgba(18,16,24,.7); }
+    figure img { display: block; width: 100%; height: auto; background: #fff; }
+    figcaption { padding: .85rem 1rem 1rem; border-top: 1px solid var(--line); }
+    figcaption b { display: block; font-family: var(--display); font-size: 1.1rem; margin-bottom: .2rem; }
+    figcaption span { color: var(--muted); font-size: .92rem; }
+    .how { margin-top: 2.5rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: .75rem; }
+    .how div { padding: .9rem 1rem; border: 1px solid var(--line); background: rgba(18,16,24,.7); }
+    .how strong { font-family: var(--mono); font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: var(--brand); display: block; margin-bottom: .25rem; }
+    .how span { color: var(--muted); font-size: .92rem; }
+    .fine { margin-top: 2rem; font: 400 .8rem/1.5 var(--mono); color: var(--muted); }
+  </style>
+</head>
+<body>
+  <a class="studio-back" href="/">← Vargas Studio</a>
+  <div class="wrap">
+    <nav class="top" aria-label="Scrollback">
+      <a href="./">Explorer</a>
+      <a href="./landing.html">Landing</a>
+      <a href="./join.html">Waitlist</a>
+      <a href="./ads.html">Meta ads</a>
+      <a href="./story.html">Story</a>
+      <a href="./print.html" aria-current="page">Print</a>
+      <a href="./social.html">Social</a>
+    </nav>
+
+    <p class="kicker">Print · US Letter · 2 pages</p>
+    <h1>2001–2004, on paper.</h1>
+    <p class="lede">Four year cards to cut out and a bingo sheet to pass around. Every site and object is a dated entry from the Scrollback catalog.</p>
+    <div class="cta-row">
+      <a class="btn" href="./print/scrollback-2001-2004.pdf" download>Download the PDF</a>
+      <a class="btn btn-ghost" href="./print/scrollback-2001-2004.html">Open print version</a>
+    </div>
+
+    <div class="sheets">
+      <figure>
+        <img src="./print/page-1.png" alt="Page 1: four year cards for 2001, 2002, 2003 and 2004, each listing three websites and three objects with had and want checkboxes" width="1224" height="1584" loading="lazy" />
+        <figcaption><b>Page 1 · Year cards</b><span>One card per year. Three sites, three objects, a style line, “I was __ years old.” Tick had or want.</span></figcaption>
+      </figure>
+      <figure>
+        <img src="./print/page-2.png" alt="Page 2: 2001 to 2004 bingo, a five by five grid of dated sites and objects with a lime free space" width="1224" height="1584" loading="lazy" />
+        <figcaption><b>Page 2 · 2001–2004 bingo</b><span>24 dated squares, one free space. Five in a row: you were there.</span></figcaption>
+      </figure>
+    </div>
+
+    <div class="how" aria-label="How to use">
+      <div><strong>Print</strong><span>Letter, 100% scale. Mostly white, so it is light on ink.</span></div>
+      <div><strong>Cut</strong><span>Page 1 splits into four 4 × 5¼ in cards on the dashed lines.</span></div>
+      <div><strong>Share</strong><span>Photo your filled card. Ask a friend which year was theirs.</span></div>
+    </div>
+
+    <p class="fine">Years are each entry’s window in the Scrollback catalog, not launch dates. Brand names appear as text only; no logos or brand art.</p>
+  </div>
+</body>
+</html>

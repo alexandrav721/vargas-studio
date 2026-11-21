@@ -1,0 +1,179 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=1080"/>
+<title>Planner ad frames · render source</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,550&family=Source+Sans+3:wght@500;700&display=swap" rel="stylesheet"/>
+<style>
+:root{--ink:#1c1917;--chalk:#f7f3ee;--sage:#5f7a6b;--deep:#3f5548;--mute:#6b645e;--gold:#c9a227;--display:"Fraunces",Georgia,serif;--sans:"Source Sans 3",system-ui,sans-serif}
+*{box-sizing:border-box}html,body{margin:0}
+body{width:1080px;height:1350px;overflow:hidden;font-family:var(--sans);color:var(--ink)}
+.studio-back{position:fixed;top:12px;left:12px;z-index:40;font:600 11px/1 var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--mute);text-decoration:none;background:#fff;border:1px solid rgba(28,25,23,.12);padding:.55rem .8rem}
+body.render .studio-back{display:none}
+.f{display:none;position:relative;width:1080px;height:1350px;padding:96px 88px 0;flex-direction:column}
+.f.on{display:flex}
+.light{background:linear-gradient(165deg,#e8ece8,#f7f3ee 48%,#ebe4da)}
+.dark{background:#1c1917;color:#f7f3ee}
+.kick{font:700 28px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--sage)}
+.dark .kick{color:var(--gold)}
+h1{font:700 118px/1.0 var(--display);letter-spacing:-.02em;margin:34px 0 0;color:var(--deep)}
+.dark h1{color:#f7f3ee}
+.sub{font:500 40px/1.3 var(--sans);margin:30px 0 0;max-width:880px;color:#3d3833}
+.dark .sub{color:rgba(247,243,238,.86)}
+.src{font:500 28px/1.3 var(--sans);color:var(--mute);margin-top:18px}
+.dark .src{color:rgba(247,243,238,.72)}
+.art{flex:1;display:flex;align-items:center;justify-content:center;padding:20px 0}
+.foot{height:118px;margin:0 -88px;padding:0 88px;display:flex;align-items:center;justify-content:space-between;border-top:2px solid rgba(28,25,23,.12);font:700 30px/1 var(--sans)}
+.dark .foot{border-color:rgba(247,243,238,.16)}
+.foot .name{font-family:var(--display);font-size:38px;color:var(--deep)}
+.dark .foot .name{color:#f7f3ee}
+.pill{background:var(--deep);color:#f7f3ee;padding:18px 30px;border-radius:999px;font:700 30px/1 var(--sans)}
+.dark .pill{background:var(--gold);color:#1c1917}
+.chips{display:flex;gap:24px;margin-top:10px}
+.chip{flex:1;border:3px solid rgba(28,25,23,.2);border-radius:28px;padding:34px 24px;background:#fff;text-align:center}
+.chip b{display:block;font:700 54px/1 var(--display);color:var(--deep)}
+.chip span{display:block;margin-top:14px;font:500 30px/1.25 var(--sans);color:#4a443e}
+.tickets{display:grid;grid-template-columns:1fr 1fr;gap:24px;width:100%}
+.ticket{border:3px dashed rgba(63,85,72,.55);border-radius:24px;padding:34px 30px;background:#fff}
+.ticket b{display:block;font:700 54px/1 var(--display);color:var(--deep)}
+.ticket span{display:block;margin-top:12px;font:500 30px/1.25 var(--sans);color:#4a443e}
+.quote{font:italic 550 92px/1.08 var(--display);margin:40px 0 0;color:#f7f3ee}
+.book{display:flex;gap:44px;align-items:center}
+</style></head><body>
+<a class="studio-back" href="/">← Vargas Studio</a>
+
+<!-- 1 · Angle A hook: paper remembers -->
+<section class="f dark" id="f1">
+  <div class="kick">Lumen · The Next Chapter</div>
+  <h1>Write the goal<br/>by hand.</h1>
+  <p class="sub">People who wrote plans on paper showed more recall activity in the brain than phone users.</p>
+  <p class="src">Umejima et al., University of Tokyo, 2021 · 48 adults</p>
+  <div class="art">
+    <svg width="760" height="470" viewBox="0 0 760 470" aria-hidden="true">
+      <rect x="40" y="20" width="600" height="430" rx="18" fill="#f7f3ee"/>
+      <rect x="40" y="20" width="600" height="70" rx="18" fill="#e3dccf"/>
+      <text x="76" y="66" font-family="Source Sans 3" font-weight="700" font-size="28" fill="#3f5548" letter-spacing="3">1 · GOAL IN FOCUS</text>
+      <text x="76" y="150" font-family="Source Sans 3" font-size="28" fill="#6b645e">This season I am moving…</text>
+      <path d="M80 214c40-18 70 10 110-6s60-20 100-4 70-12 110 2 60 8 90-6" fill="none" stroke="#3f5548" stroke-width="5" stroke-linecap="round"/>
+      <line x1="76" y1="232" x2="600" y2="232" stroke="#1c1917" stroke-opacity=".25" stroke-width="2"/>
+      <text x="76" y="300" font-family="Source Sans 3" font-size="28" fill="#6b645e">Because…</text>
+      <path d="M80 360c30-14 60 8 90-4s50-12 80 0" fill="none" stroke="#3f5548" stroke-width="5" stroke-linecap="round"/>
+      <line x1="76" y1="378" x2="600" y2="378" stroke="#1c1917" stroke-opacity=".25" stroke-width="2"/>
+      <g transform="translate(560 300) rotate(-38)">
+        <rect x="0" y="0" width="230" height="30" rx="8" fill="#c9a227"/>
+        <rect x="190" y="0" width="40" height="30" rx="6" fill="#3f5548"/>
+        <path d="M0 0 L-38 15 L0 30 Z" fill="#e3dccf"/><path d="M-26 10 L-38 15 L-26 20 Z" fill="#1c1917"/>
+      </g>
+    </svg>
+  </div>
+  <div class="foot"><span class="name">Season Chapter · free printable</span><span class="pill">Download</span></div>
+</section>
+
+<!-- 2 · Angle A payoff: one goal, one next move -->
+<section class="f light" id="f2">
+  <div class="kick">Lumen · The Next Chapter</div>
+  <h1>One goal.<br/>One next move.</h1>
+  <p class="sub">Plans that name the next step beat good intentions alone.</p>
+  <p class="src">Gollwitzer &amp; Sheeran, 2006 · meta-analysis of 94 studies</p>
+  <div class="art" style="flex-direction:column;align-items:stretch;justify-content:center">
+    <p style="font:700 30px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--mute);margin:0 0 18px">This week, pick a size</p>
+    <div class="chips">
+      <div class="chip"><b>Small</b><span>Under two minutes</span></div>
+      <div class="chip"><b>Full</b><span>The real session</span></div>
+      <div class="chip"><b>Rest</b><span>Planned, not skipped</span></div>
+    </div>
+  </div>
+  <div class="foot"><span class="name">Season Chapter · free printable</span><span class="pill">Download</span></div>
+</section>
+
+<!-- 3 · Angle B hook: no backlog debt -->
+<section class="f light" id="f3">
+  <div class="kick">Undated · no backlog debt</div>
+  <h1>Missed a week?<br/>Don’t redo it.</h1>
+  <p class="sub">Dated planners turn a gap into blank pages. This one just waits.</p>
+  <div class="art">
+    <svg width="900" height="520" viewBox="0 0 900 520" aria-hidden="true">
+      <text x="0" y="40" font-family="Source Sans 3" font-weight="700" font-size="30" fill="#6b645e" letter-spacing="3">DATED</text>
+      <g font-family="Source Sans 3" font-size="28" fill="#6b645e">
+        <rect x="0" y="62" width="900" height="150" rx="20" fill="#fff" stroke="#1c1917" stroke-opacity=".15" stroke-width="2"/>
+        <g stroke="#9a3b2f" stroke-width="5" stroke-linecap="round">
+          <line x1="40" y1="100" x2="230" y2="180"/><line x1="230" y1="100" x2="40" y2="180"/>
+          <line x1="300" y1="100" x2="490" y2="180"/><line x1="490" y1="100" x2="300" y2="180"/>
+          <line x1="560" y1="100" x2="750" y2="180"/><line x1="750" y1="100" x2="560" y2="180"/>
+        </g>
+        <text x="40" y="250" font-size="30">Mar 3 · Mar 10 · Mar 17 — empty</text>
+      </g>
+      <text x="0" y="330" font-family="Source Sans 3" font-weight="700" font-size="30" fill="#3f5548" letter-spacing="3">UNDATED</text>
+      <rect x="0" y="352" width="900" height="150" rx="20" fill="#fff" stroke="#3f5548" stroke-width="4"/>
+      <g font-family="Fraunces" font-weight="700" font-size="40" fill="#3f5548" text-anchor="middle">
+        <text x="80" y="442">M</text><text x="205" y="442">T</text><text x="330" y="442">W</text><text x="455" y="442">T</text><text x="580" y="442">F</text><text x="705" y="442">S</text><text x="830" y="442">S</text>
+      </g>
+      <path d="M60 470 h40" stroke="#c9a227" stroke-width="8" stroke-linecap="round"/>
+    </svg>
+  </div>
+  <div class="foot"><span class="name">Season Chapter · free printable</span><span class="pill">Download</span></div>
+</section>
+
+<!-- 4 · Angle B payoff: return ticket -->
+<section class="f light" id="f4">
+  <div class="kick">The return ticket</div>
+  <h1>Come back<br/>where you are.</h1>
+  <p class="sub">After a gap, pick one. Never rebuild missing days.</p>
+  <div class="art">
+    <div class="tickets">
+      <div class="ticket"><b>Continue</b><span>Same goal, same size</span></div>
+      <div class="ticket"><b>Shrink</b><span>Same goal, smaller step</span></div>
+      <div class="ticket"><b>Pause</b><span>On purpose, not by drift</span></div>
+      <div class="ticket"><b>Revise</b><span>The goal changed. Fine.</span></div>
+    </div>
+  </div>
+  <div class="foot"><span class="name">Season Chapter · free printable</span><span class="pill">Download</span></div>
+</section>
+
+<!-- 5 · Angle C hook: off the screen -->
+<section class="f dark" id="f5">
+  <div class="kick">Lumen · paper edition</div>
+  <h1>For people<br/>putting the<br/>phone down.</h1>
+  <p class="sub">Goals on paper. A book in hand. Same world as the Lumen app.</p>
+  <div class="art">
+    <svg width="820" height="330" viewBox="0 0 820 330" aria-hidden="true">
+      <rect x="20" y="40" width="330" height="270" rx="16" fill="#f7f3ee"/>
+      <rect x="20" y="40" width="330" height="54" rx="16" fill="#5f7a6b"/>
+      <text x="44" y="77" font-family="Source Sans 3" font-weight="700" font-size="28" fill="#f7f3ee" letter-spacing="2">PLANNER</text>
+      <g stroke="#1c1917" stroke-opacity=".3" stroke-width="2"><line x1="44" y1="150" x2="326" y2="150"/><line x1="44" y1="200" x2="326" y2="200"/><line x1="44" y1="250" x2="326" y2="250"/></g>
+      <rect x="420" y="20" width="240" height="300" rx="10" fill="#3f5548"/>
+      <rect x="420" y="20" width="28" height="300" rx="6" fill="#2c3d33"/>
+      <text x="476" y="110" font-family="Fraunces" font-style="italic" font-weight="550" font-size="34" fill="#f7f3ee">It Was</text>
+      <text x="476" y="152" font-family="Fraunces" font-style="italic" font-weight="550" font-size="34" fill="#f7f3ee">Always</text>
+      <text x="476" y="194" font-family="Fraunces" font-style="italic" font-weight="550" font-size="34" fill="#f7f3ee">You</text>
+      <circle cx="600" cy="262" r="26" fill="#c9a227"/>
+      <g transform="translate(720 70)"><rect x="0" y="0" width="90" height="170" rx="18" fill="none" stroke="#f7f3ee" stroke-opacity=".5" stroke-width="5"/><line x1="-14" y1="190" x2="104" y2="-20" stroke="#c9a227" stroke-width="7" stroke-linecap="round"/></g>
+    </svg>
+  </div>
+  <div class="foot"><span class="name">Planner and Book · the shop</span><span class="pill">Learn more</span></div>
+</section>
+
+<!-- 6 · Angle C payoff: the book -->
+<section class="f dark" id="f6">
+  <div class="kick">It Was Always You · Chapter One</div>
+  <p class="quote">“You have always<br/>been bright.”</p>
+  <p class="sub">Illustrated edition by Johanna J. 37 chapters across five parts: a journey, not a checklist.</p>
+  <div class="art">
+    <svg width="760" height="300" viewBox="0 0 760 300" aria-hidden="true">
+      <g fill="none" stroke="#c9a227" stroke-width="6" stroke-linecap="round">
+        <circle cx="380" cy="170" r="70" fill="#c9a227" fill-opacity=".18"/>
+        <line x1="380" y1="40" x2="380" y2="72"/><line x1="380" y1="268" x2="380" y2="296"/>
+        <line x1="250" y1="170" x2="282" y2="170"/><line x1="478" y1="170" x2="510" y2="170"/>
+        <line x1="288" y1="78" x2="310" y2="100"/><line x1="450" y1="240" x2="472" y2="262"/>
+        <line x1="472" y1="78" x2="450" y2="100"/><line x1="310" y1="240" x2="288" y2="262"/>
+      </g>
+    </svg>
+  </div>
+  <p style="font:italic 550 46px/1.25 var(--display);color:#f7f3ee;margin:0 0 56px;text-align:center">When you begin speaking up,<br/>the light returns.</p>
+  <div class="foot"><span class="name">Read the Chapter One sneak</span><span class="pill">Learn more</span></div>
+</section>
+
+<script>
+const p=new URLSearchParams(location.search);const n=p.get('f')||'1';
+document.getElementById('f'+n)?.classList.add('on');
+if(p.has('render'))document.body.classList.add('render');
+</script>
+</body></html>

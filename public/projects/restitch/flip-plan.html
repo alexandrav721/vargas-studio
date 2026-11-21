@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Restitch — Flip plan worksheet</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,500..700,0..100&family=Sora:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    @page { size: Letter; margin: 0.5in; }
+    :root { --ink: #0c1612; --soft: #3a4c42; --rule: #9db0a5; --tint: #eef5f0; --accent: #5d7a12; --display: "Fraunces", Georgia, serif; --sans: "Sora", system-ui, sans-serif; }
+    * { box-sizing: border-box; }
+    html { background-color: #ffffff; }
+    body { margin: 0; color: var(--ink); background: #fff; font: 400 10pt/1.35 var(--sans); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .studio-back { position: fixed; top: 0.65rem; left: 0.65rem; z-index: 9999; padding: 0.45rem 0.8rem; border: 1px solid rgba(238,245,240,0.28); background: #0c1612; color: #eef5f0; font: 600 0.72rem var(--sans); letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; }
+    @media print { .studio-back { display: none; } }
+    .sheet { width: 7.5in; height: 9.95in; overflow: hidden; margin: 0 auto; display: flex; flex-direction: column; gap: 0.12in; }
+    .sheet + .sheet { break-before: page; page-break-before: always; }
+    @media screen { body { background: #d9e2dc; padding: 3.2rem 0 2rem; } .sheet { background: #fff; padding: 0.5in; width: 8.5in; height: 11in; box-shadow: 0 6px 30px rgba(0,0,0,0.18); margin-bottom: 1.5rem; } }
+    @media screen and (max-width: 860px) { .sheet { width: auto; height: auto; min-height: 0; margin: 0 0.5rem 1rem; padding: 1rem; } }
+    header { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 2.5pt solid var(--ink); padding-bottom: 0.08in; }
+    .brand { font: 600 13pt var(--display); letter-spacing: -0.01em; color: var(--accent); }
+    h1 { margin: 0; font: 600 30pt/1 var(--display); letter-spacing: -0.03em; font-variation-settings: "SOFT" 40, "opsz" 144; }
+    .meta { text-align: right; font-size: 9pt; color: var(--soft); }
+    .meta span { display: inline-block; min-width: 1.4in; border-bottom: 0.75pt solid var(--rule); margin-left: 0.06in; }
+    h2 { margin: 0 0 0.07in; font: 600 13pt var(--display); letter-spacing: -0.01em; display: flex; gap: 0.08in; align-items: baseline; }
+    h2 b { font: 600 9pt var(--sans); color: #fff; background: var(--ink); padding: 0.02in 0.07in; }
+    h2 small { font: 500 8pt var(--sans); color: var(--soft); letter-spacing: 0.02em; }
+    .box { border: 1pt solid var(--ink); padding: 0.12in 0.14in; }
+    .line { display: grid; grid-template-columns: auto 1fr; gap: 0.08in; align-items: end; margin: 0.09in 0 0; }
+    .line.blank { grid-template-columns: 1fr; margin-top: 0.14in; }
+    .line i { display: block; border-bottom: 0.75pt solid var(--rule); height: 0.2in; }
+    .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 0.16in; }
+    .cols3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.1in 0.16in; }
+    .chk { display: inline-flex; align-items: center; gap: 0.05in; margin: 0.05in 0.16in 0 0; white-space: nowrap; }
+    .chk::before { content: ""; width: 0.13in; height: 0.13in; border: 1pt solid var(--ink); display: inline-block; flex: none; }
+    .note { font-size: 8pt; color: var(--soft); margin: 0.06in 0 0; }
+    .swatch { width: 0.5in; height: 0.36in; border: 1pt dashed var(--ink); display: inline-block; vertical-align: middle; margin-right: 0.08in; }
+    table.tape { width: 100%; border-collapse: collapse; }
+    .tape td { padding: 0.07in 0; border-bottom: 0.75pt solid var(--rule); vertical-align: bottom; }
+    .tape td:first-child { width: 2in; font-weight: 600; }
+    .tape td:last-child { width: 2.3in; font-size: 7.5pt; color: var(--soft); padding-left: 0.1in; }
+    ol.steps { list-style: none; counter-reset: s; margin: 0; padding: 0; }
+    ol.steps li { counter-increment: s; display: grid; grid-template-columns: 0.22in 0.2in 1fr 1.4in; gap: 0.06in; align-items: end; padding: 0.09in 0 0.04in; border-bottom: 0.75pt solid var(--rule); }
+    ol.steps li::before { content: counter(s); font: 600 11pt var(--display); }
+    ol.steps li span.cb { width: 0.14in; height: 0.14in; border: 1pt solid var(--ink); }
+    ol.steps li em { font-style: normal; font-size: 7.5pt; color: var(--soft); border-left: 0.75pt solid var(--rule); padding-left: 0.06in; }
+    .sketch { display: grid; grid-template-columns: 1fr 1fr; gap: 0.16in; }
+    .sketch .frame { border: 1pt solid var(--ink); height: 1.05in; position: relative; padding: 0.08in 0.1in; font: 600 8pt var(--sans); letter-spacing: 0.08em; text-transform: uppercase; }
+    .sketch svg { position: absolute; inset: 0.3in 0 0.15in; margin: auto; height: 0.7in; width: 100%; }
+    .foot { margin-top: auto; display: flex; justify-content: space-between; gap: 0.2in; border-top: 1pt solid var(--ink); padding-top: 0.07in; font-size: 7.5pt; color: var(--soft); }
+    .how { background: var(--tint); padding: 0.1in 0.14in; font-size: 8pt; }
+    .how strong { color: var(--ink); }
+  </style>
+</head>
+<body>
+  <a class="studio-back" href="/">← Vargas Studio</a>
+
+  <section class="sheet" aria-label="Page 1">
+    <header>
+      <div><div class="brand">Restitch</div><h1>Flip plan</h1></div>
+      <div class="meta">Date <span></span><br /><br />Plan no. <span style="min-width:0.6in"></span></div>
+    </header>
+
+    <div class="box">
+      <h2><b>1</b> The garment <small>what's in the bag</small></h2>
+      <div class="cols">
+        <div class="line">What it is <i></i></div>
+        <div class="line">Where from <i></i></div>
+        <div class="line">Photo file name <i></i></div>
+        <div class="line">Fabric feel (yours) <i></i></div>
+      </div>
+      <div class="line">Why it isn't worn yet <i></i></div>
+    </div>
+
+    <div class="box">
+      <h2><b>2</b> Photo read <small>copy it from Plan this make</small></h2>
+      <div class="cols">
+        <div>
+          <div class="line" style="grid-template-columns:auto auto 1fr"><span class="swatch"></span>Average color # <i></i></div>
+          <div class="line">Brightness % <i></i></div>
+          <div class="line">Aspect <i></i></div>
+          <div style="margin-top:0.08in">Hue band <br /><span class="chk">Warm</span><span class="chk">Cool</span><span class="chk">Green</span><span class="chk">Neutral</span></div>
+        </div>
+        <div>
+          Reads as
+          <div><span class="chk">Long column</span></div>
+          <div><span class="chk">Wide, short layer</span></div>
+          <div><span class="chk">Dark, boxy piece</span></div>
+          <div><span class="chk">Near-square top</span></div>
+          <div><span class="chk">Everyday piece</span></div>
+        </div>
+      </div>
+      <p class="note">A visual guess from one photo. Not a size, not a fiber test, and the back is unknown.</p>
+    </div>
+
+    <div class="box">
+      <h2><b>3</b> Your tape <small>your numbers, your unit</small> <span style="margin-left:auto;font:500 9pt var(--sans)"><span class="chk">in</span><span class="chk">cm</span></span></h2>
+      <table class="tape">
+        <tr><td>Full bust</td><td></td><td>Around the fullest part, tape level</td></tr>
+        <tr><td>Waist</td><td></td><td>Where you bend side to side</td></tr>
+        <tr><td>Hip</td><td></td><td>Around the fullest part of the seat</td></tr>
+        <tr><td>Shoulder to shoulder</td><td></td><td>Across the back, bone to bone</td></tr>
+        <tr><td>Back waist length</td><td></td><td>Neck bone down to the waist</td></tr>
+        <tr><td>Height</td><td></td><td>Shoes off</td></tr>
+        <tr><td>The edge you'll change</td><td></td><td>On the cloth, flat, with your tape</td></tr>
+      </table>
+    </div>
+
+    <div class="box">
+      <h2><b>4</b> Skill <small>pick one; the flips change with it</small></h2>
+      <div class="cols3">
+        <div><span class="chk"><strong>Beginner</strong></span><p class="note">No-sew and plain hand stitches.</p></div>
+        <div><span class="chk"><strong>Intermediate</strong></span><p class="note">Hand work plus a straight machine seam.</p></div>
+        <div><span class="chk"><strong>Advanced</strong></span><p class="note">Fitting, pressing, machine shaping.</p></div>
+      </div>
+    </div>
+
+    <div class="foot"><span>Restitch · Flip plan · page 1 of 2</span><span>Plan this make: vargas-studio.pages.dev/restitch.html</span></div>
+  </section>
+
+  <section class="sheet" aria-label="Page 2">
+    <header>
+      <div><div class="brand">Restitch</div><h1>The make</h1></div>
+      <div class="meta">Garment <span></span></div>
+    </header>
+
+    <div class="box">
+      <h2><b>5</b> Chosen flip</h2>
+      <div class="line">Flip title <i></i></div>
+      <div style="margin-top:0.06in"><span class="chk">No-sew</span><span class="chk">Hand</span><span class="chk">Machine</span></div>
+    </div>
+
+    <div class="cols">
+      <div class="box">
+        <h2><b>6</b> Supplies <small>tick what you have</small></h2>
+        <div><span class="chk">Hand needle</span></div>
+        <div><span class="chk">Thread to match</span></div>
+        <div><span class="chk">Pins / safety pins</span></div>
+        <div><span class="chk">Tape measure</span></div>
+        <div><span class="chk">Chalk or soap sliver</span></div>
+        <div><span class="chk">Iron</span></div>
+        <div><span class="chk">Seam ripper</span></div>
+        <div class="line" style="grid-template-columns:0.13in 1fr"><span style="border:1pt solid var(--ink);height:0.13in"></span><i></i></div>
+        <div class="line" style="grid-template-columns:0.13in 1fr"><span style="border:1pt solid var(--ink);height:0.13in"></span><i></i></div>
+      </div>
+      <div class="box">
+        <h2><b>7</b> Measure for this flip</h2>
+        <p class="note" style="margin-top:0">Copy the “Measure for this flip” list. Write the number you took.</p>
+        <div class="line blank"><i></i></div>
+        <div class="line blank"><i></i></div>
+        <div class="line blank"><i></i></div>
+        <div class="line blank"><i></i></div>
+        <div class="line blank"><i></i></div>
+      </div>
+    </div>
+
+    <div class="box">
+      <h2><b>8</b> Steps <small>tick as you go · note the technique link</small></h2>
+      <ol class="steps">
+        <li><span class="cb"></span><span></span><em>technique</em></li>
+        <li><span class="cb"></span><span></span><em>technique</em></li>
+        <li><span class="cb"></span><span></span><em>technique</em></li>
+        <li><span class="cb"></span><span></span><em>technique</em></li>
+        <li><span class="cb"></span><span></span><em>technique</em></li>
+      </ol>
+      <div class="cols" style="margin-top:0.08in">
+        <div><span class="chk">Tried it on</span><span class="chk">Pressed</span></div>
+        <div class="line">Fix next time <i></i></div>
+      </div>
+    </div>
+
+    <div class="sketch">
+      <div class="frame">Before · sketch or tape the photo
+        <svg viewBox="0 0 120 200" aria-hidden="true"><path d="M44 10 L54 6 Q60 14 66 6 L76 10 L80 52 Q88 120 96 190 L24 190 Q32 120 40 52 Z" fill="none" stroke="#c5d2ca" stroke-width="1.5" stroke-dasharray="4 4"/></svg>
+      </div>
+      <div class="frame">After · mark what changed
+        <svg viewBox="0 0 120 200" aria-hidden="true"><path d="M44 10 L54 6 Q60 14 66 6 L76 10 L80 52 Q88 120 96 190 L24 190 Q32 120 40 52 Z" fill="none" stroke="#c5d2ca" stroke-width="1.5" stroke-dasharray="4 4"/></svg>
+      </div>
+    </div>
+
+    <div class="how"><strong>Honest note.</strong> Restitch reads color, brightness and aspect from your photo. No pattern, no size guess. Your numbers live in your browser and on this sheet.</div>
+
+    <div class="foot"><span>Restitch · Flip plan · page 2 of 2</span><span>A Vargas Studio sample</span></div>
+  </section>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Restitch — save my flips (demo)</title>
+  <meta name="description" content="A three-step demo funnel for Restitch. It saves nothing and sends you to the working planner." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,500..700,0..100&family=Sora:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="restitch.css" />
+  <style>
+    .demo-bar { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; padding: 0.7rem 0.9rem; margin-bottom: 1.8rem; border: 1px dashed color-mix(in srgb, var(--warm) 60%, transparent); color: var(--warm); font-size: 0.86rem; }
+    .progress { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.35rem; margin: 0 0 1.6rem; }
+    .progress i { display: block; height: 3px; background: color-mix(in srgb, var(--fog) 18%, transparent); }
+    .progress i.on { background: var(--citrus); }
+    .step { display: none; }
+    .step.is-active { display: block; animation: rise 0.4s var(--ease); }
+    @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+    .step h1 { font-size: clamp(2.1rem, 7vw, 3.4rem); max-width: 14ch; }
+    .choices { display: grid; gap: 0.5rem; margin-top: 1.5rem; }
+    .choice { display: grid; grid-template-columns: 3rem 1fr; gap: 0.9rem; align-items: center; text-align: left; width: 100%; padding: 0.85rem 0.95rem; font: inherit; color: var(--paper); background: color-mix(in srgb, var(--ink-2) 60%, transparent); border: 1px solid color-mix(in srgb, var(--fog) 18%, transparent); cursor: pointer; }
+    .choice:hover, .choice:focus-visible { border-color: var(--citrus); outline: none; }
+    .choice[aria-pressed="true"] { border-color: var(--citrus); box-shadow: inset 3px 0 0 var(--citrus); }
+    .choice svg { width: 3rem; height: 3rem; }
+    .choice strong { display: block; font: 600 1.1rem var(--display); }
+    .choice span span { color: var(--mist); font-size: 0.86rem; }
+    label.field { display: grid; gap: 0.35rem; margin-top: 1.5rem; color: var(--mist); font-size: 0.86rem; }
+    label.field input { font: 500 1.05rem var(--sans); color: var(--paper); background: transparent; border: 0; border-bottom: 1px solid color-mix(in srgb, var(--fog) 30%, transparent); padding: 0.5rem 0; border-radius: 0; }
+    label.field input:focus { outline: none; border-bottom-color: var(--citrus); }
+    .row { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.5rem; }
+    .back { background: none; border: 0; color: var(--mist); font: 600 0.82rem var(--sans); cursor: pointer; padding: 0.8rem 0.2rem; }
+    .back:hover { color: var(--citrus); }
+    .picked { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 1.2rem 0 0; }
+    .note { margin-top: 1.4rem; color: var(--fog); }
+  </style>
+</head>
+<body>
+  <a class="studio-back" href="/">← Vargas Studio</a>
+  <main class="wrap narrow">
+    <nav class="top" aria-label="Restitch">
+      <span class="brand">Restitch</span>
+      <a href="landing.html">Landing</a>
+      <a href="funnel.html" aria-current="page">Funnel</a>
+      <a href="ads.html">Ads</a>
+      <a href="deck.html">Deck</a>
+      <a href="print.html">Print</a>
+      <a href="social.html">Social</a>
+    </nav>
+
+    <p class="demo-bar" role="note"><span class="badge badge-mocked">Demo</span> This funnel saves nothing. No email is sent or stored. It ends at the working planner.</p>
+
+    <div class="progress" aria-hidden="true"><i class="on"></i><i></i><i></i></div>
+
+    <form id="funnel" novalidate>
+      <section class="step is-active" data-step="1" aria-labelledby="s1">
+        <p class="eyebrow">1 of 3</p>
+        <h1 id="s1">What's in the thrift bag?</h1>
+        <div class="choices" role="group" aria-label="Garment">
+          <button type="button" class="choice" data-k="piece" data-v="A top or tee" aria-pressed="false">
+            <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M17 8 L24 12 L31 8 L42 15 L37 22 L34 20 L34 41 L14 41 L14 20 L11 22 L6 15 Z" fill="none" stroke="#d6f26a" stroke-width="2" stroke-linejoin="round"/></svg>
+            <span><strong>A top or tee</strong><span>Near-square in a photo</span></span>
+          </button>
+          <button type="button" class="choice" data-k="piece" data-v="A dress or long piece" aria-pressed="false">
+            <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M19 4 L24 8 L29 4 L31 15 L37 44 L11 44 L17 15 Z" fill="none" stroke="#d6f26a" stroke-width="2" stroke-linejoin="round"/></svg>
+            <span><strong>A dress or long piece</strong><span>Tall and narrow</span></span>
+          </button>
+          <button type="button" class="choice" data-k="piece" data-v="A jacket or heavy shirt" aria-pressed="false">
+            <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M16 7 L24 14 L32 7 L42 13 L42 40 L34 40 L34 41 L14 41 L14 40 L6 40 L6 13 Z M24 14 L24 41" fill="none" stroke="#d6f26a" stroke-width="2" stroke-linejoin="round"/></svg>
+            <span><strong>A jacket or heavy shirt</strong><span>Dark, boxy</span></span>
+          </button>
+          <button type="button" class="choice" data-k="piece" data-v="A wide piece" aria-pressed="false">
+            <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M4 16 L44 16 L44 32 L4 32 Z M10 32 L8 38 M16 32 L15 38 M32 32 L33 38 M38 32 L40 38" fill="none" stroke="#d6f26a" stroke-width="2" stroke-linejoin="round"/></svg>
+            <span><strong>A wide piece</strong><span>Scarf, wrap, cropped layer</span></span>
+          </button>
+        </div>
+      </section>
+
+      <section class="step" data-step="2" aria-labelledby="s2">
+        <p class="eyebrow">2 of 3</p>
+        <h1 id="s2">How do you sew today?</h1>
+        <div class="choices" role="group" aria-label="Skill">
+          <button type="button" class="choice" data-k="skill" data-v="Beginner" aria-pressed="false">
+            <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="16" cy="24" r="7" fill="none" stroke="#d6f26a" stroke-width="2"/><circle cx="32" cy="24" r="7" fill="none" stroke="#d6f26a" stroke-width="2"/><path d="M23 24 L25 24" stroke="#d6f26a" stroke-width="2"/></svg>
+            <span><strong>Beginner</strong><span>No-sew and plain hand stitches</span></span>
+          </button>
+          <button type="button" class="choice" data-k="skill" data-v="Intermediate" aria-pressed="false">
+            <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M8 40 L40 8" stroke="#d6f26a" stroke-width="2"/><circle cx="38" cy="10" r="2.5" fill="none" stroke="#d6f26a" stroke-width="2"/><path d="M6 30 Q14 22 22 30 T38 30" fill="none" stroke="#d6f26a" stroke-width="2" stroke-dasharray="3 3"/></svg>
+            <span><strong>Intermediate</strong><span>Hand work plus a straight machine seam</span></span>
+          </button>
+          <button type="button" class="choice" data-k="skill" data-v="Advanced" aria-pressed="false">
+            <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M8 38 L40 38 M14 38 L14 18 L34 18 L34 30 L22 30 M24 30 L24 38" fill="none" stroke="#d6f26a" stroke-width="2" stroke-linejoin="round"/></svg>
+            <span><strong>Advanced</strong><span>Fitting, pressing, machine shaping</span></span>
+          </button>
+        </div>
+        <button type="button" class="back" data-go="1">← Back</button>
+      </section>
+
+      <section class="step" data-step="3" aria-labelledby="s3">
+        <p class="eyebrow">3 of 3</p>
+        <h1 id="s3">Save my flips?</h1>
+        <p class="lede">An account with saved flips is not built. This step tests whether you'd want one.</p>
+        <label class="field">Email (demo: not sent, not stored)
+          <input type="email" name="email" autocomplete="off" placeholder="you@example.com" />
+        </label>
+        <div class="row">
+          <button type="submit" class="btn">Save my flips</button>
+          <button type="button" class="back" data-go="2">← Back</button>
+        </div>
+      </section>
+
+      <section class="step" data-step="4" aria-labelledby="s4">
+        <p class="eyebrow">Done</p>
+        <h1 id="s4">Nothing was saved.</h1>
+        <p class="lede">You don't need an email. The real planner saves flips in your own browser.</p>
+        <div class="picked" aria-label="Your picks"></div>
+        <p class="note">Open Plan this make, pick <strong class="js-skill">your skill</strong>, and upload a photo of the piece.</p>
+        <div class="row"><a class="btn" href="/restitch.html">Open Plan this make</a></div>
+      </section>
+    </form>
+
+    <footer class="foot">Restitch demo funnel · nothing on this page leaves your browser.</footer>
+  </main>
+  <script>
+    (function () {
+      var form = document.getElementById("funnel");
+      var bars = document.querySelectorAll(".progress i");
+      var picks = {};
+      function go(n) {
+        document.querySelectorAll(".step").forEach(function (s) { s.classList.toggle("is-active", s.dataset.step === String(n)); });
+        bars.forEach(function (b, i) { b.classList.toggle("on", i < Math.min(n, 3)); });
+        var h = document.querySelector('.step[data-step="' + n + '"] h1'); if (h) { h.setAttribute("tabindex", "-1"); h.focus(); }
+      }
+      form.addEventListener("click", function (e) {
+        var c = e.target.closest(".choice");
+        if (c) {
+          c.parentNode.querySelectorAll(".choice").forEach(function (b) { b.setAttribute("aria-pressed", "false"); });
+          c.setAttribute("aria-pressed", "true");
+          picks[c.dataset.k] = c.dataset.v;
+          setTimeout(function () { go(c.dataset.k === "piece" ? 2 : 3); }, 180);
+        }
+        var b = e.target.closest("[data-go]");
+        if (b) go(+b.dataset.go);
+      });
+      form.addEventListener("submit", function (e) {
+        e.preventDefault(); // Demo: no request is made. The email field is cleared, never read into storage.
+        form.email.value = "";
+        var box = document.querySelector(".picked"); box.innerHTML = "";
+        [picks.piece, picks.skill].filter(Boolean).forEach(function (t) { var s = document.createElement("span"); s.className = "badge badge-real"; s.textContent = t; box.appendChild(s); });
+        document.querySelector(".js-skill").textContent = picks.skill || "your skill";
+        go(4);
+      });
+    })();
+  </script>
+</body>
+</html>

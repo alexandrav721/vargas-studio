@@ -1,0 +1,121 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Scrolll — How reach works (marketer one-pager)</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet"/>
+<style>
+@page{size:Letter;margin:0.45in}
+:root{--ink:#070b10;--mute:#3d4a57;--line:#cfd8e1;--pay:#c6ff4a;--signal:#3ad7ff;--heat:#ff6b45;--display:"Syne",system-ui,sans-serif;--sans:"IBM Plex Sans",system-ui,sans-serif}
+*{box-sizing:border-box}
+html{background:#e9edf1}
+body{margin:0;color:var(--ink);font-family:var(--sans);font-size:10.5pt;line-height:1.4;background:#e9edf1}
+.studio-back{position:fixed;top:12px;left:12px;z-index:40;font:600 11px/1 var(--sans);letter-spacing:.1em;text-transform:uppercase;color:#e7eef5;text-decoration:none;background:#070b10;padding:.55rem .8rem}
+.sheet{width:8.5in;min-height:11in;margin:3rem auto;background:#fff;padding:.45in;box-shadow:0 10px 40px rgba(0,0,0,.15)}
+@media print{html,body{background:#fff}.studio-back{display:none}.sheet{margin:0;padding:0;box-shadow:none;width:auto;min-height:0}}
+@media screen and (max-width:8.6in){.sheet{width:100%;min-height:0;margin:3rem 0 0;padding:1.1rem}.steps{grid-template-columns:1fr 1fr!important}.two,.check{grid-template-columns:1fr!important}header{flex-wrap:wrap;gap:8px}footer{flex-direction:column;align-items:flex-start}footer .url{text-align:left!important;word-break:break-all}.for{text-align:left!important}}
+header{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:3px solid var(--ink);padding-bottom:10pt}
+.logo{font-family:var(--display);font-weight:800;font-size:30pt;letter-spacing:-.04em;line-height:.9}
+.for{font:700 8pt var(--sans);letter-spacing:.18em;text-transform:uppercase;text-align:right}
+h1{font-family:var(--display);font-size:23pt;line-height:1.05;letter-spacing:-.02em;margin:12pt 0 4pt}
+h1 mark{background:var(--pay);padding:0 4pt}
+.lede{font-size:10.5pt;color:var(--mute);margin:0 0 12pt;max-width:6.6in}
+h2{font:700 8pt var(--sans);letter-spacing:.18em;text-transform:uppercase;margin:0 0 7pt;color:var(--ink)}
+h2 .dot{display:inline-block;width:8pt;height:8pt;background:var(--signal);margin-right:6pt;vertical-align:0}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:8pt;margin-bottom:12pt}
+.step{border:1.5px solid var(--ink);border-radius:10pt;padding:8pt 8pt 9pt}
+.step .n{font-family:var(--display);font-weight:800;font-size:18pt;line-height:1}
+.step b{display:block;font-size:10.5pt;margin:5pt 0 3pt}
+.step p{margin:0;font-size:8.5pt;line-height:1.35;color:var(--mute)}
+.step svg{display:block;margin-top:6pt}
+.two{display:grid;grid-template-columns:1.15fr 1fr;gap:12pt;margin-bottom:12pt}
+.box{border:1.5px solid var(--line);border-radius:10pt;padding:9pt 10pt}
+table{width:100%;border-collapse:collapse;font-size:9pt}
+td{padding:3pt 0;border-bottom:1px solid var(--line);vertical-align:top}
+td:last-child{text-align:right;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap;padding-left:8pt}
+tr.tot td{border-bottom:0;border-top:2px solid var(--ink);font-weight:700}
+.bar{display:flex;height:16pt;border-radius:5pt;overflow:hidden;margin:7pt 0 4pt;font:700 8pt var(--sans)}
+.bar div{display:grid;place-items:center}
+.tagS{display:inline-block;font:700 7pt var(--sans);letter-spacing:.12em;text-transform:uppercase;color:#a33a1c;border:1px solid #a33a1c;border-radius:4pt;padding:1pt 4pt;margin-left:4pt;vertical-align:1pt}
+ul{margin:0;padding-left:13pt;font-size:9.5pt}li{margin:1.5pt 0}
+.yes li::marker{content:"+  ";font-weight:700}
+.no li::marker{content:"–  ";font-weight:700}
+.fine{font-size:8.5pt;color:var(--mute);margin:6pt 0 0}
+.check{display:grid;grid-template-columns:repeat(3,1fr);gap:6pt 12pt;margin-bottom:12pt}
+.check label{display:flex;gap:7pt;align-items:flex-start;font-size:9pt;line-height:1.3}
+.check i{flex:none;width:11pt;height:11pt;border:1.5px solid var(--ink);border-radius:2pt;margin-top:1pt}
+.line{border-bottom:1px solid var(--ink);height:16pt}
+footer{display:flex;justify-content:space-between;align-items:center;gap:12pt;background:var(--ink);color:#fff;border-radius:10pt;padding:11pt 14pt}
+footer b{font-family:var(--display);font-size:15pt;color:var(--pay);display:block}
+footer span{font-size:9pt;color:#c9d3dc}
+footer .url{font:700 10.5pt var(--sans);color:#fff;text-align:right}
+</style></head><body>
+<a class="studio-back" href="/">← Vargas Studio</a>
+<article class="sheet">
+<header>
+  <div class="logo">Scrolll</div>
+  <div class="for">For marketers<br/>How a paid view works</div>
+</header>
+
+<h1>Buy attention that <mark>pays people back.</mark></h1>
+<p class="lede">Verified humans with stated interests. A disclosed share goes to the person watching. You pay only for posts that were actually on screen.</p>
+
+<h2><span class="dot"></span>One paid view, start to finish</h2>
+<div class="steps">
+  <div class="step"><div class="n">1</div><b>They pick the topic</b><p>People opt into ad topics and set a “never” list. You only reach people who said yes to yours.</p>
+    <svg width="74" height="22" viewBox="0 0 74 22"><rect x="1" y="2" width="46" height="18" rx="9" fill="#c6ff4a" stroke="#070b10" stroke-width="1.5"/><text x="24" y="15" font-size="9" font-family="IBM Plex Sans" font-weight="700" text-anchor="middle">Running</text><rect x="53" y="2" width="18" height="18" rx="9" fill="none" stroke="#070b10" stroke-width="1.5"/></svg></div>
+  <div class="step"><div class="n">2</div><b>Your post runs, labeled</b><p>Always marked “Sponsored” in the feed. Each person caps how many they see per hour.</p>
+    <svg width="60" height="22" viewBox="0 0 60 22"><rect x="1" y="1" width="58" height="20" rx="4" fill="#3ad7ff" stroke="#070b10" stroke-width="1.5"/><text x="30" y="14.5" font-size="8" font-family="IBM Plex Sans" font-weight="700" text-anchor="middle" letter-spacing="1">SPONSORED</text></svg></div>
+  <div class="step"><div class="n">3</div><b>Counted only if seen</b><p>Half the post on screen for 1 second (video: 2). The industry viewable bar. Scroll-pasts are free.</p>
+    <svg width="60" height="22" viewBox="0 0 60 22"><rect x="1" y="7" width="58" height="8" rx="4" fill="none" stroke="#070b10" stroke-width="1.5"/><rect x="1" y="7" width="40" height="8" rx="4" fill="#c6ff4a" stroke="#070b10" stroke-width="1.5"/></svg></div>
+  <div class="step"><div class="n">4</div><b>Your price is split</b><p>Viewer, the creator hosting the feed, and Scrolll. Split disclosed to people before they earn.</p>
+    <svg width="60" height="22" viewBox="0 0 60 22"><rect x="1" y="4" width="29" height="14" fill="#c6ff4a" stroke="#070b10" stroke-width="1.5"/><rect x="30" y="4" width="12" height="14" fill="#3ad7ff" stroke="#070b10" stroke-width="1.5"/><rect x="42" y="4" width="17" height="14" fill="#fff" stroke="#070b10" stroke-width="1.5"/></svg></div>
+</div>
+
+<div class="two">
+  <div class="box">
+    <h2><span class="dot"></span>Worked example <span class="tagS">Sample numbers</span></h2>
+    <table>
+      <tr><td>Picture post, sample price</td><td>$12 per 1,000 counted views</td></tr>
+      <tr><td>Counted views bought</td><td>50,000</td></tr>
+      <tr class="tot"><td>You pay</td><td>$600</td></tr>
+    </table>
+    <div class="bar"><div style="width:50%;background:#c6ff4a">Viewers 50%</div><div style="width:20%;background:#3ad7ff">Hosts 20%</div><div style="width:30%;background:#e7eef5">Scrolll 30%</div></div>
+    <table>
+      <tr><td>To the 50,000 viewers (0.6¢ each)</td><td>$300</td></tr>
+      <tr><td>To creators hosting those feeds</td><td>$120</td></tr>
+      <tr><td>To Scrolll</td><td>$180</td></tr>
+    </table>
+    <p class="fine">Prices and the 50/20/30 split are placeholders. The real split is not set yet; it will be published before anyone earns.</p>
+  </div>
+  <div>
+    <div class="box" style="margin-bottom:10pt">
+      <h2><span class="dot"></span>You get</h2>
+      <ul class="yes"><li>Counted views from verified humans</li><li>The topic each view came from</li><li>Seconds on screen, taps to your link</li><li>Labeled placement, not disguised</li></ul>
+    </div>
+    <div class="box">
+      <h2><span class="dot"></span>You don’t get</h2>
+      <ul class="no"><li>Names, posts, contacts or location history</li><li>Anyone who put your category on “never”</li><li>Billed views that were never on screen</li></ul>
+    </div>
+  </div>
+</div>
+
+<h2><span class="dot"></span>Is it a fit? Tick what applies</h2>
+<div class="check">
+  <label><i></i>People choose your category on purpose (running, coffee, thrift, cooking…)</label>
+  <label><i></i>You’d rather pay per real view than per load</label>
+  <label><i></i>Your brand can say “we pay the viewer” out loud</label>
+  <label><i></i>Picture or short video creative ready</label>
+  <label><i></i>You can run a small pilot first</label>
+  <label><i></i>Not gambling, payday loans or diet pills (on the default “never” list)</label>
+</div>
+<div class="two" style="grid-template-columns:1fr 1fr 1fr;gap:12pt;margin-bottom:12pt">
+  <div><h2>Your topic</h2><div class="line"></div></div>
+  <div><h2>Pilot budget</h2><div class="line"></div></div>
+  <div><h2>Start month</h2><div class="line"></div></div>
+</div>
+
+<footer>
+  <div><b>Talk about inventory</b><span>Early access. No campaigns are live yet; first pilots set rates together.</span></div>
+  <div class="url">vargas-studio.pages.dev<br/>/projects/scrolll/advertise.html</div>
+</footer>
+</article>
+</body></html>

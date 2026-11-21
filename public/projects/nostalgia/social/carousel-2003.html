@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>What 2003 felt like online</title>
+  <meta name="description" content="Five-slide Scrollback carousel built from dated catalog entries: AIM, MSN Messenger, LiveJournal, Xanga, Friendster and more." />
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #f4f0e6; --muted: #c4bba8; --line: rgba(244,240,230,.24);
+      --brand: #b8ff00; --brand-2: #ff3dbb; --win: #d4d0c8; --win-ink: #111;
+      --display: "Syne", sans-serif; --body: "IBM Plex Sans", sans-serif; --mono: "IBM Plex Mono", monospace;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; background: #050507; color: var(--ink); font-family: var(--body); }
+    .studio-back {
+      position: fixed; top: .65rem; left: .65rem; z-index: 40;
+      padding: .45rem .8rem; border: 1px solid rgba(244,240,230,.28); background: #0c0c10;
+      color: var(--ink); font: 500 .72rem/1 var(--mono); letter-spacing: .06em;
+      text-transform: uppercase; text-decoration: none;
+    }
+    body.export .studio-back { display: none; }
+    .deck { display: grid; gap: 40px; justify-content: center; padding: 60px 0; }
+    body.export .deck { padding: 0; gap: 0; }
+    .s {
+      width: 1080px; height: 1350px; position: relative; overflow: hidden;
+      padding: 84px 80px 72px; display: flex; flex-direction: column;
+      background:
+        radial-gradient(ellipse at 10% 0%, rgba(184,255,0,.14), transparent 45%),
+        radial-gradient(ellipse at 100% 100%, rgba(255,61,187,.16), transparent 45%),
+        linear-gradient(180deg, #0a0a0a, #121018 60%, #0a0a0a);
+    }
+    body.export .s[hidden] { display: none; }
+    .top { display: flex; justify-content: space-between; font: 600 28px var(--mono); letter-spacing: .2em; text-transform: uppercase; color: var(--brand); }
+    .top span:last-child { color: var(--muted); letter-spacing: .08em; }
+    h1, h2 { font-family: var(--display); font-weight: 800; letter-spacing: -.035em; margin: 0; }
+    h2 { font-size: 92px; line-height: .98; margin-top: 56px; }
+    .mid { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+    h2 em { font-style: normal; color: var(--brand); }
+    .src { margin-top: auto; padding-top: 28px; border-top: 2px solid var(--line); font: 500 28px/1.4 var(--mono); color: var(--muted); }
+    .src b { color: var(--ink); font-weight: 600; }
+
+    /* slide 1 */
+    .cover-year { font: 800 212px/.86 var(--display); letter-spacing: -.06em; margin-top: 190px; font-variant-numeric: lining-nums; }
+    .cover-year span { color: var(--brand-2); }
+    .cover-line { font: 800 84px/1 var(--display); letter-spacing: -.03em; margin: 36px 0 0; }
+    .cover-sub { font: 500 34px/1.35 var(--body); color: var(--muted); margin: 28px 0 0; max-width: 820px; }
+    .swipe { display: inline-flex; align-items: center; gap: 16px; margin-top: 40px; font: 600 30px var(--mono); color: var(--brand); }
+    .swipe svg { width: 60px; height: 24px; }
+
+    /* drawn windows (Win98-style chrome, no real logos) */
+    .win { background: var(--win); color: var(--win-ink); border: 3px solid; border-color: #fff #555 #555 #fff; font-family: var(--mono); }
+    .win .bar { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; color: #fff; font: 600 32px var(--mono); }
+    .win .bar i { width: 30px; height: 26px; background: var(--win); border: 2px solid; border-color: #fff #555 #555 #fff; display: inline-block; }
+    .win .body { padding: 26px 28px; font-size: 34px; line-height: 1.45; }
+    .wins { display: grid; gap: 44px; }
+    .w-aim .bar { background: linear-gradient(90deg, #000080, #1084d0); }
+    .w-msn .bar { background: linear-gradient(90deg, #0a4ea8, #4a90e2); }
+    .away { background: #fff8b0; border: 2px solid #8a7a00; padding: 14px 18px; }
+    .row { display: flex; justify-content: space-between; }
+    .dim { color: #444; }
+    .nudge { display: inline-block; font-weight: 600; color: #a00060; }
+
+    /* LiveJournal / Xanga entry */
+    .entry { background: #f4f6f8; color: #111; border-top: 14px solid #3b6e8f; padding: 44px 48px; font: 500 38px/1.45 var(--body); }
+    .entry h3 { font: 600 32px var(--mono); margin: 0 0 14px; color: #3b6e8f; }
+    .entry p { margin: 0 0 18px; }
+    .meta { display: grid; gap: 18px; border-top: 2px dashed #9aa; padding-top: 24px; font: 500 32px var(--mono); }
+    .meta b { color: #3b6e8f; }
+    .blank { display: inline-block; width: 220px; border-bottom: 3px solid #111; vertical-align: -4px; }
+    .footer-stats { margin-top: 32px; font: 500 32px var(--mono); color: var(--muted); }
+
+    /* Friendster profile */
+    .profile { display: grid; grid-template-columns: 300px 1fr; gap: 32px; background: #fff7ee; color: #111; padding: 36px; border-top: 14px solid #f0801f; }
+    .ph { width: 300px; height: 380px; background: #e8dccb; display: grid; place-items: center; }
+    .ph svg { width: 160px; height: 200px; }
+    .profile h3 { font: 700 44px var(--body); margin: 0 0 8px; }
+    .profile .k { font: 600 30px var(--mono); color: #a04c00; margin: 24px 0 8px; }
+    .profile .t { font: 500 34px/1.35 var(--body); }
+    .friends { display: flex; gap: 10px; margin-top: 8px; }
+    .friends i { width: 64px; height: 64px; background: #e8dccb; display: inline-block; }
+
+    /* list slide */
+    .list { margin: 48px 0 0; padding: 0; list-style: none; display: grid; gap: 4px; }
+    .list li { display: flex; justify-content: space-between; align-items: baseline; gap: 20px; padding: 18px 0; border-bottom: 2px solid var(--line); font: 600 40px var(--body); }
+    .list li small { font: 500 28px var(--mono); color: var(--muted); white-space: nowrap; }
+    .list li.new small { color: var(--brand); }
+    .cta { margin-top: 44px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .cta p { margin: 0; font: 800 54px/1.02 var(--display); letter-spacing: -.03em; }
+    .cta .btn { background: var(--brand); color: #0a0a0a; font: 700 32px var(--body); padding: 22px 30px; white-space: nowrap; }
+  </style>
+</head>
+<body>
+  <a class="studio-back" href="/">← Vargas Studio</a>
+  <div class="deck">
+
+    <!-- 1 -->
+    <section class="s" data-slide="1">
+      <div class="top"><span>Scrollback</span><span>1 / 5</span></div>
+      <div class="cover-year">20<span>03</span></div>
+      <p class="cover-line">What it felt like online.</p>
+      <p class="cover-sub">Every site here is dated from the Scrollback catalog. No vague vibes.</p>
+      <span class="swipe">swipe <svg viewBox="0 0 60 24" fill="none" stroke="#b8ff00" stroke-width="4"><path d="M2 12h52M44 2l12 10-12 10"/></svg></span>
+      <p class="src"><b>Era:</b> Y2K Horizon, 2000–2003. Its last year.</p>
+    </section>
+
+    <!-- 2 -->
+    <section class="s" data-slide="2" hidden>
+      <div class="top"><span>Scrollback · 2003</span><span>2 / 5</span></div>
+      <h2>Two chat windows. <em>Always.</em></h2>
+      <div class="mid"><div class="wins">
+        <div class="win w-aim">
+          <div class="bar"><span>Buddy List</span><span><i></i> <i></i></span></div>
+          <div class="body">
+            <div class="row"><span>sk8rgrl_03</span><span class="dim">Away</span></div>
+            <div class="away">brb dinner. if this is kevin, no.</div>
+            <div class="row" style="margin-top:14px"><span>xXbandkidXx</span><span class="dim">Idle 42 min</span></div>
+          </div>
+        </div>
+        <div class="win w-msn">
+          <div class="bar"><span>Conversation</span><span><i></i> <i></i></span></div>
+          <div class="body"><span class="nudge">jess has just sent you a nudge.</span><br><span class="dim">jess: r u there??</span></div>
+        </div>
+      </div></div>
+      <p class="src"><b>AIM</b> 1997–2005 · away messages<br><b>MSN Messenger</b> 2002–2009 · nudges</p>
+    </section>
+
+    <!-- 3 -->
+    <section class="s" data-slide="3" hidden>
+      <div class="top"><span>Scrollback · 2003</span><span>3 / 5</span></div>
+      <h2>Your diary had a <em>mood.</em></h2>
+      <div class="mid"><div class="entry">
+        <h3>Tuesday, 10:47 PM</h3>
+        <p>ok so the bus was late again and</p>
+        <div class="meta">
+          <span><b>Current mood:</b> <span class="blank"></span></span>
+          <span><b>Current music:</b> <span class="blank" style="width:300px"></span></span>
+          <span class="dim">14 comments</span>
+        </div>
+      </div>
+      <p class="footer-stats">Fill in the mood. You remember it.</p></div>
+      <p class="src"><b>LiveJournal</b> 2001–2007 · mood icons, comment threads<br><b>Xanga</b> 2002–2006 · footers full of stats</p>
+    </section>
+
+    <!-- 4 -->
+    <section class="s" data-slide="4" hidden>
+      <div class="top"><span>Scrollback · 2003</span><span>4 / 5</span></div>
+      <h2>Friendster was <em>the new thing.</em></h2>
+      <div class="mid"><div class="profile">
+        <div class="ph"><svg viewBox="0 0 160 200" fill="#b9a68e"><circle cx="80" cy="64" r="40"/><path d="M10 200c0-50 30-82 70-82s70 32 70 82z"/></svg></div>
+        <div>
+          <h3>your profile</h3>
+          <div class="k">Testimonials (3)</div>
+          <div class="t">“she burned me the best mix CD of all time”</div>
+          <div class="k">Friends of friends</div>
+          <div class="friends"><i></i><i></i><i></i><i></i><i></i></div>
+        </div>
+      </div>
+      <p class="footer-stats">Profiles. Testimonials. Then it slowed down.</p></div>
+      <p class="src"><b>Friendster</b> 2003–2005 · testimonial walls, friends-of-friends</p>
+    </section>
+
+    <!-- 5 -->
+    <section class="s" data-slide="5" hidden>
+      <div class="top"><span>Scrollback · 2003</span><span>5 / 5</span></div>
+      <h2>Also open <em>on your screen.</em></h2>
+      <ul class="list">
+        <li>Homestar Runner <small>2001–2009</small></li>
+        <li>Neopets <small>2001–2007</small></li>
+        <li>StumbleUpon <small>2002–2008</small></li>
+        <li>LimeWire <small>2001–2007</small></li>
+        <li>MapQuest printouts <small>2000–2006</small></li>
+        <li class="new">PureVolume <small>new · 2003–2008</small></li>
+      </ul>
+      <div class="cta"><p>Which year<br>was yours?</p><span class="btn">Join the waitlist</span></div>
+      <p class="src">Scrollback · websites, items and style, 1995–2012</p>
+    </section>
+
+  </div>
+  <script>
+    const n = new URLSearchParams(location.search).get('slide');
+    const slides = document.querySelectorAll('.s');
+    if (n) {
+      document.body.classList.add('export');
+      slides.forEach((s) => { s.hidden = s.dataset.slide !== n; });
+    } else {
+      slides.forEach((s) => { s.hidden = false; });
+    }
+  </script>
+</body>
+</html>
