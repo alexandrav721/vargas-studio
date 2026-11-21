@@ -1,69 +1,38 @@
 import { useEffect, useMemo, useState } from "react";
 import data from "../content/portfolio.json";
 
-type Status = "hot" | "active" | "quiet" | "seed";
-type CellState = "live" | "fill-in" | "na";
-
-const statusLabel: Record<Status, string> = {
-  hot: "Hot now",
-  active: "In flight",
-  quiet: "Quieter",
-  seed: "Seed",
-};
-
-const cellStateLabel: Record<CellState, string> = {
-  live: "Live",
-  "fill-in": "Fill in",
-  na: "N/A",
-};
-
-type VisualCell = {
-  label: string;
-  detail: string;
-  url: string | null;
-  state: string;
-};
-
-type Project = (typeof data.projects)[number];
-
-const OPEN_PRIORITY = [
-  "product-ui",
-  "website",
-  "landing",
-  "funnel",
-  "social",
-  "deck",
-  "meta-ads",
-  "print",
-] as const;
-
-function visualsOf(project: Project) {
-  return project.visuals as Record<string, VisualCell>;
-}
-
-function cellFor(project: Project, columnId: string): VisualCell | null {
-  return visualsOf(project)[columnId] ?? null;
-}
-
-function liveCount(project: Project) {
-  return Object.values(visualsOf(project)).filter((c) => c.state === "live")
-    .length;
-}
-
-function primaryOpen(project: Project): { columnId: string; cell: VisualCell } | null {
-  const visuals = visualsOf(project);
-  for (const id of OPEN_PRIORITY) {
-    const cell = visuals[id];
-    if (cell?.state === "live" && cell.url) {
-      return { columnId: id, cell };
-    }
-  }
-  return null;
-}
+import Deck from "./Deck";
+import ProjectPage from "./ProjectPage";
+import {
+  cellFor,
+  cellStateLabel,
+  liveCount,
+  parseRoute,
+  primaryOpen,
+  projectHref,
+  statusLabel,
+  visualsOf,
+  type CellState,
+  type Route,
+  type Status,
+} from "./lib";
 
 const MAX_COMPARE = 5;
 
 export default function App() {
+  const [route, setRoute] = useState<Route>(() => parseRoute(window.location.hash));
+
+  useEffect(() => {
+    const onHash = () => setRoute(parseRoute(window.location.hash));
+    window.addEventListener("hashchange", onHash);
+    return () => window.removeEventListener("hashchange", onHash);
+  }, []);
+
+  if (route.view === "deck") return <Deck key={route.slide} start={route.slide} />;
+  return <Studio route={route} />;
+}
+
+function Studio({ route }: { route: Route }) {
   const [tocOpen, setTocOpen] = useState(false);
   const [active, setActive] = useState("intro");
   const [openProjectId, setOpenProjectId] = useState<string | null>(
@@ -89,7 +58,24 @@ export default function App() {
     );
     sections.forEach((s) => obs.observe(s));
     return () => obs.disconnect();
-  }, []);
+  }, [route.view]);
+
+  // Arriving on home from a #section link (e.g. from a project page).
+  useEffect(() => {
+    if (route.view !== "home") return;
+    const id = window.location.hash.slice(1);
+    if (!id || id.startsWith("/")) return;
+    requestAnimationFrame(() =>
+      document.getElementById(id)?.scrollIntoView({ behavior: "auto" }),
+    );
+  }, [route.view]);
+
+  // A new project page starts at the top.
+  const projectId = route.view === "project" ? route.id : null;
+  useEffect(() => {
+    if (projectId) window.scrollTo({ top: 0 });
+    setTocOpen(false);
+  }, [projectId]);
 
   const toc = [
     { id: "intro", label: "Intro" },
@@ -100,6 +86,11 @@ export default function App() {
 
   const jump = (id: string) => {
     setTocOpen(false);
+    if (route.view !== "home") {
+      // Leave the project page; the effect below scrolls once home mounts.
+      window.location.hash = id;
+      return;
+    }
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   };
 
@@ -157,15 +148,25 @@ export default function App() {
       </button>
 
       <aside className={`toc ${tocOpen ? "open" : ""}`} aria-label="Site menu">
-        <p className="toc-brand">{data.site.brand}</p>
-        <nav>
+        <a className="toc-brand" href="#/">
+          {data.site.brand}
+        </a>
+        <a className="toc-tour" href="#/tour">
+          <svg viewBox="0 0 16 16" aria-hidden="true">
+            <rect x="1.5" y="3" width="13" height="9" />
+            <path d="M6.5 5.5v4l3.5-2z" />
+          </svg>
+          Take the tour
+        </a>
+        <nav aria-label="Sections">
           {toc.map((item) => (
             <a
               key={item.id}
               href={`#${item.id}`}
               className={
-                active === item.id ||
-                (item.id === "projects" && active.startsWith("project-"))
+                route.view === "home" &&
+                (active === item.id ||
+                  (item.id === "projects" && active.startsWith("project-")))
                   ? "on"
                   : ""
               }
@@ -178,11 +179,31 @@ export default function App() {
             </a>
           ))}
         </nav>
-        <p className="toc-hint">
-          Browse ideas, then compare the same craft columns across them.
-        </p>
+        <p className="toc-group">Projects</p>
+        <nav className="toc-projects" aria-label="Projects">
+          {data.projects.map((p) => (
+            <a
+              key={p.id}
+              href={projectHref(p.id)}
+              className={projectId === p.id ? "on" : ""}
+              aria-current={projectId === p.id ? "page" : undefined}
+            >
+              {p.name}
+            </a>
+          ))}
+        </nav>
       </aside>
 
+      {projectId ? (
+        <main className="main">
+          <ProjectPage id={projectId} />
+          <footer className="foot">
+            <p>
+              {data.site.brand} · {data.site.owner}
+            </p>
+          </footer>
+        </main>
+      ) : (
       <main className="main">
         <header className="hero" id="intro" data-section>
           <p className="eyebrow">
@@ -192,7 +213,9 @@ export default function App() {
           <p className="tagline">{data.site.tagline}</p>
           <p className="lede">{data.site.forWhom}</p>
           <div className="hero-cta">
+            <a href="#/tour">Take the tour</a>
             <a
+              className="ghost"
               href="#projects"
               onClick={(e) => {
                 e.preventDefault();
@@ -304,6 +327,9 @@ export default function App() {
                   ) : (
                     <span className="fill-in">No live link yet</span>
                   )}
+                  <a className="action-ghost" href={projectHref(p.id)}>
+                    Deep dive
+                  </a>
                   <button
                     type="button"
                     className={`action-ghost ${compareIds.includes(p.id) ? "is-on" : ""}`}
@@ -551,6 +577,7 @@ export default function App() {
           </p>
         </footer>
       </main>
+      )}
     </div>
   );
 }
