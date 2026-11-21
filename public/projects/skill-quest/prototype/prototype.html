@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Skill Quest prototype</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#F6F1E7;--paper-2:#EDE5D4;--ink:#161412;--ink-2:#4A443D;--tomato:#C7391F;--sun:#F5B82E;--teal:#1F7A6B;
+  --display:"Bricolage Grotesque",system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace}
+*{box-sizing:border-box;margin:0}
+body{background:#2a2622;font:16px/1.45 var(--display);color:var(--ink);min-height:100vh;display:grid;place-items:center;padding:20px 0}
+.device{width:390px;height:844px;max-width:100vw;background:var(--paper);border:10px solid #0d0c0b;border-radius:52px;position:relative;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.5)}
+@media(max-width:420px){body{padding:0}.device{border:0;border-radius:0;height:100vh;width:100vw}}
+.notch{position:absolute;top:8px;left:50%;transform:translateX(-50%);width:120px;height:32px;background:#0d0c0b;border-radius:20px;z-index:20}
+.screen{position:absolute;inset:0;padding:58px 20px 96px;overflow-y:auto;display:none;flex-direction:column}
+.screen.on{display:flex;animation:in .28s ease}
+@keyframes in{from{opacity:0;transform:translateY(10px)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.tag{font:700 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
+h1{font-size:34px;line-height:1;font-weight:800;letter-spacing:-.02em;margin:10px 0}
+h2{font-size:24px;line-height:1.05;font-weight:800;margin:6px 0}
+.muted{color:var(--ink-2)}
+.btn{display:flex;justify-content:center;align-items:center;gap:8px;width:100%;font:700 17px var(--display);background:var(--tomato);color:#fff;border:2px solid var(--ink);border-radius:14px;padding:15px;box-shadow:4px 4px 0 var(--ink);cursor:pointer}
+.btn:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--ink)}
+.btn.alt{background:#fff;color:var(--ink)} .btn.sun{background:var(--sun);color:var(--ink)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.foot{position:absolute;left:20px;right:20px;bottom:28px;z-index:5}
+.box{background:#fff;border:2px solid var(--ink);border-radius:16px;padding:14px}
+.opt{display:flex;gap:12px;align-items:center;background:#fff;border:2px solid var(--ink);border-radius:16px;padding:14px;margin:10px 0;cursor:pointer;text-align:left;width:100%;font:inherit}
+.opt.sel{background:var(--sun);box-shadow:3px 3px 0 var(--ink)}
+.opt .ic{width:44px;height:44px;border:2px solid var(--ink);border-radius:12px;display:grid;place-items:center;font-size:22px;background:var(--paper);flex:none}
+.hud{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.xp{font:700 12px var(--mono);background:#fff;border:2px solid var(--ink);border-radius:99px;padding:6px 10px}
+.xpbar{height:12px;border:2px solid var(--ink);border-radius:12px;background:#fff;overflow:hidden;margin:6px 0 18px}
+.xpbar b{display:block;height:100%;background:var(--teal);transition:width 1s ease}
+.map{position:relative;padding-left:30px}
+.map:before{content:"";position:absolute;left:21px;top:10px;bottom:10px;border-left:3px dashed var(--ink)}
+.node{position:relative;margin:12px 0}
+.node:before{content:"";position:absolute;left:-17px;top:20px;width:16px;height:16px;border:2.5px solid var(--ink);border-radius:50%;background:var(--paper)}
+.node.cur:before{background:var(--tomato)} .node.done:before{background:var(--teal)}
+.node.lock{opacity:.5}
+.node .box{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.node.cur .box{box-shadow:4px 4px 0 var(--ink);cursor:pointer}
+.chip{display:inline-block;font:500 14px var(--display);border:2px solid var(--ink);border-radius:99px;padding:8px 12px;margin:4px 4px 0 0;background:#fff;cursor:pointer}
+.chip.sel{background:var(--teal);color:#fff}
+.steps{display:flex;gap:6px;margin:4px 0 14px}.steps i{flex:1;height:6px;border-radius:6px;background:var(--paper-2);border:1.5px solid var(--ink)}.steps i.on{background:var(--tomato)}
+.code{font:500 12px/1.6 var(--mono);background:var(--ink);color:#EDE5D4;border-radius:14px;padding:14px;margin-top:14px;white-space:pre-wrap;min-height:120px}
+.code .k{color:var(--sun)} .code .new{background:#3a3128;border-radius:3px}
+.task{display:flex;gap:10px;align-items:center;padding:11px 0;border-bottom:1.5px dashed #b9ae9d;font-size:15px}
+.task .st{width:26px;height:26px;border-radius:8px;border:2px solid var(--ink);display:grid;place-items:center;font:700 13px var(--mono);flex:none;background:#fff}
+.task.ok .st{background:var(--teal);color:#fff} .task.meh .st{background:var(--sun)}
+.spin{animation:spin 1s linear infinite;display:inline-block}@keyframes spin{to{transform:rotate(360deg)}}
+/* card */
+.cardwrap{perspective:900px;display:grid;place-items:center;margin:8px 0 16px}
+.card{width:250px;height:350px;position:relative;transform-style:preserve-3d;transition:transform .9s cubic-bezier(.2,.8,.2,1)}
+.card.flip{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;border:2.5px solid var(--ink);border-radius:20px;box-shadow:8px 8px 0 var(--ink);padding:14px;background:#fff}
+.face.back{background:repeating-linear-gradient(45deg,var(--tomato) 0 14px,#b23319 14px 28px);display:grid;place-items:center}
+.face.back span{background:var(--sun);border:2.5px solid var(--ink);border-radius:14px;padding:10px 14px;font:800 22px var(--display)}
+.face.front{transform:rotateY(180deg)}
+.ctop{display:flex;justify-content:space-between}.rar{font:700 11px var(--mono);background:var(--tomato);color:#fff;border-radius:6px;padding:4px 7px}
+.art{height:110px;border:2px solid var(--ink);border-radius:12px;margin:10px 0;background:radial-gradient(circle at 30% 40%,var(--sun) 0 20px,transparent 21px),radial-gradient(circle at 70% 62%,var(--tomato) 0 28px,transparent 29px),repeating-linear-gradient(45deg,var(--paper) 0 8px,var(--paper-2) 8px 16px);display:grid;place-items:center;font-size:40px}
+.face h3{font-size:19px;line-height:1.1}
+.stat{display:grid;grid-template-columns:62px 1fr 26px;align-items:center;gap:8px;font:700 11px var(--mono);margin:7px 0}
+.bar{height:9px;border:1.5px solid var(--ink);border-radius:9px;overflow:hidden;background:var(--paper)}.bar b{display:block;height:100%;width:0;transition:width 1.2s ease .9s}
+.burst{text-align:center;font:800 22px var(--display);color:var(--teal);opacity:0;transition:opacity .4s 1.6s}
+.burst.on{opacity:1}
+.fix{display:flex;gap:10px;font-size:14.5px;margin:8px 0}.fix b{font-family:var(--mono);color:var(--tomato)}
+.lb{display:flex;align-items:center;gap:10px;padding:10px 12px;border-bottom:1.5px solid var(--paper-2)}
+.lb .r{font:700 14px var(--mono);width:26px}.lb .n{flex:1;font-weight:700}.lb .s{font:700 14px var(--mono)}
+.lb.me{background:var(--sun);border:2px solid var(--ink);border-radius:12px;margin:6px 0}
+.banner{background:var(--ink);color:var(--paper);border-radius:18px;padding:16px;margin-bottom:14px}
+.banner .tag{color:var(--sun)}
+/* chrome */
+.dots{position:absolute;bottom:8px;left:0;right:0;display:flex;justify-content:center;gap:6px;z-index:6}
+.dots i{width:7px;height:7px;border-radius:50%;background:#c9bfae}.dots i.on{background:var(--ink);width:18px;border-radius:7px}
+.toast{position:absolute;left:50%;top:60px;transform:translate(-50%,-20px);background:var(--ink);color:#fff;font:700 14px var(--display);padding:10px 16px;border-radius:99px;opacity:0;transition:.25s;z-index:30;pointer-events:none;white-space:nowrap}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+body.demo .next-tap{outline:4px solid #2FD3B5;outline-offset:3px;animation:pulse 1.2s infinite}
+@keyframes pulse{50%{outline-color:transparent}}
+.help{position:fixed;right:16px;bottom:16px;color:#cfc6b8;font:500 12px var(--mono)}
+@media(max-width:420px){.help{display:none}}
+</style>
+</head>
+<body>
+<div class="device" id="device">
+  <div class="notch"></div>
+  <div class="toast" id="toast"></div>
+
+  <!-- 0 · Welcome / pick class -->
+  <section class="screen" data-i="0">
+    <span class="tag">Welcome to Skill Quest</span>
+    <h1>What kind of builder are you?</h1>
+    <p class="muted">We'll pick your first quest to match.</p>
+    <div style="margin-top:12px">
+      <button class="opt next-tap" data-pick><span class="ic">🧰</span><span><b>The Operator</b><br><span class="muted">Automate boring work tasks</span></span></button>
+      <button class="opt" data-pick><span class="ic">🏡</span><span><b>The Life Hacker</b><br><span class="muted">Make home &amp; life easier</span></span></button>
+      <button class="opt" data-pick><span class="ic">🎨</span><span><b>The Creator</b><br><span class="muted">Content, ideas, brand</span></span></button>
+    </div>
+    <div class="foot"><button class="btn" id="b0" disabled data-go="1">Let's play →</button></div>
+  </section>
+
+  <!-- 1 · Quest map -->
+  <section class="screen" data-i="1">
+    <div class="hud"><span class="tag">Level 1 · Apprentice</span><span class="xp">⚡ 0 XP</span></div>
+    <h2>Your quest map</h2>
+    <div class="xpbar"><b style="width:4%"></b></div>
+    <div class="map">
+      <div class="node cur next-tap" data-go="2"><div class="box"><div><span class="tag" style="color:var(--tomato)">Quest 1 · 15 min</span><h3 style="font-size:18px;margin-top:4px">Your first skill: Weeknight Meal Planner</h3></div><span style="font-size:24px">▶</span></div></div>
+      <div class="node lock" data-soon><div class="box"><div><span class="tag">Quest 2</span><h3 style="font-size:17px;margin-top:4px">Make it remember your taste</h3></div>🔒</div></div>
+      <div class="node lock" data-soon><div class="box"><div><span class="tag">Quest 3</span><h3 style="font-size:17px;margin-top:4px">Add a grocery-list output</h3></div>🔒</div></div>
+      <div class="node lock" data-soon><div class="box"><div><span class="tag">Boss quest</span><h3 style="font-size:17px;margin-top:4px">Two skills, one agent</h3></div>🔒</div></div>
+    </div>
+  </section>
+
+  <!-- 2 · Build the skill -->
+  <section class="screen" data-i="2">
+    <div class="hud"><span class="tag">Quest 1 · Meal Planner</span><span class="xp" id="qxp">⚡ 0 XP</span></div>
+    <div class="steps"><i class="on"></i><i id="s2"></i><i id="s3"></i></div>
+    <div id="q1">
+      <h2>When should Claude use this skill?</h2>
+      <p class="muted">Pick all that fit. This becomes the skill's description, the part Claude reads to decide when to use it.</p>
+      <div style="margin-top:10px">
+        <span class="chip next-tap" data-c="what's for dinner">"What's for dinner?"</span>
+        <span class="chip" data-c="plan meals for the week">Plan the week</span>
+        <span class="chip" data-c="use what's in my fridge">Use what's in my fridge</span>
+        <span class="chip" data-c="I'm short on time">I'm short on time</span>
+      </div>
+    </div>
+    <div id="q2" style="display:none">
+      <h2>How should it work?</h2>
+      <p class="muted">Pick the rules. Good skills are specific.</p>
+      <div style="margin-top:10px">
+        <span class="chip next-tap" data-r="Ask what's in the fridge first">Ask what's in the fridge first</span>
+        <span class="chip" data-r="Max 30 minutes per dinner">Max 30 min per dinner</span>
+        <span class="chip" data-r="Give 5 dinners, one per weekday">5 dinners, Mon–Fri</span>
+        <span class="chip" data-r="End with one grocery list">End with a grocery list</span>
+      </div>
+    </div>
+    <div class="code" id="code"></div>
+    <div class="foot"><button class="btn" id="b2" disabled>Next step →</button></div>
+  </section>
+
+  <!-- 3 · Testing -->
+  <section class="screen" data-i="3">
+    <span class="tag">Testing your skill</span>
+    <h2>Running 5 real tasks…</h2>
+    <p class="muted">An AI judge checks each answer. This is how your card gets its stats.</p>
+    <div class="box" style="margin-top:14px" id="tasks"></div>
+    <div class="foot"><button class="btn sun" id="b3" disabled data-go="4">Reveal my card ✨</button></div>
+  </section>
+
+  <!-- 4 · Card reveal (aha) -->
+  <section class="screen" data-i="4">
+    <span class="tag" style="text-align:center">Quest complete</span>
+    <div class="cardwrap">
+      <div class="card" id="card">
+        <div class="face back"><span>SQ</span></div>
+        <div class="face front">
+          <div class="ctop"><span class="rar">RARE</span><span class="tag" style="color:var(--ink)">LV 1</span></div>
+          <div class="art">🍲</div>
+          <h3>Weeknight Meal Planner</h3>
+          <p class="muted" style="font-size:12px;margin:3px 0 8px">by you · 5 dinners from your fridge</p>
+          <div class="stat">POWER<span class="bar"><b data-w="82" style="background:var(--teal)"></b></span>82</div>
+          <div class="stat">CLARITY<span class="bar"><b data-w="71" style="background:var(--sun)"></b></span>71</div>
+          <div class="stat">SPEED<span class="bar"><b data-w="64" style="background:var(--tomato)"></b></span>64</div>
+        </div>
+      </div>
+    </div>
+    <p class="burst" id="burst">+120 XP · Level 2 unlocked!</p>
+    <div class="box" style="margin-top:12px">
+      <span class="tag">3 fixes to power up</span>
+      <div class="fix"><b>+6</b><span>Say what to do if the fridge is nearly empty.</span></div>
+      <div class="fix"><b>+4</b><span>Group the grocery list by store aisle.</span></div>
+      <div class="fix"><b>+3</b><span>Add one example dinner so Claude matches your style.</span></div>
+    </div>
+    <div class="foot" style="display:grid;grid-template-columns:1fr 1.4fr;gap:10px">
+      <button class="btn alt" data-soon="Sharing opens your card as an image">Share</button>
+      <button class="btn next-tap" data-go="5">Enter the battle →</button>
+    </div>
+  </section>
+
+  <!-- 5 · Weekly battle -->
+  <section class="screen" data-i="5">
+    <div class="banner">
+      <span class="tag">Battle #4 · ends Sunday</span>
+      <h2 style="color:var(--paper)">Best meal-planner skill</h2>
+      <p style="color:#cfc6b8;font-size:14px">Every entry runs the same 10 hidden tasks. AI judge 70% + votes 30%.</p>
+    </div>
+    <span class="tag">Live leaderboard · 214 entries (sample data)</span>
+    <div style="margin-top:8px">
+      <div class="lb"><span class="r">1</span><span class="n">Fridge Wizard</span><span class="s">94</span></div>
+      <div class="lb"><span class="r">2</span><span class="n">Budget Bites</span><span class="s">91</span></div>
+      <div class="lb"><span class="r">3</span><span class="n">Toddler-Proof Dinners</span><span class="s">89</span></div>
+      <div class="lb me" id="me"><span class="r" id="rank">—</span><span class="n">Weeknight Meal Planner · you</span><span class="s">82</span></div>
+    </div>
+    <p class="muted" style="font-size:14px;margin-top:10px" id="hint">Apply the 3 fixes to climb about 30 places.</p>
+    <div class="foot" style="display:grid;gap:10px">
+      <button class="btn next-tap" id="enter">Enter my card</button>
+      <button class="btn alt" data-go="1">Back to quest map</button>
+    </div>
+  </section>
+
+  <div class="dots" id="dots"></div>
+</div>
+<p class="help">Press D for demo mode · ← → to move</p>
+
+<script>
+const screens=[...document.querySelectorAll('.screen')];
+const dots=document.getElementById('dots');
+screens.forEach(()=>dots.appendChild(document.createElement('i')));
+let cur=0;
+function go(i){
+  i=Math.max(0,Math.min(screens.length-1,+i));
+  screens.forEach((s,k)=>s.classList.toggle('on',k===i));
+  [...dots.children].forEach((d,k)=>d.classList.toggle('on',k===i));
+  cur=i; try{history.replaceState(null,'','?screen='+i)}catch(e){}
+  if(i===2) startBuild(); if(i===3) runTests(); if(i===4) reveal();
+  if(i===1) setTimeout(()=>document.querySelector('[data-i="1"] .xpbar b').style.width=xpWidth+'%',50);
+}
+let xpWidth=4;
+function toast(t){const el=document.getElementById('toast');el.textContent=t;el.classList.add('on');clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove('on'),1800)}
+document.addEventListener('click',e=>{
+  const g=e.target.closest('[data-go]'); if(g&&!g.disabled) return go(g.dataset.go);
+  const s=e.target.closest('[data-soon]'); if(s) toast(s.dataset.soon||'Unlocks after Quest 1');
+});
+// 0: pick a class
+document.querySelectorAll('[data-pick]').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('[data-pick]').forEach(x=>x.classList.remove('sel','next-tap'));
+  b.classList.add('sel'); const btn=document.getElementById('b0'); btn.disabled=false; btn.classList.add('next-tap');
+});
+// 2: build
+let phase=0;const picks={c:new Set(),r:new Set()};
+const code=document.getElementById('code'),b2=document.getElementById('b2');
+function esc(t){return t.replace(/[&<>]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]))}
+function render(){
+  const desc=picks.c.size?'Plan quick dinners. Use when the user says '+[...picks.c].map(x=>'"'+x+'"').join(', ')+'.':'…';
+  const rules=[...picks.r].map((r,i)=>(i+1)+'. '+r).join('\n')||'…';
+  code.innerHTML='<span class="k">---</span>\n<span class="k">name:</span> meal-planner\n<span class="k">description:</span> '+esc(desc)+'\n<span class="k">---</span>\n# Weeknight Meal Planner\n'+esc(rules);
+}
+function startBuild(){phase=0;picks.c.clear();picks.r.clear();
+  document.querySelectorAll('.chip').forEach(c=>c.classList.remove('sel'));
+  document.getElementById('q1').style.display='';document.getElementById('q2').style.display='none';
+  document.getElementById('s2').classList.remove('on');document.getElementById('qxp').textContent='⚡ 0 XP';
+  b2.disabled=true;b2.textContent='Next step →';render()}
+document.querySelectorAll('.chip').forEach(ch=>ch.onclick=()=>{
+  ch.classList.toggle('sel'); ch.classList.remove('next-tap');
+  const set=ch.dataset.c?picks.c:picks.r, v=ch.dataset.c||ch.dataset.r;
+  set.has(v)?set.delete(v):set.add(v); render();
+  b2.disabled = phase===0 ? picks.c.size===0 : picks.r.size<2;
+  if(!b2.disabled) b2.classList.add('next-tap');
+});
+b2.onclick=()=>{
+  if(phase===0){phase=1;document.getElementById('q1').style.display='none';document.getElementById('q2').style.display='';
+    document.getElementById('s2').classList.add('on');document.getElementById('qxp').textContent='⚡ 40 XP';
+    b2.disabled=true;b2.classList.remove('next-tap');b2.textContent='Test my skill →';toast('+40 XP · nice description!');}
+  else go(3);
+};
+// 3: tests
+const TASKS=[["Dinner with eggs, spinach, rice","ok"],["Vegetarian week, 2 people","ok"],["Fridge is almost empty","meh"],["20 minutes max tonight","ok"],["Week plan + grocery list","ok"]];
+function runTests(){
+  const box=document.getElementById('tasks'),b3=document.getElementById('b3');b3.disabled=true;b3.classList.remove('next-tap');
+  box.innerHTML=TASKS.map(t=>'<div class="task"><span class="st"><span class="spin">◌</span></span>'+t[0]+'</div>').join('');
+  [...box.children].forEach((row,i)=>setTimeout(()=>{row.classList.add(TASKS[i][1]);row.querySelector('.st').textContent=TASKS[i][1]==='ok'?'✓':'~';
+    if(i===TASKS.length-1){b3.disabled=false;b3.classList.add('next-tap')}},500+i*550));
+}
+// 4: reveal
+function reveal(){
+  const c=document.getElementById('card'),burst=document.getElementById('burst');
+  c.classList.remove('flip');burst.classList.remove('on');c.querySelectorAll('.bar b').forEach(b=>b.style.width=0);
+  setTimeout(()=>{c.classList.add('flip');burst.classList.add('on');c.querySelectorAll('.bar b').forEach(b=>b.style.width=b.dataset.w+'%');xpWidth=60},300);
+}
+// 5: battle
+document.getElementById('enter').onclick=e=>{
+  const r=document.getElementById('rank');r.textContent='38';e.target.textContent='Entered ✓';e.target.disabled=true;e.target.classList.remove('next-tap');
+  document.getElementById('hint').textContent='You\'re #38 of 214. Apply the 3 fixes to jump toward the top 10.';toast('Card entered in Battle #4 🏆');
+};
+// keys + deep link
+document.addEventListener('keydown',e=>{
+  if(e.key==='d'||e.key==='D') document.body.classList.toggle('demo');
+  if(e.key==='ArrowRight') go(cur+1); if(e.key==='ArrowLeft') go(cur-1);
+});
+go(new URLSearchParams(location.search).get('screen')||0);
+</script>
+</body>
+</html>

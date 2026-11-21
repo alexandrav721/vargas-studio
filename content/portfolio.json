@@ -52,6 +52,11 @@
   ],
   "now": [
     {
+      "date": "2026-11-21",
+      "projectId": "skill-quest",
+      "text": "Skill Quest added: landing + A/B variants, clickable prototype and pitch deck for a game that teaches AI skill building."
+    },
+    {
       "date": "2026-11-20",
       "projectId": "restitch",
       "text": "Restitch \u2014 upload a garment photo, pick a skill, type your tape, and save the flip in the browser closet."
@@ -684,6 +689,66 @@
           "url": "https://github.com/alexandrav721/Lumen"
         }
       ]
+    },
+    {
+      "id": "skill-quest",
+      "name": "Skill Quest",
+      "oneLiner": "A game that teaches beginners to build AI skills: quests, scored skill cards, weekly battles.",
+      "status": "active",
+      "updated": "2026-11-21",
+      "summary": "Quests walk beginners through building real Claude skills. Every skill gets tested and turned into a shareable card with Power, Clarity and Speed scores, and weekly battles put skills head to head on one theme. Money plan: sponsors host battles first, then Pro at $8/mo, then Teams at $20/seat.",
+      "latest": "Built 21 Nov with the idea-lab skills: landing page + 3 A/B hero variants, clickable prototype (build \u2192 test \u2192 card reveal \u2192 battle), and a 12-slide pitch deck. Waitlist is a demo and saves nothing yet.",
+      "visuals": {
+        "website": {
+          "label": "Skill Quest home",
+          "detail": "Quest \u00b7 Score \u00b7 Battle story, pricing with a Pro fake door, FAQ.",
+          "url": "/projects/skill-quest/landing/index.html",
+          "state": "live"
+        },
+        "landing": {
+          "label": "3 A/B hero variants",
+          "detail": "Pain, Gain and Identity angles; only the hero and button change.",
+          "url": "/projects/skill-quest/landing/variant-pain.html",
+          "state": "live"
+        },
+        "funnel": {
+          "label": "Waitlist demo",
+          "detail": "Email + 'what would you build first?'; records which price was clicked. Demo: saves nothing.",
+          "url": "/projects/skill-quest/landing/index.html#join",
+          "state": "live"
+        },
+        "meta-ads": {
+          "label": "Meta ads",
+          "detail": "Ad copy is written for three angles; frames not designed yet.",
+          "url": null,
+          "state": "na"
+        },
+        "product-ui": {
+          "label": "Clickable prototype",
+          "detail": "Pick a class \u2192 quest map \u2192 build a skill \u2192 test \u2192 card flips \u2192 enter the battle. Press D for demo mode.",
+          "url": "/projects/skill-quest/prototype/prototype.html",
+          "state": "live"
+        },
+        "deck": {
+          "label": "Pitch deck",
+          "detail": "12 slides: problem, quest/score/battle, three payers, ~$640k year-3 base case. Arrow keys to move.",
+          "url": "/projects/skill-quest/deck/deck.html",
+          "state": "live"
+        },
+        "print": {
+          "label": "Print / physical",
+          "detail": "Not planned.",
+          "url": null,
+          "state": "na"
+        },
+        "social": {
+          "label": "Social",
+          "detail": "Planned: '10 popular skills, scored' card carousel.",
+          "url": null,
+          "state": "na"
+        }
+      },
+      "code": []
     }
   ],
   "general": {
@@ -731,7 +796,7 @@
   "housekeeping": {
     "visualsHome": "content/portfolio.json \u2192 projects[].visuals (one cell per column). Live URLs go in visuals.*.url. Screenshots/stills go in media/ when ready.",
     "nonVisualHome": "General = skills, agents, reusable craft. Per-project Code = repo links + short summaries. Longer plans/docs stay in the Project store docs/ \u2014 not on the public grid.",
-    "retireOld": "Old shapes removed: freeform surfaces[], Ads/Waitlists/Landings lenses. To drop something: delete its cell content or set state to na, remove dead links, rebuild + republish. Never reintroduce confidential carve-out workstreams."
+    "retireOld": "Old shapes removed: freeform surfaces[], Ads/Waitlists/Landings lenses. To drop something: delete its cell content or set state to na, remove dead links, rebuild + republish. Never reintroduce removed projects."
   },
   "updateHint": "Edit content/portfolio.json. Fill visuals.<column>.url for live demos. Keep non-visual in general + projects[].code. Then rebuild and republish."
 }

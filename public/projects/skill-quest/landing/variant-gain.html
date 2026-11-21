@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en" data-angle="gain">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Skill Quest: level up by building real AI skills</title>
+<meta name="description" content="A game that teaches you to build Claude skills. Every skill you build gets tested, scored and turned into a card you can battle and share.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<!-- Analytics placeholder: paste Plausible / GA4 / Reddit Pixel snippet here -->
+<style>
+  :root{
+    --paper:#F6F1E7; --paper-2:#EDE5D4; --ink:#161412; --ink-2:#4A443D;
+    --tomato:#C7391F; --sun:#F5B82E; --teal:#1F7A6B; --line:#161412;
+    --display:"Bricolage Grotesque", system-ui, sans-serif;
+    --mono:"JetBrains Mono", ui-monospace, monospace;
+  }
+  *{box-sizing:border-box;margin:0}
+  html{-webkit-text-size-adjust:100%}
+  body{background:var(--paper);color:var(--ink);font:17px/1.55 var(--display);overflow-x:hidden}
+  a{color:inherit}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+  .btn{display:inline-flex;align-items:center;gap:10px;font:700 17px/1 var(--display);background:var(--tomato);color:#fff;border:2px solid var(--ink);border-radius:14px;padding:16px 22px;box-shadow:4px 4px 0 var(--ink);cursor:pointer;text-decoration:none;transition:transform .12s, box-shadow .12s}
+  .btn:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink)}
+  .btn:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--ink)}
+  .btn.alt{background:var(--sun);color:var(--ink)}
+  .tag{font:700 12px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase}
+
+  /* top bar */
+  header{padding:18px 0}
+  header .wrap{display:flex;justify-content:space-between;align-items:center}
+  .logo{font-weight:800;font-size:20px;display:flex;align-items:center;gap:8px}
+  .logo i{width:26px;height:26px;border:2px solid var(--ink);border-radius:7px;background:var(--sun);display:grid;place-items:center;font:700 13px var(--mono);font-style:normal;transform:rotate(-8deg)}
+  .beta{border:2px solid var(--ink);border-radius:99px;padding:6px 10px;background:#fff}
+
+  /* hero */
+  .hero{padding:28px 0 64px}
+  .hero .wrap{display:grid;gap:40px;align-items:center}
+  @media(min-width:880px){.hero .wrap{grid-template-columns:1.1fr .9fr}}
+  h1{font-size:clamp(42px,9vw,76px);line-height:.95;font-weight:800;letter-spacing:-.03em}
+  h1 em{font-style:normal;background:var(--sun);padding:0 .12em;border-radius:6px;box-decoration-break:clone}
+  .sub{font-size:19px;color:var(--ink-2);max-width:30ch;margin:18px 0 26px}
+  .micro{margin-top:14px;font-size:14px;color:var(--ink-2)}
+
+  /* skill card */
+  .stage{position:relative;height:440px;display:grid;place-items:center}
+  .card{width:260px;background:#fff;border:2.5px solid var(--ink);border-radius:20px;padding:14px;box-shadow:8px 8px 0 var(--ink);position:absolute}
+  .card.back{transform:rotate(9deg) translate(54px,10px);background:var(--teal);color:#fff}
+  .card.back2{transform:rotate(-10deg) translate(-56px,22px);background:var(--sun)}
+  .card.front{transform:rotate(-2deg);animation:float 5s ease-in-out infinite}
+  @keyframes float{50%{transform:rotate(-2deg) translateY(-8px)}}
+  @media (prefers-reduced-motion:reduce){.card.front{animation:none}}
+  .card .top{display:flex;justify-content:space-between;align-items:center}
+  .rar{font:700 11px var(--mono);background:var(--tomato);color:#fff;border-radius:6px;padding:4px 7px}
+  .lvl{font:700 12px var(--mono)}
+  .art{height:118px;border:2px solid var(--ink);border-radius:12px;margin:10px 0;background:
+      radial-gradient(circle at 30% 40%, var(--sun) 0 22px, transparent 23px),
+      radial-gradient(circle at 70% 62%, var(--tomato) 0 30px, transparent 31px),
+      repeating-linear-gradient(45deg, var(--paper) 0 8px, var(--paper-2) 8px 16px);position:relative}
+  .art:after{content:"🍲";position:absolute;inset:0;display:grid;place-items:center;font-size:44px}
+  .card .ctitle{font-size:20px;line-height:1.1;font-weight:700;color:var(--ink);margin:0}
+  .card p{font-size:12.5px;color:var(--ink-2);margin:4px 0 10px}
+  .stat{display:grid;grid-template-columns:62px 1fr 28px;align-items:center;gap:8px;font:700 11px var(--mono);margin:6px 0}
+  .bar{height:9px;border:1.5px solid var(--ink);border-radius:9px;overflow:hidden;background:var(--paper)}
+  .bar b{display:block;height:100%;background:var(--teal)}
+  .bar b.t{background:var(--tomato)} .bar b.s{background:var(--sun)}
+  .pill{position:absolute;font:700 12px var(--mono);background:#fff;border:2px solid var(--ink);border-radius:99px;padding:7px 11px;box-shadow:3px 3px 0 var(--ink)}
+  .p1{top:20px;right:2%;transform:rotate(6deg)} .p2{bottom:24px;left:0;transform:rotate(-5deg)}
+
+  /* sections */
+  section{padding:64px 0;border-top:2px solid var(--ink)}
+  h2{font-size:clamp(32px,6vw,48px);line-height:1;letter-spacing:-.02em;font-weight:800;margin:10px 0 28px;max-width:18ch}
+  .grid{display:grid;gap:16px}
+  @media(min-width:760px){.grid.c3{grid-template-columns:repeat(3,1fr)} .grid.c2{grid-template-columns:repeat(2,1fr)}}
+  .box{background:#fff;border:2px solid var(--ink);border-radius:18px;padding:22px}
+  .quote{font-size:21px;font-weight:700;line-height:1.25}
+  .step{display:flex;gap:16px;align-items:flex-start}
+  .num{flex:none;width:44px;height:44px;border:2px solid var(--ink);border-radius:12px;display:grid;place-items:center;font:700 18px var(--mono);background:var(--sun)}
+  .step h3{font-size:21px;line-height:1.15;margin-bottom:4px}
+  .muted{color:var(--ink-2)}
+  .dark{background:var(--ink);color:var(--paper)}
+  .dark .box{background:#24201C;border-color:#5a5148;color:var(--paper)}
+  .dark .muted{color:#bdb3a6}
+  .ph{border-style:dashed}
+  .price{font:800 44px/1 var(--display)} .price small{font:500 16px var(--display);color:var(--ink-2)}
+  .box ul{padding-left:18px;margin:14px 0 20px} .box li{margin:6px 0}
+  .hot{background:var(--sun)}
+  details{border-bottom:2px solid var(--ink);padding:18px 0}
+  summary{font-weight:700;font-size:19px;cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:12px}
+  summary::after{content:"+";font:700 22px var(--mono)} details[open] summary::after{content:"–"}
+  details p{margin-top:10px;color:var(--ink-2);max-width:60ch}
+
+  /* form */
+  .join{background:var(--tomato);color:#fff}
+  .join h2{color:#fff}
+  form{display:grid;gap:12px;max-width:520px}
+  input,select{font:500 17px var(--display);padding:15px 16px;border:2px solid var(--ink);border-radius:14px;background:#fff;color:var(--ink);width:100%}
+  input:focus,select:focus,.btn:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+  .join .btn{background:var(--ink)}
+  .thanks{display:none;background:#fff;color:var(--ink);border:2px solid var(--ink);border-radius:18px;padding:24px;max-width:520px;box-shadow:6px 6px 0 var(--ink)}
+  .thanks.on{display:block}
+  footer{padding:28px 0 40px;font-size:14px;color:var(--ink-2)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="logo"><i>SQ</i>Skill Quest</div>
+    <span class="tag beta">Beta · free</span>
+  </div>
+</header>
+
+<main>
+<!-- HERO: only this block changes between A/B variants -->
+<section class="hero" style="border:0">
+  <div class="wrap">
+    <div>
+      <h1 id="h1">Become an AI builder, <em>for real</em></h1>
+      <p class="sub" id="sub">Collect skill cards, climb the weekly leaderboard, and show off what you made.</p>
+      <a class="btn" href="#join" id="cta" data-track="hero-cta">Join the game →</a>
+      <p class="micro">No coding background needed · Works with Claude Code &amp; Cowork</p>
+    </div>
+    <div class="stage" aria-hidden="true">
+      <div class="card back2"></div>
+      <div class="card back"></div>
+      <div class="card front">
+        <div class="top"><span class="rar">RARE</span><span class="lvl">LV 7</span></div>
+        <div class="art"></div>
+        <p class="ctitle">Weeknight Meal Planner</p>
+        <p>Plans 5 dinners from what's in your fridge.</p>
+        <div class="stat">POWER<span class="bar"><b style="width:88%"></b></span>88</div>
+        <div class="stat">CLARITY<span class="bar"><b class="s" style="width:74%"></b></span>74</div>
+        <div class="stat">SPEED<span class="bar"><b class="t" style="width:61%"></b></span>61</div>
+      </div>
+      <span class="pill p1">+120 XP</span>
+      <span class="pill p2">🏆 Battle #4 · 2nd</span>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Building skills shouldn't feel like homework</h2>
+    <div class="grid c3">
+      <div class="box"><p class="quote">"I don't know if my skill is actually any good."</p></div>
+      <div class="box"><p class="quote">"Tutorials are boring. I quit halfway."</p></div>
+      <div class="box"><p class="quote">"There are 80,000 skills out there. Why would anyone see mine?"</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Quest. Score. Battle.</h2>
+    <div class="grid c3">
+      <div class="step"><span class="num">1</span><div><h3>Play a quest</h3><p class="muted">15-minute missions walk you through building a real skill, one step at a time.</p></div></div>
+      <div class="step"><span class="num">2</span><div><h3>Get your card</h3><p class="muted">Your skill gets tested on real tasks and scored for Power, Clarity and Speed. Plus 3 fixes.</p></div></div>
+      <div class="step"><span class="num">3</span><div><h3>Enter the battle</h3><p class="muted">Each week, skills go head to head on one theme. Win and you're on the leaderboard.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="dark">
+  <div class="wrap">
+    <h2>Skills you'll actually use, and proof they work</h2>
+    <div class="grid c2">
+      <div class="box"><h3>Finish what you start</h3><p class="muted">XP, levels and streaks keep you going where tutorials don't.</p></div>
+      <div class="box"><h3>Know what "good" looks like</h3><p class="muted">Every score comes with the exact changes that would raise it.</p></div>
+      <div class="box"><h3>Keep everything you build</h3><p class="muted">Each quest leaves you with a working skill in your own Claude.</p></div>
+      <div class="box"><h3>Something to show off</h3><p class="muted">Share your cards anywhere. Your best skills become your builder profile.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Be one of the first</h2>
+    <div class="grid c3">
+      <div class="box ph"><p class="muted">[Testimonial: replace with a real quote from a beta player]</p></div>
+      <div class="box ph"><p class="muted">[Testimonial: replace with a real quote from a beta player]</p></div>
+      <div class="box ph"><p class="muted">[Battle #0 results: add once the first battle has run]</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Free to play. Pro when you're hooked.</h2>
+    <div class="grid c2">
+      <div class="box">
+        <span class="tag">Free</span>
+        <p class="price" style="margin-top:10px">$0</p>
+        <ul><li>Quests 1–5</li><li>3 skill cards</li><li>Weekly battles</li></ul>
+        <a class="btn alt" href="#join" data-plan="free" data-track="price-free">Start free</a>
+      </div>
+      <div class="box hot">
+        <span class="tag">Pro</span>
+        <p class="price" style="margin-top:10px">$8<small>/month</small></p>
+        <ul><li>All quests, up to "ship a plugin"</li><li>Unlimited skill cards &amp; re-scores</li><li>Private leagues with friends</li><li>Card styles</li></ul>
+        <a class="btn" href="#join" data-plan="pro" data-track="price-pro">Get early access at $8</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Before you play</h2>
+    <details><summary>I'm not technical. Can I really do this?</summary><p>Yes, that's who it's built for. Quest 1 assumes you've never written a skill. If you can describe a task in plain English, you can build a skill.</p></details>
+    <details><summary>Do I need Claude Code?</summary><p>You'll need Claude (Claude Code or Cowork) to use the skills you build. Each quest tells you exactly where to put the file.</p></details>
+    <details><summary>Is this just another course?</summary><p>No. You don't watch, you build. Every quest ends with a working skill and a score that tells you how good it is.</p></details>
+    <details><summary>How are skills scored?</summary><p>Your skill runs on a set of sample tasks and an AI judge grades the results. In battles, community votes count too. You always see why you got your score.</p></details>
+  </div>
+</section>
+
+<section class="join" id="join">
+  <div class="wrap">
+    <h2>Get your first skill card free</h2>
+    <form id="waitlist" novalidate>
+      <input type="email" name="email" placeholder="you@email.com" required aria-label="Email">
+      <select name="use" aria-label="What would you build first?">
+        <option value="">What would you build first? (optional)</option>
+        <option>Something for my work</option>
+        <option>Something for home / life</option>
+        <option>Something for my business</option>
+        <option>Not sure yet, just curious</option>
+      </select>
+      <input type="hidden" name="plan" value="free">
+      <button class="btn" type="submit">Save my spot →</button>
+    </form>
+    <div class="thanks" id="thanks" role="status">
+      <p class="tag">You're in 🎮</p>
+      <h3 style="font-size:26px;margin:8px 0">Quest 1 is on its way.</h3>
+      <p class="muted">We're opening in small groups. Watch your inbox, and reply to the welcome email with a skill you wish existed. The best ones become battle themes.</p>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer><div class="wrap">© 2026 Skill Quest (working name) · Not affiliated with Anthropic · <a href="privacy.html">Privacy</a></div></footer>
+
+<script>
+// ---- A/B hero copy (only hero + CTA change between variants) ----
+const ANGLES = {
+  pain:     {eyebrow:"Skill scores for Claude", h1:'Stop guessing if your <em>skill works</em>', sub:"Every skill you build gets tested and scored, so you know exactly what to fix.", cta:"Score my skill →"},
+  gain:     {eyebrow:"No coding background needed", h1:'Build your first AI skill <em>tonight</em>', sub:"Short quests take you from zero to a skill you'll actually use.", cta:"Start quest 1 →"},
+  identity: {eyebrow:"The game for building AI skills", h1:'Become an AI builder, <em>for real</em>', sub:"Collect skill cards, climb the weekly leaderboard, and show off what you made.", cta:"Join the game →"}
+};
+const angle = new URLSearchParams(location.search).get("v") || document.documentElement.dataset.angle;
+const a = ANGLES[angle] || ANGLES.identity;
+document.getElementById("h1").innerHTML = a.h1;
+document.getElementById("sub").textContent = a.sub;
+document.getElementById("cta").textContent = a.cta;
+
+// ---- Form ----
+// To collect real signups, paste a free form endpoint here:
+//   Formspree: https://formspree.io/f/XXXX   ·   Tally / Google Forms also work
+// Leave empty to test locally (shows the thank-you state, stores nothing).
+const FORM_ENDPOINT = "";
+
+const params = new URLSearchParams(location.search);
+const form = document.getElementById("waitlist");
+
+// Fake-door: remember which price button was clicked (Pro clicks = purchase intent)
+document.querySelectorAll("[data-plan]").forEach(b => b.addEventListener("click", () => {
+  form.plan.value = b.dataset.plan;
+}));
+
+form.addEventListener("submit", async e => {
+  e.preventDefault();
+  if (!form.email.checkValidity()) { form.email.focus(); form.email.style.borderColor = "#fff"; return; }
+  const data = {
+    email: form.email.value, use: form.use.value, plan: form.plan.value, angle,
+    utm_source: params.get("utm_source") || "", utm_campaign: params.get("utm_campaign") || ""
+  };
+  if (FORM_ENDPOINT) {
+    try { await fetch(FORM_ENDPOINT, {method:"POST", headers:{"Content-Type":"application/json", "Accept":"application/json"}, body:JSON.stringify(data)}); } catch (err) {}
+  }
+  form.style.display = "none";
+  document.getElementById("thanks").classList.add("on");
+});
+</script>
+</body>
+</html>
