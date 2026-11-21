@@ -1,0 +1,403 @@
+/* Restitch · Pattern Tissue theme for the "Plan this make" planner.
+   Loaded only by restitch.tsx, after styles.css, so the studio home keeps its own look.
+   Values copied from ideas/restitch/concept/tokens.css (21 Nov 2026). */
+
+:root {
+  --rs-tissue: #efe3cf;
+  --rs-sheet: #fbf5ea;
+  --rs-ink: #2a211a;
+  --rs-muted: #6b5644;
+  --rs-line: #d8c7aa;
+  --rs-red: #b23a22;
+  --rs-red-deep: #962f1a;
+  --rs-red-soft: #f2b6a6;
+  --rs-blue: #2f5d8a;
+  --rs-blue-deep: #234a70;
+  --rs-grid: rgba(47, 93, 138, 0.08);
+  --rs-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --rs-radius: 2px;
+  --rs-cut: 2px dashed var(--rs-red);
+  --rs-shadow: 0 14px 30px -22px rgba(42, 33, 26, 0.45);
+
+  /* Studio tokens remapped: --ink is the page background, --paper the text. */
+  --ink: var(--rs-tissue);
+  --ink-2: var(--rs-sheet);
+  --paper: var(--rs-ink);
+  --fog: var(--rs-muted);
+  --mist: var(--rs-muted);
+  --citrus: var(--rs-red);
+  --citrus-deep: var(--rs-red-deep);
+  --warm: var(--rs-blue);
+  --danger-quiet: var(--rs-muted);
+  --display: "Young Serif", Georgia, serif;
+  --sans: "Instrument Sans", system-ui, sans-serif;
+}
+
+body {
+  color: var(--rs-ink);
+  background: var(--rs-tissue);
+}
+
+a {
+  color: var(--rs-blue);
+}
+
+a:hover {
+  color: var(--rs-blue-deep);
+}
+
+/* Pattern-tissue page: cream with a faint blue 24px grid. No glow, no grain. */
+.atmosphere {
+  background-color: var(--rs-tissue);
+  background-image:
+    linear-gradient(var(--rs-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--rs-grid) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.atmosphere::after {
+  content: none;
+  animation: none;
+}
+
+::selection {
+  background: var(--rs-red-soft);
+  color: var(--rs-ink);
+}
+
+html {
+  scrollbar-color: var(--rs-line) var(--rs-tissue);
+}
+
+:focus-visible {
+  outline: 2px solid var(--rs-blue);
+  outline-offset: 3px;
+}
+
+/* ───────── Header ───────── */
+.plan-home {
+  margin-top: 1rem;
+  padding: 0.4rem 0.75rem;
+  font-family: var(--sans);
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  color: var(--rs-ink);
+  background: var(--rs-sheet);
+  border: 1px solid var(--rs-line);
+  border-radius: var(--rs-radius);
+}
+
+.plan-home:hover {
+  color: var(--rs-ink);
+  border-color: var(--rs-ink);
+}
+
+.eyebrow {
+  color: var(--rs-red);
+  font-weight: 600;
+}
+
+.plan-title,
+.section h2,
+.measure-label,
+.recipe-card h3,
+.closet-list strong,
+.disclaimer p {
+  font-family: var(--display);
+  font-weight: 400;
+  font-variation-settings: normal;
+}
+
+.plan-title {
+  letter-spacing: -0.01em;
+  line-height: 1.04;
+  color: var(--rs-ink);
+}
+
+.section h2,
+.measure-label,
+.recipe-card h3 {
+  letter-spacing: -0.005em;
+}
+
+.lede,
+.body,
+.make-steps {
+  color: var(--rs-ink);
+}
+
+.section-lede,
+.cell-detail,
+.typed-value,
+.foot {
+  color: var(--rs-muted);
+}
+
+.cell-detail {
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+/* ───────── Cut lines between sections ───────── */
+.section {
+  border-top: var(--rs-cut);
+}
+
+.foot {
+  border-top: 1px solid var(--rs-line);
+}
+
+/* ───────── Sheets (cards) ───────── */
+.stand-in,
+.measure-card,
+.recipe-card {
+  background: var(--rs-sheet);
+  border: 1px solid var(--rs-line);
+  border-radius: var(--rs-radius);
+  box-shadow: var(--rs-shadow);
+}
+
+.column-cell-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.4rem 0.75rem;
+  width: 100%;
+}
+
+.column-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.recipe-card {
+  padding: 0.95rem 1rem 1.05rem;
+  min-width: 0;
+}
+
+.recipe-card.is-selected {
+  border-color: var(--rs-red);
+  box-shadow: inset 3px 0 0 var(--rs-red), var(--rs-shadow);
+}
+
+.preview-canvas {
+  background-color: var(--rs-tissue);
+  background-image:
+    linear-gradient(var(--rs-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--rs-grid) 1px, transparent 1px);
+  background-size: 24px 24px;
+  border: 1px solid var(--rs-line);
+}
+
+/* Shared SVG sheet rules (kept in step for any garment drawing on this page). */
+.sheet {
+  fill: var(--rs-sheet);
+}
+
+.sheet-rule {
+  stroke: var(--rs-line);
+  stroke-opacity: 1;
+}
+
+.sheet-label {
+  fill: var(--rs-ink);
+}
+
+.garment {
+  fill: transparent;
+  stroke: var(--rs-ink);
+  stroke-width: 1.5;
+}
+
+/* ───────── Labels, chips, method tags ───────── */
+.badge {
+  border: 1px solid var(--rs-line);
+  border-radius: var(--rs-radius);
+  color: var(--rs-muted);
+  background: var(--rs-sheet);
+}
+
+.badge-real {
+  border-color: var(--rs-blue);
+  color: var(--rs-blue);
+}
+
+.badge-mocked {
+  border-color: var(--rs-red);
+  color: var(--rs-red);
+}
+
+/* Measurements read from the photo: mono. */
+.chip-row .badge {
+  font-family: var(--rs-mono);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  color: var(--rs-ink);
+}
+
+.swatch {
+  border: 1px solid var(--rs-ink);
+}
+
+/* Method tag: NO-SEW / HAND / MACHINE in chalk blue mono. */
+.kind-chip {
+  font-family: var(--rs-mono);
+  font-weight: 600;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  color: var(--rs-blue);
+}
+
+.meta-label {
+  color: var(--rs-muted);
+}
+
+.plain-list li {
+  border-left: 2px solid var(--rs-line);
+}
+
+.plain-list strong {
+  color: var(--rs-ink);
+}
+
+.make-steps li::marker {
+  color: var(--rs-red);
+}
+
+/* ───────── Tape inputs (measurements: mono) ───────── */
+.tape-fields label {
+  color: var(--rs-muted);
+}
+
+.tape-fields input {
+  font: 500 0.95rem var(--rs-mono);
+  color: var(--rs-ink);
+  background: #fff;
+  border: 1px solid var(--rs-line);
+  border-radius: var(--rs-radius);
+  padding: 0.45rem 0.6rem;
+}
+
+.tape-fields input::placeholder {
+  font-family: var(--sans);
+  color: var(--rs-muted);
+  opacity: 1;
+}
+
+.tape-fields input:focus {
+  outline: 2px solid var(--rs-blue);
+  outline-offset: 1px;
+  border-color: var(--rs-blue);
+}
+
+/* ───────── Buttons: red with white text; secondary = sheet with hairline ───────── */
+.file-btn,
+.save-btn {
+  font: 600 0.9rem var(--sans);
+  letter-spacing: 0.01em;
+  text-transform: none;
+  color: #fff;
+  background: var(--rs-red);
+  border: 1px solid var(--rs-red);
+  border-radius: var(--rs-radius);
+  padding: 0.65rem 1rem;
+  transition: background 0.2s var(--ease);
+}
+
+.file-btn:hover,
+.save-btn:hover {
+  background: var(--rs-red-deep);
+  border-color: var(--rs-red-deep);
+}
+
+.file-btn:focus-within {
+  outline: 2px solid var(--rs-blue);
+  outline-offset: 3px;
+}
+
+.skill-switch button,
+.text-btn {
+  font: 600 0.88rem var(--sans);
+  color: var(--rs-ink);
+  background: var(--rs-sheet);
+  border: 1px solid var(--rs-line);
+  border-radius: var(--rs-radius);
+}
+
+.skill-switch button:hover,
+.text-btn:hover {
+  border-color: var(--rs-ink);
+}
+
+.skill-switch button[aria-pressed="true"] {
+  color: #fff;
+  background: var(--rs-red);
+  border-color: var(--rs-red);
+}
+
+.text-btn[aria-pressed="true"] {
+  color: var(--rs-red);
+  border-color: var(--rs-red);
+  background: var(--rs-sheet);
+}
+
+/* ───────── Closet ───────── */
+.closet-list button {
+  background: var(--rs-sheet);
+  border: 1px solid var(--rs-line);
+  border-radius: var(--rs-radius);
+  padding: 0.6rem 0.75rem 0.6rem 0.6rem;
+}
+
+.closet-list button:hover {
+  border-color: var(--rs-ink);
+}
+
+.closet-list img {
+  background: var(--rs-tissue);
+  border: 1px solid var(--rs-line);
+}
+
+.closet-list strong {
+  color: var(--rs-ink);
+}
+
+/* ───────── The one dark ink panel: the disclaimer ───────── */
+.disclaimer {
+  margin: 2.5rem 0 0;
+  padding: 1.25rem 1.35rem;
+  border: none;
+  border-radius: var(--rs-radius);
+  background: var(--rs-ink);
+  max-width: 44rem;
+}
+
+.disclaimer p {
+  font-size: 1.12rem;
+  line-height: 1.5;
+  color: var(--rs-tissue);
+}
+
+@media (max-width: 860px) {
+  .main.plan-page {
+    padding-top: 0.5rem;
+  }
+}
+
+/* Room above the first cut line and below the save button. */
+.sample-grid + .section {
+  margin-top: 2.5rem;
+}
+
+.save-btn {
+  margin-bottom: 1.5rem;
+}
+
+.column-grid {
+  align-items: start;
+}

@@ -7,19 +7,19 @@
   <meta name="description" content="Restitch explainer graphic in square, wide and story sizes, plus a five-slide carousel about what one photo can and can't tell you." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,500..700,0..100&family=Sora:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="restitch.css" />
   <style>
-    .set { margin-top: 2.5rem; }
+    .set { margin-top: 2.75rem; padding-top: 2.5rem; border-top: var(--rs-cut); }
     .set h2 { margin-bottom: 0.4rem; }
     .gallery { display: grid; gap: 1rem; margin-top: 1.2rem; align-items: start; }
     .g3 { grid-template-columns: 1fr 1.5fr 0.6fr; }
     .g5 { grid-template-columns: repeat(5, 1fr); }
     figure { margin: 0; }
-    figure img { display: block; width: 100%; height: auto; border: 1px solid var(--line); }
-    figcaption { display: flex; justify-content: space-between; gap: 0.5rem; margin-top: 0.45rem; font-size: 0.8rem; color: var(--mist); }
-    .caption-copy { margin-top: 1.2rem; max-width: 42rem; padding: 0.9rem 1rem; background: color-mix(in srgb, var(--ink-2) 70%, transparent); border-left: 2px solid var(--citrus); color: var(--fog); }
-    .caption-copy strong { color: var(--paper); }
+    figure img { display: block; width: 100%; height: auto; border: var(--rs-border); border-radius: var(--rs-radius); box-shadow: var(--rs-shadow); }
+    figcaption { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.2rem 0.5rem; margin-top: 0.45rem; font: 500 0.76rem var(--rs-font-mono); color: var(--rs-muted); }
+    .caption-copy { margin-top: 1.2rem; max-width: 42rem; padding: 0.9rem 1rem; background: var(--rs-sheet); border: var(--rs-border); border-left: var(--rs-cut); border-radius: var(--rs-radius); }
+    .caption-copy strong { color: var(--rs-ink); }
     @media (max-width: 860px) { .g3 { grid-template-columns: 1fr; } .g5 { grid-template-columns: 1fr 1fr; } }
   </style>
 </head>

@@ -7,34 +7,36 @@
   <meta name="description" content="Six 4:5 Meta frames for Restitch across three angles: save money, your fit, keep it in rotation. Each links to the campaign landing page." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,500..700,0..100&family=Sora:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="restitch.css" />
   <style>
-    .pager-wrap { display: grid; grid-template-columns: minmax(0, 460px) minmax(0, 1fr); gap: 2rem; margin-top: 2rem; align-items: start; }
-    .stage { position: relative; overflow: hidden; border: 1px solid var(--line); background: var(--ink-2); touch-action: pan-y; }
+    .pager-wrap { display: grid; grid-template-columns: minmax(0, 460px) minmax(0, 1fr); gap: 2rem; margin-top: 2rem; padding-top: 2rem; border-top: var(--rs-cut); align-items: start; }
+    .stage { position: relative; overflow: hidden; border: var(--rs-border); border-radius: var(--rs-radius); background: var(--rs-sheet); box-shadow: var(--rs-shadow); touch-action: pan-y; }
     .track { display: flex; transition: transform 0.38s var(--ease); }
+    @media (prefers-reduced-motion: reduce) { .track { transition: none; } }
     .track img { flex: 0 0 100%; width: 100%; height: auto; min-width: 0; aspect-ratio: 4 / 5; display: block; }
     .controls { display: flex; align-items: center; justify-content: space-between; gap: 0.6rem; margin-top: 0.8rem; }
-    .controls button { font: 600 0.8rem var(--sans); color: var(--paper); background: transparent; border: 1px solid color-mix(in srgb, var(--fog) 28%, transparent); padding: 0.55rem 0.85rem; cursor: pointer; }
-    .controls button:hover:not(:disabled) { border-color: var(--citrus); color: var(--citrus); }
-    .controls button:disabled { opacity: 0.35; cursor: default; }
-    .count { font-size: 0.82rem; color: var(--mist); font-variant-numeric: tabular-nums; }
-    .hint { margin: 0.5rem 0 0; font-size: 0.78rem; color: var(--mist); text-align: center; }
+    .controls button { font: 600 0.86rem var(--rs-font-text); color: var(--rs-ink); background: var(--rs-sheet); border: 1px solid var(--rs-ink); border-radius: var(--rs-radius); padding: 0.55rem 0.85rem; cursor: pointer; }
+    .controls button:hover:not(:disabled), .controls button:focus-visible { border-color: var(--rs-red); color: var(--rs-red); outline: none; }
+    .controls button:disabled { opacity: 0.4; cursor: default; }
+    .count { font: 600 0.82rem var(--rs-font-mono); color: var(--rs-muted); font-variant-numeric: tabular-nums; }
+    .hint { margin: 0.5rem 0 0; font-size: 0.8rem; color: var(--rs-muted); text-align: center; }
+    .copy { padding: 1.1rem 1.2rem 1.3rem; background: var(--rs-sheet); border: var(--rs-border); border-radius: var(--rs-radius); }
     .copy dl { margin: 0; }
-    .copy dt { margin-top: 1.1rem; font-size: 0.68rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mist); }
-    .copy dd { margin: 0.3rem 0 0; color: var(--paper); overflow-wrap: anywhere; }
+    .copy dt { margin-top: 1.1rem; font: 600 0.7rem var(--rs-font-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--rs-muted); }
+    .copy dd { margin: 0.3rem 0 0; color: var(--rs-ink); overflow-wrap: anywhere; }
     code { overflow-wrap: anywhere; }
     .copy .primary { font-size: 1.02rem; }
-    .copy .head { font: 600 1.35rem/1.2 var(--display); }
-    .cta { display: inline-block; padding: 0.45rem 0.8rem; background: #2d3a33; color: var(--paper); font-weight: 600; font-size: 0.9rem; }
-    .angle { color: var(--warm); }
-    .notes { margin-top: 3.5rem; }
+    .copy .head { font: 400 1.4rem/1.2 var(--rs-font-display); }
+    .cta { display: inline-block; padding: 0.45rem 0.8rem; background: #E6D9C3; color: var(--rs-ink); border-radius: var(--rs-radius); font-weight: 600; font-size: 0.9rem; }
+    .angle { color: var(--rs-red); margin-bottom: 0; }
+    .notes { margin-top: 3.5rem; padding-top: 2.75rem; border-top: var(--rs-cut); }
     .notes h2 { margin-bottom: 1rem; }
-    .notes ul { padding-left: 1.1rem; color: var(--fog); max-width: 46rem; }
+    .notes ul { padding-left: 1.1rem; max-width: 46rem; }
     .notes li { margin: 0.45rem 0; }
-    table { width: 100%; border-collapse: collapse; margin-top: 0.8rem; font-size: 0.9rem; }
-    th, td { text-align: left; padding: 0.55rem 0.8rem 0.55rem 0; border-top: 1px solid var(--line); vertical-align: top; }
-    th { font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mist); border-top: 0; }
+    table { width: 100%; border-collapse: collapse; margin-top: 0.8rem; font-size: 0.9rem; background: var(--rs-sheet); border: var(--rs-border); }
+    th, td { text-align: left; padding: 0.6rem 0.8rem; border-top: var(--rs-border); vertical-align: top; }
+    th { font: 600 0.7rem var(--rs-font-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--rs-muted); border-top: 0; }
     .scroll { overflow-x: auto; }
     @media (max-width: 820px) { .pager-wrap { grid-template-columns: minmax(0, 1fr); } }
   </style>

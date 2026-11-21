@@ -7,16 +7,16 @@
   <meta name="description" content="A two-page US Letter worksheet for one thrift flip: garment, photo read, your tape, skill, supplies, steps, before and after." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,500..700,0..100&family=Sora:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="restitch.css" />
   <style>
     .actions { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.5rem; }
-    .pages { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2.2rem; }
+    .pages { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2.2rem; padding-top: 2rem; border-top: var(--rs-cut); }
     .pages figure { margin: 0; }
-    .pages img { display: block; width: 100%; height: auto; background: #fff; box-shadow: 0 10px 40px rgba(0,0,0,0.35); }
-    .pages figcaption { margin-top: 0.6rem; font-size: 0.84rem; color: var(--mist); }
+    .pages img { display: block; width: 100%; height: auto; background: #fff; border: var(--rs-border); box-shadow: var(--rs-shadow); }
+    .pages figcaption { margin-top: 0.6rem; font: 500 0.78rem var(--rs-font-mono); color: var(--rs-muted); }
     .uses { margin-top: 2.5rem; }
-    .uses ol { color: var(--fog); padding-left: 1.2rem; max-width: 40rem; }
+    .uses ol { padding-left: 1.2rem; max-width: 40rem; }
     .uses li { margin: 0.4rem 0; }
     @media (max-width: 700px) { .pages { grid-template-columns: 1fr; } }
   </style>
