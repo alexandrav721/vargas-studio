@@ -693,7 +693,6 @@
     {
       "id": "skill-quest",
       "name": "Skill Quest",
-      "aka": "working name",
       "oneLiner": "A game that teaches beginners to build AI skills: quests, scored skill cards, weekly battles.",
       "status": "active",
       "updated": "2026-11-21",
@@ -797,7 +796,7 @@
   "housekeeping": {
     "visualsHome": "content/portfolio.json \u2192 projects[].visuals (one cell per column). Live URLs go in visuals.*.url. Screenshots/stills go in media/ when ready.",
     "nonVisualHome": "General = skills, agents, reusable craft. Per-project Code = repo links + short summaries. Longer plans/docs stay in the Project store docs/ \u2014 not on the public grid.",
-    "retireOld": "Old shapes removed: freeform surfaces[], Ads/Waitlists/Landings lenses. To drop something: delete its cell content or set state to na, remove dead links, rebuild + republish. Never reintroduce confidential carve-out workstreams."
+    "retireOld": "Old shapes removed: freeform surfaces[], Ads/Waitlists/Landings lenses. To drop something: delete its cell content or set state to na, remove dead links, rebuild + republish. Never reintroduce removed projects."
   },
   "updateHint": "Edit content/portfolio.json. Fill visuals.<column>.url for live demos. Keep non-visual in general + projects[].code. Then rebuild and republish."
 }
