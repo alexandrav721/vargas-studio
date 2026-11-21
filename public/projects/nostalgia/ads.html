@@ -104,30 +104,94 @@
       color: var(--brand);
     }
     .badge.archive { color: var(--brand-2); }
-    .grid {
-      display: grid; gap: 1rem;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    /* One-by-one frame pager (not a jammed strip) */
+    .carousel {
+      --stage: min(100%, 520px);
+      display: grid;
+      gap: 1rem;
+      justify-items: center;
+      max-width: 560px;
+      margin: 0 auto;
     }
-    .tile {
-      margin: 0; padding: 0; border: 1px solid var(--line); background: var(--panel);
-      cursor: zoom-in; text-align: left; color: inherit; font: inherit;
-      transition: border-color 0.2s var(--ease), transform 0.25s var(--ease);
+    .carousel-stage {
+      position: relative;
+      width: var(--stage);
+      border: 1px solid var(--line);
+      background: var(--panel);
+      overflow: hidden;
+      touch-action: pan-y;
     }
-    .tile:hover, .tile:focus-visible {
-      border-color: rgba(125, 255, 179, 0.55);
-      transform: translateY(-2px); outline: none;
+    .carousel-track {
+      display: flex;
+      width: 100%;
+      transition: transform 0.38s var(--ease);
+      will-change: transform;
     }
-    .tile img {
-      display: block; width: 100%; aspect-ratio: 1; object-fit: cover; background: #0a1018;
+    .slide {
+      flex: 0 0 100%;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: inherit;
+      font: inherit;
+      text-align: left;
+      cursor: zoom-in;
     }
-    .tile figcaption {
-      padding: 0.75rem 0.85rem 0.9rem; border-top: 1px solid var(--line);
+    .slide img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      background: #0a1018;
+      user-select: none;
+      -webkit-user-drag: none;
     }
-    .tile .job {
+    .slide figcaption {
+      padding: 0.85rem 1rem 1rem;
+      border-top: 1px solid var(--line);
+    }
+    .slide .job {
       display: block; font-family: var(--mono); font-size: 0.65rem;
       letter-spacing: 0.12em; text-transform: uppercase; color: var(--brand-2); margin-bottom: 0.3rem;
     }
-    .tile .cap { display: block; font-size: 0.9rem; color: var(--ink); }
+    .slide .cap { display: block; font-size: 0.95rem; color: var(--ink); }
+    .carousel-controls {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 0.75rem; width: 100%; flex-wrap: wrap;
+    }
+    .carousel-controls .pager {
+      display: flex; gap: 0.45rem; align-items: center;
+    }
+    .carousel-controls button {
+      appearance: none; border: 1px solid var(--line); background: transparent;
+      color: var(--ink); font: 600 0.78rem/1 var(--mono); letter-spacing: 0.06em;
+      text-transform: uppercase; padding: 0.55rem 0.8rem; cursor: pointer;
+      transition: border-color 0.2s var(--ease), color 0.2s var(--ease);
+    }
+    .carousel-controls button:hover:not(:disabled) {
+      border-color: var(--brand); color: var(--brand);
+    }
+    .carousel-controls button:disabled {
+      opacity: 0.35; cursor: default;
+    }
+    .carousel-counter {
+      font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.08em;
+      color: var(--muted); min-width: 4.5rem; text-align: center;
+    }
+    .carousel-dots {
+      display: flex; flex-wrap: wrap; gap: 0.4rem; justify-content: center; width: 100%;
+    }
+    .carousel-dots button {
+      width: 0.55rem; height: 0.55rem; padding: 0; border-radius: 999px;
+      border: 1px solid rgba(232,238,247,0.35); background: transparent; cursor: pointer;
+    }
+    .carousel-dots button[aria-current="true"] {
+      background: var(--brand); border-color: var(--brand); width: 1.15rem;
+    }
+    .carousel-hint {
+      margin: 0; font-size: 0.78rem; color: var(--muted); text-align: center;
+    }
     .note {
       margin-top: 1.5rem; padding: 1rem 1.1rem; border-left: 3px solid var(--brand);
       background: rgba(16, 22, 31, 0.65); color: var(--muted); max-width: 48rem;
@@ -201,32 +265,52 @@
         <h2>You always want to go home</h2>
         <p>Soft, warm longing — that era felt like home. Photoreal thrift / living-room stills. Six 1:1 frames.</p>
       </div>
-      <div class="grid" data-set="romantic">
-        <button class="tile" type="button" data-src="./ads/romantic-home/01-home-hook.png" data-cap="You always want to go home. · Feel · Buy · Talk">
+      <div class="carousel" data-set="romantic" data-index="0">
+      <div class="carousel-stage">
+        <div class="carousel-track">
+        <button class="slide" type="button" data-src="./ads/romantic-home/01-home-hook.png" data-cap="You always want to go home. · Feel · Buy · Talk">
           <img src="./ads/romantic-home/01-home-hook.png" alt="Scrollback romantic ad 01 — home hook" loading="lazy" width="1080" height="1080" />
           <figcaption><span class="job">01 · Hook</span><span class="cap">You always want to go home.</span></figcaption>
         </button>
-        <button class="tile" type="button" data-src="./ads/romantic-home/02-feel-home.png" data-cap="That era felt like home.">
+        <button class="slide" type="button" data-src="./ads/romantic-home/02-feel-home.png" data-cap="That era felt like home.">
           <img src="./ads/romantic-home/02-feel-home.png" alt="Scrollback romantic ad 02 — feel" loading="lazy" width="1080" height="1080" />
           <figcaption><span class="job">02 · Feel</span><span class="cap">That era felt like home.</span></figcaption>
         </button>
-        <button class="tile" type="button" data-src="./ads/romantic-home/03-buy-finds.png" data-cap="Bring the objects home. Era-dated finds.">
+        <button class="slide" type="button" data-src="./ads/romantic-home/03-buy-finds.png" data-cap="Bring the objects home. Era-dated finds.">
           <img src="./ads/romantic-home/03-buy-finds.png" alt="Scrollback romantic ad 03 — buy" loading="lazy" width="1080" height="1080" />
           <figcaption><span class="job">03 · Buy</span><span class="cap">Bring the objects home.</span></figcaption>
         </button>
-        <button class="tile" type="button" data-src="./ads/romantic-home/04-talk-home.png" data-cap="People who miss that home too.">
+        <button class="slide" type="button" data-src="./ads/romantic-home/04-talk-home.png" data-cap="People who miss that home too.">
           <img src="./ads/romantic-home/04-talk-home.png" alt="Scrollback romantic ad 04 — talk" loading="lazy" width="1080" height="1080" />
           <figcaption><span class="job">04 · Talk</span><span class="cap">People who miss that home too.</span></figcaption>
         </button>
-        <button class="tile" type="button" data-src="./ads/romantic-home/05-who-home.png" data-cap="If 2001–2004 was home for you…">
+        <button class="slide" type="button" data-src="./ads/romantic-home/05-who-home.png" data-cap="If 2001–2004 was home for you…">
           <img src="./ads/romantic-home/05-who-home.png" alt="Scrollback romantic ad 05 — who" loading="lazy" width="1080" height="1080" />
           <figcaption><span class="job">05 · Who</span><span class="cap">If 2001–2004 was home…</span></figcaption>
         </button>
-        <button class="tile" type="button" data-src="./ads/romantic-home/06-cta-home.png" data-cap="Come home to 2001–2004 · Join the waitlist">
+        <button class="slide" type="button" data-src="./ads/romantic-home/06-cta-home.png" data-cap="Come home to 2001–2004 · Join the waitlist">
           <img src="./ads/romantic-home/06-cta-home.png" alt="Scrollback romantic ad 06 — CTA" loading="lazy" width="1080" height="1080" />
           <figcaption><span class="job">06 · CTA</span><span class="cap">Join the waitlist — Feel · Buy · Talk</span></figcaption>
         </button>
+        </div>
       </div>
+      <div class="carousel-controls">
+        <div class="pager">
+          <button type="button" class="prev" aria-label="Previous frame">← Prev</button>
+          <button type="button" class="next" aria-label="Next frame">Next →</button>
+        </div>
+        <span class="carousel-counter" aria-live="polite">1 / 6</span>
+      </div>
+      <div class="carousel-dots" role="tablist" aria-label="Frames">
+          <button type="button" data-i="0" aria-label="Frame 1" aria-current="true"></button>
+          <button type="button" data-i="1" aria-label="Frame 2"></button>
+          <button type="button" data-i="2" aria-label="Frame 3"></button>
+          <button type="button" data-i="3" aria-label="Frame 4"></button>
+          <button type="button" data-i="4" aria-label="Frame 5"></button>
+          <button type="button" data-i="5" aria-label="Frame 6"></button>
+      </div>
+      <p class="carousel-hint">One frame at a time · arrows / swipe · click to enlarge</p>
+    </div>
     </section>
 
     <!-- Fun (primary) -->
@@ -236,32 +320,52 @@
         <h2>Wanna hit a website that feels like 2003 again?</h2>
         <p>Early-2000s mall / after-school joy. Bright jelly accents on real objects. Six 1:1 frames.</p>
       </div>
-      <div class="grid" data-set="fun">
-        <button class="tile" type="button" data-src="./ads/fun/01-offer.png" data-cap="Wanna hit a website that feels like 2003 again?">
+      <div class="carousel" data-set="fun" data-index="0">
+      <div class="carousel-stage">
+        <div class="carousel-track">
+        <button class="slide" type="button" data-src="./ads/fun/01-offer.png" data-cap="Wanna hit a website that feels like 2003 again?">
           <img src="./ads/fun/01-offer.png" alt="Scrollback fun ad 01 — offer" loading="lazy" width="1080" height="1080" />
           <figcaption><span class="job">01 · Hook</span><span class="cap">Feel like 2003 again?</span></figcaption>
         </button>
-        <button class="tile" type="button" data-src="./ads/fun/02-feel.png" data-cap="Come play in 2003.">
+        <button class="slide" type="button" data-src="./ads/fun/02-feel.png" data-cap="Come play in 2003.">
           <img src="./ads/fun/02-feel.png" alt="Scrollback fun ad 02 — feel" loading="lazy" width="1080" height="1080" />
           <figcaption><span class="job">02 · Feel</span><span class="cap">Come play in 2003.</span></figcaption>
         </button>
-        <button class="tile" type="button" data-src="./ads/fun/03-buy.png" data-cap="Real era stuff. Not costume.">
+        <button class="slide" type="button" data-src="./ads/fun/03-buy.png" data-cap="Real era stuff. Not costume.">
           <img src="./ads/fun/03-buy.png" alt="Scrollback fun ad 03 — buy" loading="lazy" width="1080" height="1080" />
           <figcaption><span class="job">03 · Buy</span><span class="cap">Real era stuff. Not costume.</span></figcaption>
         </button>
-        <button class="tile" type="button" data-src="./ads/fun/04-talk.png" data-cap="Hang with people who still get it.">
+        <button class="slide" type="button" data-src="./ads/fun/04-talk.png" data-cap="Hang with people who still get it.">
           <img src="./ads/fun/04-talk.png" alt="Scrollback fun ad 04 — talk" loading="lazy" width="1080" height="1080" />
           <figcaption><span class="job">04 · Talk</span><span class="cap">People who still get it.</span></figcaption>
         </button>
-        <button class="tile" type="button" data-src="./ads/fun/05-who.png" data-cap="Junior high ~2001–2004?">
+        <button class="slide" type="button" data-src="./ads/fun/05-who.png" data-cap="Junior high ~2001–2004?">
           <img src="./ads/fun/05-who.png" alt="Scrollback fun ad 05 — who" loading="lazy" width="1080" height="1080" />
           <figcaption><span class="job">05 · Who</span><span class="cap">Junior high ~2001–2004?</span></figcaption>
         </button>
-        <button class="tile" type="button" data-src="./ads/fun/06-cta.png" data-cap="Join the waitlist — shop 2001–2004 finds">
+        <button class="slide" type="button" data-src="./ads/fun/06-cta.png" data-cap="Join the waitlist — shop 2001–2004 finds">
           <img src="./ads/fun/06-cta.png" alt="Scrollback fun ad 06 — CTA" loading="lazy" width="1080" height="1080" />
           <figcaption><span class="job">06 · CTA</span><span class="cap">Join — Feel · Buy · Talk</span></figcaption>
         </button>
+        </div>
       </div>
+      <div class="carousel-controls">
+        <div class="pager">
+          <button type="button" class="prev" aria-label="Previous frame">← Prev</button>
+          <button type="button" class="next" aria-label="Next frame">Next →</button>
+        </div>
+        <span class="carousel-counter" aria-live="polite">1 / 6</span>
+      </div>
+      <div class="carousel-dots" role="tablist" aria-label="Frames">
+          <button type="button" data-i="0" aria-label="Frame 1" aria-current="true"></button>
+          <button type="button" data-i="1" aria-label="Frame 2"></button>
+          <button type="button" data-i="2" aria-label="Frame 3"></button>
+          <button type="button" data-i="3" aria-label="Frame 4"></button>
+          <button type="button" data-i="4" aria-label="Frame 5"></button>
+          <button type="button" data-i="5" aria-label="Frame 6"></button>
+      </div>
+      <p class="carousel-hint">One frame at a time · arrows / swipe · click to enlarge</p>
+    </div>
     </section>
 
     <!-- Clarity (secondary) -->
@@ -271,32 +375,52 @@
         <h2>Clarity rebuild</h2>
         <p>Offer-first clarity pass that locked Feel / Buy / Talk. Kept for history — romantic + fun are the friend ship pack.</p>
       </div>
-      <div class="grid" data-set="clarity">
-        <button class="tile" type="button" data-src="./ads/clarity/01-offer.png" data-cap="Want a website that feels like 2001–2004 again?">
+      <div class="carousel" data-set="clarity" data-index="0">
+      <div class="carousel-stage">
+        <div class="carousel-track">
+        <button class="slide" type="button" data-src="./ads/clarity/01-offer.png" data-cap="Want a website that feels like 2001–2004 again?">
           <img src="./ads/clarity/01-offer.png" alt="Scrollback clarity ad 01" loading="lazy" width="1080" height="1080" />
           <figcaption><span class="job">01 · Offer</span><span class="cap">Website that feels like 2001–2004</span></figcaption>
         </button>
-        <button class="tile" type="button" data-src="./ads/clarity/02-feel.png" data-cap="Feel it again.">
+        <button class="slide" type="button" data-src="./ads/clarity/02-feel.png" data-cap="Feel it again.">
           <img src="./ads/clarity/02-feel.png" alt="Scrollback clarity ad 02" loading="lazy" width="1080" height="1080" />
           <figcaption><span class="job">02 · Feel</span><span class="cap">Feel it again.</span></figcaption>
         </button>
-        <button class="tile" type="button" data-src="./ads/clarity/03-buy.png" data-cap="Buy from that time only.">
+        <button class="slide" type="button" data-src="./ads/clarity/03-buy.png" data-cap="Buy from that time only.">
           <img src="./ads/clarity/03-buy.png" alt="Scrollback clarity ad 03" loading="lazy" width="1080" height="1080" />
           <figcaption><span class="job">03 · Buy</span><span class="cap">Era-dated finds.</span></figcaption>
         </button>
-        <button class="tile" type="button" data-src="./ads/clarity/04-talk.png" data-cap="Talk with people who get 2001–2004.">
+        <button class="slide" type="button" data-src="./ads/clarity/04-talk.png" data-cap="Talk with people who get 2001–2004.">
           <img src="./ads/clarity/04-talk.png" alt="Scrollback clarity ad 04" loading="lazy" width="1080" height="1080" />
           <figcaption><span class="job">04 · Talk</span><span class="cap">People who get those years.</span></figcaption>
         </button>
-        <button class="tile" type="button" data-src="./ads/clarity/05-who.png" data-cap="If junior high was ~2001–2004…">
+        <button class="slide" type="button" data-src="./ads/clarity/05-who.png" data-cap="If junior high was ~2001–2004…">
           <img src="./ads/clarity/05-who.png" alt="Scrollback clarity ad 05" loading="lazy" width="1080" height="1080" />
           <figcaption><span class="job">05 · Who</span><span class="cap">Junior high ~2001–2004</span></figcaption>
         </button>
-        <button class="tile" type="button" data-src="./ads/clarity/06-cta.png" data-cap="Join the waitlist — Feel · Buy · Talk">
+        <button class="slide" type="button" data-src="./ads/clarity/06-cta.png" data-cap="Join the waitlist — Feel · Buy · Talk">
           <img src="./ads/clarity/06-cta.png" alt="Scrollback clarity ad 06" loading="lazy" width="1080" height="1080" />
           <figcaption><span class="job">06 · CTA</span><span class="cap">Join the waitlist</span></figcaption>
         </button>
+        </div>
       </div>
+      <div class="carousel-controls">
+        <div class="pager">
+          <button type="button" class="prev" aria-label="Previous frame">← Prev</button>
+          <button type="button" class="next" aria-label="Next frame">Next →</button>
+        </div>
+        <span class="carousel-counter" aria-live="polite">1 / 6</span>
+      </div>
+      <div class="carousel-dots" role="tablist" aria-label="Frames">
+          <button type="button" data-i="0" aria-label="Frame 1" aria-current="true"></button>
+          <button type="button" data-i="1" aria-label="Frame 2"></button>
+          <button type="button" data-i="2" aria-label="Frame 3"></button>
+          <button type="button" data-i="3" aria-label="Frame 4"></button>
+          <button type="button" data-i="4" aria-label="Frame 5"></button>
+          <button type="button" data-i="5" aria-label="Frame 6"></button>
+      </div>
+      <p class="carousel-hint">One frame at a time · arrows / swipe · click to enlarge</p>
+    </div>
     </section>
 
     <!-- Lizzie-era (secondary) -->
@@ -306,40 +430,62 @@
         <h2>Lizzie-era / after-school TV</h2>
         <p>Evokes 2001–2004 tween cable culture — no forged Disney marks or character likenesses. Eight frames; explorer-leaning offer before Feel·Buy·Talk locked.</p>
       </div>
-      <div class="grid" data-set="lizzie">
-        <button class="tile" type="button" data-src="./ads/lizzie-era/01-afterschool-tv.png" data-cap="After-school TV hit different.">
+      <div class="carousel" data-set="lizzie" data-index="0">
+      <div class="carousel-stage">
+        <div class="carousel-track">
+        <button class="slide" type="button" data-src="./ads/lizzie-era/01-afterschool-tv.png" data-cap="After-school TV hit different.">
           <img src="./ads/lizzie-era/01-afterschool-tv.png" alt="Scrollback Lizzie-era ad 01" loading="lazy" width="1080" height="1080" />
           <figcaption><span class="job">01</span><span class="cap">After-school TV hit different.</span></figcaption>
         </button>
-        <button class="tile" type="button" data-src="./ads/lizzie-era/02-mall-accessories.png" data-cap="Butterfly clips. Plastic choker.">
+        <button class="slide" type="button" data-src="./ads/lizzie-era/02-mall-accessories.png" data-cap="Butterfly clips. Plastic choker.">
           <img src="./ads/lizzie-era/02-mall-accessories.png" alt="Scrollback Lizzie-era ad 02" loading="lazy" width="1080" height="1080" />
           <figcaption><span class="job">02</span><span class="cap">Butterfly clips. That locker fit.</span></figcaption>
         </button>
-        <button class="tile" type="button" data-src="./ads/lizzie-era/03-inner-narrator.png" data-cap="Your brain had a cartoon narrator.">
+        <button class="slide" type="button" data-src="./ads/lizzie-era/03-inner-narrator.png" data-cap="Your brain had a cartoon narrator.">
           <img src="./ads/lizzie-era/03-inner-narrator.png" alt="Scrollback Lizzie-era ad 03" loading="lazy" width="1080" height="1080" />
           <figcaption><span class="job">03</span><span class="cap">Cartoon narrator energy.</span></figcaption>
         </button>
-        <button class="tile" type="button" data-src="./ads/lizzie-era/04-era-objects.png" data-cap="Flip phone. Click wheel.">
+        <button class="slide" type="button" data-src="./ads/lizzie-era/04-era-objects.png" data-cap="Flip phone. Click wheel.">
           <img src="./ads/lizzie-era/04-era-objects.png" alt="Scrollback Lizzie-era ad 04" loading="lazy" width="1080" height="1080" />
           <figcaption><span class="job">04</span><span class="cap">Era objects.</span></figcaption>
         </button>
-        <button class="tile" type="button" data-src="./ads/lizzie-era/05-parallel-web.png" data-cap="Buddy list + virtual pets.">
+        <button class="slide" type="button" data-src="./ads/lizzie-era/05-parallel-web.png" data-cap="Buddy list + virtual pets.">
           <img src="./ads/lizzie-era/05-parallel-web.png" alt="Scrollback Lizzie-era ad 05" loading="lazy" width="1080" height="1080" />
           <figcaption><span class="job">05</span><span class="cap">Buddy list + virtual pets.</span></figcaption>
         </button>
-        <button class="tile" type="button" data-src="./ads/lizzie-era/06-style-look.png" data-cap="Colorblock. Rhinestones. Mixed prints.">
+        <button class="slide" type="button" data-src="./ads/lizzie-era/06-style-look.png" data-cap="Colorblock. Rhinestones. Mixed prints.">
           <img src="./ads/lizzie-era/06-style-look.png" alt="Scrollback Lizzie-era ad 06" loading="lazy" width="1080" height="1080" />
           <figcaption><span class="job">06</span><span class="cap">The junior-high Y2K look.</span></figcaption>
         </button>
-        <button class="tile" type="button" data-src="./ads/lizzie-era/07-year-hook.png" data-cap="What year was your junior high?">
+        <button class="slide" type="button" data-src="./ads/lizzie-era/07-year-hook.png" data-cap="What year was your junior high?">
           <img src="./ads/lizzie-era/07-year-hook.png" alt="Scrollback Lizzie-era ad 07" loading="lazy" width="1080" height="1080" />
           <figcaption><span class="job">07</span><span class="cap">What year was your junior high?</span></figcaption>
         </button>
-        <button class="tile" type="button" data-src="./ads/lizzie-era/08-email-cta.png" data-cap="Drop your email — unlock your era">
+        <button class="slide" type="button" data-src="./ads/lizzie-era/08-email-cta.png" data-cap="Drop your email — unlock your era">
           <img src="./ads/lizzie-era/08-email-cta.png" alt="Scrollback Lizzie-era ad 08" loading="lazy" width="1080" height="1080" />
           <figcaption><span class="job">08 · CTA</span><span class="cap">Unlock your era.</span></figcaption>
         </button>
+        </div>
       </div>
+      <div class="carousel-controls">
+        <div class="pager">
+          <button type="button" class="prev" aria-label="Previous frame">← Prev</button>
+          <button type="button" class="next" aria-label="Next frame">Next →</button>
+        </div>
+        <span class="carousel-counter" aria-live="polite">1 / 8</span>
+      </div>
+      <div class="carousel-dots" role="tablist" aria-label="Frames">
+          <button type="button" data-i="0" aria-label="Frame 1" aria-current="true"></button>
+          <button type="button" data-i="1" aria-label="Frame 2"></button>
+          <button type="button" data-i="2" aria-label="Frame 3"></button>
+          <button type="button" data-i="3" aria-label="Frame 4"></button>
+          <button type="button" data-i="4" aria-label="Frame 5"></button>
+          <button type="button" data-i="5" aria-label="Frame 6"></button>
+          <button type="button" data-i="6" aria-label="Frame 7"></button>
+          <button type="button" data-i="7" aria-label="Frame 8"></button>
+      </div>
+      <p class="carousel-hint">One frame at a time · arrows / swipe · click to enlarge</p>
+    </div>
     </section>
 
     <p class="note">
@@ -371,6 +517,11 @@
   <script>
     const tabs = [...document.querySelectorAll('.filters button')];
     const chapters = [...document.querySelectorAll('.chapter')];
+    const lb = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lb-img');
+    const lbCap = document.getElementById('lb-cap');
+    let items = [];
+    let idx = 0;
 
     function showChapter(id) {
       chapters.forEach((ch) => {
@@ -383,23 +534,92 @@
         btn.classList.toggle('is-active', on);
         btn.setAttribute('aria-selected', on ? 'true' : 'false');
       });
+      const car = document.querySelector('.chapter.is-active .carousel');
+      if (car) syncCarousel(car);
     }
 
     tabs.forEach((btn) => btn.addEventListener('click', () => showChapter(btn.dataset.chapter)));
 
-    const lb = document.getElementById('lightbox');
-    const lbImg = document.getElementById('lb-img');
-    const lbCap = document.getElementById('lb-cap');
-    let items = [];
-    let idx = 0;
+    function syncCarousel(car) {
+      const track = car.querySelector('.carousel-track');
+      const slides = [...car.querySelectorAll('.slide')];
+      const n = slides.length;
+      let i = Math.max(0, Math.min(n - 1, Number(car.dataset.index) || 0));
+      car.dataset.index = String(i);
+      track.style.transform = 'translateX(-' + (i * 100) + '%)';
+      const counter = car.querySelector('.carousel-counter');
+      if (counter) counter.textContent = (i + 1) + ' / ' + n;
+      car.querySelectorAll('.carousel-dots button').forEach((d, di) => {
+        d.setAttribute('aria-current', di === i ? 'true' : 'false');
+      });
+      const prev = car.querySelector('.prev');
+      const next = car.querySelector('.next');
+      if (prev) prev.disabled = false;
+      if (next) next.disabled = false;
+    }
 
-    function activeTiles() {
+    function go(car, delta) {
+      const n = car.querySelectorAll('.slide').length;
+      let i = Number(car.dataset.index) || 0;
+      i = (i + delta + n) % n;
+      car.dataset.index = String(i);
+      syncCarousel(car);
+    }
+
+    function goTo(car, i) {
+      car.dataset.index = String(i);
+      syncCarousel(car);
+    }
+
+    document.querySelectorAll('.carousel').forEach((car) => {
+      car.querySelector('.prev')?.addEventListener('click', () => go(car, -1));
+      car.querySelector('.next')?.addEventListener('click', () => go(car, 1));
+      car.querySelectorAll('.carousel-dots button').forEach((d) => {
+        d.addEventListener('click', () => goTo(car, Number(d.dataset.i)));
+      });
+
+      const stage = car.querySelector('.carousel-stage');
+      let x0 = null;
+      let swiped = false;
+      stage.addEventListener('pointerdown', (e) => {
+        x0 = e.clientX;
+        swiped = false;
+        stage.setPointerCapture?.(e.pointerId);
+      });
+      stage.addEventListener('pointerup', (e) => {
+        if (x0 == null) return;
+        const dx = e.clientX - x0;
+        x0 = null;
+        if (Math.abs(dx) < 40) return;
+        swiped = true;
+        go(car, dx < 0 ? 1 : -1);
+      });
+      stage.addEventListener('pointercancel', () => { x0 = null; });
+      stage.addEventListener('click', (e) => {
+        if (!swiped) return;
+        e.preventDefault();
+        e.stopPropagation();
+        swiped = false;
+      }, true);
+
+      syncCarousel(car);
+    });
+
+    addEventListener('keydown', (e) => {
+      if (lb.classList.contains('is-open')) return;
+      const car = document.querySelector('.chapter.is-active .carousel');
+      if (!car) return;
+      if (e.key === 'ArrowLeft') { e.preventDefault(); go(car, -1); }
+      if (e.key === 'ArrowRight') { e.preventDefault(); go(car, 1); }
+    });
+
+    function activeSlides() {
       const ch = document.querySelector('.chapter.is-active');
-      return [...(ch ? ch.querySelectorAll('.tile') : [])];
+      return [...(ch ? ch.querySelectorAll('.slide') : [])];
     }
 
     function openLb(i) {
-      items = activeTiles();
+      items = activeSlides();
       idx = i;
       paintLb();
       lb.hidden = false;
@@ -419,10 +639,10 @@
       lbCap.textContent = t.dataset.cap || '';
     }
 
-    document.querySelectorAll('.tile').forEach((tile, _i, all) => {
-      tile.addEventListener('click', () => {
-        const list = activeTiles();
-        openLb(list.indexOf(tile));
+    document.querySelectorAll('.slide').forEach((slide) => {
+      slide.addEventListener('click', () => {
+        const list = activeSlides();
+        openLb(list.indexOf(slide));
       });
     });
 

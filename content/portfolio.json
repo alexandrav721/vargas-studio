@@ -4,7 +4,7 @@
     "tagline": "A portfolio of business ideas built with Cursor",
     "owner": "Alexandra Vargas",
     "role": "Designer",
-    "forWhom": "Friends — one link to see what she can build, project by project.",
+    "forWhom": "Friends \u2014 one link to see what she can build, project by project.",
     "intro": "Alexandra designs and ships product ideas in Cursor. Browse the project index, open one for the story and live links, then compare the same visual columns side by side.",
     "howToNav": "Projects = index + detail. Compare = pick projects and scan a craft matrix. Craft holds skills and agents outside the visual grid."
   },
@@ -12,12 +12,12 @@
     {
       "id": "website",
       "name": "Website",
-      "blurb": "Brand / product home — the full story."
+      "blurb": "Brand / product home \u2014 the full story."
     },
     {
       "id": "landing",
       "name": "Landing",
-      "blurb": "Short campaign page — often the Meta destination."
+      "blurb": "Short campaign page \u2014 often the Meta destination."
     },
     {
       "id": "funnel",
@@ -37,7 +37,7 @@
     {
       "id": "deck",
       "name": "Deck / story",
-      "blurb": "Narrative boards — decks, first-ad boards, pitches."
+      "blurb": "Narrative boards \u2014 decks, first-ad boards, pitches."
     },
     {
       "id": "print",
@@ -47,14 +47,14 @@
     {
       "id": "social",
       "name": "Social",
-      "blurb": "Organic proof — Instagram and similar."
+      "blurb": "Organic proof \u2014 Instagram and similar."
     }
   ],
   "now": [
     {
       "date": "2026-11-20",
       "projectId": "restitch",
-      "text": "Restitch — upload a garment photo, pick a skill, type your tape, and save the flip in the browser closet."
+      "text": "Restitch \u2014 upload a garment photo, pick a skill, type your tape, and save the flip in the browser closet."
     },
     {
       "date": "2026-11-20",
@@ -64,7 +64,7 @@
     {
       "date": "2026-11-20",
       "projectId": "scrolll",
-      "text": "Scrolll friend demos hosted at /projects/scrolll/ — site, Meta join funnel, deck, ad frames."
+      "text": "Scrolll friend demos hosted at /projects/scrolll/ \u2014 site, Meta join funnel, deck, ad frames."
     },
     {
       "date": "2026-11-20",
@@ -79,7 +79,7 @@
     {
       "date": "2026-11-20",
       "projectId": "nostalgia",
-      "text": "Scrollback Meta ads gallery + waitlist + landing in-studio — romantic & fun ship pack; clarity/Lizzie as earlier chapters."
+      "text": "Scrollback Meta ads gallery + waitlist + landing in-studio \u2014 romantic & fun ship pack; clarity/Lizzie as earlier chapters."
     }
   ],
   "projects": [
@@ -87,7 +87,7 @@
       "id": "restitch",
       "name": "Restitch",
       "aka": null,
-      "oneLiner": "Thrift-flip planner — the photo names the shape, you bring the tape.",
+      "oneLiner": "Thrift-flip planner \u2014 the photo names the shape, you bring the tape.",
       "status": "active",
       "updated": "2026-11-20",
       "summary": "Restitch does not generate a pattern. Upload a photo and the page reads average color, brightness, and aspect from that file, then offers no-sew, hand, and machine flips for the skill you pick. Body numbers are what you type. The closet stays in this browser. No account, no checkout, no PDF.",
@@ -95,7 +95,7 @@
       "visuals": {
         "website": {
           "label": "Plan this make",
-          "detail": "The working flip flow is the product home — upload, read, plan, closet.",
+          "detail": "The working flip flow is the product home \u2014 upload, read, plan, closet.",
           "url": "restitch.html",
           "state": "live"
         },
@@ -131,7 +131,7 @@
         },
         "print": {
           "label": "Print / PDF",
-          "detail": "No generated or hosted PDF. Patterns stay on the designer’s site.",
+          "detail": "No generated or hosted PDF. Patterns stay on the designer\u2019s site.",
           "url": null,
           "state": "na"
         },
@@ -168,17 +168,32 @@
           "badge": "Mocked",
           "note": "Stand-in numbers until Alexandra measures a real top. The drawing did not produce them.",
           "items": [
-            { "name": "Full bust", "value": "36 in" },
-            { "name": "Waist", "value": "29 in" },
-            { "name": "Hip", "value": "40 in" },
-            { "name": "Height", "value": "5 ft 6 in" }
+            {
+              "name": "Full bust",
+              "value": "36 in"
+            },
+            {
+              "name": "Waist",
+              "value": "29 in"
+            },
+            {
+              "name": "Hip",
+              "value": "40 in"
+            },
+            {
+              "name": "Height",
+              "value": "5 ft 6 in"
+            }
           ]
         },
         "read": {
           "title": "Read",
           "badge": "Real",
-          "chips": ["From this photo", "Back unknown"],
-          "body": "Sleeveless woven top. Wide neckline. No zipper in the photo. Straight hem. Fabric guess: midweight woven. Confidence is “from this photo,” and the back is marked unknown."
+          "chips": [
+            "From this photo",
+            "Back unknown"
+          ],
+          "body": "Sleeveless woven top. Wide neckline. No zipper in the photo. Straight hem. Fabric guess: midweight woven. Confidence is \u201cfrom this photo,\u201d and the back is marked unknown."
         },
         "measureNext": {
           "title": "Measure next",
@@ -205,13 +220,13 @@
               ]
             }
           ],
-          "body": "The four numbers above are stand-ins for what you would type. They are not a finished size. Still take this tape list — the photo fixed the shape and the tape fixes the size. This page does not print centimeters from the photo."
+          "body": "The four numbers above are stand-ins for what you would type. They are not a finished size. Still take this tape list \u2014 the photo fixed the shape and the tape fixes the size. This page does not print centimeters from the photo."
         },
         "make": {
           "title": "Make plan",
           "badge": "Real",
           "steps": [
-            "Compare a free tank’s finished bust to the flat bust of this shirt times two.",
+            "Compare a free tank\u2019s finished bust to the flat bust of this shirt times two.",
             "Lengthen or shorten at the marked line.",
             "Lower or raise the neckline on the pattern, then cut a muslin and check the armhole and the neckline gap.",
             "Sew shoulders, attach a neck facing, sew the sides, hem."
@@ -232,26 +247,26 @@
           "intro": "These are patterns the designer gives away. The file stays on that site. Restitch does not host it.",
           "cards": [
             {
-              "name": "Helen’s Closet free patterns",
-              "detail": "Horizon Tank and Luna Tank were $0 on 20 November 2026. The file stays on Helen’s Closet’s site.",
+              "name": "Helen\u2019s Closet free patterns",
+              "detail": "Horizon Tank and Luna Tank were $0 on 20 November 2026. The file stays on Helen\u2019s Closet\u2019s site.",
               "url": "https://helensclosetpatterns.com/collections/free-patterns",
-              "linkLabel": "Open Helen’s Closet"
+              "linkLabel": "Open Helen\u2019s Closet"
             },
             {
               "name": "Mood Sewciety free library",
-              "detail": "Free sewing patterns. The file stays on Mood Sewciety’s site.",
+              "detail": "Free sewing patterns. The file stays on Mood Sewciety\u2019s site.",
               "url": "https://blog.moodfabrics.com/category/free-sewing-patterns/",
               "linkLabel": "Open Mood Sewciety"
             },
             {
               "name": "Core T-Shirt",
-              "detail": "Closet Core’s free crew-neck tee, the knit cousin of this woven top. The file stays on their site.",
+              "detail": "Closet Core\u2019s free crew-neck tee, the knit cousin of this woven top. The file stays on their site.",
               "url": "https://closetcorepatterns.com/products/core-t-shirt-free-pattern",
               "linkLabel": "Open Closet Core"
             },
             {
               "name": "Schnittfund",
-              "detail": "An index of checked free patterns, for a wider search. Schnittfund does not host the file. The download stays on the designer’s site.",
+              "detail": "An index of checked free patterns, for a wider search. Schnittfund does not host the file. The download stays on the designer\u2019s site.",
               "url": "https://schnittfund.com/en",
               "linkLabel": "Open Schnittfund"
             }
@@ -270,7 +285,11 @@
         "ledger": {
           "title": "Real and mocked",
           "intro": "What Plan this make does on this page.",
-          "columns": ["On this page", "Status", "What that means"],
+          "columns": [
+            "On this page",
+            "Status",
+            "What that means"
+          ],
           "rows": [
             {
               "item": "Upload, pixel read, skill, and closet",
@@ -295,7 +314,7 @@
             {
               "item": "Disclaimer",
               "status": "Real",
-              "detail": "On this page, in Restitch’s words."
+              "detail": "On this page, in Restitch\u2019s words."
             },
             {
               "item": "Accounts, payment, a generated PDF, centimeter readouts from the photo",
@@ -310,45 +329,45 @@
       "id": "nostalgia",
       "name": "Nostalgia Project",
       "aka": "Scrollback",
-      "oneLiner": "Millennial nostalgia by year — websites, items, and style.",
+      "oneLiner": "Millennial nostalgia by year \u2014 websites, items, and style.",
       "status": "hot",
       "updated": "2026-11-20",
-      "summary": "Pick your generation and years, then explore formative websites, physical items, and style eras (roughly 1995–2012). Working product name: Scrollback. Offer: Feel 2001–2004 · buy era-only · talk with people who get it. Dated nostalgia — not vague vibes.",
-      "latest": "In-studio Meta ads gallery (romantic + fun ship pack; clarity / Lizzie-era as earlier chapters), campaign landing, soft waitlist join, and Feel/Buy/Talk story board — plus the explorer at /projects/nostalgia/.",
+      "summary": "Pick your generation and years, then explore formative websites, physical items, and style eras (roughly 1995\u20132012). Working product name: Scrollback. Offer: Feel 2001\u20132004 \u00b7 buy era-only \u00b7 talk with people who get it. Dated nostalgia \u2014 not vague vibes.",
+      "latest": "In-studio Meta ads gallery pages one frame at a time (romantic + fun ship pack; clarity / Lizzie-era earlier), campaign landing, soft waitlist join, and Feel/Buy/Talk story board \u2014 plus the explorer at /projects/nostalgia/.",
       "visuals": {
         "website": {
           "label": "Scrollback explorer",
-          "detail": "Year-range picker → websites / items / style. Era feel + era-only buys + talk — Feel · Buy · Talk.",
+          "detail": "Year-range picker \u2192 websites / items / style. Era feel + era-only buys + talk \u2014 Feel \u00b7 Buy \u00b7 Talk.",
           "url": "/projects/nostalgia/",
           "state": "live"
         },
         "landing": {
           "label": "Campaign landing",
-          "detail": "Short Meta destination — Feel · Buy · Talk + honest waitlist CTA.",
+          "detail": "Short Meta destination \u2014 Feel \u00b7 Buy \u00b7 Talk + honest waitlist CTA.",
           "url": "/projects/nostalgia/landing.html",
           "state": "live"
         },
         "funnel": {
           "label": "Waitlist / join",
-          "detail": "Soft multi-step join demo in-studio (hook → why → email). Production scrollback.apps.grok.bot may still be private.",
+          "detail": "Soft multi-step join demo in-studio (hook \u2192 why \u2192 email). Production scrollback.apps.grok.bot may still be private.",
           "url": "/projects/nostalgia/join.html",
           "state": "live"
         },
         "meta-ads": {
           "label": "Meta creative pack",
-          "detail": "Romantic home + Fun primary carousels; Clarity + Lizzie-era as earlier chapters. Real image frames.",
+          "detail": "Romantic home + Fun primary packs \u2014 one frame at a time (prev/next); Clarity + Lizzie-era as earlier chapters. Real image frames.",
           "url": "/projects/nostalgia/ads.html",
           "state": "live"
         },
         "product-ui": {
           "label": "Explorer UI",
-          "detail": "Same Scrollback app — the product is the year-dated catalog UI.",
+          "detail": "Same Scrollback app \u2014 the product is the year-dated catalog UI.",
           "url": "/projects/nostalgia/",
           "state": "live"
         },
         "deck": {
           "label": "Story / pitch board",
-          "detail": "Feel · Buy · Talk + romantic vs fun tone lanes — keyboard storyboard.",
+          "detail": "Feel \u00b7 Buy \u00b7 Talk + romantic vs fun tone lanes \u2014 keyboard storyboard.",
           "url": "/projects/nostalgia/story.html",
           "state": "live"
         },
@@ -367,7 +386,7 @@
       },
       "code": [
         {
-          "label": "Origin · lumen-d678/nostalgia",
+          "label": "Origin \u00b7 lumen-d678/nostalgia",
           "summary": "Scrollback Vite app + catalog JSON + research docs.",
           "url": "https://origin.cursor.com/git/alexandra-vargas/lumen-d678"
         }
@@ -377,7 +396,7 @@
       "id": "scrolll",
       "name": "Get Paid to Scroll",
       "aka": "Scrolll",
-      "oneLiner": "Doomscroll — but earn for your attention.",
+      "oneLiner": "Doomscroll \u2014 but earn for your attention.",
       "status": "hot",
       "updated": "2026-11-20",
       "summary": "Fairness-forward scroll product. People and creators earn for attention; marketers buy reach on Scrolll inventory. Brand story + Meta join funnel + interactive story deck.",
@@ -385,19 +404,19 @@
       "visuals": {
         "website": {
           "label": "Scrolll marketing site",
-          "detail": "Home + for-you / creators / advertise — Doom Pay fairness story.",
+          "detail": "Home + for-you / creators / advertise \u2014 Doom Pay fairness story.",
           "url": "/projects/scrolll/",
           "state": "live"
         },
         "landing": {
           "label": "Meta destination",
-          "detail": "Join entry for Meta traffic — /projects/scrolll/join.html?src=meta.",
+          "detail": "Join entry for Meta traffic \u2014 /projects/scrolll/join.html?src=meta.",
           "url": "/projects/scrolll/join.html?src=meta",
           "state": "live"
         },
         "funnel": {
           "label": "Multi-step join",
-          "detail": "Hook → why → email → thanks. Soft-success on submit.",
+          "detail": "Hook \u2192 why \u2192 email \u2192 thanks. Soft-success on submit.",
           "url": "/projects/scrolll/join.html",
           "state": "live"
         },
@@ -409,13 +428,13 @@
         },
         "product-ui": {
           "label": "Product app",
-          "detail": "Core scroll feed UI not friend-published yet — marketing + deck stand in.",
+          "detail": "Core scroll feed UI not friend-published yet \u2014 marketing + deck stand in.",
           "url": null,
           "state": "na"
         },
         "deck": {
           "label": "Story deck",
-          "detail": "Keyboard + click narrative beats — fairness inversion story.",
+          "detail": "Keyboard + click narrative beats \u2014 fairness inversion story.",
           "url": "/projects/scrolll/deck.html",
           "state": "live"
         },
@@ -434,7 +453,7 @@
       },
       "code": [
         {
-          "label": "Origin · lumen-d678 (/scrolll)",
+          "label": "Origin \u00b7 lumen-d678 (/scrolll)",
           "summary": "Marketing routes, join funnel, deck, waitlist API.",
           "url": "https://origin.cursor.com/git/alexandra-vargas/lumen-d678"
         }
@@ -452,31 +471,31 @@
       "visuals": {
         "website": {
           "label": "celebrateloop.com",
-          "detail": "OPENING IN THE FINANCIAL DISTRICT — organize what you have, discover what’s around you.",
+          "detail": "OPENING IN THE FINANCIAL DISTRICT \u2014 organize what you have, discover what\u2019s around you.",
           "url": "https://celebrateloop.com/",
           "state": "live"
         },
         "landing": {
           "label": "Meta ad landing",
-          "detail": "Short hero + waitlist — Ask · share · Handshake. Hosted in-studio (live /ad retired).",
+          "detail": "Short hero + waitlist \u2014 Ask \u00b7 share \u00b7 Handshake. Hosted in-studio (live /ad retired).",
           "url": "/projects/loop/ad/",
           "state": "live"
         },
         "funnel": {
           "label": "Onboarding funnel",
-          "detail": "Club door → Handshake story → waitlist signal chips. Hosted in-studio.",
+          "detail": "Club door \u2192 Handshake story \u2192 waitlist signal chips. Hosted in-studio.",
           "url": "/projects/loop/",
           "state": "live"
         },
         "meta-ads": {
           "label": "Meta creatives",
-          "detail": "Five 1080×1350 frames — umbrellas, hours, pile, earns, ask your block.",
+          "detail": "Five 1080\u00d71350 frames \u2014 umbrellas, hours, pile, earns, ask your block.",
           "url": "https://celebrateloop.com/ads",
           "state": "live"
         },
         "product-ui": {
           "label": "Sample inventory",
-          "detail": "Try a sample household — no account needed. Live on celebrateloop.com/demo.",
+          "detail": "Try a sample household \u2014 no account needed. Live on celebrateloop.com/demo.",
           "url": "https://celebrateloop.com/demo",
           "state": "live"
         },
@@ -494,7 +513,7 @@
         },
         "social": {
           "label": "Instagram + community",
-          "detail": "@loopmaxyourstuff · neighborhood shelves at /community.",
+          "detail": "@loopmaxyourstuff \u00b7 neighborhood shelves at /community.",
           "url": "https://www.instagram.com/loopmaxyourstuff/",
           "state": "live"
         }
@@ -526,10 +545,10 @@
       "id": "planner-book",
       "name": "Planner and Book",
       "aka": null,
-      "oneLiner": "Physical goal planner + illustrated book — print craft meets premium unlock.",
+      "oneLiner": "Physical goal planner + illustrated book \u2014 print craft meets premium unlock.",
       "status": "active",
       "updated": "2026-11-20",
-      "summary": "Goals on paper and a beautiful book in hand: free printable Physical Goal Planner, premium illustrated book unlock, plus Weekline crew wall. Sits beside the Habit game — same world, different artifact.",
+      "summary": "Goals on paper and a beautiful book in hand: free printable Physical Goal Planner, premium illustrated book unlock, plus Weekline crew wall. Sits beside the Habit game \u2014 same world, different artifact.",
       "latest": "Shop + printable Season Chapter sample + Weekline crew wall hosted at /projects/planner/ (from Origin /planner + /shop).",
       "visuals": {
         "website": {
@@ -540,7 +559,7 @@
         },
         "landing": {
           "label": "Book / planner offer",
-          "detail": "Shop page carries both offers — book unlock + print kit notify.",
+          "detail": "Shop page carries both offers \u2014 book unlock + print kit notify.",
           "url": "/projects/planner/",
           "state": "live"
         },
@@ -558,13 +577,13 @@
         },
         "product-ui": {
           "label": "Weekline crew wall",
-          "detail": "Goal-first crew week planner — handbill energy, undated return tickets.",
+          "detail": "Goal-first crew week planner \u2014 handbill energy, undated return tickets.",
           "url": "/projects/planner/weekline.html",
           "state": "live"
         },
         "deck": {
           "label": "Story / pitch",
-          "detail": "No dedicated deck — shop + printable carry the story.",
+          "detail": "No dedicated deck \u2014 shop + printable carry the story.",
           "url": null,
           "state": "na"
         },
@@ -583,7 +602,7 @@
       },
       "code": [
         {
-          "label": "Origin · lumen-d678 (/planner)",
+          "label": "Origin \u00b7 lumen-d678 (/planner)",
           "summary": "Printable planner + premium book sneak / waitlist UI.",
           "url": "https://origin.cursor.com/git/alexandra-vargas/lumen-d678"
         },
@@ -598,11 +617,11 @@
       "id": "habit-game",
       "name": "Habit game",
       "aka": "Lumen",
-      "oneLiner": "Psychology-powered goal game — chic, streaky follow-through.",
+      "oneLiner": "Psychology-powered goal game \u2014 chic, streaky follow-through.",
       "status": "active",
       "updated": "2026-11-20",
       "summary": "Name season and annual goals, check in daily, protect a streak, play short stuck games when you drift. Dream Life Studio places a selfie into dream scenes. Conversion lab scores landing copy without live A/B. Premium AI coach / SMS journal is waitlist-only.",
-      "latest": "Friend demos at /projects/lumen/ — marketing, pinned landing, conversion lab, product UI shell, GTM first-ad board, premium waitlist.",
+      "latest": "Friend demos at /projects/lumen/ \u2014 marketing, pinned landing, conversion lab, product UI shell, GTM first-ad board, premium waitlist.",
       "visuals": {
         "website": {
           "label": "Lumen marketing",
@@ -612,7 +631,7 @@
         },
         "landing": {
           "label": "Pinned marketing landing",
-          "detail": "Follow-through hero — free forever core, premium gated.",
+          "detail": "Follow-through hero \u2014 free forever core, premium gated.",
           "url": "/projects/lumen/landing.html",
           "state": "live"
         },
@@ -629,20 +648,20 @@
           "state": "live"
         },
         "product-ui": {
-          "label": "Today · Stuck · Dream",
+          "label": "Today \u00b7 Stuck \u00b7 Dream",
           "detail": "Interactive friend shell of the daily loop.",
           "url": "/projects/lumen/product.html",
           "state": "live"
         },
         "deck": {
           "label": "Conversion lab",
-          "detail": "Score landing variants without live A/B — Hook / Clarity / Desire / Friction / Proof.",
+          "detail": "Score landing variants without live A/B \u2014 Hook / Clarity / Desire / Friction / Proof.",
           "url": "/projects/lumen/lab.html",
           "state": "live"
         },
         "print": {
           "label": "Print / physical",
-          "detail": "Planner + book live under Planner and Book — not duplicated here.",
+          "detail": "Planner + book live under Planner and Book \u2014 not duplicated here.",
           "url": null,
           "state": "na"
         },
@@ -655,13 +674,13 @@
       },
       "code": [
         {
-          "label": "Origin · lumen-d678",
+          "label": "Origin \u00b7 lumen-d678",
           "summary": "Main Habit game / Lumen product, labs, Nightcrew.",
           "url": "https://origin.cursor.com/git/alexandra-vargas/lumen-d678"
         },
         {
-          "label": "GitHub · Lumen (stub)",
-          "summary": "Thin public repo — expand when the product ships there.",
+          "label": "GitHub \u00b7 Lumen (stub)",
+          "summary": "Thin public repo \u2014 expand when the product ships there.",
           "url": "https://github.com/alexandrav721/Lumen"
         }
       ]
@@ -675,7 +694,7 @@
       },
       {
         "name": "Demand testing",
-        "detail": "First-ad boards, Meta destinations, waitlist heat — ship the test before the full app."
+        "detail": "First-ad boards, Meta destinations, waitlist heat \u2014 ship the test before the full app."
       },
       {
         "name": "Agent orchestration",
@@ -685,7 +704,7 @@
     "agents": [
       {
         "name": "GTM Alexandra",
-        "detail": "Reusable co-pilot: fuzzy idea → brief → story → prototype → first-ad → deck. Cursor skills /alexandra-gtm + children.",
+        "detail": "Reusable co-pilot: fuzzy idea \u2192 brief \u2192 story \u2192 prototype \u2192 first-ad \u2192 deck. Cursor skills /alexandra-gtm + children.",
         "status": "active"
       },
       {
@@ -697,7 +716,7 @@
     "reusable": [
       {
         "name": "Visual GTM packs",
-        "detail": "Ship designed HTML (real slides), not markdown dumps — alexandra-visuals skill."
+        "detail": "Ship designed HTML (real slides), not markdown dumps \u2014 alexandra-visuals skill."
       },
       {
         "name": "Conversion lab pattern",
@@ -705,13 +724,13 @@
       },
       {
         "name": "Fancy Farm brand book",
-        "detail": "Logo / brand explorations inside lumen-d678 — own venture when ready."
+        "detail": "Logo / brand explorations inside lumen-d678 \u2014 own venture when ready."
       }
     ]
   },
   "housekeeping": {
-    "visualsHome": "content/portfolio.json → projects[].visuals (one cell per column). Live URLs go in visuals.*.url. Screenshots/stills go in media/ when ready.",
-    "nonVisualHome": "General = skills, agents, reusable craft. Per-project Code = repo links + short summaries. Longer plans/docs stay in the Project store docs/ — not on the public grid.",
+    "visualsHome": "content/portfolio.json \u2192 projects[].visuals (one cell per column). Live URLs go in visuals.*.url. Screenshots/stills go in media/ when ready.",
+    "nonVisualHome": "General = skills, agents, reusable craft. Per-project Code = repo links + short summaries. Longer plans/docs stay in the Project store docs/ \u2014 not on the public grid.",
     "retireOld": "Old shapes removed: freeform surfaces[], Ads/Waitlists/Landings lenses. To drop something: delete its cell content or set state to na, remove dead links, rebuild + republish. Never reintroduce confidential carve-out workstreams."
   },
   "updateHint": "Edit content/portfolio.json. Fill visuals.<column>.url for live demos. Keep non-visual in general + projects[].code. Then rebuild and republish."
