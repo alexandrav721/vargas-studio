@@ -742,10 +742,10 @@
           "state": "na"
         },
         "social": {
-          "label": "Social",
-          "detail": "Planned: '10 popular skills, scored' card carousel.",
-          "url": null,
-          "state": "na"
+          "label": "Explainer post",
+          "detail": "What it does in one picture: Quest, Card, Battle, and who pays. Square, wide and story sizes.",
+          "url": "/projects/skill-quest/graphic/explainer-square.png",
+          "state": "live"
         }
       },
       "code": []
