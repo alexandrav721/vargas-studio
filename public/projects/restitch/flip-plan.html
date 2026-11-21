@@ -6,28 +6,28 @@
   <title>Restitch — Flip plan worksheet</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,500..700,0..100&family=Sora:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet" />
   <style>
     @page { size: Letter; margin: 0.5in; }
-    :root { --ink: #0c1612; --soft: #3a4c42; --rule: #9db0a5; --tint: #eef5f0; --accent: #5d7a12; --display: "Fraunces", Georgia, serif; --sans: "Sora", system-ui, sans-serif; }
+    :root { --ink: #2A211A; --soft: #6B5644; --rule: rgba(42,33,26,0.35); --line: #D8C7AA; --tint: #FBF5EA; --tissue: #EFE3CF; --accent: #B23A22; --blue: #2F5D8A; --display: "Young Serif", Georgia, serif; --sans: "Instrument Sans", system-ui, sans-serif; --mono: "IBM Plex Mono", ui-monospace, monospace; }
     * { box-sizing: border-box; }
     html { background-color: #ffffff; }
     body { margin: 0; color: var(--ink); background: #fff; font: 400 10pt/1.35 var(--sans); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-    .studio-back { position: fixed; top: 0.65rem; left: 0.65rem; z-index: 9999; padding: 0.45rem 0.8rem; border: 1px solid rgba(238,245,240,0.28); background: #0c1612; color: #eef5f0; font: 600 0.72rem var(--sans); letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; }
+    .studio-back { position: fixed; top: 0.65rem; left: 0.65rem; z-index: 9999; padding: 0.45rem 0.8rem; border: 1px solid var(--line); border-radius: 2px; background: #FBF5EA; color: var(--ink); font: 600 0.72rem var(--sans); letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; }
     @media print { .studio-back { display: none; } }
     .sheet { width: 7.5in; height: 9.95in; overflow: hidden; margin: 0 auto; display: flex; flex-direction: column; gap: 0.12in; }
     .sheet + .sheet { break-before: page; page-break-before: always; }
-    @media screen { body { background: #d9e2dc; padding: 3.2rem 0 2rem; } .sheet { background: #fff; padding: 0.5in; width: 8.5in; height: 11in; box-shadow: 0 6px 30px rgba(0,0,0,0.18); margin-bottom: 1.5rem; } }
-    @media screen and (max-width: 860px) { .sheet { width: auto; height: auto; min-height: 0; margin: 0 0.5rem 1rem; padding: 1rem; } }
-    header { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 2.5pt solid var(--ink); padding-bottom: 0.08in; }
-    .brand { font: 600 13pt var(--display); letter-spacing: -0.01em; color: var(--accent); }
-    h1 { margin: 0; font: 600 30pt/1 var(--display); letter-spacing: -0.03em; font-variation-settings: "SOFT" 40, "opsz" 144; }
+    @media screen { body { background-color: #EFE3CF; background-image: linear-gradient(rgba(47,93,138,.08) 1px, transparent 1px), linear-gradient(90deg, rgba(47,93,138,.08) 1px, transparent 1px); background-size: 24px 24px; padding: 3.2rem 0 2rem; } .sheet { background: #fff; padding: 0.5in; width: 8.5in; height: 11in; border: 1px solid #D8C7AA; border-radius: 2px; box-shadow: 0 14px 30px -22px rgba(42,33,26,.45); margin-bottom: 1.5rem; } }
+    @media screen and (max-width: 860px) { .sheet { width: auto; height: auto; min-height: 0; margin: 0 0.5rem 1rem; padding: 1rem; } .sheet .cols3 { grid-template-columns: 1fr; } }
+    header { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 1.5pt dashed var(--accent); padding-bottom: 0.1in; }
+    .brand { font: 400 13pt var(--display); color: var(--ink); }
+    h1 { margin: 0; font: 400 30pt/1 var(--display); letter-spacing: -0.01em; }
     .meta { text-align: right; font-size: 9pt; color: var(--soft); }
     .meta span { display: inline-block; min-width: 1.4in; border-bottom: 0.75pt solid var(--rule); margin-left: 0.06in; }
-    h2 { margin: 0 0 0.07in; font: 600 13pt var(--display); letter-spacing: -0.01em; display: flex; gap: 0.08in; align-items: baseline; }
-    h2 b { font: 600 9pt var(--sans); color: #fff; background: var(--ink); padding: 0.02in 0.07in; }
+    h2 { margin: 0 0 0.07in; font: 400 13pt var(--display); display: flex; gap: 0.08in; align-items: baseline; }
+    h2 b { font: 600 9pt var(--mono); color: #fff; background: var(--ink); padding: 0.02in 0.07in; }
     h2 small { font: 500 8pt var(--sans); color: var(--soft); letter-spacing: 0.02em; }
-    .box { border: 1pt solid var(--ink); padding: 0.12in 0.14in; }
+    .box { border: 0.75pt solid var(--ink); border-radius: 2px; padding: 0.12in 0.14in; }
     .line { display: grid; grid-template-columns: auto 1fr; gap: 0.08in; align-items: end; margin: 0.09in 0 0; }
     .line.blank { grid-template-columns: 1fr; margin-top: 0.14in; }
     .line i { display: block; border-bottom: 0.75pt solid var(--rule); height: 0.2in; }
@@ -36,21 +36,21 @@
     .chk { display: inline-flex; align-items: center; gap: 0.05in; margin: 0.05in 0.16in 0 0; white-space: nowrap; }
     .chk::before { content: ""; width: 0.13in; height: 0.13in; border: 1pt solid var(--ink); display: inline-block; flex: none; }
     .note { font-size: 8pt; color: var(--soft); margin: 0.06in 0 0; }
-    .swatch { width: 0.5in; height: 0.36in; border: 1pt dashed var(--ink); display: inline-block; vertical-align: middle; margin-right: 0.08in; }
+    .swatch { width: 0.5in; height: 0.36in; border: 1pt dashed var(--accent); display: inline-block; vertical-align: middle; margin-right: 0.08in; }
     table.tape { width: 100%; border-collapse: collapse; }
     .tape td { padding: 0.07in 0; border-bottom: 0.75pt solid var(--rule); vertical-align: bottom; }
     .tape td:first-child { width: 2in; font-weight: 600; }
     .tape td:last-child { width: 2.3in; font-size: 7.5pt; color: var(--soft); padding-left: 0.1in; }
     ol.steps { list-style: none; counter-reset: s; margin: 0; padding: 0; }
-    ol.steps li { counter-increment: s; display: grid; grid-template-columns: 0.22in 0.2in 1fr 1.4in; gap: 0.06in; align-items: end; padding: 0.09in 0 0.04in; border-bottom: 0.75pt solid var(--rule); }
-    ol.steps li::before { content: counter(s); font: 600 11pt var(--display); }
+    ol.steps li { counter-increment: s; display: grid; grid-template-columns: 0.22in 0.2in 1fr 1.4in; gap: 0.06in; align-items: end; padding: 0.07in 0 0.03in; border-bottom: 0.75pt solid var(--rule); }
+    ol.steps li::before { content: counter(s); font: 400 11pt var(--display); }
     ol.steps li span.cb { width: 0.14in; height: 0.14in; border: 1pt solid var(--ink); }
     ol.steps li em { font-style: normal; font-size: 7.5pt; color: var(--soft); border-left: 0.75pt solid var(--rule); padding-left: 0.06in; }
     .sketch { display: grid; grid-template-columns: 1fr 1fr; gap: 0.16in; }
-    .sketch .frame { border: 1pt solid var(--ink); height: 1.05in; position: relative; padding: 0.08in 0.1in; font: 600 8pt var(--sans); letter-spacing: 0.08em; text-transform: uppercase; }
-    .sketch svg { position: absolute; inset: 0.3in 0 0.15in; margin: auto; height: 0.7in; width: 100%; }
-    .foot { margin-top: auto; display: flex; justify-content: space-between; gap: 0.2in; border-top: 1pt solid var(--ink); padding-top: 0.07in; font-size: 7.5pt; color: var(--soft); }
-    .how { background: var(--tint); padding: 0.1in 0.14in; font-size: 8pt; }
+    .sketch .frame { border: 0.75pt solid var(--ink); border-radius: 2px; height: 0.95in; position: relative; padding: 0.08in 0.1in; font: 600 7.5pt var(--mono); letter-spacing: 0.06em; text-transform: uppercase; }
+    .sketch svg { position: absolute; inset: 0.28in 0 0.1in; margin: auto; height: 0.62in; width: 100%; }
+    .foot { margin-top: auto; display: flex; justify-content: space-between; gap: 0.2in; border-top: 1pt dashed var(--accent); padding-top: 0.07in; font-size: 7.5pt; color: var(--soft); }
+    .how { background: var(--tint); border: 0.75pt solid var(--line); border-radius: 2px; padding: 0.1in 0.14in; font-size: 8pt; }
     .how strong { color: var(--ink); }
   </style>
 </head>
@@ -173,10 +173,10 @@
 
     <div class="sketch">
       <div class="frame">Before · sketch or tape the photo
-        <svg viewBox="0 0 120 200" aria-hidden="true"><path d="M44 10 L54 6 Q60 14 66 6 L76 10 L80 52 Q88 120 96 190 L24 190 Q32 120 40 52 Z" fill="none" stroke="#c5d2ca" stroke-width="1.5" stroke-dasharray="4 4"/></svg>
+        <svg viewBox="0 0 120 200" aria-hidden="true"><path d="M44 10 L54 6 Q60 14 66 6 L76 10 L80 52 Q88 120 96 190 L24 190 Q32 120 40 52 Z" fill="none" stroke="#D8C7AA" stroke-width="1.5"/><path d="M60 30 V 172 M56 36 L60 30 L64 36 M56 166 L60 172 L64 166" fill="none" stroke="#2F5D8A" stroke-opacity="0.55" stroke-width="1.2"/></svg>
       </div>
       <div class="frame">After · mark what changed
-        <svg viewBox="0 0 120 200" aria-hidden="true"><path d="M44 10 L54 6 Q60 14 66 6 L76 10 L80 52 Q88 120 96 190 L24 190 Q32 120 40 52 Z" fill="none" stroke="#c5d2ca" stroke-width="1.5" stroke-dasharray="4 4"/></svg>
+        <svg viewBox="0 0 120 200" aria-hidden="true"><path d="M44 10 L54 6 Q60 14 66 6 L76 10 L80 52 Q88 120 96 190 L24 190 Q32 120 40 52 Z" fill="none" stroke="#D8C7AA" stroke-width="1.5"/><path d="M60 30 V 172 M56 36 L60 30 L64 36 M56 166 L60 172 L64 166" fill="none" stroke="#2F5D8A" stroke-opacity="0.55" stroke-width="1.2"/></svg>
       </div>
     </div>
 

@@ -7,32 +7,35 @@
   <meta name="description" content="A three-step demo funnel for Restitch. It saves nothing and sends you to the working planner." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,500..700,0..100&family=Sora:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="restitch.css" />
   <style>
-    .demo-bar { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; padding: 0.7rem 0.9rem; margin-bottom: 1.8rem; border: 1px dashed color-mix(in srgb, var(--warm) 60%, transparent); color: var(--warm); font-size: 0.86rem; }
+    .demo-bar { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; padding: 0.7rem 0.9rem; margin-bottom: 1.8rem; background: var(--rs-sheet); border: 1px dashed var(--rs-red); border-radius: var(--rs-radius); color: var(--rs-ink); font-size: 0.9rem; }
     .progress { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.35rem; margin: 0 0 1.6rem; }
-    .progress i { display: block; height: 3px; background: color-mix(in srgb, var(--fog) 18%, transparent); }
-    .progress i.on { background: var(--citrus); }
+    .progress i { display: block; height: 0; border-top: 2px dashed var(--rs-line); }
+    .progress i.on { border-top-color: var(--rs-red); }
     .step { display: none; }
     .step.is-active { display: block; animation: rise 0.4s var(--ease); }
     @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+    @media (prefers-reduced-motion: reduce) { .step.is-active { animation: none; } }
     .step h1 { font-size: clamp(2.1rem, 7vw, 3.4rem); max-width: 14ch; }
+    .step h1:focus { outline: none; }
     .choices { display: grid; gap: 0.5rem; margin-top: 1.5rem; }
-    .choice { display: grid; grid-template-columns: 3rem 1fr; gap: 0.9rem; align-items: center; text-align: left; width: 100%; padding: 0.85rem 0.95rem; font: inherit; color: var(--paper); background: color-mix(in srgb, var(--ink-2) 60%, transparent); border: 1px solid color-mix(in srgb, var(--fog) 18%, transparent); cursor: pointer; }
-    .choice:hover, .choice:focus-visible { border-color: var(--citrus); outline: none; }
-    .choice[aria-pressed="true"] { border-color: var(--citrus); box-shadow: inset 3px 0 0 var(--citrus); }
+    .choice { display: grid; grid-template-columns: 3rem 1fr; gap: 0.9rem; align-items: center; text-align: left; width: 100%; padding: 0.85rem 0.95rem; font: inherit; color: var(--rs-ink); background: var(--rs-sheet); border: var(--rs-border); border-radius: var(--rs-radius); cursor: pointer; }
+    .choice:hover, .choice:focus-visible { border-color: var(--rs-blue); outline: none; }
+    .choice[aria-pressed="true"] { border-color: var(--rs-red); box-shadow: inset 3px 0 0 var(--rs-red); }
     .choice svg { width: 3rem; height: 3rem; }
-    .choice strong { display: block; font: 600 1.1rem var(--display); }
-    .choice span span { color: var(--mist); font-size: 0.86rem; }
-    label.field { display: grid; gap: 0.35rem; margin-top: 1.5rem; color: var(--mist); font-size: 0.86rem; }
-    label.field input { font: 500 1.05rem var(--sans); color: var(--paper); background: transparent; border: 0; border-bottom: 1px solid color-mix(in srgb, var(--fog) 30%, transparent); padding: 0.5rem 0; border-radius: 0; }
-    label.field input:focus { outline: none; border-bottom-color: var(--citrus); }
+    .choice strong { display: block; font: 400 1.15rem var(--rs-font-display); }
+    .choice span span { color: var(--rs-muted); font-size: 0.88rem; }
+    label.field { display: grid; gap: 0.35rem; margin-top: 1.5rem; color: var(--rs-muted); font-size: 0.88rem; }
+    label.field input { font: 500 1.05rem var(--rs-font-text); color: var(--rs-ink); background: var(--rs-sheet); border: var(--rs-border); border-bottom: 1px solid var(--rs-ink); padding: 0.65rem 0.7rem; border-radius: var(--rs-radius); }
+    label.field input::placeholder { color: var(--rs-muted); }
+    label.field input:focus { outline: none; border-bottom: 2px solid var(--rs-blue); }
     .row { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.5rem; }
-    .back { background: none; border: 0; color: var(--mist); font: 600 0.82rem var(--sans); cursor: pointer; padding: 0.8rem 0.2rem; }
-    .back:hover { color: var(--citrus); }
+    .back { background: none; border: 0; color: var(--rs-muted); font: 600 0.86rem var(--rs-font-text); cursor: pointer; padding: 0.8rem 0.2rem; }
+    .back:hover, .back:focus-visible { color: var(--rs-red); }
     .picked { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 1.2rem 0 0; }
-    .note { margin-top: 1.4rem; color: var(--fog); }
+    .note { margin-top: 1.4rem; }
   </style>
 </head>
 <body>
@@ -58,19 +61,19 @@
         <h1 id="s1">What's in the thrift bag?</h1>
         <div class="choices" role="group" aria-label="Garment">
           <button type="button" class="choice" data-k="piece" data-v="A top or tee" aria-pressed="false">
-            <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M17 8 L24 12 L31 8 L42 15 L37 22 L34 20 L34 41 L14 41 L14 20 L11 22 L6 15 Z" fill="none" stroke="#d6f26a" stroke-width="2" stroke-linejoin="round"/></svg>
+            <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M17 8 L24 12 L31 8 L42 15 L37 22 L34 20 L34 41 L14 41 L14 20 L11 22 L6 15 Z" fill="none" stroke="#2A211A" stroke-width="2" stroke-linejoin="round"/><path d="M24 19 V36 M21.5 22 L24 19 L26.5 22 M21.5 33 L24 36 L26.5 33" fill="none" stroke="#2F5D8A" stroke-width="1.5"/></svg>
             <span><strong>A top or tee</strong><span>Near-square in a photo</span></span>
           </button>
           <button type="button" class="choice" data-k="piece" data-v="A dress or long piece" aria-pressed="false">
-            <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M19 4 L24 8 L29 4 L31 15 L37 44 L11 44 L17 15 Z" fill="none" stroke="#d6f26a" stroke-width="2" stroke-linejoin="round"/></svg>
+            <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M19 4 L24 8 L29 4 L31 15 L37 44 L11 44 L17 15 Z" fill="none" stroke="#2A211A" stroke-width="2" stroke-linejoin="round"/><path d="M24 16 V40 M21.5 19 L24 16 L26.5 19 M21.5 37 L24 40 L26.5 37" fill="none" stroke="#2F5D8A" stroke-width="1.5"/></svg>
             <span><strong>A dress or long piece</strong><span>Tall and narrow</span></span>
           </button>
           <button type="button" class="choice" data-k="piece" data-v="A jacket or heavy shirt" aria-pressed="false">
-            <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M16 7 L24 14 L32 7 L42 13 L42 40 L34 40 L34 41 L14 41 L14 40 L6 40 L6 13 Z M24 14 L24 41" fill="none" stroke="#d6f26a" stroke-width="2" stroke-linejoin="round"/></svg>
+            <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M16 7 L24 14 L32 7 L42 13 L42 40 L34 40 L34 41 L14 41 L14 40 L6 40 L6 13 Z M24 14 L24 41" fill="none" stroke="#2A211A" stroke-width="2" stroke-linejoin="round"/><path d="M30 20 V36 M27.5 23 L30 20 L32.5 23 M27.5 33 L30 36 L32.5 33" fill="none" stroke="#2F5D8A" stroke-width="1.5"/></svg>
             <span><strong>A jacket or heavy shirt</strong><span>Dark, boxy</span></span>
           </button>
           <button type="button" class="choice" data-k="piece" data-v="A wide piece" aria-pressed="false">
-            <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M4 16 L44 16 L44 32 L4 32 Z M10 32 L8 38 M16 32 L15 38 M32 32 L33 38 M38 32 L40 38" fill="none" stroke="#d6f26a" stroke-width="2" stroke-linejoin="round"/></svg>
+            <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M4 16 L44 16 L44 32 L4 32 Z M10 32 L8 38 M16 32 L15 38 M32 32 L33 38 M38 32 L40 38" fill="none" stroke="#2A211A" stroke-width="2" stroke-linejoin="round"/><path d="M12 24 H36 M15 21.5 L12 24 L15 26.5 M33 21.5 L36 24 L33 26.5" fill="none" stroke="#2F5D8A" stroke-width="1.5"/></svg>
             <span><strong>A wide piece</strong><span>Scarf, wrap, cropped layer</span></span>
           </button>
         </div>
@@ -81,15 +84,15 @@
         <h1 id="s2">How do you sew today?</h1>
         <div class="choices" role="group" aria-label="Skill">
           <button type="button" class="choice" data-k="skill" data-v="Beginner" aria-pressed="false">
-            <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="16" cy="24" r="7" fill="none" stroke="#d6f26a" stroke-width="2"/><circle cx="32" cy="24" r="7" fill="none" stroke="#d6f26a" stroke-width="2"/><path d="M23 24 L25 24" stroke="#d6f26a" stroke-width="2"/></svg>
+            <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="16" cy="24" r="7" fill="none" stroke="#2A211A" stroke-width="2"/><circle cx="32" cy="24" r="7" fill="none" stroke="#2A211A" stroke-width="2"/><path d="M23 24 L25 24" stroke="#2A211A" stroke-width="2"/></svg>
             <span><strong>Beginner</strong><span>No-sew and plain hand stitches</span></span>
           </button>
           <button type="button" class="choice" data-k="skill" data-v="Intermediate" aria-pressed="false">
-            <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M8 40 L40 8" stroke="#d6f26a" stroke-width="2"/><circle cx="38" cy="10" r="2.5" fill="none" stroke="#d6f26a" stroke-width="2"/><path d="M6 30 Q14 22 22 30 T38 30" fill="none" stroke="#d6f26a" stroke-width="2" stroke-dasharray="3 3"/></svg>
+            <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M8 40 L40 8" stroke="#2A211A" stroke-width="2"/><circle cx="38" cy="10" r="2.5" fill="none" stroke="#2A211A" stroke-width="2"/><path d="M6 30 Q14 22 22 30 T38 30" fill="none" stroke="#2A211A" stroke-width="2" stroke-dasharray="3 3"/></svg>
             <span><strong>Intermediate</strong><span>Hand work plus a straight machine seam</span></span>
           </button>
           <button type="button" class="choice" data-k="skill" data-v="Advanced" aria-pressed="false">
-            <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M8 38 L40 38 M14 38 L14 18 L34 18 L34 30 L22 30 M24 30 L24 38" fill="none" stroke="#d6f26a" stroke-width="2" stroke-linejoin="round"/></svg>
+            <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M8 38 L40 38 M14 38 L14 18 L34 18 L34 30 L22 30 M24 30 L24 38" fill="none" stroke="#2A211A" stroke-width="2" stroke-linejoin="round"/></svg>
             <span><strong>Advanced</strong><span>Fitting, pressing, machine shaping</span></span>
           </button>
         </div>

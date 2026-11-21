@@ -7,42 +7,47 @@
   <meta name="description" content="Upload a photo of a thrift find. Restitch reads its color and shape and lays out no-sew, hand and machine flips for your skill. You bring the tape. Free, no account." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,500..700,0..100&family=Sora:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="restitch.css" />
   <!-- Analytics placeholder: paste a Plausible / GA4 / Meta Pixel snippet here when the campaign runs. Nothing is tracked today. -->
   <style>
     .hero { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); gap: 2.5rem; align-items: center; }
     .hero .cta-row { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.6rem; }
-    .hero .fine { margin-top: 0.8rem; color: var(--mist); font-size: 0.84rem; }
-    .mock { margin: 0; border-top: 1px solid color-mix(in srgb, var(--fog) 18%, transparent); background: color-mix(in srgb, var(--ink-2) 70%, transparent); padding: 1rem; }
-    .mock-head { display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.8rem; }
-    .mock-head strong { font: 600 1.15rem var(--display); }
+    .hero .fine { margin-top: 0.8rem; color: var(--rs-muted); font: 500 0.74rem var(--rs-font-mono); letter-spacing: 0.04em; text-transform: uppercase; }
+    .mock { margin: 0; background: var(--rs-sheet); border: var(--rs-border); border-radius: var(--rs-radius); box-shadow: var(--rs-shadow); padding: 1rem; }
+    .mock-head { display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; flex-wrap: wrap; padding-bottom: 0.75rem; margin-bottom: 0.9rem; border-bottom: var(--rs-cut); }
+    .mock-head strong { font: 600 0.78rem var(--rs-font-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--rs-muted); }
     .mock-body { display: grid; grid-template-columns: 7.5rem 1fr; gap: 0.9rem; }
-    .mock-body img { width: 100%; height: auto; align-self: start; display: block; background: #e9e4da; }
+    .mock-body img { width: 100%; height: auto; align-self: start; display: block; background: #e9e4da; border: var(--rs-border); }
     .chips { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-bottom: 0.6rem; }
-    .reads { margin: 0 0 0.7rem; font-size: 0.9rem; color: var(--fog); }
+    .chips .badge { color: var(--rs-ink); text-transform: none; }
+    .reads { margin: 0 0 0.7rem; font: 400 1.1rem/1.3 var(--rs-font-display); }
     .flips { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.4rem; }
-    .flips li { display: grid; grid-template-columns: 4.6rem 1fr; gap: 0.5rem; align-items: baseline; padding: 0.45rem 0; border-top: 1px solid var(--line); font-size: 0.9rem; }
-    .flips .m { font-size: 0.66rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--citrus); }
-    .mock-note { margin: 0.8rem 0 0; font-size: 0.78rem; color: var(--mist); }
+    .flips li { display: grid; grid-template-columns: 4.8rem 1fr; gap: 0.5rem; align-items: baseline; padding: 0.55rem 0.7rem; background: #fff; border: var(--rs-border); border-radius: var(--rs-radius); font-size: 0.92rem; font-weight: 600; }
+    .flips .m { font: 600 0.7rem var(--rs-font-mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--rs-blue); }
+    .mock-note { margin: 0.8rem 0 0; font-size: 0.8rem; color: var(--rs-muted); }
     .pains { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.75rem; margin-top: 1.4rem; }
-    .pains blockquote { margin: 0; padding: 1rem 1.1rem; border-left: 2px solid var(--warm); background: color-mix(in srgb, var(--ink-2) 55%, transparent); font: 500 1.2rem/1.3 var(--display); }
+    .pains blockquote { margin: 0; padding: 1rem 1.1rem; background: var(--rs-sheet); border: var(--rs-border); border-left: var(--rs-cut); border-radius: var(--rs-radius); font: 400 1.2rem/1.3 var(--rs-font-display); }
     .steps { counter-reset: s; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.75rem; margin-top: 1.4rem; }
     .steps li { list-style: none; counter-increment: s; }
-    .steps li::before { content: counter(s); display: block; font: 600 2.4rem/1 var(--display); color: var(--citrus); margin-bottom: 0.5rem; }
-    .steps p, .gets p { margin: 0.35rem 0 0; color: var(--fog); font-size: 0.94rem; }
+    .steps li::before { content: "0" counter(s); display: block; font: 600 0.78rem var(--rs-font-mono); letter-spacing: 0.08em; color: var(--rs-blue); margin-bottom: 0.55rem; }
+    .steps p, .gets p { margin: 0.35rem 0 0; color: var(--rs-muted); font-size: 0.94rem; }
     .gets { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.75rem; margin-top: 1.4rem; }
     .ledger { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-top: 1.4rem; }
-    .ledger ul { margin: 0.5rem 0 0; padding-left: 1.1rem; color: var(--fog); }
+    .ledger ul { margin: 0.6rem 0 0; padding-left: 1.1rem; }
     .ledger li { margin: 0.3rem 0; }
     .price { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.6rem 1.2rem; margin-top: 1rem; }
-    .price .big { font: 600 clamp(3rem, 8vw, 4.5rem)/1 var(--display); color: var(--citrus); }
-    details { border-top: 1px solid var(--line); padding: 0.9rem 0; }
+    .price .big { font: 400 clamp(3rem, 8vw, 4.5rem)/1 var(--rs-font-display); color: var(--rs-ink); }
+    details { border-top: var(--rs-border); padding: 0.9rem 0; }
+    details:last-child { border-bottom: var(--rs-border); }
     details summary { cursor: pointer; font-weight: 600; }
-    details p { margin: 0.5rem 0 0; color: var(--fog); max-width: 42rem; }
-    .final { text-align: left; padding: 2.2rem 1.3rem; margin-top: 3.5rem; background: color-mix(in srgb, var(--ink-2) 75%, transparent); border-top: 2px solid var(--citrus); }
-    .final h2 { max-width: 16ch; }
-    .final .btn { margin-top: 1.2rem; }
+    details summary::marker { color: var(--rs-red); }
+    details p { margin: 0.5rem 0 0; color: var(--rs-muted); max-width: 42rem; }
+    /* The page's one dark ink panel. */
+    .final { text-align: left; padding: 2.2rem 1.3rem; margin-top: 3.5rem; background: var(--rs-ink); color: var(--rs-tissue); border-radius: var(--rs-radius); }
+    .final h2 { max-width: 22ch; color: var(--rs-tissue); }
+    .final h2 span { color: var(--rs-red-soft); }
+    .final .rule { margin-top: 1.4rem; padding-top: 1.2rem; border-top: 2px dashed var(--rs-red-soft); }
     @media (max-width: 860px) {
       .hero, .pains, .steps, .gets, .ledger { grid-template-columns: 1fr; }
       .gets { grid-template-columns: 1fr 1fr; }
@@ -61,7 +66,7 @@
     <section class="hero" aria-labelledby="h">
       <div>
         <p class="eyebrow">Restitch · thrift-flip planner</p>
-        <h1 id="h">Plan the flip before you cut.</h1>
+        <h1 id="h">Plan the flip <span class="red">before you cut.</span></h1>
         <p class="lede">Upload a photo of the piece. Restitch reads its color and shape, then lays out a no-sew, a hand and a machine flip for your skill. You bring the tape.</p>
         <div class="cta-row">
           <a class="btn js-cta" href="/restitch.html">Plan a flip, free</a>
@@ -172,8 +177,8 @@
     </section>
 
     <section class="final" aria-labelledby="go">
-      <h2 id="go">Got a thrift find in a bag? Plan it tonight.</h2>
-      <a class="btn js-cta" href="/restitch.html">Plan a flip, free</a>
+      <h2 id="go">Got a thrift find in a bag? <span>Plan it tonight.</span></h2>
+      <div class="rule"><a class="btn js-cta" href="/restitch.html">Plan a flip, free</a></div>
     </section>
 
     <footer class="foot">Restitch · a Vargas Studio sample by Alexandra Vargas</footer>

@@ -5,47 +5,50 @@
   <title>Restitch carousel slide</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,500..700,0..100&family=Sora:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet" />
   <style>
-    :root { --ink:#0c1612; --fog:#d7e4dc; --mist:#a8bfb2; --paper:#eef5f0; --citrus:#d6f26a; --warm:#f0c9a0; --display:"Fraunces", Georgia, serif; --sans:"Sora", system-ui, sans-serif; }
+    :root { --tissue:#EFE3CF; --sheet:#FBF5EA; --ink:#2A211A; --muted:#6B5644; --line:#D8C7AA; --red:#B23A22; --red-soft:#F2B6A6; --blue:#2F5D8A; --grid:rgba(47,93,138,.08);
+      --display:"Young Serif", Georgia, serif; --sans:"Instrument Sans", system-ui, sans-serif; --mono:"IBM Plex Mono", ui-monospace, monospace; }
     * { box-sizing: border-box; }
-    html, body { margin: 0; width: 1080px; height: 1350px; overflow: hidden; background-color: #0c1612; }
-    .s { width: 1080px; height: 1350px; padding: 72px 80px 64px; display: flex; flex-direction: column; color: var(--paper); font-family: var(--sans);
-      background: radial-gradient(900px 700px at 0% 0%, rgba(214,242,106,0.12), transparent 60%), #0c1612; }
-    .s.paper { background: #eef5f0; color: #0c1612; }
-    .top { display: flex; justify-content: space-between; align-items: baseline; font: 600 30px var(--sans); color: var(--mist); }
-    .top .mark { font: 600 42px var(--display); color: var(--citrus); }
-    .paper .top { color: #34483d; } .paper .top .mark { color: #3d5a10; }
+    html, body { margin: 0; width: 1080px; height: 1350px; overflow: hidden; background-color: #EFE3CF; }
+    .s { width: 1080px; height: 1350px; padding: 72px 80px 64px; display: flex; flex-direction: column; color: var(--ink); font-family: var(--sans);
+      background-color: var(--tissue); background-image: linear-gradient(var(--grid) 2px, transparent 2px), linear-gradient(90deg, var(--grid) 2px, transparent 2px); background-size: 36px 36px; background-position: -1px -1px; }
+    .s.paper { background-color: var(--sheet); }
+    .s.dark { background: var(--ink); color: var(--tissue); }
+    .top { display: flex; justify-content: space-between; align-items: center; font: 600 30px var(--mono); letter-spacing: 0.06em; color: var(--blue); }
+    .top .mark { position: relative; font: 400 44px/1 var(--display); letter-spacing: 0; color: var(--ink); padding-bottom: 12px; }
+    .top .mark::after { content: ""; position: absolute; left: 0; right: 18%; bottom: 0; border-top: 3px dashed var(--red); }
+    .dark .top, .dark .top .mark { color: var(--tissue); } .dark .top .mark::after { border-top-color: var(--red-soft); }
     .body { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 44px; }
-    h1 { margin: 0; font: 600 108px/0.98 var(--display); letter-spacing: -0.035em; font-variation-settings: "SOFT" 40, "opsz" 144; }
-    h1 em { font-style: normal; color: var(--citrus); } .paper h1 em { color: #3d5a10; }
-    p.sub { margin: 0; font: 500 36px/1.3 var(--sans); color: var(--fog); max-width: 860px; } .paper p.sub { color: #23352c; }
+    h1 { margin: 0; font: 400 104px/1.02 var(--display); letter-spacing: -0.015em; }
+    h1 em { font-style: normal; color: var(--red); } .dark h1 em { color: var(--red-soft); }
+    p.sub { margin: 0; font: 500 36px/1.3 var(--sans); color: var(--muted); max-width: 880px; } .dark p.sub { color: var(--tissue); }
     .chips { display: flex; flex-direction: column; gap: 22px; align-items: flex-start; }
-    .chip { display: inline-flex; align-items: center; gap: 18px; padding: 18px 28px; border: 2px solid rgba(215,228,220,0.35); font: 600 44px var(--sans); }
-    .chip i { width: 40px; height: 40px; display: inline-block; border: 2px solid rgba(238,245,240,0.5); }
+    .chip { display: inline-flex; align-items: center; gap: 18px; padding: 18px 28px; background: var(--sheet); border: 2px solid var(--line); border-radius: 2px; font: 600 42px var(--mono); }
+    .chip i { width: 40px; height: 40px; display: inline-block; border: 2px solid var(--ink); }
     .no { display: flex; flex-direction: column; gap: 26px; }
-    .no div { display: flex; align-items: center; gap: 26px; font: 600 54px var(--display); }
+    .no div { display: flex; align-items: center; gap: 26px; font: 400 54px var(--display); }
     .no svg { width: 56px; height: 56px; flex: none; }
     .field { display: grid; grid-template-columns: 330px 1fr; gap: 20px; align-items: end; font: 600 40px var(--sans); }
-    .field i { border-bottom: 3px solid #0c1612; height: 52px; font: 500 34px var(--sans); font-style: normal; color: #34483d; }
-    .url { font: 600 40px var(--sans); color: var(--citrus); }
-    .foot { margin-top: 36px; padding-top: 24px; border-top: 2px solid rgba(215,228,220,0.22); display: flex; justify-content: space-between; font: 500 28px var(--sans); color: var(--mist); }
-    .paper .foot { border-top-color: rgba(12,22,18,0.2); color: #34483d; }
+    .field i { border-bottom: 2px solid var(--ink); height: 52px; font: 500 34px var(--mono); font-style: normal; color: var(--blue); }
+    .url { font: 600 40px var(--sans); color: var(--red-soft); }
+    .foot { margin-top: 36px; padding-top: 24px; border-top: 3px dashed var(--red); display: flex; justify-content: space-between; font: 500 28px var(--sans); color: var(--muted); }
+    .dark .foot { border-top-color: var(--red-soft); color: var(--tissue); }
   </style>
 </head>
 <body>
   <div id="root"></div>
   <script>
-    var X = '<svg viewBox="0 0 56 56"><circle cx="28" cy="28" r="25" fill="none" stroke="#f0c9a0" stroke-width="4"/><path d="M18 18 L38 38 M38 18 L18 38" stroke="#f0c9a0" stroke-width="5" stroke-linecap="round"/></svg>';
+    var X = '<svg viewBox="0 0 56 56"><circle cx="28" cy="28" r="25" fill="none" stroke="#B23A22" stroke-width="3" stroke-dasharray="6 4"/><path d="M18 18 L38 38 M38 18 L18 38" stroke="#B23A22" stroke-width="4" stroke-linecap="round"/></svg>';
     var S = {
-      1: { body: '<svg width="300" height="420" viewBox="0 0 300 420"><path d="M100 20 L128 8 Q150 34 172 8 L200 20 L210 140 Q232 290 256 410 L44 410 Q68 290 90 140 Z" fill="#3f5e85" stroke="#eef5f0" stroke-width="5" stroke-linejoin="round"/></svg><h1>What can one photo tell you about a <em>thrift find?</em></h1>' },
+      1: { body: '<svg width="300" height="420" viewBox="0 0 300 420"><path d="M100 20 L128 8 Q150 34 172 8 L200 20 L210 140 Q232 290 256 410 L44 410 Q68 290 90 140 Z" fill="#FBF5EA" stroke="#2A211A" stroke-width="3" stroke-linejoin="round"/><path d="M150 60 V 380 M140 72 L150 60 L160 72 M140 368 L150 380 L160 368" fill="none" stroke="#2F5D8A" stroke-width="3"/><path d="M62 300 Q150 316 238 300" fill="none" stroke="#B23A22" stroke-width="3" stroke-dasharray="10 7"/><rect x="214" y="350" width="34" height="34" fill="#3f5e85" stroke="#2A211A" stroke-width="2"/></svg><h1>What can one photo tell you about a <em>thrift find?</em></h1>' },
       2: { body: '<h1>It reads <em>three things.</em></h1><div class="chips"><span class="chip"><i style="background:#3f5e85"></i>Color #3F5E85</span><span class="chip">Brightness 35%</span><span class="chip">Aspect 0.38</span></div><p class="sub">Enough to say “long column” and pick flips. Real read of a sample drawing.</p>' },
       3: { body: '<h1>What it <em>can\'t</em> read.</h1><div class="no"><div>' + X + 'Your size</div><div>' + X + 'The fiber</div><div>' + X + 'The back</div></div><p class="sub">Restitch labels a guess as a guess.</p>' },
       4: { paper: true, body: '<h1>So you bring <em>the tape.</em></h1><div style="display:grid;gap:26px"><div class="field">Full bust<i>you type it</i></div><div class="field">Waist<i></i></div><div class="field">Hip<i></i></div></div><p class="sub">Each flip shows the numbers you typed, or “not typed yet”.</p>' },
-      5: { body: '<h1>Plan a flip. <em>Free.</em></h1><p class="sub">Photo, skill, tape. A no-sew, a hand and a machine flip. No account, no checkout, no pattern PDF.</p><p class="url">vargas-studio.pages.dev/restitch.html</p>' }
+      5: { dark: true, body: '<h1>Plan a flip. <em>Free.</em></h1><p class="sub">Photo, skill, tape. A no-sew, a hand and a machine flip. No account, no checkout, no pattern PDF.</p><p class="url">vargas-studio.pages.dev/restitch.html</p>' }
     };
     var n = +(new URLSearchParams(location.search).get("n") || 1); var d = S[n] || S[1];
-    document.getElementById("root").innerHTML = '<div class="s' + (d.paper ? ' paper' : '') + '"><div class="top"><span class="mark">Restitch</span><span>' + n + ' / 5</span></div><div class="body">' + d.body + '</div><div class="foot"><span>Thrift-flip planner</span><span>' + (n < 5 ? 'Swipe →' : 'Link in bio') + '</span></div></div>';
+    document.getElementById("root").innerHTML = '<div class="s' + (d.paper ? ' paper' : '') + (d.dark ? ' dark' : '') + '"><div class="top"><span class="mark">Restitch</span><span>' + n + ' / 5</span></div><div class="body">' + d.body + '</div><div class="foot"><span>Thrift-flip planner</span><span>' + (n < 5 ? 'Swipe →' : 'Link in bio') + '</span></div></div>';
   </script>
 </body>
 </html>
