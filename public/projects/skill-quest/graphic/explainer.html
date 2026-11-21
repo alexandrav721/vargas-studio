@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Skill Quest Explainer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+/* tokens from concept/tokens.css (Card Shop) */
+:root{--sq-bg:#F6F1E7;--sq-surface:#FFFFFF;--sq-text:#161412;--sq-accent:#C7391F;--sq-on-accent:#FFFFFF;--sq-highlight:#F5B82E;--sq-teal:#1F7A6B;--sq-track:#EDE5D4;--sq-border:4px solid #161412;--sq-shadow:8px 8px 0 #161412}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--sq-bg)}
+body{font-family:"Bricolage Grotesque",sans-serif;color:var(--sq-text)}
+.g{width:1080px;height:1080px;padding:72px 64px 56px;display:flex;flex-direction:column;overflow:hidden;background:var(--sq-bg)}
+.top{display:flex;align-items:center;gap:14px;font:800 32px "Bricolage Grotesque";letter-spacing:.01em}
+h1{font:800 84px/1 "Bricolage Grotesque";letter-spacing:-.02em;margin:36px 0 18px}
+h1 em{font-style:normal;color:var(--sq-accent);white-space:nowrap}
+.sub{font:500 32px/1.3 "Bricolage Grotesque";max-width:900px}
+.steps{display:flex;align-items:stretch;gap:0;margin:auto 0}
+.step{flex:1;background:var(--sq-surface);border:var(--sq-border);box-shadow:var(--sq-shadow);border-radius:20px;padding:28px 22px 26px;display:flex;flex-direction:column;gap:14px;position:relative}
+.num{position:absolute;top:-24px;left:20px;width:48px;height:48px;border-radius:50%;background:var(--sq-accent);color:var(--sq-on-accent);border:4px solid #161412;font:700 26px/40px "JetBrains Mono";text-align:center}
+.step svg{width:96px;height:96px}
+.lab{font:800 44px/1 "Bricolage Grotesque"}
+.det{font:500 28px/1.25 "Bricolage Grotesque"}
+.arrow{width:58px;flex:none;display:flex;align-items:center;justify-content:center}
+.arrow svg{width:46px;height:46px}
+.money{background:var(--sq-highlight);border:var(--sq-border);border-radius:20px;padding:22px 26px;display:flex;flex-wrap:wrap;align-items:center;gap:10px 26px;font:700 28px/1.2 "Bricolage Grotesque"}
+.money .k{font:700 24px "JetBrains Mono";letter-spacing:.02em}
+.money span.p{white-space:nowrap}
+.foot{margin-top:22px;display:flex;justify-content:space-between;font:700 24px "JetBrains Mono"}
+/* wide */
+body.wide .g{width:1600px;height:900px;padding:64px 80px 48px}
+body.wide h1{font-size:88px;margin:28px 0 14px}
+body.wide .steps{margin:auto 0}
+body.wide .step{flex-direction:row;align-items:center;gap:20px;padding:30px 26px}
+body.wide .step svg{flex:none}
+body.wide .arrow{width:70px}
+/* story */
+body.story .g{width:1080px;height:1920px;padding:120px 72px 90px}
+body.story h1{font-size:104px;margin:56px 0 26px}
+body.story .sub{font-size:38px}
+body.story .steps{flex-direction:column;margin:auto 0}
+body.story .step{flex-direction:row;align-items:center;gap:32px;padding:40px 36px}
+body.story .step svg{width:128px;height:128px;flex:none}
+body.story .lab{font-size:58px}
+body.story .det{font-size:36px}
+body.story .arrow{width:auto;height:84px}
+body.story .arrow svg{transform:rotate(90deg);width:54px;height:54px}
+body.story .money{flex-direction:column;align-items:flex-start;font-size:36px;padding:32px 36px;gap:16px}
+body.story .money .k{font-size:28px}
+body.story .foot{font-size:28px;margin-top:36px}
+</style>
+</head>
+<body>
+<div class="g">
+  <div class="top">
+    <svg width="40" height="46" viewBox="0 0 24 28" aria-hidden="true"><g transform="rotate(-8 12 16)"><rect x="1" y="3" width="22" height="24" rx="4" fill="#C7391F" stroke="#161412" stroke-width="2"/><path d="M12 9l2 4.5 4.8.4-3.7 3 1.2 4.7L12 19l-4.3 2.6 1.2-4.7-3.7-3 4.8-.4z" fill="#F5B82E"/></g></svg>
+    SKILL QUEST
+  </div>
+  <h1>Learn to build AI skills <em>by playing</em></h1>
+  <p class="sub">A game for beginners building Claude skills.</p>
+
+  <div class="steps">
+    <div class="step"><span class="num">1</span>
+      <svg viewBox="0 0 96 96" aria-hidden="true"><path d="M14 80 C 30 60, 20 46, 40 42 S 66 40, 70 22" fill="none" stroke="#161412" stroke-width="5" stroke-dasharray="9 8" stroke-linecap="round"/><circle cx="14" cy="80" r="8" fill="#1F7A6B" stroke="#161412" stroke-width="4"/><path d="M70 30 V 6" stroke="#161412" stroke-width="5" stroke-linecap="round"/><path d="M70 7 L 90 13 L 70 20 Z" fill="#C7391F" stroke="#161412" stroke-width="4" stroke-linejoin="round"/></svg>
+      <div><div class="lab">Quest</div><div class="det">Build a real skill, step by step</div></div>
+    </div>
+    <div class="arrow"><svg viewBox="0 0 46 46" aria-hidden="true"><path d="M4 23 H 36 M 24 10 L 38 23 L 24 36" fill="none" stroke="#C7391F" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <div class="step"><span class="num">2</span>
+      <svg viewBox="0 0 96 96" aria-hidden="true"><g transform="rotate(-8 48 48)"><rect x="18" y="8" width="60" height="80" rx="9" fill="#fff" stroke="#161412" stroke-width="5"/><path d="M48 20l4.5 9.5 10.3.9-7.8 6.6 2.4 10.1L48 41.8l-9.4 5.3 2.4-10.1-7.8-6.6 10.3-.9z" fill="#F5B82E" stroke="#161412" stroke-width="3" stroke-linejoin="round"/><rect x="28" y="58" width="40" height="7" rx="3.5" fill="#EDE5D4"/><rect x="28" y="58" width="32" height="7" rx="3.5" fill="#C7391F"/><rect x="28" y="71" width="40" height="7" rx="3.5" fill="#EDE5D4"/><rect x="28" y="71" width="24" height="7" rx="3.5" fill="#1F7A6B"/></g></svg>
+      <div><div class="lab">Card</div><div class="det">It gets tested and scored</div></div>
+    </div>
+    <div class="arrow"><svg viewBox="0 0 46 46" aria-hidden="true"><path d="M4 23 H 36 M 24 10 L 38 23 L 24 36" fill="none" stroke="#C7391F" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <div class="step"><span class="num">3</span>
+      <svg viewBox="0 0 96 96" aria-hidden="true"><path d="M26 12 H 70 V 40 C 70 54, 60 62, 48 62 C 36 62, 26 54, 26 40 Z" fill="#F5B82E" stroke="#161412" stroke-width="5" stroke-linejoin="round"/><path d="M26 20 H 12 C 12 34, 18 40, 28 42 M70 20 H 84 C 84 34, 78 40, 68 42" fill="none" stroke="#161412" stroke-width="5" stroke-linecap="round"/><path d="M48 62 V 74" stroke="#161412" stroke-width="5"/><rect x="30" y="74" width="36" height="12" rx="3" fill="#C7391F" stroke="#161412" stroke-width="5"/></svg>
+      <div><div class="lab">Battle</div><div class="det">Compete on a new theme weekly</div></div>
+    </div>
+  </div>
+
+  <div class="money">
+    <span class="k">WHO PAYS</span>
+    <span class="p">Sponsors host battles</span>
+    <span class="p">Pro $8/mo</span>
+    <span class="p">Teams $20/seat</span>
+  </div>
+  <div class="foot"><span>Free to start</span><span>vargas-studio.pages.dev</span></div>
+</div>
+<script>
+var s=(new URLSearchParams(location.search).get('size')||'square');
+if(s==='wide'||s==='story')document.body.className=s;
+</script>
+</body>
+</html>
