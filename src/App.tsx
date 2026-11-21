@@ -216,7 +216,7 @@ export default function App() {
 
         <section className="section" id="projects" data-section>
           <p className="section-kicker">Projects</p>
-          <h2>Five ideas, one studio</h2>
+          <h2>Seven ideas, one studio</h2>
           <p className="section-lede">
             Scan the index, open one for the story and live links, then use
             Compare when you want the same craft column across projects.
