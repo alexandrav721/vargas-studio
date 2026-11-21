@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Restitch — Flip plan worksheet</title>
+  <meta name="description" content="A two-page US Letter worksheet for one thrift flip: garment, photo read, your tape, skill, supplies, steps, before and after." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,500..700,0..100&family=Sora:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="restitch.css" />
+  <style>
+    .actions { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.5rem; }
+    .pages { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2.2rem; }
+    .pages figure { margin: 0; }
+    .pages img { display: block; width: 100%; height: auto; background: #fff; box-shadow: 0 10px 40px rgba(0,0,0,0.35); }
+    .pages figcaption { margin-top: 0.6rem; font-size: 0.84rem; color: var(--mist); }
+    .uses { margin-top: 2.5rem; }
+    .uses ol { color: var(--fog); padding-left: 1.2rem; max-width: 40rem; }
+    .uses li { margin: 0.4rem 0; }
+    @media (max-width: 700px) { .pages { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <a class="studio-back" href="/">← Vargas Studio</a>
+  <main class="wrap">
+    <nav class="top" aria-label="Restitch">
+      <span class="brand">Restitch</span>
+      <a href="landing.html">Landing</a>
+      <a href="funnel.html">Funnel</a>
+      <a href="ads.html">Ads</a>
+      <a href="deck.html">Deck</a>
+      <a href="print.html" aria-current="page">Print</a>
+      <a href="social.html">Social</a>
+    </nav>
+    <p class="eyebrow">Print · US Letter · 2 pages</p>
+    <h1>Flip plan worksheet.</h1>
+    <p class="lede">One sheet per thrift find. Copy the read from Plan this make, write your own tape, tick supplies and steps at the table. Same order as the planner: photo, skill, tape, flip.</p>
+    <div class="actions">
+      <a class="btn" href="flip-plan.pdf" download>Download the PDF</a>
+      <a class="btn btn-ghost" href="flip-plan.html">Open the print page</a>
+    </div>
+
+    <div class="pages">
+      <figure>
+        <img src="print/flip-plan-page-1.png" alt="Page 1 of the Flip plan: the garment, photo read with color, brightness, aspect and silhouette checkboxes, your tape with six body measurements, and skill." width="979" height="1267" />
+        <figcaption>Page 1 · garment, photo read, your tape, skill</figcaption>
+      </figure>
+      <figure>
+        <img src="print/flip-plan-page-2.png" alt="Page 2 of the Flip plan: chosen flip, supplies checklist, measure-for-this-flip lines, five step checkboxes, and before and after sketch boxes." width="979" height="1267" />
+        <figcaption>Page 2 · chosen flip, supplies, steps, before and after</figcaption>
+      </figure>
+    </div>
+
+    <section class="uses" aria-labelledby="u">
+      <h2 id="u">How to use it</h2>
+      <ol>
+        <li>Upload the photo at <a href="/restitch.html">Plan this make</a> and copy the hex, brightness and aspect into box 2.</li>
+        <li>Measure yourself and the cloth. Write numbers in box 3, in the unit you like.</li>
+        <li>Pick a flip in the planner and copy its notions, measure list and steps onto page 2.</li>
+        <li>Tape the before photo into the first box. Sketch what changed in the second.</li>
+      </ol>
+      <p class="muted small">Printing tip: “Actual size”, margins default. The PDF is a blank worksheet, not a pattern.</p>
+    </section>
+    <footer class="foot">Restitch · Flip plan worksheet · HTML with @page, exported to PDF with headless Chrome</footer>
+  </main>
+</body>
+</html>

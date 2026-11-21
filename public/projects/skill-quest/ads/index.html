@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Skill Quest Ads</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F6F1E7;--sf:#FFFFFF;--tx:#161412;--muted:#4D4741;--ac:#C7391F;--hi:#F5B82E}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--tx);font:17px/1.5 "Bricolage Grotesque",sans-serif}
+.studio-back{position:fixed;top:12px;left:12px;z-index:40;font:700 12px/1 "JetBrains Mono",monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--tx);text-decoration:none;background:var(--sf);border:2px solid var(--tx);border-radius:8px;padding:8px 10px}
+.wrap{max-width:1040px;margin:0 auto;padding:72px 16px 64px}
+h1{font:800 clamp(34px,6vw,56px)/1 "Bricolage Grotesque";letter-spacing:-.02em}
+h1 em{font-style:normal;color:var(--ac)}
+.lede{color:var(--muted);margin:14px 0 32px;max-width:62ch}
+.viewer{display:grid;grid-template-columns:minmax(0,420px) 1fr;gap:32px;align-items:start}
+.frame{border:3px solid var(--tx);border-radius:14px;overflow:hidden;box-shadow:6px 6px 0 var(--tx);background:var(--sf)}
+.frame img{display:block;width:100%;height:auto;aspect-ratio:4/5}
+.nav{display:flex;align-items:center;gap:12px;margin-top:18px}
+.nav button{font:700 16px "Bricolage Grotesque";background:var(--sf);color:var(--tx);border:2.5px solid var(--tx);border-radius:10px;padding:10px 16px;cursor:pointer;box-shadow:3px 3px 0 var(--tx)}
+.nav button:focus-visible{outline:3px solid var(--ac);outline-offset:2px}
+.count{font:700 15px "JetBrains Mono"}
+.meta{display:grid;gap:18px}
+.meta dt{font:700 13px "JetBrains Mono";letter-spacing:.04em;color:var(--muted)}
+.meta dd{font-size:19px;margin-top:2px}
+.meta a{color:var(--ac);font-weight:700}
+.angle{display:inline-block;font:700 13px "JetBrains Mono";background:var(--hi);border:2px solid var(--tx);border-radius:6px;padding:2px 8px}
+.notes{margin-top:48px;border-top:2px solid var(--tx);padding-top:24px;display:grid;gap:10px;max-width:70ch}
+.notes h2{font:800 26px "Bricolage Grotesque"}
+.notes li{margin-left:20px}
+@media (max-width:760px){.viewer{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<a class="studio-back" href="/">← Studio</a>
+<div class="wrap">
+  <h1>Skill Quest <em>feed ads</em></h1>
+  <p class="lede">Four 1080×1350 frames (4:5) that fit both the Reddit and Meta feeds. Each one matches a landing page that exists. Reddit goes first: the plan says Meta is too broad for this niche until there's proof.</p>
+
+  <div class="viewer">
+    <div>
+      <div class="frame"><img id="img" src="frame-1.png" alt=""></div>
+      <div class="nav"><button id="prev" aria-label="Previous frame">← Prev</button><span class="count" id="count">1 / 4</span><button id="next" aria-label="Next frame">Next →</button></div>
+    </div>
+    <dl class="meta">
+      <div><dt>ANGLE</dt><dd><span class="angle" id="angle"></span></dd></div>
+      <div><dt>PRIMARY TEXT</dt><dd id="primary"></dd></div>
+      <div><dt>HEADLINE</dt><dd id="headline"></dd></div>
+      <div><dt>BUTTON</dt><dd id="cta"></dd></div>
+      <div><dt>GOES TO</dt><dd><a id="dest" href="#"></a></dd></div>
+      <div><dt>DOWNLOAD</dt><dd><a id="dl" href="#" download>PNG, 1080×1350</a></dd></div>
+    </dl>
+  </div>
+
+  <section class="notes">
+    <h2>How to run it</h2>
+    <ul>
+      <li>$150 test: $50 per angle (Pain, Gain, Identity), 7 days, on r/ClaudeAI and r/ClaudeCode. Add the Battle frame once Battle #0 is scheduled.</li>
+      <li>Tag every link with UTM, e.g. <code>?utm_source=reddit&amp;utm_campaign=identity</code>.</li>
+      <li>Keep an angle if its click rate is ≥ 1% and signups are ≥ 10% of visitors; pause it under 1% on day 8.</li>
+      <li>Scores on the cards are samples, and they're labeled as samples. Nothing claims real players yet.</li>
+    </ul>
+  </section>
+</div>
+<script>
+var F=[
+ {img:'frame-1.png',angle:'PAIN',primary:'You wrote a Claude skill. Does it actually work? Skill Quest tests it on real tasks, gives it a score, and tells you the 3 things to fix.',headline:'Stop guessing if your skill works',cta:'Learn more',dest:'../landing/variant-pain.html'},
+ {img:'frame-2.png',angle:'GAIN',primary:'Never built a Claude skill? Quest 1 walks you through your first one, no coding needed, and you keep what you make.',headline:'Build your first AI skill tonight',cta:'Sign up',dest:'../landing/variant-gain.html'},
+ {img:'frame-3.png',angle:'IDENTITY',primary:'Every skill you build becomes a card with real scores. Collect them, battle them, and show what you made.',headline:'Become an AI builder, for real',cta:'Sign up',dest:'../landing/variant-identity.html'},
+ {img:'frame-4.png',angle:'BATTLE',primary:'This week’s battle: best meal-planner skill. Everyone’s skill runs the same hidden tasks. Think yours can win?',headline:'Enter the weekly skill battle',cta:'Learn more',dest:'../landing/index.html'}
+];
+var i=0;
+function show(n){i=(n+F.length)%F.length;var f=F[i];
+ var img=document.getElementById('img');img.src=f.img;img.alt=f.headline+' (ad frame '+(i+1)+')';
+ ['angle','primary','headline','cta'].forEach(function(k){document.getElementById(k).textContent=f[k]});
+ var d=document.getElementById('dest');d.href=f.dest;d.textContent=f.dest.replace('../','Skill Quest /');
+ document.getElementById('dl').href=f.img;
+ document.getElementById('count').textContent=(i+1)+' / '+F.length;}
+document.getElementById('prev').onclick=function(){show(i-1)};
+document.getElementById('next').onclick=function(){show(i+1)};
+document.addEventListener('keydown',function(e){if(e.key==='ArrowLeft')show(i-1);if(e.key==='ArrowRight')show(i+1)});
+show(0);
+</script>
+</body>
+</html>

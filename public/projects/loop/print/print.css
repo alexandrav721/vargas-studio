@@ -1,0 +1,21 @@
+/* Loop print pieces. Tokens match celebrateloop.com (Archivo + Instrument Serif, ink green, cream, lime, claret mark). */
+:root{
+  --ink:#17221c; --cream:#faf9f5; --paper:#fff; --sage:#566354; --lime:#d8ff64; --claret:#8c2e48; --line:#dddfda;
+  --sans:Archivo,system-ui,-apple-system,sans-serif; --serif:"Instrument Serif",Georgia,serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#e9e7e1}
+body{font-family:var(--sans);color:var(--ink);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.sheet{background:var(--paper);margin:24px auto;box-shadow:0 10px 40px rgba(23,34,28,.18);position:relative;overflow:hidden}
+.lockup{display:flex;align-items:center;gap:.12in}
+.lockup svg{display:block}
+.lockup .word{font-family:var(--serif);font-style:italic;font-size:30pt;line-height:1}
+.eyebrow{font-size:10pt;font-weight:600;letter-spacing:.18em;text-transform:uppercase;display:flex;align-items:center;gap:.08in}
+.eyebrow .dot{width:.11in;height:.11in;border-radius:50%;background:var(--sage)}
+.qr{display:block;width:100%;height:auto}
+.studio-back{position:fixed;top:12px;left:12px;z-index:40;font:600 12px/1 Archivo,system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#5F5A54;text-decoration:none;background:#fff;border:1px solid #E5E1DC;padding:.55rem .75rem}
+@media print{
+  html,body{background:none}
+  .sheet{margin:0;box-shadow:none}
+  .studio-back{display:none}
+}

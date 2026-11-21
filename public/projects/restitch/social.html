@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Restitch — social</title>
+  <meta name="description" content="Restitch explainer graphic in square, wide and story sizes, plus a five-slide carousel about what one photo can and can't tell you." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,500..700,0..100&family=Sora:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="restitch.css" />
+  <style>
+    .set { margin-top: 2.5rem; }
+    .set h2 { margin-bottom: 0.4rem; }
+    .gallery { display: grid; gap: 1rem; margin-top: 1.2rem; align-items: start; }
+    .g3 { grid-template-columns: 1fr 1.5fr 0.6fr; }
+    .g5 { grid-template-columns: repeat(5, 1fr); }
+    figure { margin: 0; }
+    figure img { display: block; width: 100%; height: auto; border: 1px solid var(--line); }
+    figcaption { display: flex; justify-content: space-between; gap: 0.5rem; margin-top: 0.45rem; font-size: 0.8rem; color: var(--mist); }
+    .caption-copy { margin-top: 1.2rem; max-width: 42rem; padding: 0.9rem 1rem; background: color-mix(in srgb, var(--ink-2) 70%, transparent); border-left: 2px solid var(--citrus); color: var(--fog); }
+    .caption-copy strong { color: var(--paper); }
+    @media (max-width: 860px) { .g3 { grid-template-columns: 1fr; } .g5 { grid-template-columns: 1fr 1fr; } }
+  </style>
+</head>
+<body>
+  <a class="studio-back" href="/">← Vargas Studio</a>
+  <main class="wrap">
+    <nav class="top" aria-label="Restitch">
+      <span class="brand">Restitch</span>
+      <a href="landing.html">Landing</a>
+      <a href="funnel.html">Funnel</a>
+      <a href="ads.html">Ads</a>
+      <a href="deck.html">Deck</a>
+      <a href="print.html">Print</a>
+      <a href="social.html" aria-current="page">Social</a>
+    </nav>
+    <p class="eyebrow">Social · organic posts</p>
+    <h1>Photo. Skill. Tape.</h1>
+    <p class="lede">One explainer in three sizes, and a five-slide carousel about what a photo can and can't tell you. Every number shown is the planner's real read of a sample drawing.</p>
+
+    <section class="set" aria-labelledby="ex">
+      <h2 id="ex">Explainer</h2>
+      <p class="muted small">How it works in three steps, with what you get and what it costs. Built as one HTML file, sized with <code>?size=</code>.</p>
+      <div class="gallery g3">
+        <figure><img src="social/explainer-square.png" alt="Square explainer: Plan a thrift flip from one photo. 1 Photo reads color, brightness, shape. 2 Skill. 3 Tape, your numbers never guessed. You get no-sew, hand, machine. Free." width="1080" height="1080" /><figcaption>Square 1080×1080 <a href="social/explainer-square.png" download>PNG</a></figcaption></figure>
+        <figure><img src="social/explainer-wide.png" alt="Wide version of the same explainer." width="1600" height="900" loading="lazy" /><figcaption>Wide 1600×900 <a href="social/explainer-wide.png" download>PNG</a></figcaption></figure>
+        <figure><img src="social/explainer-story.png" alt="Story version of the same explainer." width="1080" height="1920" loading="lazy" /><figcaption>Story 1080×1920 <a href="social/explainer-story.png" download>PNG</a></figcaption></figure>
+      </div>
+    </section>
+
+    <section class="set" aria-labelledby="car">
+      <h2 id="car">Carousel · “What can one photo tell you?”</h2>
+      <p class="muted small">Five 4:5 slides. The honesty is the hook: it reads three things, and says which three it can't.</p>
+      <div class="gallery g5">
+        <figure><img src="social/carousel-1.png" alt="Slide 1: What can one photo tell you about a thrift find?" width="1080" height="1350" loading="lazy" /><figcaption>1 · Hook <a href="social/carousel-1.png" download>PNG</a></figcaption></figure>
+        <figure><img src="social/carousel-2.png" alt="Slide 2: It reads three things. Color, brightness, aspect." width="1080" height="1350" loading="lazy" /><figcaption>2 · Reads <a href="social/carousel-2.png" download>PNG</a></figcaption></figure>
+        <figure><img src="social/carousel-3.png" alt="Slide 3: What it can't read. Your size, the fiber, the back." width="1080" height="1350" loading="lazy" /><figcaption>3 · Can't <a href="social/carousel-3.png" download>PNG</a></figcaption></figure>
+        <figure><img src="social/carousel-4.png" alt="Slide 4: So you bring the tape. Full bust, waist, hip fields." width="1080" height="1350" loading="lazy" /><figcaption>4 · Tape <a href="social/carousel-4.png" download>PNG</a></figcaption></figure>
+        <figure><img src="social/carousel-5.png" alt="Slide 5: Plan a flip. Free. No account, no checkout, no pattern PDF." width="1080" height="1350" loading="lazy" /><figcaption>5 · CTA <a href="social/carousel-5.png" download>PNG</a></figcaption></figure>
+      </div>
+      <div class="caption-copy">
+        <strong>Caption:</strong> A photo of a thrift find tells you its color, how bright it is and its shape. It can't tell you your size, the fiber or what the back looks like. Restitch uses the first three to suggest a no-sew, a hand and a machine flip, and leaves the tape to you. Free, no account. Link in bio.
+        <br /><br /><strong>Tags:</strong> #thriftflip #upcycling #refashion #sewingforbeginners #nosew
+      </div>
+    </section>
+
+    <section class="set" aria-labelledby="test">
+      <h2 id="test">5-second test</h2>
+      <p class="muted">Show the square explainer to five people for five seconds, then ask: What does it do? Who is it for? What does it cost? Pass = 4 of 5 answer two of three right.</p>
+    </section>
+    <footer class="foot">Restitch · social set · drawn in HTML/SVG and exported to PNG with headless Chrome</footer>
+  </main>
+</body>
+</html>

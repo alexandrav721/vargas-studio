@@ -1,0 +1,443 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Scrolll — App prototype</title>
+<meta name="description" content="Clickable phone prototype of the Scrolll feed: marked sponsored posts, a live attention meter, why-you-earned sheet, wallet and ad settings. Sample data only."/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="styles.css"/>
+<style>
+.proto{position:relative;z-index:1;width:min(100% - 2rem,1040px);margin:0 auto;padding:4.5rem 0 3rem;display:grid;gap:2rem;align-items:start}
+@media(min-width:900px){.proto{grid-template-columns:1fr 390px}}
+.side h1{font-family:var(--display);font-size:clamp(2rem,5vw,3rem);letter-spacing:-.03em;line-height:1;margin:0}
+.side .lede{font-size:.98rem}
+.screens{list-style:none;padding:0;margin:1.5rem 0 0;display:grid;gap:.4rem;counter-reset:s}
+.screens button{all:unset;box-sizing:border-box;cursor:pointer;display:flex;gap:.7rem;align-items:center;width:100%;padding:.55rem .75rem;border-radius:12px;border:1px solid rgba(231,238,245,.1);color:var(--mute);font-size:.92rem}
+.screens button b{font:700 .75rem var(--sans);width:1.6rem;height:1.6rem;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(231,238,245,.25);color:var(--paper);flex:none}
+.screens button[aria-current="true"]{color:var(--paper);border-color:var(--pay);background:rgba(198,255,74,.06)}
+.screens button[aria-current="true"] b{background:var(--pay);color:#070b10;border-color:var(--pay)}
+.screens button:focus-visible{outline:2px solid var(--signal)}
+.fine{margin-top:1.25rem;font-size:.85rem;color:var(--mute);border-left:3px solid var(--heat);padding:.2rem 0 .2rem .8rem}
+.fine kbd{font:700 .8rem var(--sans);border:1px solid rgba(231,238,245,.3);border-radius:6px;padding:0 .35rem;color:var(--paper)}
+
+/* phone */
+.phone{position:relative;width:390px;max-width:100%;height:844px;border-radius:46px;background:#000;border:10px solid #1c2530;box-shadow:0 30px 80px rgba(0,0,0,.6);overflow:hidden;margin:0 auto}
+@media(max-width:520px){.proto{width:100%;padding-top:3.2rem}.side{padding:0 1rem}.phone{width:100%;border-radius:0;border:0;height:calc(100svh - 3.2rem);min-height:600px;order:-1}}
+.scr{position:absolute;inset:0;display:none;flex-direction:column;background:var(--void)}
+.scr.on{display:flex}
+.status{flex:none;height:44px;display:flex;justify-content:space-between;align-items:center;padding:0 26px;font:600 14px var(--sans);color:var(--paper)}
+.status i{display:inline-block;width:24px;height:11px;border:1.5px solid var(--paper);border-radius:3px;position:relative}
+.status i::after{content:"";position:absolute;inset:1.5px 6px 1.5px 1.5px;background:var(--paper);border-radius:1px}
+.body{flex:1;overflow-y:auto;padding:0 20px 20px;-webkit-overflow-scrolling:touch}
+.pbtn{all:unset;cursor:pointer;display:block;box-sizing:border-box;width:100%;text-align:center;padding:15px 18px;border-radius:999px;background:var(--pay);color:#070b10;font:700 16px var(--sans)}
+.pbtn.ghost{background:transparent;color:var(--paper);border:1px solid rgba(231,238,245,.28)}
+.link{all:unset;cursor:pointer;color:var(--pay);font:600 14px var(--sans);text-decoration:underline;text-underline-offset:3px}
+.h2{font-family:var(--display);font-size:28px;line-height:1.05;letter-spacing:-.02em;margin:8px 0 6px}
+.sub{color:var(--mute);font-size:14px;margin:0 0 16px}
+
+/* welcome */
+.welcome{justify-content:space-between}
+.welcome .big{font-family:var(--display);font-weight:800;font-size:66px;letter-spacing:-.05em;line-height:.9;margin:40px 0 10px}
+.rules{list-style:none;padding:0;margin:28px 0 0;display:grid;gap:12px}
+.rules li{display:flex;gap:12px;align-items:flex-start;background:var(--panel);border:1px solid rgba(231,238,245,.1);border-radius:16px;padding:14px}
+.rules svg{flex:none}
+.rules strong{display:block;font-size:15px}
+.rules span{color:var(--mute);font-size:13px}
+
+/* chips */
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 18px}
+.chip{all:unset;cursor:pointer;padding:9px 14px;border-radius:999px;border:1px solid rgba(231,238,245,.22);font:600 14px var(--sans);color:var(--paper)}
+.chip[aria-pressed="true"]{background:var(--pay);color:#070b10;border-color:var(--pay)}
+.chip.never[aria-pressed="true"]{background:var(--heat);border-color:var(--heat);color:#1a0a05}
+.lbl{font:700 11px var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--signal);margin:14px 0 4px}
+
+/* feed */
+.apphead{flex:none;display:flex;align-items:center;justify-content:space-between;padding:4px 16px 10px;border-bottom:1px solid rgba(231,238,245,.08)}
+.logo{font-family:var(--display);font-weight:800;font-size:24px;letter-spacing:-.04em}
+.meter{all:unset;cursor:pointer;display:flex;align-items:center;gap:8px;padding:6px 12px 6px 8px;border-radius:999px;background:var(--panel);border:1px solid rgba(198,255,74,.35)}
+.meter .ring{width:26px;height:26px}
+.meter .amt{font:700 15px var(--sans);color:var(--pay);font-variant-numeric:tabular-nums}
+.meter .cnt{font:600 11px var(--sans);color:var(--mute);display:block;line-height:1}
+.meter.bump{animation:bump .5s}
+@keyframes bump{40%{transform:scale(1.08);box-shadow:0 0 0 6px rgba(198,255,74,.18)}}
+.meter.off{border-color:rgba(231,238,245,.2)}.meter.off .amt{color:var(--mute)}
+.feed{flex:1;overflow-y:auto;padding:12px 12px 24px;scroll-behavior:smooth}
+.post{background:var(--deep);border:1px solid rgba(231,238,245,.08);border-radius:20px;margin-bottom:14px;overflow:hidden}
+.post header{display:flex;align-items:center;gap:10px;padding:12px 14px}
+.av{width:34px;height:34px;border-radius:50%;flex:none;display:grid;place-items:center;font:700 13px var(--sans);color:#070b10}
+.post .who{font:600 14px var(--sans)}.post .meta{font-size:12px;color:var(--mute)}
+.media{position:relative;aspect-ratio:4/3;display:block;width:100%}
+.media svg{display:block;width:100%;height:100%}
+.vid{position:absolute;left:12px;bottom:12px;display:flex;align-items:center;gap:6px;background:rgba(7,11,16,.75);padding:5px 10px;border-radius:999px;font:600 12px var(--sans)}
+.post .cap{padding:12px 14px 14px;font-size:14px}
+.post .cap b{font-weight:600}
+.acts{display:flex;gap:16px;padding:0 14px 12px;color:var(--mute);font-size:13px}
+.sp{border-color:rgba(58,215,255,.4)}
+.tag-sp{margin-left:auto;font:700 10px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:#070b10;background:var(--signal);padding:4px 8px;border-radius:6px}
+.why-strip{display:flex;align-items:center;gap:10px;padding:10px 14px;border-top:1px solid rgba(58,215,255,.25);background:rgba(58,215,255,.06)}
+.why-strip .bar{flex:1;height:6px;border-radius:9px;background:rgba(231,238,245,.12);overflow:hidden}
+.why-strip .bar i{display:block;height:100%;width:0;background:var(--pay);transition:width .1s linear}
+.why-strip .st{font:600 12px var(--sans);color:var(--mute);min-width:88px}
+.why-strip.done .st{color:var(--pay)}.why-strip.done .bar i{width:100%!important}
+.why-btn{all:unset;cursor:pointer;font:700 12px var(--sans);color:var(--signal);white-space:nowrap}
+.cta-sp{display:flex;justify-content:space-between;align-items:center;padding:0 14px 12px}
+.cta-sp a{all:unset;cursor:pointer;font:700 13px var(--sans);padding:8px 14px;border-radius:999px;background:var(--paper);color:#070b10}
+.adfree-note{margin:4px 4px 14px;padding:12px 14px;border-radius:16px;border:1px dashed rgba(231,238,245,.25);color:var(--mute);font-size:13px}
+
+/* tabbar */
+.tabs{flex:none;display:flex;justify-content:space-around;padding:8px 0 26px;border-top:1px solid rgba(231,238,245,.08);background:var(--void)}
+.tabs button{all:unset;cursor:pointer;display:grid;justify-items:center;gap:3px;font:600 11px var(--sans);color:var(--mute);padding:4px 14px}
+.tabs button[aria-current="true"]{color:var(--pay)}
+
+/* sheet */
+.scrim{position:absolute;inset:0;background:rgba(0,0,0,.55);display:none;z-index:5}
+.sheet{position:absolute;left:0;right:0;bottom:0;z-index:6;background:var(--panel);border-radius:26px 26px 0 0;border-top:1px solid rgba(231,238,245,.15);padding:10px 20px 30px;transform:translateY(105%);transition:transform .3s cubic-bezier(.22,1,.36,1);max-height:86%;overflow-y:auto}
+.sheet.open{transform:none}.scrim.open{display:block}
+.grab{width:40px;height:5px;border-radius:9px;background:rgba(231,238,245,.3);margin:0 auto 10px}
+.rows{display:grid;gap:8px;margin:6px 0 4px}
+.row{display:flex;gap:10px;align-items:flex-start;font-size:14px}
+.row svg{flex:none;margin-top:2px}
+.row span{color:var(--mute)}
+.split{display:flex;height:34px;border-radius:10px;overflow:hidden;margin:8px 0 6px;font:700 12px var(--sans)}
+.split div{display:grid;place-items:center;color:#070b10}
+.legend{display:grid;grid-template-columns:1fr auto;gap:4px 10px;font-size:14px}
+.legend em{font-style:normal;font-variant-numeric:tabular-nums;font-weight:600}
+.sample{display:inline-block;font:700 10px var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--heat);border:1px solid var(--heat);border-radius:6px;padding:2px 6px;margin-left:6px;vertical-align:2px}
+
+/* wallet */
+.bal{background:linear-gradient(160deg,#16260f,var(--deep));border:1px solid rgba(198,255,74,.3);border-radius:22px;padding:18px;margin-top:6px}
+.bal .n{font-family:var(--display);font-size:46px;font-weight:800;letter-spacing:-.03em;line-height:1;color:var(--pay)}
+.prog{height:8px;border-radius:9px;background:rgba(231,238,245,.12);margin:14px 0 6px;overflow:hidden}.prog i{display:block;height:100%;background:var(--pay)}
+.kv{display:flex;justify-content:space-between;font-size:13px;color:var(--mute)}
+.list{margin:10px 0 0;padding:0;list-style:none}
+.list li{display:flex;justify-content:space-between;align-items:center;padding:12px 2px;border-bottom:1px solid rgba(231,238,245,.08);font-size:14px}
+.list li span{color:var(--mute);font-size:12px;display:block}
+.list li em{font-style:normal;font-weight:700;font-variant-numeric:tabular-nums}
+.pend{color:var(--heat)!important}
+
+/* settings */
+.set{background:var(--deep);border:1px solid rgba(231,238,245,.08);border-radius:18px;padding:14px;margin-bottom:12px}
+.set h3{margin:0 0 4px;font:700 15px var(--sans)}
+.set p{margin:0;color:var(--mute);font-size:13px}
+.tog{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.sw{all:unset;cursor:pointer;width:50px;height:30px;border-radius:99px;background:rgba(231,238,245,.2);position:relative;flex:none}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:var(--paper);transition:left .2s}
+.sw[aria-checked="true"]{background:var(--pay)}.sw[aria-checked="true"]::after{left:23px;background:#070b10}
+input[type=range]{width:100%;accent-color:var(--pay);margin-top:10px}
+
+/* toast + demo */
+.toast{position:absolute;left:50%;bottom:96px;transform:translateX(-50%);background:var(--paper);color:#070b10;font:600 13px var(--sans);padding:10px 16px;border-radius:999px;opacity:0;transition:opacity .2s;z-index:9;white-space:nowrap;pointer-events:none}
+.toast.on{opacity:1}
+body.demo .hint{outline:3px solid var(--heat);outline-offset:3px;animation:pulse 1.2s infinite;border-radius:999px}
+@keyframes pulse{50%{outline-color:rgba(255,107,69,.25)}}
+.demo-flag{display:none;position:fixed;top:12px;right:12px;z-index:50;background:var(--heat);color:#1a0a05;font:700 11px var(--sans);letter-spacing:.1em;text-transform:uppercase;padding:.5rem .7rem}
+body.demo .demo-flag{display:block}
+</style></head><body>
+<a class="studio-back" href="/">← Vargas Studio</a>
+<div class="demo-flag">Demo mode · D to exit</div>
+<main class="proto">
+<section class="side">
+  <nav class="top" aria-label="Scrolll" style="margin-bottom:1.5rem">
+    <a href="index.html">Home</a><a href="for-you.html">For you</a><a href="advertise.html">Advertise</a><a href="app.html" aria-current="page">App</a><a href="join.html">Join</a>
+  </nav>
+  <p class="kicker">Product prototype</p>
+  <h1>The feed that pays you back.</h1>
+  <p class="lede">Scroll the phone. When a sponsored post is half on screen for a full second, it counts and the meter ticks. Tap the meter to see why.</p>
+  <ol class="screens" id="list"></ol>
+  <p class="fine">Sample people, brands and money. Nothing saves. The real split is TBD and disclosed before you earn; the 50 / 20 / 30 shown here is a placeholder. Press <kbd>D</kbd> for demo mode. Method notes: <a href="notes.md">notes.md</a>.</p>
+</section>
+
+<div class="phone" id="phone">
+
+  <!-- 1 Welcome -->
+  <section class="scr welcome" data-s="1">
+    <div class="status"><span>9:41</span><i></i></div>
+    <div class="body">
+      <p class="lbl" style="margin-top:20px">Get Paid to Scroll</p>
+      <div class="big">Scrolll</div>
+      <p style="color:var(--pay);font:600 18px var(--sans);margin:0">Doomscroll. Earn for attention.</p>
+      <ul class="rules">
+        <li><svg width="28" height="28" viewBox="0 0 28 28"><rect x="3" y="6" width="22" height="16" rx="4" fill="none" stroke="#3ad7ff" stroke-width="2"/><rect x="7" y="10" width="9" height="4" rx="1" fill="#3ad7ff"/></svg><div><strong>Ads say “Sponsored”</strong><span>Always marked. Never dressed as a post.</span></div></li>
+        <li><svg width="28" height="28" viewBox="0 0 28 28"><circle cx="14" cy="14" r="10" fill="none" stroke="#c6ff4a" stroke-width="2"/><path d="M14 8v6l4 3" stroke="#c6ff4a" stroke-width="2" fill="none" stroke-linecap="round"/></svg><div><strong>Seen = counted</strong><span>Half on screen for 1 second. Video: 2.</span></div></li>
+        <li><svg width="28" height="28" viewBox="0 0 28 28"><path d="M4 22h20M7 22V12m7 10V6m7 16v-8" stroke="#ff6b45" stroke-width="2.4" stroke-linecap="round"/></svg><div><strong>You get a cut</strong><span>Split disclosed before you earn.</span></div></li>
+      </ul>
+    </div>
+    <div style="padding:0 20px 34px;display:grid;gap:10px">
+      <button class="pbtn" data-go="2" data-hint>Pick what ads are about</button>
+    </div>
+  </section>
+
+  <!-- 2 Topics -->
+  <section class="scr" data-s="2">
+    <div class="status"><span>9:41</span><i></i></div>
+    <div class="body">
+      <p class="lbl" style="margin-top:10px">Step 1 of 1</p>
+      <h2 class="h2">You pick the ads.</h2>
+      <p class="sub">Only these topics. Change it any time.</p>
+      <p class="lbl">Show me ads about</p>
+      <div class="chips" id="likes"></div>
+      <p class="lbl">Never show me</p>
+      <div class="chips" id="nevers"></div>
+      <p class="sub" style="margin-top:4px">Or <button class="link" data-adfree-start>go ad-free</button>. You won’t earn, and that’s fine.</p>
+    </div>
+    <div style="padding:0 20px 34px"><button class="pbtn" data-go="3" data-hint>Start scrolling</button></div>
+  </section>
+
+  <!-- 3 Feed -->
+  <section class="scr" data-s="3">
+    <div class="status"><span>9:41</span><i></i></div>
+    <div class="apphead">
+      <span class="logo">Scrolll</span>
+      <button class="meter" id="meter" aria-label="Attention meter: why you earned" data-hint>
+        <svg class="ring" viewBox="0 0 26 26"><circle cx="13" cy="13" r="10" fill="none" stroke="rgba(231,238,245,.15)" stroke-width="3"/><circle id="ringArc" cx="13" cy="13" r="10" fill="none" stroke="#c6ff4a" stroke-width="3" stroke-dasharray="62.8" stroke-dashoffset="62.8" stroke-linecap="round" transform="rotate(-90 13 13)"/></svg>
+        <span><span class="amt" id="amt">0.0¢</span><span class="cnt" id="cnt">0 ads seen today</span></span>
+      </button>
+    </div>
+    <div class="feed" id="feed"></div>
+    <nav class="tabs" data-tabs></nav>
+    <div class="scrim" id="scrim"></div>
+    <div class="sheet" id="sheet" role="dialog" aria-label="Why you earned this">
+      <div class="grab"></div>
+      <div id="sheetBody"></div>
+      <div style="display:grid;gap:10px;margin-top:16px">
+        <button class="pbtn" data-go="5" data-hint>See my wallet</button>
+        <button class="pbtn ghost" id="closeSheet">Back to feed</button>
+      </div>
+    </div>
+    <div class="toast" id="toast3"></div>
+  </section>
+
+  <!-- 5 Wallet -->
+  <section class="scr" data-s="5">
+    <div class="status"><span>9:41</span><i></i></div>
+    <div class="body">
+      <h2 class="h2" style="margin-top:6px">Wallet</h2>
+      <div class="bal">
+        <div class="kv"><span>Ready to pay out</span><span class="sample" style="margin:0">Sample</span></div>
+        <div class="n" id="balN">$2.83</div>
+        <div class="prog"><i id="balBar" style="width:57%"></i></div>
+        <div class="kv"><span id="balLeft">$2.17 to the $5 minimum</span><span>Pays 1st of month</span></div>
+      </div>
+      <p class="lbl" style="margin-top:18px">Pending · checking for bots, 48 h</p>
+      <ul class="list"><li><div>Today<span id="todayLine">0 ads seen</span></div><em class="pend" id="todayAmt">0.0¢</em></li></ul>
+      <p class="lbl" style="margin-top:18px">November so far</p>
+      <ul class="list">
+        <li><div>Ads you saw<span>312 pictures · 96 videos</span></div><em>408</em></li>
+        <li><div>Advertisers paid for them<span>sample price 1.2¢ picture · 2.0¢ video</span></div><em>$5.66</em></li>
+        <li><div>Your share<span>50% placeholder split</span></div><em style="color:var(--pay)">$2.83</em></li>
+        <li><div>Creators hosting your feed<span>20% · @teo.rides, @marisol.cooks +14</span></div><em>$1.13</em></li>
+        <li><div>Scrolll<span>30% · runs the app</span></div><em>$1.70</em></li>
+      </ul>
+      <p class="lbl" style="margin-top:18px">Cash out to</p>
+      <ul class="list">
+        <li><div>Bank account<span>Add at payout</span></div><button class="link" data-soon>Add</button></li>
+        <li><div>Gift card<span>Pick at payout</span></div><button class="link" data-soon>Browse</button></li>
+      </ul>
+      <p class="sub" style="margin-top:14px">Honest math: about $3–4 a month at this pace. Small, but it’s yours, not the platform’s.</p>
+      <button class="pbtn ghost" data-go="6" data-hint style="margin-top:6px">Change what ads are about</button>
+    </div>
+    <nav class="tabs" data-tabs></nav>
+    <div class="toast"></div>
+  </section>
+
+  <!-- 6 Settings -->
+  <section class="scr" data-s="6">
+    <div class="status"><span>9:41</span><i></i></div>
+    <div class="body">
+      <h2 class="h2" style="margin-top:6px">Ad settings</h2>
+      <p class="sub">You pick the persona. You pick the ads.</p>
+      <div class="set"><h3>Ads about</h3><div class="chips" id="likes2" style="margin-bottom:0"></div></div>
+      <div class="set"><h3>Never show</h3><div class="chips" id="nevers2" style="margin-bottom:0"></div></div>
+      <div class="set"><h3>Sponsored posts per hour: <span id="capN">6</span></h3><p>More ads, more earning. Fewer, calmer feed.</p><input type="range" min="2" max="12" value="6" id="cap" aria-label="Sponsored posts per hour"/></div>
+      <div class="set tog"><div><h3>Ad-free</h3><p>No sponsored posts. Earning stops.</p></div><button class="sw" role="switch" aria-checked="false" id="adfree" aria-label="Ad-free"></button></div>
+      <div class="set"><h3>What advertisers get</h3><p>A verified-human view and your picked topic. Not your name, posts or contacts.</p></div>
+      <button class="pbtn" data-go="3" data-hint style="margin-top:4px">Back to feed</button>
+    </div>
+    <nav class="tabs" data-tabs></nav>
+    <div class="toast"></div>
+  </section>
+</div>
+</main>
+
+<script>
+/* ---------- sample data ---------- */
+const PRICE={pic:1.2,vid:2.0};            // sample advertiser price per counted view, in cents
+const SPLIT={you:.5,host:.2,scrolll:.3}; // placeholder split, real one TBD
+const NEED={pic:1000,vid:2000};           // ms at >=50% on screen (MRC viewable standard)
+const TOPICS=['Running','Coffee','Thrift','Cooking','Skincare','Travel','Music','Gaming','Home','Pets'];
+const NEVER=['Gambling','Alcohol','Diet pills','Crypto','Payday loans'];
+const st={likes:new Set(['Running','Coffee','Thrift','Cooking']),nevers:new Set(['Gambling','Diet pills','Payday loans']),cap:6,adfree:false,cents:0,seen:0,last:null};
+
+const art={
+ noodles:`<rect width="400" height="500" fill="#2a1a10"/><circle cx="200" cy="270" r="150" fill="#f1e4cf"/><circle cx="200" cy="270" r="120" fill="#d98a3a"/><path d="M110 250q40-30 90 0t90 0M100 285q50-30 100 0t100 0M115 320q40-25 85 0t85 0" stroke="#f6d37a" stroke-width="10" fill="none" stroke-linecap="round"/><circle cx="160" cy="230" r="14" fill="#6aa84f"/><circle cx="245" cy="300" r="12" fill="#6aa84f"/><path d="M300 90l-60 150M330 100l-70 145" stroke="#a66a3a" stroke-width="8" stroke-linecap="round"/>`,
+ bike:`<rect width="400" height="500" fill="#10283a"/><rect y="330" width="400" height="170" fill="#1e3d2a"/><circle cx="320" cy="110" r="44" fill="#ffcf6b"/><circle cx="120" cy="330" r="62" fill="none" stroke="#e7eef5" stroke-width="9"/><circle cx="290" cy="330" r="62" fill="none" stroke="#e7eef5" stroke-width="9"/><path d="M120 330l60-100h90l20 100M180 230l40 100 70-100M170 215h40M270 230l-10-30h30" stroke="#ff6b45" stroke-width="9" fill="none" stroke-linejoin="round" stroke-linecap="round"/>`,
+ thrift:`<rect width="400" height="500" fill="#2b2033"/><path d="M40 110h320" stroke="#c9b8d8" stroke-width="8" stroke-linecap="round"/><g fill="none" stroke="#c9b8d8" stroke-width="5"><path d="M100 110v24M200 110v24M300 110v24"/></g><path d="M60 140l40-10 40 10 10 220H50z" fill="#b5523b"/><path d="M160 140l40-10 40 10 15 260H145z" fill="#3c6e8f"/><path d="M200 140v260" stroke="#2c5370" stroke-width="4"/><path d="M260 140l40-10 40 10 8 190H252z" fill="#d9b44a"/><rect x="215" y="390" width="70" height="40" rx="6" fill="#e7eef5"/><text x="250" y="418" font-family="IBM Plex Sans" font-weight="700" font-size="22" text-anchor="middle" fill="#070b10">$9</text>`,
+ sunset:`<defs><linearGradient id="gs" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff8a5c"/><stop offset=".6" stop-color="#ffcf6b"/></linearGradient></defs><rect width="400" height="500" fill="url(#gs)"/><circle cx="200" cy="300" r="70" fill="#fff2c4"/><rect y="300" width="400" height="200" fill="#1f4a63"/><path d="M0 340q50-12 100 0t100 0 100 0 100 0M0 380q50-12 100 0t100 0 100 0 100 0" stroke="#7fb6cf" stroke-width="5" fill="none"/>`,
+ plant:`<rect width="400" height="500" fill="#e8e1d3"/><rect x="0" y="380" width="400" height="120" fill="#c8b89a"/><path d="M150 300h100l-12 110h-76z" fill="#b5523b"/><path d="M200 300c0-80-60-120-90-150 40 10 80 50 90 100 5-70 40-120 90-140-30 40-70 100-90 190z" fill="#3f7d4a"/><path d="M200 300c-20-40-70-60-100-60 30 20 70 40 100 60z" fill="#5a9e5f"/>`,
+ shoe:`<rect width="400" height="500" fill="#0f2a22"/><path d="M50 330q20-90 90-110l40 30q40 20 100 25 70 8 80 55v20H50z" fill="#c6ff4a"/><path d="M50 350h310v22H50z" fill="#e7eef5"/><path d="M150 240l20 18M170 228l20 18M190 220l20 18" stroke="#0f2a22" stroke-width="6" stroke-linecap="round"/><text x="200" y="130" font-family="Syne" font-weight="800" font-size="40" text-anchor="middle" fill="#e7eef5">9.1 oz</text>`,
+ coffee:`<rect width="400" height="500" fill="#1c1410"/><ellipse cx="200" cy="360" rx="140" ry="22" fill="#2e221b"/><path d="M110 220h180l-20 140H130z" fill="#e7eef5"/><path d="M290 245q50 0 45 40t-55 35" fill="none" stroke="#e7eef5" stroke-width="12"/><ellipse cx="200" cy="222" rx="90" ry="14" fill="#6b3f22"/><path d="M170 190q-15-25 0-50t0-50M215 190q-15-25 0-50t0-50" stroke="#8a7a6e" stroke-width="5" fill="none" stroke-linecap="round"/>`,
+ tent:`<rect width="400" height="500" fill="#16233a"/><circle cx="90" cy="90" r="3" fill="#fff"/><circle cx="300" cy="60" r="2" fill="#fff"/><circle cx="220" cy="120" r="2.5" fill="#fff"/><path d="M0 360l120-120 90 80 80-110 110 150v140H0z" fill="#2c4a3a"/><path d="M120 400l80-130 80 130z" fill="#ff6b45"/><path d="M200 270v130" stroke="#16233a" stroke-width="5"/>`
+};
+const POSTS=[
+ {k:'org',who:'marisol.cooks',av:'#ffcf6b',meta:'Brooklyn · 2h',art:'noodles',cap:'12-minute peanut noodles. The lazy version, no regrets.',likes:'1,204'},
+ {k:'sp',type:'pic',who:'Pellum Running',av:'#c6ff4a',meta:'Sponsored',art:'shoe',topic:'Running',host:'marisol.cooks',cap:'Trail shoe, 9.1 oz. Run it 30 days, send it back if it’s wrong.',cta:'Learn more',hourN:2},
+ {k:'org',type:'vid',who:'teo.rides',av:'#3ad7ff',meta:'Sunday loop · 5h',art:'bike',cap:'31 miles, one flat, zero regrets. Route in comments.',likes:'842',dur:'0:24'},
+ {k:'org',who:'june.thrifts',av:'#c9b8d8',meta:'Thrift on 3rd St · 1d',art:'thrift',cap:'$9 wool overshirt. Moth hole is a feature.',likes:'3,019'},
+ {k:'sp',type:'vid',who:'Brisk & Bean',av:'#e7eef5',meta:'Sponsored',art:'coffee',topic:'Coffee',host:'june.thrifts',cap:'Cold brew bags. One jar, overnight, done.',cta:'Get offer',dur:'0:15',hourN:3},
+ {k:'org',who:'ana.on.balconies',av:'#5a9e5f',meta:'Queens · 1d',art:'plant',cap:'Day 40 of not killing this pothos.',likes:'611'},
+ {k:'org',type:'vid',who:'kai.goes.west',av:'#ff8a5c',meta:'Big Sur · 2d',art:'sunset',cap:'Pulled over for this. Worth the 40 minutes late.',likes:'5,880',dur:'0:31'},
+ {k:'sp',type:'pic',who:'Loft & Ledger',av:'#d9b44a',meta:'Sponsored',art:'thrift',topic:'Thrift',host:'kai.goes.west',cap:'Secondhand denim, graded and mended. Sizes 24–40.',cta:'Learn more',hourN:4},
+ {k:'org',who:'teo.rides',av:'#3ad7ff',meta:'Joshua Tree · 3d',art:'tent',cap:'First night out with the new tent. Cold. Loved it.',likes:'1,377'}
+];
+
+/* ---------- helpers ---------- */
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const fmt=c=>c<100?c.toFixed(1)+'¢':'$'+(c/100).toFixed(2);
+const icon={
+ heart:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"/></svg>',
+ chat:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5h16v11H9l-5 4z"/></svg>',
+ play:'<svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 1l9 5-9 5z" fill="#e7eef5"/></svg>',
+ check:'<svg width="18" height="18" viewBox="0 0 18 18"><circle cx="9" cy="9" r="8" fill="#c6ff4a"/><path d="M5 9l3 3 5-6" stroke="#070b10" stroke-width="2" fill="none"/></svg>',
+ eye:'<svg width="18" height="18" viewBox="0 0 18 18"><path d="M1 9s3-6 8-6 8 6 8 6-3 6-8 6-8-6-8-6z" fill="none" stroke="#3ad7ff" stroke-width="1.6"/><circle cx="9" cy="9" r="2.5" fill="#3ad7ff"/></svg>',
+ tag:'<svg width="18" height="18" viewBox="0 0 18 18"><path d="M2 2h7l7 7-7 7-7-7z" fill="none" stroke="#3ad7ff" stroke-width="1.6"/><circle cx="6" cy="6" r="1.5" fill="#3ad7ff"/></svg>',
+ shield:'<svg width="18" height="18" viewBox="0 0 18 18"><path d="M9 1l7 3v5c0 4-3 7-7 8-4-1-7-4-7-8V4z" fill="none" stroke="#3ad7ff" stroke-width="1.6"/></svg>'
+};
+function tabsHTML(cur){
+ const t=[[3,'Feed','<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="3" width="16" height="8" rx="2"/><rect x="4" y="13" width="16" height="8" rx="2"/></svg>'],
+  [5,'Wallet','<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="13" rx="3"/><path d="M16 12h2"/><path d="M6 6l9-3 1 3"/></svg>'],
+  [6,'Ad settings','<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg>']];
+ return t.map(([n,l,i])=>`<button data-go="${n}" aria-current="${n==cur}">${i}${l}</button>`).join('');
+}
+function toast(msg){const el=$('.scr.on .toast');if(!el)return;el.textContent=msg;el.classList.add('on');clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove('on'),1800)}
+
+/* ---------- chips ---------- */
+function chips(){
+ [['#likes',TOPICS,st.likes,''],['#likes2',TOPICS,st.likes,''],['#nevers',NEVER,st.nevers,'never'],['#nevers2',NEVER,st.nevers,'never']].forEach(([sel,arr,set,cls])=>{
+  $(sel).innerHTML=arr.map(t=>`<button class="chip ${cls}" aria-pressed="${set.has(t)}" data-t="${t}">${t}</button>`).join('');
+  $(sel).querySelectorAll('.chip').forEach(b=>b.onclick=()=>{set.has(b.dataset.t)?set.delete(b.dataset.t):set.add(b.dataset.t);chips();buildFeed()});
+ });
+}
+
+/* ---------- feed ---------- */
+const timers=new Map();
+function buildFeed(){
+ timers.clear();
+ const f=$('#feed');let html='';
+ if(st.adfree)html+=`<div class="adfree-note">Ad-free is on. No sponsored posts, no earning. Turn it off in Ad settings.</div>`;
+ POSTS.forEach((p,i)=>{
+  if(p.k==='sp'&&(st.adfree||!st.likes.has(p.topic)))return;
+  const sp=p.k==='sp';
+  html+=`<article class="post ${sp?'sp':''}" data-i="${i}">
+   <header><span class="av" style="background:${p.av}">${p.who[0].toUpperCase()}</span><div><div class="who">${sp?p.who:'@'+p.who}</div><div class="meta">${sp?'Because you picked '+p.topic:p.meta}</div></div>${sp?'<span class="tag-sp">Sponsored</span>':''}</header>
+   <div class="media"><svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" role="img" aria-label="${p.cap}">${art[p.art]}</svg>${p.type==='vid'?`<span class="vid">${icon.play}${p.dur}</span>`:''}</div>
+   <div class="cap">${sp?'':'<b>@'+p.who+'</b> '}${p.cap}</div>
+   ${sp?`<div class="cta-sp"><span class="meta">${p.type==='vid'?'Video · counts at 2 s':'Picture · counts at 1 s'}</span><a data-soon>${p.cta}</a></div>
+   <div class="why-strip" id="ws${i}"><span class="st">Not seen yet</span><span class="bar"><i></i></span><button class="why-btn" data-why="${i}">Why?</button></div>`
+   :`<div class="acts"><span>${icon.heart} ${p.likes}</span><span>${icon.chat} Reply</span></div>`}
+  </article>`;
+ });
+ f.innerHTML=html;
+ observe();
+}
+/* visibility check: every 100 ms, a sponsored post at >=50% inside the feed accrues time; dropping below resets it */
+function observe(){}
+setInterval(()=>{
+ if($('.scr.on')?.dataset.s!=='3')return;
+ const fr=$('#feed').getBoundingClientRect();
+ $$('#feed .post.sp').forEach(el=>{
+  const i=+el.dataset.i,p=POSTS[i];if(p.counted){paintStrip(i,1,true);return}
+  const r=el.getBoundingClientRect(),vis=Math.max(0,Math.min(r.bottom,fr.bottom)-Math.max(r.top,fr.top))/r.height;
+  let t=timers.get(i)||{ms:0};timers.set(i,t);
+  if(vis>=.5)tick(i);else if(t.ms){t.ms=0;paintStrip(i,0)}
+ });
+},100);
+function paintStrip(i,frac,done){
+ const w=document.getElementById('ws'+i);if(!w)return;
+ w.querySelector('i').style.width=(frac*100)+'%';
+ const p=POSTS[i];
+ w.querySelector('.st').textContent=done?'Counted · +'+fmt(PRICE[p.type]*SPLIT.you):frac>0?'Seeing… '+(frac*NEED[p.type]/1000).toFixed(1)+' s':'Not seen yet';
+ w.classList.toggle('done',!!done);
+}
+function tick(i){
+ const t=timers.get(i),p=POSTS[i];t.ms+=100;
+ const frac=Math.min(1,t.ms/NEED[p.type]);paintStrip(i,frac);
+ if(frac>=1){p.counted=true;paintStrip(i,1,true);
+  st.cents+=PRICE[p.type]*SPLIT.you;st.seen++;st.last=i;paintMeter(true)}
+}
+function paintMeter(bump){
+ const m=$('#meter');
+ $('#amt').textContent=st.adfree?'Off':fmt(st.cents);
+ $('#cnt').textContent=st.adfree?'Ad-free':st.seen+' ad'+(st.seen==1?'':'s')+' seen today';
+ m.classList.toggle('off',st.adfree);
+ $('#ringArc').setAttribute('stroke-dashoffset',62.8*(1-Math.min(1,st.seen/st.cap)));
+ if(bump){m.classList.remove('bump');void m.offsetWidth;m.classList.add('bump')}
+ $('#todayAmt').textContent=fmt(st.cents);$('#todayLine').textContent=st.seen+' ad'+(st.seen==1?'':'s')+' seen';
+}
+
+/* ---------- why sheet ---------- */
+function openWhy(i){
+ if(i==null)i=st.last??1;
+ const p=POSTS[i],paid=PRICE[p.type];
+ const parts=[['You',SPLIT.you,'#c6ff4a'],['@'+p.host,SPLIT.host,'#3ad7ff'],['Scrolll',SPLIT.scrolll,'#e7eef5']];
+ $('#sheetBody').innerHTML=`
+  <p class="lbl">Why you earned this</p>
+  <h2 class="h2" style="font-size:24px">${p.who} · ${p.counted?'+'+fmt(paid*SPLIT.you):'not counted yet'}</h2>
+  <div class="rows">
+   <div class="row">${icon.tag}<div>You picked <b>${p.topic}</b><br><span>Not on your never list.</span></div></div>
+   <div class="row">${icon.eye}<div>${p.counted?'Half on screen for '+(NEED[p.type]/1000)+' s':'Needs half on screen for '+(NEED[p.type]/1000)+' s'}<br><span>Same bar advertisers use to count a viewable ad.</span></div></div>
+   <div class="row">${icon.shield}<div>Ad ${p.hourN} of ${st.cap} this hour<br><span>Your cap. Change it in Ad settings.</span></div></div>
+  </div>
+  <p class="lbl" style="margin-top:16px">Where the ${fmt(paid)} went <span class="sample">Sample split</span></p>
+  <div class="split">${parts.map(([n,s,c])=>`<div style="width:${s*100}%;background:${c}">${s*100}%</div>`).join('')}</div>
+  <div class="legend">${parts.map(([n,s])=>`<span>${n}</span><em>${fmt(paid*s)}</em>`).join('')}</div>
+  <p class="sub" style="margin:12px 0 0">The real split is TBD and shown before you earn a cent. ${p.who} got one verified view tagged “${p.topic}”. Not your name.</p>`;
+ $('#sheet').classList.add('open');$('#scrim').classList.add('open');
+}
+function closeWhy(){$('#sheet').classList.remove('open');$('#scrim').classList.remove('open')}
+
+/* ---------- router ---------- */
+const NAMES={1:'Welcome',2:'Pick your ad topics',3:'Feed + attention meter',4:'Why you earned this',5:'Wallet + payout',6:'Ad settings'};
+function go(n){
+ n=+n;const real=n===4?3:n;
+ $$('.scr').forEach(s=>s.classList.toggle('on',s.dataset.s==real));
+ $$('[data-tabs]').forEach(t=>{t.innerHTML=tabsHTML(real)});
+ if(n===4){
+  // make sure there is a counted ad to explain
+  const p=POSTS[1];if(!p.counted&&st.likes.has('Running')&&!st.adfree){p.counted=true;st.cents+=PRICE.pic*SPLIT.you;st.seen++;st.last=1;paintStrip(1,1,true);paintMeter()}
+  openWhy(st.last??1);
+ }else if(real===3){closeWhy();setTimeout(observe,50)}
+ else closeWhy();
+ cur=n;paintList();hint();
+ history.replaceState(null,'','?screen='+n);
+}
+let cur=1;
+function paintList(){
+ $('#list').innerHTML=Object.entries(NAMES).map(([n,l])=>`<li><button data-go="${n}" aria-current="${n==cur}"><b>${n}</b>${l}</button></li>`).join('');
+}
+function hint(){
+ $$('.hint').forEach(e=>e.classList.remove('hint'));
+ let el;
+ if(cur===4)el=$('#sheet [data-go="5"]');
+ else if(cur===3)el=$('#meter');
+ else el=$(`.scr[data-s="${cur}"] [data-hint]`);
+ el&&el.classList.add('hint');
+}
+
+/* ---------- events ---------- */
+document.addEventListener('click',e=>{
+ const g=e.target.closest('[data-go]');if(g){e.preventDefault();go(g.dataset.go);return}
+ const w=e.target.closest('[data-why]');if(w){openWhy(+w.dataset.why);cur=4;paintList();hint();return}
+ if(e.target.closest('#meter')){if(st.adfree){toast('Ad-free is on. Nothing to count.');return}go(4);return}
+ if(e.target.closest('#closeSheet')||e.target.closest('#scrim')){closeWhy();cur=3;paintList();hint();return}
+ if(e.target.closest('[data-soon]')){toast('Demo only. Nothing happens yet.');return}
+ if(e.target.closest('[data-adfree-start]')){st.adfree=true;$('#adfree').setAttribute('aria-checked','true');buildFeed();paintMeter();go(3);return}
+});
+$('#adfree').onclick=()=>{st.adfree=!st.adfree;$('#adfree').setAttribute('aria-checked',st.adfree);buildFeed();paintMeter();toast(st.adfree?'Ad-free on. Earning paused.':'Ads back on. Earning on.')};
+$('#cap').oninput=e=>{st.cap=+e.target.value;$('#capN').textContent=st.cap;paintMeter()};
+addEventListener('keydown',e=>{if(e.key==='d'||e.key==='D'){document.body.classList.toggle('demo');hint()}});
+
+chips();buildFeed();paintMeter();
+const QP=new URLSearchParams(location.search);const q=+QP.get('screen');
+go(q>=1&&q<=6?q:1);
+const sc=+QP.get('scroll');if(sc&&q===3){$('#feed').style.scrollBehavior='auto';setTimeout(()=>{$('#feed').scrollTop=sc},150)}
+if(QP.has('demo'))document.body.classList.add('demo');
+</script>
+</body></html>

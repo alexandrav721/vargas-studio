@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Restitch — Meta ads</title>
+  <meta name="description" content="Six 4:5 Meta frames for Restitch across three angles: save money, your fit, keep it in rotation. Each links to the campaign landing page." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,500..700,0..100&family=Sora:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="restitch.css" />
+  <style>
+    .pager-wrap { display: grid; grid-template-columns: minmax(0, 460px) minmax(0, 1fr); gap: 2rem; margin-top: 2rem; align-items: start; }
+    .stage { position: relative; overflow: hidden; border: 1px solid var(--line); background: var(--ink-2); touch-action: pan-y; }
+    .track { display: flex; transition: transform 0.38s var(--ease); }
+    .track img { flex: 0 0 100%; width: 100%; height: auto; min-width: 0; aspect-ratio: 4 / 5; display: block; }
+    .controls { display: flex; align-items: center; justify-content: space-between; gap: 0.6rem; margin-top: 0.8rem; }
+    .controls button { font: 600 0.8rem var(--sans); color: var(--paper); background: transparent; border: 1px solid color-mix(in srgb, var(--fog) 28%, transparent); padding: 0.55rem 0.85rem; cursor: pointer; }
+    .controls button:hover:not(:disabled) { border-color: var(--citrus); color: var(--citrus); }
+    .controls button:disabled { opacity: 0.35; cursor: default; }
+    .count { font-size: 0.82rem; color: var(--mist); font-variant-numeric: tabular-nums; }
+    .hint { margin: 0.5rem 0 0; font-size: 0.78rem; color: var(--mist); text-align: center; }
+    .copy dl { margin: 0; }
+    .copy dt { margin-top: 1.1rem; font-size: 0.68rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mist); }
+    .copy dd { margin: 0.3rem 0 0; color: var(--paper); overflow-wrap: anywhere; }
+    code { overflow-wrap: anywhere; }
+    .copy .primary { font-size: 1.02rem; }
+    .copy .head { font: 600 1.35rem/1.2 var(--display); }
+    .cta { display: inline-block; padding: 0.45rem 0.8rem; background: #2d3a33; color: var(--paper); font-weight: 600; font-size: 0.9rem; }
+    .angle { color: var(--warm); }
+    .notes { margin-top: 3.5rem; }
+    .notes h2 { margin-bottom: 1rem; }
+    .notes ul { padding-left: 1.1rem; color: var(--fog); max-width: 46rem; }
+    .notes li { margin: 0.45rem 0; }
+    table { width: 100%; border-collapse: collapse; margin-top: 0.8rem; font-size: 0.9rem; }
+    th, td { text-align: left; padding: 0.55rem 0.8rem 0.55rem 0; border-top: 1px solid var(--line); vertical-align: top; }
+    th { font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mist); border-top: 0; }
+    .scroll { overflow-x: auto; }
+    @media (max-width: 820px) { .pager-wrap { grid-template-columns: minmax(0, 1fr); } }
+  </style>
+</head>
+<body>
+  <a class="studio-back" href="/">← Vargas Studio</a>
+  <main class="wrap">
+    <nav class="top" aria-label="Restitch">
+      <span class="brand">Restitch</span>
+      <a href="landing.html">Landing</a>
+      <a href="funnel.html">Funnel</a>
+      <a href="ads.html" aria-current="page">Ads</a>
+      <a href="deck.html">Deck</a>
+      <a href="print.html">Print</a>
+      <a href="social.html">Social</a>
+    </nav>
+    <p class="eyebrow">Meta creative pack · 4:5 feed</p>
+    <h1>Three reasons to flip.</h1>
+    <p class="lede">Save money, your fit, keep it in rotation. Six frames, each with its copy. Every CTA is “Learn more” to the <a href="landing.html">landing page</a>, which opens the free planner.</p>
+
+    <div class="pager-wrap">
+      <div>
+        <div class="stage" id="stage">
+          <div class="track" id="track"></div>
+        </div>
+        <div class="controls">
+          <button type="button" id="prev" aria-label="Previous frame">← Prev</button>
+          <span class="count" id="count" aria-live="polite">1 / 6</span>
+          <button type="button" id="next" aria-label="Next frame">Next →</button>
+        </div>
+        <p class="hint">One frame at a time · arrow keys or swipe</p>
+      </div>
+      <div class="copy" aria-live="polite">
+        <p class="eyebrow angle" id="angle"></p>
+        <dl>
+          <dt>Primary text</dt><dd class="primary" id="primary"></dd>
+          <dt>Headline</dt><dd class="head" id="headline"></dd>
+          <dt>Description</dt><dd id="desc"></dd>
+          <dt>CTA button</dt><dd><span class="cta" id="cta"></span></dd>
+          <dt>Destination</dt><dd id="dest"></dd>
+          <dt>PNG</dt><dd><a id="png" download>Download 1080 × 1350</a></dd>
+        </dl>
+      </div>
+    </div>
+
+    <section class="notes" aria-labelledby="test">
+      <h2 id="test">Test plan</h2>
+      <ul>
+        <li><strong>Budget:</strong> $150 over 14 days, $50 per angle, one ad set each, US, 18–34, interests sewing / thrift / upcycling. <span class="muted">Assumption, not spent.</span></li>
+        <li><strong>Measure:</strong> link CTR, landing → planner click-through, planner photos uploaded (needs an analytics snippet; none is installed today).</li>
+        <li><strong>Keep</strong> an angle if landing → planner click-through ≥ 25% and cost per planner visit ≤ $1.00. <strong>Kill</strong> below 10%. <span class="muted">Thresholds are assumptions to revise after day 7.</span></li>
+        <li><strong>UTMs:</strong> <code>?utm_source=meta&amp;utm_campaign=restitch&amp;utm_content=save|fit|rotation</code>. The landing page passes them through to the planner.</li>
+      </ul>
+
+      <h2 id="why" style="margin-top:2.5rem">Why these angles</h2>
+      <div class="scroll">
+        <table>
+          <thead><tr><th>Signal</th><th>What it says</th><th>Source</th></tr></thead>
+          <tbody>
+            <tr><td>Pinterest 2026 Hobbies Trend Report</td><td>“Thrift flip ideas” searches +610%, “refashion clothes upcycling” +230%, “repair aesthetic” +167%.</td><td><a href="https://newsroom.pinterest.com/news/2026-pinterest-hobbies-trend-report/">Pinterest Newsroom, Aug 2026</a></td></tr>
+            <tr><td>Gen Z sewing</td><td>Sewing and mending framed as saving money and getting off the phone; thrift flips perform online.</td><td><a href="https://fortune.com/2025/09/22/gen-z-sewing-hobby-get-off-phone-save-money/">Fortune, Sep 2025</a></td></tr>
+            <tr><td>Thrift-flip videos</td><td>The format is the before → process → after reveal, often naming a low thrift price; “beginner friendly” is a common promise.</td><td><a href="https://www.dailydot.com/culture/thrift-flip-tiktok-trend">Daily Dot, Aug 2025</a></td></tr>
+            <tr><td>Why people flip</td><td>Sustainability and making a piece your own; critics flag thrift-store gentrification and cutting down scarce plus sizes.</td><td><a href="https://goodonyou.eco/thrift-flipping-trend/">Good On You</a></td></tr>
+            <tr><td>Discovery happens in feeds</td><td>Nearly 50% of shoppers find secondhand through social, creators and influencers.</td><td><a href="https://newsroom.thredup.com/news/thredup-14th-resale-report">ThredUp Resale Report, Apr 2026</a></td></tr>
+            <tr><td>Landfill figure (frame 5)</td><td>11.3 million tons of textiles landfilled in the US in 2018, the latest EPA year.</td><td><a href="https://www.epa.gov/facts-and-figures-about-materials-waste-and-recycling/textiles-material-specific-data">US EPA</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <ul style="margin-top:1.5rem">
+        <li><strong>Creative rules:</strong> no “AI pattern” claims; no cutting down plus-size pieces in visuals; no price promise beyond “free”; the read on frame 4 is the planner's real output for a sample drawing and is labeled that way.</li>
+        <li><strong>Left out:</strong> “Shop now”, “Sign up” and “Get offer” CTAs. There is nothing to buy and no account to make.</li>
+      </ul>
+    </section>
+    <footer class="foot">Restitch · Meta creative pack · frames drawn in HTML and exported to PNG</footer>
+  </main>
+  <script>
+    var LAND = "/projects/restitch/landing.html";
+    var ADS = [
+      { png: "ads/01-save-cheap.png", angle: "Save money · 1 of 2", alt: "The find was cheap. The plan is free.",
+        primary: "Your thrift find doesn't need a paid pattern. Upload a photo and Restitch lays out a no-sew, a hand and a machine flip for your skill. Free, no account.",
+        headline: "The find was cheap. The plan is free.", desc: "Free thrift-flip planner", cta: "Learn more", utm: "save" },
+      { png: "ads/02-save-nosew.png", angle: "Save money · 2 of 2", alt: "Every read has a no-sew flip.",
+        primary: "No machine? Start with a knot, a pin or a snap. Every photo you upload gets a no-sew option, plus hand and machine flips when you're ready.",
+        headline: "Every read has a no-sew flip", desc: "Beginner friendly", cta: "Learn more", utm: "save" },
+      { png: "ads/03-fit-tape.png", angle: "Your fit · 1 of 2", alt: "Your tape. Not a size chart.",
+        primary: "The tutorial was someone else's shirt on someone else's body. Restitch never guesses your size: you type your own numbers and each flip shows what to measure.",
+        headline: "Your tape. Not a size chart.", desc: "Free, in your browser", cta: "Learn more", utm: "fit" },
+      { png: "ads/04-fit-read.png", angle: "Your fit · 2 of 2", alt: "The photo names the shape. You bring the tape.",
+        primary: "Restitch reads three things from your photo: color, brightness and shape. That picks the flips. Your measurements stay yours. No pattern PDF, no account.",
+        headline: "The photo names the shape", desc: "You bring the tape", cta: "Learn more", utm: "fit" },
+      { png: "ads/05-planet-landfill.png", angle: "Keep it in rotation · 1 of 2", alt: "11.3M tons of textiles went to US landfills in 2018.",
+        primary: "11.3 million tons of textiles went to US landfills in 2018 (US EPA). One flip won't fix that. It does keep one piece in your closet. Plan it free.",
+        headline: "Flip one piece back into rotation", desc: "Free thrift-flip planner", cta: "Learn more", utm: "rotation" },
+      { png: "ads/06-planet-before-after.png", angle: "Keep it in rotation · 2 of 2", alt: "Flip it before you donate it again.",
+        primary: "Bought it, never wore it, about to donate it again? Shorten it, knot it, drape it. Upload a photo and get steps sized to your skill.",
+        headline: "Flip it before you donate it again", desc: "No-sew, hand or machine", cta: "Learn more", utm: "rotation" }
+    ];
+    var i = 0, track = document.getElementById("track");
+    track.innerHTML = ADS.map(function (a, k) { return '<img src="' + a.png + '" alt="Ad frame ' + (k + 1) + ': ' + a.alt + '" width="1080" height="1350"' + (k ? ' loading="lazy"' : '') + '>'; }).join("");
+    function show(n) {
+      i = Math.max(0, Math.min(ADS.length - 1, n)); var a = ADS[i];
+      track.style.transform = "translateX(" + (-100 * i) + "%)";
+      document.getElementById("count").textContent = (i + 1) + " / " + ADS.length;
+      document.getElementById("prev").disabled = i === 0;
+      document.getElementById("next").disabled = i === ADS.length - 1;
+      document.getElementById("angle").textContent = a.angle;
+      document.getElementById("primary").textContent = a.primary;
+      document.getElementById("headline").textContent = a.headline;
+      document.getElementById("desc").textContent = a.desc;
+      document.getElementById("cta").textContent = a.cta;
+      var url = LAND + "?utm_source=meta&utm_campaign=restitch&utm_content=" + a.utm;
+      document.getElementById("dest").innerHTML = '<a href="landing.html?utm_source=meta&utm_campaign=restitch&utm_content=' + a.utm + '">' + url + '</a>';
+      var p = document.getElementById("png"); p.href = a.png;
+    }
+    document.getElementById("prev").onclick = function () { show(i - 1); };
+    document.getElementById("next").onclick = function () { show(i + 1); };
+    document.addEventListener("keydown", function (e) { if (e.key === "ArrowLeft") show(i - 1); if (e.key === "ArrowRight") show(i + 1); });
+    var x0 = null, stage = document.getElementById("stage");
+    stage.addEventListener("touchstart", function (e) { x0 = e.touches[0].clientX; }, { passive: true });
+    stage.addEventListener("touchend", function (e) { if (x0 == null) return; var dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 40) show(i + (dx < 0 ? 1 : -1)); x0 = null; });
+    show(0);
+  </script>
+</body>
+</html>

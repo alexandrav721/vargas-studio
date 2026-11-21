@@ -53,6 +53,11 @@
   "now": [
     {
       "date": "2026-11-21",
+      "projectId": "restitch",
+      "text": "Every section is now filled across all seven projects: Restitch gets a landing page, deck, ads, worksheet and social set; Scrolll a clickable feed app; Planner a deck and ads; print and social pieces everywhere."
+    },
+    {
+      "date": "2026-11-21",
       "projectId": "skill-quest",
       "text": "Skill Quest added: landing + A/B variants, clickable prototype and pitch deck for a game that teaches AI skill building."
     },
@@ -95,7 +100,7 @@
       "oneLiner": "Thrift-flip planner \u2014 the photo names the shape, you bring the tape.",
       "status": "active",
       "updated": "2026-11-20",
-      "summary": "Restitch does not generate a pattern. Upload a photo and the page reads average color, brightness, and aspect from that file, then offers no-sew, hand, and machine flips for the skill you pick. Body numbers are what you type. The closet stays in this browser. No account, no checkout, no PDF.",
+      "summary": "Restitch does not generate a pattern. Upload a photo and the page reads average color, brightness, and aspect from that file, then offers no-sew, hand, and machine flips for the skill you pick. Body numbers are what you type. The closet stays in this browser. No account, no checkout, no pattern PDF.",
       "latest": "Plan this make runs on this site. A different photo is a different read. Measurements and saved flips stay in the browser.",
       "visuals": {
         "website": {
@@ -106,21 +111,21 @@
         },
         "landing": {
           "label": "Campaign landing",
-          "detail": "No campaign page. The sample is the share.",
-          "url": null,
-          "state": "na"
+          "detail": "Meta landing page. Shows the planner\u2019s real read of a sample drawing; the button opens the free planner.",
+          "url": "/projects/restitch/landing.html",
+          "state": "live"
         },
         "funnel": {
-          "label": "Waitlist / account",
-          "detail": "No account, no checkout, no email capture.",
-          "url": null,
-          "state": "na"
+          "label": "Save-my-flips demo",
+          "detail": "Garment, skill, email in three steps. Says plainly it saves nothing, then opens the planner.",
+          "url": "/projects/restitch/funnel.html",
+          "state": "live"
         },
         "meta-ads": {
           "label": "Meta creative pack",
-          "detail": "No ad frames in this sample.",
-          "url": null,
-          "state": "na"
+          "detail": "Six 4:5 frames, three angles: no machine needed, your fit, keep it in rotation. One at a time.",
+          "url": "/projects/restitch/ads.html",
+          "state": "live"
         },
         "product-ui": {
           "label": "Plan this make",
@@ -129,22 +134,22 @@
           "state": "live"
         },
         "deck": {
-          "label": "Story / pitch board",
-          "detail": "No deck. The screen is the sample.",
-          "url": null,
-          "state": "na"
+          "label": "Story / pitch deck",
+          "detail": "12 slides with cited resale and thrift-flip data and a revenue view. Founder and raise marked TODO.",
+          "url": "/projects/restitch/deck.html",
+          "state": "live"
         },
         "print": {
-          "label": "Print / PDF",
-          "detail": "No generated or hosted PDF. Patterns stay on the designer\u2019s site.",
-          "url": null,
-          "state": "na"
+          "label": "Flip plan worksheet",
+          "detail": "Two-page Letter PDF in the planner\u2019s order: photo read, your tape, skill, flip, steps.",
+          "url": "/projects/restitch/print.html",
+          "state": "live"
         },
         "social": {
-          "label": "Social",
-          "detail": "No feed embedded, and no scraped frames.",
-          "url": null,
-          "state": "na"
+          "label": "Explainer + carousel",
+          "detail": "How it works in one picture (3 sizes), plus 5 slides on what one photo can and can\u2019t tell you.",
+          "url": "/projects/restitch/social.html",
+          "state": "live"
         }
       },
       "code": [
@@ -377,16 +382,16 @@
           "state": "live"
         },
         "print": {
-          "label": "Print / physical",
-          "detail": "Not in scope for this project.",
-          "url": null,
-          "state": "na"
+          "label": "2001\u20132004 year cards",
+          "detail": "Printable Letter PDF: four cut-out year cards (tick had / want) plus a bingo sheet, all from dated catalog entries.",
+          "url": "/projects/nostalgia/print.html",
+          "state": "live"
         },
         "social": {
-          "label": "Social",
-          "detail": "No organic channel linked yet.",
-          "url": null,
-          "state": "na"
+          "label": "Explainer + 2003 carousel",
+          "detail": "One-picture explainer in 3 sizes, plus a 5-slide \u201cWhat 2003 felt like online\u201d carousel.",
+          "url": "/projects/nostalgia/social.html",
+          "state": "live"
         }
       },
       "code": [
@@ -432,10 +437,10 @@
           "state": "live"
         },
         "product-ui": {
-          "label": "Product app",
-          "detail": "Core scroll feed UI not friend-published yet \u2014 marketing + deck stand in.",
-          "url": null,
-          "state": "na"
+          "label": "Scrolll feed app",
+          "detail": "Clickable phone demo: marked ads, live earnings meter, why-you-earned sheet, wallet. Sample money.",
+          "url": "/projects/scrolll/app.html",
+          "state": "live"
         },
         "deck": {
           "label": "Story deck",
@@ -444,16 +449,16 @@
           "state": "live"
         },
         "print": {
-          "label": "Print / physical",
-          "detail": "Not in scope.",
-          "url": null,
-          "state": "na"
+          "label": "Marketer one-pager",
+          "detail": "Printable Letter sheet: how a paid view works, sample math, fit checklist. PDF included.",
+          "url": "/projects/scrolll/print.html",
+          "state": "live"
         },
         "social": {
-          "label": "Social",
-          "detail": "No organic channel linked yet.",
-          "url": null,
-          "state": "na"
+          "label": "Explainer + carousel",
+          "detail": "How Scrolll pays in one picture (3 sizes), plus a 5-slide carousel. Split stays TBD.",
+          "url": "/projects/scrolll/social.html",
+          "state": "live"
         }
       },
       "code": [
@@ -511,10 +516,10 @@
           "state": "live"
         },
         "print": {
-          "label": "Print / physical",
-          "detail": "Not in scope for Loop.",
-          "url": null,
-          "state": "na"
+          "label": "Flyer + card",
+          "detail": "Tear-off lobby flyer and a 4\u00d76 card, each with a tested QR to celebrateloop.com. Print-ready PDFs.",
+          "url": "/projects/loop/print.html",
+          "state": "live"
         },
         "social": {
           "label": "Instagram + community",
@@ -575,10 +580,10 @@
           "state": "live"
         },
         "meta-ads": {
-          "label": "Meta creatives",
-          "detail": "Dedicated Meta pack not built yet for planner/book.",
-          "url": null,
-          "state": "na"
+          "label": "Planner Meta ads",
+          "detail": "Six 4:5 frames, three angles: paper remembers, no backlog debt, phone down. Not run yet.",
+          "url": "/projects/planner/ads.html",
+          "state": "live"
         },
         "product-ui": {
           "label": "Weekline crew wall",
@@ -587,10 +592,10 @@
           "state": "live"
         },
         "deck": {
-          "label": "Story / pitch",
-          "detail": "No dedicated deck \u2014 shop + printable carry the story.",
-          "url": null,
-          "state": "na"
+          "label": "Planner pitch deck",
+          "detail": "12 slides with cited planner-market numbers. Founder, traction and raise left as TODO.",
+          "url": "/projects/planner/deck.html",
+          "state": "live"
         },
         "print": {
           "label": "Planner PDF + book sneak",
@@ -599,10 +604,10 @@
           "state": "live"
         },
         "social": {
-          "label": "Social",
-          "detail": "No organic channel linked yet.",
-          "url": null,
-          "state": "na"
+          "label": "Explainer + carousel",
+          "detail": "Explainer in 3 sizes, plus a 5-slide how-to for the free Season Chapter sheet. Prices TBD.",
+          "url": "/projects/planner/social.html",
+          "state": "live"
         }
       },
       "code": [
@@ -665,16 +670,16 @@
           "state": "live"
         },
         "print": {
-          "label": "Print / physical",
-          "detail": "Planner + book live under Planner and Book \u2014 not duplicated here.",
-          "url": null,
-          "state": "na"
+          "label": "Season streak card",
+          "detail": "Free 2-page PDF: fridge card for one season goal with return tickets, plus 6 Stuck game wallet cards.",
+          "url": "/projects/lumen/print.html",
+          "state": "live"
         },
         "social": {
-          "label": "Social",
-          "detail": "No organic channel linked yet.",
-          "url": null,
-          "state": "na"
+          "label": "Explainer + carousel",
+          "detail": "One explainer in 3 sizes, plus 5 slides on the streak that forgives, with research cited.",
+          "url": "/projects/lumen/social.html",
+          "state": "live"
         }
       },
       "code": [
@@ -718,10 +723,10 @@
           "state": "live"
         },
         "meta-ads": {
-          "label": "Meta ads",
-          "detail": "Ad copy is written for three angles; frames not designed yet.",
-          "url": null,
-          "state": "na"
+          "label": "Feed ads",
+          "detail": "Four 4:5 frames (pain, gain, identity, battle) for Reddit first, Meta later. Each matches a real landing page.",
+          "url": "/projects/skill-quest/ads/index.html",
+          "state": "live"
         },
         "product-ui": {
           "label": "Clickable prototype",
@@ -736,10 +741,10 @@
           "state": "live"
         },
         "print": {
-          "label": "Print / physical",
-          "detail": "Not planned.",
-          "url": null,
-          "state": "na"
+          "label": "Sponsor kit + cards",
+          "detail": "Two-page PDF: sponsor one-pager for Battle #1, plus blank skill cards to score Battle #0 by hand.",
+          "url": "/projects/skill-quest/print/index.html",
+          "state": "live"
         },
         "social": {
           "label": "Explainer post",

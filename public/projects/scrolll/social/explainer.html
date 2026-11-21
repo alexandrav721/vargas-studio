@@ -1,0 +1,65 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Scrolll — Explainer graphic</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet"/>
+<style>
+:root{--void:#070b10;--panel:#121b26;--paper:#e7eef5;--mute:#a9b6c3;--pay:#c6ff4a;--signal:#3ad7ff;--heat:#ff6b45;--display:"Syne",system-ui,sans-serif;--sans:"IBM Plex Sans",system-ui,sans-serif}
+*{box-sizing:border-box}html,body{margin:0;background:var(--void)}
+.studio-back{position:fixed;top:12px;left:12px;z-index:40;font:600 11px/1 var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--mute);text-decoration:none;background:rgba(7,11,16,.8);border:1px solid rgba(231,238,245,.12);padding:.55rem .8rem}
+body.export .studio-back{display:none}
+.g{position:relative;overflow:hidden;color:var(--paper);font-family:var(--sans);background:radial-gradient(ellipse at 15% 0%,rgba(198,255,74,.16),transparent 55%),radial-gradient(ellipse at 95% 30%,rgba(58,215,255,.12),transparent 50%),var(--void);display:grid}
+.k{font:700 28px var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--signal)}
+h1{font-family:var(--display);font-weight:800;letter-spacing:-.035em;line-height:.98;margin:0}
+h1 em{font-style:normal;color:var(--pay)}
+.steps{display:grid;gap:22px}
+.s{display:flex;gap:26px;align-items:center;background:var(--panel);border:2px solid rgba(231,238,245,.12);border-radius:28px;padding:24px 28px}
+.s .ic{flex:none;width:96px;height:96px;border-radius:22px;display:grid;place-items:center;background:#0b1118}
+.s b{display:block;font:700 40px/1.1 var(--sans)}
+.s span{display:block;font-size:30px;color:var(--mute);line-height:1.25}
+.s .num{font-family:var(--display);font-weight:800;font-size:34px;color:var(--pay);margin-right:4px}
+.money{border-radius:24px;background:var(--pay);color:var(--void);padding:22px 28px;font:700 30px/1.25 var(--sans)}
+.money small{display:block;font-weight:600;font-size:28px;opacity:.85}
+.foot{display:flex;justify-content:space-between;align-items:center;font-size:28px;color:var(--mute)}
+.foot b{font-family:var(--display);font-weight:800;color:var(--paper);font-size:38px;letter-spacing:-.03em}
+
+/* square 1080 */
+.square{width:1080px;height:1080px;padding:70px 72px 56px;grid-template-rows:auto auto 1fr auto auto;gap:26px}
+.square h1{font-size:86px}
+.square .steps{gap:18px}.square .s{padding:18px 26px}
+/* wide 1600x900 */
+.wide{width:1600px;height:900px;padding:70px 80px 56px;grid-template-columns:1fr 1fr;grid-template-rows:auto 1fr auto;column-gap:70px;row-gap:26px}
+.wide .k{grid-column:1}.wide h1{grid-column:1;grid-row:2;font-size:100px;align-self:start}
+.wide .steps{grid-column:2;grid-row:1/3;align-self:center}
+.wide .money{grid-column:1;grid-row:2;align-self:end}
+.wide .foot{grid-column:1/3}
+/* story 1080x1920 */
+.story{width:1080px;height:1920px;padding:150px 72px 120px;grid-template-rows:auto auto 1fr auto auto;gap:40px}
+.story h1{font-size:118px}
+.story .steps{gap:30px;align-content:center}.story .s{padding:34px 32px}
+.story .s .ic{width:120px;height:120px}
+.story .s b{font-size:46px}.story .s span{font-size:34px}
+.story .money{font-size:36px}.story .money small{font-size:32px}
+.story .foot{flex-direction:column;gap:12px;align-items:flex-start}
+/* preview mode: scale to fit screen */
+body:not(.export){min-height:100vh;display:grid;place-items:center;padding:60px 12px 20px}
+body:not(.export) .g{transform-origin:top center}
+</style></head><body>
+<a class="studio-back" href="/">← Vargas Studio</a>
+<div class="g" id="g">
+  <div class="k">Get Paid to Scroll</div>
+  <h1>When an ad runs, <em>you get paid.</em></h1>
+  <div class="steps">
+    <div class="s"><div class="ic"><svg width="56" height="56" viewBox="0 0 56 56"><rect x="14" y="4" width="28" height="48" rx="6" fill="none" stroke="#e7eef5" stroke-width="4"/><rect x="19" y="12" width="18" height="12" rx="2" fill="#3ad7ff"/><rect x="19" y="28" width="18" height="12" rx="2" fill="none" stroke="#e7eef5" stroke-width="3"/></svg></div><div><b><span class="num" style="display:inline">1</span> Scroll</b><span>Your feed. Ads you picked.</span></div></div>
+    <div class="s"><div class="ic"><svg width="60" height="60" viewBox="0 0 60 60"><path d="M4 30s10-18 26-18 26 18 26 18-10 18-26 18S4 30 4 30z" fill="none" stroke="#e7eef5" stroke-width="4"/><circle cx="30" cy="30" r="8" fill="#c6ff4a"/></svg></div><div><b><span class="num" style="display:inline">2</span> Seen = counted</b><span>Half on screen, 1 second.</span></div></div>
+    <div class="s"><div class="ic"><svg width="64" height="40" viewBox="0 0 64 40"><rect x="2" y="6" width="28" height="28" fill="#c6ff4a"/><rect x="30" y="6" width="14" height="28" fill="#3ad7ff"/><rect x="44" y="6" width="18" height="28" fill="#e7eef5"/></svg></div><div><b><span class="num" style="display:inline">3</span> Split it</b><span>You · the creator · Scrolll.</span></div></div>
+  </div>
+  <div class="money">Brands pay per seen ad.<small>Split disclosed before you earn.</small></div>
+  <div class="foot"><b>Scrolll</b><span>vargas-studio.pages.dev/projects/scrolll</span></div>
+</div>
+<script>
+const q=new URLSearchParams(location.search),size=q.get('size')||'square',g=document.getElementById('g');
+g.classList.add(['square','wide','story'].includes(size)?size:'square');
+if(q.has('export'))document.body.classList.add('export');
+else{const fit=()=>{const w=g.offsetWidth,h=g.offsetHeight,s=Math.min(1,(innerWidth-24)/w,(innerHeight-80)/h);g.style.transform=`scale(${s})`;g.style.marginBottom=`${-(1-s)*h}px`;g.style.marginLeft=g.style.marginRight=`${-(1-s)*w/2}px`};fit();addEventListener('resize',fit)}
+</script>
+</body></html>

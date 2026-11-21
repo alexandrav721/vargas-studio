@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Restitch — plan the flip before you cut</title>
+  <meta name="description" content="Upload a photo of a thrift find. Restitch reads its color and shape and lays out no-sew, hand and machine flips for your skill. You bring the tape. Free, no account." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,500..700,0..100&family=Sora:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="restitch.css" />
+  <!-- Analytics placeholder: paste a Plausible / GA4 / Meta Pixel snippet here when the campaign runs. Nothing is tracked today. -->
+  <style>
+    .hero { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); gap: 2.5rem; align-items: center; }
+    .hero .cta-row { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.6rem; }
+    .hero .fine { margin-top: 0.8rem; color: var(--mist); font-size: 0.84rem; }
+    .mock { margin: 0; border-top: 1px solid color-mix(in srgb, var(--fog) 18%, transparent); background: color-mix(in srgb, var(--ink-2) 70%, transparent); padding: 1rem; }
+    .mock-head { display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.8rem; }
+    .mock-head strong { font: 600 1.15rem var(--display); }
+    .mock-body { display: grid; grid-template-columns: 7.5rem 1fr; gap: 0.9rem; }
+    .mock-body img { width: 100%; height: auto; align-self: start; display: block; background: #e9e4da; }
+    .chips { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-bottom: 0.6rem; }
+    .reads { margin: 0 0 0.7rem; font-size: 0.9rem; color: var(--fog); }
+    .flips { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.4rem; }
+    .flips li { display: grid; grid-template-columns: 4.6rem 1fr; gap: 0.5rem; align-items: baseline; padding: 0.45rem 0; border-top: 1px solid var(--line); font-size: 0.9rem; }
+    .flips .m { font-size: 0.66rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--citrus); }
+    .mock-note { margin: 0.8rem 0 0; font-size: 0.78rem; color: var(--mist); }
+    .pains { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.75rem; margin-top: 1.4rem; }
+    .pains blockquote { margin: 0; padding: 1rem 1.1rem; border-left: 2px solid var(--warm); background: color-mix(in srgb, var(--ink-2) 55%, transparent); font: 500 1.2rem/1.3 var(--display); }
+    .steps { counter-reset: s; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.75rem; margin-top: 1.4rem; }
+    .steps li { list-style: none; counter-increment: s; }
+    .steps li::before { content: counter(s); display: block; font: 600 2.4rem/1 var(--display); color: var(--citrus); margin-bottom: 0.5rem; }
+    .steps p, .gets p { margin: 0.35rem 0 0; color: var(--fog); font-size: 0.94rem; }
+    .gets { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.75rem; margin-top: 1.4rem; }
+    .ledger { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-top: 1.4rem; }
+    .ledger ul { margin: 0.5rem 0 0; padding-left: 1.1rem; color: var(--fog); }
+    .ledger li { margin: 0.3rem 0; }
+    .price { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.6rem 1.2rem; margin-top: 1rem; }
+    .price .big { font: 600 clamp(3rem, 8vw, 4.5rem)/1 var(--display); color: var(--citrus); }
+    details { border-top: 1px solid var(--line); padding: 0.9rem 0; }
+    details summary { cursor: pointer; font-weight: 600; }
+    details p { margin: 0.5rem 0 0; color: var(--fog); max-width: 42rem; }
+    .final { text-align: left; padding: 2.2rem 1.3rem; margin-top: 3.5rem; background: color-mix(in srgb, var(--ink-2) 75%, transparent); border-top: 2px solid var(--citrus); }
+    .final h2 { max-width: 16ch; }
+    .final .btn { margin-top: 1.2rem; }
+    @media (max-width: 860px) {
+      .hero, .pains, .steps, .gets, .ledger { grid-template-columns: 1fr; }
+      .gets { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 420px) {
+      .gets { grid-template-columns: 1fr; }
+      .mock-body { grid-template-columns: 1fr; }
+      .mock-body img { width: 6.5rem; }
+      .flips li { grid-template-columns: 1fr; gap: 0.1rem; }
+    }
+  </style>
+</head>
+<body>
+  <a class="studio-back" href="/">← Vargas Studio</a>
+  <main class="wrap">
+    <section class="hero" aria-labelledby="h">
+      <div>
+        <p class="eyebrow">Restitch · thrift-flip planner</p>
+        <h1 id="h">Plan the flip before you cut.</h1>
+        <p class="lede">Upload a photo of the piece. Restitch reads its color and shape, then lays out a no-sew, a hand and a machine flip for your skill. You bring the tape.</p>
+        <div class="cta-row">
+          <a class="btn js-cta" href="/restitch.html">Plan a flip, free</a>
+          <a class="btn btn-ghost" href="#wont">What it won't do</a>
+        </div>
+        <p class="fine">No account. No checkout. Your photo stays in your browser.</p>
+      </div>
+      <figure class="mock" aria-label="A real read from Restitch of a sample drawing of a long blue dress">
+        <div class="mock-head">
+          <strong>Read</strong>
+          <span class="badge badge-mocked">Real output · sample drawing</span>
+        </div>
+        <div class="mock-body">
+          <img src="shots/sample-file.png" alt="Sample file: a flat drawing of a long blue sleeveless dress" width="900" height="1300" />
+          <div>
+            <div class="chips">
+              <span class="badge"><i class="swatch" style="background:#3f5e85"></i>#3F5E85</span>
+              <span class="badge">Brightness 35%</span>
+              <span class="badge">Aspect 0.38</span>
+              <span class="badge">Cool</span>
+            </div>
+            <p class="reads">Reads as a long column: dress, duster, robe.</p>
+            <ul class="flips">
+              <li><span class="m">No-sew</span>Pin a one-shoulder drape on cool cloth</li>
+              <li><span class="m">Hand</span>Shorten the column with a hand hem</li>
+              <li><span class="m">Machine</span>Open a walking vent in the column</li>
+            </ul>
+          </div>
+        </div>
+        <figcaption class="mock-note">What Plan this make returned for this file at Intermediate, 21 Nov 2026. A different photo gets a different read.</figcaption>
+      </figure>
+    </section>
+
+    <section class="section" aria-labelledby="p">
+      <p class="eyebrow">Sound familiar</p>
+      <h2 id="p">The find was cheap. The plan is the hard part.</h2>
+      <div class="pains">
+        <blockquote>The tutorial was a different shirt.</blockquote>
+        <blockquote>I can hand-stitch. I don't own a machine.</blockquote>
+        <blockquote>It's still in the bag with the tag on.</blockquote>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="how">
+      <p class="eyebrow">How it works</p>
+      <h2 id="how">Photo. Skill. Tape.</h2>
+      <ol class="steps" style="padding:0">
+        <li class="panel"><h3>Photo</h3><p>Average color, brightness and aspect come from that file. Nothing else.</p></li>
+        <li class="panel"><h3>Skill</h3><p>Beginner, intermediate or advanced changes which flips you get and how fine the steps are.</p></li>
+        <li class="panel"><h3>Tape</h3><p>Type your own numbers. Each flip lists what to measure and shows what you typed.</p></li>
+      </ol>
+    </section>
+
+    <section class="section" aria-labelledby="get">
+      <p class="eyebrow">What you get</p>
+      <h2 id="get">Three ways in, one per method.</h2>
+      <div class="gets">
+        <div class="panel"><h3>A no-sew option</h3><p>Every read has one. Knots, pins, snaps.</p></div>
+        <div class="panel"><h3>Notions list</h3><p>Needle, thread, iron. Know before you start.</p></div>
+        <div class="panel"><h3>Short steps</h3><p>Each technique links to a public how-to page.</p></div>
+        <div class="panel"><h3>A closet</h3><p>Save flips in this browser. Reload, still there.</p></div>
+      </div>
+    </section>
+
+    <section class="section" id="wont" aria-labelledby="w">
+      <p class="eyebrow">Plain about it</p>
+      <h2 id="w">What it won't do.</h2>
+      <div class="ledger">
+        <div class="panel">
+          <span class="badge badge-real">Does</span>
+          <ul>
+            <li>Reads color, brightness and aspect from your file</li>
+            <li>Changes the flips when you change skill</li>
+            <li>Shows the numbers you typed next to each flip</li>
+            <li>Keeps your closet in this browser</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <span class="badge badge-mocked">Doesn't</span>
+          <ul>
+            <li>Make a pattern, pattern pieces or a PDF</li>
+            <li>Guess your size or the fiber from a photo</li>
+            <li>See the back of the garment</li>
+            <li>Ask for an account, an email or a card</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="price">
+      <p class="eyebrow">Price</p>
+      <h2 id="price">Free while it's a sample.</h2>
+      <div class="price">
+        <span class="big">$0</span>
+        <span class="muted">No checkout exists. No reviews yet either: it's new.</span>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="faq">
+      <p class="eyebrow">Questions</p>
+      <h2 id="faq">Before you open it.</h2>
+      <div style="margin-top:1.2rem">
+        <details><summary>Is this an AI pattern maker?</summary><p>No. The page averages the pixels of your photo in your browser. No model invents a measurement, and there is no pattern.</p></details>
+        <details><summary>Where does my photo go?</summary><p>It is drawn on a canvas on the page. Saved flips live in this browser's storage. There is no upload server and no account.</p></details>
+        <details><summary>I don't own a sewing machine.</summary><p>Pick Beginner. Every read includes a no-sew flip and a hand-stitch flip.</p></details>
+        <details><summary>Inches or centimeters?</summary><p>Either. Type in your unit. The page repeats what you typed and never converts it.</p></details>
+      </div>
+    </section>
+
+    <section class="final" aria-labelledby="go">
+      <h2 id="go">Got a thrift find in a bag? Plan it tonight.</h2>
+      <a class="btn js-cta" href="/restitch.html">Plan a flip, free</a>
+    </section>
+
+    <footer class="foot">Restitch · a Vargas Studio sample by Alexandra Vargas</footer>
+  </main>
+  <script>
+    // Carry ad UTM tags through to the product so a campaign can be read later. Nothing is stored or sent here.
+    (function () {
+      var q = new URLSearchParams(location.search), keep = new URLSearchParams();
+      ["utm_source", "utm_medium", "utm_campaign", "utm_content"].forEach(function (k) { if (q.get(k)) keep.set(k, q.get(k)); });
+      if (![...keep].length) return;
+      document.querySelectorAll(".js-cta").forEach(function (a) { a.href = a.getAttribute("href") + "?" + keep.toString(); });
+    })();
+  </script>
+</body>
+</html>

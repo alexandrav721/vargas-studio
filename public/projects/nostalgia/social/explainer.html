@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Scrollback explainer graphic</title>
+  <meta name="description" content="What Scrollback does in one picture: pick your years, explore websites, items and style, then feel, buy and talk." />
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg0: #0a0a0a; --ink: #f4f0e6; --muted: #c4bba8; --line: rgba(244,240,230,.22);
+      --brand: #b8ff00; --brand-2: #ff3dbb;
+      --display: "Syne", sans-serif; --body: "IBM Plex Sans", sans-serif; --mono: "IBM Plex Mono", monospace;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; background: var(--bg0); color: var(--ink); font-family: var(--body); }
+    .studio-back {
+      position: fixed; top: .65rem; left: .65rem; z-index: 40;
+      padding: .45rem .8rem; border: 1px solid rgba(244,240,230,.28); background: #0c0c10;
+      color: var(--ink); font: 500 .72rem/1 var(--mono); letter-spacing: .06em;
+      text-transform: uppercase; text-decoration: none;
+    }
+    body.export .studio-back { display: none; }
+    .g {
+      position: relative; overflow: hidden; margin: 0 auto;
+      background:
+        radial-gradient(ellipse at 12% 8%, rgba(184,255,0,.16), transparent 42%),
+        radial-gradient(ellipse at 92% 100%, rgba(255,61,187,.16), transparent 45%),
+        linear-gradient(180deg, #0a0a0a, #121018 60%, #0a0a0a);
+      display: grid;
+    }
+    .g.square { width: 1080px; height: 1080px; padding: 60px 72px 44px; grid-template-rows: auto 1fr auto; gap: 28px; }
+    .g.square h1 { font-size: 68px; }
+    .g.square .steps { gap: 18px; }
+    .g.square .step { padding: 20px 28px; }
+    .g.wide   { width: 1600px; height: 900px; padding: 64px 80px 48px; grid-template-rows: auto 1fr auto; gap: 36px; }
+    .g.story  { width: 1080px; height: 1920px; padding: 120px 72px 90px; grid-template-rows: auto 1fr auto; gap: 48px; }
+    .brand { font: 600 28px var(--mono); letter-spacing: .3em; text-transform: uppercase; color: var(--brand); }
+    h1 { margin: 18px 0 0; font: 800 76px/0.98 var(--display); letter-spacing: -.035em; }
+    h1 span { color: var(--brand); }
+    .sub { margin: 20px 0 0; font: 500 32px/1.3 var(--body); color: var(--muted); }
+    .sub b { color: var(--brand-2); font-weight: 600; }
+    .g.wide h1 { font-size: 72px; }
+    .g.wide .head { display: grid; grid-template-columns: auto 1fr; column-gap: 48px; align-items: end; }
+    .g.wide .head .brand { grid-column: 1 / -1; }
+    .g.wide .sub { margin: 0 0 10px; text-align: right; white-space: nowrap; }
+    .g.story h1 { font-size: 92px; }
+    .g.story .sub { font-size: 40px; }
+
+    .steps { display: grid; gap: 22px; align-content: center; }
+    .g.wide .steps { grid-template-columns: repeat(3, 1fr); gap: 28px; align-content: stretch; }
+    .g.story .steps { gap: 40px; }
+    .br, .g:not(.wide) .wbr { display: none; }
+    .step {
+      display: grid; grid-template-columns: 64px 1fr 330px; align-items: center; gap: 28px;
+      border: 2px solid var(--line); background: rgba(18,16,24,.82); padding: 24px 28px;
+    }
+    .g.story .step, .g.wide .step { grid-template-columns: 84px 1fr; gap: 24px 28px; padding: 36px 40px; align-content: center; }
+    .g.story .step .viz, .g.wide .step .viz { grid-column: 1 / -1; justify-self: start; }
+    .g.wide .step { grid-template-columns: 64px 1fr; padding: 32px 30px; align-content: space-between; }
+        .num {
+      width: 64px; height: 64px; display: grid; place-items: center; background: var(--brand); color: #0a0a0a;
+      font: 600 36px var(--mono);
+    }
+    .step:nth-child(3) .num { background: var(--brand-2); }
+    .step h2 { margin: 0; font: 800 40px/1.05 var(--display); letter-spacing: -.02em; }
+    .step p { margin: 8px 0 0; font: 500 28px/1.25 var(--body); color: var(--muted); }
+    .g.story .step h2 { font-size: 56px; }
+    .g.story .step p { font-size: 34px; }
+    .g.story .num { width: 84px; height: 84px; font-size: 46px; }
+
+    /* drawn visuals */
+    .viz { justify-self: end; }
+    .g.story .viz { justify-self: start; }
+    .range { width: 300px; }
+    .range .labels { display: flex; justify-content: space-between; font: 600 30px var(--mono); color: var(--brand); }
+    .range .track { position: relative; height: 14px; margin-top: 12px; background: rgba(244,240,230,.18); }
+    .range .fill { position: absolute; left: 47%; right: 18%; top: 0; bottom: 0; background: var(--brand); }
+    .range .knob { position: absolute; top: -9px; width: 32px; height: 32px; background: var(--ink); border: 3px solid #0a0a0a; }
+    .range .tick { display: flex; justify-content: space-between; margin-top: 16px; font: 500 28px var(--mono); color: var(--muted); }
+    .g.story .range { width: 760px; }
+    .g.wide .range { width: 100%; }
+    .g.wide .viz.range { justify-self: stretch; }
+    .lenses { display: flex; gap: 14px; }
+    .lens { width: 90px; height: 90px; border: 2px solid var(--line); display: grid; place-items: center; background: #0c0c10; }
+    .g.story .lens { width: 120px; height: 120px; }
+    .lens svg { width: 54px; height: 54px; }
+    .ftb { display: flex; gap: 10px; flex-wrap: nowrap; justify-content: flex-end; }
+    .g.story .ftb { justify-content: flex-start; }
+    .pill { font: 700 28px var(--display); padding: 10px 14px; border: 2px solid var(--brand-2); color: var(--ink); }
+    .pill:first-child { background: var(--brand-2); color: #0a0a0a; }
+
+    .foot {
+      display: flex; justify-content: space-between; align-items: center; gap: 24px;
+      border-top: 2px solid var(--line); padding-top: 22px; font: 500 28px var(--mono); color: var(--muted);
+    }
+    .foot b { color: var(--ink); font-weight: 600; }
+    .g.wide .foot { grid-column: 1 / -1; }
+    .g.story .foot { flex-direction: column; align-items: flex-start; font-size: 32px; }
+  </style>
+</head>
+<body>
+  <a class="studio-back" href="/">← Vargas Studio</a>
+  <main class="g square" id="g">
+    <div class="head">
+      <div class="brand">Scrollback</div>
+      <h1>Your teen years, dated <span>to the year.</span></h1>
+      <p class="sub">Dated nostalgia,<br class="wbr"> <b>not vague vibes.</b></p>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="num">1</div>
+        <div><h2>Pick your years</h2><p>Born 1989? You get 2003–2009.</p></div>
+        <div class="viz range" aria-hidden="true">
+          <div class="labels"><span>2003</span><span>2009</span></div>
+          <div class="track"><div class="fill"></div><div class="knob" style="left:calc(47% - 16px)"></div><div class="knob" style="left:calc(82% - 16px)"></div></div>
+          <div class="tick"><span>1995</span><span>2012</span></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="num">2</div>
+        <div><h2>See what you had</h2><p>52 sites · 53 items · 4 eras</p></div>
+        <div class="viz lenses" aria-hidden="true">
+          <div class="lens"><svg viewBox="0 0 54 54" fill="none" stroke="#b8ff00" stroke-width="3.5"><rect x="5" y="9" width="44" height="36"/><path d="M5 19h44"/><circle cx="11" cy="14" r="1.6" fill="#b8ff00"/><circle cx="17" cy="14" r="1.6" fill="#b8ff00"/></svg></div>
+          <div class="lens"><svg viewBox="0 0 54 54" fill="none" stroke="#b8ff00" stroke-width="3.5"><rect x="15" y="4" width="24" height="20" rx="3"/><rect x="15" y="27" width="24" height="23" rx="3"/><path d="M15 25.5h24"/><path d="M21 34h3M30 34h3M21 40h3M30 40h3"/></svg></div>
+          <div class="lens"><svg viewBox="0 0 54 54" fill="none" stroke="#b8ff00" stroke-width="3.5"><path d="M27 14a5 5 0 1 1 5 5c-3 0-5 2-5 4v3"/><path d="M27 26L5 42h44z" stroke-linejoin="round"/></svg></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="num">3</div>
+        <div><h2>Then live in it</h2><p>Era-only finds. People who get it.</p></div>
+        <div class="viz ftb" aria-hidden="true"><span class="pill">Feel</span><span class="pill">Buy</span><span class="pill">Talk</span></div>
+      </div>
+    </div>
+
+    <div class="foot"><span><b>Websites · items · style</b> 1995–2012</span><span>Waitlist open</span></div>
+  </main>
+  <script>
+    const size = new URLSearchParams(location.search).get('size');
+    if (size) {
+      document.body.classList.add('export');
+      const g = document.getElementById('g');
+      g.className = 'g ' + (['square', 'wide', 'story'].includes(size) ? size : 'square');
+    }
+  </script>
+</body>
+</html>

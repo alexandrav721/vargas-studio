@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Restitch explainer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,500..700,0..100&family=Sora:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root { --ink:#0c1612; --ink-2:#15241d; --fog:#d7e4dc; --mist:#a8bfb2; --paper:#eef5f0; --citrus:#d6f26a; --warm:#f0c9a0; --display:"Fraunces", Georgia, serif; --sans:"Sora", system-ui, sans-serif; }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; background-color: #0c1612; overflow: hidden; }
+    .g { position: relative; color: var(--paper); font-family: var(--sans); display: grid; padding: 80px;
+      background: radial-gradient(900px 700px at 0% 0%, rgba(214,242,106,0.12), transparent 60%), radial-gradient(800px 700px at 100% 100%, rgba(240,201,160,0.10), transparent 60%), #0c1612; }
+    .mark { font: 600 44px var(--display); color: var(--citrus); letter-spacing: -0.02em; }
+    h1 { margin: 18px 0 0; font: 600 92px/0.98 var(--display); letter-spacing: -0.035em; font-variation-settings: "SOFT" 40, "opsz" 144; }
+    h1 em { font-style: normal; color: var(--citrus); }
+    .steps { display: grid; gap: 28px; }
+    .step { display: grid; grid-template-columns: 150px 1fr; gap: 30px; align-items: center; padding: 26px 28px; background: rgba(21,36,29,0.85); border-top: 3px solid var(--citrus); }
+    .step svg { width: 150px; height: 150px; }
+    .num { font: 600 30px var(--sans); color: var(--citrus); letter-spacing: 0.08em; }
+    .step h2 { margin: 4px 0 6px; font: 600 54px/1 var(--display); letter-spacing: -0.02em; }
+    .step p { margin: 0; font: 500 30px/1.25 var(--sans); color: var(--fog); }
+    .out { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; font: 600 30px var(--sans); }
+    .out .lbl { color: var(--warm); letter-spacing: 0.06em; text-transform: uppercase; }
+    .chip { padding: 12px 20px; border: 2px solid rgba(215,228,220,0.35); letter-spacing: 0.04em; }
+    .money { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 24px; padding-top: 24px; border-top: 2px solid rgba(215,228,220,0.25); font: 500 30px var(--sans); color: var(--mist); }
+    .money b { color: var(--paper); font-weight: 600; }
+    /* sizes */
+    .square { width: 1080px; height: 1080px; grid-template-rows: auto 1fr auto auto; gap: 34px; padding: 64px 72px; }
+    .square h1 { font-size: 78px; }
+    .square .steps { grid-template-columns: repeat(3, 1fr); gap: 20px; align-content: center; }
+    .square .step { grid-template-columns: 1fr; gap: 16px; padding: 24px 22px; align-content: start; }
+    .square .step svg { width: 110px; height: 110px; }
+    .square .step h2 { font-size: 48px; }
+    .wide { width: 1600px; height: 900px; grid-template-columns: 1fr; grid-template-rows: auto 1fr auto auto; gap: 30px; padding: 64px 80px; }
+    .wide h1 { font-size: 82px; }
+    .wide .steps { grid-template-columns: repeat(3, 1fr); gap: 24px; align-content: center; }
+    .wide .step { grid-template-columns: 120px 1fr; gap: 22px; }
+    .wide .step svg { width: 120px; height: 120px; }
+    .story { width: 1080px; height: 1920px; grid-template-rows: auto 1fr auto auto; gap: 48px; padding: 110px 80px 120px; }
+    .story h1 { font-size: 104px; }
+    .story .steps { align-content: center; gap: 34px; }
+    .story .step { padding: 34px 32px; }
+    .story .money { flex-direction: column; }
+  </style>
+</head>
+<body>
+  <div id="g" class="g">
+    <header>
+      <div class="mark">Restitch</div>
+      <h1>Plan a thrift flip from <em>one photo.</em></h1>
+    </header>
+    <div class="steps">
+      <div class="step">
+        <svg viewBox="0 0 150 150" aria-hidden="true"><rect x="14" y="14" width="122" height="122" fill="none" stroke="#d6f26a" stroke-width="5"/><path d="M62 30 L70 27 Q75 34 80 27 L88 30 L91 60 Q96 92 100 120 L50 120 Q54 92 59 60 Z" fill="#d6f26a" fill-opacity="0.18" stroke="#eef5f0" stroke-width="4" stroke-linejoin="round"/><rect x="104" y="104" width="22" height="22" fill="#3f5e85" stroke="#eef5f0" stroke-width="3"/></svg>
+        <div><div class="num">01</div><h2>Photo</h2><p>Reads color, brightness, shape.</p></div>
+      </div>
+      <div class="step">
+        <svg viewBox="0 0 150 150" aria-hidden="true"><rect x="20" y="92" width="30" height="38" fill="#d6f26a"/><rect x="60" y="62" width="30" height="68" fill="none" stroke="#eef5f0" stroke-width="5"/><rect x="100" y="28" width="30" height="102" fill="none" stroke="#eef5f0" stroke-width="5"/></svg>
+        <div><div class="num">02</div><h2>Skill</h2><p>Beginner, intermediate or advanced.</p></div>
+      </div>
+      <div class="step">
+        <svg viewBox="0 0 150 150" aria-hidden="true"><g transform="rotate(-14 75 75)"><rect x="6" y="56" width="138" height="38" fill="#f0c9a0"/><g stroke="#0c1612" stroke-width="4"><line x1="20" y1="56" x2="20" y2="80"/><line x1="36" y1="56" x2="36" y2="70"/><line x1="52" y1="56" x2="52" y2="70"/><line x1="68" y1="56" x2="68" y2="80"/><line x1="84" y1="56" x2="84" y2="70"/><line x1="100" y1="56" x2="100" y2="70"/><line x1="116" y1="56" x2="116" y2="80"/><line x1="132" y1="56" x2="132" y2="70"/></g></g></svg>
+        <div><div class="num">03</div><h2>Tape</h2><p>Your numbers. Never guessed.</p></div>
+      </div>
+    </div>
+    <div class="out"><span class="lbl">You get</span><span class="chip">No-sew</span><span class="chip">Hand</span><span class="chip">Machine</span></div>
+    <div class="money"><span><b>Free.</b> No account, no checkout.</span><span>vargas-studio.pages.dev/restitch.html</span></div>
+  </div>
+  <script>
+    var s = new URLSearchParams(location.search).get("size") || "square";
+    document.getElementById("g").classList.add(["square", "wide", "story"].indexOf(s) > -1 ? s : "square");
+  </script>
+</body>
+</html>

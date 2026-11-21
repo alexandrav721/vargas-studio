@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Scrollback — Social</title>
+  <meta name="description" content="Scrollback explainer graphic in square, wide and story sizes, plus a five-slide carousel: What 2003 felt like online." />
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg0: #07090d; --bg1: #121018; --ink: #f4f0e6; --muted: #b7ae9a;
+      --line: rgba(244,240,230,.14); --brand: #b8ff00; --brand-2: #ff00aa;
+      --display: "Syne", sans-serif; --body: "IBM Plex Sans", sans-serif; --mono: "IBM Plex Mono", monospace;
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; min-height: 100vh; color: var(--ink); font-family: var(--body); line-height: 1.5;
+      background:
+        radial-gradient(ellipse at 85% 0%, rgba(255,0,170,.10), transparent 40%),
+        linear-gradient(180deg, #0a0a0a, #121018 60%, #0a0a0a);
+    }
+    .studio-back {
+      position: fixed; top: .65rem; left: .65rem; z-index: 40;
+      padding: .45rem .8rem; border: 1px solid rgba(244,240,230,.28); background: #0c0c10;
+      color: var(--ink); font: 500 .72rem/1 var(--mono); letter-spacing: .06em;
+      text-transform: uppercase; text-decoration: none;
+    }
+    .wrap { width: min(100% - 2rem, 980px); margin: 0 auto; padding: 4.5rem 0 4rem; }
+    nav.top { display: flex; flex-wrap: wrap; gap: .7rem 1.1rem; margin-bottom: 2rem; font-size: .72rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; }
+    nav.top a { color: var(--muted); text-decoration: none; }
+    nav.top a:hover, nav.top a[aria-current="page"] { color: var(--brand); }
+    .kicker { margin: 0 0 .7rem; font-size: .72rem; letter-spacing: .18em; text-transform: uppercase; color: var(--brand-2); font-weight: 700; }
+    h1 { margin: 0; font: 800 clamp(2.2rem, 8vw, 3.6rem)/.95 var(--display); letter-spacing: -.04em; }
+    h2 { margin: 3rem 0 .4rem; font: 800 1.6rem/1.1 var(--display); letter-spacing: -.02em; }
+    .lede { margin: 1rem 0 0; color: var(--muted); max-width: 36rem; font-size: 1.05rem; }
+    .sub { margin: 0 0 1.25rem; color: var(--muted); max-width: 40rem; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 1rem; align-items: start; }
+    figure { margin: 0; border: 1px solid var(--line); background: rgba(18,16,24,.7); }
+    figure img { display: block; width: 100%; height: auto; }
+    figcaption { display: flex; justify-content: space-between; align-items: center; gap: .75rem; padding: .7rem .9rem; border-top: 1px solid var(--line); font: 500 .78rem var(--mono); color: var(--muted); }
+    figcaption a { color: var(--brand); text-decoration: none; white-space: nowrap; }
+    figure.wide { grid-column: 1 / -1; }
+
+    /* one-slide-at-a-time pager (same pattern as ads.html) */
+    .carousel { display: grid; gap: 1rem; justify-items: center; max-width: 520px; margin: 0 auto; }
+    .carousel-stage { width: 100%; border: 1px solid var(--line); overflow: hidden; touch-action: pan-y; background: #0a0a0a; }
+    .carousel-track { display: flex; transition: transform .38s var(--ease); }
+    .carousel-track img { flex: 0 0 100%; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; display: block; user-select: none; -webkit-user-drag: none; }
+    .controls { display: flex; align-items: center; justify-content: space-between; gap: .75rem; width: 100%; }
+    .controls button, .controls a {
+      appearance: none; border: 1px solid var(--line); background: transparent; color: var(--ink);
+      font: 600 .78rem/1 var(--mono); letter-spacing: .06em; text-transform: uppercase; padding: .6rem .85rem; cursor: pointer; text-decoration: none;
+    }
+    .controls button:hover, .controls a:hover { border-color: var(--brand); color: var(--brand); }
+    .counter { font: 500 .78rem var(--mono); color: var(--muted); }
+    .post { margin-top: 1.5rem; padding: 1rem 1.1rem; border-left: 3px solid var(--brand); background: rgba(16,22,31,.65); max-width: 42rem; }
+    .post strong { display: block; font: 600 .7rem var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--brand); margin-bottom: .35rem; }
+    .post p { margin: 0; color: var(--ink); }
+    .fine { margin-top: 2rem; font: 400 .8rem/1.5 var(--mono); color: var(--muted); }
+  </style>
+</head>
+<body>
+  <a class="studio-back" href="/">← Vargas Studio</a>
+  <div class="wrap">
+    <nav class="top" aria-label="Scrollback">
+      <a href="./">Explorer</a>
+      <a href="./landing.html">Landing</a>
+      <a href="./join.html">Waitlist</a>
+      <a href="./ads.html">Meta ads</a>
+      <a href="./story.html">Story</a>
+      <a href="./print.html">Print</a>
+      <a href="./social.html" aria-current="page">Social</a>
+    </nav>
+
+    <p class="kicker">Organic social · not paid ads</p>
+    <h1>Scrollback in one picture.</h1>
+    <p class="lede">An explainer in three sizes, and a five-slide carousel built from dated catalog entries.</p>
+
+    <h2>Explainer</h2>
+    <p class="sub">Pick your years → see what you had → feel, buy, talk. No price shown: none is set yet.</p>
+    <div class="grid">
+      <figure>
+        <img src="./social/explainer-square.png" alt="Scrollback explainer, square: Your teen years, dated to the year. Three steps: pick your years, see what you had, then live in it." width="1080" height="1080" loading="lazy" />
+        <figcaption><span>Square 1080×1080</span><a href="./social/explainer-square.png" download>Download</a></figcaption>
+      </figure>
+      <figure>
+        <img src="./social/explainer-story.png" alt="Scrollback explainer, story size, same three steps stacked" width="1080" height="1920" loading="lazy" />
+        <figcaption><span>Story 1080×1920</span><a href="./social/explainer-story.png" download>Download</a></figcaption>
+      </figure>
+      <figure class="wide">
+        <img src="./social/explainer-wide.png" alt="Scrollback explainer, wide: headline on top, three steps side by side" width="1600" height="900" loading="lazy" />
+        <figcaption><span>Wide 1600×900 · deck or site</span><a href="./social/explainer-wide.png" download>Download</a></figcaption>
+      </figure>
+    </div>
+
+    <h2>Carousel · What 2003 felt like online</h2>
+    <p class="sub">Five 1080×1350 slides. Every site carries its catalog years.</p>
+    <div class="carousel" id="car" tabindex="0" aria-roledescription="carousel" aria-label="What 2003 felt like online">
+      <div class="carousel-stage">
+        <div class="carousel-track" id="track">
+          <img src="./social/carousel-2003-1.png" alt="Slide 1: 2003. What it felt like online." width="1080" height="1350" />
+          <img src="./social/carousel-2003-2.png" alt="Slide 2: Two chat windows. Always. A drawn buddy list with an away message, and a nudge. AIM 1997–2005, MSN Messenger 2002–2009." width="1080" height="1350" loading="lazy" />
+          <img src="./social/carousel-2003-3.png" alt="Slide 3: Your diary had a mood. A diary entry with blank current mood and current music. LiveJournal 2001–2007, Xanga 2002–2006." width="1080" height="1350" loading="lazy" />
+          <img src="./social/carousel-2003-4.png" alt="Slide 4: Friendster was the new thing. A drawn profile with testimonials and friends of friends. Friendster 2003–2005." width="1080" height="1350" loading="lazy" />
+          <img src="./social/carousel-2003-5.png" alt="Slide 5: Also open on your screen: Homestar Runner, Neopets, StumbleUpon, LimeWire, MapQuest printouts, PureVolume. Which year was yours? Join the waitlist." width="1080" height="1350" loading="lazy" />
+        </div>
+      </div>
+      <div class="controls">
+        <button type="button" id="prev">← Prev</button>
+        <span class="counter" id="count">1 / 5</span>
+        <a id="dl" href="./social/carousel-2003-1.png" download>Download</a>
+        <button type="button" id="next">Next →</button>
+      </div>
+    </div>
+
+    <div class="post">
+      <strong>Caption</strong>
+      <p>What 2003 felt like online, dated. AIM away messages, MSN nudges, a LiveJournal mood, and Friendster before it slowed down. Which year was yours? Waitlist link in bio.</p>
+    </div>
+
+    <p class="fine">Names are text only; windows and profiles are drawn, not screenshots or logos. Chat names and the testimonial are made-up examples.</p>
+  </div>
+  <script>
+    const track = document.getElementById('track');
+    const n = track.children.length;
+    let i = 0;
+    function go(k) {
+      i = (k + n) % n;
+      track.style.transform = 'translateX(-' + (i * 100) + '%)';
+      document.getElementById('count').textContent = (i + 1) + ' / ' + n;
+      document.getElementById('dl').href = './social/carousel-2003-' + (i + 1) + '.png';
+    }
+    document.getElementById('prev').addEventListener('click', () => go(i - 1));
+    document.getElementById('next').addEventListener('click', () => go(i + 1));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') go(i - 1);
+      if (e.key === 'ArrowRight') go(i + 1);
+    });
+    let x0 = null;
+    track.addEventListener('pointerdown', (e) => { x0 = e.clientX; });
+    track.addEventListener('pointerup', (e) => {
+      if (x0 === null) return;
+      const dx = e.clientX - x0; x0 = null;
+      if (Math.abs(dx) > 40) go(i + (dx < 0 ? 1 : -1));
+    });
+  </script>
+</body>
+</html>
