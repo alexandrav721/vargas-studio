@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Restitch — What did you find?</title>
+  <meta name="description" content="Pick a thrift find. Say what's in your kit. Get its sewing-pattern envelope: View A no-sew, B by hand, C by machine." />
+  <meta property="og:title" content="Which view should I make? — Restitch" />
+  <meta property="og:description" content="Your find as a sewing-pattern envelope. View A no-sew, B by hand, C by machine. Size: your tape." />
+  <meta name="theme-color" content="#EFE3CF" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="restitch.css" />
+  <link rel="stylesheet" href="play.css" />
+</head>
+<body class="play">
+  <a class="studio-back" href="/">← Vargas Studio</a>
+
+  <main class="stage">
+    <!-- 1. Arrive: pick a find -->
+    <section class="beat is-on" id="beat-find" aria-labelledby="ask-find">
+      <h1 class="ask" id="ask-find">What did you find?</h1>
+      <div class="rack" id="rack"></div>
+      <input id="own" type="file" accept="image/*" class="sr-only" />
+      <label class="big-btn" for="own">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="12" cy="13" r="3.6" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
+        Snap yours
+      </label>
+      <p class="fine" id="find-note">Samples · photos: Wikimedia Commons</p>
+    </section>
+
+    <!-- 2. Kit -->
+    <section class="beat" id="beat-kit" aria-labelledby="ask-kit">
+      <div class="kit-find" id="kit-find" aria-hidden="true"></div>
+      <h2 class="ask" id="ask-kit">What's in your kit?</h2>
+      <div class="kits">
+        <button class="kit" type="button" data-kit="pins">
+          <svg viewBox="0 0 64 40" aria-hidden="true"><path d="M8 26c0-6 5-8 10-8h34a4 4 0 0 1 0 8H14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><path d="M14 26c-4 0-6-2-6-4" fill="none" stroke="currentColor" stroke-width="2.4"/><circle cx="54" cy="22" r="5" fill="none" stroke="currentColor" stroke-width="2.4"/></svg>
+          <span>Safety pins</span>
+        </button>
+        <button class="kit" type="button" data-kit="needle">
+          <svg viewBox="0 0 64 40" aria-hidden="true"><path d="M6 34 54 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><ellipse cx="51" cy="8" rx="3" ry="1.4" transform="rotate(-30 51 8)" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M50 9c-6 10 6 16-4 26" fill="none" stroke="var(--rs-red)" stroke-width="1.8" stroke-dasharray="3 3"/></svg>
+          <span>Needle &amp; thread</span>
+        </button>
+        <button class="kit" type="button" data-kit="machine">
+          <svg viewBox="0 0 64 40" aria-hidden="true"><path d="M8 34h48M12 34V12a4 4 0 0 1 4-4h30a6 6 0 0 1 6 6v6H24v14M44 20v8M40 28h8" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/></svg>
+          <span>Sewing machine</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- 3. The read -->
+    <section class="beat" id="beat-read" aria-label="Reading the photo">
+      <div class="mat">
+        <div class="mat-photo" id="read-photo"></div>
+      </div>
+      <ul class="read-chips" id="read-chips" aria-live="polite"></ul>
+    </section>
+
+    <!-- 4. Payoff: the envelope -->
+    <section class="beat" id="beat-env" aria-labelledby="env-ask">
+      <p class="friend-note" id="friend-note" hidden></p>
+      <div class="env-wrap" id="env-wrap"></div>
+      <h2 class="ask ask--small" id="env-ask">Which view?</h2>
+      <div class="views" id="views"></div>
+    </section>
+
+    <!-- 5. Make it yours + share -->
+    <section class="beat" id="beat-view" aria-labelledby="view-title">
+      <p class="compare" id="compare" hidden></p>
+      <div class="view-big" id="view-big" aria-hidden="true"></div>
+      <p class="view-tag" id="view-tag"></p>
+      <h2 class="view-title" id="view-title"></h2>
+      <p class="measure" id="measure"></p>
+      <details class="steps">
+        <summary id="steps-sum">Steps</summary>
+        <p class="notions" id="notions"></p>
+        <ol id="steps"></ol>
+        <p class="fine">Drawings are sketches, not photos of a finished flip.</p>
+      </details>
+      <div class="actions">
+        <button class="big-btn" type="button" id="send">Ask a friend</button>
+        <button class="ghost-btn" type="button" id="save">Save envelope</button>
+      </div>
+      <div class="more">
+        <button class="text-btn" type="button" id="again">Flip another find</button>
+        <a class="text-btn" href="/restitch.html">Full planner →</a>
+      </div>
+    </section>
+  </main>
+
+  <canvas id="work" hidden></canvas>
+  <script src="play/engine.js"></script>
+  <script src="play/finds.js"></script>
+  <script src="play.js"></script>
+</body>
+</html>
