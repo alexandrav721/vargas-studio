@@ -105,6 +105,8 @@ function ensureRealDialog() {
     if (e.target === dlg || e.target.closest("[data-real-close]")) dlg.close();
   });
   dlg.addEventListener("close", () => {
+    if (dlg.open) return; // already reopened for another site
+    realToken += 1;
     $("#real-frame").src = "about:blank";
   });
   $("#real-sound").addEventListener("click", playDialUp);
@@ -146,6 +148,7 @@ async function showYear(year) {
     $("#real-out").href = `https://web.archive.org/web/${ts}/${orig}`;
     if (snapYear !== year) {
       $("#real-title").textContent = `${realSite.name} · ${snapYear} (closest saved)`;
+      status.innerHTML = `<span>dialing ${esc(snapYear)}…</span>`;
       $$("#real-years button").forEach((b) => b.classList.toggle("is-active", Number(b.dataset.year) === snapYear));
     }
   } catch {
