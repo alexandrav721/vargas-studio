@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Weekline — Tear your week</title>
+  <meta name="description" content="Tear tabs off this week's free NYC Parks flyers. Get a Monday-to-Sunday Sheet to send to the chat." />
+  <meta property="og:title" content="Tear your week — Weekline" />
+  <meta property="og:description" content="Tear tabs off this week's free NYC Parks flyers. Get a Monday-to-Sunday Sheet to send to the chat." />
+  <meta name="theme-color" content="#0a0a0b" />
+  <link rel="icon" href="./app/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./play.css" />
+</head>
+<body>
+  <a class="studio-back" href="/" aria-label="Back to Vargas Studio">←</a>
+
+  <!-- 1. Arrive: the chat that can't decide -->
+  <section class="beat is-on" id="beat-ask" aria-labelledby="ask-q">
+    <p class="brand">Weekline</p>
+    <div class="chat" aria-hidden="true">
+      <p class="bubble bubble--a" id="bubble">idk you pick</p>
+    </div>
+    <h1 class="ask-q" id="ask-q">Which side of the river?</h1>
+    <div class="river" role="radiogroup" aria-labelledby="ask-q">
+      <button type="button" class="side is-on" role="radio" aria-checked="true" data-side="bk">Brooklyn</button>
+      <button type="button" class="side" role="radio" aria-checked="false" data-side="mn">Manhattan</button>
+    </div>
+    <button class="big-btn" type="button" id="go">Show my week</button>
+  </section>
+
+  <!-- 1b. Arrive from a friend's link -->
+  <section class="beat" id="beat-friend" aria-labelledby="friend-q">
+    <p class="brand">Weekline</p>
+    <div class="mini-sheet" id="friend-sheet" aria-hidden="true"></div>
+    <h1 class="ask-q" id="friend-q"></h1>
+    <button class="big-btn" type="button" id="friend-go">Show the flyers</button>
+  </section>
+
+  <!-- 2. Pasting the wall -->
+  <section class="beat" id="beat-load" aria-label="Loading this week's flyers">
+    <div class="paste" aria-hidden="true"><i></i><i></i><i></i></div>
+    <p class="load-line" id="load-line" aria-live="polite">Pasting this week's flyers…</p>
+  </section>
+
+  <!-- 3. Play: tear or leave -->
+  <section class="beat" id="beat-wall" aria-labelledby="wall-q">
+    <div class="wall-top">
+      <h2 class="wall-q" id="wall-q">Tear what you'd go to</h2>
+      <span class="wall-count" id="count"></span>
+    </div>
+    <ol class="days" id="days" aria-label="Your week so far"></ol>
+    <div class="deck" id="deck" aria-live="polite"></div>
+    <div class="answers">
+      <button class="ans ans--leave" type="button" data-ans="leave">Leave it</button>
+      <button class="ans ans--tear" type="button" data-ans="tear">Tear a tab</button>
+    </div>
+  </section>
+
+  <!-- 4. Payoff: the Sheet fills and gets stamped -->
+  <section class="beat" id="beat-sheet" aria-labelledby="crew-name">
+    <p class="crew-lead" id="crew-lead">This week you're</p>
+    <h2 class="crew-name" id="crew-name"></h2>
+    <p class="common" id="common" hidden></p>
+    <div class="sheet" id="sheet">
+      <div class="sheet-head">
+        <p class="sheet-title" id="sheet-title"></p>
+        <span class="sheet-tag" id="sheet-tag"></span>
+      </div>
+      <ol class="sheet-rows" id="rows"></ol>
+      <p class="sheet-total" id="total"></p>
+      <span class="stamp" id="stamp" aria-hidden="true">Sorted.</span>
+    </div>
+    <p class="note" id="note" hidden></p>
+    <div class="after" id="after">
+      <label class="name-field">
+        <span>Your first name</span>
+        <input id="name" maxlength="20" autocomplete="given-name" placeholder="optional" />
+      </label>
+      <div class="actions">
+        <button class="big-btn" type="button" id="send">Send to the chat</button>
+        <button class="ghost-btn" type="button" id="save">Save card</button>
+      </div>
+      <div class="more">
+        <button class="quiet" type="button" id="ics">Add to calendar</button>
+        <button class="quiet" type="button" id="again">Tear again</button>
+        <a class="quiet" href="./app/">Full app →</a>
+      </div>
+    </div>
+  </section>
+
+  <script src="./play.js"></script>
+</body>
+</html>
