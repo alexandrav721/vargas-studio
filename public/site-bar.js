@@ -1,7 +1,7 @@
 /* The site bar for static pages (games and project pieces):
      <link rel="stylesheet" href="/site-bar.css" />
      <script src="/site-bar.js" data-project="<project id>" data-kind="game|piece" defer></script>
-   game  → "← Vargas Studio" (home)          · "How I built it →" (the project page)
+   game  → "← Vargas Studio" (home, Play section)          · "How I built it →" (the project page)
    piece → "← <Project name>" (project page) · "Vargas Studio" (home)
    It replaces the page's own back-to-studio link. Same look as src/SiteBar.tsx. */
 (function () {
@@ -22,7 +22,7 @@
     bar.setAttribute("aria-label", "Vargas Studio");
     var page = "/#/p/" + pid;
     bar.innerHTML = kind === "game"
-      ? '<a href="/">← Vargas Studio</a><a class="site-home" href="' + page + '">How I built it →</a>'
+      ? '<a href="/#play">← Vargas Studio</a><a class="site-home" href="' + page + '">How I built it →</a>'
       : '<a href="' + page + '">← ' + NAMES[pid] + '</a><a class="site-home" href="/">Vargas Studio</a>';
     document.body.insertBefore(bar, document.body.firstChild);
 
