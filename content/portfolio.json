@@ -52,6 +52,11 @@
   ],
   "now": [
     {
+      "date": "2026-11-22",
+      "projectId": "nostalgia",
+      "text": "Nostalgia now makes you feel it: real archived pages from your years, a bedroom that fills with what you had, and the toy you never got."
+    },
+    {
       "date": "2026-11-21",
       "projectId": "weekline",
       "text": "Weekline added as its own project with all eight pieces: the working app and pitch site run in the studio, plus a landing page, invite demo, ads, deck, social set and printable week sheet."
@@ -424,9 +429,9 @@
       "audience": "Millennials who came of age between 1995 and 2012",
       "pays": "Not decided yet.",
       "status": "hot",
-      "updated": "2026-11-20",
+      "updated": "2026-11-22",
       "summary": "Pick your generation and years, then explore formative websites, physical items, and style eras (roughly 1995\u20132012). Working product name: Scrollback. Offer: Feel 2001\u20132004 \u00b7 buy era-only \u00b7 talk with people who get it. Dated nostalgia \u2014 not vague vibes.",
-      "latest": "In-studio Meta ads gallery pages one frame at a time (romantic + fun ship pack; clarity / Lizzie-era earlier), campaign landing, soft waitlist join, and Feel/Buy/Talk story board \u2014 plus the explorer at /projects/nostalgia/.",
+      "latest": "Three new moments in the explorer: open the real archived page from your years inside an old monitor, tick what you had to fill your bedroom and save it as a card, and keep a list of the things you never got with where to find one now.",
       "visuals": {
         "website": {
           "label": "Scrollback explorer",
