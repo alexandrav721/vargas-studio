@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Skill Quest Real Card</title>
+<meta name="description" content="Skill Quest's scorer run on a real skill: three hidden tasks, a blind judge, plain Claude as the opponent.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F6F1E7;--sf:#FFFFFF;--tx:#161412;--muted:#4D4741;--ac:#C7391F;--hi:#F5B82E;--teal:#1F7A6B;--line:#D9CFBD}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--tx);font:17px/1.55 "Bricolage Grotesque",sans-serif}
+::selection{background:var(--hi);color:var(--tx)}
+a{color:var(--ac);font-weight:700}
+.studio-back{position:fixed;top:12px;left:12px;z-index:40;font:700 12px/1 "JetBrains Mono",monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--tx);text-decoration:none;background:var(--sf);border:2px solid var(--tx);border-radius:8px;padding:8px 10px}
+.wrap{max-width:1040px;margin:0 auto;padding:76px 16px 72px}
+h1{font:800 clamp(36px,6.4vw,62px)/1 "Bricolage Grotesque";letter-spacing:-.025em;max-width:16ch}
+h1 em{font-style:normal;color:var(--ac)}
+.lede{color:var(--muted);margin:16px 0 40px;max-width:60ch;font-size:19px}
+.hero{display:grid;grid-template-columns:minmax(0,420px) 1fr;gap:40px;align-items:start}
+.hero img{width:100%;height:auto;display:block;border-radius:14px}
+.facts{display:grid;gap:18px}
+.facts div{border-top:2px solid var(--tx);padding-top:10px}
+.facts b{display:block;font:700 13px "JetBrains Mono";letter-spacing:.05em;color:var(--muted)}
+.facts p{font-size:19px}
+h2{font:800 30px/1.1 "Bricolage Grotesque";margin:64px 0 18px}
+table{width:100%;border-collapse:collapse;font-size:15.5px}
+th,td{text-align:left;vertical-align:top;padding:10px 12px 10px 0;border-bottom:1px solid var(--line)}
+th{font:700 12.5px "JetBrains Mono";letter-spacing:.05em;color:var(--muted)}
+td.n{font:700 15px "JetBrains Mono";white-space:nowrap}
+.scroll{overflow-x:auto}
+.rules li{margin:0 0 8px 20px}
+.note{background:var(--sf);border:2px solid var(--tx);border-radius:12px;padding:18px 20px;margin-top:24px;max-width:70ch}
+.btns{display:flex;flex-wrap:wrap;gap:12px;margin-top:20px}
+.btn{display:inline-block;font:700 16px "Bricolage Grotesque";text-decoration:none;border:2.5px solid var(--tx);border-radius:10px;padding:11px 16px;color:var(--tx);background:var(--sf)}
+.btn.primary{background:var(--ac);color:#fff}
+small{color:var(--muted);font-family:"JetBrains Mono",monospace;font-size:13px}
+code{font-family:"JetBrains Mono",monospace;font-size:.9em}
+@media (max-width:760px){.hero{grid-template-columns:1fr}}
+@media (max-width:600px){.scroll table,.scroll tbody,.scroll tr,.scroll td{display:block}.scroll tr:first-child{display:none}
+.scroll tr{border-bottom:2px solid var(--tx);padding:10px 0}.scroll td{border:0;padding:3px 0}
+.scroll td[data-l]::before{content:attr(data-l) " ";font:700 12px "JetBrains Mono";letter-spacing:.05em;color:var(--muted);margin-right:6px}}
+</style>
+</head>
+<body>
+<a class="studio-back" href="/">← Studio</a>
+<main class="wrap">
+  <h1>A real card, <em>scored for real</em></h1>
+  <p class="lede">Skill Quest's scorer, run on one of Alexandra's own skills on 21 Nov 2026. Three hidden tasks, plain Claude as the opponent, and a judge who never knew which answer used the skill.</p>
+
+  <section class="hero">
+    <img src="idea-innovate.png" alt="Skill card: idea-innovate, Epic, total 81. Power 85, Lift 50, Clarity 100, Speed 90, Finds it 100. Weak spot: Lift.">
+    <div class="facts">
+      <div><b>RESULT VS PLAIN CLAUDE</b><p>won 1 · tied 1 · lost 1. Plain Claude won the hardest task by modeling the numbers more carefully.</p></div>
+      <div><b>WHAT IT TOLD THE AUTHOR</b><p>The skill is clear and Claude finds it every time, but it barely beats Claude on its own. Next fix: add what Claude doesn't already know.</p></div>
+      <div><b>WHAT IT TOOK</b><p>About 5 minutes and 11 short helper runs inside Claude Code. No API key, no server. Dollar cost not measured yet.</p></div>
+    </div>
+  </section>
+
+  <h2>The three hidden tasks</h2>
+  <div class="scroll"><table>
+    <tr><th>Task (written from the skill's description only)</th><th>Skill</th><th>Plain</th><th>Result</th><th>Judge's reason</th></tr>
+    <tr class="tr"><td data-l="Task">I have a business idea: a subscription box of snacks from different countries…</td><td class=n data-l="Skill">4.5</td><td class=n data-l="Plain">3.8</td><td data-l="Result"><b>Won</b></td><td data-l="Judge">B scores 8 variations and says how each one fails, checks customer, money, moat and risk, and picks one version with a plain verdict. A lists 6 variations unscored and stress-tests only the generic idea. <small>(skill = answer B)</small></td></tr><tr class="tr"><td data-l="Task">I want to start a business around dog walking in my city…</td><td class=n data-l="Skill">4.3</td><td class=n data-l="Plain">4.5</td><td data-l="Result"><b>Tie</b></td><td data-l="Judge">A has more realistic income math and a fuller launch plan but uses verdict labels instead of numeric scores, while B gives clean numeric scoring and a sharp pick with somewhat optimistic capacity numbers and a narrower niche. <small>(skill = answer B)</small></td></tr><tr class="tr"><td data-l="Task">Help me pivot…</td><td class=n data-l="Skill">4.0</td><td class=n data-l="Plain">4.5</td><td data-l="Result"><b>Lost</b></td><td data-l="Judge">B builds the comparison on the supplied numbers with a 12-month model, probability-weighted expected ARR and LTV:CAC, and its riskiest-bet test sequence has clearer pass/fail thresholds and a kill rule; A is strong but scores on coarse 1-5 judgments. <small>(skill = answer A)</small></td></tr>
+  </table></div>
+  <p style="margin-top:12px"><a href="idea-innovate-report.html">Full report</a> · scores are the blind judge's 1–5 average.</p>
+
+  <h2>How a card is scored</h2>
+  <div class="scroll"><table>
+    <tr><th>Stat</th><th>How</th></tr>
+    <tr><td><b>Power</b></td><td>Blind judge's 1–5 score of the skill's answers (correct, complete, useful, clear) × 20</td></tr>
+    <tr><td><b>Lift</b></td><td>How often the skill's answer beat plain Claude's on the same task (tie = half)</td></tr>
+    <tr><td><b>Clarity</b></td><td>A fixed checklist on the SKILL.md: same file, same score</td></tr>
+    <tr><td><b>Speed</b></td><td>Plain Claude's time ÷ the skill's time, capped at 100</td></tr>
+    <tr><td><b>Finds it</b></td><td>Whether Claude picks it for the right requests among the other skills installed next to it</td></tr>
+  </table></div>
+  <ul class="rules" style="margin-top:16px">
+    <li>Tasks come from the skill's description only, never its instructions, so a skill can't be tuned to its own test.</li>
+    <li>Answer order is random and the judge is blind. One run per task, no re-rolls.</li>
+    <li>The judge method is adapted from Anthropic's skill-creator (Apache-2.0). Anthropic already scores skills; Skill Quest's job is making it fun for beginners.</li>
+  </ul>
+
+  <div class="note">
+    <p><b>Honest limits.</b> One skill, three tasks: a reading, not a verdict. The scorer is built as a Claude Code plugin (score, battle, and five beginner quests) but isn't published yet, and the name "Skill Quest" is taken, so it needs a new name first.</p>
+    <div class="btns"><a class="btn primary" href="../prototype/prototype.html">Try the game prototype</a><a class="btn" href="../deck/deck.html?slide=7">See the deck</a></div>
+  </div>
+</main>
+</body>
+</html>

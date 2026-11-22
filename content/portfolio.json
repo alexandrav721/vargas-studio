@@ -58,6 +58,11 @@
     },
     {
       "date": "2026-11-21",
+      "projectId": "skill-quest",
+      "text": "Skill Quest's scorer is real: a Claude Code plugin scored idea-innovate on hidden tasks against plain Claude (Epic 81). The deck now says Anthropic already scores skills and Skill Quest makes it fun for beginners."
+    },
+    {
+      "date": "2026-11-21",
       "projectId": "restitch",
       "text": "Every section is now filled across all seven projects: Restitch gets a landing page, deck, ads, worksheet and social set; Scrolll a clickable feed app; Planner a deck and ads; print and social pieces everywhere."
     },
@@ -784,8 +789,8 @@
       "pays": "Sponsored battles, Pro at $8/mo, Teams at $20/seat.",
       "status": "active",
       "updated": "2026-11-21",
-      "summary": "Quests walk beginners through building real Claude skills. Every skill gets tested and turned into a shareable card with Power, Clarity and Speed scores, and weekly battles put skills head to head on one theme. Money plan: sponsors host battles first, then Pro at $8/mo, then Teams at $20/seat.",
-      "latest": "Built 21 Nov with the idea-lab skills: landing page + 3 A/B hero variants, clickable prototype (build \u2192 test \u2192 card reveal \u2192 battle), and a 12-slide pitch deck. Waitlist is a demo and saves nothing yet.",
+      "summary": "Quests walk beginners through building real Claude skills. Every skill gets tested on hidden tasks against plain Claude by a blind judge and becomes a shareable card (Power, Lift, Clarity, Speed, Finds it), and battles put skills head to head. Anthropic already scores skills; Skill Quest makes it fun for beginners. Money plan: sponsored battles, then Pro at $8/mo, then Teams at $20/seat.",
+      "latest": "The scorer works: built as a Claude Code plugin (score, battle, five quests) and run on a real skill, idea-innovate scored Epic 81 (won 1, tied 1, lost 1 vs plain Claude). Not published yet; the name is taken, so it needs a new one first.",
       "visuals": {
         "website": {
           "label": "Skill Quest home",
@@ -812,9 +817,9 @@
           "state": "live"
         },
         "product-ui": {
-          "label": "Clickable prototype",
-          "detail": "Pick a class \u2192 quest map \u2192 build a skill \u2192 test \u2192 card flips \u2192 enter the battle. Press D for demo mode.",
-          "url": "/projects/skill-quest/prototype/prototype.html",
+          "label": "Working scorer + real card",
+          "detail": "A real skill scored on 3 hidden tasks by a blind judge, with the card, the results and the rules. Prototype linked.",
+          "url": "/projects/skill-quest/cards/",
           "state": "live"
         },
         "deck": {

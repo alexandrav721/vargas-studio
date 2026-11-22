@@ -43,7 +43,6 @@
  "/projects/skill-quest/landing/index.html": "/thumbs/skill-quest-website.jpg",
  "/projects/skill-quest/landing/variant-pain.html": "/thumbs/skill-quest-landing.jpg",
  "/projects/skill-quest/ads/index.html": "/thumbs/skill-quest-meta-ads.jpg",
- "/projects/skill-quest/prototype/prototype.html": "/thumbs/skill-quest-product-ui.jpg",
  "/projects/skill-quest/deck/deck.html": "/thumbs/skill-quest-deck.jpg",
  "/projects/skill-quest/print/index.html": "/thumbs/skill-quest-print.jpg",
  "/projects/skill-quest/graphic/explainer-square.png": "/thumbs/skill-quest-social.jpg",
@@ -54,5 +53,6 @@
  "/projects/weekline/app/": "/thumbs/weekline-product-ui.jpg",
  "/projects/weekline/deck.html": "/thumbs/weekline-deck.jpg",
  "/projects/weekline/print.html": "/thumbs/weekline-print.jpg",
- "/projects/weekline/social.html": "/thumbs/weekline-social.jpg"
+ "/projects/weekline/social.html": "/thumbs/weekline-social.jpg",
+ "/projects/skill-quest/cards/": "/thumbs/skill-quest-product-ui.jpg"
 }
