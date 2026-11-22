@@ -443,10 +443,10 @@ async function makeCard() {
   g.font = "500 40px 'IBM Plex Mono', monospace";
   g.fillText(`In ${label} I was`, 72, 170);
   g.fillStyle = "#f6f2ea";
-  const words = persona.split(" ");
-  const half = Math.ceil(words.length / 2);
-  const l1 = words.slice(0, half).join(" ");
-  const l2 = words.slice(half).join(" ");
+  // "The Top 8" / "Trendsetter": keep the era words together
+  const type = Object.values(TYPE_WORD).concat("All-Rounder").find((t) => persona.endsWith(t)) || "";
+  const l1 = persona.slice(0, persona.length - type.length).trim();
+  const l2 = type;
   const size = Math.min(fitText(g, l1, 936, 150, 800, "Syne, sans-serif"), fitText(g, l2, 936, 150, 800, "Syne, sans-serif"));
   g.font = `800 ${size}px Syne, sans-serif`;
   g.fillText(l1, 72, 170 + size + 20);
@@ -461,7 +461,7 @@ async function makeCard() {
     const media = ITEM_MEDIA[it.name];
     let img = media?.file ? await loadImg(`./${media.file}`) : null;
     if (!img) {
-      const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50"><rect width="50" height="50" fill="#e4ddd0"/>${iconFor(it)}</svg>`;
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="500" height="500" viewBox="0 0 50 50"><rect width="50" height="50" fill="#e4ddd0"/>${iconFor(it)}</svg>`;
       const u = URL.createObjectURL(new Blob([svg], { type: "image/svg+xml" }));
       img = await loadImg(u);
       URL.revokeObjectURL(u);
@@ -483,8 +483,9 @@ async function makeCard() {
     }
     g.fillStyle = "#1d1a16";
     g.font = "700 30px Syne, sans-serif";
-    const nm = it.name.replace(/\s*\(.*?\)/g, "");
-    fitText(g, nm, 340, 30, 700, "Syne, sans-serif");
+    let nm = it.name.replace(/\s*\(.*?\)/g, "").split(/\s*[\/+&]\s*/)[0];
+    g.font = "700 28px Syne, sans-serif";
+    while (g.measureText(nm).width > 340 && nm.length > 4) nm = `${nm.slice(0, -2).trim()}…`.replace(/……$/, "…");
     g.fillText(nm, -170, 196);
     g.restore();
   }

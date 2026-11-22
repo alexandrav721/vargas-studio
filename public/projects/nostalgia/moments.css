@@ -297,7 +297,7 @@
   place-items: center;
   background: radial-gradient(circle at 30% 20%, color-mix(in srgb, var(--brand) 45%, var(--bg1)), var(--bg0));
 }
-.pic--noshot span { font: 800 clamp(1.2rem, 4vw, 1.7rem)/1 var(--display); color: var(--ink); padding: 1rem; text-align: center; }
+.pic--noshot span { font: 800 clamp(1.05rem, 2.6vw, 1.45rem)/1.05 var(--display); color: var(--ink); padding: 1rem; text-align: center; overflow-wrap: anywhere; max-width: 100%; }
 .tile--site .tile-name { margin-top: 0.7rem; }
 
 /* Era digest as three pictures */
