@@ -3,6 +3,8 @@ import data from "../content/portfolio.json";
 
 import Deck from "./Deck";
 import ProjectPage from "./ProjectPage";
+import StudioDesk from "./StudioDesk";
+import "./desk.css";
 import {
   cellFor,
   cellStateLabel,
@@ -32,6 +34,7 @@ export default function App() {
   }, []);
 
   if (route.view === "deck") return <Deck key={route.slide} start={route.slide} />;
+  if (route.view === "desk") return <StudioDesk />;
   return <Studio route={route} />;
 }
 
@@ -554,24 +557,6 @@ function Studio({ route }: { route: Route }) {
             ))}
           </ul>
 
-          <div className="update-block">
-            <h3 className="subhead">Keep it current</h3>
-            <p className="body">{data.updateHint}</p>
-            <ul className="plain-list house-list">
-              <li>
-                <strong>Visuals</strong>
-                <span>{data.housekeeping.visualsHome}</span>
-              </li>
-              <li>
-                <strong>Code & non-visual</strong>
-                <span>{data.housekeeping.nonVisualHome}</span>
-              </li>
-              <li>
-                <strong>Retire old stuff</strong>
-                <span>{data.housekeeping.retireOld}</span>
-              </li>
-            </ul>
-          </div>
         </section>
 
         <footer className="foot">
