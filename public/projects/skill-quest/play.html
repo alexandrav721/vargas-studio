@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Spot the Skill</title>
+  <meta name="description" content="Three real rounds from a blind skill test. Call the winner, then see what the judge said and which answer used the skill." />
+  <meta property="og:title" content="Can you spot the skill?" />
+  <meta property="og:description" content="Three real rounds from a blind test of a Claude skill vs plain Claude. You be the judge." />
+  <meta property="og:image" content="./cards/idea-innovate.png" />
+  <meta name="theme-color" content="#F6F1E7" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./play.css" />
+</head>
+<body>
+  <a class="studio-back" href="/">← Studio</a>
+
+  <!-- 1. Arrive -->
+  <section class="beat is-on" id="beat-boot" aria-labelledby="boot-ask">
+    <div class="backs" aria-hidden="true">
+      <div class="back back--a"><span>A</span></div>
+      <div class="back back--b"><span>B</span></div>
+    </div>
+    <h1 class="boot-ask" id="boot-ask">Can you spot the skill?</h1>
+    <p class="friend-line" id="friend-line" hidden>Friend went first.</p>
+    <button class="btn btn--go" type="button" id="go">Judge 3 rounds</button>
+  </section>
+
+  <!-- 2. Rounds -->
+  <section class="beat" id="beat-round" aria-labelledby="round-task">
+    <div class="round-top">
+      <span class="round-count" id="round-count"></span>
+      <span class="pips" id="pips" aria-hidden="true"></span>
+    </div>
+    <h2 class="round-task" id="round-task"></h2>
+    <div class="pair" id="pair"></div>
+    <div class="calls" id="calls">
+      <button class="btn btn--call" type="button" data-call="A">A wins</button>
+      <button class="btn btn--call btn--tie" type="button" data-call="tie">Too close</button>
+      <button class="btn btn--call" type="button" data-call="B">B wins</button>
+    </div>
+    <div class="verdict" id="verdict" hidden aria-live="polite"></div>
+  </section>
+
+  <!-- 3. Payoff -->
+  <section class="beat" id="beat-reveal" aria-labelledby="reveal-title">
+    <p class="reveal-lead" id="reveal-lead">You matched the judge</p>
+    <p class="reveal-score" id="reveal-score" aria-live="polite"></p>
+    <h2 class="reveal-title" id="reveal-title"></h2>
+    <p class="reveal-friend" id="reveal-friend" hidden></p>
+    <p class="reveal-made" id="reveal-made">The card those rounds made</p>
+    <div class="flip" id="flip">
+      <div class="flip-in">
+        <div class="flip-face flip-back" aria-hidden="true"><span>SQ</span></div>
+        <div class="flip-face flip-front" id="real-card"></div>
+      </div>
+    </div>
+    <button class="btn btn--go" type="button" id="to-yours">Your turn</button>
+  </section>
+
+  <!-- 4. Yours + share + next step -->
+  <section class="beat" id="beat-yours" aria-labelledby="yours-ask">
+    <label class="yours-ask" id="yours-ask" for="chore">What do you do every week?</label>
+    <input id="chore" maxlength="40" autocomplete="off" placeholder="invoice my clients" />
+    <div class="blank" id="blank-card" aria-live="polite"></div>
+    <div class="share-row">
+      <button class="btn btn--go" type="button" id="send">Challenge a friend</button>
+      <button class="btn btn--ghost" type="button" id="save">Save card</button>
+    </div>
+    <div class="next">
+      <p class="next-title">Score it for real</p>
+      <div class="cmd"><code id="cmd">/skill-quest:score invoice-my-clients</code><button class="cmd-copy" type="button" id="copy">Copy</button></div>
+      <p class="next-note">A Claude Code plugin. Not public yet.</p>
+      <p class="next-links"><a href="./cards/">The real card</a> · <button class="linkish" type="button" id="again">Judge again</button></p>
+    </div>
+  </section>
+
+  <dialog class="peek" id="peek" aria-labelledby="peek-title">
+    <p class="peek-kicker" id="peek-kicker"></p>
+    <h3 class="peek-title" id="peek-title"></h3>
+    <blockquote class="peek-text" id="peek-text"></blockquote>
+    <p class="peek-src">From the saved run, 21 Nov 2026</p>
+    <button class="btn btn--ghost" type="button" id="peek-close">Close</button>
+  </dialog>
+
+  <script src="./play.js"></script>
+</body>
+</html>
