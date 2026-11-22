@@ -60,6 +60,7 @@
     });
   };
   var label = function (c) { return c === "tie" ? "Too close" : c; };
+  var sfx = function (name, n) { if (window.SQSound) window.SQSound.play(name, n); };
   function load(k, d) { try { var v = localStorage.getItem(k); return v == null ? d : v; } catch (e) { return d; } }
   function save(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* this visit only */ } }
 
@@ -80,7 +81,7 @@
 
   /* ---------- 1. Arrive ---------- */
   if (friend) $("#friend-line").hidden = false;
-  $("#go").addEventListener("click", function () { r = 0; picks = []; paintRound(); show("beat-round"); });
+  $("#go").addEventListener("click", function () { r = 0; picks = []; paintRound(); show("beat-round"); sfx("deal"); });
 
   /* ---------- 2. Rounds ---------- */
   function answerCard(slot, row) {
@@ -125,12 +126,14 @@
     busy = true;
     var row = ROUNDS[r];
     picks[r] = c;
+    sfx("pick");
     $("#calls").hidden = true;
     $$(".ans").forEach(function (el) { el.classList.toggle("is-mine", el.dataset.slot === c); });
     var v = $("#verdict");
     v.hidden = false;
     v.innerHTML = '<p class="v-wait">The blind judge says…</p>';
     await wait(900);
+    sfx("stamp");
     var same = c === row.judge;
     v.innerHTML =
       '<p class="v-call"><span class="stamp">Judge: ' + esc(label(row.judge)) + "</span>" +
@@ -147,6 +150,7 @@
       who.innerHTML = '<b>' + row.score[s].toFixed(1) + '</b><span>' + (isSkill ? "Skill" : "Plain Claude") + "</span>";
     });
     var outcome = row.judge === "tie" ? "A tie." : row.judge === row.skill ? "The skill won." : "Plain Claude won.";
+    sfx(row.judge === row.skill ? "win" : "even");
     var f = friend ? '<span class="v-friend">Friend: ' + esc(label(friend[r])) + "</span>" : "";
     v.insertAdjacentHTML("beforeend",
       '<p class="v-out">' + outcome + "</p>" + f +
@@ -166,7 +170,7 @@
 
   function next() {
     r += 1;
-    if (r < ROUNDS.length) { paintRound(); show("beat-round"); }
+    if (r < ROUNDS.length) { paintRound(); show("beat-round"); sfx("deal"); }
     else reveal();
   }
 
@@ -203,14 +207,17 @@
     }
     for (var n = 0; n <= m; n += 1) {
       $("#reveal-score").textContent = n + " of 3";
+      sfx("tick", n);
       await wait(260);
     }
     await wait(300);
     $("#reveal-title").textContent = TITLES[m];
     void $("#reveal-title").offsetWidth;
     $("#reveal-title").classList.add("is-in");
+    sfx("sticker");
     await wait(900);
     $("#flip").classList.add("is-open");
+    sfx("win");
     await wait(reduced ? 0 : 1500);
     $("#to-yours").classList.add("is-in");
   }
@@ -240,7 +247,7 @@
     catch (e) { $("#copy").textContent = "Select it"; }
     setTimeout(function () { $("#copy").textContent = "Copy"; }, 1600);
   });
-  $("#again").addEventListener("click", function () { r = 0; picks = []; paintRound(); show("beat-round"); });
+  $("#again").addEventListener("click", function () { r = 0; picks = []; paintRound(); show("beat-round"); sfx("deal"); });
 
   function shareLink() {
     var u = new URL(location.href);
@@ -315,9 +322,10 @@
     a.click();
     setTimeout(function () { URL.revokeObjectURL(a.href); }, 2000);
   }
-  $("#save").addEventListener("click", async function () { var b = await makeCard(); if (b) download(b); });
+  $("#save").addEventListener("click", async function () { sfx("share"); var b = await makeCard(); if (b) download(b); });
   $("#send").addEventListener("click", async function () {
     var btn = $("#send");
+    sfx("share");
     btn.disabled = true;
     var blob = await makeCard();
     btn.disabled = false;
