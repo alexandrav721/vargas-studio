@@ -1,0 +1,129 @@
+/* Shared print styles for every planner. US Letter, white paper, colour used
+   sparingly so home printers don't drown in ink. Each planner sets its own
+   --accent / --accent-2 / --wash on <body>. */
+@page { size: 8.5in 11in; margin: 0; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  --ink: #26231f; --muted: #6f6a62; --rule: #c9c3b8; --paper: #ffffff;
+  --head: 'Fredoka', 'Avenir Next Rounded', system-ui, sans-serif;
+  --body: 'DM Sans', 'Avenir Next', system-ui, sans-serif;
+  --hand: 'Caveat', 'Bradley Hand', cursive;
+  font-family: var(--body); color: var(--ink); background: #e9e6e0;
+  -webkit-print-color-adjust: exact; print-color-adjust: exact;
+}
+@media print { body { background: none; } }
+
+.page {
+  width: 8.5in; height: 11in; position: relative; overflow: hidden;
+  padding: 0.55in 0.6in 0.6in; background: var(--paper);
+  page-break-after: always; break-after: page; margin: 0 auto;
+  display: flex; flex-direction: column;
+}
+@media screen { .page { margin: 0.3in auto; box-shadow: 0 2px 12px rgba(0,0,0,.12); } }
+
+/* Header */
+.kicker { font: 700 10.5pt/1 var(--body); letter-spacing: .18em; text-transform: uppercase; color: var(--accent); }
+.kicker::after { content: ''; display: block; height: 1.5px; background: var(--rule); margin-top: 8px; }
+h1 { font: 700 34pt/1.02 var(--head); margin: 18px 0 2px; letter-spacing: -.01em; }
+.sub { font: 600 19pt/1.15 var(--hand); color: var(--accent); margin: 0 0 14px; }
+h2 { font: 700 15pt/1.1 var(--head); margin: 14px 0 6px; color: var(--ink); }
+h3 { font: 700 10pt/1.2 var(--body); letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin: 10px 0 6px; }
+p, li { font-size: 10.5pt; line-height: 1.45; margin: 0 0 6px; }
+.muted { color: var(--muted); }
+.small { font-size: 9pt; }
+.hand { font-family: var(--hand); font-size: 15pt; color: var(--muted); }
+ol.steps { padding-left: 1.2em; margin: 4px 0 8px; }
+ol.steps li { margin-bottom: 3px; }
+ol.steps li::marker { color: var(--accent); font-weight: 700; }
+
+/* Footer */
+.foot { position: absolute; left: .6in; right: .6in; bottom: .32in; display: flex; justify-content: space-between;
+  font: 700 8pt/1 var(--body); letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+.foot .n { color: var(--accent); }
+
+/* Layout helpers */
+.grow { flex: 1; display: flex; flex-direction: column; min-height: 0; }
+.row { display: flex; gap: 14px; }
+.row > * { flex: 1; min-width: 0; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.center { text-align: center; }
+.mt { margin-top: 12px; } .mtl { margin-top: 22px; }
+
+/* Writing boxes */
+.box { border: 1.5px solid var(--rule); border-radius: 10px; padding: 8px 10px 6px; position: relative; background: #fff; }
+.box .lbl { font: 700 8.5pt/1.2 var(--body); letter-spacing: .12em; text-transform: uppercase; color: var(--accent); }
+.box .hint { font-size: 8.5pt; color: var(--muted); margin-top: 1px; }
+.box.fill { display: flex; flex-direction: column; flex: 1; }
+.box.fill .lines { flex: 1; }
+.lines { background: linear-gradient(to bottom, transparent 26px, var(--rule) 26px) 0 2px / 100% 27px repeat-y; min-height: 27px; }
+.wash { background: var(--wash); border-color: transparent; }
+.tag { display: inline-block; font: 700 8pt/1 var(--body); letter-spacing: .12em; text-transform: uppercase;
+  padding: 5px 8px; border-radius: 99px; background: var(--wash); color: var(--accent); }
+.check { display: flex; align-items: flex-start; gap: 8px; margin: 6px 0; font-size: 10.5pt; }
+.check::before { content: ''; flex: 0 0 13px; height: 13px; border: 1.6px solid var(--accent); border-radius: 3px; margin-top: 2px; }
+.circ::before { border-radius: 50%; }
+.blank { display: inline-block; border-bottom: 1.4px solid var(--rule); min-width: 1.4in; height: 1em; vertical-align: baseline; }
+
+/* Make-it badge for interactive pages */
+.make { position: absolute; top: .5in; right: .6in; background: var(--accent); color: #fff; border-radius: 99px;
+  font: 700 8.5pt/1 var(--body); letter-spacing: .14em; text-transform: uppercase; padding: 7px 11px; }
+.make b { font-family: var(--hand); font-size: 13pt; letter-spacing: 0; text-transform: none; font-weight: 600; }
+.howto { background: var(--wash); border-radius: 12px; padding: 10px 14px 6px; }
+.howto h3 { margin-top: 2px; }
+
+/* Cut + fold lines */
+.cut { border: 1.6px dashed var(--ink) !important; }
+.cutline { border-top: 1.6px dashed var(--ink); position: relative; margin: 10px 0; }
+.cutline::before { content: '✂'; position: absolute; left: -2px; top: -12px; font-size: 14px; background: #fff; padding-right: 4px; }
+.foldnote { font: 700 7.5pt/1 var(--body); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+
+/* Cards */
+.cards { display: grid; gap: 0; }
+.card { border: 1.6px dashed var(--ink); margin: -0.8px; padding: 12px 14px; display: flex; flex-direction: column; justify-content: space-between; position: relative; }
+.card .cn { font: 700 8pt/1 var(--body); letter-spacing: .14em; text-transform: uppercase; color: var(--accent); }
+.card .ct { font: 600 15pt/1.2 var(--head); margin-top: 6px; }
+.card .cs { font-size: 9pt; color: var(--muted); }
+
+/* Day boxes for weekly pages */
+.days { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; flex: 1; }
+.day { border: 1.5px solid var(--rule); border-radius: 10px; padding: 6px 10px; display: flex; flex-direction: column; }
+.day .d { font: 700 10pt/1 var(--head); color: var(--accent); display: flex; justify-content: space-between; }
+.day .lines { flex: 1; }
+
+/* Dot tracker (habit) */
+.dots { display: grid; grid-template-columns: repeat(16, 1fr); gap: 5px 4px; }
+.dot { aspect-ratio: 1; border-radius: 50%; background: var(--wash); display: grid; place-items: center;
+  font: 700 7.5pt/1 var(--body); color: var(--muted); }
+
+/* Tables */
+table.t { width: 100%; border-collapse: collapse; font-size: 9.5pt; }
+table.t th { font: 700 8pt/1.2 var(--body); letter-spacing: .1em; text-transform: uppercase; color: var(--accent); text-align: left; padding: 5px 4px; border-bottom: 1.5px solid var(--accent); }
+table.t td { border-bottom: 1px solid var(--rule); height: 30px; padding: 2px 4px; vertical-align: middle; }
+table.t td.c { text-align: center; }
+table.t td.sq::after { content: ''; display: inline-block; width: 13px; height: 13px; border: 1.4px solid var(--rule); border-radius: 50%; }
+
+/* Cover */
+.cover { padding: 0; color: #fff; background: var(--cover); }
+.cover .inner { position: absolute; inset: .7in .7in .7in; display: flex; flex-direction: column; }
+.cover .eyebrow { font: 700 10pt/1 var(--body); letter-spacing: .22em; text-transform: uppercase; opacity: .85; }
+.cover .title { font: 700 66pt/.95 var(--head); margin-top: auto; letter-spacing: -.02em; }
+.cover .tag2 { font: 600 28pt/1.1 var(--hand); margin-top: 12px; color: var(--accent-2); }
+.cover .for { margin-top: 26px; font-size: 12pt; line-height: 1.5; max-width: 4.6in; opacity: .92; }
+.cover .name { margin-top: 30px; font: 700 9pt/1 var(--body); letter-spacing: .18em; text-transform: uppercase; border-top: 1.5px solid rgba(255,255,255,.55); padding-top: 10px; width: 3.4in; }
+.cover svg.art { position: absolute; right: -0.6in; top: -0.4in; width: 6.4in; height: 6.4in; }
+
+/* Website preview screenshots */
+body.shot { background: #fff; }
+body.shot .page { margin: 0; box-shadow: none; }
+
+/* Stretch: writing areas grow to fill the page so nothing stops half-way down */
+.box { display: flex; flex-direction: column; }
+.box > .lines { flex: 1 1 auto; }
+.grow.stretch > .box, .grow.stretch > .grid2, .grow.stretch > .grid3, .grow.stretch > .grid4,
+.grow.stretch > .days, .grow.stretch > .row, .grow.stretch > .cards { flex: 1 1 auto; }
+.grow.stretch > .cards { grid-auto-rows: 1fr; }
+.grow.stretch > .cards > .card { height: auto !important; }
+.grow.stretch > .row > .box, .grow.stretch > .row > div > .box:last-child { }
