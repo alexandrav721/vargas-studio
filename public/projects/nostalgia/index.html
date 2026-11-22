@@ -33,11 +33,9 @@
           </div>
         </div>
       </div>
-      <p class="step-kicker">Nostalgia, dated properly</p>
       <h1 class="brand">Scrollback</h1>
       <p class="hero-copy">
-        <strong>Millennial years, reconstructed.</strong>
-        Say when you came of age—then open the websites, the objects, and the look that belonged to those years.
+        Pick your years. See the sites, the stuff and the look you grew up with.
       </p>
       <div class="cta-row">
         <button class="btn btn-primary" type="button" data-go="years">Enter your years</button>
@@ -57,9 +55,8 @@
         <div class="mark">Scrollback</div>
         <button class="btn btn-ghost" type="button" data-go="landing">Back</button>
       </div>
-      <p class="step-kicker">Step 01 · Generation</p>
       <h2>Who’s coming through?</h2>
-      <p class="lede">We’re shipping Millennials first—born roughly 1981 to 1996—the cohort that grew up between dial-up and the first smartphones.</p>
+      <p class="lede">Millennials first: born 1981 to 1996.</p>
       <div class="gen-grid" id="gen-grid"></div>
       <div class="cta-row" style="margin-top:1.5rem">
         <button class="btn btn-primary" type="button" id="continue-years" disabled>Continue to years</button>
@@ -72,9 +69,8 @@
         <div class="mark">Scrollback</div>
         <button class="btn btn-ghost" type="button" data-go="generation">Back</button>
       </div>
-      <p class="step-kicker">Step 02 · Years</p>
       <h2>Which stretch of time?</h2>
-      <p class="lede">Use your birth year and we’ll estimate formative years (about ages 14–20), or set the range yourself inside 1995–2012.</p>
+      <p class="lede">Your birth year finds your teen years. Or pick them yourself.</p>
 
       <div class="year-panel">
         <div class="year-modes" role="tablist" aria-label="Year mode">
@@ -92,9 +88,6 @@
             <button class="chip" type="button" data-birth="1984">Early millennial · ~1984</button>
             <button class="chip" type="button" data-birth="1992">Late millennial · ~1992</button>
           </div>
-          <p class="lede" style="margin:0.65rem 0 0;font-size:0.88rem">
-            Early (~1981–1988) hit dial-up/AIM harder; late (~1989–1996) hit MySpace/Tumblr harder.
-          </p>
         </div>
 
         <div id="mode-range" class="range-pair hidden">
@@ -116,8 +109,7 @@
 
         <div class="preview-pill" id="year-preview" aria-live="polite"></div>
 
-        <p class="step-kicker" style="margin-top:1.35rem">Or jump an era band</p>
-        <div class="year-modes" id="era-jumps" aria-label="Era shortcuts"></div>
+        <div class="year-modes" id="era-jumps" aria-label="Era shortcuts" style="margin-top:1.35rem"></div>
 
         <div class="cta-row" style="margin-top:1.25rem">
           <button class="btn btn-primary" type="button" id="open-results">Open this era</button>
@@ -141,15 +133,13 @@
 
       <div class="tabs" role="tablist" aria-label="Nostalgia lenses">
         <button class="tab is-active" type="button" data-lens="websites" role="tab" aria-selected="true" title="Keyboard: 1">Websites</button>
-        <button class="tab" type="button" data-lens="items" role="tab" aria-selected="false" title="Keyboard: 2">Items</button>
+        <button class="tab" type="button" data-lens="items" role="tab" aria-selected="false" title="Keyboard: 2">Stuff</button>
         <button class="tab" type="button" data-lens="style" role="tab" aria-selected="false" title="Keyboard: 3">Style</button>
         <button class="tab tab--room" type="button" data-lens="room" role="tab" aria-selected="false" title="Keyboard: 4">My room <span class="room-count" id="room-count"></span></button>
       </div>
-      <p class="lens-hint" id="lens-hint">Lenses · keys <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> <kbd>4</kbd> · Esc backs up</p>
 
       <label class="search-bar">
-        <span class="step-kicker" style="margin:0">Filter this lens</span>
-        <input id="lens-filter" type="search" placeholder="e.g. MySpace, Razr, chrome…" autocomplete="off" />
+        <input id="lens-filter" type="search" placeholder="Find… Razr, MySpace, chrome" aria-label="Find in this tab" autocomplete="off" />
       </label>
       <p id="filter-empty" class="lede hidden" style="margin-top:0.5rem">No matches in this lens—try another word or clear the filter.</p>
 

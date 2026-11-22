@@ -2,6 +2,9 @@
    Adds to the explorer; the catalog and lenses are unchanged.
    Saved state (had / wanted / away message) lives only in this browser. */
 
+import { ITEM_MEDIA } from "./media.js";
+import { ITEMS as CATALOG_ITEMS } from "./catalog-data.js";
+
 const OWN_KEY = "scrollback.own.v1";
 const AWAY_KEY = "scrollback.away.v1";
 
@@ -82,7 +85,7 @@ function ensureRealDialog() {
     "beforeend",
     `<dialog id="real-page" class="real" aria-labelledby="real-title">
       <div class="real-top">
-        <h2 id="real-title"></h2>
+        <div><h2 id="real-title"></h2><p class="real-vibe" id="real-vibe"></p></div>
         <button class="real-x" type="button" data-real-close aria-label="Close">×</button>
       </div>
       <div class="real-crt">
@@ -167,6 +170,7 @@ export function openRealPage(name) {
   realSite = view.sites.find((s) => s.name === name);
   if (!realSite) return;
   const dlg = ensureRealDialog();
+  $("#real-vibe").textContent = realSite.vibe || "";
   const years = yearsFor(realSite);
   $("#real-years").innerHTML = years
     .map((y) => `<button type="button" class="chip" data-year="${y}">${y}</button>`)
@@ -228,7 +232,7 @@ function colorFor(name) {
 }
 
 /** Simple original drawings in a 50×50 box, picked by what the item is. */
-function iconFor(item) {
+export function iconFor(item) {
   const n = item.name.toLowerCase();
   const c = colorFor(item.name);
   const has = (...w) => w.some((x) => n.includes(x));
@@ -314,11 +318,11 @@ function renderRoom() {
   host.innerHTML = `
     <div class="room-wrap">
       <div class="room-head">
-        <h3>My room, ${esc(label)}</h3>
+        <h3>${had.length >= 3 ? `You were ${esc(personaFor(had, view.from, view.to))}` : `My room, ${esc(label)}`}</h3>
         <span class="meta">${had.length ? `${had.length} thing${had.length === 1 ? "" : "s"} you had` : "Empty for now"}</span>
       </div>
       <div class="room-stage">${roomSvg(had)}
-        ${had.length ? "" : `<div class="room-empty"><p>Tick <strong>I had this</strong> on things in Items. Your room fills up.</p><button class="btn btn-primary" type="button" data-room-go="items">Go to Items</button></div>`}
+        ${had.length ? "" : `<div class="room-empty"><p>Tap <strong>had it</strong> on your old stuff. It moves in here.</p><button class="btn btn-primary" type="button" data-room-go="items">Pick my stuff</button></div>`}
       </div>
       ${more ? `<p class="room-more">+${more} more on your card</p>` : ""}
       <label class="away">
@@ -326,8 +330,8 @@ function renderRoom() {
         <input id="away-input" maxlength="80" placeholder="brb, growing up" value="${esc(away)}" />
       </label>
       <div class="room-actions">
-        <button class="btn btn-primary" type="button" id="room-save" ${had.length ? "" : "disabled"}>Save my ${esc(label)} card</button>
-        <button class="btn btn-ghost" type="button" id="room-send" ${had.length ? "" : "disabled"}>Send it to a friend</button>
+        <button class="btn btn-primary" type="button" id="room-send" ${had.length ? "" : "disabled"}>Send to a friend</button>
+        <button class="btn btn-ghost" type="button" id="room-save" ${had.length ? "" : "disabled"}>Save my card</button>
       </div>
     </div>
     <div class="wish-wrap">
@@ -351,6 +355,7 @@ function renderRoom() {
       }
     </div>`;
   $("[data-room-go]", host)?.addEventListener("click", () => $(`.tab[data-lens="items"]`)?.click());
+  paintFriend();
   $("#away-input", host)?.addEventListener("input", (e) => {
     away = e.target.value.slice(0, 80);
     save(AWAY_KEY, away);
@@ -359,10 +364,59 @@ function renderRoom() {
   $("#room-send", host)?.addEventListener("click", sendCard);
 }
 
+/* ---------- The share: your persona card + a link to compare ---------- */
+
+const ERA_WORD = [
+  [1995, 1999, "Dial-up"],
+  [2000, 2003, "Chrome"],
+  [2004, 2007, "Top 8"],
+  [2008, 2012, "Dashboard"],
+];
+const TYPE_WORD = { tech: "Early Adopter", toy: "Collector", fashion: "Trendsetter", media: "Mixtape Maker" };
+
+function bucket(category) {
+  const c = String(category || "").toLowerCase();
+  if (c.includes("fashion")) return "fashion";
+  if (c.includes("toy")) return "toy";
+  if (c.includes("media") || c.includes("music")) return "media";
+  return "tech";
+}
+
+/** "The Top 8 Trendsetter": era of your years + what you ticked most. Built only from your own ticks. */
+export function personaFor(had, from, to) {
+  const mid = Math.round((from + to) / 2);
+  const era = (ERA_WORD.find(([a, b]) => mid >= a && mid <= b) || ERA_WORD[1])[2];
+  const counts = {};
+  had.forEach((it) => { const k = bucket(it.category); counts[k] = (counts[k] || 0) + 1; });
+  const sorted = Object.entries(counts).sort((x, y) => y[1] - x[1]);
+  let type = "All-Rounder";
+  if (sorted.length && (sorted.length === 1 || sorted[0][1] > sorted[1][1])) type = TYPE_WORD[sorted[0][0]];
+  return `The ${era} ${type}`;
+}
+
+function loadImg(src) {
+  return new Promise((ok) => {
+    const img = new Image();
+    img.onload = () => ok(img);
+    img.onerror = () => ok(null);
+    img.src = src;
+  });
+}
+
+function fitText(g, text, maxW, start, weight, family) {
+  let size = start;
+  g.font = `${weight} ${size}px ${family}`;
+  while (g.measureText(text).width > maxW && size > 28) {
+    size -= 4;
+    g.font = `${weight} ${size}px ${family}`;
+  }
+  return size;
+}
+
 async function makeCard() {
   const had = ownedItems("had");
   const W = 1080;
-  const H = 1350;
+  const H = 1920;
   const canvas = document.createElement("canvas");
   canvas.width = W;
   canvas.height = H;
@@ -373,69 +427,169 @@ async function makeCard() {
     /* ignore */
   }
   const label = view.from === view.to ? `${view.from}` : `${view.from}–${view.to}`;
-  g.fillStyle = "#0a0a0a";
+  const persona = personaFor(had, view.from, view.to);
+  const css = getComputedStyle(document.body);
+  const brand = css.getPropertyValue("--brand").trim() || "#b8ff00";
+  const bg0 = css.getPropertyValue("--bg0").trim() || "#0a0a0a";
+  const bg1 = css.getPropertyValue("--bg1").trim() || "#121018";
+
+  const grad = g.createLinearGradient(0, 0, 0, H);
+  grad.addColorStop(0, bg1);
+  grad.addColorStop(1, bg0);
+  g.fillStyle = grad;
   g.fillRect(0, 0, W, H);
-  g.fillStyle = "#f4f0e6";
-  let size = 92;
+
+  g.fillStyle = brand;
+  g.font = "500 40px 'IBM Plex Mono', monospace";
+  g.fillText(`In ${label} I was`, 72, 170);
+  g.fillStyle = "#f6f2ea";
+  const words = persona.split(" ");
+  const half = Math.ceil(words.length / 2);
+  const l1 = words.slice(0, half).join(" ");
+  const l2 = words.slice(half).join(" ");
+  const size = Math.min(fitText(g, l1, 936, 150, 800, "Syne, sans-serif"), fitText(g, l2, 936, 150, 800, "Syne, sans-serif"));
   g.font = `800 ${size}px Syne, sans-serif`;
-  while (g.measureText(`My ${label}`).width > 952 && size > 40) {
-    size -= 4;
-    g.font = `800 ${size}px Syne, sans-serif`;
+  g.fillText(l1, 72, 170 + size + 20);
+  g.fillText(l2, 72, 170 + size * 2 + 30);
+
+  // a pile of up to 5 snapshots of what you had
+  const picks = had.slice(0, 5);
+  const spots = [[92, 640, -6], [560, 600, 5], [300, 930, -2], [640, 1010, 7], [90, 1180, 4]];
+  for (let i = 0; i < picks.length; i += 1) {
+    const it = picks[i];
+    const [x, y, rot] = spots[i];
+    const media = ITEM_MEDIA[it.name];
+    let img = media?.file ? await loadImg(`./${media.file}`) : null;
+    if (!img) {
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50"><rect width="50" height="50" fill="#e4ddd0"/>${iconFor(it)}</svg>`;
+      const u = URL.createObjectURL(new Blob([svg], { type: "image/svg+xml" }));
+      img = await loadImg(u);
+      URL.revokeObjectURL(u);
+    }
+    g.save();
+    g.translate(x + 190, y + 210);
+    g.rotate((rot * Math.PI) / 180);
+    g.shadowColor = "rgba(0,0,0,0.45)";
+    g.shadowBlur = 30;
+    g.shadowOffsetY = 14;
+    g.fillStyle = "#f6f2ea";
+    g.fillRect(-190, -210, 380, 440);
+    g.shadowColor = "transparent";
+    if (img) {
+      const s2 = Math.max(340 / img.width, 340 / img.height);
+      const sw = 340 / s2;
+      const sh = 340 / s2;
+      g.drawImage(img, (img.width - sw) / 2, (img.height - sh) / 2, sw, sh, -170, -190, 340, 340);
+    }
+    g.fillStyle = "#1d1a16";
+    g.font = "700 30px Syne, sans-serif";
+    const nm = it.name.replace(/\s*\(.*?\)/g, "");
+    fitText(g, nm, 340, 30, 700, "Syne, sans-serif");
+    g.fillText(nm, -170, 196);
+    g.restore();
   }
-  g.fillText(`My ${label}`, 64, 140);
-  const svg = roomSvg(had);
-  const img = new Image();
-  const url = URL.createObjectURL(new Blob([svg], { type: "image/svg+xml" }));
-  await new Promise((ok) => { img.onload = ok; img.onerror = ok; img.src = url; });
-  g.drawImage(img, 64, 190, 952, 666);
-  URL.revokeObjectURL(url);
-  g.font = "500 30px 'IBM Plex Sans', sans-serif";
-  g.fillStyle = "#b7ae9a";
-  const names = had.map((it) => it.name.replace(/\s*\(.*?\)/g, ""));
-  let line = "";
-  let y = 920;
-  for (const n of names) {
-    const next = line ? `${line} · ${n}` : n;
-    if (g.measureText(next).width > 952) {
-      g.fillText(line, 64, y);
-      y += 44;
-      line = n;
-      if (y > 1150) break;
-    } else line = next;
+  const more = had.length - picks.length;
+  if (more > 0) {
+    g.fillStyle = brand;
+    g.font = "700 44px Syne, sans-serif";
+    g.fillText(`+${more} more`, 620, 1560);
   }
-  if (line && y <= 1150) g.fillText(line, 64, y);
   if (away.trim()) {
-    g.fillStyle = "#ffd36a";
-    g.font = "italic 500 32px 'IBM Plex Sans', sans-serif";
-    g.fillText(`away msg: “${away.trim()}”`, 64, 1230);
+    g.fillStyle = "#f6f2ea";
+    g.font = "italic 500 40px 'IBM Plex Sans', sans-serif";
+    fitText(g, `away msg: “${away.trim()}”`, 936, 40, "italic 500", "'IBM Plex Sans', sans-serif");
+    g.fillText(`away msg: “${away.trim()}”`, 72, 1680);
   }
-  g.fillStyle = "#7dffb3";
-  g.font = "500 26px 'IBM Plex Mono', monospace";
-  g.fillText("SCROLLBACK · what did your room have?", 64, 1300);
+  g.fillStyle = brand;
+  g.font = "800 58px Syne, sans-serif";
+  g.fillText("Who were you?", 72, 1790);
+  g.fillStyle = "rgba(246,242,234,0.7)";
+  g.font = "500 28px 'IBM Plex Mono', monospace";
+  g.fillText("Scrollback · photos: Wikimedia Commons", 72, 1850);
   return new Promise((ok) => canvas.toBlob(ok, "image/png"));
 }
 
 function download(blob) {
   const a = document.createElement("a");
   a.href = URL.createObjectURL(blob);
-  a.download = `my-${view.from}-room.png`;
+  a.download = `who-i-was-${view.from}.png`;
   a.click();
   setTimeout(() => URL.revokeObjectURL(a.href), 2000);
 }
 
+/* Your picks travel in the link itself (no server, nothing stored). */
+function allItemNames() {
+  return Object.values(CATALOG_ITEMS).flat().map((it) => it.name);
+}
+function compareLink() {
+  const names = allItemNames();
+  const ids = ownedItems("had").map((it) => names.indexOf(it.name)).filter((i) => i >= 0);
+  const u = new URL(location.href);
+  u.search = "";
+  u.hash = "";
+  u.searchParams.set("gen", "millennial");
+  u.searchParams.set("mode", "range");
+  u.searchParams.set("from", String(view.from));
+  u.searchParams.set("to", String(view.to));
+  u.searchParams.set("lens", "items");
+  u.searchParams.set("had", ids.map((i) => i.toString(36)).join("."));
+  u.searchParams.set("via", "card");
+  return u.href;
+}
+function readFriendPicks() {
+  const raw = new URLSearchParams(location.search).get("had");
+  if (!raw) return null;
+  const names = allItemNames();
+  return new Set(raw.split(".").map((x) => names[parseInt(x, 36)]).filter(Boolean));
+}
+const friend = readFriendPicks();
+
 async function sendCard() {
   const blob = await makeCard();
   if (!blob) return;
-  const file = new File([blob], `my-${view.from}-room.png`, { type: "image/png" });
+  const link = compareLink();
+  const persona = personaFor(ownedItems("had"), view.from, view.to);
+  const file = new File([blob], `who-i-was-${view.from}.png`, { type: "image/png" });
   try {
     if (navigator.canShare?.({ files: [file] })) {
-      await navigator.share({ files: [file], text: "Did you have any of these?" });
+      await navigator.share({ files: [file], text: `I was ${persona}. Who were you? ${link}` });
+      return;
+    }
+    if (navigator.share) {
+      await navigator.share({ text: `I was ${persona}. Who were you?`, url: link });
       return;
     }
   } catch {
     return; /* closed the share sheet */
   }
+  try {
+    await navigator.clipboard.writeText(link);
+    const btn = $("#room-send");
+    if (btn) {
+      btn.textContent = "Link copied";
+      setTimeout(() => { btn.textContent = "Send to a friend"; }, 1800);
+    }
+  } catch {
+    /* no clipboard */
+  }
   download(blob);
+}
+
+function paintFriend() {
+  if (!friend) return;
+  $$("[data-own-item]").forEach((row) => row.classList.toggle("friend-had", friend.has(row.dataset.ownItem)));
+  const host = $("#lens-items");
+  if (!host) return;
+  let strip = $("#friend-strip");
+  if (!strip) {
+    host.insertAdjacentHTML("afterbegin", `<div class="friend-strip" id="friend-strip" role="status"></div>`);
+    strip = $("#friend-strip");
+  }
+  const mine = new Set(Object.entries(own).filter(([, v]) => v === "had").map(([k]) => k));
+  const common = [...friend].filter((n) => mine.has(n)).length;
+  strip.innerHTML = mine.size
+    ? `<strong>${common} in common</strong> with your friend's ${friend.size}. <button type="button" class="btn btn-primary" data-room-go="room">Make my card</button>`
+    : `<strong>Your friend had ${friend.size} of these.</strong> Tap <em>had it</em> on yours to compare.`;
 }
 
 /* ---------- Had it / Wanted it ---------- */
@@ -472,12 +626,66 @@ export function renderMoments(next) {
   view = next;
   paintOwnButtons();
   renderRoom();
+  paintFriend();
   const count = $("#room-count");
   if (count) count.textContent = String(Object.values(own).filter((v) => v === "had").length || "");
 }
 
+/* ---------- Tap a thing: the photo big, its story, had / wanted ---------- */
+
+function ensureThingDialog() {
+  let dlg = $("#thing");
+  if (dlg) return dlg;
+  document.body.insertAdjacentHTML(
+    "beforeend",
+    `<dialog id="thing" class="thing" aria-labelledby="thing-name">
+      <button class="real-x thing-x" type="button" data-thing-close aria-label="Close">×</button>
+      <div class="thing-body" id="thing-body"></div>
+    </dialog>`
+  );
+  dlg = $("#thing");
+  dlg.addEventListener("click", (e) => {
+    if (e.target === dlg || e.target.closest("[data-thing-close]")) dlg.close();
+  });
+  return dlg;
+}
+
+function firstSentences(text, n = 2) {
+  const parts = String(text || "").match(/[^.!?]+[.!?]+(\s|$)/g) || [String(text || "")];
+  return parts.slice(0, n).join("").trim();
+}
+
+export function openThing(name) {
+  const it = view.items.find((x) => x.name === name);
+  if (!it) return;
+  const media = ITEM_MEDIA[name];
+  const dlg = ensureThingDialog();
+  $("#thing-body").innerHTML = `
+    <figure class="thing-pic">
+      ${media?.file ? `<img src="./${esc(media.file)}" alt="${esc(it.name)}" />` : `<svg viewBox="0 0 50 50" role="img" aria-label="${esc(it.name)}">${iconFor(it)}</svg>`}
+    </figure>
+    <div class="thing-text" data-own-item="${esc(it.name)}">
+      <h2 id="thing-name">${esc(it.name)}</h2>
+      <p class="thing-years">${esc(it.years)}</p>
+      ${it.sensory ? `<p class="thing-sense">${esc(it.sensory)}</p>` : ""}
+      <p class="thing-why">${esc(firstSentences(it.why))}</p>
+      <div class="own-row">
+        <button type="button" class="own-btn" data-own="had" aria-pressed="false">I had this</button>
+        <button type="button" class="own-btn own-btn--want" data-own="wanted" aria-pressed="false">Wanted it, never got it</button>
+      </div>
+      ${media?.file ? `<p class="thing-credit">Photo: <a href="${esc(media.source)}" target="_blank" rel="noopener noreferrer">${esc(media.author || "Wikimedia Commons")}</a>, ${esc(media.license || "")}</p>` : ""}
+    </div>`;
+  paintOwnButtons();
+  dlg.showModal();
+}
+
 /* One listener for every button these moments add. */
 document.addEventListener("click", (e) => {
+  const thing = e.target.closest("[data-thing]");
+  if (thing) {
+    openThing(thing.dataset.thing);
+    return;
+  }
   const real = e.target.closest("[data-real]");
   if (real) {
     e.preventDefault();
@@ -488,6 +696,11 @@ document.addEventListener("click", (e) => {
   if (ownBtn) {
     const row = ownBtn.closest("[data-own-item]");
     if (row) setOwn(row.dataset.ownItem, ownBtn.dataset.own);
+    return;
+  }
+  const go = e.target.closest("#friend-strip [data-room-go]");
+  if (go) {
+    $(`.tab[data-lens="room"]`)?.click();
     return;
   }
   const set = e.target.closest("[data-own-set]");

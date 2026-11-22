@@ -1,0 +1,52 @@
+{
+ "Angelfire": {
+  "file": "img/sites/angelfire.jpg",
+  "year": 1999,
+  "source": "https://web.archive.org/web/19990501072557/https://www.angelfire.com/"
+ },
+ "Yahoo!": {
+  "file": "img/sites/yahoo.jpg",
+  "year": 2000,
+  "source": "https://web.archive.org/web/20000706192913/https://www.yahoo.com/"
+ },
+ "AltaVista": {
+  "file": "img/sites/altavista.jpg",
+  "year": 1998,
+  "source": "https://web.archive.org/web/19980505193923/http://www.altavista.com/"
+ },
+ "Ask Jeeves": {
+  "file": "img/sites/ask-jeeves.jpg",
+  "year": 2000,
+  "source": "https://web.archive.org/web/20000706213646/https://www.ask.com/"
+ },
+ "AOL / AOL Instant Messenger (AIM)": {
+  "file": "img/sites/aol-aol-instant-messenger-aim.jpg",
+  "year": 2001,
+  "source": "https://web.archive.org/web/20010514101756/http://www.aim.com/"
+ },
+ "LimeWire (P2P era context)": {
+  "file": "img/sites/limewire-p2p-era-context.jpg",
+  "year": 2004,
+  "source": "https://web.archive.org/web/20040701135557/http://www.limewire.com/"
+ },
+ "GeoCities": {
+  "file": "img/sites/geocities.jpg",
+  "year": 1999,
+  "source": "https://web.archive.org/web/19990701000000/http://www.geocities.com/"
+ },
+ "Napster": {
+  "file": "img/sites/napster.jpg",
+  "year": 2000,
+  "source": "https://web.archive.org/web/20000701000000/https://www.napster.com/"
+ },
+ "Newgrounds (early)": {
+  "file": "img/sites/newgrounds-early.jpg",
+  "year": 2002,
+  "source": "https://web.archive.org/web/20020701000000/https://www.newgrounds.com/"
+ },
+ "Tripod": {
+  "file": "img/sites/tripod.jpg",
+  "year": 1998,
+  "source": "https://web.archive.org/web/19980701000000/http://www.tripod.com/"
+ }
+}

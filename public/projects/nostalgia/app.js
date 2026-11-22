@@ -8,7 +8,8 @@ import {
   primaryEra,
 } from "./data.js";
 import { WEBSITES as CATALOG_WEBSITES, ITEMS as CATALOG_ITEMS } from "./catalog-data.js";
-import { renderMoments, realYearFor } from "./moments.js";
+import { renderMoments, realYearFor, iconFor } from "./moments.js";
+import { ITEM_MEDIA, SITE_MEDIA } from "./media.js";
 
 const state = {
   generation: "millennial",
@@ -262,6 +263,34 @@ function cohortNote(cohort) {
   return "";
 }
 
+/** "Game Boy (and Game Boy Color)" -> "Game Boy" for tiles; the full name stays in the detail view. */
+function shortName(name) {
+  return String(name || "").replace(/\s*\(.*?\)\s*/g, " ").trim();
+}
+
+function hostOf(archive) {
+  const m = String(archive || "").match(/web\.archive\.org\/web\/[^/]+\/https?:\/\/([^/]+)/i);
+  const raw = m ? m[1] : String(archive || "").replace(/^https?:\/\//, "").split("/")[0];
+  if (/restorativland/i.test(raw)) return "geocities.com";
+  return raw.replace(/^www\./, "");
+}
+
+/** A real photo when we have one, else an original drawing of the thing. */
+function picture(media, item) {
+  if (media?.file) {
+    return `<span class="pic"><img src="./${esc(media.file)}" alt="" loading="lazy" decoding="async" /></span>`;
+  }
+  return `<span class="pic pic--drawn"><svg viewBox="0 0 50 50" aria-hidden="true">${item ? iconFor(item) : ""}</svg></span>`;
+}
+
+function sitePicture(site) {
+  const media = site ? SITE_MEDIA[site.name] : null;
+  if (media?.file) {
+    return `<span class="pic pic--shot"><img src="./${esc(media.file)}" alt="" loading="lazy" decoding="async" /></span>`;
+  }
+  return `<span class="pic pic--shot pic--noshot"><span>${esc(shortName(site?.name || ""))}</span></span>`;
+}
+
 /** Prefer Wayback / restoration hosts as “Open archive”; live domains as “Visit site”. */
 function archiveLinkLabel(url) {
   const href = String(url || "").toLowerCase();
@@ -347,7 +376,7 @@ function renderResults() {
   $("#era-banner").innerHTML = `
     <div class="years">${from}–${to} · ${esc(GENERATION.label)}</div>
     <h2>${esc(primary.label)}</h2>
-    <p>${esc(primary.subtitle)}. Style lane: ${esc(primary.styleName)}. Matched ${sites.length} websites and ${items.length} objects for your years—switch lenses for the visual system too.</p>
+    <p>${esc(primary.subtitle)}.</p>
   `;
 
   const peakSite = sites.find((s) => s.peakFit) || sites[0];
@@ -356,22 +385,18 @@ function renderResults() {
   const digest = $("#era-digest");
   if (digest) {
     digest.innerHTML = `
-      <p class="digest-kicker">Your era digest · web · things · style</p>
       <div class="digest-grid">
-        <button class="digest-card" type="button" data-digest-lens="websites" data-digest-q="${esc(peakSite?.name || "")}">
-          <span class="digest-lens">Website</span>
-          <strong>${esc(peakSite?.name || "—")}</strong>
-          <span class="digest-line">${esc(peakSite?.vibe || "Open the Websites lens")}</span>
+        <button class="digest-card digest-card--pic" type="button" data-digest-lens="items" data-digest-q="${esc(peakItem?.name || "")}">
+          ${picture(ITEM_MEDIA[peakItem?.name], peakItem)}
+          <strong>${esc(shortName(peakItem?.name || ""))}</strong>
         </button>
-        <button class="digest-card" type="button" data-digest-lens="items" data-digest-q="${esc(peakItem?.name || "")}">
-          <span class="digest-lens">Object</span>
-          <strong>${esc(peakItem?.name || "—")}</strong>
-          <span class="digest-line">${esc(peakItem?.sensory || "Open the Items lens")}</span>
+        <button class="digest-card digest-card--pic" type="button" data-digest-lens="websites" data-digest-q="${esc(peakSite?.name || "")}">
+          ${sitePicture(peakSite)}
+          <strong>${esc(shortName(peakSite?.name || ""))}</strong>
         </button>
-        <button class="digest-card" type="button" data-digest-lens="style" data-digest-q="">
-          <span class="digest-lens">Style</span>
+        <button class="digest-card digest-card--pic" type="button" data-digest-lens="style" data-digest-q="">
+          <span class="pic pic--swatch">${(styleCue?.palette || []).slice(0, 5).map((hex) => `<i style="background:${/^#[0-9a-fA-F]{3,8}$/.test(hex) ? hex : "#000"}"></i>`).join("")}</span>
           <strong>${esc(styleCue?.name || primary.styleName)}</strong>
-          <span class="digest-line">${esc(styleCue?.motifs?.[0] || primary.subtitle)}</span>
         </button>
       </div>`;
     $$("[data-digest-lens]", digest).forEach((btn) => {
@@ -382,45 +407,35 @@ function renderResults() {
   }
 
   $("#lens-websites").innerHTML = `
-    <div class="card-list">
+    <div class="tile-grid tile-grid--sites">
       ${sites
-        .map((s) => {
-          const href = safeUrl(s.archive);
-          const linkLabel = archiveLinkLabel(href);
-          return `
-        <article class="item${s.peakFit ? " item--peak" : ""}">
-          <div class="item-head">
-            <h3>${esc(s.name)}${s.peakFit ? ` <span class="peak-tag">peaks in your years</span>` : ""}</h3>
-            <span class="meta">${esc(s.years)}${s.cohort ? ` · ${esc(cohortNote(s.cohort))}` : ""}</span>
-          </div>
-          <p class="vibe">${esc(s.vibe)}</p>
-          <p>${esc(s.why)}${
-            href
-              ? ` <a href="${esc(href)}" target="_blank" rel="noopener noreferrer">${esc(linkLabel)}</a>`
-              : ""
-          }</p>
-          ${href ? `<button class="real-btn" type="button" data-real="${esc(s.name)}">Open the real ${realYearFor(s)} page</button>` : ""}
-        </article>`;
-        })
+        .map((s) => `
+        <button class="item tile tile--site${s.peakFit ? " item--peak" : ""}" type="button" data-real="${esc(s.name)}"
+          aria-label="Open ${esc(s.name)} as it looked in ${realYearFor(s)}">
+          <span class="browser" aria-hidden="true"><span class="browser-bar"><i></i><i></i><i></i><span>${esc(hostOf(s.archive))}</span></span>${sitePicture(s)}</span>
+          <span class="tile-name">${esc(shortName(s.name))}</span>
+          <span class="tile-year">${realYearFor(s)}${s.peakFit ? ` <b class="peak-dot">peak</b>` : ""}</span>
+          <span class="tile-hidden">${esc(s.vibe)}</span>
+        </button>`)
         .join("")}
     </div>`;
 
   $("#lens-items").innerHTML = `
-    <div class="card-list">
+    <div class="tile-grid tile-grid--items">
       ${items
         .map(
           (it) => `
-        <article class="item${it.peakFit ? " item--peak" : ""}">
-          <div class="item-head">
-            <h3>${esc(it.name)}${it.peakFit ? ` <span class="peak-tag">peaks in your years</span>` : ""}</h3>
-            <span class="meta">${esc(it.category)} · ${esc(it.years)}</span>
-          </div>
-          <p class="vibe">${esc(it.sensory)}</p>
-          <p>${esc(it.why)}</p>
-          <div class="own-row" data-own-item="${esc(it.name)}">
-            <button type="button" class="own-btn" data-own="had" aria-pressed="false">I had this</button>
-            <button type="button" class="own-btn own-btn--want" data-own="wanted" aria-pressed="false">Wanted it, never got it</button>
-          </div>
+        <article class="item tile tile--thing${it.peakFit ? " item--peak" : ""}" data-own-item="${esc(it.name)}">
+          <button class="tile-open" type="button" data-thing="${esc(it.name)}" aria-label="${esc(it.name)}: more">
+            ${picture(ITEM_MEDIA[it.name], it)}
+            <span class="tile-name">${esc(shortName(it.name))}</span>
+            <span class="tile-year">${esc(it.years)}${it.peakFit ? ` <b class="peak-dot">peak</b>` : ""}</span>
+            <span class="tile-hidden">${esc(it.sensory)}</span>
+          </button>
+          <button type="button" class="had-toggle" data-own="had" aria-pressed="false" aria-label="I had ${esc(it.name)}">
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path class="had-plus" d="M10 4v12M4 10h12"/><path class="had-check" d="M4.5 10.5l3.5 3.5 7.5-8"/></svg>
+            <span>had it</span>
+          </button>
         </article>`
         )
         .join("")}
@@ -494,7 +509,7 @@ function renderResults() {
   });
 
   $("#research").innerHTML = `
-    <h3>How this was researched</h3>
+    <details><summary>How we dated all this</summary>
     <div class="note-grid">
       ${RESEARCH_NOTES.map(
         (n) => `<div class="note"><strong>${esc(n.title)}</strong><p>${esc(n.body)}</p></div>`
@@ -507,7 +522,9 @@ function renderResults() {
         <strong>Catalog depth</strong>
         <p>${sites.length} websites · ${items.length} objects · ${styleBlocks.length} style system${styleBlocks.length === 1 ? "" : "s"} in this range.</p>
       </div>
-    </div>`;
+    </div>
+    <p class="credits-line">Photos: Wikimedia Commons contributors (credited on each object). Old pages: Internet Archive Wayback Machine.</p>
+    </details>`;
 
   const filter = $("#lens-filter");
   if (filter) filter.value = "";
