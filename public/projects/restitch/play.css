@@ -1,0 +1,159 @@
+/* Restitch front door (play.html). Pattern Tissue tokens come from restitch.css. */
+.play { min-height: 100svh; }
+.stage { width: min(100% - 2rem, 27rem); margin: 0 auto; padding: 3.6rem 0 2.5rem; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+.beat { display: none; }
+.beat.is-on { display: block; animation: beat-in 0.35s var(--ease) both; }
+@keyframes beat-in { from { opacity: 0; transform: translateY(8px); } }
+.beat :focus { outline: none; }
+
+.ask { font: 400 clamp(2.1rem, 9vw, 2.6rem)/1.04 var(--rs-font-display); margin: 0.4rem 0 1.1rem; max-width: none; }
+.ask--small { font-size: 1.45rem; margin: 1.1rem 0 0.6rem; }
+.fine { margin: 0.7rem 0 0; color: var(--rs-muted); font: 500 0.7rem/1.4 var(--rs-font-mono); letter-spacing: 0.04em; text-transform: uppercase; }
+.fine.is-err { color: var(--rs-red); }
+
+/* Buttons */
+.big-btn {
+  display: flex; align-items: center; justify-content: center; gap: 0.55rem; width: 100%; min-height: 3.4rem;
+  font: 600 1.08rem var(--rs-font-text); color: #fff; background: var(--rs-red); border: 1px solid var(--rs-red);
+  border-radius: var(--rs-radius); cursor: pointer; text-decoration: none; box-shadow: var(--rs-shadow);
+}
+.big-btn svg { width: 1.4rem; height: 1.4rem; }
+.big-btn:hover { background: #962F1B; }
+.big-btn:disabled { opacity: 0.7; cursor: progress; }
+.big-btn:focus-visible, #own:focus-visible + .big-btn, .ghost-btn:focus-visible, .text-btn:focus-visible,
+.hanger:focus-visible, .kit:focus-visible, .view:focus-visible { outline: 2px solid var(--rs-blue); outline-offset: 2px; }
+.ghost-btn {
+  width: 100%; min-height: 3rem; font: 600 0.98rem var(--rs-font-text); color: var(--rs-ink); background: var(--rs-sheet);
+  border: 1px solid var(--rs-ink); border-radius: var(--rs-radius); cursor: pointer;
+}
+.ghost-btn:hover { color: var(--rs-red); border-color: var(--rs-red); }
+.text-btn { background: none; border: 0; padding: 0.4rem 0; font: 600 0.92rem var(--rs-font-text); color: var(--rs-blue); cursor: pointer; text-decoration: underline; text-underline-offset: 0.2em; }
+
+/* 1. The rack: finds hang from a rail */
+.rack {
+  position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem 0.8rem;
+  padding-top: 0.9rem; margin-bottom: 1.3rem;
+}
+.rack::before { content: ""; position: absolute; left: -0.3rem; right: -0.3rem; top: 0; height: 3px; background: var(--rs-ink); border-radius: 2px; }
+.rack::after { content: ""; position: absolute; left: -0.3rem; right: -0.3rem; top: calc(50% + 0.42rem); height: 3px; background: var(--rs-ink); border-radius: 2px; }
+.hanger {
+  position: relative; display: block; padding: 0.4rem; aspect-ratio: 4 / 4.4; background: #fff;
+  border: 1px solid var(--rs-line); border-radius: var(--rs-radius); cursor: pointer; box-shadow: var(--rs-shadow);
+  transform: rotate(var(--r, -1.2deg)); transition: transform 0.25s var(--ease), border-color 0.2s;
+}
+.hanger:nth-child(2n) { --r: 1.4deg; }
+.hanger:nth-child(3) { --r: 0.8deg; }
+.hanger::before {
+  content: ""; position: absolute; left: 50%; top: -0.95rem; width: 0.75rem; height: 0.95rem; transform: translateX(-50%);
+  border: 2px solid var(--rs-ink); border-bottom: 0; border-radius: 0.5rem 0.5rem 0 0;
+}
+.hanger img { width: 100%; height: 100%; object-fit: contain; display: block; pointer-events: none; }
+.hanger:hover { transform: rotate(0deg) translateY(-3px); border-color: var(--rs-red); }
+
+/* 2. Kit */
+.kit-find { width: 6.5rem; height: 6.5rem; padding: 0.3rem; background: #fff; border: 2px dashed var(--rs-red); border-radius: var(--rs-radius); margin: 0.2rem 0 0.4rem; }
+.kit-find img, .kit-find svg { width: 100%; height: 100%; object-fit: contain; display: block; }
+.kits { display: grid; gap: 0.7rem; }
+.kit {
+  display: flex; align-items: center; gap: 1rem; min-height: 4.6rem; padding: 0.6rem 1rem; text-align: left;
+  font: 600 1.15rem var(--rs-font-text); color: var(--rs-ink); background: var(--rs-sheet);
+  border: 1px solid var(--rs-line); border-radius: var(--rs-radius); cursor: pointer; box-shadow: var(--rs-shadow);
+}
+.kit svg { width: 4rem; height: 2.5rem; flex: none; color: var(--rs-ink); }
+.kit:hover { border-color: var(--rs-red); }
+
+/* 3. The read */
+.mat {
+  display: flex; justify-content: center; padding: 1.1rem; margin-top: 0.4rem; background-color: #F6EEDD;
+  background-image: linear-gradient(rgba(47, 93, 138, 0.16) 1px, transparent 1px), linear-gradient(90deg, rgba(47, 93, 138, 0.16) 1px, transparent 1px);
+  background-size: 18px 18px; border: 1px solid var(--rs-line); border-radius: var(--rs-radius);
+}
+.mat-photo { position: relative; display: inline-block; line-height: 0; }
+.mat-photo img, .mat-photo > svg:first-child { display: block; max-width: 100%; max-height: 46svh; width: auto; height: auto; }
+.mat-photo > svg:first-child { height: 46svh; }
+.trace { position: absolute; display: block; border: 2.5px dashed var(--rs-red); box-shadow: 0 0 0 1px rgba(251, 245, 234, 0.6); animation: trace 1.3s var(--ease) both; }
+@keyframes trace { from { clip-path: inset(0 100% 100% 0); } 50% { clip-path: inset(0 0 100% 0); } to { clip-path: inset(0 0 0 0); } }
+.read-chips { list-style: none; display: flex; flex-wrap: wrap; gap: 0.45rem; padding: 0; margin: 1rem 0 0; min-height: 5.5rem; }
+.chip {
+  display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.42rem 0.65rem; background: var(--rs-sheet);
+  border: 1px solid var(--rs-line); border-radius: var(--rs-radius); font: 600 0.82rem var(--rs-font-mono); animation: chip-in 0.3s var(--ease) both;
+}
+.chip--ink { background: var(--rs-ink); color: var(--rs-tissue); border-color: var(--rs-ink); font: 400 1.05rem var(--rs-font-display); }
+.chip--muted { color: var(--rs-muted); border-style: dashed; }
+.sw { width: 0.9rem; height: 0.9rem; border: 1px solid var(--rs-ink); display: inline-block; }
+@keyframes chip-in { from { opacity: 0; transform: translateY(6px); } }
+
+/* 4. The envelope */
+.friend-note { margin: 0.2rem 0 0.6rem; font: 400 1.25rem var(--rs-font-display); color: var(--rs-red); }
+.env {
+  position: relative; background: var(--rs-sheet); border: 1px solid var(--rs-line); border-radius: var(--rs-radius);
+  box-shadow: 0 22px 40px -26px rgba(42, 33, 26, 0.6); transform: rotate(-0.8deg); margin-top: 0.3rem;
+}
+.env.is-landing { animation: env-in 0.75s var(--ease) both; }
+@keyframes env-in { from { opacity: 0; transform: translateY(60px) rotate(-6deg) scale(0.94); } }
+.env-top { display: flex; justify-content: space-between; align-items: center; padding: 0.45rem 0.8rem; background: var(--rs-ink); color: var(--rs-tissue); }
+.env-brand { font: 600 0.72rem var(--rs-font-mono); letter-spacing: 0.14em; text-transform: uppercase; }
+.env-no { font: 400 1.3rem var(--rs-font-display); }
+.env-title { font: 400 1.55rem/1.1 var(--rs-font-display); margin: 0; padding: 0.6rem 0.8rem 0.5rem; border-bottom: var(--rs-cut); }
+.env-cover { display: grid; grid-template-columns: 1.55fr 1fr; gap: 0.5rem; padding: 0.6rem 0.8rem; }
+.env-photo { background: #fff; border: 1px solid var(--rs-line); display: flex; align-items: center; justify-content: center; padding: 0.3rem; min-height: 0; }
+.env-photo img, .env-photo svg { width: 100%; height: 100%; max-height: 15.5rem; object-fit: contain; display: block; }
+.env-minis { display: grid; grid-template-rows: repeat(3, 1fr); gap: 0.35rem; }
+.mini { position: relative; background: #fff; border: 1px solid var(--rs-line); display: flex; justify-content: center; padding: 0.15rem; }
+.mini svg { height: 100%; max-height: 5.4rem; width: auto; }
+.mini-l { position: absolute; left: 0.3rem; top: 0.15rem; font: 600 0.8rem var(--rs-font-mono); color: var(--rs-blue); }
+.mini.is-picked { outline: 2.5px solid var(--rs-red); outline-offset: 2px; border-radius: 50%; }
+.env--wide .env-cover { grid-template-columns: 1fr; }
+.env--wide .env-photo img { max-height: 11rem; }
+.env--wide .env-minis { grid-template-rows: none; grid-template-columns: repeat(3, 1fr); }
+.env--wide .mini svg { height: 5.2rem; }
+.env-foot { display: flex; justify-content: space-between; gap: 0.6rem; padding: 0.45rem 0.8rem 0.6rem; font: 600 0.66rem var(--rs-font-mono); letter-spacing: 0.04em; text-transform: uppercase; color: var(--rs-muted); border-top: 1px solid var(--rs-line); }
+.env-foot > span:first-child { white-space: nowrap; }
+.env-credit { text-transform: none; letter-spacing: 0; text-align: right; }
+.env-credit a { color: var(--rs-muted); }
+.stamp {
+  position: absolute; right: 0.4rem; top: 3.1rem; padding: 0.2rem 0.55rem; border: 2.5px solid var(--rs-red); border-radius: 999px;
+  color: var(--rs-red); font: 600 0.7rem var(--rs-font-mono); letter-spacing: 0.06em; text-transform: uppercase; background: var(--rs-sheet); transform: rotate(-10deg); opacity: 0.85; pointer-events: none;
+  animation: stamp 0.45s 0.75s cubic-bezier(0.3, 1.6, 0.5, 1) both;
+}
+@keyframes stamp { from { opacity: 0; transform: rotate(-10deg) scale(2.4); } }
+
+.views { display: grid; gap: 0.5rem; }
+.view {
+  display: grid; grid-template-columns: 2.1rem 1fr auto; align-items: center; gap: 0.7rem; min-height: 3.6rem; padding: 0.5rem 0.8rem;
+  text-align: left; background: var(--rs-sheet); border: 1px solid var(--rs-line); border-radius: var(--rs-radius); cursor: pointer;
+  font: 500 0.95rem/1.3 var(--rs-font-text); color: var(--rs-ink);
+}
+.view:hover { border-color: var(--rs-red); }
+.v-l { display: grid; place-items: center; width: 2.1rem; height: 2.1rem; border: 1.5px solid var(--rs-blue); border-radius: 50%; color: var(--rs-blue); font: 600 1rem var(--rs-font-mono); }
+.v-t b { display: block; font: 600 0.68rem var(--rs-font-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--rs-blue); }
+.v-mark { font: 600 0.64rem var(--rs-font-mono); font-style: normal; text-transform: uppercase; color: var(--rs-red); border: 1px dashed var(--rs-red); padding: 0.15rem 0.35rem; white-space: nowrap; }
+
+/* 5. Make it yours */
+.compare { margin: 0.2rem 0 0.5rem; font: 400 1.35rem var(--rs-font-display); color: var(--rs-red); }
+.view-big { display: flex; justify-content: center; padding: 0.8rem; background: var(--rs-sheet); border: 1px solid var(--rs-line); border-radius: var(--rs-radius); }
+.view-big svg { height: min(16rem, 34svh); width: auto; animation: draw-in 0.6s var(--ease) both; }
+@keyframes draw-in { from { opacity: 0; transform: scale(0.92) rotate(-2deg); } }
+.view-tag { margin: 0.9rem 0 0.2rem; font: 600 0.74rem var(--rs-font-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--rs-blue); }
+.view-title { font: 400 1.6rem/1.12 var(--rs-font-display); }
+.measure { margin: 0.6rem 0 0; font-size: 0.95rem; }
+.m-k { font: 600 0.68rem var(--rs-font-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--rs-red); border: 1px solid var(--rs-red); padding: 0.1rem 0.35rem; margin-right: 0.2rem; }
+.steps { margin: 0.7rem 0 0; border-top: 1px solid var(--rs-line); border-bottom: 1px solid var(--rs-line); padding: 0.55rem 0; }
+.steps summary { cursor: pointer; font-weight: 600; }
+.steps summary::marker { color: var(--rs-red); }
+.steps ol { margin: 0.5rem 0 0; padding-left: 1.2rem; font-size: 0.93rem; }
+.steps li { margin: 0.35rem 0; }
+.notions { margin: 0.5rem 0 0; font-size: 0.93rem; }
+.actions { display: grid; gap: 0.55rem; margin-top: 1rem; }
+.more { display: flex; justify-content: space-between; gap: 1rem; margin-top: 0.6rem; }
+
+@media (min-width: 700px) {
+  .stage { padding-top: 4.5rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .beat.is-on, .env.is-landing, .stamp, .chip, .view-big svg { animation: none; }
+  .trace { animation: none; }
+  .hanger { transition: none; }
+}
