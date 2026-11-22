@@ -1,0 +1,65 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Make Your Planner</title>
+<meta name="description" content="Answer six quick questions and get a printable planner built around how you get stuck — your name, your goal, your rewards."/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,550&family=Source+Sans+3:wght@500;700&family=Caveat:wght@600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../styles.css"/>
+<link rel="stylesheet" href="make.css"/>
+</head><body>
+<a class="studio-back" href="/">← Vargas Studio</a>
+<div class="mk">
+  <header class="mk-head">
+    <nav class="top"><a href="../index.html">Shop</a><a href="../index.html#planners">Free planners</a><a href="./" aria-current="page">Make yours</a></nav>
+    <h1 class="brand">A planner built around how you get stuck.</h1>
+    <p class="lede">Six quick questions. Your name, your goal, your rewards, printed in.</p>
+  </header>
+
+  <div class="mk-grid">
+    <section class="mk-panel" aria-live="polite">
+      <!-- Step 1: quiz -->
+      <div id="step-quiz" class="step">
+        <div class="dots" id="dots" aria-hidden="true"></div>
+        <p class="qnum" id="qnum"></p>
+        <h2 id="qtext"></h2>
+        <div class="opts" id="opts"></div>
+        <div class="qnav"><button class="link" id="back" type="button">← Back</button><button class="link" id="skip" type="button">Skip quiz</button></div>
+      </div>
+
+      <!-- Step 2: personalize -->
+      <div id="step-make" class="step" hidden>
+        <div class="result" id="result"></div>
+        <form id="form" autocomplete="off">
+          <label>Name on the cover<input id="f-name" maxlength="18" placeholder="Your first name"/></label>
+          <fieldset class="seg"><legend>It's for</legend>
+            <label><input type="radio" name="for" value="me" checked/> Me</label>
+            <label><input type="radio" name="for" value="gift"/> A gift</label>
+          </fieldset>
+          <div id="gift" hidden>
+            <label>From<input id="f-from" maxlength="24" placeholder="Your name"/></label>
+            <label>A note on page one<textarea id="f-note" maxlength="220" rows="3" placeholder="You've got this. Love, …"></textarea></label>
+          </div>
+          <label id="l-goal">What should it help with?<input id="f-goal" maxlength="60" placeholder="e.g. finish my portfolio"/></label>
+          <label id="l-habit" hidden>The habit<input id="f-habit" maxlength="50" placeholder="e.g. read 10 pages"/></label>
+          <div class="three"><span class="legend">Three rewards you'd actually love</span>
+            <input id="f-r1" maxlength="34" placeholder="a fancy coffee"/><input id="f-r2" maxlength="34" placeholder="an episode, guilt-free"/><input id="f-r3" maxlength="34" placeholder="a day trip"/></div>
+          <fieldset class="swatches"><legend>Colour</legend><div id="swatches"></div></fieldset>
+          <details class="pages"><summary>Pages in your planner <span id="pcount"></span></summary><div id="plist"></div></details>
+        </form>
+        <div class="getit">
+          <button class="btn" id="print" type="button">Print it / save as PDF</button>
+          <form id="order" method="post" target="_blank" hidden><button class="btn btn-ghost" type="submit">Order it printed</button></form>
+          <p class="fine" id="printhint">Free. In the print window, choose “Save as PDF” or print at 100% on US Letter.</p>
+          <p class="fine" id="soon">Printed kits with pre-cut pieces are coming soon.</p>
+          <button class="link" id="redo" type="button">↺ Retake the quiz</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="mk-preview" aria-label="Preview of your planner">
+      <div class="pv-bar"><span id="pv-title">Preview</span><span class="pv-n" id="pv-n"></span></div>
+      <iframe id="book" src="book.html" title="Your planner preview"></iframe>
+    </section>
+  </div>
+</div>
+<script src="builder.js"></script>
+</body></html>
