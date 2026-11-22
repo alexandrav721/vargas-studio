@@ -8,6 +8,7 @@ import {
   primaryEra,
 } from "./data.js";
 import { WEBSITES as CATALOG_WEBSITES, ITEMS as CATALOG_ITEMS } from "./catalog-data.js";
+import { renderMoments, realYearFor } from "./moments.js";
 
 const state = {
   generation: "millennial",
@@ -243,7 +244,7 @@ function readUrlState() {
   }
   if (params.has("from")) state.yearFrom = clamp(Number(params.get("from")), 1995, 2012);
   if (params.has("to")) state.yearTo = clamp(Number(params.get("to")), 1995, 2012);
-  if (["websites", "items", "style"].includes(params.get("lens"))) {
+  if (["websites", "items", "style", "room"].includes(params.get("lens"))) {
     state.lens = params.get("lens");
   }
   return params.get("stage") || (params.has("from") || params.has("birth") ? "results" : null);
@@ -398,6 +399,7 @@ function renderResults() {
               ? ` <a href="${esc(href)}" target="_blank" rel="noopener noreferrer">${esc(linkLabel)}</a>`
               : ""
           }</p>
+          ${href ? `<button class="real-btn" type="button" data-real="${esc(s.name)}">Open the real ${realYearFor(s)} page</button>` : ""}
         </article>`;
         })
         .join("")}
@@ -415,6 +417,10 @@ function renderResults() {
           </div>
           <p class="vibe">${esc(it.sensory)}</p>
           <p>${esc(it.why)}</p>
+          <div class="own-row" data-own-item="${esc(it.name)}">
+            <button type="button" class="own-btn" data-own="had" aria-pressed="false">I had this</button>
+            <button type="button" class="own-btn own-btn--want" data-own="wanted" aria-pressed="false">Wanted it, never got it</button>
+          </div>
         </article>`
         )
         .join("")}
@@ -505,6 +511,7 @@ function renderResults() {
 
   const filter = $("#lens-filter");
   if (filter) filter.value = "";
+  renderMoments({ from, to, sites, items });
   setLens(state.lens);
   syncUrl();
 }
@@ -648,7 +655,7 @@ function bind() {
     }, 420);
   });
 
-  const lenses = ["websites", "items", "style"];
+  const lenses = ["websites", "items", "style", "room"];
   $$(".tab").forEach((tab) => {
     tab.addEventListener("click", () => setLens(tab.dataset.lens));
     tab.addEventListener("keydown", (e) => {
@@ -686,7 +693,7 @@ function bind() {
     }
     if (typing) return;
     if (!$("#stage-results")?.classList.contains("is-active")) return;
-    const lensByKey = { "1": "websites", "2": "items", "3": "style" };
+    const lensByKey = { "1": "websites", "2": "items", "3": "style", "4": "room" };
     if (lensByKey[e.key]) {
       e.preventDefault();
       setLens(lensByKey[e.key]);
