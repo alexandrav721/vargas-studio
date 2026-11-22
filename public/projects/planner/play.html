@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Which planner are you? · Planner and Book</title>
+  <meta name="description" content="Flip ten real planner pages. Keep the ones you'd use. Scratch to see your planner, then print just your pages." />
+  <meta property="og:title" content="Which planner are you?" />
+  <meta property="og:description" content="Keep the pages you'd use. Print them tonight." />
+  <meta property="og:image" content="./downloads/01-stuck-starter-cover.png" />
+  <meta name="theme-color" content="#f7f3ee" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=DM+Sans:wght@400;500;700&family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./play/play.css" />
+</head>
+<body class="play-body">
+  <a class="studio-back" href="/">← Vargas Studio</a>
+
+  <!-- 1. Arrive -->
+  <section class="beat is-on" id="beat-boot" aria-labelledby="boot-ask">
+    <div class="fan" id="fan" aria-hidden="true"></div>
+    <h1 class="boot-ask" id="boot-ask">Which planner are you?</h1>
+    <p class="boot-sub" id="boot-sub">Keep the pages you'd use.</p>
+    <button class="big-btn" type="button" id="go">Start</button>
+    <a class="quiet-link" href="./index.html">Browse all</a>
+  </section>
+
+  <!-- 2. Flip: keep or skip -->
+  <section class="beat" id="beat-play" aria-label="Keep or skip">
+    <div class="play-top">
+      <h2 class="play-ask">Would you use it?</h2>
+      <span class="play-count" id="play-count" aria-live="polite"></span>
+    </div>
+    <div class="deck" id="deck"></div>
+    <div class="answers">
+      <button class="ans ans--skip" type="button" data-ans="skip">Skip</button>
+      <button class="ans ans--keep" type="button" data-ans="keep">Keep</button>
+    </div>
+    <div class="kept" id="kept" aria-hidden="true"></div>
+  </section>
+
+  <!-- 2b. Tiebreaker (only when two planners tie) -->
+  <section class="beat" id="beat-tie" aria-labelledby="tie-ask">
+    <h2 class="play-ask tie-ask" id="tie-ask">Tiebreaker. Pick one.</h2>
+    <div class="tie" id="tie"></div>
+  </section>
+
+  <!-- 3. Reveal: scratch -->
+  <section class="beat" id="beat-reveal" aria-label="Your planner">
+    <p class="reveal-lead" id="reveal-lead" aria-live="polite"></p>
+    <div class="ticket" id="ticket">
+      <img class="ticket-cover" id="cover" src="./downloads/04-gentle-reset-cover.png" alt="" width="816" height="1056" />
+      <span class="ticket-name" id="ticket-name" aria-hidden="true"></span>
+      <canvas class="foil" id="foil" aria-hidden="true"></canvas>
+    </div>
+    <button class="big-btn" type="button" id="scratch">Scratch it</button>
+    <div class="after" id="after" hidden>
+      <h2 class="reveal-name" id="reveal-name"></h2>
+      <p class="reveal-tag" id="reveal-tag"></p>
+      <p class="reveal-friend" id="reveal-friend" hidden></p>
+      <label class="belongs">
+        <span>This planner belongs to</span>
+        <input id="who" maxlength="24" autocomplete="given-name" placeholder="your name" />
+      </label>
+      <a class="big-btn" id="print" href="./my-pages.html">Print my pages</a>
+      <div class="row">
+        <button class="ghost-btn" type="button" id="send">Send to a friend</button>
+        <button class="ghost-btn" type="button" id="save">Save card</button>
+      </div>
+      <p class="toast" id="toast" role="status" aria-live="polite"></p>
+      <div class="more">
+        <a class="quiet-link" id="pdf" href="./downloads/01-stuck-starter.pdf" download>Full PDF</a>
+        <button class="quiet-link" type="button" id="again">Play again</button>
+        <a class="quiet-link" href="./index.html">All planners</a>
+      </div>
+    </div>
+  </section>
+
+  <script src="./play/play.js"></script>
+</body>
+</html>
