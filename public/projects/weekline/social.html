@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Weekline Social</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --wl-ink:#0a0a0b;--wl-asphalt:#141310;--wl-curb:#1f1c18;--wl-paper:#f6f1e6;--wl-concrete:#b7b0a4;
+  --wl-lime:#c8f542;--wl-cyan:#3de0ff;--wl-coral:#ff6b4a;--wl-line:rgba(246,241,230,.16);--wl-fog:rgba(246,241,230,.08);
+  --wl-font-display:'Bricolage Grotesque','Arial Narrow',sans-serif;--wl-font-body:'Outfit',system-ui,sans-serif;
+  --wl-shadow-btn:3px 3px 0 rgba(0,0,0,.45);--wl-shadow-sheet:0 24px 80px rgba(0,0,0,.5);
+  --wl-glow-a:rgba(200,245,66,.14);--wl-glow-b:rgba(61,224,255,.12);--wl-glow-c:rgba(255,107,74,.10);
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--wl-ink);color:var(--wl-paper);font:400 1rem/1.55 var(--wl-font-body);overflow-x:hidden;
+  background-image:radial-gradient(60rem 30rem at 85% -10%,var(--wl-glow-a),transparent 60%),radial-gradient(40rem 26rem at -10% 30%,var(--wl-glow-b),transparent 60%),radial-gradient(50rem 30rem at 60% 110%,var(--wl-glow-c),transparent 60%)}
+a{color:inherit}
+img{display:block;max-width:100%;height:auto}
+:focus-visible{outline:3px solid var(--wl-lime);outline-offset:3px}
+.studio-back{position:fixed;top:12px;left:12px;z-index:100;font:600 12px/1 var(--wl-font-body);letter-spacing:.08em;text-transform:uppercase;text-decoration:none;color:var(--wl-paper);background:var(--wl-ink);border:1px solid rgba(246,241,230,.35);padding:9px 11px;box-shadow:var(--wl-shadow-btn)}
+.studio-back:hover{background:var(--wl-curb)}
+.topbar{max-width:1120px;margin:0 auto;padding:12px 24px 0 132px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;min-height:56px}
+.brand{display:inline-flex;align-items:center;gap:10px;text-decoration:none}
+.brand-mark{width:30px;height:30px;background:var(--wl-lime);color:var(--wl-ink);display:grid;place-items:center;font:800 19px/1 var(--wl-font-display);box-shadow:var(--wl-shadow-btn)}
+.brand-word{font:800 1.3rem/1 var(--wl-font-display);letter-spacing:-.03em}
+.topnav{display:flex;gap:2px;flex-wrap:wrap}
+.topnav a{font-size:.88rem;font-weight:600;text-decoration:none;color:var(--wl-concrete);padding:8px 9px;border-bottom:2px solid transparent}
+.topnav a:hover{color:var(--wl-paper)}
+.topnav a[aria-current=page]{color:var(--wl-paper);border-bottom-color:var(--wl-lime)}
+.wrap{max-width:1120px;margin:0 auto;padding:40px 24px 72px}
+.eyebrow{font-size:.75rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--wl-lime);margin:0 0 12px}
+h1{font:800 clamp(2.2rem,6vw,3.6rem)/.95 var(--wl-font-display);letter-spacing:-.03em;margin:0}
+h1 em{font-style:normal;color:var(--wl-lime)}
+h2{font:800 clamp(1.7rem,4vw,2.3rem)/1 var(--wl-font-display);letter-spacing:-.03em;margin:0 0 8px}
+.lede{color:var(--wl-concrete);font-size:1.1rem;max-width:40rem;margin:16px 0 0}
+section{margin-top:56px}
+.sec-note{color:var(--wl-concrete);margin:0 0 22px;max-width:60ch}
+.grid{display:grid;gap:20px}
+.ex{grid-template-columns:1fr 1.48fr .56fr;align-items:start}
+.car{grid-template-columns:repeat(5,minmax(0,1fr))}
+figure{margin:0;display:flex;flex-direction:column;gap:10px;min-width:0}
+figure a.img{display:block;border:1px solid var(--wl-line);box-shadow:var(--wl-shadow-sheet),5px 5px 0 rgba(0,0,0,.5);background:var(--wl-asphalt)}
+figcaption{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;font-size:.92rem}
+figcaption b{font-weight:600}
+figcaption span{color:var(--wl-concrete)}
+.dl{display:inline-flex;align-items:center;min-height:44px;padding:8px 14px;background:var(--wl-lime);color:var(--wl-ink);font-weight:600;font-size:.9rem;text-decoration:none;box-shadow:var(--wl-shadow-btn)}
+.links{display:flex;gap:16px;flex-wrap:wrap;margin-top:6px;font-size:.92rem}
+.links a{color:var(--wl-lime);font-weight:600}
+.notes{margin:28px 0 0;padding-left:18px;color:var(--wl-concrete);max-width:72ch;display:grid;gap:8px}
+.notes b{color:var(--wl-paper)}
+@media (max-width:900px){.ex{grid-template-columns:1fr 1fr}.ex figure:nth-child(2){grid-column:1/-1;order:-1}.car{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.topbar{padding:56px 16px 0}.wrap{padding:28px 16px 56px}.ex{grid-template-columns:1fr}.car{grid-template-columns:1fr 1fr;gap:14px}}
+</style>
+</head>
+<body>
+<a class="studio-back" href="/">← Studio</a>
+<header class="topbar">
+  <a class="brand" href="pitch/"><span class="brand-mark" aria-hidden="true">W</span><span class="brand-word">Weekline</span></a>
+  <nav class="topnav" aria-label="Weekline">
+    <a href="/projects/weekline/pitch/">Pitch</a>
+    <a href="/projects/weekline/app/">App</a>
+    <a href="ads.html">Ads</a>
+    <a href="social.html" aria-current="page">Social</a>
+  </nav>
+</header>
+<main class="wrap">
+  <p class="eyebrow">Social · organic posts</p>
+  <h1>The week, <em>in one picture.</em></h1>
+  <p class="lede">An explainer in three sizes and a 5-slide carousel. Drafts: nothing has been posted.</p>
+
+  <section aria-labelledby="ex-h">
+    <h2 id="ex-h">Explainer</h2>
+    <p class="sec-note">Crew → limits → week Sheet, plus Seeking and who pays. Readable in 5 seconds.</p>
+    <div class="grid ex">
+      <figure>
+        <a class="img" href="social/explainer-square.png"><img src="social/explainer-square.png" width="1080" height="1080" alt="Weekline explainer, square: pick a crew, set limits, get a Mon–Sun Sheet with Live, Open and Sample rows. Seeking line. Who pays: free now, ticket links and Plus planned, free events never paywalled." loading="lazy"></a>
+        <figcaption><b>Square</b><span>1080×1080</span><a class="dl" href="social/explainer-square.png" download="weekline-explainer-square.png">PNG</a></figcaption>
+      </figure>
+      <figure>
+        <a class="img" href="social/explainer-wide.png"><img src="social/explainer-wide.png" width="1600" height="900" alt="Weekline explainer, wide version of the same three steps." loading="lazy"></a>
+        <figcaption><b>Wide</b><span>1600×900</span><a class="dl" href="social/explainer-wide.png" download="weekline-explainer-wide.png">PNG</a></figcaption>
+      </figure>
+      <figure>
+        <a class="img" href="social/explainer-story.png"><img src="social/explainer-story.png" width="1080" height="1920" alt="Weekline explainer, story version with the full Mon–Sun Sheet." loading="lazy"></a>
+        <figcaption><b>Story</b><span>1080×1920</span><a class="dl" href="social/explainer-story.png" download="weekline-explainer-story.png">PNG</a></figcaption>
+      </figure>
+    </div>
+    <p class="links"><a href="social/explainer.html?size=square">Live HTML: square</a><a href="social/explainer.html?size=wide">wide</a><a href="social/explainer.html?size=story">story</a></p>
+  </section>
+
+  <section aria-labelledby="car-h">
+    <h2 id="car-h">Carousel: a free week in Brooklyn</h2>
+    <p class="sec-note">Five slides, 1080×1350, following the app’s real flow: crew, zone, radius, budget, Sheet, send.</p>
+    <div class="grid car" id="car"></div>
+    <p class="links"><a href="social/carousel.html?s=1">Live HTML: slide 1</a></p>
+    <ul class="notes">
+      <li><b>LIVE PARKS</b> rows are real NYC Parks listings for 23–29 Nov 2026 from the public NYC Open Data feed, pulled 21 Nov 2026. Re-pull before posting a later week.</li>
+      <li><b>SAMPLE</b> rows are the app’s demo rows. <b>OPEN</b> nights are left empty on purpose.</li>
+      <li>“Free” is printed only where the listing says free. Other costs are not claimed.</li>
+      <li>Who pays follows the owner’s posture: free now; ticket links and Plus are planned, not built; free events never go behind a paywall.</li>
+    </ul>
+  </section>
+</main>
+<script>
+var cap=['Cover','Pick a crew','Set limits','Get the Sheet','Send it'],h='';
+for(var i=1;i<=5;i++){var src='social/carousel-'+i+'.png';
+ h+='<figure><a class="img" href="'+src+'"><img src="'+src+'" width="1080" height="1350" loading="lazy" alt="Carousel slide '+i+': '+cap[i-1]+'"></a><figcaption><b>'+i+' · '+cap[i-1]+'</b><a class="dl" href="'+src+'" download="weekline-carousel-'+i+'.png">PNG</a></figcaption></figure>';}
+document.getElementById('car').innerHTML=h;
+</script>
+</body>
+</html>

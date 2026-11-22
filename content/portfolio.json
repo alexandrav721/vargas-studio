@@ -53,6 +53,11 @@
   "now": [
     {
       "date": "2026-11-21",
+      "projectId": "weekline",
+      "text": "Weekline added as its own project with all eight pieces: the working app and pitch site run in the studio, plus a landing page, invite demo, ads, deck, social set and printable week sheet."
+    },
+    {
+      "date": "2026-11-21",
       "projectId": "restitch",
       "text": "Every section is now filled across all seven projects: Restitch gets a landing page, deck, ads, worksheet and social set; Scrolll a clickable feed app; Planner a deck and ads; print and social pieces everywhere."
     },
@@ -79,7 +84,7 @@
     {
       "date": "2026-11-20",
       "projectId": "planner-book",
-      "text": "Planner + book shop, printable sample, and Weekline crew wall hosted in-studio."
+      "text": "Planner + book shop, printable sample hosted in-studio."
     },
     {
       "date": "2026-11-20",
@@ -93,6 +98,75 @@
     }
   ],
   "projects": [
+    {
+      "id": "weekline",
+      "name": "Weekline",
+      "aka": null,
+      "oneLiner": "Turns NYC's noisy calendar into a week you can live.",
+      "audience": "New Yorkers 25 to 40 in Manhattan and Brooklyn who plan their week around what's on",
+      "pays": "Free now. Ticket affiliate links, then a Plus plan, are planned; free events never paywalled.",
+      "status": "hot",
+      "updated": "2026-11-21",
+      "summary": "Two rituals, one brand. Crew week: pick a crew like Cheap Thrills or Move Pack, set your zone, radius and budget, and get a Monday-to-Sunday sheet you can export to your calendar. Seeking: pick a life goal (fitness, friends, network, job, love) and get a calendar that proves it. Live events come from NYC Parks open data; everything else is labeled Sample or Editorial.",
+      "latest": "All eight pieces are in: the working app and pitch site, plus a landing page, invite demo, ads, deck, social set and a printable week sheet. NYC Parks events load live; partner feeds and calendar sync aren't wired yet.",
+      "visuals": {
+        "website": {
+          "label": "Investor pitch site",
+          "detail": "The story in one scroll: problem, crews, Seeking, market, competition. Three visual versions.",
+          "url": "/projects/weekline/pitch/",
+          "state": "live"
+        },
+        "landing": {
+          "label": "Weekline landing page",
+          "detail": "Ad landing page: three headlines, an example week with source labels, live vs not yet, FAQ. Collects nothing.",
+          "url": "/projects/weekline/landing.html",
+          "state": "live"
+        },
+        "funnel": {
+          "label": "Invite request",
+          "detail": "Three-step invite demo: crew, borough and budget, email. Says plainly that nothing is saved.",
+          "url": "/projects/weekline/funnel.html",
+          "state": "live"
+        },
+        "meta-ads": {
+          "label": "Meta feed ads",
+          "detail": "Six 4:5 frames, three angles, the week Sheet up front. Rows labeled Live Parks, Sample or Open. Not run yet.",
+          "url": "/projects/weekline/ads.html",
+          "state": "live"
+        },
+        "product-ui": {
+          "label": "Weekline app",
+          "detail": "The real app: plan a crew week or a Seeking calendar. NYC Parks events load live; other rows are labeled.",
+          "url": "/projects/weekline/app/",
+          "state": "live"
+        },
+        "deck": {
+          "label": "Investor deck",
+          "detail": "12 slides with cited NYC numbers. Zero users said plainly; team and the ask left as TODO.",
+          "url": "/projects/weekline/deck.html",
+          "state": "live"
+        },
+        "print": {
+          "label": "Week sheet + fridge card",
+          "detail": "Two Letter pages for the Sunday ritual: fill in the week, stick the card on the fridge.",
+          "url": "/projects/weekline/print.html",
+          "state": "live"
+        },
+        "social": {
+          "label": "Explainer + carousel",
+          "detail": "Crew, limits, Sheet in one picture (3 sizes), plus a 5-slide 'free week in Brooklyn' carousel.",
+          "url": "/projects/weekline/social.html",
+          "state": "live"
+        }
+      },
+      "code": [
+        {
+          "label": "celebrateloop-site / weekline-app + weekline",
+          "summary": "Product app (crew week, Seeking, NYC Parks feed) and the investor pitch site.",
+          "url": "https://github.com/alexandrav721/celebrateloop-site"
+        }
+      ]
+    },
     {
       "id": "restitch",
       "name": "Restitch",
@@ -568,8 +642,8 @@
       "pays": "Free printable, then a paid planner and book (prices TBD).",
       "status": "active",
       "updated": "2026-11-20",
-      "summary": "Goals on paper and a beautiful book in hand: free printable Physical Goal Planner, premium illustrated book unlock, plus Weekline crew wall. Sits beside the Habit game \u2014 same world, different artifact.",
-      "latest": "Shop + printable Season Chapter sample + Weekline crew wall hosted at /projects/planner/ (from Origin /planner + /shop).",
+      "summary": "Goals on paper and a beautiful book in hand: free printable Physical Goal Planner, premium illustrated book unlock. Sits beside the Habit game \u2014 same world, different artifact.",
+      "latest": "Shop + printable Season Chapter sample hosted at /projects/planner/. Weekline now has its own project.",
       "visuals": {
         "website": {
           "label": "Planner + book shop",
@@ -596,9 +670,9 @@
           "state": "live"
         },
         "product-ui": {
-          "label": "Weekline crew wall",
-          "detail": "Goal-first crew week planner \u2014 handbill energy, undated return tickets.",
-          "url": "/projects/planner/weekline.html",
+          "label": "Shop + book preview",
+          "detail": "Pick the planner, print the free Season Chapter sheet, preview the illustrated book.",
+          "url": "/projects/planner/",
           "state": "live"
         },
         "deck": {
@@ -625,11 +699,6 @@
           "label": "Origin \u00b7 lumen-d678 (/planner)",
           "summary": "Printable planner + premium book sneak / waitlist UI.",
           "url": "https://origin.cursor.com/git/alexandra-vargas/lumen-d678"
-        },
-        {
-          "label": "celebrateloop-site/weekline-app",
-          "summary": "Crew week canvas prototype.",
-          "url": "https://github.com/alexandrav721/celebrateloop-site"
         }
       ]
     },

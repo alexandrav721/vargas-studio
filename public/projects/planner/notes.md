@@ -54,7 +54,7 @@ Before running: the free printable has no email capture today, so downloads can'
 1. **Title.** Planner and Book is Lumen's paper edition: a goal planner you print or buy, and an illustrated book you unlock.
 2. **Problem.** Dated planners turn a missed stretch into empty pages, and people quit. The story is illustrative; the interview stat is a TODO.
 3. **Solution.** One goal, a sized next step, an obstacle toolkit, and a return ticket. The book is the deeper companion.
-4. **Product.** Three working web demos today: the printable, the shop, the Weekline crew wall.
+4. **Product.** Two working web demos today: the printable and the shop. (Weekline moved to its own project on 21 Nov 2026.)
 5. **Why now.** Papier and Hobonichi show paper planners growing in 2024–2025, driven by social video and a choice to be less digital.
 6. **Market.** Comparable brands sell near a million copies or $50M a year. Our year-3 math is deliberately small and fully assumed.
 7. **Traction.** None yet. The first test is two weeks of Meta ads to the free printable, then pre-orders.
@@ -78,7 +78,7 @@ Before running: the free printable has no email capture today, so downloads can'
 11. *Seasonality?* Planner buying peaks in Q4/back-to-school (Papier's best day was Black Friday, #1). Undated pages let us sell all year.
 12. *Inventory risk?* Start with print-on-demand; move to offset runs only after pre-orders.
 13. *Retail?* Papier reached ~4,300 doors (#1); not before DTC proves out.
-14. *What does Weekline add?* A crew wall for shared weekly aims; it's a demo and a referral loop, not a revenue line yet.
+14. *Is Weekline part of this?* No. Weekline is a separate project (NYC week plans) with its own page in the studio.
 15. *How much are you raising?* [TODO]
 
 ### 3 weakest points (fix before pitching)

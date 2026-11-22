@@ -113,3 +113,7 @@ export function parseRoute(hash: string): Route {
 
 export const projectHref = (id: string) => `#/p/${id}`;
 export const tourHref = (slide = 1) => (slide <= 1 ? "#/tour" : `#/tour/${slide}`);
+
+const WORDS = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve"];
+/** "eight" for 8 projects; digits past twelve. */
+export const projectCountWord = WORDS[data.projects.length] ?? String(data.projects.length);

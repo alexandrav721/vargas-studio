@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<meta name="robots" content="noindex">
+<title>Weekline Explainer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<!--
+  Weekline explainer graphic. ?size=square (1080x1080) | wide (1600x900) | story (1080x1920)
+  Shape: how it works (crew -> constraints -> week Sheet) + Seeking line + small "who pays" strip.
+  Money strip follows revenue.md posture only: free now; ticket links + Plus are PLANNED (not built); free events never paywalled.
+  No prices shown (Plus price is an untested assumption).
+  Rows: LIVE = NYC Parks listings (NYC Open Data feed w3wp-dpdi, pulled 21 Nov 2026); SAMPLE = app demo row; OPEN = nothing padded.
+-->
+<style>
+:root{
+  --wl-ink:#0a0a0b;--wl-asphalt:#141310;--wl-curb:#1f1c18;--wl-paper:#f6f1e6;--wl-concrete:#b7b0a4;
+  --wl-lime:#c8f542;--wl-cyan:#3de0ff;--wl-coral:#ff6b4a;--wl-line:rgba(246,241,230,.16);
+  --wl-sheet-paper:#f7f2e6;--wl-sheet-ink:#171410;--wl-stamp:#1f6f58;--wl-sample:#7a4a00;--wl-editorial:#4a4740;
+  --wl-font-display:'Bricolage Grotesque','Arial Narrow',sans-serif;--wl-font-body:'Outfit',system-ui,sans-serif;
+  --wl-shadow-flyer:4px 8px 0 rgba(0,0,0,.35);--wl-shadow-sheet:0 24px 80px rgba(0,0,0,.5);
+  --wl-glow-a:rgba(200,245,66,.14);--wl-glow-b:rgba(61,224,255,.12);--wl-glow-c:rgba(255,107,74,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--wl-ink);overflow:hidden}
+body{font-family:var(--wl-font-body);color:var(--wl-paper)}
+.g{position:relative;overflow:hidden;display:grid;gap:32px;padding:56px 60px;
+  background:radial-gradient(700px 420px at 92% -6%,var(--wl-glow-a),transparent 62%),radial-gradient(560px 380px at -8% 50%,var(--wl-glow-b),transparent 62%),radial-gradient(640px 420px at 70% 108%,var(--wl-glow-c),transparent 62%),var(--wl-ink)}
+.top{grid-area:top;display:flex;justify-content:space-between;align-items:center;gap:20px}
+.brand{display:flex;align-items:center;gap:14px}
+.mark{width:52px;height:52px;background:var(--wl-lime);color:var(--wl-ink);display:grid;place-items:center;font:800 34px/1 var(--wl-font-display)}
+.word{font:800 40px/1 var(--wl-font-display);letter-spacing:-.03em}
+.eyebrow{font:600 28px/1 var(--wl-font-body);letter-spacing:.12em;text-transform:uppercase;color:var(--wl-lime)}
+h1{grid-area:h1;font:800 78px/.95 var(--wl-font-display);letter-spacing:-.035em}
+h1 em{font-style:normal;color:var(--wl-lime)}
+.step{position:relative;display:flex;flex-direction:column;gap:16px;min-width:0}
+.s1{grid-area:s1}.s2{grid-area:s2}.s3{grid-area:s3}
+.lab{display:flex;align-items:center;gap:14px;font:800 40px/1 var(--wl-font-display);letter-spacing:-.02em}
+.num{width:48px;height:48px;flex:none;background:var(--wl-lime);color:var(--wl-ink);display:grid;place-items:center;font:800 30px/1 var(--wl-font-display)}
+.flyers{display:flex;flex-wrap:wrap;gap:12px}
+.fl{font:800 30px/1 var(--wl-font-display);color:var(--wl-ink);padding:12px 14px;box-shadow:var(--wl-shadow-flyer);white-space:nowrap}
+.fc{background:var(--wl-cyan);transform:rotate(-2.8deg)}.fo{background:var(--wl-coral);transform:rotate(2.4deg)}.fl3{background:var(--wl-lime);transform:rotate(-1.6deg)}
+.chips{display:flex;flex-wrap:wrap;gap:10px}
+.chip{font:600 28px/1 var(--wl-font-body);border:2px solid rgba(246,241,230,.45);padding:10px 14px;white-space:nowrap}
+.sheet{background:var(--wl-sheet-paper);color:var(--wl-sheet-ink);box-shadow:var(--wl-shadow-sheet),6px 6px 0 rgba(0,0,0,.35)}
+.sh-h{display:flex;justify-content:space-between;align-items:baseline;padding:14px 20px 10px;border-bottom:3px solid var(--wl-sheet-ink);font:800 30px/1 var(--wl-font-display)}
+.sh-h span{font:600 28px/1 var(--wl-font-body);color:var(--wl-editorial)}
+.r{display:grid;grid-template-columns:78px 1fr auto;gap:12px;align-items:center;padding:0 20px;height:62px;border-bottom:1.5px solid rgba(23,20,16,.18);font:600 28px/1 var(--wl-font-body)}
+.r:last-child{border-bottom:0}
+.r .t{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.r .o{font-style:italic;color:var(--wl-editorial)}
+.b{font:700 28px/1 var(--wl-font-body);letter-spacing:.04em;border:2.5px solid currentColor;padding:5px 8px}
+.live{color:var(--wl-stamp)}.samp{color:var(--wl-sample)}.open{color:var(--wl-editorial);border-style:dashed}
+.sf{display:flex;justify-content:space-between;padding:10px 20px;border-top:3px solid var(--wl-sheet-ink);font:700 28px/1 var(--wl-font-body);letter-spacing:.06em;text-transform:uppercase;color:var(--wl-stamp)}
+.arrow{color:var(--wl-lime)}
+.seek{grid-area:seek;display:flex;align-items:center;gap:18px;flex-wrap:wrap;font:500 32px/1.2 var(--wl-font-body)}
+.seek b{font:800 32px/1 var(--wl-font-display);background:var(--wl-cyan);color:var(--wl-ink);padding:8px 12px}
+.seek q{font-style:normal;color:var(--wl-concrete)}
+.pay{grid-area:pay;display:grid;grid-template-columns:auto repeat(3,minmax(0,1fr));border:2px solid var(--wl-line);background:var(--wl-asphalt)}
+.pay>div{padding:16px 18px;border-left:2px solid var(--wl-line);font:500 28px/1.15 var(--wl-font-body)}
+.pay>div:first-child{border-left:0;font:800 30px/1.1 var(--wl-font-display);color:var(--wl-lime);display:flex;align-items:center}
+.pay small{display:block;font:700 28px/1 var(--wl-font-body);letter-spacing:.06em;text-transform:uppercase;color:var(--wl-concrete);margin-bottom:8px}
+
+/* ---- square 1080 ---- */
+.square{width:1080px;height:1080px;gap:26px;grid-template-columns:430px 1fr;grid-template-rows:auto auto 1fr auto auto;
+  grid-template-areas:"top top" "h1 h1" "left s3" "seek seek" "pay pay"}
+.square .left{grid-area:left;display:flex;flex-direction:column;gap:30px}
+.square .a12{display:none}
+.square .a23{position:absolute;left:-44px;top:8px}
+.square .s3{padding-left:24px}
+.square .pay{grid-template-columns:repeat(3,minmax(0,1fr))}
+.square .pay>div:first-child{grid-column:1/-1;border-bottom:2px solid var(--wl-line);padding:12px 18px}
+.square .pay>div:nth-child(2){border-left:0}
+.square .xr,.wide .xr{display:none}
+/* ---- wide 1600x900 ---- */
+.wide{width:1600px;height:900px;gap:30px;grid-template-columns:1fr 1fr 1.35fr;grid-template-rows:auto auto 1fr auto auto;
+  grid-template-areas:"top top top" "h1 h1 h1" "s1 s2 s3" "seek seek seek" "pay pay pay"}
+.wide .left{display:contents}
+.wide .a12,.wide .a23{position:absolute;left:-34px;top:4px}
+.wide .s2,.wide .s3{padding-left:20px}
+/* ---- story 1080x1920 ---- */
+.story{width:1080px;height:1920px;gap:34px;padding:72px 64px 64px;grid-template-columns:1fr;grid-template-rows:auto auto auto auto 1fr auto auto;
+  grid-template-areas:"top" "h1" "left" "s3" "." "seek" "pay"}
+.story h1{font-size:104px;margin-top:16px}
+.story .left{grid-area:left;display:flex;flex-direction:column;gap:40px}
+.story .a12,.story .a23{display:none}
+.story .lab{font-size:48px}
+.story .num{width:58px;height:58px;font-size:34px}
+.story .r{height:66px;font-size:32px}
+.story .sh-h{font-size:36px;padding:20px 24px 14px}
+.story .pay{grid-template-columns:1fr;}
+.story .pay>div{border-left:0;border-top:2px solid var(--wl-line);display:flex;gap:16px;align-items:baseline}
+.story .pay>div:first-child{border-top:0}
+.story .pay small{margin:0;min-width:200px}
+.story .seek{font-size:36px}
+</style>
+</head>
+<body>
+<div class="g" id="g">
+  <div class="top"><div class="brand"><span class="mark">W</span><span class="word">Weekline</span></div><span class="eyebrow">Manhattan + Brooklyn</span></div>
+  <h1>Your NYC week, <em>on one Sheet.</em></h1>
+  <div class="left">
+    <div class="step s1">
+      <div class="lab"><span class="num">1</span>Pick a crew</div>
+      <div class="flyers"><span class="fl fc">Cheap Thrills</span><span class="fl fo">Dateline</span><span class="fl fl3">Move Pack</span></div>
+    </div>
+    <div class="step s2">
+      <svg class="arrow a12" width="28" height="40" viewBox="0 0 28 40" aria-hidden="true"><path d="M4 6 L22 20 L4 34" fill="none" stroke="currentColor" stroke-width="6"/></svg>
+      <div class="lab"><span class="num">2</span>Set limits</div>
+      <div class="chips"><span class="chip">Brooklyn</span><span class="chip">~40 min</span><span class="chip">Under $25</span></div>
+    </div>
+  </div>
+  <div class="step s3">
+    <svg class="arrow a23" width="28" height="40" viewBox="0 0 28 40" aria-hidden="true"><path d="M4 6 L22 20 L4 34" fill="none" stroke="currentColor" stroke-width="6"/></svg>
+    <div class="lab"><span class="num">3</span>Get the week</div>
+    <div class="sheet">
+      <div class="sh-h">Mon–Sun <span>23 Nov</span></div>
+      <div class="r"><span>Mon</span><span class="t">Parks workout</span><span class="b live">LIVE</span></div>
+      <div class="r"><span>Tue</span><span class="t">Open Run</span><span class="b live">LIVE</span></div>
+      <div class="r"><span>Wed</span><span class="t o">Open</span><span class="b open">OPEN</span></div>
+      <div class="r xr"><span>Thu</span><span class="t o">Open</span><span class="b open">OPEN</span></div>
+      <div class="r xr"><span>Fri</span><span class="t">Parks hike</span><span class="b live">LIVE</span></div>
+      <div class="r"><span>Sat</span><span class="t">Long loop</span><span class="b samp">SAMPLE</span></div>
+      <div class="r xr"><span>Sun</span><span class="t">Pop-up market</span><span class="b samp">SAMPLE</span></div>
+      <div class="sf"><span>Send</span><span>.ics</span></div>
+    </div>
+  </div>
+  <p class="seek"><b>Seeking</b>Life goal → calendar. <q>You’re what you schedule.</q></p>
+  <div class="pay">
+    <div>Who pays</div>
+    <div><small>Now</small>Free to plan</div>
+    <div><small>Planned</small>Ticket links, Plus</div>
+    <div><small>Always</small>Free events, no paywall</div>
+  </div>
+</div>
+<script>
+var s=new URLSearchParams(location.search).get('size');if(['square','wide','story'].indexOf(s)<0)s='square';
+document.getElementById('g').classList.add(s);
+</script>
+</body>
+</html>

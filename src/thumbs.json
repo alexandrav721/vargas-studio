@@ -29,7 +29,6 @@
  "/projects/loop/print.html": "/thumbs/loop-print.jpg",
  "/projects/planner/": "/thumbs/planner-book-website.jpg",
  "/projects/planner/ads.html": "/thumbs/planner-book-meta-ads.jpg",
- "/projects/planner/weekline.html": "/thumbs/planner-book-product-ui.jpg",
  "/projects/planner/deck.html": "/thumbs/planner-book-deck.jpg",
  "/projects/planner/print.html": "/thumbs/planner-book-print.jpg",
  "/projects/planner/social.html": "/thumbs/planner-book-social.jpg",
@@ -47,5 +46,13 @@
  "/projects/skill-quest/prototype/prototype.html": "/thumbs/skill-quest-product-ui.jpg",
  "/projects/skill-quest/deck/deck.html": "/thumbs/skill-quest-deck.jpg",
  "/projects/skill-quest/print/index.html": "/thumbs/skill-quest-print.jpg",
- "/projects/skill-quest/graphic/explainer-square.png": "/thumbs/skill-quest-social.jpg"
+ "/projects/skill-quest/graphic/explainer-square.png": "/thumbs/skill-quest-social.jpg",
+ "/projects/weekline/pitch/": "/thumbs/weekline-website.jpg",
+ "/projects/weekline/landing.html": "/thumbs/weekline-landing.jpg",
+ "/projects/weekline/funnel.html": "/thumbs/weekline-funnel.jpg",
+ "/projects/weekline/ads.html": "/thumbs/weekline-meta-ads.jpg",
+ "/projects/weekline/app/": "/thumbs/weekline-product-ui.jpg",
+ "/projects/weekline/deck.html": "/thumbs/weekline-deck.jpg",
+ "/projects/weekline/print.html": "/thumbs/weekline-print.jpg",
+ "/projects/weekline/social.html": "/thumbs/weekline-social.jpg"
 }
