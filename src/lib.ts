@@ -97,11 +97,13 @@ export function supportingThumbs(project: Project, n: number) {
 }
 
 export type Route =
+  | { view: "desk" }
   | { view: "home" }
   | { view: "deck"; slide: number }
   | { view: "project"; id: string };
 
 export function parseRoute(hash: string): Route {
+  if (hash === "" || hash === "#" || hash === "#/") return { view: "desk" };
   const deck = hash.match(/^#\/tour(?:\/(\d+))?$/);
   if (deck) return { view: "deck", slide: Math.max(0, Number(deck[1] ?? 1) - 1) };
   const proj = hash.match(/^#\/p\/([\w-]+)$/);
