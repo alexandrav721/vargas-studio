@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Skills Made EZ prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F6F1E7; --surface:#FFFFFF; --ink:#161412; --accent:#C7391F; --on-accent:#FFFFFF;
+  --sun:#F5B82E; --teal:#1F7A6B; --track:#EDE5D4; --muted:#5C554C;
+  --display:"Bricolage Grotesque",system-ui,sans-serif; --mono:"JetBrains Mono",ui-monospace,monospace;
+  --r:12px; --rs:6px; --border:2.5px solid var(--ink); --shadow:4px 4px 0 var(--ink);
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:500 17px/1.4 var(--display);
+  background-image:radial-gradient(rgba(22,20,18,.05) 1px,transparent 1px);background-size:5px 5px;min-height:100vh}
+button{font:inherit;color:inherit}
+.top{position:sticky;justify-content:space-between;top:0;z-index:5;display:flex;align-items:center;gap:10px;padding:10px 16px;background:var(--bg);border-bottom:2px solid var(--ink)}
+.logo{font-weight:800;font-size:17px;letter-spacing:-.02em;white-space:nowrap}
+.logo b{color:var(--accent)}
+.dots{position:absolute;left:0;bottom:-3px;height:4px;width:0;background:var(--accent);transition:width .3s}
+
+.icon-btn{flex:none;white-space:nowrap;border:2px solid var(--ink);background:var(--surface);border-radius:999px;padding:4px 10px;font:700 12px var(--mono);cursor:pointer}
+.sample{font:700 11px var(--mono);text-transform:uppercase;letter-spacing:.06em;background:var(--sun);border:2px solid var(--ink);border-radius:999px;padding:3px 9px;display:inline-block}
+main{max-width:520px;margin:0 auto;padding:20px 16px 120px}
+section{display:none}
+section.on{display:block;animation:in .35s cubic-bezier(.2,.9,.3,1.2)}
+@keyframes in{from{transform:translateY(14px)}to{transform:none}}
+h1{font-size:34px;line-height:1.05;letter-spacing:-.03em;margin:14px 0 10px;font-weight:800}
+h2{font-size:26px;line-height:1.1;letter-spacing:-.02em;margin:10px 0 14px;font-weight:800}
+.sub{color:var(--muted);margin:0 0 18px}
+.kicker{font:700 12px var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--teal)}
+.btn{display:block;width:100%;border:var(--border);background:var(--accent);color:var(--on-accent);border-radius:var(--r);
+  padding:15px 18px;font-weight:700;font-size:18px;box-shadow:var(--shadow);cursor:pointer;margin-top:18px;transition:transform .08s,box-shadow .08s}
+.btn:active,.press:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--ink)}
+.btn.ghost{background:var(--surface);color:var(--ink)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tile{border:var(--border);background:var(--surface);border-radius:var(--r);padding:14px 12px;text-align:left;cursor:pointer;box-shadow:var(--shadow);min-height:96px;display:flex;flex-direction:column;gap:8px}
+.tile svg{width:30px;height:30px}
+.tile[aria-pressed=true]{background:var(--sun)}
+.tile span{font-weight:700;line-height:1.15}
+.checks{display:grid;gap:8px;margin-top:6px}
+.check{display:flex;justify-content:space-between;align-items:center;gap:10px;border:var(--border);border-radius:var(--r);background:var(--surface);padding:10px 12px}
+.yn{display:flex;gap:6px}
+.yn button{border:2px solid var(--ink);border-radius:999px;background:var(--surface);padding:4px 12px;font-weight:700;cursor:pointer}
+.yn button[aria-pressed=true]{background:var(--ink);color:var(--bg)}
+.meter{margin-top:14px;border:var(--border);border-radius:var(--r);padding:12px 14px;display:flex;gap:12px;align-items:center;background:var(--surface)}
+.light{width:28px;height:28px;border-radius:50%;border:2.5px solid var(--ink);flex:none;transition:background .3s}
+.ex{border:var(--border);border-radius:var(--r);background:var(--surface);padding:12px;margin-bottom:10px;box-shadow:var(--shadow)}
+.ex .q{font-size:15px;color:var(--muted)}
+.ex .a{margin-top:6px;font-size:15px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.ex.tilt{transform:rotate(-1.5deg)}
+textarea,input[type=text]{width:100%;border:var(--border);border-radius:var(--r);padding:10px 12px;font:500 16px var(--display);background:var(--surface);color:var(--ink)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 16px}
+.chip{border:2px solid var(--ink);border-radius:999px;padding:6px 12px;background:var(--surface);cursor:pointer;font-weight:700;font-size:15px}
+.chip[aria-pressed=true]{background:var(--teal);color:#fff}
+label.ql{display:block;font-weight:800;font-size:19px;margin-top:6px}
+.recipe{border:var(--border);border-radius:var(--r);background:var(--surface);box-shadow:var(--shadow);padding:14px}
+.recipe h3{margin:0 0 8px;font:700 13px var(--mono);text-transform:uppercase;letter-spacing:.06em}
+.line{display:flex;gap:8px;align-items:flex-start;padding:7px 0;border-top:1.5px dashed var(--track);opacity:0;transform:translateX(-10px);transition:all .3s}
+.line.in{opacity:1;transform:none}
+.line p{margin:0;flex:1;font-size:16px}
+.tag{font:700 10.5px var(--mono);text-transform:uppercase;background:var(--track);border-radius:4px;padding:3px 6px;white-space:nowrap;margin-top:2px}
+.redact{border:var(--border);border-radius:var(--r);background:var(--surface);padding:14px;font-size:16px;line-height:1.6}
+mark{background:var(--sun);border-radius:3px;padding:0 3px;transition:all .3s}
+mark.swapped{background:var(--ink);color:var(--bg)}
+.note{font-size:14px;color:var(--muted);margin-top:10px}
+.case{border:var(--border);border-radius:var(--r);background:var(--ink);color:var(--bg);padding:12px 14px;font-size:16px}
+.case .kicker{color:var(--sun)}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px;perspective:900px}
+.card{position:relative;min-height:230px;transform-style:preserve-3d;transition:transform .38s cubic-bezier(.3,1.4,.5,1)}
+.card.flip{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;border:var(--border);border-radius:var(--r);background:var(--surface);padding:10px;box-shadow:var(--shadow);overflow:hidden;font-size:13.5px;line-height:1.35}
+.face .lbl{font:800 22px var(--display);display:block;margin-bottom:6px}
+.face.back{transform:rotateY(180deg);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:6px}
+.face.back.mine{background:var(--sun)}
+.face .more{position:absolute;left:0;right:0;bottom:0;height:46px;background:linear-gradient(transparent,var(--surface))}
+.read{margin-top:8px;font:700 13px var(--mono);background:none;border:none;text-decoration:underline;cursor:pointer;padding:0}
+.calls{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:14px}
+.calls button{border:var(--border);border-radius:var(--r);background:var(--surface);padding:12px 4px;font-weight:800;box-shadow:var(--shadow);cursor:pointer}
+.stamp{font:800 24px var(--display);color:var(--accent);border:3.5px solid var(--accent);border-radius:8px;padding:4px 12px;display:inline-block;transform:rotate(-6deg) scale(2);opacity:0;transition:all .25s cubic-bezier(.3,1.6,.5,1)}
+.stamp.on{transform:rotate(-6deg) scale(1);opacity:1}
+.verdict{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:12px;min-height:46px}
+.badge{font:700 12px var(--mono);border:2px solid var(--ink);border-radius:999px;padding:4px 9px;background:var(--surface)}
+.sheet{position:fixed;inset:0;background:rgba(22,20,18,.55);display:none;align-items:flex-end;z-index:20}
+.sheet.on{display:flex}
+.sheet .in{background:var(--bg);border-top:var(--border);border-radius:16px 16px 0 0;padding:18px 16px 28px;max-height:80vh;overflow:auto;width:100%;max-width:520px;margin:0 auto;font-size:16px}
+.big-card{border:3px solid var(--ink);border-radius:16px;background:var(--surface);box-shadow:6px 6px 0 var(--ink);padding:16px;position:relative;transform:rotate(-2deg);margin:10px 6px 0}
+.big-card .name{font:800 24px var(--display);letter-spacing:-.02em;margin:4px 0 10px}
+.rec{display:flex;gap:8px;margin:10px 0}
+.rec div{flex:1;border:2px solid var(--ink);border-radius:8px;text-align:center;padding:6px 0;font:700 12px var(--mono)}
+.rec b{display:block;font:800 26px var(--display)}
+.bar{margin:8px 0}
+.bar small{font:700 12px var(--mono);display:flex;justify-content:space-between}
+.track{height:12px;border:2px solid var(--ink);border-radius:999px;background:var(--track);overflow:hidden;margin-top:3px}
+.fill{height:100%;width:0;background:var(--accent);transition:width .7s cubic-bezier(.2,.8,.3,1)}
+.fill.teal{background:var(--teal)}
+.sticker{position:absolute;right:-8px;top:-14px;background:var(--sun);border:2.5px solid var(--ink);border-radius:8px;padding:4px 10px;font:800 16px var(--display);transform:rotate(8deg) scale(0);transition:transform .3s cubic-bezier(.3,1.8,.5,1)}
+.sticker.on{transform:rotate(8deg) scale(1)}
+.fix{border:2.5px dashed var(--accent);border-radius:var(--r);padding:12px;margin-top:16px;background:var(--surface)}
+.fix b{color:var(--accent)}
+.apps{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.apps button{border:var(--border);border-radius:var(--r);background:var(--surface);padding:12px;font-weight:800;box-shadow:var(--shadow);cursor:pointer}
+pre{white-space:pre-wrap;background:var(--surface);border:var(--border);border-radius:var(--r);padding:12px;font:500 13px/1.5 var(--mono);max-height:260px;overflow:auto}
+.switch{display:flex;justify-content:space-between;align-items:center;border:var(--border);border-radius:var(--r);background:var(--surface);padding:12px;margin-top:10px}
+.switch button{width:54px;height:30px;border-radius:999px;border:2.5px solid var(--ink);background:var(--track);position:relative;cursor:pointer}
+.switch button::after{content:"";position:absolute;top:2px;left:2px;width:21px;height:21px;border-radius:50%;background:var(--ink);transition:left .2s}
+.switch button[aria-checked=true]{background:var(--teal)}
+.switch button[aria-checked=true]::after{left:25px;background:#fff}
+.saved{font:800 40px var(--display);color:var(--teal)}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat{border:var(--border);border-radius:var(--r);background:var(--surface);padding:12px}
+.stat b{display:block;font:800 32px var(--display)}
+.stat span{font:700 12px var(--mono);text-transform:uppercase}
+.list{border:var(--border);border-radius:var(--r);background:var(--surface);margin-top:12px}
+.list div{display:flex;justify-content:space-between;padding:10px 12px;border-top:1.5px dashed var(--track)}
+.list div:first-child{border:none}
+.foot{position:fixed;left:0;right:0;bottom:0;background:var(--bg);border-top:2px solid var(--ink);padding:6px 16px 14px;z-index:4}
+.foot .btn{max-width:488px;margin:6px auto 0}
+.caption{position:fixed;left:50%;bottom:92px;transform:translateX(-50%);font:700 12px var(--mono);background:var(--ink);color:var(--bg);padding:4px 10px;border-radius:999px;opacity:0;transition:opacity .2s;z-index:30;pointer-events:none}
+.caption.on{opacity:1}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+<link rel="stylesheet" href="/site-bar.css" />
+<script src="/site-bar.js" data-project="skill-quest" data-kind="piece" defer></script>
+</head>
+<body>
+<header class="top">
+  <div class="logo">Skills Made <b>EZ</b></div>
+  <span class="sample" title="Everything here is sample data">Sample</span>
+  <div class="dots" id="dots" aria-hidden="true"></div>
+  <button style="margin-left:auto" class="icon-btn" id="mute" aria-pressed="false" aria-label="Sound on">♪ on</button>
+</header>
+<main>
+
+<!-- 0 start -->
+<section data-s="0" class="on">
+  <p class="kicker">Prototype · nothing is saved</p>
+  <h1>Teach AI one thing you do every week.</h1>
+  <p class="sub">Then a blind test checks it does it your way.</p>
+  <div class="pair" aria-hidden="true">
+    <div class="card"><div class="face" style="background:var(--ink)"></div></div>
+    <div class="card" style="transform:rotate(4deg)"><div class="face" style="background:var(--accent)"></div></div>
+  </div>
+</section>
+
+<!-- 1 pick + task check -->
+<section data-s="1">
+  <h2>What do you do every week?</h2>
+  <div class="grid" id="tasks"></div>
+  <div id="checkWrap" hidden>
+    <p class="kicker" style="margin-top:20px">Can a recipe beat plain AI here?</p>
+    <div class="checks" id="checks"></div>
+    <div class="meter" role="status"><div class="light" id="light"></div><div id="meterText">Answer 3 quick ones.</div></div>
+  </div>
+</section>
+
+<!-- 2 examples -->
+<section data-s="2">
+  <h2>Show 3 you're proud of.</h2>
+  <p class="sub">Real past ones. They teach AI your way.</p>
+  <div id="examples"></div>
+  <button class="read" id="pasteOwn">+ Paste your own instead</button>
+  <textarea id="own" rows="4" hidden placeholder="Paste a past message and your reply"></textarea>
+</section>
+
+<!-- 3 questions -->
+<section data-s="3">
+  <h2>3 quick questions.</h2>
+  <label class="ql" for="q1">What do you never say?</label>
+  <div class="chips" data-q="never"></div>
+  <label class="ql" for="q2">What do you always check?</label>
+  <div class="chips" data-q="check"></div>
+  <label class="ql" for="q3">Your one rule?</label>
+  <div class="chips" data-q="rule"></div>
+</section>
+
+<!-- 4 recipe -->
+<section data-s="4">
+  <h2>Your recipe.</h2>
+  <p class="sub">Every line came from you.</p>
+  <div class="recipe"><h3 id="recipeName">Upset customer reply</h3><div id="lines"></div></div>
+</section>
+
+<!-- 5 redact -->
+<section data-s="5">
+  <h2>Private stuff out.</h2>
+  <p class="sub">Names, emails and money get swapped before anything is saved.</p>
+  <div class="redact" id="redact"></div>
+  <p class="note">In the real version this runs on your computer. Use your company's approved AI tool.</p>
+</section>
+
+<!-- 6 you judge -->
+<section data-s="6">
+  <p class="kicker" id="roundK">Round 1 of 3 · you judge first</p>
+  <div class="case"><span class="kicker">Hidden case from your past</span><div id="caseText"></div></div>
+  <div class="pair">
+    <div class="card" id="cA"><div class="face front"><span class="lbl">A</span><div id="tA"></div><div class="more"></div></div><div class="face back" id="bA"></div></div>
+    <div class="card" id="cB"><div class="face front"><span class="lbl">B</span><div id="tB"></div><div class="more"></div></div><div class="face back" id="bB"></div></div>
+  </div>
+  <button class="read" id="readBoth">Read both</button>
+  <div class="calls" id="calls">
+    <button data-c="A" class="press">A</button><button data-c="tie" class="press">Too close</button><button data-c="B" class="press">B</button>
+  </div>
+  <div class="verdict" id="verdict" aria-live="polite"></div>
+</section>
+
+<!-- 7 card + fix + use -->
+<section data-s="7">
+  <div class="big-card" id="bigCard">
+    <div class="sticker" id="sticker">BEATS PLAIN AI</div>
+    <span class="kicker">Sample result · checked blind</span>
+    <div class="name">Upset customer reply</div>
+    <div class="rec"><div><b id="rW">0</b>won</div><div><b id="rT">0</b>tied</div><div><b id="rL">0</b>lost</div></div>
+    <div class="bar"><small><span>Your way</span><span id="wayN"></span></small><div class="track"><div class="fill" id="way"></div></div></div>
+    <div class="bar"><small><span>Plain AI, your way</span><span id="plainN"></span></small><div class="track"><div class="fill teal" id="plain"></div></div></div>
+    <small class="note" style="display:block">You agreed with the judge <b id="agree"></b> of 3.</small>
+  </div>
+  <div class="fix" id="fix">
+    <b>One fix:</b> <span id="fixText">Round 3 lost: it didn't say what you changed. Add: "When we got it wrong, say what we fixed."</span>
+    <button class="btn" id="applyFix">Add it and recheck</button>
+  </div>
+  <div id="useWrap">
+    <p class="kicker" style="margin-top:22px">Use it in</p>
+    <div class="apps" id="apps"><button>Claude</button><button>ChatGPT</button><button>Copilot</button><button>Gemini</button></div>
+  </div>
+</section>
+
+<!-- 8 habit + private -->
+<section data-s="8">
+  <h2>Make it a habit.</h2>
+  <label class="ql">Remind me on</label>
+  <div class="chips" id="days"></div>
+  <label class="ql">How long did it take before?</label>
+  <div class="chips" id="before"></div>
+  <label class="ql">And with the recipe?</label>
+  <div class="chips" id="after"></div>
+  <div class="saved" id="saved" aria-live="polite"></div>
+  <div class="switch"><span><b>Share my card</b><br><small class="note">Off: only you see it.</small></span><button role="switch" aria-checked="false" id="share" aria-label="Share my card"></button></div>
+</section>
+
+<!-- 9 team -->
+<section data-s="9">
+  <p class="kicker">For team leads · sample team</p>
+  <h2>Team scoreboard</h2>
+  <div class="stats">
+    <div class="stat"><b>9/11</b><span>made a recipe</span></div>
+    <div class="stat"><b>7</b><span>beat plain AI</span></div>
+    <div class="stat"><b>5.5 h</b><span>saved a week</span></div>
+    <div class="stat"><b>3</b><span>shared with team</span></div>
+  </div>
+  <div class="list" aria-label="Most shared recipes">
+    <div><span>Weekly client update</span><b>shared 4×</b></div>
+    <div><span>Quote from price list</span><b>shared 3×</b></div>
+    <div><span>Upset customer reply</span><b>shared 2×</b></div>
+  </div>
+  <p class="note">Team totals only. No ranking of people. Time saved counts only what people entered.</p>
+  <button class="btn ghost" disabled>Export for my boss (PDF)</button>
+</section>
+</main>
+
+<div class="foot"><button class="btn" id="next">Start</button></div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetT"><div class="in"><h2 id="sheetT"></h2><div id="sheetBody"></div><button class="btn ghost" id="closeSheet">Close</button></div></div>
+<div class="caption" id="cap" aria-hidden="true"></div>
+
+<script>
+const $ = id => document.getElementById(id);
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* ---------- sound (same synth as senses/board.html) ---------- */
+let ctx, master, muted = false, noiseBuf;
+function audio(){ if(!ctx){ ctx=new (window.AudioContext||window.webkitAudioContext)(); const c=ctx.createDynamicsCompressor(); c.threshold.value=-14; c.ratio.value=4; master=ctx.createGain(); master.gain.value=muted?0:.55; master.connect(c).connect(ctx.destination);} if(ctx.state==="suspended") ctx.resume(); return ctx; }
+function noise(){ if(!noiseBuf){ noiseBuf=ctx.createBuffer(1,ctx.sampleRate*.5,ctx.sampleRate); const d=noiseBuf.getChannelData(0); for(let i=0;i<d.length;i++) d[i]=Math.random()*2-1;} const s=ctx.createBufferSource(); s.buffer=noiseBuf; return s; }
+function env(g,t,p,a,d){ g.gain.setValueAtTime(.0001,t); g.gain.exponentialRampToValueAtTime(p,t+a); g.gain.exponentialRampToValueAtTime(.0001,t+a+d); }
+function thump(t,f=120,p=.9){ const o=ctx.createOscillator(),g=ctx.createGain(); o.type="sine"; o.frequency.setValueAtTime(f,t); o.frequency.exponentialRampToValueAtTime(f*.45,t+.14); env(g,t,p,.004,.16); o.connect(g).connect(master); o.start(t); o.stop(t+.22); }
+function hiss(t,dur,f0,f1,p,q=1.2){ const s=noise(),bp=ctx.createBiquadFilter(),g=ctx.createGain(); bp.type="bandpass"; bp.Q.value=q; bp.frequency.setValueAtTime(f0,t); bp.frequency.exponentialRampToValueAtTime(f1,t+dur); env(g,t,p,Math.min(.01,dur/4),dur); s.connect(bp).connect(g).connect(master); s.start(t); s.stop(t+dur+.05); }
+function mallet(t,f,p=.5,d=.7){ [[1,p],[4,p*.12],[2.01,p*.18]].forEach(([m,pp])=>{ const o=ctx.createOscillator(),g=ctx.createGain(); o.type="sine"; o.frequency.value=f*m; env(g,t,pp,.003,m===1?d:d*.35); o.connect(g).connect(master); o.start(t); o.stop(t+d+.1); }); }
+function wood(t,f=520,p=.35){ const o=ctx.createOscillator(),g=ctx.createGain(); o.type="triangle"; o.frequency.setValueAtTime(f*1.5,t); o.frequency.exponentialRampToValueAtTime(f,t+.02); env(g,t,p,.002,.06); o.connect(g).connect(master); o.start(t); o.stop(t+.1); }
+const C5=523.25,E5=659.25,G5=783.99,C6=1046.5;
+const SOUND={
+  sig(t){ hiss(t,.04,3200,2200,.5,.8); thump(t,140,.7); mallet(t+.09,C5,.45); mallet(t+.21,G5,.5,.9); },
+  deal(t){ hiss(t,.18,900,3400,.22); hiss(t+.22,.18,900,3400,.22); thump(t+.17,180,.25); thump(t+.39,180,.25); },
+  pick(t){ wood(t,520); },
+  stamp(t){ thump(t,90,1); hiss(t,.05,1500,600,.25); },
+  reveal(t){ hiss(t,.12,1200,4200,.25); SOUND.sig(t+.14); },
+  even(t){ wood(t,440,.3); wood(t+.14,440,.3); },
+  bars(t){ [0,1,2].forEach(i=>wood(t+i*.19,[C5,E5,G5][i],.22)); },
+  sticker(t){ thump(t,160,.6); hiss(t,.03,2600,1800,.35); mallet(t+.05,C6,.18,.4); },
+  line(t){ wood(t,700,.18); },
+};
+const CAPTION={sig:"♪ snap · ding-ding",deal:"♪ swish · swish",pick:"♪ tock",stamp:"♪ thud",reveal:"♪ flip · snap · ding-ding",even:"♪ tock-tock",bars:"♪ tick tick tick",sticker:"♪ thwack · ding",line:"♪ tick"};
+const BUZZ={reveal:[20,70,40],sticker:[25],stamp:[35]};
+let capT;
+function play(n){ try{ audio(); if(!muted){ SOUND[n](ctx.currentTime+.01); if(BUZZ[n]&&navigator.vibrate) navigator.vibrate(BUZZ[n]); } }catch(e){}
+  const c=$("cap"); c.textContent=muted?"":CAPTION[n]; c.classList.toggle("on",!muted); clearTimeout(capT); capT=setTimeout(()=>c.classList.remove("on"),900); }
+$("mute").onclick=()=>{ muted=!muted; $("mute").textContent=muted?"♪ off":"♪ on"; $("mute").setAttribute("aria-label",muted?"Muted":"Sound on"); $("mute").setAttribute("aria-pressed",muted); if(master) master.gain.value=muted?0:.55; };
+const wait=ms=>new Promise(r=>setTimeout(r,reduce?Math.min(ms,60):ms));
+
+/* ---------- sample data (Sample: an invented bakery) ---------- */
+const ICON={
+  reply:'<svg viewBox="0 0 32 32" fill="none" stroke="#161412" stroke-width="2.5"><path d="M4 6h24v15H13l-6 5v-5H4z"/><path d="M10 13h12"/></svg>',
+  update:'<svg viewBox="0 0 32 32" fill="none" stroke="#161412" stroke-width="2.5"><rect x="6" y="4" width="20" height="24" rx="2"/><path d="M11 11h10M11 16h10M11 21h6"/></svg>',
+  quote:'<svg viewBox="0 0 32 32" fill="none" stroke="#161412" stroke-width="2.5"><path d="M16 4v24M21 9h-7a3.5 3.5 0 0 0 0 7h4a3.5 3.5 0 0 1 0 7h-8"/></svg>',
+  notes:'<svg viewBox="0 0 32 32" fill="none" stroke="#161412" stroke-width="2.5"><path d="M6 9l3 3 5-6M6 20l3 3 5-6M18 10h9M18 21h9"/></svg>',
+  post:'<svg viewBox="0 0 32 32" fill="none" stroke="#161412" stroke-width="2.5"><rect x="4" y="6" width="24" height="20" rx="3"/><circle cx="12" cy="13" r="3"/><path d="M4 23l8-6 6 4 4-3 6 5"/></svg>',
+  other:'<svg viewBox="0 0 32 32" fill="none" stroke="#161412" stroke-width="2.5"><path d="M16 7v18M7 16h18"/></svg>'
+};
+const TASKS=[["reply","Reply to upset customers"],["update","Weekly client update"],["quote","Quote from my price list"],["notes","Meeting notes to to-dos"],["post","Post in our voice"],["other","Something else"]];
+const CHECKS=[["rules","It uses our rules or prices"],["voice","It has to sound like us"],["format","I repeat the same format"]];
+const EXAMPLES=[
+  {q:"Waited 40 min for my pickup order. Unreal.",a:"Hi Sam, you're right: 40 minutes is too long, and on a workday too. I've put a free coffee on your next order. We now text when it's ready. Reach me at lena@risebakery.com. Lena, owner"},
+  {q:"Cake said 'Happy Birthday Emily'. Her name is Emilie.",a:"Hi Dana, I'm so sorry we misspelled Emilie's name on her birthday. I've refunded the $45 today. Want a small cake on us this week? Reply with a day. Lena, owner"},
+  {q:"Croissants were stale. Paid $14 for these??",a:"Hi Marco, thank you for telling me. Day-old croissants should never be sold at full price. I've refunded your $14. From now on we mark day-old ones half off. Lena, owner"},
+];
+const QS={never:["\"Per our policy\"","\"Unfortunately\"","\"Valued customer\""],check:["The order details","Their name","What we already refunded"],rule:["Say what we changed","Refund small things fast","Reply the same day"]};
+const ROUNDS=[
+  {case:"Ordered gluten-free. Got regular. My son couldn't eat any of it.",
+   recipe:"Hi Jo, you ordered gluten-free and we gave you regular, so your son couldn't have any. That's on us. I've refunded the $18 today, and a GF loaf is yours free this Saturday. Reply with a pickup time. [Your name], owner",
+   plain:"Dear Valued Customer, we sincerely apologize for any inconvenience caused by the mix-up with your order. Unfortunately, errors can occasionally occur. Please contact our customer service team at your earliest convenience so we can look into this matter further.",
+   recipeSlot:"B", judge:"recipe", orders:"Both orders agreed"},
+  {case:"Your prices went up AGAIN?! I've come here 6 years.",
+   recipe:"Hi Pat, six years means a lot to us, and you deserve a straight answer. Butter and flour went up 30% this year, so our loaf went from $7 to $8. Your 10th loaf is still free. Thanks for telling me. [Your name], owner",
+   plain:"Thank you for being a loyal customer for 6 years! We understand price changes can be frustrating. Like many businesses, we have faced rising costs for ingredients. We truly value your support and hope to see you again soon.",
+   recipeSlot:"A", judge:"recipe", orders:"Both orders agreed"},
+  {case:"Site says open till 6. Door was locked at 5:40.",
+   recipe:"Hi Alex, I'm sorry you came by and found the door locked. That's frustrating. Next time you're in, the coffee's on me. [Your name], owner",
+   plain:"Hi Alex, I'm so sorry. You made the trip and the door was locked at 5:40 when our site says 6. That's on us. We've fixed the hours online today (we close at 5:30 on weekdays). Please let me make it up to you with a coffee on your next visit.",
+   fixed:"Hi Alex, I'm sorry: you made the trip and the door was locked at 5:40 when our site says 6. That's on us. I fixed the hours on the site today (5:30 on weekdays). Next time you're in, the coffee's on me. [Your name], owner",
+   recipeSlot:"B", judge:"plain", orders:"Both orders agreed", fixedJudge:"tie", fixedOrders:"Orders disagreed, so it counts as a tie"}
+];
+
+/* ---------- state + navigation ---------- */
+let step=0, task=null, checks={}, picked={never:new Set(),check:new Set(),rule:new Set()}, round=0, calls=[], fixed=false;
+const N=10;
+
+function show(s){
+  step=s; document.querySelectorAll("section").forEach(x=>x.classList.toggle("on",+x.dataset.s===s));
+  $("dots").style.width=((s+1)/N*100)+"%";
+  window.scrollTo({top:0,behavior:"instant"}); render(); }
+const NEXT_LABEL=["Start","Next","Next","Write my recipe","Next","Looks good","","Make it a habit","Done","Start over"];
+function render(){
+  const n=$("next"); n.textContent=NEXT_LABEL[step]; n.disabled=false; n.parentElement.hidden=false;
+  if(step===1) n.disabled=!(task&&Object.keys(checks).length===3);
+  if(step===3) n.disabled=!["never","check","rule"].every(k=>picked[k].size);
+  if(step===6) n.parentElement.hidden=true;
+  if(step===4) buildRecipe();
+  if(step===5) runRedact();
+  if(step===6) startRound();
+  if(step===7) showCard();
+  if(step===8 && !$("days").children.length) buildHabit();
+}
+$("next").onclick=()=>{ play("pick"); if(step===9){ location.reload(); return;} if(step===0) play("deal"); show(step+1); };
+
+/* 1: task + check */
+$("tasks").innerHTML=TASKS.map(([k,l])=>`<button class="tile press" data-k="${k}" aria-pressed="false">${ICON[k]}<span>${l}</span></button>`).join("");
+$("tasks").onclick=e=>{ const b=e.target.closest(".tile"); if(!b) return; play("pick"); task=b.dataset.k;
+  [...$("tasks").children].forEach(t=>t.setAttribute("aria-pressed",t===b)); $("checkWrap").hidden=false; render(); $("checkWrap").scrollIntoView({behavior:reduce?"auto":"smooth",block:"start"}); };
+$("checks").innerHTML=CHECKS.map(([k,l])=>`<div class="check"><span>${l}</span><div class="yn" data-k="${k}"><button aria-pressed="false" data-v="1">Yes</button><button aria-pressed="false" data-v="0">No</button></div></div>`).join("");
+$("checks").onclick=e=>{ const b=e.target.closest("button"); if(!b) return; play("pick"); const yn=b.parentElement; checks[yn.dataset.k]=+b.dataset.v;
+  [...yn.children].forEach(x=>x.setAttribute("aria-pressed",x===b)); meter(); render(); if(Object.keys(checks).length===3) $("light").scrollIntoView({behavior:reduce?"auto":"smooth",block:"center"}); };
+function meter(){ const n=Object.keys(checks).length, y=Object.values(checks).reduce((a,b)=>a+b,0);
+  if(n<3) return; const L=$("light"), T=$("meterText");
+  if(y>=2){ L.style.background="#1F7A6B"; T.innerHTML="<b>Great pick.</b> Your know-how is what AI can't guess."; }
+  else if(y===1){ L.style.background="#F5B82E"; T.innerHTML="<b>Could work.</b> Add your rules to give it an edge."; }
+  else { L.style.background="#C7391F"; T.innerHTML="<b>Plain AI is already fine here.</b> Try a task with your rules or voice."; } }
+
+/* 2: examples */
+$("examples").innerHTML=EXAMPLES.map((x,i)=>`<div class="ex${i===1?" tilt":""}"><div class="q">“${x.q}”</div><div class="a"><b>You:</b> ${x.a}</div></div>`).join("");
+$("pasteOwn").onclick=()=>{ $("own").hidden=false; $("own").focus(); };
+
+/* 3: questions */
+document.querySelectorAll(".chips[data-q]").forEach(box=>{ const k=box.dataset.q;
+  box.innerHTML=QS[k].map(v=>`<button class="chip" aria-pressed="false">${v}</button>`).join("");
+  box.onclick=e=>{ const b=e.target.closest(".chip"); if(!b) return; play("pick"); const on=b.getAttribute("aria-pressed")!=="true";
+    b.setAttribute("aria-pressed",on); on?picked[k].add(b.textContent):picked[k].delete(b.textContent); render(); }; });
+
+/* 4: recipe built from answers */
+let built=false;
+async function buildRecipe(){ if(built) return; built=true;
+  const L=[
+    ["Name each thing that went wrong, and why it mattered to them.","Examples 1–3"],
+    ["Fix small things fast: refund or a free item, said exactly.", picked.rule.has("Refund small things fast")?"Your rule":"Examples 2–3"],
+    ...[...picked.rule].filter(r=>r!=="Refund small things fast").map(r=>[r+".","Your rule"]),
+    ["Never say "+[...picked.never].join(", ")+".","Never say"],
+    ["Check first: "+[...picked.check].map(s=>s.toLowerCase()).join(", ")+".","Always check"],
+    ["Short, warm, first names. Sign off as the owner.","Your voice"],
+  ];
+  $("lines").innerHTML=L.map(([t,s])=>`<div class="line"><p contenteditable="true">${t}</p><span class="tag">${s}</span></div>`).join("");
+  for(const el of $("lines").children){ await wait(380); el.classList.add("in"); play("line"); } }
+
+/* 5: redact (real regex over the sample examples) */
+async function runRedact(){
+  const raw=EXAMPLES.map(x=>x.a).join("<br><br>");
+  const names=["Sam","Dana","Marco","Emilie","Lena"];
+  let h=raw.replace(/[\w.]+@[\w.]+\.\w+/g,m=>`<mark data-r="[Email]">${m}</mark>`)
+           .replace(/\$\d+(\.\d\d)?/g,m=>`<mark data-r="[Amount]">${m}</mark>`)
+           .replace(new RegExp("\\b("+names.join("|")+")('s)?\\b","g"),(m,n,s)=>`<mark data-r="${n==="Lena"?"[Your name]":"[Customer]"}">${n}</mark>${s||""}`);
+  $("redact").innerHTML=h; await wait(900);
+  for(const m of $("redact").querySelectorAll("mark")){ await wait(140); m.textContent=m.dataset.r; m.classList.add("swapped"); play("line"); } }
+
+/* 6: blind rounds */
+function slotText(r,slot){ const isRecipe=r.recipeSlot===slot; return isRecipe?(fixed&&r.fixed?r.fixed:r.recipe):r.plain; }
+function startRound(){ const r=ROUNDS[round];
+  $("roundK").textContent=`Round ${round+1} of 3 · you judge first`; $("caseText").textContent="“"+r.case+"”";
+  ["A","B"].forEach(s=>{ $("t"+s).textContent=slotText(r,s); $("c"+s).classList.remove("flip"); });
+  $("verdict").innerHTML=""; $("calls").hidden=false; $("readBoth").hidden=false; play("deal"); }
+$("readBoth").onclick=()=>{ const r=ROUNDS[round]; openSheet("Read both",`<p><b>A</b></p><p>${slotText(r,"A")}</p><p><b>B</b></p><p>${slotText(r,"B")}</p>`); };
+$("calls").onclick=async e=>{ const b=e.target.closest("button"); if(!b) return; play("pick");
+  const r=ROUNDS[round], you=b.dataset.c; $("calls").hidden=true; $("readBoth").hidden=true;
+  const judgeRes=(fixed&&r.fixedJudge)||r.judge;
+  const judgeSlot=judgeRes==="tie"?"tie":judgeRes==="recipe"?r.recipeSlot:(r.recipeSlot==="A"?"B":"A");
+  calls[round]={you,judgeSlot,result:judgeRes};
+  $("verdict").innerHTML=`<span class="badge">You: ${you==="tie"?"Too close":you}</span>`;
+  await wait(800);
+  $("verdict").innerHTML+=` <span class="stamp" id="st">JUDGE: ${judgeSlot==="tie"?"TIE":judgeSlot}</span>`;
+  requestAnimationFrame(()=>$("st").classList.add("on")); play("stamp"); await wait(500);
+  ["A","B"].forEach(s=>{ const mine=r.recipeSlot===s; const back=$("b"+s); back.className="face back"+(mine?" mine":"");
+    back.innerHTML=`<span class="lbl">${mine?"Your recipe":"Plain AI"}</span><small>${(judgeRes==="recipe"&&mine)||(judgeRes==="plain"&&!mine)?"Judge's pick":judgeRes==="tie"?"Tie":""}</small>`;
+    $("c"+s).classList.add("flip"); });
+  play(judgeRes==="recipe"?"reveal":"even"); await wait(500);
+  $("verdict").innerHTML+=`<span class="badge">${(fixed&&r.fixedOrders)||r.orders}</span>`;
+  const nb=document.createElement("button"); nb.className="btn"; nb.textContent=round<2?"Next round":"See my card";
+  nb.onclick=()=>{ play("pick"); if(round<2){ round++; startRound(); } else show(7); };
+  $("verdict").appendChild(nb); };
+
+/* 7: card */
+async function showCard(){
+  const res=ROUNDS.map((r,i)=>fixed&&i===2?r.fixedJudge:r.judge);
+  const w=res.filter(x=>x==="recipe").length,t=res.filter(x=>x==="tie").length,l=res.filter(x=>x==="plain").length;
+  $("rW").textContent=w; $("rT").textContent=t; $("rL").textContent=l;
+  $("agree").textContent=calls.filter(c=>c&&c.you===c.judgeSlot).length;
+  const way=fixed?4.6:4.2, plain=2.4;
+  $("way").style.width="0"; $("plain").style.width="0"; $("sticker").classList.remove("on");
+  await wait(350); play("bars"); $("way").style.width=(way/5*100)+"%"; $("wayN").textContent=way+" / 5";
+  await wait(250); $("plain").style.width=(plain/5*100)+"%"; $("plainN").textContent=plain+" / 5";
+  await wait(700); if(w>l){ $("sticker").classList.add("on"); play("sticker"); }
+  $("fix").hidden=fixed; }
+$("applyFix").onclick=async()=>{ play("pick"); fixed=true;
+  const lines=$("lines"); const d=document.createElement("div"); d.className="line in";
+  d.innerHTML='<p contenteditable="true">When we got it wrong, say what we fixed.</p><span class="tag">Fix</span>'; lines.appendChild(d);
+  round=2; calls[2]=null; show(6); };
+const RECIPE_TXT=()=>"Upset customer reply (recipe)\n\n"+[...$("lines").querySelectorAll("p")].map(p=>"- "+p.textContent).join("\n")+"\n\nOutput: the reply, ready to paste, then one line: \"Before you send: check …\"";
+const HOW={Claude:"Saved as a Claude skill (a SKILL.md file). In the real version: one tap to add it.",ChatGPT:"Paste into a Project's instructions.",Copilot:"Paste into an agent's instructions.",Gemini:"Paste into a Gem's instructions."};
+$("apps").onclick=e=>{ const b=e.target.closest("button"); if(!b) return; play("pick"); const app=b.textContent;
+  openSheet("Use it in "+app,`<p>${HOW[app]}</p><pre id="rtxt">${RECIPE_TXT().replace(/</g,"&lt;")}</pre><button class="btn" id="copy">Copy recipe</button>`);
+  $("copy").onclick=async()=>{ try{ await navigator.clipboard.writeText(RECIPE_TXT()); $("copy").textContent="Copied"; play("sig"); }catch(e){ $("copy").textContent="Select the text to copy"; } }; };
+
+/* 8: habit */
+let mins={before:null,after:null};
+function chipRow(id,vals,cb){ $(id).innerHTML=vals.map(v=>`<button class="chip" aria-pressed="false">${v}</button>`).join("");
+  $(id).onclick=e=>{ const b=e.target.closest(".chip"); if(!b) return; play("pick"); [...$(id).children].forEach(c=>c.setAttribute("aria-pressed",c===b)); cb&&cb(b.textContent); }; }
+function buildHabit(){
+  chipRow("days",["Mon","Tue","Wed","Thu","Fri"]);
+  chipRow("before",["5 min","15 min","30 min","1 hour"],v=>{ mins.before=v; savedCalc(); });
+  chipRow("after",["2 min","5 min","10 min","15 min"],v=>{ mins.after=v; savedCalc(); }); }
+const toMin=v=>v.includes("hour")?60:parseInt(v);
+function savedCalc(){ if(!mins.before||!mins.after) return; const d=toMin(mins.before)-toMin(mins.after);
+  $("saved").textContent=d>0?`${d} min back a week`:"No time saved yet. That's OK: it's about quality too."; if(d>0) play("sig"); }
+$("share").onclick=()=>{ const on=$("share").getAttribute("aria-checked")!=="true"; $("share").setAttribute("aria-checked",on); play("pick"); };
+
+/* sheet */
+function openSheet(t,html){ $("sheetT").textContent=t; $("sheetBody").innerHTML=html; $("sheet").classList.add("on"); $("closeSheet").focus(); }
+$("closeSheet").onclick=()=>$("sheet").classList.remove("on");
+$("sheet").onclick=e=>{ if(e.target===$("sheet")) $("sheet").classList.remove("on"); };
+document.addEventListener("keydown",e=>{ if(e.key==="Escape") $("sheet").classList.remove("on");
+  if(step===6&&!$("calls").hidden&&!$("sheet").classList.contains("on")){ const k=e.key.toUpperCase(); const m={A:"A",T:"tie",B:"B"}[k]; if(m) $("calls").querySelector(`[data-c="${m}"]`).click(); } });
+show(0);
+</script>
+</body>
+</html>
