@@ -370,3 +370,7 @@
   color: var(--bg0);
 }
 .tile-open { position: relative; }
+@media (max-width: 640px) {
+  .thing-pic { min-height: 0; }
+  .thing-pic img { max-height: 42vh; }
+}
