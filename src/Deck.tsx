@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import data from "../content/portfolio.json";
+import Lightbox, { type Shot } from "./Lightbox";
 import {
   heroThumb,
   liveCount,
@@ -8,7 +9,9 @@ import {
   projectHref,
   statusLabel,
   supportingThumbs,
+  thumbFor,
   tourHref,
+  visualsOf,
   type Status,
 } from "./lib";
 
@@ -38,9 +41,26 @@ const slideTitle = (i: number) =>
         ? "How it gets made"
         : projects[i - FIRST_PROJECT].name;
 
+/* Every distinct picture of a project for the viewer, the hero first. */
+function shotsFor(p: (typeof data.projects)[number]): Shot[] {
+  const v = visualsOf(p);
+  const out: Shot[] = [];
+  for (const col of data.columns) {
+    const cell = v[col.id];
+    const src = thumbFor(cell?.url);
+    if (!cell || cell.state !== "live" || !cell.url || !src || out.some((o) => o.src === src)) continue;
+    out.push({ src, label: col.name, url: cell.url });
+  }
+  const hero = heroThumb(p);
+  const k = out.findIndex((o) => o.src === hero);
+  if (k > 0) out.unshift(...out.splice(k, 1));
+  return out;
+}
+
 export default function Deck({ start }: { start: number }) {
   const scroller = useRef<HTMLDivElement>(null);
   const [current, setCurrent] = useState(Math.min(start, TOTAL - 1));
+  const [viewer, setViewer] = useState<{ id: string; at: number } | null>(null);
 
   const go = useCallback((i: number, smooth = true) => {
     const n = Math.max(0, Math.min(TOTAL - 1, i));
@@ -265,18 +285,35 @@ export default function Deck({ start }: { start: number }) {
               </div>
               <figure className="sp-visual">
                 {hero ? (
-                  <img
-                    className="sp-hero"
-                    src={hero}
-                    alt={`${p.name} home page`}
-                    loading={i < 2 ? "eager" : "lazy"}
-                  />
+                  <button
+                    type="button"
+                    className="sp-zoom"
+                    aria-label={`See ${p.name}'s pictures bigger`}
+                    onClick={() => setViewer({ id: p.id, at: 0 })}
+                  >
+                    <img
+                      className="sp-hero"
+                      src={hero}
+                      alt={`${p.name} home page`}
+                      loading={i < 2 ? "eager" : "lazy"}
+                    />
+                  </button>
                 ) : null}
                 {strip.length ? (
                   <ul className="sp-strip">
                     {strip.map((s) => (
                       <li key={s.id}>
-                        <a href={s.url} target="_blank" rel="noreferrer">
+                        <a
+                          href={s.url}
+                          target="_blank"
+                          rel="noreferrer"
+                          onClick={(e) => {
+                            if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+                            e.preventDefault();
+                            const at = shotsFor(p).findIndex((x) => x.src === s.src);
+                            setViewer({ id: p.id, at: Math.max(0, at) });
+                          }}
+                        >
                           <img src={s.src} alt="" loading="lazy" />
                           <span>{s.label}</span>
                         </a>
@@ -314,6 +351,14 @@ export default function Deck({ start }: { start: number }) {
           </div>
         </section>
       </div>
+      {viewer ? (
+        <Lightbox
+          title={data.projects.find((x) => x.id === viewer.id)?.name ?? ""}
+          shots={shotsFor(data.projects.find((x) => x.id === viewer.id)!)}
+          start={viewer.at}
+          onClose={() => setViewer(null)}
+        />
+      ) : null}
     </div>
   );
 }

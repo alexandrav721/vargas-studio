@@ -1,0 +1,132 @@
+.lb {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  background: rgba(8, 14, 11, 0.94);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  color: var(--paper);
+  overscroll-behavior: contain;
+  animation: lb-in 0.18s var(--ease) both;
+}
+@keyframes lb-in {
+  from {
+    opacity: 0;
+  }
+}
+.lb-top,
+.lb-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px clamp(12px, 3vw, 28px);
+}
+.lb-title {
+  margin: 0;
+  font: 600 18px/1.2 var(--display);
+}
+.lb-title span {
+  color: var(--mist);
+  font: 400 14px/1 var(--sans);
+}
+.lb-close,
+.lb-step {
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(215, 228, 220, 0.3);
+  border-radius: 999px;
+  background: rgba(12, 22, 18, 0.6);
+  color: var(--paper);
+  font: 500 18px/1 var(--sans);
+  cursor: pointer;
+}
+.lb-close:hover,
+.lb-step:hover:not(:disabled) {
+  border-color: var(--citrus);
+  color: var(--citrus);
+}
+.lb-step:disabled {
+  opacity: 0.25;
+  cursor: default;
+}
+.lb-close:focus-visible,
+.lb-step:focus-visible,
+.lb-label a:focus-visible {
+  outline: 3px solid var(--citrus);
+  outline-offset: 2px;
+}
+
+/* one picture per screen; swipe or scroll sideways */
+.lb-track {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+  min-height: 0;
+}
+.lb-track::-webkit-scrollbar {
+  display: none;
+}
+.lb-slide {
+  flex: 0 0 100%;
+  margin: 0;
+  display: grid;
+  place-items: center;
+  padding: 8px clamp(12px, 4vw, 56px);
+  scroll-snap-align: center;
+  min-height: 0;
+}
+.lb-slide img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 10px;
+  box-shadow: 0 30px 60px -24px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(215, 228, 220, 0.14);
+}
+
+.lb-label {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: center;
+  gap: 4px 14px;
+  text-align: center;
+  font: 500 16px/1.3 var(--sans);
+}
+.lb-label a {
+  color: var(--citrus);
+  font-weight: 500;
+}
+
+/* the pictures that open it look tappable */
+.sp-zoom {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: zoom-in;
+  text-align: inherit;
+  color: inherit;
+  font: inherit;
+}
+.sp-zoom:focus-visible {
+  outline: 3px solid var(--citrus);
+  outline-offset: 3px;
+  border-radius: 8px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lb {
+    animation: none;
+  }
+}
