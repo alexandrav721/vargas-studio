@@ -77,11 +77,17 @@
   }
 }
 
-/* no sidebar any more: the page uses the full width */
-.shell > .main {
-  margin-left: 0;
-  margin-right: auto;
-  margin-inline: auto;
+/* Desktop: the left sidebar (sections + every project) is the navigation, always visible.
+   Phones: no room for a sidebar, so the same sections show as tabs in the sticky top bar. */
+@media (min-width: 861px) {
+  .ov-bar {
+    display: none;
+  }
+}
+@media (max-width: 860px) {
+  .shell > .toc {
+    display: none;
+  }
 }
 /* a compact top: the bar is the map, so the intro is three short lines */
 .shell .hero {
@@ -89,9 +95,11 @@
   padding-top: clamp(28px, 6vw, 64px) !important;
   padding-bottom: 8px;
 }
-/* headings land below the sticky bar */
-.shell [data-section] {
-  scroll-margin-top: 64px;
+/* headings land below the sticky bar on phones */
+@media (max-width: 860px) {
+  .shell [data-section] {
+    scroll-margin-top: 64px;
+  }
 }
 
 /* Play */
