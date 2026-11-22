@@ -358,11 +358,11 @@
   border: 1px solid color-mix(in srgb, var(--brand) 50%, var(--line));
 }
 .friend-strip strong { font: 700 1.05rem var(--display); }
-.friend-had .tile-open::after {
+.friend-had .tile-open .pic::after {
   content: "they had it";
   position: absolute;
-  left: 0.95rem;
-  top: 0.95rem;
+  left: 0.4rem;
+  bottom: 0.4rem;
   font: 600 0.66rem/1 var(--mono);
   padding: 0.35rem 0.5rem;
   border-radius: 999px;
