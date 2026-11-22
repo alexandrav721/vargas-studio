@@ -389,7 +389,7 @@ export function personaFor(had, from, to) {
   const counts = {};
   had.forEach((it) => { const k = bucket(it.category); counts[k] = (counts[k] || 0) + 1; });
   const sorted = Object.entries(counts).sort((x, y) => y[1] - x[1]);
-  let type = "All-Rounder";
+  let type = "Main Character";
   if (sorted.length && (sorted.length === 1 || sorted[0][1] > sorted[1][1])) type = TYPE_WORD[sorted[0][0]];
   return `The ${era} ${type}`;
 }
@@ -413,8 +413,11 @@ function fitText(g, text, maxW, start, weight, family) {
   return size;
 }
 
-async function makeCard() {
-  const had = ownedItems("had");
+export async function makeCard(opts = {}) {
+  const had = opts.had || ownedItems("had");
+  const from = opts.from ?? view.from;
+  const to = opts.to ?? view.to;
+  const awayMsg = opts.away ?? away;
   const W = 1080;
   const H = 1920;
   const canvas = document.createElement("canvas");
@@ -426,8 +429,8 @@ async function makeCard() {
   } catch {
     /* ignore */
   }
-  const label = view.from === view.to ? `${view.from}` : `${view.from}–${view.to}`;
-  const persona = personaFor(had, view.from, view.to);
+  const label = from === to ? `${from}` : `${from}–${to}`;
+  const persona = personaFor(had, from, to);
   const css = getComputedStyle(document.body);
   const brand = css.getPropertyValue("--brand").trim() || "#b8ff00";
   const bg0 = css.getPropertyValue("--bg0").trim() || "#0a0a0a";
@@ -444,7 +447,7 @@ async function makeCard() {
   g.fillText(`In ${label} I was`, 72, 170);
   g.fillStyle = "#f6f2ea";
   // "The Top 8" / "Trendsetter": keep the era words together
-  const type = Object.values(TYPE_WORD).concat("All-Rounder").find((t) => persona.endsWith(t)) || "";
+  const type = Object.values(TYPE_WORD).concat("Main Character").find((t) => persona.endsWith(t)) || "";
   const l1 = persona.slice(0, persona.length - type.length).trim();
   const l2 = type;
   const size = Math.min(fitText(g, l1, 936, 150, 800, "Syne, sans-serif"), fitText(g, l2, 936, 150, 800, "Syne, sans-serif"));
@@ -495,11 +498,11 @@ async function makeCard() {
     g.font = "700 44px Syne, sans-serif";
     g.fillText(`+${more} more`, 620, 1560);
   }
-  if (away.trim()) {
+  if (awayMsg.trim()) {
     g.fillStyle = "#f6f2ea";
     g.font = "italic 500 40px 'IBM Plex Sans', sans-serif";
-    fitText(g, `away msg: “${away.trim()}”`, 936, 40, "italic 500", "'IBM Plex Sans', sans-serif");
-    g.fillText(`away msg: “${away.trim()}”`, 72, 1680);
+    fitText(g, `away msg: “${awayMsg.trim()}”`, 936, 40, "italic 500", "'IBM Plex Sans', sans-serif");
+    g.fillText(`away msg: “${awayMsg.trim()}”`, 72, 1680);
   }
   g.fillStyle = brand;
   g.font = "800 58px Syne, sans-serif";
