@@ -144,7 +144,10 @@ async function showYear(year) {
     const snapYear = Number(String(ts).slice(0, 4));
     target = `https://web.archive.org/web/${ts}if_/${orig}`;
     $("#real-out").href = `https://web.archive.org/web/${ts}/${orig}`;
-    if (snapYear !== year) $("#real-title").textContent = `${realSite.name} · ${snapYear} (closest saved)`;
+    if (snapYear !== year) {
+      $("#real-title").textContent = `${realSite.name} · ${snapYear} (closest saved)`;
+      $$("#real-years button").forEach((b) => b.classList.toggle("is-active", Number(b.dataset.year) === snapYear));
+    }
   } catch {
     /* lookup failed: load the page directly */
   }
@@ -258,6 +261,7 @@ const SLOTS = {
 };
 function zonesFor(item) {
   const c = (item.category || "").toLowerCase();
+  if (/scooter|heelys|dance|guitar|chuck|converse|kinect/i.test(item.name)) return ["floor", "shelf", "desk"];
   if (c.includes("toy") || c.includes("media")) return ["shelf", "floor", "desk"];
   if (c.includes("fashion")) return ["floor", "shelf", "desk"];
   return ["desk", "shelf", "floor"];
@@ -268,10 +272,11 @@ function roomSvg(hadItems) {
   const placed = [];
   const hasBliss = hadItems.some((it) => /bliss|wallpaper/i.test(it.name));
   for (const it of hadItems) {
+    if (/bliss|wallpaper/i.test(it.name)) continue;
     const zone = zonesFor(it).find((z) => used[z] < SLOTS[z].length);
     if (!zone) break;
     const [x, y] = SLOTS[zone][used[zone]++];
-    placed.push(`<g transform="translate(${x} ${y})" class="room-item"><title>${esc(it.name)}</title>${iconFor(it)}</g>`);
+    placed.push(`<g transform="translate(${x - 6} ${y - 12}) scale(1.3)" class="room-item"><title>${esc(it.name)}</title>${iconFor(it)}</g>`);
   }
   const screen = hasBliss
     ? `<rect x="138" y="160" width="84" height="58" fill="#6fb2ff"/><path d="M138 202 Q175 178 222 196 L222 218 L138 218Z" fill="#5cb85c"/>`
@@ -359,12 +364,21 @@ async function makeCard() {
   canvas.width = W;
   canvas.height = H;
   const g = canvas.getContext("2d");
-  try { await document.fonts.ready; } catch { /* ignore */ }
+  try {
+    await Promise.race([document.fonts.ready, new Promise((ok) => setTimeout(ok, 800))]);
+  } catch {
+    /* ignore */
+  }
   const label = view.from === view.to ? `${view.from}` : `${view.from}–${view.to}`;
   g.fillStyle = "#0a0a0a";
   g.fillRect(0, 0, W, H);
   g.fillStyle = "#f4f0e6";
-  g.font = "800 92px Syne, sans-serif";
+  let size = 92;
+  g.font = `800 ${size}px Syne, sans-serif`;
+  while (g.measureText(`My ${label}`).width > 952 && size > 40) {
+    size -= 4;
+    g.font = `800 ${size}px Syne, sans-serif`;
+  }
   g.fillText(`My ${label}`, 64, 140);
   const svg = roomSvg(had);
   const img = new Image();

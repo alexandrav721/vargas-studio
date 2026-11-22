@@ -84,6 +84,7 @@
 .wish-wrap > h3 { font: 800 clamp(1.4rem, 3.5vw, 2rem)/1.05 var(--display); margin: 0 0 1rem; }
 .item.wish h4 { font: 700 1.15rem var(--display); margin: 0; }
 .wish-actions { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 0.75rem; }
+.wish-actions a.btn-primary { color: var(--bg0); text-decoration: none; }
 .wish-note { color: var(--muted); font-size: 0.85rem; margin-top: 0.75rem; }
 
 /* Open the real page */
@@ -155,6 +156,7 @@
   color: #9fe0a8;
   z-index: 1;
 }
+.real-status[hidden] { display: none; }
 .real-status a { color: #ffd36a; }
 .real-years { display: flex; flex-wrap: wrap; gap: 0.4rem; justify-content: center; margin-top: 0.9rem; }
 .real-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: center; margin-top: 0.9rem; }
