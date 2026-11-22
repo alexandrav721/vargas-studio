@@ -389,7 +389,7 @@ export function personaFor(had, from, to) {
   const counts = {};
   had.forEach((it) => { const k = bucket(it.category); counts[k] = (counts[k] || 0) + 1; });
   const sorted = Object.entries(counts).sort((x, y) => y[1] - x[1]);
-  let type = "All-Rounder";
+  let type = "Main Character";
   if (sorted.length && (sorted.length === 1 || sorted[0][1] > sorted[1][1])) type = TYPE_WORD[sorted[0][0]];
   return `The ${era} ${type}`;
 }
@@ -447,7 +447,7 @@ export async function makeCard(opts = {}) {
   g.fillText(`In ${label} I was`, 72, 170);
   g.fillStyle = "#f6f2ea";
   // "The Top 8" / "Trendsetter": keep the era words together
-  const type = Object.values(TYPE_WORD).concat("All-Rounder").find((t) => persona.endsWith(t)) || "";
+  const type = Object.values(TYPE_WORD).concat("Main Character").find((t) => persona.endsWith(t)) || "";
   const l1 = persona.slice(0, persona.length - type.length).trim();
   const l2 = type;
   const size = Math.min(fitText(g, l1, 936, 150, 800, "Syne, sans-serif"), fitText(g, l2, 936, 150, 800, "Syne, sans-serif"));

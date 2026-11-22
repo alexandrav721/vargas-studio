@@ -202,3 +202,10 @@
   .reveal-name { opacity: 1; }
   .card { transition: none; }
 }
+@media (max-width: 480px) {
+  .wy:not(.is-now) { display: none; }
+  .wheel { gap: 0.75rem; }
+  .wy.is-now { font-size: clamp(2.8rem, 14vw, 3.8rem); }
+}
+.wheel-step { flex: none; }
+.play-count { white-space: nowrap; }
