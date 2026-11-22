@@ -31,7 +31,7 @@ export default function ProjectPage({ id }: { id: string }) {
 
   return (
     <div className="lad">
-      <SiteBar backHref="#/work" backLabel="How I build them" />
+      <SiteBar backHref="#projects" backLabel="All ideas" />
       <main className="lad-main">
         <article className="proj" aria-labelledby="proj-title">
           <a className="proj-pic" href={m.play} target={m.external ? "_blank" : undefined} rel={m.external ? "noopener" : undefined} tabIndex={-1} aria-hidden="true">
@@ -68,10 +68,6 @@ export default function ProjectPage({ id }: { id: string }) {
               <dd>{p.pays}</dd>
             </div>
           </dl>
-
-          <a className="lad-more" href="#/all">
-            See every detail →
-          </a>
 
           <nav className="proj-pager" aria-label="Other ideas">
             <a href={projectHref(prev.id)}>← {META[prev.id]?.name ?? prev.name}</a>

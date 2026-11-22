@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import data from "../content/portfolio.json";
 
 import ProjectPage from "./ProjectPage";
-import SiteBar from "./SiteBar";
+import PlayGrid from "./PlayGrid";
 import {
   cellFor,
   cellStateLabel,
@@ -21,22 +21,16 @@ const MAX_COMPARE = 5;
 
 const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
-/* The full detailed view (the old home): index with project details, compare table and craft.
-   Kept one tap away at #/all for people who want every detail. */
-export default function DetailView() {
+/* Home: the whole studio at a glance. A slim sticky bar shows every section (Play, Ideas, Compare,
+   Tools) and highlights where you are; everything is one tap away (see idea-journey step 4). */
+export default function Overview() {
   useEffect(() => {
-    document.title = "Every detail · Vargas Studio";
+    document.title = "Vargas Studio — Alexandra Vargas";
   }, []);
-  return (
-    <div className="has-site-bar">
-      <SiteBar backHref="#/work" backLabel="How I build them" />
-      <Studio route={{ view: "home" }} />
-    </div>
-  );
+  return <Studio route={{ view: "home" }} />;
 }
 
 function Studio({ route }: { route: Route }) {
-  const [tocOpen, setTocOpen] = useState(false);
   const [active, setActive] = useState("intro");
   const [openProjectId, setOpenProjectId] = useState<string | null>(
     data.projects[0]?.id ?? null,
@@ -69,7 +63,7 @@ function Studio({ route }: { route: Route }) {
     const id = window.location.hash.slice(1);
     if (!id || id.startsWith("/")) return;
     requestAnimationFrame(() =>
-      document.getElementById(id)?.scrollIntoView({ behavior: "auto" }),
+      document.getElementById(id)?.scrollIntoView({ behavior: "instant" as ScrollBehavior }),
     );
   }, [route.view]);
 
@@ -77,18 +71,16 @@ function Studio({ route }: { route: Route }) {
   const projectId = route.view === "project" ? route.id : null;
   useEffect(() => {
     if (projectId) window.scrollTo({ top: 0 });
-    setTocOpen(false);
   }, [projectId]);
 
   const toc = [
-    { id: "intro", label: "Intro" },
-    { id: "projects", label: "Projects" },
+    { id: "play", label: "Play" },
+    { id: "projects", label: "Ideas" },
     { id: "compare", label: "Compare" },
-    { id: "craft", label: "Craft" },
+    { id: "craft", label: "Tools" },
   ];
 
   const jump = (id: string) => {
-    setTocOpen(false);
     if (route.view !== "home") {
       // Leave the project page; the effect below scrolls once home mounts.
       window.location.hash = id;
@@ -141,61 +133,37 @@ function Studio({ route }: { route: Route }) {
     <div className="shell">
       <div className="atmosphere" aria-hidden="true" />
 
-      <button
-        type="button"
-        className="toc-toggle"
-        aria-expanded={tocOpen}
-        onClick={() => setTocOpen((v) => !v)}
-      >
-        {tocOpen ? "Close" : "Menu"}
-      </button>
-
-      <aside className={`toc ${tocOpen ? "open" : ""}`} aria-label="Site menu">
-        <a className="toc-brand" href="#/">
+      <nav className="ov-bar" aria-label="Sections">
+        <a
+          className="ov-brand"
+          href="#intro"
+          onClick={(e) => {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }}
+        >
           {data.site.brand}
         </a>
-        <a className="toc-tour" href="#/tour">
-          <svg viewBox="0 0 16 16" aria-hidden="true">
-            <rect x="1.5" y="3" width="13" height="9" />
-            <path d="M6.5 5.5v4l3.5-2z" />
-          </svg>
-          Take the tour
-        </a>
-        <nav aria-label="Sections">
-          {toc.map((item) => (
-            <a
-              key={item.id}
-              href={`#${item.id}`}
-              className={
-                route.view === "home" &&
-                (active === item.id ||
-                  (item.id === "projects" && active.startsWith("project-")))
-                  ? "on"
-                  : ""
-              }
-              onClick={(e) => {
-                e.preventDefault();
-                jump(item.id);
-              }}
-            >
-              {item.label}
-            </a>
-          ))}
-        </nav>
-        <p className="toc-group">Projects</p>
-        <nav className="toc-projects" aria-label="Projects">
-          {data.projects.map((p) => (
-            <a
-              key={p.id}
-              href={projectHref(p.id)}
-              className={projectId === p.id ? "on" : ""}
-              aria-current={projectId === p.id ? "page" : undefined}
-            >
-              {p.name}
-            </a>
-          ))}
-        </nav>
-      </aside>
+        <div className="ov-tabs">
+          {toc.map((item) => {
+            const on = active === item.id || (item.id === "projects" && active.startsWith("project-"));
+            return (
+              <a
+                key={item.id}
+                href={`#${item.id}`}
+                className={on ? "on" : ""}
+                aria-current={on ? "location" : undefined}
+                onClick={(e) => {
+                  e.preventDefault();
+                  jump(item.id);
+                }}
+              >
+                {item.label}
+              </a>
+            );
+          })}
+        </div>
+      </nav>
 
       {projectId ? (
         <main className="main">
@@ -214,38 +182,19 @@ function Studio({ route }: { route: Route }) {
           </p>
           <h1 className="brand-hero">{data.site.brand}</h1>
           <p className="tagline">{data.site.tagline}</p>
-          <p className="lede">{data.site.forWhom}</p>
-          <div className="hero-cta">
-            <a href="#/tour">Take the tour</a>
-            <a
-              className="ghost"
-              href="#projects"
-              onClick={(e) => {
-                e.preventDefault();
-                jump("projects");
-              }}
-            >
-              Browse projects
-            </a>
-            <a
-              className="ghost"
-              href="#compare"
-              onClick={(e) => {
-                e.preventDefault();
-                jump("compare");
-              }}
-            >
-              Compare side by side
-            </a>
-          </div>
         </header>
 
+        <section className="section" id="play" data-section>
+          <p className="section-kicker">Play</p>
+          <h2>Try one in a minute</h2>
+          <PlayGrid />
+        </section>
+
         <section className="section" id="projects" data-section>
-          <p className="section-kicker">Projects</p>
+          <p className="section-kicker">The ideas</p>
           <h2>{capitalize(projectCountWord)} ideas, one studio</h2>
           <p className="section-lede">
-            Scan the index, open one for the story and live links, then use
-            Compare when you want the same craft column across projects.
+            Tap one for its story, everything built and live links.
           </p>
 
           <ol className="project-index" aria-label="Project index">
@@ -512,8 +461,8 @@ function Studio({ route }: { route: Route }) {
         </section>
 
         <section className="section" id="craft" data-section>
-          <p className="section-kicker">Craft</p>
-          <h2>Non-visual work</h2>
+          <p className="section-kicker">Tools</p>
+          <h2>Tools I use</h2>
           <p className="section-lede">
             Skills, agents, and reusable patterns — kept out of the visual
             columns on purpose.

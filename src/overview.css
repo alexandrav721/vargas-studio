@@ -1,0 +1,168 @@
+/* Home at a glance: one slim sticky bar with every section, visible on every screen size
+   (NN/g: hidden navigation nearly halves discoverability). */
+.ov-bar {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  gap: 4px 16px;
+  padding: 0 clamp(12px, 4vw, 3.5rem);
+  min-height: 52px;
+  background: rgba(12, 22, 18, 0.92);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(215, 228, 220, 0.14);
+}
+.ov-brand {
+  flex: none;
+  font: 600 17px/1 var(--display);
+  color: var(--paper);
+  text-decoration: none;
+  padding: 14px 0;
+}
+.ov-brand:hover {
+  color: var(--citrus);
+}
+.ov-tabs {
+  display: flex;
+  gap: 2px;
+  margin-left: auto;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.ov-tabs::-webkit-scrollbar {
+  display: none;
+}
+.ov-tabs a {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 10px;
+  color: var(--mist);
+  font: 500 14px/1 var(--sans);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.ov-tabs a:hover {
+  color: var(--paper);
+}
+.ov-tabs a.on {
+  color: var(--paper);
+}
+.ov-tabs a.on::after {
+  content: "";
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 6px;
+  height: 2px;
+  border-radius: 1px;
+  background: var(--citrus);
+}
+.ov-brand:focus-visible,
+.ov-tabs a:focus-visible {
+  outline: 2px solid var(--citrus);
+  outline-offset: -2px;
+  border-radius: 6px;
+}
+@media (max-width: 420px) {
+  .ov-brand {
+    font-size: 15px;
+  }
+  .ov-tabs a {
+    padding: 0 7px;
+    font-size: 13.5px;
+  }
+}
+
+/* no sidebar any more: the page uses the full width */
+.shell > .main {
+  margin-left: 0;
+  margin-right: auto;
+  margin-inline: auto;
+}
+/* a compact top: the bar is the map, so the intro is three short lines */
+.shell .hero {
+  min-height: 0 !important;
+  padding-top: clamp(28px, 6vw, 64px) !important;
+  padding-bottom: 8px;
+}
+/* headings land below the sticky bar */
+.shell [data-section] {
+  scroll-margin-top: 64px;
+}
+
+/* Play */
+.play-grid {
+  list-style: none;
+  margin: 18px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px 12px;
+}
+@media (min-width: 700px) {
+  .play-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 20px 16px;
+  }
+}
+.play-tile {
+  display: grid;
+  gap: 8px;
+  color: var(--paper);
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.play-tile img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 15 / 16;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 12px 22px -12px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(215, 228, 220, 0.12);
+  transition: transform 0.22s var(--ease), box-shadow 0.22s var(--ease);
+}
+.play-tile:hover img,
+.play-tile:focus-visible img {
+  transform: translateY(-3px);
+}
+.play-tile:focus-visible {
+  outline: none;
+}
+.play-tile:focus-visible img {
+  box-shadow: 0 0 0 3px var(--citrus);
+}
+.play-tile.is-lifted img {
+  transform: translateY(-8px) scale(1.04);
+  box-shadow: 0 26px 34px -16px rgba(0, 0, 0, 0.85), 0 0 0 2px var(--citrus);
+}
+.play-name {
+  font: 500 15px/1.2 var(--sans);
+}
+.play-sound {
+  margin-top: 14px;
+  min-height: 36px;
+  padding: 0 12px;
+  border: 1px solid rgba(215, 228, 220, 0.3);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--fog);
+  font: 500 11px/1 var(--sans);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.play-sound[aria-pressed="true"] {
+  background: var(--fog);
+  color: var(--ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .play-tile img {
+    transition: none;
+  }
+}
