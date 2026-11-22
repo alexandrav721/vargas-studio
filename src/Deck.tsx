@@ -4,6 +4,7 @@ import {
   heroThumb,
   liveCount,
   primaryOpen,
+  projectCountWord,
   projectHref,
   statusLabel,
   supportingThumbs,
@@ -12,6 +13,7 @@ import {
 } from "./lib";
 
 const projects = data.projects;
+const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
 const PIPELINE: [string, string][] = [
   ["Innovate", "Find the strongest version of the idea"],
@@ -31,7 +33,7 @@ const slideTitle = (i: number) =>
   i === 0
     ? "Intro"
     : i === SUMMARY
-      ? "All seven on one page"
+      ? `All ${projectCountWord} on one page`
       : i === TOTAL - 1
         ? "How it gets made"
         : projects[i - FIRST_PROJECT].name;
@@ -159,13 +161,13 @@ export default function Deck({ start }: { start: number }) {
           <div className="intro-copy">
             <h1>{data.site.brand}</h1>
             <p className="intro-line">
-              Seven business ideas, each built out for real: a working product,
+              {cap(projectCountWord)} business ideas, each built out for real: a working product,
               landing pages, ads, a pitch deck, print and social.
             </p>
             <p className="intro-by">by {data.site.owner}</p>
             <div className="slide-actions">
               <button type="button" className="action-primary" onClick={() => go(SUMMARY)}>
-                See all seven on one page
+                See all {projectCountWord} on one page
               </button>
               <button type="button" className="action-ghost" onClick={() => go(FIRST_PROJECT)}>
                 Go one by one
@@ -186,8 +188,8 @@ export default function Deck({ start }: { start: number }) {
         </section>
 
         {/* 2 · One-page summary */}
-        <section className="slide slide-summary" data-index={1} aria-label="All seven on one page">
-          <h2>All seven on one page</h2>
+        <section className="slide slide-summary" data-index={1} aria-label={`All ${projectCountWord} on one page`}>
+          <h2>All {projectCountWord} on one page</h2>
           <table className="summary">
             <thead>
               <tr>

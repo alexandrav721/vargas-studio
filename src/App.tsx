@@ -8,6 +8,7 @@ import {
   cellStateLabel,
   liveCount,
   parseRoute,
+  projectCountWord,
   primaryOpen,
   projectHref,
   statusLabel,
@@ -18,6 +19,8 @@ import {
 } from "./lib";
 
 const MAX_COMPARE = 5;
+
+const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
 export default function App() {
   const [route, setRoute] = useState<Route>(() => parseRoute(window.location.hash));
@@ -239,7 +242,7 @@ function Studio({ route }: { route: Route }) {
 
         <section className="section" id="projects" data-section>
           <p className="section-kicker">Projects</p>
-          <h2>Seven ideas, one studio</h2>
+          <h2>{capitalize(projectCountWord)} ideas, one studio</h2>
           <p className="section-lede">
             Scan the index, open one for the story and live links, then use
             Compare when you want the same craft column across projects.

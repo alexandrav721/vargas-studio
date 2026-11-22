@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1080">
+<meta name="robots" content="noindex">
+<title>Weekline Ad Frames</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<!--
+  Weekline Meta ad frames, 1080x1350 (4:5). ?f=1..6
+  Tokens: ~/Claude/ideas/weekline/concept/tokens.css (Wheatpaste Crew).
+  Copy: ~/Claude/ideas/weekline/marketing.md section 5.
+  LIVE PARKS rows = real NYC Parks listings for Mon 23 - Fri 27 Nov 2026, pulled 21 Nov 2026 from
+  NYC Open Data "NYC Parks Public Events - Upcoming 14 Days": https://data.cityofnewyork.us/resource/w3wp-dpdi.json
+  "Free" is shown only where the listing text says free (NYRR Open Run). Other costs are not claimed.
+  SAMPLE rows come from the app's sample fixtures (weekline-app/src/data/events.ts) and are labeled SAMPLE.
+  Re-pull the feed for the week the ads actually run.
+-->
+<style>
+:root{
+  --wl-ink:#0a0a0b;--wl-asphalt:#141310;--wl-curb:#1f1c18;--wl-paper:#f6f1e6;--wl-concrete:#b7b0a4;
+  --wl-lime:#c8f542;--wl-cyan:#3de0ff;--wl-coral:#ff6b4a;--wl-line:rgba(246,241,230,.16);
+  --wl-sheet-paper:#f7f2e6;--wl-sheet-ink:#171410;--wl-stamp:#1f6f58;--wl-sample:#7a4a00;--wl-editorial:#4a4740;
+  --wl-font-display:'Bricolage Grotesque','Arial Narrow',sans-serif;--wl-font-body:'Outfit',system-ui,sans-serif;
+  --wl-shadow-btn:3px 3px 0 rgba(0,0,0,.45);--wl-shadow-flyer:4px 8px 0 rgba(0,0,0,.35);--wl-shadow-sheet:0 24px 80px rgba(0,0,0,.5);
+  --wl-glow-a:rgba(200,245,66,.14);--wl-glow-b:rgba(61,224,255,.12);--wl-glow-c:rgba(255,107,74,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1350px;overflow:hidden;background:var(--wl-ink)}
+body{font-family:var(--wl-font-body);color:var(--wl-paper)}
+.frame{position:relative;width:1080px;height:1350px;padding:56px 64px 48px;display:flex;flex-direction:column;overflow:hidden;
+  background:
+    radial-gradient(700px 420px at 92% -6%,var(--wl-glow-a),transparent 62%),
+    radial-gradient(560px 380px at -8% 42%,var(--wl-glow-b),transparent 62%),
+    radial-gradient(640px 420px at 70% 108%,var(--wl-glow-c),transparent 62%),
+    var(--wl-ink)}
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.10;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.top{display:flex;align-items:center;justify-content:space-between;gap:24px}
+.brand{display:flex;align-items:center;gap:16px}
+.mark{width:60px;height:60px;background:var(--wl-lime);color:var(--wl-ink);display:grid;place-items:center;font:800 40px/1 var(--wl-font-display);box-shadow:var(--wl-shadow-btn)}
+.word{font:800 46px/1 var(--wl-font-display);letter-spacing:-.03em;position:relative;padding-bottom:8px}
+.word::after{content:"";position:absolute;left:0;bottom:0;width:72px;height:6px;background:var(--wl-lime)}
+.eyebrow{font:600 28px/1.1 var(--wl-font-body);letter-spacing:.12em;text-transform:uppercase;color:var(--wl-lime);text-align:right}
+h1{font:800 92px/.95 var(--wl-font-display);letter-spacing:-.035em;margin-top:44px}
+h1 em{font-style:normal;color:var(--wl-lime)}
+.sub{font:400 34px/1.3 var(--wl-font-body);color:var(--wl-concrete);margin-top:20px;max-width:900px}
+.grow{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center}
+
+/* Sheet: always ink on wheat */
+.sheet{background:var(--wl-sheet-paper);color:var(--wl-sheet-ink);box-shadow:var(--wl-shadow-sheet),8px 8px 0 rgba(0,0,0,.35);position:relative}
+.sh-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;padding:22px 30px 16px;border-bottom:3px solid var(--wl-sheet-ink)}
+.sh-title{font:800 38px/1 var(--wl-font-display);letter-spacing:-.02em;white-space:nowrap}
+.sh-meta{font:600 28px/1.1 var(--wl-font-body);letter-spacing:.04em;text-transform:uppercase;color:var(--wl-editorial);text-align:right}
+.row{display:grid;grid-template-columns:128px 1fr auto;align-items:center;gap:20px;padding:6px 30px;min-height:88px;border-bottom:1.5px solid rgba(23,20,16,.18)}
+.row:last-of-type{border-bottom:0}
+.d{font:700 30px/1.05 var(--wl-font-body)}
+.d small{display:block;font:500 28px/1.1 var(--wl-font-body);color:var(--wl-editorial)}
+.t{font:600 32px/1.15 var(--wl-font-body);min-width:0}
+.t small{display:block;font:400 28px/1.2 var(--wl-font-body);color:var(--wl-editorial);margin-top:4px}
+.t.open{font-style:italic;color:var(--wl-editorial)}
+.badge{font:700 28px/1 var(--wl-font-body);letter-spacing:.06em;text-transform:uppercase;border:2.5px solid currentColor;padding:7px 12px;white-space:nowrap}
+.badge.live{color:var(--wl-stamp)}
+.badge.sample{color:var(--wl-sample)}
+.badge.open{color:var(--wl-editorial);border-style:dashed}
+.compact .row{min-height:72px;height:72px;padding:0 30px}
+.roomy .row{height:118px}
+.sh-foot{display:flex;justify-content:space-between;padding:16px 30px;border-top:3px solid var(--wl-sheet-ink);font:700 28px/1 var(--wl-font-body);letter-spacing:.1em;text-transform:uppercase;color:var(--wl-stamp)}
+
+.cta{display:flex;align-items:center;justify-content:space-between;gap:24px;margin-top:34px}
+.btn{background:var(--wl-lime);color:var(--wl-ink);font:700 38px/1 var(--wl-font-body);padding:24px 34px;box-shadow:6px 6px 0 rgba(0,0,0,.5);white-space:nowrap}
+.cta-note{font:500 30px/1.25 var(--wl-font-body);color:var(--wl-paper);text-align:right}
+.foot{margin-top:24px;font:400 28px/1.3 var(--wl-font-body);color:var(--wl-concrete)}
+.foot b{font-weight:700;color:var(--wl-paper)}
+
+/* flyers */
+.flyers{display:flex;gap:22px;margin-top:40px}
+.flyer{font:800 36px/1 var(--wl-font-display);letter-spacing:-.02em;color:var(--wl-ink);padding:18px 22px;box-shadow:var(--wl-shadow-flyer)}
+.flyer small{display:block;font:500 28px/1.1 var(--wl-font-body);margin-top:6px;letter-spacing:0}
+.f-coral{background:var(--wl-coral)}.f-cyan{background:var(--wl-cyan)}.f-paper{background:var(--wl-sheet-paper)}.f-lime{background:var(--wl-lime)}
+.stamp{position:absolute;font:800 64px/1 var(--wl-font-display);letter-spacing:-.02em;color:var(--wl-stamp);border:6px solid var(--wl-stamp);padding:10px 22px;transform:rotate(-7deg);background:rgba(247,242,230,.85)}
+.quote{font:800 52px/1.05 var(--wl-font-display);letter-spacing:-.03em;margin-top:40px}
+.quote em{font-style:normal;color:var(--wl-lime)}
+.crewcard{position:absolute;right:64px;top:150px;width:330px;transform:rotate(3deg)}
+</style>
+</head>
+<body>
+<div class="frame" id="frame"></div>
+<script>
+// Real NYC Parks listings (NYC Open Data w3wp-dpdi, pulled 21 Nov 2026)
+var LIVE={
+  mon:{d:'Mon',n:'23 Nov',t:'Bodyweight Interval Training',p:'McCarren Park · 6:00 pm',b:'live'},
+  tue:{d:'Tue',n:'24 Nov',t:'NYRR Open Run',p:'Brooklyn Bridge Park · 6:45 pm · free',b:'live'},
+  fri:{d:'Fri',n:'27 Nov',t:'Post-Thanksgiving Super Hike',p:'Prospect Park · 12:00 pm',b:'live'}
+};
+var OPEN={wed:{d:'Wed',n:'25 Nov',t:'Open',p:'nothing padded',b:'open'},thu:{d:'Thu',n:'26 Nov',t:'Open',p:'Thanksgiving',b:'open'}};
+// Sample fixtures from the app (labeled SAMPLE)
+var SAMPLE={
+  sat:{d:'Sat',n:'28 Nov',t:'Prospect Park long loop',p:'Park Slope · 8:00 am · $0',b:'sample'},
+  sun:{d:'Sun',n:'29 Nov',t:'Warehouse pop-up market',p:'Bushwick · 12:00 pm · $0',b:'sample'}
+};
+var WEEK=[LIVE.mon,LIVE.tue,OPEN.wed,OPEN.thu,LIVE.fri,SAMPLE.sat,SAMPLE.sun];
+var BL={live:'Live Parks',sample:'Sample',open:'Open'};
+
+function row(r,opt){opt=opt||{};
+  return '<div class="row"><div class="d">'+r.d+'<small>'+r.n+'</small></div><div class="t'+(r.b==='open'?' open':'')+'">'+r.t+(opt.place===false?'':'<small>'+r.p+'</small>')+'</div><span class="badge '+r.b+'">'+BL[r.b]+'</span></div>';}
+function sheet(rows,meta,cls,foot,extra){
+  return '<div class="sheet '+cls+'"><div class="sh-head"><span class="sh-title">'+(meta.title||'Weekline Sheet')+'</span><span class="sh-meta">'+meta.m+'</span></div>'+rows.map(function(r){return row(r,meta)}).join('')+(foot?'<div class="sh-foot">'+foot+'</div>':'')+(extra||'')+'</div>';}
+var TOP=function(eb){return '<div class="top"><div class="brand"><span class="mark">W</span><span class="word">Weekline</span></div><span class="eyebrow">'+eb+'</span></div>';};
+var FOOT_MIX='<p class="foot"><b>LIVE PARKS</b> = NYC Parks listings, 23–29 Nov 2026. <b>SAMPLE</b> = demo row.</p>';
+var FOOT_LIVE='<p class="foot"><b>LIVE PARKS</b> = NYC Parks listings, 23–29 Nov 2026 (NYC Open Data).</p>';
+var CTA=function(b,n){return '<div class="cta"><span class="btn">'+b+' →</span><span class="cta-note">'+n+'</span></div>';};
+
+var F={
+ 1:function(){return TOP('Brooklyn · this week')+
+   '<div class="flyers"><span class="flyer f-paper" style="transform:rotate(-3deg)">idk you pick</span><span class="flyer f-cyan" style="transform:rotate(2.4deg)">idk you pick</span><span class="flyer f-coral" style="transform:rotate(-1.6deg)">idk you pick</span></div>'+
+   '<h1>End the “idk you pick” chat.</h1>'+
+   '<div class="grow">'+sheet([LIVE.mon,LIVE.tue,OPEN.wed,SAMPLE.sat],{m:'Cheap Thrills · Brooklyn'},'roomy','<span>Send to chat</span><span>.ics ready</span>')+'</div>'+
+   CTA('See a sample week','Early invites · NYC')+FOOT_MIX;},
+ 2:function(){return TOP('Pick a crew · get the week')+
+   '<h1>Your NYC week, on <em>one Sheet.</em></h1>'+
+   '<p class="sub">Crew, borough, radius, budget. Mon–Sun, ready to send.</p>'+
+   '<div class="grow">'+sheet(WEEK,{m:'Brooklyn · ~40 min · Under $25',place:false},'compact','<span>Send to chat</span><span>.ics ready</span>')+'</div>'+
+   CTA('See a sample week','Early invites · NYC')+FOOT_MIX;},
+ 3:function(){return TOP('Free week · Brooklyn')+
+   '<h1>A free week in Brooklyn, <em>planned.</em></h1>'+
+   '<div class="grow">'+sheet(WEEK,{m:'Week of 23 Nov'},'',null)+'</div>'+
+   CTA('Get my week','Empty nights stay empty.')+FOOT_MIX;},
+ 4:function(){return TOP('Cheap Thrills crew')+
+   '<div class="crewcard"><div class="flyer f-cyan" style="font-size:46px;padding:26px 28px">Cheap Thrills<small style="font-size:30px;margin-top:12px">Maximum city, minimum spend.</small></div></div>'+
+   '<h1 style="max-width:600px">Cheap week. <em>Real plan.</em></h1>'+
+   '<p class="sub" style="max-width:600px">Thin days stay honest. Nothing padded.</p>'+
+   '<div class="grow">'+sheet([LIVE.tue,OPEN.wed,OPEN.thu,SAMPLE.sat],{m:'Brooklyn · Under $25'},'roomy','<span>Add to calendar</span><span>.ics</span>')+'</div>'+
+   CTA('Get my week','Early invites · NYC')+FOOT_MIX;},
+ 5:function(){return TOP('Seeking · get fit')+
+   '<h1>Say you’re getting fit. <em>Schedule Tuesday.</em></h1>'+
+   '<div class="grow">'+sheet([LIVE.tue],{title:'Seeking',m:'Get fit · Brooklyn'},'roomy','<span>Locked</span><span>.ics ready</span>','<span class="stamp" style="right:30px;top:-120px">Scheduled.</span>')+
+   '<p class="quote">You’re not what you say you’ll do. <em>You’re what you schedule.</em></p></div>'+
+   CTA('Schedule it','Early invites · NYC')+FOOT_LIVE;},
+ 6:function(){
+   var mon={d:'Mon',n:'23 Nov',t:'Bodyweight Interval Training',p:'Why: low impact, all levels · 6 pm',b:'live'};
+   var tue={d:'Tue',n:'24 Nov',t:'NYRR Open Run',p:'Why: free ~3-mile group run · 6:45 pm',b:'live'};
+   var fri={d:'Fri',n:'27 Nov',t:'Post-Thanksgiving Super Hike',p:'Why: 2-hour Rangers hike · noon',b:'live'};
+   return TOP('Seeking · get fit')+
+   '<h1>Getting fit? <em>Prove it Tuesday.</em></h1>'+
+   '<p class="sub">This week’s NYC Parks events, each with a why.</p>'+
+   '<div class="grow">'+sheet([mon,tue,OPEN.wed,fri],{title:'Seeking',m:'Get fit · Brooklyn'},'roomy','<span>Lock · skip</span><span>.ics ready</span>')+'</div>'+
+   CTA('Schedule it','No streaks. No coach.')+FOOT_LIVE;}
+};
+var n=parseInt(new URLSearchParams(location.search).get('f'),10);if(!F[n])n=1;
+document.getElementById('frame').innerHTML=F[n]();
+document.title='Weekline ad frame '+n;
+</script>
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1080">
+<meta name="robots" content="noindex">
+<title>Weekline Carousel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<!--
+  "How to plan a free week in Brooklyn", 5 slides, 1080x1350. ?s=1..5
+  Flow and labels copied from the product (weekline-app/src/data/events.ts: CREWS, ZONES, RADIUS_TIERS, BUDGET_TIERS).
+  LIVE PARKS rows: NYC Parks listings 23-27 Nov 2026, NYC Open Data w3wp-dpdi, pulled 21 Nov 2026.
+  SAMPLE rows: the app's demo fixtures. "Free" shown only where the listing text says so.
+-->
+<style>
+:root{
+  --wl-ink:#0a0a0b;--wl-asphalt:#141310;--wl-curb:#1f1c18;--wl-paper:#f6f1e6;--wl-concrete:#b7b0a4;
+  --wl-lime:#c8f542;--wl-cyan:#3de0ff;--wl-coral:#ff6b4a;--wl-line:rgba(246,241,230,.16);
+  --wl-sheet-paper:#f7f2e6;--wl-sheet-ink:#171410;--wl-stamp:#1f6f58;--wl-sample:#7a4a00;--wl-editorial:#4a4740;
+  --wl-app-wheat:#e8e1d2;--wl-app-amber:#f5b942;
+  --wl-font-display:'Bricolage Grotesque','Arial Narrow',sans-serif;--wl-font-body:'Outfit',system-ui,sans-serif;
+  --wl-shadow-flyer:4px 8px 0 rgba(0,0,0,.35);--wl-shadow-sheet:0 24px 80px rgba(0,0,0,.5);
+  --wl-glow-a:rgba(200,245,66,.14);--wl-glow-b:rgba(61,224,255,.12);--wl-glow-c:rgba(255,107,74,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1350px;overflow:hidden;background:var(--wl-ink)}
+body{font-family:var(--wl-font-body);color:var(--wl-paper)}
+.slide{position:relative;width:1080px;height:1350px;padding:56px 64px 52px;display:flex;flex-direction:column;overflow:hidden;
+  background:radial-gradient(700px 420px at 92% -6%,var(--wl-glow-a),transparent 62%),radial-gradient(560px 380px at -8% 42%,var(--wl-glow-b),transparent 62%),radial-gradient(640px 420px at 70% 108%,var(--wl-glow-c),transparent 62%),var(--wl-ink)}
+.top{display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:14px}
+.mark{width:54px;height:54px;background:var(--wl-lime);color:var(--wl-ink);display:grid;place-items:center;font:800 36px/1 var(--wl-font-display)}
+.word{font:800 42px/1 var(--wl-font-display);letter-spacing:-.03em}
+.count{font:700 30px/1 var(--wl-font-body);color:var(--wl-concrete);letter-spacing:.06em}
+.eyebrow{font:600 28px/1.1 var(--wl-font-body);letter-spacing:.12em;text-transform:uppercase;color:var(--wl-lime);margin-top:48px}
+h1{font:800 96px/.95 var(--wl-font-display);letter-spacing:-.035em;margin-top:16px}
+h1 em{font-style:normal;color:var(--wl-lime)}
+h2{font:800 84px/.95 var(--wl-font-display);letter-spacing:-.035em;margin-top:14px}
+h2 em{font-style:normal;color:var(--wl-lime)}
+.sub{font:400 34px/1.3 var(--wl-font-body);color:var(--wl-concrete);margin-top:20px}
+.grow{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center}
+.bottom{display:flex;justify-content:space-between;align-items:center;margin-top:28px;font:600 30px/1.2 var(--wl-font-body)}
+.swipe{color:var(--wl-lime);font-weight:700}
+.foot{font:400 28px/1.3 var(--wl-font-body);color:var(--wl-concrete);margin-top:20px}
+.foot b{color:var(--wl-paper)}
+
+.sheet{background:var(--wl-sheet-paper);color:var(--wl-sheet-ink);box-shadow:var(--wl-shadow-sheet),8px 8px 0 rgba(0,0,0,.35);position:relative}
+.sh-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;padding:20px 28px 14px;border-bottom:3px solid var(--wl-sheet-ink)}
+.sh-title{font:800 36px/1 var(--wl-font-display);letter-spacing:-.02em;white-space:nowrap}
+.sh-meta{font:600 28px/1.1 var(--wl-font-body);letter-spacing:.04em;text-transform:uppercase;color:var(--wl-editorial);text-align:right}
+.row{display:grid;grid-template-columns:120px 1fr auto;align-items:center;gap:18px;padding:6px 28px;min-height:88px;border-bottom:1.5px solid rgba(23,20,16,.18)}
+.row:last-of-type{border-bottom:0}
+.d{font:700 30px/1.05 var(--wl-font-body)}
+.d small{display:block;font:500 28px/1.1 var(--wl-font-body);color:var(--wl-editorial)}
+.t{font:600 31px/1.15 var(--wl-font-body);min-width:0}
+.t small{display:block;font:400 28px/1.2 var(--wl-font-body);color:var(--wl-editorial);margin-top:4px}
+.t.open{font-style:italic;color:var(--wl-editorial)}
+.badge{font:700 28px/1 var(--wl-font-body);letter-spacing:.06em;text-transform:uppercase;border:2.5px solid currentColor;padding:7px 12px;white-space:nowrap}
+.badge.live{color:var(--wl-stamp)}.badge.sample{color:var(--wl-sample)}.badge.open{color:var(--wl-editorial);border-style:dashed}
+.sh-foot{display:flex;justify-content:space-between;padding:14px 28px;border-top:3px solid var(--wl-sheet-ink);font:700 28px/1 var(--wl-font-body);letter-spacing:.1em;text-transform:uppercase;color:var(--wl-stamp)}
+
+/* crews */
+.crews{display:grid;grid-template-columns:1fr 1fr;gap:30px 34px;margin-top:10px}
+.crew{padding:24px 24px 22px;color:var(--wl-ink);box-shadow:var(--wl-shadow-flyer)}
+.crew:not(.on){background:var(--wl-curb);color:var(--wl-concrete);border-left:12px solid var(--tape)}
+.crew:not(.on) b{color:var(--wl-paper)}
+.crew b{display:block;font:800 40px/1 var(--wl-font-display);letter-spacing:-.02em}
+.crew span{display:block;font:500 28px/1.2 var(--wl-font-body);margin-top:10px}
+.crew.on{opacity:1;outline:6px solid var(--wl-lime);outline-offset:8px}
+.c-cyan{background:var(--wl-cyan);--tape:var(--wl-cyan)}.c-coral{--tape:var(--wl-coral)}.c-lime{--tape:var(--wl-lime)}.c-cream{--tape:var(--wl-app-wheat)}.c-amber{--tape:var(--wl-app-amber)}.c-ink{--tape:var(--wl-concrete)}
+.picked{font:700 28px/1 var(--wl-font-body);letter-spacing:.1em;text-transform:uppercase;color:var(--wl-lime);margin-top:34px}
+
+/* controls */
+.group{margin-top:34px}
+.group h3{font:600 28px/1 var(--wl-font-body);letter-spacing:.12em;text-transform:uppercase;color:var(--wl-concrete);margin-bottom:16px}
+.opts{display:flex;flex-wrap:wrap;gap:14px}
+.opt{font:600 32px/1 var(--wl-font-body);border:2px solid rgba(246,241,230,.4);padding:18px 22px;color:var(--wl-paper)}
+.opt small{font:400 28px/1 var(--wl-font-body);color:var(--wl-concrete);margin-left:8px}
+.opt.on{background:var(--wl-lime);border-color:var(--wl-lime);color:var(--wl-ink);box-shadow:4px 4px 0 rgba(0,0,0,.5)}
+.opt.on small{color:var(--wl-ink)}
+
+/* send */
+.acts{display:flex;flex-direction:column;gap:22px;margin-top:8px}
+.act{display:flex;align-items:center;gap:22px;font:700 40px/1 var(--wl-font-body);padding:28px 30px;border:2px solid rgba(246,241,230,.4)}
+.act.p{background:var(--wl-lime);color:var(--wl-ink);border-color:var(--wl-lime);box-shadow:6px 6px 0 rgba(0,0,0,.5)}
+.act svg{flex:none}
+.legend{margin-top:46px;display:grid;gap:18px}
+.legend div{display:grid;grid-template-columns:230px 1fr;align-items:center;gap:20px;font:500 32px/1.2 var(--wl-font-body)}
+.legend .badge{background:var(--wl-sheet-paper);justify-self:start}
+.tilt{transform:rotate(-2deg)}
+</style>
+</head>
+<body>
+<div class="slide" id="s"></div>
+<script>
+var R={
+ mon:['Mon','23 Nov','Bodyweight Interval Training','McCarren Park · 6:00 pm','live'],
+ tue:['Tue','24 Nov','NYRR Open Run','Brooklyn Bridge Park · 6:45 pm · free','live'],
+ wed:['Wed','25 Nov','Open','nothing padded','open'],
+ thu:['Thu','26 Nov','Open','Thanksgiving','open'],
+ fri:['Fri','27 Nov','Post-Thanksgiving Super Hike','Prospect Park · 12:00 pm','live'],
+ sat:['Sat','28 Nov','Prospect Park long loop','Park Slope · 8:00 am · $0','sample'],
+ sun:['Sun','29 Nov','Warehouse pop-up market','Bushwick · 12:00 pm · $0','sample']
+};
+var BL={live:'Live Parks',sample:'Sample',open:'Open'};
+function row(k){var r=R[k];return '<div class="row"><div class="d">'+r[0]+'<small>'+r[1]+'</small></div><div class="t'+(r[4]==='open'?' open':'')+'">'+r[2]+'<small>'+r[3]+'</small></div><span class="badge '+r[4]+'">'+BL[r[4]]+'</span></div>';}
+function sheet(keys,meta,foot,cls){return '<div class="sheet '+(cls||'')+'"><div class="sh-head"><span class="sh-title">Weekline Sheet</span><span class="sh-meta">'+meta+'</span></div>'+keys.map(row).join('')+(foot?'<div class="sh-foot">'+foot+'</div>':'')+'</div>';}
+function hdr(n){return '<div class="top"><div class="brand"><span class="mark">W</span><span class="word">Weekline</span></div><span class="count">'+n+' / 5</span></div>';}
+var FOOT='<p class="foot"><b>LIVE PARKS</b> = NYC Parks listings, 23–29 Nov 2026. <b>SAMPLE</b> = demo row.<br>Check cost on each listing.</p>';
+var ARROW='<svg width="44" height="44" viewBox="0 0 44 44" aria-hidden="true"><path d="M8 22h26M24 10l12 12-12 12" fill="none" stroke="currentColor" stroke-width="5"/></svg>';
+var CAL='<svg width="44" height="44" viewBox="0 0 44 44" aria-hidden="true"><rect x="5" y="9" width="34" height="30" fill="none" stroke="currentColor" stroke-width="4"/><path d="M5 18h34M14 4v9M30 4v9" stroke="currentColor" stroke-width="4"/></svg>';
+var S={
+ 1:function(){return hdr(1)+
+   '<p class="eyebrow">Brooklyn · week of 23 Nov</p>'+
+   '<h1>How to plan a <em>free week</em> in Brooklyn.</h1>'+
+   '<p class="sub">Four picks. One Sheet. Every row labeled.</p>'+
+   '<div class="grow">'+sheet(['mon','tue','wed'],'Cheap Thrills','',' tilt')+'</div>'+
+   '<div class="bottom"><span>Using Weekline’s real flow</span><span class="swipe">Swipe →</span></div>';},
+ 2:function(){var c=[['Cheap Thrills','Maximum city, minimum spend.','c-cyan',1],['Dateline','One good night, on purpose.','c-coral'],['Move Pack','Bodies in motion.','c-lime'],['Culture Circuit','Rooms with something on.','c-cream'],['Table Hop','Food events, not Yelp.','c-amber'],['Wildcard','One weird night, one free find.','c-ink']];
+   return hdr(2)+'<p class="eyebrow">Step 1</p><h2>Pick a <em>crew.</em></h2><p class="sub">Six crews. Each one shapes the week.</p>'+
+   '<div class="grow"><div class="crews">'+c.map(function(x){return '<div class="crew '+x[2]+(x[3]?' on':'')+'"><b>'+x[0]+'</b><span>'+x[1]+'</span></div>'}).join('')+'</div>'+
+   '<p class="picked">Picked: Cheap Thrills</p></div>';},
+ 3:function(){function g(t,o){return '<div class="group"><h3>'+t+'</h3><div class="opts">'+o.map(function(x){return '<span class="opt'+(x[2]?' on':'')+'">'+x[0]+(x[1]?'<small>'+x[1]+'</small>':'')+'</span>'}).join('')+'</div></div>';}
+   return hdr(3)+'<p class="eyebrow">Step 2</p><h2>Set your <em>limits.</em></h2><p class="sub">Where you are, how far you’ll go, what you’ll spend.</p>'+
+   '<div class="grow">'+g('Zone',[['Manhattan'],['Brooklyn','',1],['Both / I move']])+g('Radius',[['Stay close','~20 min'],['Cross-borough OK','~40 min',1],['Anywhere M+BK']])+g('Budget',[['Free only','',1],['Low','under ~$25'],['Medium'],['Splurge OK']])+'</div>'+
+   '<p class="foot">The same choices the app asks, in the same words.</p>';},
+ 4:function(){return hdr(4)+'<p class="eyebrow">Step 3</p><h2>Get the <em>Sheet.</em></h2><p class="sub">Mon–Sun. Every row says where it came from.</p>'+
+   '<div class="grow">'+sheet(['mon','tue','wed','thu','fri','sat','sun'],'Brooklyn · Free only','')+'</div>'+FOOT;},
+ 5:function(){return hdr(5)+'<p class="eyebrow">Step 4</p><h2>Send it. <em>Go.</em></h2><p class="sub">The plan leaves the app with you.</p>'+
+   '<div class="grow"><div class="acts"><div class="act p">'+ARROW+'Send to the group chat</div><div class="act">'+CAL+'Add to calendar (.ics)</div></div>'+
+   '<div class="legend"><div><span class="badge live">Live Parks</span><span>Real NYC Parks listing, public feed</span></div><div><span class="badge sample">Sample</span><span>Demo row, not a real listing</span></div><div><span class="badge open">Open</span><span>Nothing on? It stays empty.</span></div></div></div>'+
+   '<div class="bottom"><span>Weekline · early invites, NYC</span><span class="swipe">Check listings before you go</span></div>';}
+};
+var n=parseInt(new URLSearchParams(location.search).get('s'),10);if(!S[n])n=1;
+document.getElementById('s').innerHTML=S[n]();document.title='Weekline carousel '+n;
+</script>
+</body>
+</html>

@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Weekline · Request an invite</title>
+<meta name="description" content="Request an early Weekline invite in three picks. Demo form: nothing is saved yet.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="weekline.css">
+<style>
+  .funnel { max-width: 46rem; margin: 0 auto; padding: 48px 24px 0; }
+  .progress { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-bottom: 10px; }
+  .progress span { height: 6px; background: var(--wl-line); }
+  .progress span.on { background: var(--wl-lime); }
+  .progress-label { font-size: 0.8rem; font-weight: 600; letter-spacing: var(--wl-tracking-label); text-transform: uppercase; color: var(--wl-fg-mute); margin: 0 0 28px; }
+  .step-panel h1 { font-size: clamp(2.1rem, 5vw, 3.2rem); max-width: 16ch; }
+  .step-panel .lede { margin-bottom: 28px; }
+  .step-panel[hidden] { display: none; }
+  [tabindex='-1']:focus { outline: none; }
+  #s3-h { margin-bottom: 28px; }
+  fieldset { border: 0; margin: 0 0 28px; padding: 0; min-width: 0; }
+  legend { font: 700 1.1rem/1.2 var(--wl-font-display); margin-bottom: 12px; padding: 0; }
+
+  .crew-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+  .crew-opt input, .pill input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  .crew-card {
+    display: flex; flex-direction: column; justify-content: space-between; gap: 10px; min-height: 120px; height: 100%;
+    padding: 14px; cursor: pointer; color: var(--wl-ink); box-shadow: var(--wl-shadow-flyer);
+    border: 3px solid transparent; transition: transform 0.15s var(--wl-ease);
+  }
+  .crew-card strong { font: 800 1.25rem/1 var(--wl-font-display); text-transform: uppercase; letter-spacing: -0.01em; }
+  .crew-card span { font-size: 0.85rem; line-height: 1.3; font-weight: 500; }
+  .crew-opt input:checked + .crew-card { border-color: var(--wl-paper); outline: 3px solid var(--wl-ink); outline-offset: -6px; transform: rotate(0deg) translateY(-3px) !important; }
+  .crew-opt input:focus-visible + .crew-card { outline: 3px solid var(--wl-lime); outline-offset: 3px; }
+  .crew-check { display: none; width: 22px; height: 22px; background: var(--wl-ink); color: var(--wl-paper); align-self: flex-end; }
+  .crew-opt input:checked + .crew-card .crew-check { display: grid; place-items: center; }
+  .crew-card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 6px; }
+
+  .pills { display: flex; flex-wrap: wrap; gap: 10px; }
+  .pill { position: relative; }
+  .pill span {
+    display: inline-flex; flex-direction: column; min-height: 48px; justify-content: center; padding: 10px 16px; cursor: pointer;
+    border: 1px solid rgba(246,241,230,.4); font-weight: 600;
+  }
+  .pill small { font-weight: 400; font-size: 0.8rem; color: var(--wl-fg-mute); }
+  .pill input:checked + span { background: var(--wl-lime); color: var(--wl-ink); border-color: var(--wl-lime); box-shadow: var(--wl-shadow-btn); }
+  .pill input:checked + span small { color: var(--wl-ink); }
+  .pill input:focus-visible + span { outline: 3px solid var(--wl-lime); outline-offset: 3px; }
+
+  .field label { display: block; font: 700 1.1rem/1.2 var(--wl-font-display); margin-bottom: 10px; }
+  .field input {
+    width: 100%; min-height: 52px; padding: 12px 14px; font: 400 1.05rem var(--wl-font-body);
+    background: var(--wl-surface); color: var(--wl-fg); border: 1px solid rgba(246,241,230,.4); border-radius: 0;
+  }
+  .field input:focus { outline: 3px solid var(--wl-lime); outline-offset: 2px; }
+  .warn {
+    display: grid; grid-template-columns: 24px 1fr; gap: 10px; align-items: start; margin: 18px 0 28px; padding: 14px;
+    border: 1px dashed #f5b942; color: var(--wl-paper); font-size: 0.92rem;
+  }
+  .warn svg { width: 22px; height: 22px; color: #f5b942; }
+  .err { color: #ff8a70; font-size: 0.9rem; margin: -16px 0 20px; min-height: 1.2em; }
+  .nav-row { display: flex; gap: 12px; justify-content: space-between; align-items: center; flex-wrap: wrap; padding-top: 8px; border-top: 1px solid var(--wl-line); padding-top: 20px; }
+  .link-btn { background: none; border: 0; color: var(--wl-fg-mute); font: 600 1rem var(--wl-font-body); cursor: pointer; padding: 12px 4px; text-decoration: underline; text-underline-offset: 3px; }
+  .link-btn:hover { color: var(--wl-fg); }
+
+  .result-card { border: 2px solid var(--wl-lime); background: var(--wl-surface); padding: 28px; margin-top: 8px; }
+  .result-card h1 { font-size: clamp(2rem, 5vw, 3rem); }
+  .stamp { display: inline-block; font: 800 0.8rem/1 var(--wl-font-display); letter-spacing: 0.12em; text-transform: uppercase; color: #f5b942; border: 2px solid #f5b942; padding: 7px 9px 6px; transform: rotate(-2deg); margin-bottom: 16px; }
+  .picks { list-style: none; padding: 0; margin: 20px 0 24px; display: grid; gap: 8px; }
+  .picks li { display: flex; gap: 10px; flex-wrap: wrap; font-size: 1rem; }
+  .picks b { min-width: 7.5rem; color: var(--wl-fg-mute); font-weight: 600; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; padding-top: 3px; }
+
+  @media (max-width: 720px) {
+    .funnel { padding: 32px var(--wl-gutter-mobile) 0; }
+    .crew-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+    .crew-card { min-height: 104px; padding: 12px; }
+    .crew-card strong { font-size: 1.05rem; }
+    .crew-card span { font-size: 0.8rem; }
+    .result-card { padding: 20px; }
+    .nav-row .btn { flex: 1 1 auto; }
+  }
+</style>
+</head>
+<body>
+<a class="studio-back" href="/">&larr; Studio</a>
+
+<header class="topbar">
+  <a class="brand" href="landing.html" data-keep-a aria-label="Weekline landing"><span class="brand-mark" aria-hidden="true">W</span><span class="brand-word">Weekline</span></a>
+  <nav class="topnav" aria-label="Weekline">
+    <a href="/projects/weekline/pitch/">Pitch</a>
+    <a href="/projects/weekline/app/">App</a>
+    <a href="landing.html" data-keep-a>Landing</a>
+    <a href="funnel.html" aria-current="page" data-keep-a>Invite</a>
+  </nav>
+</header>
+
+<main class="funnel">
+  <form id="f" novalidate>
+    <div id="prog-wrap">
+      <div class="progress" aria-hidden="true"><span class="on"></span><span></span><span></span></div>
+      <p class="progress-label" id="prog-label" aria-live="polite">Step 1 of 3</p>
+    </div>
+
+    <!-- STEP 1 -->
+    <section class="step-panel" data-step="1" aria-labelledby="s1-h">
+      <h1 class="h-display" id="s1-h">Pick your crew.</h1>
+      <p class="lede">The week gets built around it. You can switch later.</p>
+      <fieldset>
+        <legend class="sr-only">Crew</legend>
+        <div class="crew-grid">
+          <label class="crew-opt"><input type="radio" name="crew" value="Cheap Thrills"><span class="crew-card" style="background:var(--wl-cyan);transform:rotate(-1.4deg)"><span class="crew-card-top"><strong>Cheap Thrills</strong><i class="crew-check" aria-hidden="true">&#10003;</i></span><span>Maximum city, minimum spend.</span></span></label>
+          <label class="crew-opt"><input type="radio" name="crew" value="Dateline"><span class="crew-card" style="background:var(--wl-coral);transform:rotate(1.2deg)"><span class="crew-card-top"><strong>Dateline</strong><i class="crew-check" aria-hidden="true">&#10003;</i></span><span>One good night with a plan.</span></span></label>
+          <label class="crew-opt"><input type="radio" name="crew" value="Move Pack"><span class="crew-card" style="background:var(--wl-lime);transform:rotate(-0.8deg)"><span class="crew-card-top"><strong>Move Pack</strong><i class="crew-check" aria-hidden="true">&#10003;</i></span><span>A week that actually moves.</span></span></label>
+          <label class="crew-opt"><input type="radio" name="crew" value="Culture Circuit"><span class="crew-card" style="background:var(--wl-paper);transform:rotate(1.6deg)"><span class="crew-card-top"><strong>Culture Circuit</strong><i class="crew-check" aria-hidden="true">&#10003;</i></span><span>Shows, screens, talks.</span></span></label>
+          <label class="crew-opt"><input type="radio" name="crew" value="Table Hop"><span class="crew-card" style="background:#f5b942;transform:rotate(-1.8deg)"><span class="crew-card-top"><strong>Table Hop</strong><i class="crew-check" aria-hidden="true">&#10003;</i></span><span>Markets and food one-offs.</span></span></label>
+          <label class="crew-opt"><input type="radio" name="crew" value="Wildcard"><span class="crew-card" style="background:#e8e1d2;transform:rotate(0.9deg)"><span class="crew-card-top"><strong>Wildcard</strong><i class="crew-check" aria-hidden="true">&#10003;</i></span><span>One weird night, one free find.</span></span></label>
+        </div>
+      </fieldset>
+      <p class="err" id="err1" role="alert"></p>
+      <div class="nav-row">
+        <a class="link-btn" href="landing.html" data-keep-a>Back</a>
+        <button type="button" class="btn btn-primary" data-next="2">Next</button>
+      </div>
+    </section>
+
+    <!-- STEP 2 -->
+    <section class="step-panel" data-step="2" aria-labelledby="s2-h" hidden>
+      <h1 class="h-display" id="s2-h">Your side of the river.</h1>
+      <p class="lede">Weekline covers Manhattan and Brooklyn for now.</p>
+      <fieldset>
+        <legend>Borough</legend>
+        <div class="pills">
+          <label class="pill"><input type="radio" name="zone" value="Brooklyn"><span>Brooklyn</span></label>
+          <label class="pill"><input type="radio" name="zone" value="Manhattan"><span>Manhattan</span></label>
+          <label class="pill"><input type="radio" name="zone" value="Both"><span>Both, I move</span></label>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Weekly budget</legend>
+        <div class="pills">
+          <label class="pill"><input type="radio" name="budget" value="Free only"><span>Free only<small>hide paid</small></span></label>
+          <label class="pill"><input type="radio" name="budget" value="Low (under ~$25)"><span>Low<small>under ~$25</small></span></label>
+          <label class="pill"><input type="radio" name="budget" value="Medium (under ~$60)"><span>Medium<small>under ~$60</small></span></label>
+          <label class="pill"><input type="radio" name="budget" value="Splurge OK"><span>Splurge OK<small>1–2 anchors</small></span></label>
+        </div>
+      </fieldset>
+      <p class="err" id="err2" role="alert"></p>
+      <div class="nav-row">
+        <button type="button" class="link-btn" data-back="1">Back</button>
+        <button type="button" class="btn btn-primary" data-next="3">Next</button>
+      </div>
+    </section>
+
+    <!-- STEP 3 -->
+    <section class="step-panel" data-step="3" aria-labelledby="s3-h" hidden>
+      <h1 class="h-display" id="s3-h">Where should the invite go?</h1>
+      <div class="field">
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com" required>
+      </div>
+      <div class="warn" role="note">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3l10 18H2L12 3z"/><path d="M12 10v5M12 18v.5"/></svg>
+        <span>Demo form. Weekline has no invite backend yet, so this sends and saves nothing.</span>
+      </div>
+      <p class="err" id="err3" role="alert"></p>
+      <div class="nav-row">
+        <button type="button" class="link-btn" data-back="2">Back</button>
+        <button type="submit" class="btn btn-primary">Request invite</button>
+      </div>
+    </section>
+  </form>
+
+  <!-- RESULT -->
+  <section id="result" hidden aria-labelledby="r-h">
+    <div class="result-card">
+      <span class="stamp">Not saved</span>
+      <h1 class="h-display" id="r-h" tabindex="-1">Nothing was saved.</h1>
+      <p class="lede">No backend yet. Your email didn't leave this page and is cleared now. Your picks:</p>
+      <ul class="picks">
+        <li><b>Crew</b><span id="r-crew"></span></li>
+        <li><b>Borough</b><span id="r-zone"></span></li>
+        <li><b>Budget</b><span id="r-budget"></span></li>
+      </ul>
+      <p class="mute" style="margin:0 0 24px">Want a week now? Try the same picks in the live demo.</p>
+      <div class="btn-row">
+        <a class="btn btn-primary" href="/projects/weekline/app/">Try the live demo
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5"/></svg></a>
+        <a class="btn btn-ghost" href="landing.html" data-keep-a>Back to Weekline</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <span>Weekline · by Alexandra Vargas · <a href="/">Vargas Studio</a></span>
+    <span>No tracking, no cookies, nothing stored.</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var p = new URLSearchParams(location.search).get('a') || '';
+  var alias = { free: 'gain', seek: 'identity' };
+  var a = alias[p] || p;
+  if (!/^(pain|gain|identity)$/.test(a)) a = 'gain';
+  document.querySelectorAll('[data-keep-a]').forEach(function (el) {
+    el.setAttribute('href', el.getAttribute('href').split('?')[0] + '?a=' + a);
+  });
+
+  var form = document.getElementById('f');
+  // Preselect a crew that matches the ad angle (still changeable).
+  var pre = { pain: 'Wildcard', gain: 'Cheap Thrills', identity: 'Move Pack' }[a];
+  var preEl = form.querySelector('input[name=crew][value="' + pre + '"]');
+  if (preEl) preEl.checked = true;
+  if (a === 'gain' || a === 'identity') form.querySelector('input[name=zone][value=Brooklyn]').checked = true;
+  if (a === 'gain') form.querySelector('input[name=budget][value="Free only"]').checked = true;
+
+  var bars = document.querySelectorAll('.progress span');
+  var label = document.getElementById('prog-label');
+  function val(n) { var el = form.querySelector('input[name=' + n + ']:checked'); return el ? el.value : ''; }
+  function show(n) {
+    document.querySelectorAll('.step-panel').forEach(function (s) { s.hidden = s.getAttribute('data-step') !== String(n); });
+    bars.forEach(function (b, i) { b.classList.toggle('on', i < n); });
+    label.textContent = 'Step ' + n + ' of 3';
+    var h = document.getElementById('s' + n + '-h');
+    if (h) { h.setAttribute('tabindex', '-1'); h.focus({ preventScroll: true }); }
+    window.scrollTo(0, 0);
+  }
+  function check(n) {
+    var msg = '';
+    if (n === 1 && !val('crew')) msg = 'Pick a crew to continue.';
+    if (n === 2 && (!val('zone') || !val('budget'))) msg = 'Pick a borough and a budget.';
+    document.getElementById('err' + n).textContent = msg;
+    return !msg;
+  }
+  form.addEventListener('click', function (e) {
+    var t = e.target.closest('[data-next],[data-back]');
+    if (!t) return;
+    if (t.hasAttribute('data-next')) { var cur = Number(t.getAttribute('data-next')) - 1; if (check(cur)) show(cur + 1); }
+    else show(Number(t.getAttribute('data-back')));
+  });
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var email = document.getElementById('email');
+    if (!email.value.trim() || !email.checkValidity()) { document.getElementById('err3').textContent = 'Enter an email address.'; return; }
+    // Nothing is sent anywhere. Clear the email right away.
+    email.value = '';
+    document.getElementById('r-crew').textContent = val('crew');
+    document.getElementById('r-zone').textContent = val('zone');
+    document.getElementById('r-budget').textContent = val('budget');
+    form.hidden = true;
+    var r = document.getElementById('result');
+    r.hidden = false;
+    window.scrollTo(0, 0);
+    document.getElementById('r-h').focus({ preventScroll: true });
+  });
+  // Allow deep links to a step for review screenshots: #step2, #step3, #done
+  var hs = location.hash;
+  if (hs === '#step2') show(2);
+  if (hs === '#step3') show(3);
+  if (hs === '#done') { form.querySelector('input[name=zone][value=Brooklyn]').checked = true; if (!val('budget')) form.querySelector('input[name=budget]').checked = true; document.getElementById('email').value = 'you@example.com'; form.requestSubmit(); }
+})();
+</script>
+</body>
+</html>
