@@ -58,7 +58,7 @@
       radial-gradient(circle at 30% 40%, var(--sun) 0 22px, transparent 23px),
       radial-gradient(circle at 70% 62%, var(--tomato) 0 30px, transparent 31px),
       repeating-linear-gradient(45deg, var(--paper) 0 8px, var(--paper-2) 8px 16px);position:relative}
-  .art:after{content:"🍲";position:absolute;inset:0;display:grid;place-items:center;font-size:44px}
+  .art:after{content:none}
   .card .ctitle{font-size:20px;line-height:1.1;font-weight:700;color:var(--ink);margin:0}
   .card p{font-size:12.5px;color:var(--ink-2);margin:4px 0 10px}
   .stat{display:grid;grid-template-columns:62px 1fr 28px;align-items:center;gap:8px;font:700 11px var(--mono);margin:6px 0}
@@ -118,7 +118,7 @@
   <div class="wrap">
     <div>
       <h1 id="h1">Become an AI builder, <em>for real</em></h1>
-      <p class="sub" id="sub">Collect skill cards, climb the weekly leaderboard, and show off what you made.</p>
+      <p class="sub" id="sub">Turn your skills into scored cards, battle friends, and show off what you made.</p>
       <a class="btn" href="#join" id="cta" data-track="hero-cta">Join the game →</a>
       <p class="micro">No coding background needed · Works with Claude Code &amp; Cowork</p>
     </div>
@@ -126,16 +126,16 @@
       <div class="card back2"></div>
       <div class="card back"></div>
       <div class="card front">
-        <div class="top"><span class="rar">RARE</span><span class="lvl">LV 7</span></div>
+        <div class="top"><span class="rar">EPIC</span><span class="lvl">81</span></div>
         <div class="art"></div>
-        <p class="ctitle">Weeknight Meal Planner</p>
-        <p>Plans 5 dinners from what's in your fridge.</p>
-        <div class="stat">POWER<span class="bar"><b style="width:88%"></b></span>88</div>
-        <div class="stat">CLARITY<span class="bar"><b class="s" style="width:74%"></b></span>74</div>
-        <div class="stat">SPEED<span class="bar"><b class="t" style="width:61%"></b></span>61</div>
+        <p class="ctitle">idea-innovate</p>
+        <p>Turns a rough business idea into its strongest version.</p>
+        <div class="stat">POWER<span class="bar"><b style="width:85%"></b></span>85</div>
+        <div class="stat">CLARITY<span class="bar"><b class="s" style="width:100%"></b></span>100</div>
+        <div class="stat">SPEED<span class="bar"><b class="t" style="width:90%"></b></span>90</div>
       </div>
-      <span class="pill p1">+120 XP</span>
-      <span class="pill p2">🏆 Battle #4 · 2nd</span>
+      <span class="pill p1">Real card · 21 Nov</span>
+      <span class="pill p2">vs plain Claude: 1 won · 1 tied · 1 lost</span>
     </div>
   </div>
 </section>
@@ -144,9 +144,9 @@
   <div class="wrap">
     <h2>Building skills shouldn't feel like homework</h2>
     <div class="grid c3">
-      <div class="box"><p class="quote">"I don't know if my skill is actually any good."</p></div>
-      <div class="box"><p class="quote">"Tutorials are boring. I quit halfway."</p></div>
-      <div class="box"><p class="quote">"There are 80,000 skills out there. Why would anyone see mine?"</p></div>
+      <div class="box"><p class="quote">Is my skill actually any good?</p></div>
+      <div class="box"><p class="quote">Tutorials are boring. Most people quit halfway.</p></div>
+      <div class="box"><p class="quote">Why would anyone find mine?</p></div>
     </div>
   </div>
 </section>
@@ -155,9 +155,9 @@
   <div class="wrap">
     <h2>Quest. Score. Battle.</h2>
     <div class="grid c3">
-      <div class="step"><span class="num">1</span><div><h3>Play a quest</h3><p class="muted">15-minute missions walk you through building a real skill, one step at a time.</p></div></div>
-      <div class="step"><span class="num">2</span><div><h3>Get your card</h3><p class="muted">Your skill gets tested on real tasks and scored for Power, Clarity and Speed. Plus 3 fixes.</p></div></div>
-      <div class="step"><span class="num">3</span><div><h3>Enter the battle</h3><p class="muted">Each week, skills go head to head on one theme. Win and you're on the leaderboard.</p></div></div>
+      <div class="step"><span class="num">1</span><div><h3>Play a quest</h3><p class="muted">Short missions walk you through building a real skill, one step at a time.</p></div></div>
+      <div class="step"><span class="num">2</span><div><h3>Get your card</h3><p class="muted">Your skill is tested on hidden tasks against plain Claude, judged blind, and scored. Plus what to fix.</p></div></div>
+      <div class="step"><span class="num">3</span><div><h3>Battle a friend</h3><p class="muted">Two skills, the same hidden tasks. A blind judge picks the winner.</p></div></div>
     </div>
   </div>
 </section>
@@ -166,21 +166,10 @@
   <div class="wrap">
     <h2>Skills you'll actually use, and proof they work</h2>
     <div class="grid c2">
-      <div class="box"><h3>Finish what you start</h3><p class="muted">XP, levels and streaks keep you going where tutorials don't.</p></div>
+      <div class="box"><h3>Finish what you start</h3><p class="muted">XP and levels keep you going where tutorials don't.</p></div>
       <div class="box"><h3>Know what "good" looks like</h3><p class="muted">Every score comes with the exact changes that would raise it.</p></div>
       <div class="box"><h3>Keep everything you build</h3><p class="muted">Each quest leaves you with a working skill in your own Claude.</p></div>
       <div class="box"><h3>Something to show off</h3><p class="muted">Share your cards anywhere. Your best skills become your builder profile.</p></div>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="wrap">
-    <h2>Be one of the first</h2>
-    <div class="grid c3">
-      <div class="box ph"><p class="muted">[Testimonial: replace with a real quote from a beta player]</p></div>
-      <div class="box ph"><p class="muted">[Testimonial: replace with a real quote from a beta player]</p></div>
-      <div class="box ph"><p class="muted">[Battle #0 results: add once the first battle has run]</p></div>
     </div>
   </div>
 </section>
@@ -192,7 +181,7 @@
       <div class="box">
         <span class="tag">Free</span>
         <p class="price" style="margin-top:10px">$0</p>
-        <ul><li>Quests 1–5</li><li>3 skill cards</li><li>Weekly battles</li></ul>
+        <ul><li>Quests 1–5</li><li>3 skill cards</li><li>Battles</li></ul>
         <a class="btn alt" href="#join" data-plan="free" data-track="price-free">Start free</a>
       </div>
       <div class="box hot">
@@ -246,7 +235,7 @@
 const ANGLES = {
   pain:     {eyebrow:"Skill scores for Claude", h1:'Stop guessing if your <em>skill works</em>', sub:"Every skill you build gets tested and scored, so you know exactly what to fix.", cta:"Score my skill →"},
   gain:     {eyebrow:"No coding background needed", h1:'Build your first AI skill <em>tonight</em>', sub:"Short quests take you from zero to a skill you'll actually use.", cta:"Start quest 1 →"},
-  identity: {eyebrow:"The game for building AI skills", h1:'Become an AI builder, <em>for real</em>', sub:"Collect skill cards, climb the weekly leaderboard, and show off what you made.", cta:"Join the game →"}
+  identity: {eyebrow:"The game for building AI skills", h1:'Become an AI builder, <em>for real</em>', sub:"Turn your skills into scored cards, battle friends, and show off what you made.", cta:"Join the game →"}
 };
 const angle = new URLSearchParams(location.search).get("v") || document.documentElement.dataset.angle;
 const a = ANGLES[angle] || ANGLES.identity;
