@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Lumen — What's your fog?</title>
+  <meta name="description" content="Six quick taps. Find what's in your way, and the small game that clears it." />
+  <meta property="og:title" content="What's your fog? — Lumen" />
+  <meta property="og:description" content="Miss a day. You're still in. Find your fog in 30 seconds." />
+  <meta name="theme-color" content="#12151c" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./play.css" />
+</head>
+<body>
+  <a class="studio-back" href="/">← Vargas Studio</a>
+
+  <div class="fog" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+
+  <main class="stage">
+    <!-- 1. Ask -->
+    <section class="beat is-on" id="b-ask" aria-labelledby="ask-h">
+      <div class="gift" id="gift" hidden>
+        <div class="ticket ticket--small"><span>Spare ticket</span></div>
+        <p id="gift-line">A friend sent you a spare ticket.</p>
+      </div>
+      <svg class="streakline" viewBox="0 0 320 80" role="img" aria-label="A gold streak with one ticket stub in it">
+        <g id="streak-dots"></g>
+      </svg>
+      <h1 class="ask" id="ask-h">What's in your way lately?</h1>
+      <button class="go" type="button" id="go">Clear the fog</button>
+      <button class="quiet" type="button" id="my-game" hidden>My game</button>
+      <a class="quiet" href="./index.html" id="browse">Just look around</a>
+    </section>
+
+    <!-- 2. Play -->
+    <section class="beat" id="b-play" aria-label="Is this you?">
+      <div class="play-top">
+        <h2 class="play-ask">Is this you?</h2>
+        <span class="count" id="count" aria-live="polite"></span>
+      </div>
+      <div class="deck" id="deck"></div>
+      <div class="answers">
+        <button class="ans" type="button" data-ans="0">Not me</button>
+        <button class="ans" type="button" data-ans="1">Sometimes</button>
+        <button class="ans ans--yes" type="button" data-ans="2">So me</button>
+      </div>
+    </section>
+
+    <!-- 3. Reveal -->
+    <section class="beat" id="b-reveal" aria-live="polite" aria-label="Your fog">
+      <p class="lead" id="lead">Your fog is…</p>
+      <div class="reveal-art" id="reveal-art" aria-hidden="true"></div>
+      <h2 class="name" id="name"></h2>
+      <p class="fogtag" id="fogtag"></p>
+      <div class="move" id="move"></div>
+      <p class="compare" id="compare" hidden></p>
+      <button class="go late" type="button" id="to-ticket">What if I miss a day?</button>
+    </section>
+
+    <!-- 4. Ticket -->
+    <section class="beat" id="b-ticket" aria-label="A missed day">
+      <h2 class="big" id="t-head">Say you miss Tuesday.</h2>
+      <div class="week" id="week" aria-label="This week"></div>
+      <p class="t-sub" id="t-sub">No zero. No reset.</p>
+      <button class="ticket ticket--big" type="button" id="ticket" aria-label="Punch a return ticket">
+        <span class="t-k">Return ticket</span><span class="t-n" id="t-n">1 of 3</span><i class="hole"></i>
+      </button>
+      <button class="go" type="button" id="punch">Punch a ticket</button>
+      <button class="go" type="button" id="to-card" hidden>Make my card</button>
+    </section>
+
+    <!-- 5. Card -->
+    <section class="beat" id="b-card" aria-label="Your card">
+      <div class="card-wrap" id="card-wrap"></div>
+      <p class="c-sub">It comes with a spare ticket for a friend.</p>
+      <div class="row">
+        <button class="go" type="button" id="send">Send with a ticket</button>
+        <button class="ghost" type="button" id="save">Save card</button>
+      </div>
+      <div class="more">
+        <button class="quiet" type="button" id="to-game">Play my game</button>
+        <a class="quiet" href="./print.html">Free fridge card →</a>
+      </div>
+    </section>
+
+    <!-- 6. Game -->
+    <section class="beat" id="b-game" aria-label="Your 2-minute game">
+      <p class="lead" id="g-fog"></p>
+      <h2 class="big" id="g-name"></h2>
+      <ol class="steps" id="g-steps"></ol>
+      <button class="ring" type="button" id="ring" aria-label="Start"><svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="52" class="ring-bg"/><circle cx="60" cy="60" r="52" class="ring-fg" id="ring-fg"/></svg><span id="ring-t">Start</span></button>
+      <p class="done-line" id="done-line" hidden>Checked in. Done for today.</p>
+      <button class="quiet" type="button" id="g-done">I did it</button>
+      <button class="quiet" type="button" id="restart">Start over</button>
+    </section>
+  </main>
+
+  <script src="./play.js"></script>
+</body>
+</html>
