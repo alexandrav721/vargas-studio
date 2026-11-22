@@ -133,6 +133,53 @@ function Studio({ route }: { route: Route }) {
     <div className="shell">
       <div className="atmosphere" aria-hidden="true" />
 
+      <aside className="toc" aria-label="Site menu">
+        <a
+          className="toc-brand"
+          href="#intro"
+          onClick={(e) => {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }}
+        >
+          {data.site.brand}
+        </a>
+        <a className="toc-tour" href="#/tour">
+          <svg viewBox="0 0 16 16" aria-hidden="true">
+            <rect x="1.5" y="3" width="13" height="9" />
+            <path d="M6.5 5.5v4l3.5-2z" />
+          </svg>
+          Take the tour
+        </a>
+        <nav aria-label="Sections">
+          {toc.map((item) => {
+            const on = active === item.id || (item.id === "projects" && active.startsWith("project-"));
+            return (
+              <a
+                key={item.id}
+                href={`#${item.id}`}
+                className={on ? "on" : ""}
+                aria-current={on ? "location" : undefined}
+                onClick={(e) => {
+                  e.preventDefault();
+                  jump(item.id);
+                }}
+              >
+                {item.label}
+              </a>
+            );
+          })}
+        </nav>
+        <p className="toc-group">Projects</p>
+        <nav className="toc-projects" aria-label="Projects">
+          {data.projects.map((p) => (
+            <a key={p.id} href={projectHref(p.id)}>
+              {p.name}
+            </a>
+          ))}
+        </nav>
+      </aside>
+
       <nav className="ov-bar" aria-label="Sections">
         <a
           className="ov-brand"
