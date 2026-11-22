@@ -1,5 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import data from "../content/portfolio.json";
+import Lightbox, { type Shot } from "./Lightbox";
 import SiteBar from "./SiteBar";
 import { projectHref, thumbFor, visualsOf } from "./lib";
 import { META, PLAIN } from "./meta";
@@ -10,6 +11,7 @@ export default function ProjectPage({ id }: { id: string }) {
   const p = data.projects[index];
   const m = META[p.id];
   const visuals = visualsOf(p);
+  const [viewer, setViewer] = useState<number | null>(null);
   const prev = data.projects[(index - 1 + data.projects.length) % data.projects.length];
   const next = data.projects[(index + 1) % data.projects.length];
 
@@ -28,6 +30,11 @@ export default function ProjectPage({ id }: { id: string }) {
     if (same) same.labels.push(label);
     else tiles.push({ url: cell.url, labels: [label] });
   }
+  // the pictures the viewer can swipe through (tiles that have a screenshot)
+  const shots: Shot[] = tiles.flatMap((t) => {
+    const src = thumbFor(t.url);
+    return src ? [{ src, label: t.labels.join(" · "), url: t.url }] : [];
+  });
 
   return (
     <div className="lad">
@@ -49,7 +56,16 @@ export default function ProjectPage({ id }: { id: string }) {
               const src = thumbFor(t.url);
               return (
                 <li key={t.url}>
-                  <a className="proj-tile" href={t.url}>
+                  <a
+                    className="proj-tile"
+                    href={t.url}
+                    onClick={(e) => {
+                      const at = shots.findIndex((x) => x.url === t.url);
+                      if (at < 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+                      e.preventDefault();
+                      setViewer(at);
+                    }}
+                  >
                     <span className="proj-shot">{src ? <img src={src} alt="" loading="lazy" decoding="async" /> : <span className="proj-noshot">{t.labels[0]}</span>}</span>
                     <span className="proj-label">{t.labels.join(" · ")}</span>
                   </a>
@@ -75,6 +91,7 @@ export default function ProjectPage({ id }: { id: string }) {
           </nav>
         </article>
       </main>
+      {viewer !== null ? <Lightbox title={m.name} shots={shots} start={viewer} onClose={() => setViewer(null)} /> : null}
     </div>
   );
 }
