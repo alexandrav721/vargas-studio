@@ -6,7 +6,7 @@
   // ---- Shopify: fill both to switch on "Order it printed" ----------------
   // domain = the store's myshopify domain, variantId = numeric id of the
   // "Personalized planner kit" product variant. Empty = button stays hidden.
-  var SHOP = { domain: '', variantId: '' };
+  var SHOP = { domain: 'vki3si-dd.myshopify.com', variantId: '68353092059380' };
 
   var COLOURS = [
     { id: 'coral', name: 'Coral', accent: '#e0583b', accent2: '#ffd166', wash: '#fde9e2', cover: '#e0583b' },
@@ -307,14 +307,14 @@
 
   function setupOrder(p, list, c) {
     var on = !!(SHOP.domain && SHOP.variantId), f = $('order');
-    f.hidden = !on; $('soon').hidden = on;
+    f.hidden = !on; $('soon').hidden = on; $('kitnote').hidden = !on;
     if (!on) return;
     f.action = 'https://' + SHOP.domain + '/cart/add';
-    var props = { Planner: p.short, Name: state.name, Colour: c.name, Goal: state.goal, Habit: state.habit,
+    var props = { Planner: p.short, Name: state.name, Colour: c.name, Goal: state.goal, Habit: answers.primary === 'habit' ? state.habit : '',
       Rewards: state.r.filter(Boolean).join(' | '), Pages: list.join(','), 'Gift from': state.who === 'gift' ? state.from : '', 'Gift note': state.who === 'gift' ? state.note : '' };
     var inputs = '<input type="hidden" name="id" value="' + esc(SHOP.variantId) + '"><input type="hidden" name="quantity" value="1"><input type="hidden" name="return_to" value="/checkout">';
     for (var k in props) if (props[k]) inputs += '<input type="hidden" name="properties[' + esc(k) + ']" value="' + esc(props[k]) + '">';
-    f.innerHTML = inputs + '<button class="btn btn-ghost" type="submit">Order it printed</button>';
+    f.innerHTML = inputs + '<button class="btn btn-ghost" type="submit">Order it printed · $39</button>';
   }
 
   // ---------- start ----------
