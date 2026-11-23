@@ -7,9 +7,10 @@
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
   function badge(r) {
     if (!r) return '<span class="badge">Not tested yet</span>';
-    if (r.winner === "skill") return '<span class="badge win">Beat plain Claude</span>';
-    if (r.winner === "tie") return '<span class="badge tie">Tied plain Claude</span>';
-    return '<span class="badge lose">Plain Claude won</span>';
+    var sc = '<span class="sc-line"><b>' + Number(r.skillScore).toFixed(1) + '</b> vs ' + Number(r.plainScore).toFixed(1) + ' plain</span>';
+    if (r.winner === "skill") return sc + '<span class="badge win">Beat plain Claude</span>';
+    if (r.winner === "tie") return sc + '<span class="badge tie">Tied plain Claude</span>';
+    return sc + '<span class="badge lose">Plain Claude won</span>';
   }
   function toast(t) { var el = $("#toast"); el.textContent = t; el.classList.add("on"); setTimeout(function () { el.classList.remove("on"); }, 1800); }
 
