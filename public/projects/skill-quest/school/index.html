@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Chef's passport · Cooking with Claude</title>
+<meta name="description" content="Cooking with Claude: 8 short lessons. Claude is the chef, you write the recipes. Collect a stamp for each lesson.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="school.css">
+<link rel="stylesheet" href="/site-bar.css" />
+<script src="/site-bar.js" data-project="skill-quest" data-kind="piece" defer></script>
+</head>
+<body>
+<header class="top">
+  <a class="logo" href="../landing/">Skills Made <b>EZ</b><small>Cooking school</small></a>
+  <div class="tools"><button class="chip" id="big" type="button" aria-pressed="false">Bigger text</button></div>
+</header>
+<main>
+  <p class="label">Cooking with Claude · 8 lessons, about 10 minutes each</p>
+  <h1>Your chef's passport.</h1>
+  <p class="muted" id="sum">Claude is the chef. You write the recipes. Every lesson ends with something real, and a stamp.</p>
+  <div class="btns" id="cta"></div>
+
+  <section class="sec">
+    <h2>The course</h2>
+    <div class="pass" id="pass"></div>
+  </section>
+
+  <section class="sec">
+    <h2>Kitchen extras</h2>
+    <p class="muted" style="margin-top:10px">Stamps from the rest of Skills Made EZ. They count toward your Maker card.</p>
+    <div class="extras" id="extras"></div>
+  </section>
+
+  <section class="sec">
+    <h2>The kitchen, in one table</h2>
+    <ul class="lines">
+      <li><b>Claude = the chef</b>Cooks anything you order. Has never tasted food.</li>
+      <li><b>Your prompt = your order</b>More detail gets a better dish.</li>
+      <li><b>A skill = a recipe card</b>The chef pulls it out when your order matches its title.</li>
+      <li><b>A kit = a meal kit</b>A few recipe cards in one box. Only from shops you trust.</li>
+      <li><b>A connector = the pantry door</b>Lets the chef reach your calendar or email. Set it to "always ask".</li>
+      <li><b>A blind test = a taste test</b>Two plates, no labels. Which is better?</li>
+    </ul>
+  </section>
+</main>
+<footer class="foot"><a href="../landing/">Skills Made EZ</a><a href="../library/#/how">How we test</a><span>Made by Alexandra Vargas</span></footer>
+<script src="school.js" defer></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  var done = School.done(), maker = School.maker();
+  var n = School.LESSONS.filter(function (l) { return done[l.id]; }).length;
+  var nextL = School.LESSONS.find(function (l) { return !done[l.id] && l.href; });
+  document.getElementById("cta").innerHTML = nextL
+    ? '<a class="btn" href="' + nextL.href + '">' + (n ? "Next: Lesson " : "Start Lesson ") + nextL.n + ", " + nextL.name + "</a>"
+    : '<a class="btn ghost" href="lesson-1.html">Redo Lesson 1</a><p class="muted" style="align-self:center;margin:0">Lesson 2 is coming soon.</p>';
+  if (n) document.getElementById("sum").textContent = n + " of 8 stamps. Every lesson ends with something real.";
+  document.getElementById("pass").innerHTML = School.LESSONS.map(function (l) {
+    var got = !!done[l.id], tag = l.href ? "a" : "div";
+    return "<" + tag + (l.href ? ' href="' + l.href + '"' : "") + ' class="' + (l.href && !got ? "open" : "") + '">' +
+      School.stampSvg(l.short, l.n, got) +
+      "<b>" + l.name + "</b><span>" + (got ? "Stamped " + new Date(done[l.id] + "T12:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" }) : l.href ? "Leave with: " + l.leave : "Coming soon") + "</span></" + tag + ">";
+  }).join("");
+  document.getElementById("extras").innerHTML = School.EXTRAS.map(function (x, i) {
+    var got = !!maker[x.id];
+    return '<a href="' + x.href + '">' + School.stampSvg(" ", i + 1, got) + "<span>" + x.name + (got ? " ✓" : "") + "</span></a>";
+  }).join("");
+});
+</script>
+</body>
+</html>
