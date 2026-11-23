@@ -374,7 +374,7 @@ function dayRow(d) {
     const ev = d.kind === "lock" ? d.lock : d.plan.ev;
     const id = d.kind === "lock" ? d.lock.event_id : ev.id;
     const fr = friendsText(id);
-    const why = d.kind === "plan" ? d.plan.why : `${esc(ev.hood)}${ev.cost ? ` · $${ev.cost}` : " · Free"}`;
+    const why = d.kind === "plan" ? d.plan.why : `${esc(ev.hood)}${ev.costUnknown ? "" : ev.cost ? ` · $${ev.cost}` : " · Free"}`;
     const lit = ui.justLit === id;
     const missed = S.checkins[id] === "didnt";
     const acts = d.kind === "lock"
@@ -415,7 +415,7 @@ function dayRow(d) {
 function sugg(d) {
   if (!d.suggest.length) return `<p class="pl">Nothing fits your budget and travel time that night.</p>`;
   return `<div class="sugg">${d.suggest.map((c) => `<div class="sg"><div><p class="tt">${esc(c.ev.title)}</p>
-    <p class="mm">${esc(c.ev.time)} · ${esc(c.ev.hood)} · ${c.ev.cost ? "$" + c.ev.cost : "Free"} · <span class="src">${srcLabel(c.ev.kind)}</span></p></div>
+    <p class="mm">${esc(c.ev.time)} · ${esc(c.ev.hood)} · ${c.ev.costUnknown ? "Price not saved" : c.ev.cost ? "$" + c.ev.cost : "Free"} · <span class="src">${srcLabel(c.ev.kind)}</span></p></div>
     <button class="chip" data-act="pick" data-id="${esc(c.ev.id)}" aria-label="Pick ${esc(c.ev.title)}">Pick</button></div>`).join("")}</div>`;
 }
 

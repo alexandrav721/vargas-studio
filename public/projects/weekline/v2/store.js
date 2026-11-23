@@ -93,10 +93,13 @@ function fromServerLock(l, signals) {
   const tm = l.start.match(/T(\d{2}):(\d{2})/);
   const h = tm ? Number(tm[1]) : 18, mi = tm ? Number(tm[2]) : 0;
   const sig = signals.find((s) => s.event_id === l.event_id && s.kind === "lock");
-  const tags = ((sig && sig.tags) || []).filter((t) => !String(t).startsWith("slot:"));
+  const all = (sig && sig.tags) || [];
+  const costTag = all.find((t) => String(t).startsWith("cost:"));
+  const cost = costTag ? Number(String(costTag).slice(5)) : undefined;
+  const tags = all.filter((t) => !/^(slot|cost):/.test(String(t)));
   const [hood, borough] = String(l.place || "").split(", ");
   const kind = l.source === "Live NYC Parks" ? "live" : l.source === "Editorial" ? "editorial" : "sample";
-  return { ...l, start: l.start.length === 16 ? l.start + ":00" : l.start, end: l.end || l.start, date, h, mi, time: fmtTime(h, mi), hood: hood || "", borough: borough || "", tags, goals: goalsForTags(tags), kind, photo: photoFor(tags) };
+  return { ...l, start: l.start.length === 16 ? l.start + ":00" : l.start, end: l.end || l.start, date, h, mi, time: fmtTime(h, mi), hood: hood || "", borough: borough || "", tags, goals: goalsForTags(tags), kind, photo: photoFor(tags), ...(Number.isFinite(cost) ? { cost } : { costUnknown: true }) };
 }
 function safeJson(s, fb) { try { return JSON.parse(s); } catch (e) { return fb; } }
 
@@ -158,7 +161,7 @@ export function exportData() {
 
 /* ---------- signals and learning ---------- */
 export function signal(kind, ev, reason, extraTags = []) {
-  const tags = [...(ev.tags || []), "slot:" + slotOf(ev), ...extraTags];
+  const tags = [...(ev.tags || []), "slot:" + slotOf(ev), ...(kind === "lock" && typeof ev.cost === "number" ? ["cost:" + ev.cost] : []), ...extraTags];
   const s = { event_id: ev.id, kind, reason: reason || null, tags, at: Date.now() };
   S.signals.push(s); save();
   if (session.user) api("POST", "signals", { items: [sigOut(s)] }).catch(() => {});
@@ -278,6 +281,7 @@ export async function fetchLive(from, toExclusive) {
     if (!r.title || !r.starttime || !r.guid) continue;
     const cat = r.categories || "";
     if (/kids|children|toddler|tots|teen|family|seniors|youth/i.test(`${cat} ${r.title}`)) continue;
+    if (/^\s*(cancel+ed|postponed|rescheduled)\b/i.test(r.title) || /cancel+ed|postponed/i.test(r.status || "")) continue;
     if (/virtual|online|zoom/i.test(`${r.title} ${r.location || ""}`)) continue;
     const code = (r.parkids || "").trim().charAt(0).toUpperCase();
     const borough = code === "M" ? "Manhattan" : code === "B" ? "Brooklyn" : null;
@@ -352,7 +356,7 @@ function why(ev, p, goalFit, mins) {
   const g = GOALS.find((x) => ev.goals.includes(x.id) && (p.goals || []).includes(x.id));
   if (g && goalFit >= 1) bits.push(g.short);
   bits.push(`${mins} min`);
-  bits.push(ev.cost ? `$${ev.cost}` : "Free");
+  bits.push(ev.costUnknown ? "Price not saved" : ev.cost ? `$${ev.cost}` : "Free");
   return bits.join(" · ");
 }
 
@@ -532,8 +536,13 @@ export async function refreshFriendCounts() {
   for (const inv of S.invites.slice(0, 12)) {
     try {
       const r = await getInvite(inv.token);
-      S.friendCounts[inv.event_id] = Math.max(0, (r.counts && r.counts.in) || 0);
-      inv.names = r.names || []; inv.counts = r.counts;
+      // Your own "I'm in" is not a friend: drop one copy of your name and your count.
+      const meIn = r.you === "in";
+      const myName = ((session.user && session.user.name) || (S.profile && S.profile.name) || "").split(" ")[0];
+      const names = (r.names || []).slice();
+      if (meIn) { const at = names.indexOf(myName); names.splice(at >= 0 ? at : 0, 1); }
+      S.friendCounts[inv.event_id] = Math.max(0, ((r.counts && r.counts.in) || 0) - (meIn ? 1 : 0));
+      inv.names = names; inv.counts = r.counts;
     } catch (e) { /* keep last known */ }
   }
   save();
