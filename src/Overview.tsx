@@ -3,7 +3,7 @@ import data from "../content/portfolio.json";
 
 import ProjectPage from "./ProjectPage";
 import PlayGrid from "./PlayGrid";
-import { NEW } from "./meta";
+import { META, NEW } from "./meta";
 import {
   cellFor,
   cellStateLabel,
@@ -178,7 +178,7 @@ function Studio({ route }: { route: Route }) {
         <nav className="toc-projects" aria-label="Projects">
           {data.projects.map((p) => (
             <a key={p.id} href={projectHref(p.id)}>
-              {p.name}
+              {META[p.id]?.name ?? p.name}
             </a>
           ))}
         </nav>
@@ -236,7 +236,6 @@ function Studio({ route }: { route: Route }) {
         </header>
 
         <section className="section" id="new" data-section>
-          <p className="section-kicker">New</p>
           <h2>Just built</h2>
           <ul className="play-grid new-grid">
             {NEW.map((n) => (
@@ -260,13 +259,11 @@ function Studio({ route }: { route: Route }) {
         </section>
 
         <section className="section" id="play" data-section>
-          <p className="section-kicker">Play</p>
           <h2>Try one in a minute</h2>
           <PlayGrid />
         </section>
 
         <section className="section" id="projects" data-section>
-          <p className="section-kicker">The ideas</p>
           <h2>{capitalize(projectCountWord)} ideas, one studio</h2>
           <p className="section-lede">
             Tap one for its story, everything built and live links.
@@ -439,11 +436,10 @@ function Studio({ route }: { route: Route }) {
         </section>
 
         <section className="section compare-section" id="compare" data-section>
-          <p className="section-kicker">Compare</p>
-          <h2>Same columns, side by side</h2>
+          <h2>Projects side by side</h2>
           <p className="section-lede">
-            Pick up to {MAX_COMPARE} projects. Rows are craft types — scan Live /
-            Fill in / N/A, then open anything that ships.
+            Pick up to {MAX_COMPARE} projects. Each row is one kind of piece. Open
+            anything marked Live.
           </p>
 
           <div className="compare-picker" role="group" aria-label="Projects to compare">
@@ -466,7 +462,7 @@ function Studio({ route }: { route: Route }) {
           <p className="compare-count">
             Comparing {comparedProjects.length} of {data.projects.length}
             {comparedProjects.length < 2
-              ? " — keep at least two selected."
+              ? ". Keep at least two selected."
               : null}
           </p>
 
@@ -540,11 +536,9 @@ function Studio({ route }: { route: Route }) {
         </section>
 
         <section className="section" id="craft" data-section>
-          <p className="section-kicker">Tools</p>
           <h2>Tools I use</h2>
           <p className="section-lede">
-            Skills, agents, and reusable patterns — kept out of the visual
-            columns on purpose.
+            The skills, AI helpers and habits behind every project.
           </p>
 
           <h3 className="subhead">Skills</h3>
