@@ -18,3 +18,9 @@ BUILD_LIMIT_DAY = "40"
 binding = "WL"
 database_name = "weekline"
 database_id = "5fd6b8c3-35df-4c4f-9f8c-fad67b3bc035"
+
+# Skills Made EZ community library: accounts, skills, examples, ratings, reports (D1 created 23 Nov 2026)
+[[d1_databases]]
+binding = "SMEZ"
+database_name = "smez"
+database_id = "2d362ab9-65fc-4a27-9f85-726433edc295"
