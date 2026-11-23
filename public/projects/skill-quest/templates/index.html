@@ -31,7 +31,7 @@
       <li>Plain Claude answers it. Claude with the skill answers it.</li>
       <li>A judge who doesn't know which is which scores both, 1 to 5.</li>
     </ol>
-    <p class="note">One test per skill so far: a reading, not a verdict. The requests are samples we made up. Tested 23 Nov 2026.</p>
+    <p class="note">One test per skill so far: a reading, not a verdict. Both answers came from the same Claude model. The requests are samples we made up. Tested 23 Nov 2026.</p>
   </section>
 
   <section class="bigger">
@@ -52,8 +52,9 @@
       <button class="flip-btn" id="fPlain" aria-pressed="false">Plain Claude</button>
     </div>
     <div class="result" id="result">
-      <div class="score" id="score"></div>
       <div class="frame" id="frame"></div>
+      <p class="score" id="score"></p>
+      <details class="req"><summary>Why it won</summary><div id="why"></div></details>
       <details class="req"><summary>The request both got</summary><div id="req"></div></details>
     </div>
 

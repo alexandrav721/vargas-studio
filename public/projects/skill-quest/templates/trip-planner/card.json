@@ -10,5 +10,5 @@
   ],
   "woah": "Every day opens as a walking route in Google Maps.",
   "whyBetter": "Plain Claude packs every hour and invents places. This keeps days near one area, shows travel time, and flags what to check first.",
-  "tryPrompt": "Plan 4 days in Lisbon in May for me and my partner. Mid budget. We like food and walking, not museums."
+  "tryPrompt": "Plan my trip. Where: [city]. How long: [days]. Who's going: [people]. Budget: [low, mid, high]. We like:"
 }

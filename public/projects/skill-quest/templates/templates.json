@@ -1,0 +1,279 @@
+[
+ {
+  "slug": "polish-email",
+  "name": "Polish my email",
+  "oneLine": "Your rough draft, shorter and clearer, still you.",
+  "forWho": "Anyone who writes emails or work messages and worries how they come across.",
+  "youGet": [
+   "A ready-to-send email with a subject line",
+   "A short list of what changed",
+   "Warnings before you hit send"
+  ],
+  "woah": "It got shorter, and it still sounds like me.",
+  "whyBetter": "Plain Claude makes emails longer, stiffer and full of pleasantries you never say. This keeps your words, cuts the rest and never adds facts.",
+  "tryPrompt": "Polish this email so it still sounds like me. Here's my draft:",
+  "zip": "polish-email/polish-email.zip",
+  "skillFile": "polish-email/skill/polish-email/SKILL.md",
+  "request": "can you make this sound better before i send it? i dont want to sound rude but i really need to get paid. its to a client\n\nhey Marcus,\n\nso I'm just following up again about the invoice for the Brightwell Bakery logo and menu stuff, I sent it on Sept 30 and it was due Oct 30 and its now almost 4 weeks past that. I know you guys are busy and I totally get it, I'm sorry to keep bugging you about this. The total is $1,850 and I've attached it again. Also just so you know the menu changes you asked for last week (the extra gluten free page and redoing the prices) weren't part of the original quote so that would be extra, probably like $200, I didn't say anything at the time cause I didn't want to be difficult but I should have. Honestly I've had to chase this 3 times now and it's kind of frustrating because I delivered everything on time?? I'd really appreciate if you could pay it this week. Also I can't start the window signs until the invoice is sorted. Sorry again and thanks so much!!\n\nTalia",
+  "outputs": {
+   "skill": {
+    "type": "md",
+    "src": "polish-email/result-skill.md"
+   },
+   "plain": {
+    "type": "md",
+    "src": "polish-email/result-plain.md"
+   }
+  },
+  "result": {
+   "winner": "skill",
+   "skillScore": 4.8,
+   "plainScore": 3.5,
+   "reason": "the skill is a tight, ready-to-send email in Talia's voice that adds no new facts and flags the risky lines, while plain Claude invents a commitment to send a separate invoice and a line about enjoying the project, and pads with extra options."
+  },
+  "thumb": "polish-email/thumb.jpg"
+ },
+ {
+  "slug": "study-buddy",
+  "name": "Study buddy",
+  "oneLine": "Your notes become a quiz you can play.",
+  "forWho": "Students and anyone with a test coming up who has notes but no time to make flashcards.",
+  "youGet": [
+   "A quiz that asks why, not just what",
+   "Flashcards from your key words",
+   "Missed questions come back until they stick"
+  ],
+  "woah": "It brings back the ones you got wrong, like a tutor.",
+  "whyBetter": "Plain Claude asks easy recall questions, adds facts your notes never said, and forgets your misses. This sticks to your notes and drills misses.",
+  "tryPrompt": "Turn my notes into a quiz I can practice with. Here are my notes:",
+  "zip": "study-buddy/study-buddy.zip",
+  "skillFile": "study-buddy/skill/study-buddy/SKILL.md",
+  "request": "can you make me a quiz from my notes? science test on friday\n\nWater cycle notes, Year 8 science\n\n- Water moves between the sea, the air and the land in a loop called the water cycle. The sun powers it.\n- Evaporation: the sun heats water in seas, lakes and rivers and it turns into water vapour (a gas) that rises.\n- Transpiration: plants lose water vapour through tiny holes in their leaves. Evaporation + transpiration together = evapotranspiration.\n- Condensation: as water vapour rises the air gets colder, so the vapour cools and turns back into tiny liquid droplets. Lots of droplets make clouds.\n- Precipitation: when droplets join and get too heavy they fall as rain, snow, sleet or hail.\n- Collection: water that falls collects in oceans, lakes and rivers. Some runs over the ground (surface runoff) into rivers.\n- Infiltration: some water soaks into the ground and becomes groundwater. It can stay there a long time and slowly flows back to rivers and the sea.\n- About 97% of Earth's water is salty sea water. Only about 3% is fresh water and most of that is frozen in ice caps and glaciers.\n- Warmer temperatures mean more evaporation.\n- Trees cut down = less transpiration, so the air above can get drier. (check this w/ Mr Patel)\n- The total amount of water on Earth stays about the same, it just changes state and place.\n- Key words: state change, water vapour, runoff, groundwater, reservoir (a store of water like a lake or an ice cap)",
+  "outputs": {
+   "skill": {
+    "type": "html",
+    "src": "study-buddy/result-skill.html"
+   },
+   "plain": {
+    "type": "md",
+    "src": "study-buddy/result-plain.md"
+   }
+  },
+  "result": {
+   "winner": "skill",
+   "skillScore": 4.5,
+   "plainScore": 4.0,
+   "reason": "the skill gives instant per-question feedback quoting the student's own notes, retries misses, and skips the unverified Mr Patel note; plain Claude is accurate and includes short-answer questions and a helpful Mr Patel flag, but it is static, so the student has to mark themselves."
+  },
+  "thumb": "study-buddy/thumb.jpg"
+ },
+ {
+  "slug": "habit-tracker",
+  "name": "Habit tracker",
+  "oneLine": "Tap once a day. Watch your streak grow.",
+  "forWho": "Anyone who wants a few small daily habits to stick, without an app store, an account or ads.",
+  "youGet": [
+   "One-tap check-ins for your own habits",
+   "A month calendar and gentle stats",
+   "Streaks that survive one missed day"
+  ],
+  "woah": "Miss a day and a return ticket saves your streak.",
+  "whyBetter": "Plain Claude makes a pretty list that forgets everything on reload and resets your streak for one bad day. This saves, forgives, and backs up.",
+  "tryPrompt": "Make me a habit tracker. My habits are:",
+  "zip": "habit-tracker/habit-tracker.zip",
+  "skillFile": "habit-tracker/skill/habit-tracker/SKILL.md",
+  "request": "can you make me a habit tracker? I want to drink more water, read 20 minutes before bed and stretch in the morning. I like green",
+  "outputs": {
+   "skill": {
+    "type": "html",
+    "src": "habit-tracker/result-skill.html"
+   },
+   "plain": {
+    "type": "html",
+    "src": "habit-tracker/result-plain.html"
+   }
+  },
+  "result": {
+   "winner": "skill",
+   "skillScore": 5.0,
+   "plainScore": 3.0,
+   "reason": "the skill is forgiving (return ticket, backfill past days), lets users add, edit and delete habits, offers export and import, and is built for a phone; plain Claude has hardcoded habits, no streak forgiveness, a month grid that cuts off on a phone screen, and its water cups conflict with the habit check-off."
+  },
+  "thumb": "habit-tracker/thumb.jpg"
+ },
+ {
+  "slug": "one-page-site",
+  "name": "My one-page website",
+  "oneLine": "A personal site built around your real work.",
+  "forWho": "Makers, freelancers and creators who need one good page to send people to.",
+  "youGet": [
+   "One ready-to-share web page",
+   "A look picked for your kind of work",
+   "Your email one tap away"
+  ],
+  "woah": "It looks like a designer made it just for me.",
+  "whyBetter": "Plain Claude makes the same template site for everyone. This builds the page around your actual work, with your facts, your colors and no filler.",
+  "tryPrompt": "Make me a one-page website. Here's who I am, three things I've made, and how to reach me:",
+  "zip": "one-page-site/one-page-site.zip",
+  "skillFile": "one-page-site/skill/one-page-site/SKILL.md",
+  "request": "hi can you make me a website? just one page, something i can put on my instagram and send to shops. i'm Maren Okafor, i make stoneware pottery (mostly bowls and mugs) in my garage studio in West Asheville, NC. been doing it about 6 years, full time since 2023. i fire to cone 10 and mix my own glazes, my favorite is a pale green celadon.\n\n3 things i'm proud of:\n- my Tide bowls, a series of 40 bowls with a dark iron rim, they sold out in about 2 hours at the Asheville Fall Pottery Market in 2025\n- i made 120 dinner plates for Little Ostra, a seafood restaurant on Haywood Rd, in 2024. took me 5 months\n- i teach a beginner wheel class at Odd Clay co-op every tuesday night, 8 people max, i've taught around 150 people so far\n\ncontact: maren@okafor-clay.com, instagram @maren.makes.clay. i take commissions and wholesale orders but my next opening is March 2027. i don't do custom pet portraits on mugs lol people keep asking",
+  "outputs": {
+   "skill": {
+    "type": "html",
+    "src": "one-page-site/result-skill.html"
+   },
+   "plain": {
+    "type": "html",
+    "src": "one-page-site/result-plain.html"
+   }
+  },
+  "result": {
+   "winner": "skill",
+   "skillScore": 4.5,
+   "plainScore": 3.8,
+   "reason": "the skill sticks to Maren's facts and looks custom-designed (kiln-shelf layout, celadon accent, copy-email button), while plain Claude is a generic centered template that invents details like a waitlist and 'custom bowls, mugs and sets, shops and restaurants welcome'.",
+   "first": {
+    "winner": "tie",
+    "skillScore": 4.5,
+    "plainScore": 4.3
+   }
+  },
+  "thumb": "one-page-site/thumb.jpg"
+ },
+ {
+  "slug": "trip-planner",
+  "name": "Trip planner",
+  "oneLine": "A day-by-day trip plan you can actually follow.",
+  "forWho": "Anyone planning a city trip who wants a calm plan, not a packed list.",
+  "youGet": [
+   "Two or three stops a day, close together",
+   "A map link and a rain plan for every day",
+   "Rough costs and a packing list you can tick"
+  ],
+  "woah": "Every day opens as a walking route in Google Maps.",
+  "whyBetter": "Plain Claude packs every hour and invents places. This keeps days near one area, shows travel time, and flags what to check first.",
+  "tryPrompt": "Plan my trip. Where: [city]. How long: [days]. Who's going: [people]. Budget: [low, mid, high]. We like:",
+  "zip": "trip-planner/trip-planner.zip",
+  "skillFile": "trip-planner/skill/trip-planner/SKILL.md",
+  "request": "# Test request\n\nSample, made up for testing.\n\n> we're going to rome for 4 days in early june, me, my husband and our 9 year old. mid budget. we like food and just walking around, not big on museums. our kid gets tired after lunch. can you plan it?\n",
+  "outputs": {
+   "skill": {
+    "type": "html",
+    "src": "trip-planner/result-skill.html"
+   },
+   "plain": {
+    "type": "md",
+    "src": "trip-planner/result-plain.md"
+   }
+  },
+  "result": {
+   "winner": "skill",
+   "skillScore": 4.5,
+   "plainScore": 3.5,
+   "reason": "the skill paces each day around the post-lunch rest, flags what to check, and adds a rain backup, costs, a checklist and map links, while plain Claude names more real restaurants but packs the days (Day 1 morning, Day 3 sunset, a dome climb) and treats the rest as optional."
+  },
+  "thumb": "trip-planner/thumb.jpg"
+ },
+ {
+  "slug": "meal-plan",
+  "name": "Meal plan + grocery list",
+  "oneLine": "A week of dinners and one list to shop.",
+  "forWho": "Anyone cooking for a household on a budget, with allergies or picky eaters.",
+  "youGet": [
+   "Seven dinners, weeknights in 30 minutes",
+   "One grocery list sorted by aisle, with ticks",
+   "A Sunday prep plan that saves weeknight time"
+  ],
+  "woah": "One pack of chicken turns into three different dinners.",
+  "whyBetter": "Plain Claude gives seven unrelated recipes. This reuses ingredients, plans leftovers, checks every allergy and adds up a list that fits your budget.",
+  "tryPrompt": "Plan a week of dinners and a grocery list. We are [how many people], allergies: [any], budget: [$ a week]. We like:",
+  "zip": "meal-plan/meal-plan.zip",
+  "skillFile": "meal-plan/skill/meal-plan/SKILL.md",
+  "request": "# Test request\n\nSample, made up for testing.\n\n> can you make us a meal plan for the week? family of 4, me, my husband and 2 kids (7 and 11). the 7 year old is allergic to peanuts. budget is about $120 for the week. we like mexican food and pasta, nothing too spicy for the kids. weeknights i only have like 30 min to cook\n",
+  "outputs": {
+   "skill": {
+    "type": "html",
+    "src": "meal-plan/result-skill.html"
+   },
+   "plain": {
+    "type": "md",
+    "src": "meal-plan/result-plain.md"
+   }
+  },
+  "result": {
+   "winner": "skill",
+   "skillScore": 4.8,
+   "plainScore": 3.5,
+   "reason": "the skill gives cookable recipes with steps, cook-once-eat-twice planning, a quantified merged grocery list (about $87) that matches the recipes, and peanut-label checks tied to specific products, while plain Claude is a vaguer outline with loose quantities and no recipes, though it does add breakfasts, lunches and snacks."
+  },
+  "thumb": "meal-plan/thumb.jpg"
+ },
+ {
+  "slug": "resume-tailor",
+  "name": "Resume tailor",
+  "oneLine": "Your resume fitted to one job, plus cover letter.",
+  "forWho": "Job seekers who want each application to fit the post without making things up.",
+  "youGet": [
+   "A table of how you match the job",
+   "A tailored resume that hiring software can read",
+   "A cover letter under 200 words"
+  ],
+  "woah": "It found the match I didn't know how to say.",
+  "whyBetter": "Plain Claude invents numbers and stuffs in skills you don't have. This uses only your real experience and shows your gaps honestly.",
+  "tryPrompt": "Tailor my resume to this job and write a short cover letter. Job post and resume below:",
+  "zip": "resume-tailor/resume-tailor.zip",
+  "skillFile": "resume-tailor/skill/resume-tailor/SKILL.md",
+  "request": "hi can you tailor my resume to this job and write a cover letter? i really want this one. ive been in retail for years and want to get out. resume and job below\n\nJOB POST:\n\nOperations Coordinator, Fernbrook Community Health (Riverside, full time, $52,000 to $58,000)\n\nFernbrook runs three community clinics and, starting in March, a mobile health van that will visit six neighborhoods a week. We need an Operations Coordinator to keep the clinics and the van stocked, staffed and on schedule.\n\nWhat you'll do:\n- Build and manage weekly schedules for 25+ front desk and support staff\n- Track supply inventory across sites and place orders with vendors\n- Plan the mobile van's routes and weekly calendar with the outreach team\n- Be the first point of contact when something goes wrong on a shift\n- Keep simple reports on supply costs and staffing hours\n\nYou have:\n- 2+ years scheduling staff or coordinating operations\n- Experience managing inventory and vendor orders\n- Strong Excel or Google Sheets skills\n- Calm, clear communication with staff and the public\n- Experience with Salesforce or a similar CRM\n\nNice to have:\n- Healthcare or nonprofit experience\n- Spanish\n- A driver's license\n\nRESUME:\n\nDana Okafor\nRiverside | dana.okafor.sample@example.com | (555) 014-2290\n\nExperience\n\nStore Shift Manager, Hollis Home Goods, Riverside, Jun 2021 to present\n- responsible for making the weekly schedule for about 30 staff\n- did the stock counts every week and ordered from our 8 main suppliers\n- handled customer complaints and problems on shift\n- trained new hires\n- made a google sheet to track overtime which cut overtime hours a lot\n- opened and closed the store\n\nSales Associate, Hollis Home Goods, Riverside, Mar 2019 to Jun 2021\n- helped customers, ran the register\n- did visual merchandising\n- employee of the month twice\n\nVolunteer, Eastside Food Pantry, 2020 to present\n- sort donations saturdays, helped set up the pop up pantry route to 4 apartment buildings\n\nSkills: Excel, Google Sheets, Square POS, scheduling, customer service, conversational Spanish\n\nEducation\nRiverside Community College, Associate in Business, 2019",
+  "outputs": {
+   "skill": {
+    "type": "md",
+    "src": "resume-tailor/result-skill.md"
+   },
+   "plain": {
+    "type": "md",
+    "src": "resume-tailor/result-plain.md"
+   }
+  },
+  "result": {
+   "winner": "skill",
+   "skillScore": 4.5,
+   "plainScore": 3.8,
+   "reason": "the skill sticks strictly to resume facts, maps each requirement with honest gaps, and keeps the letter short; plain Claude adds unsupported claims (resolved calmly and quickly, daily readiness, short-staffed shift) and miscounts tenure as four years when it is over five."
+  },
+  "thumb": "resume-tailor/thumb.jpg"
+ },
+ {
+  "slug": "business-landing",
+  "name": "Small business page",
+  "oneLine": "A page that turns visitors into bookings.",
+  "forWho": "Bakeries, dog walkers, tutors, studios and other small businesses that need customers to find and book them.",
+  "youGet": [
+   "One ready-to-share web page",
+   "Your prices, hours and booking in one place",
+   "One clear book button on every screen"
+  ],
+  "woah": "My prices and hours finally look like a real shop.",
+  "whyBetter": "Plain Claude writes slogans and invents five-star reviews. This shows what you sell, what it costs and how to book, with only your real facts.",
+  "tryPrompt": "Make a page for my small business. Here's what I sell, my prices, my hours and how people book:",
+  "zip": "business-landing/business-landing.zip",
+  "skillFile": "business-landing/skill/business-landing/SKILL.md",
+  "request": "can you make a website for my dog walking business? it's called Two Blocks Dog Co. it's just me, Dani Reyes. i walk dogs in Jamaica Plain in Boston, mostly around Pondside, Hyde Square and the Arboretum side, near Jamaica Pond.\n\nprices:\n- 30 min group walk $24\n- 60 min group walk $38\n- solo walk (just your dog) 30 min $30\n- puppy drop-in visit (potty break + feeding) $20\n- second dog from the same home +$8\n\nhours mon-fri 9am to 5pm, saturday 8am to 12pm. no sundays.\n\nmax 4 dogs in a group, always. i send a GPS map of the route and a photo after every walk. i'm insured and pet CPR certified. dogs need to be over 1 year for group walks, puppies get drop-ins. the first meet and greet is free, about 20 min at your place. if it's pouring rain or a thunderstorm we do a shorter walk and i text you first.\n\npeople should text me to book: 617-555-0143, or email dani@twoblocksdog.co. i don't have reviews on the site yet but i have like 22 regular dogs",
+  "outputs": {
+   "skill": {
+    "type": "html",
+    "src": "business-landing/result-skill.html"
+   },
+   "plain": {
+    "type": "html",
+    "src": "business-landing/result-plain.html"
+   }
+  },
+  "result": {
+   "winner": "skill",
+   "skillScore": 4.5,
+   "plainScore": 4.0,
+   "reason": "the skill looks made for Dani's business (route map, sticky text-to-book bar with prefilled message, prices and hours up front, FAQ), though its visible review and photo placeholders must be removed before publishing; plain Claude is accurate and publishable but a generic template with no mobile booking bar."
+  },
+  "thumb": "business-landing/thumb.jpg"
+ }
+]

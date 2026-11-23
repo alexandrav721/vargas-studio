@@ -10,5 +10,5 @@
   ],
   "woah": "One pack of chicken turns into three different dinners.",
   "whyBetter": "Plain Claude gives seven unrelated recipes. This reuses ingredients, plans leftovers, checks every allergy and adds up a list that fits your budget.",
-  "tryPrompt": "Meal plan for a family of 4, one kid allergic to peanuts, $120 a week. We like Mexican and pasta."
+  "tryPrompt": "Plan a week of dinners and a grocery list. We are [how many people], allergies: [any], budget: [$ a week]. We like:"
 }

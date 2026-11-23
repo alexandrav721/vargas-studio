@@ -10,5 +10,5 @@
   ],
   "woah": "It brings back the ones you got wrong, like a tutor.",
   "whyBetter": "Plain Claude asks easy recall questions, adds facts your notes never said, and forgets your misses. This sticks to your notes and drills misses.",
-  "tryPrompt": "Use the Study buddy skill. Here are my notes, make me a quiz: [paste your notes]"
+  "tryPrompt": "Turn my notes into a quiz I can practice with. Here are my notes:"
 }

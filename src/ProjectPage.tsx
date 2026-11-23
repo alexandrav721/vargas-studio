@@ -54,6 +54,11 @@ export default function ProjectPage({ id }: { id: string }) {
               {m.extra.label}
             </a>
           )}
+          {m.more?.map((x) => (
+            <a key={x.href} className="proj-play proj-extra" href={x.href}>
+              {x.label}
+            </a>
+          ))}
 
           <h2 className="proj-sub">Everything I made for it</h2>
           <ul className="proj-grid">

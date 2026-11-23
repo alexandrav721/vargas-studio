@@ -10,5 +10,5 @@
   ],
   "woah": "Miss a day and a return ticket saves your streak.",
   "whyBetter": "Plain Claude makes a pretty list that forgets everything on reload and resets your streak for one bad day. This saves, forgives, and backs up.",
-  "tryPrompt": "Use the Habit tracker skill. I want to drink more water, read 20 minutes and stretch."
+  "tryPrompt": "Make me a habit tracker. My habits are:"
 }

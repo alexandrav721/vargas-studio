@@ -19,7 +19,7 @@
     if (tested) $("#introSub").textContent = data.length + " skills for the things people ask AI for most. In blind tests, " + wins + " of " + tested + " beat plain Claude.";
     $("#grid").innerHTML = data.map(function (d, i) {
       var shot = d.thumb ? '<img src="' + esc(d.thumb) + '" alt="" loading="lazy">' : '<div class="txt">' + esc(d.oneLine) + "</div>";
-      return '<li><button class="tile" data-i="' + i + '"><span class="shot">' + shot + '</span><span class="meta"><b>' + esc(d.name) + "</b><span>" + esc(d.oneLine) + "</span>" + badge(d.result) + "</span></button></li>";
+      return '<li><button class="tile" data-i="' + i + '"><span class="shot">' + shot + '</span><span class="meta"><b>' + esc(d.name) + "</b><span class=\"line\">" + esc(d.oneLine) + "</span>" + badge(d.result) + "</span></button></li>";
     }).join("");
   }
 
@@ -29,13 +29,13 @@
     $("#fPlain").setAttribute("aria-pressed", side === "plain");
     var r = d.result, sc = $("#score");
     if (r) {
-      var mine = side === "skill" ? r.skillScore : r.plainScore;
-      sc.innerHTML = '<span class="big">' + mine + '/5</span><span>' + (side === "skill" ? "with the skill" : "plain Claude") + "</span><span>Blind judge: " +
-        (r.winner === "skill" ? "the skill won" : r.winner === "tie" ? "a tie" : "plain Claude won") + "</span>";
-    } else sc.textContent = "";
+      sc.innerHTML = '<b>' + r.skillScore.toFixed(1) + '</b> with the skill · <b>' + r.plainScore.toFixed(1) + '</b> plain Claude · scored blind, out of 5';
+      $("#why").textContent = (r.reason ? r.reason.charAt(0).toUpperCase() + r.reason.slice(1) : "") +
+        (r.first ? "\n\nFirst test: " + (r.first.winner === "tie" ? "a tie" : r.first.winner + " won") + " (" + r.first.skillScore + " vs " + r.first.plainScore + "). We fixed the skill and tested again." : "");
+    } else { sc.textContent = ""; $("#why").textContent = "Not tested yet."; }
     var f = $("#frame");
     if (!out) { f.innerHTML = '<div class="md">Not tested yet.</div>'; return; }
-    if (out.type === "html") f.innerHTML = '<iframe title="' + esc(d.name) + ' result" sandbox="allow-scripts allow-forms allow-modals" src="' + esc(out.src) + '"></iframe>';
+    if (out.type === "html") f.innerHTML = '<iframe title="' + esc(d.name) + ' result" sandbox="allow-scripts allow-same-origin allow-forms allow-modals" src="' + esc(out.src) + '"></iframe>';
     else {
       f.innerHTML = '<div class="md">Loading…</div>';
       fetch(out.src).then(function (r) { return r.text(); }).then(function (t) {
