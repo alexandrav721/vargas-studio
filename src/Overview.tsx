@@ -3,6 +3,7 @@ import data from "../content/portfolio.json";
 
 import ProjectPage from "./ProjectPage";
 import PlayGrid from "./PlayGrid";
+import { NEW } from "./meta";
 import {
   cellFor,
   cellStateLabel,
@@ -18,6 +19,9 @@ import {
 } from "./lib";
 
 const MAX_COMPARE = 5;
+
+/* Repos friends can't open (private, or the old Cursor host): show the name, no dead link. */
+const PRIVATE_REPO = /github\.com\/alexandrav721\/(celebrateloop-site|Loop|ecoinventory2026|loop-waitlist)$|origin\.cursor\.com/;
 
 const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
@@ -231,6 +235,30 @@ function Studio({ route }: { route: Route }) {
           <p className="tagline">{data.site.tagline}</p>
         </header>
 
+        <section className="section" id="new" data-section>
+          <p className="section-kicker">New</p>
+          <h2>Just built</h2>
+          <ul className="play-grid new-grid">
+            {NEW.map((n) => (
+              <li key={n.href}>
+                <a
+                  className="play-tile new-tile"
+                  href={n.href}
+                  target={n.external ? "_blank" : undefined}
+                  rel={n.external ? "noopener" : undefined}
+                >
+                  <img src={n.pic} alt="" width={600} height={640} loading="lazy" decoding="async" />
+                  <span className="play-name">
+                    {n.name}
+                    {n.external ? " ↗" : ""}
+                  </span>
+                  <span className="new-line">{n.line}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+
         <section className="section" id="play" data-section>
           <p className="section-kicker">Play</p>
           <h2>Try one in a minute</h2>
@@ -385,17 +413,21 @@ function Studio({ route }: { route: Route }) {
                     <h4>Code</h4>
                     <ul className="artifact-list">
                       {p.code.map((c) => (
-                        <li key={c.url}>
+                        <li key={c.label}>
                           <strong>{c.label}</strong>
                           <span>{c.summary}</span>
-                          <a
-                            className="surface-link"
-                            href={c.url}
-                            target="_blank"
-                            rel="noreferrer"
-                          >
-                            Repo
-                          </a>
+                          {PRIVATE_REPO.test(c.url) ? (
+                            <span className="fill-in quiet">Private</span>
+                          ) : (
+                            <a
+                              className="surface-link"
+                              href={c.url}
+                              target="_blank"
+                              rel="noreferrer"
+                            >
+                              Repo
+                            </a>
+                          )}
                         </li>
                       ))}
                     </ul>

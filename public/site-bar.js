@@ -8,7 +8,7 @@
   "use strict";
   var NAMES = {
     weekline: "Weekline", restitch: "Restitch", nostalgia: "Scrollback", scrolll: "Get Paid to Scroll",
-    loop: "Loop", "planner-book": "Planners", "habit-game": "Lumen", "skill-quest": "Skill Quest"
+    loop: "Loop", "planner-book": "Planners", "habit-game": "Lumen", "skill-quest": "Skills Made EZ"
   };
   var me = document.currentScript;
   var pid = me && me.getAttribute("data-project");

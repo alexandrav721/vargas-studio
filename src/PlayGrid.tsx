@@ -6,9 +6,9 @@ import { META } from "./meta";
 /* The Play section: every idea's game, one tap away. Picture = the game's own first screen. */
 const SOUND: Record<string, DeskSound> = {
   nostalgia: "dialup", "skill-quest": "snap", weekline: "tear", restitch: "snip",
-  "planner-book": "page", scrolll: "coin", "habit-game": "punch", loop: "keys",
+  "planner-book": "page", scrolll: "coin", "habit-game": "punch", loop: "keys", "shelf-paid": "coin",
 };
-const ORDER = ["nostalgia", "skill-quest", "weekline", "restitch", "planner-book", "scrolll", "habit-game", "loop"];
+const ORDER = ["nostalgia", "skill-quest", "weekline", "restitch", "planner-book", "scrolll", "habit-game", "shelf-paid", "loop"];
 
 export default function PlayGrid() {
   const [lifted, setLifted] = useState<string | null>(null);

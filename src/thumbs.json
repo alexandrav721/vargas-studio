@@ -54,5 +54,7 @@
  "/projects/weekline/deck.html": "/thumbs/weekline-deck.jpg",
  "/projects/weekline/print.html": "/thumbs/weekline-print.jpg",
  "/projects/weekline/social.html": "/thumbs/weekline-social.jpg",
- "/projects/skill-quest/cards/": "/thumbs/skill-quest-product-ui.jpg"
+ "/projects/skill-quest/cards/": "/thumbs/skill-quest-product-ui.jpg",
+ "https://shelfpaid.pages.dev/": "/thumbs/shelf-paid-website.jpg",
+ "https://shelfpaid.pages.dev/landing/": "/thumbs/shelf-paid-landing.jpg"
 }
