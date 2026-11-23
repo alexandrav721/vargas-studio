@@ -156,7 +156,7 @@
           "state": "live"
         },
         "deck": {
-          "label": "Investor deck",
+          "label": "Pitch deck",
           "detail": "12 slides with cited NYC numbers. Zero users, said plainly. Not raising yet.",
           "url": "/projects/weekline/deck.html",
           "state": "live"
@@ -607,9 +607,9 @@
           "state": "live"
         },
         "deck": {
-          "label": "Handshake story",
-          "detail": "Onboarding narrative doubles as the product story board.",
-          "url": "/projects/loop/",
+          "label": "Pitch deck",
+          "detail": "12 slides: the problem, the live demo, the market and the first FiDi building.",
+          "url": "/projects/loop/deck.html",
           "state": "live"
         },
         "print": {
@@ -691,7 +691,7 @@
           "state": "live"
         },
         "deck": {
-          "label": "Planner pitch deck",
+          "label": "Pitch deck",
           "detail": "The planners in 12 slides: the five PDFs, Make yours and the $39 kit.",
           "url": "/projects/planner/deck.html",
           "state": "live"
@@ -760,9 +760,9 @@
           "state": "live"
         },
         "deck": {
-          "label": "Conversion lab",
-          "detail": "Score landing variants without live A/B \u2014 Hook / Clarity / Desire / Friction / Proof.",
-          "url": "/projects/lumen/lab.html",
+          "label": "Pitch deck",
+          "detail": "12 slides with the fog game inside and the studies behind each rule.",
+          "url": "/projects/lumen/deck.html",
           "state": "live"
         },
         "print": {
