@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Scrollback — Story board (old version)</title>
+  <meta name="robots" content="noindex" />
+  <meta name="description" content="Feel · Buy · Talk storyboard plus romantic vs fun tone lanes for Scrollback." />
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg0: #07090d; --bg1: #10161f; --ink: #e8eef7; --muted: #93a0b4;
+      --line: rgba(232,238,247,.14); --brand: #7dffb3; --brand-2: #ffd36a;
+      --display: "Syne", sans-serif; --body: "IBM Plex Sans", sans-serif; --mono: "IBM Plex Mono", monospace;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; min-height: 100vh; color: var(--ink); font-family: var(--body);
+      background:
+        radial-gradient(ellipse at 15% 0%, rgba(125,255,179,.12), transparent 45%),
+        linear-gradient(165deg, var(--bg0), var(--bg1));
+      line-height: 1.55;
+    }
+    .studio-back {
+      position: fixed; top: .65rem; left: .65rem; z-index: 40;
+      padding: .45rem .8rem; border: 1px solid rgba(232,238,247,.28); background: #0c121a;
+      color: #e8eef7; font: 500 .72rem/1 var(--mono); letter-spacing: .06em;
+      text-transform: uppercase; text-decoration: none;
+    }
+    .wrap { width: min(100% - 2rem, 900px); margin: 0 auto; padding: 4.5rem 0 4rem; }
+    nav.top {
+      display: flex; flex-wrap: wrap; gap: .7rem 1.1rem; margin-bottom: 2rem;
+      font-size: .72rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase;
+    }
+    nav.top a { color: var(--muted); text-decoration: none; }
+    nav.top a:hover, nav.top a[aria-current="page"] { color: var(--brand); }
+    .kicker { margin: 0 0 .65rem; font-size: .72rem; letter-spacing: .18em; text-transform: uppercase; color: var(--brand-2); font-weight: 700; }
+    .deck-stage {
+      min-height: 58vh; display: grid; place-items: center; text-align: center;
+      padding: 2rem 1rem; border: 1px solid var(--line); background: rgba(16,22,31,.65);
+      margin-top: 1rem;
+    }
+    .deck-stage h2 {
+      margin: 0; font-family: var(--display); font-size: clamp(1.8rem, 5.5vw, 3rem);
+      letter-spacing: -.03em; line-height: 1.05;
+    }
+    .deck-stage .lede { margin: 1rem auto 0; max-width: 34rem; color: var(--muted); }
+    .deck-nav { display: flex; justify-content: center; gap: .75rem; margin-top: 1.5rem; }
+    .btn {
+      display: inline-flex; padding: .75rem 1.15rem; border: 1px solid transparent;
+      background: var(--brand); color: #07100c; font: 700 .9rem var(--body); cursor: pointer; text-decoration: none;
+    }
+    .btn-ghost { background: transparent; color: var(--ink); border-color: rgba(232,238,247,.28); }
+    .hint { text-align: center; margin-top: 1rem; color: var(--muted); font-size: .85rem; font-family: var(--mono); }
+  </style>
+  <link rel="stylesheet" href="/site-bar.css" />
+  <script src="/site-bar.js" data-project="nostalgia" data-kind="piece" defer></script>
+</head>
+<body>
+  <a class="studio-back" href="/">← Vargas Studio</a>
+  <div class="wrap">
+    <nav class="top" aria-label="Scrollback">
+      <a href="./">Explorer</a>
+      <a href="./landing.html">Landing</a>
+      <a href="./join.html">Waitlist</a>
+      <a href="./ads.html">Meta ads</a>
+      <a href="./story.html" aria-current="page">Story</a>
+    </nav>
+
+    <p class="kicker">Narrative board · ← → or click</p>
+    <div class="deck-stage" id="deck" aria-live="polite">
+      <div>
+        <p class="kicker" id="deck-k">01</p>
+        <h2 id="deck-h">Feel · Buy · Talk</h2>
+        <p class="lede" id="deck-p">One sentence: Feel 2001–2004 again on a site where you buy era-only products and talk with people who get that time.</p>
+      </div>
+    </div>
+    <div class="deck-nav">
+      <button class="btn btn-ghost" type="button" id="prev">← Prev</button>
+      <button class="btn" type="button" id="next">Next →</button>
+    </div>
+    <p class="hint">Keyboard arrows work · Open Meta ads for the friend ship pack</p>
+    <p style="text-align:center;margin-top:1.25rem">
+      <a class="btn" href="./ads.html">Meta ads gallery</a>
+      <a class="btn btn-ghost" href="./join.html" style="margin-left:.5rem">Waitlist</a>
+    </p>
+  </div>
+  <script>
+    const slides = [
+      { k: '01', h: 'Feel · Buy · Talk', p: 'Feel 2001–2004 again on a site where you buy era-only products and talk with people who get that time.' },
+      { k: '02', h: 'Feel', p: 'Early-2000s web & after-school energy — on purpose. Memory cue first; aesthetic supports the sentence.' },
+      { k: '03', h: 'Buy era-only', p: 'Shop finds dated 2001–2004 only. Dated properly — not costume “Y2K-inspired.”' },
+      { k: '04', h: 'Talk', p: 'People who miss that home too. Same years. Same longing. No explaining required.' },
+      { k: '05', h: 'Tone · Romantic home', p: 'Soft warm longing — you always want to go home. Primary ship pack alongside Fun.' },
+      { k: '06', h: 'Tone · Fun', p: 'Mall / after-school joy. Wanna hit a website that feels like 2003 again? Primary ship pack.' },
+      { k: '07', h: 'Honest waitlist', p: 'CTA is Join / Sign Up — never Shop Now while the destination is email-only.' },
+      { k: '08', h: 'Scrollback ≠ Lumen', p: 'Era feel + era-only commerce + talk. Evoke nostalgia without trademark forgery.' }
+    ];
+    let i = 0;
+    const k = document.getElementById('deck-k');
+    const h = document.getElementById('deck-h');
+    const p = document.getElementById('deck-p');
+    const paint = () => { k.textContent = slides[i].k; h.textContent = slides[i].h; p.textContent = slides[i].p; };
+    document.getElementById('next').onclick = () => { i = (i + 1) % slides.length; paint(); };
+    document.getElementById('prev').onclick = () => { i = (i - 1 + slides.length) % slides.length; paint(); };
+    addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') document.getElementById('next').click();
+      if (e.key === 'ArrowLeft') document.getElementById('prev').click();
+    });
+  </script>
+</body>
+</html>
