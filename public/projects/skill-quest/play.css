@@ -160,6 +160,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .cmd code { font: 700 13px/1.3 var(--mono); flex: 1; overflow-wrap: anywhere; }
 .cmd-copy { font: 700 13px var(--mono); background: var(--sun); color: var(--ink); border: 0; border-radius: 7px; padding: 8px 10px; min-height: 36px; }
 .next-note { font: 500 13px var(--mono); color: #cfc6b8; }
+.next-go { text-align: center; text-decoration: none; display: block; }
 .next-links { font: 700 14px var(--display); }
 .next-links a, .linkish { color: var(--bg); background: none; border: 0; text-decoration: underline; text-underline-offset: 3px; font: inherit; padding: 4px 0; }
 

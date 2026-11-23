@@ -237,12 +237,12 @@
       '<div class="bc-stats">' + ["Power", "Lift", "Clarity", "Speed", "Finds it"].map(function (s) {
         return '<span class="bc-stat">' + s + " <b>?</b></span>";
       }).join("") + "</div>";
-    $("#cmd").textContent = "/skill-quest:score " + name;
+    if ($("#cmd")) $("#cmd").textContent = "/skill-quest:score " + name;
   }
   $("#chore").value = load("sq.chore", "");
   $("#chore").addEventListener("input", function (e) { save("sq.chore", e.target.value.slice(0, 40)); paintBlank(); });
 
-  $("#copy").addEventListener("click", async function () {
+  if ($("#copy")) $("#copy").addEventListener("click", async function () {
     try { await navigator.clipboard.writeText($("#cmd").textContent); $("#copy").textContent = "Copied"; }
     catch (e) { $("#copy").textContent = "Select it"; }
     setTimeout(function () { $("#copy").textContent = "Copy"; }, 1600);

@@ -1,11 +1,11 @@
 {
   "site": {
     "brand": "Vargas Studio",
-    "tagline": "A portfolio of business ideas built with Cursor",
+    "tagline": "A portfolio of business ideas built with Claude",
     "owner": "Alexandra Vargas",
     "role": "Designer",
     "forWhom": "Friends \u2014 one link to see what she can build, project by project.",
-    "intro": "Alexandra designs and ships product ideas in Cursor. Browse the project index, open one for the story and live links, then compare the same visual columns side by side.",
+    "intro": "Alexandra designs and ships product ideas with Claude. Browse the project index, open one for the story and live links, then compare the same visual columns side by side.",
     "howToNav": "Projects = index + detail. Compare = pick projects and scan a craft matrix. Craft holds skills and agents outside the visual grid."
   },
   "columns": [
@@ -51,6 +51,16 @@
     }
   ],
   "now": [
+    {
+      "date": "2026-11-22",
+      "projectId": "shelf-paid",
+      "text": "Shelf Paid is live: see a sample week of posts from an Amazon storefront, no account needed."
+    },
+    {
+      "date": "2026-11-22",
+      "projectId": "skill-quest",
+      "text": "Build Kit is new in Skills Made EZ: plan an app room by room so AI stops guessing."
+    },
     {
       "date": "2026-11-22",
       "projectId": "planner-book",
@@ -793,14 +803,15 @@
     },
     {
       "id": "skill-quest",
-      "name": "Skill Quest",
+      "name": "Skills Made EZ",
+      "aka": "Skill Quest",
       "oneLiner": "A game that teaches beginners to build AI skills: quests, scored skill cards, weekly battles.",
       "audience": "Beginners building their first Claude skills",
       "pays": "Sponsored battles, Pro at $8/mo, Teams at $20/seat.",
       "status": "active",
-      "updated": "2026-11-21",
+      "updated": "2026-11-22",
       "summary": "Quests walk beginners through building real Claude skills. Every skill gets tested on hidden tasks against plain Claude by a blind judge and becomes a shareable card (Power, Lift, Clarity, Speed, Finds it), and battles put skills head to head. Anthropic already scores skills; Skill Quest makes it fun for beginners. Money plan: sponsored battles, then Pro at $8/mo, then Teams at $20/seat.",
-      "latest": "The scorer works: built as a Claude Code plugin (score, battle, five quests) and run on a real skill, idea-innovate scored Epic 81 (won 1, tied 1, lost 1 vs plain Claude). Not published yet; the name is taken, so it needs a new one first.",
+      "latest": "New: Build Kit, a game that turns an app idea into the plan AI coding tools read, and a worker prototype. The scorer works as a Claude Code plugin (idea-innovate scored Epic 81) but isn't public yet.",
       "visuals": {
         "website": {
           "label": "Skill Quest home",
@@ -852,6 +863,69 @@
         }
       },
       "code": []
+    },
+    {
+      "id": "shelf-paid",
+      "name": "Shelf Paid",
+      "aka": null,
+      "oneLiner": "Turns your Amazon storefront into a week of Instagram posts.",
+      "audience": "Amazon storefront owners who'd rather not show their face",
+      "pays": "Free now. A paid plan is being price-tested at $7, $12 or $19 a month.",
+      "status": "active",
+      "updated": "2026-11-22",
+      "summary": "Paste your Amazon storefront, or start from zero. Shelf Paid reads your vibe and your market, then plans a week of faceless Instagram posts with the #ad line already in. See a sample week with no account.",
+      "latest": "Live: paste a storefront, start from zero, or see a sample week with no account. Free sign-up saves your week. A price-test landing page runs beside it.",
+      "visuals": {
+        "website": {
+          "label": "Shelf Paid app",
+          "detail": "Paste a storefront, start from zero, or see a sample week.",
+          "url": "https://shelfpaid.pages.dev/",
+          "state": "live"
+        },
+        "landing": {
+          "label": "Price-test landing",
+          "detail": "Three prices to see which one people pick.",
+          "url": "https://shelfpaid.pages.dev/landing/",
+          "state": "live"
+        },
+        "funnel": {
+          "label": "Sign-up",
+          "detail": "Free account turns the sample week into yours.",
+          "url": "https://shelfpaid.pages.dev/",
+          "state": "live"
+        },
+        "meta-ads": {
+          "label": "Feed ads",
+          "detail": "Not published yet.",
+          "url": null,
+          "state": "fill-in"
+        },
+        "product-ui": {
+          "label": "Week of posts",
+          "detail": "Your vibe, your market and a week of posts.",
+          "url": "https://shelfpaid.pages.dev/",
+          "state": "live"
+        },
+        "deck": {
+          "label": "Pitch deck",
+          "detail": "Not published yet.",
+          "url": null,
+          "state": "fill-in"
+        },
+        "print": {
+          "label": "Print",
+          "detail": "Not needed.",
+          "url": null,
+          "state": "na"
+        },
+        "social": {
+          "label": "Social posts",
+          "detail": "Not published yet.",
+          "url": null,
+          "state": "fill-in"
+        }
+      },
+      "code": []
     }
   ],
   "general": {
@@ -867,6 +941,14 @@
       {
         "name": "Agent orchestration",
         "detail": "Agent SDK subagents, overnight schedules, human run/skip/refine checkpoints."
+      },
+      {
+        "name": "Idea skills",
+        "detail": "My own Claude skills for every step: spark new ideas, find the feeling, map the journey, test demand, model the money."
+      },
+      {
+        "name": "Planner skills",
+        "detail": "Two Claude skills that design fun printable planner pages: spinners, sliders, dials."
       }
     ],
     "agents": [
@@ -878,6 +960,11 @@
       {
         "name": "Lumen Nightcrew",
         "detail": "Overnight specialist crew: research, games, dreamscape UX, webcraft, preflight scoring.",
+        "status": "active"
+      },
+      {
+        "name": "Skills Made EZ scorer",
+        "detail": "Claude Code plugin: tests a skill on hidden tasks against plain Claude with a blind judge, then makes its card. Not public yet.",
         "status": "active"
       }
     ],
@@ -893,6 +980,10 @@
       {
         "name": "Fancy Farm brand book",
         "detail": "Logo / brand explorations inside lumen-d678 \u2014 own venture when ready."
+      },
+      {
+        "name": "Build Kit",
+        "detail": "Plan an app room by room so AI stops guessing, then take the docs folder to any AI coding tool."
       }
     ]
   },
