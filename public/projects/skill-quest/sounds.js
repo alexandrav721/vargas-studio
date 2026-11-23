@@ -1,4 +1,4 @@
-/* Skill Quest sounds: all synthesized in the browser (Web Audio), so they're original and need no license.
+/* Skills Made EZ sounds: all synthesized in the browser (Web Audio), so they're original and need no license.
    Design: ~/Claude/ideas/skill-quest/senses.md. Signature "snap–ding" = a card snapped onto a table,
    then a rising marimba C → G. Nothing plays before a tap; the mute choice is remembered. */
 (function () {

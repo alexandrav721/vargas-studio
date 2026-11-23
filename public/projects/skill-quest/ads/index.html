@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<title>Skill Quest Ads</title>
+<title>Skills Made EZ Ads</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
@@ -40,7 +40,7 @@ h1 em{font-style:normal;color:var(--ac)}
 <body>
 <a class="studio-back" href="/">← Studio</a>
 <div class="wrap">
-  <h1>Skill Quest <em>feed ads</em></h1>
+  <h1>Skills Made EZ <em>feed ads</em></h1>
   <p class="lede">Four 1080×1350 frames (4:5) that fit both the Reddit and Meta feeds. Each one matches a landing page that exists. Reddit goes first: the plan says Meta is too broad for this niche until there's proof.</p>
 
   <div class="viewer">
@@ -70,7 +70,7 @@ h1 em{font-style:normal;color:var(--ac)}
 </div>
 <script>
 var F=[
- {img:'frame-1.png',angle:'PAIN',primary:'You wrote a Claude skill. Does it actually work? Skill Quest tests it on real tasks, gives it a score, and tells you the 3 things to fix.',headline:'Stop guessing if your skill works',cta:'Learn more',dest:'../landing/variant-pain.html'},
+ {img:'frame-1.png',angle:'PAIN',primary:'You wrote a Claude skill. Does it actually work? Skills Made EZ tests it on real tasks, gives it a score, and tells you the 3 things to fix.',headline:'Stop guessing if your skill works',cta:'Learn more',dest:'../landing/variant-pain.html'},
  {img:'frame-2.png',angle:'GAIN',primary:'Never built a Claude skill? Quest 1 walks you through your first one, no coding needed, and you keep what you make.',headline:'Build your first AI skill tonight',cta:'Sign up',dest:'../landing/variant-gain.html'},
  {img:'frame-3.png',angle:'IDENTITY',primary:'Every skill you build becomes a card with real scores. Collect them, battle them, and show what you made.',headline:'Become an AI builder, for real',cta:'Sign up',dest:'../landing/variant-identity.html'},
  {img:'frame-4.png',angle:'BATTLE',primary:'This week’s battle: best meal-planner skill. Everyone’s skill runs the same hidden tasks. Think yours can win?',headline:'Enter the weekly skill battle',cta:'Learn more',dest:'../landing/index.html'}
@@ -79,7 +79,7 @@ var i=0;
 function show(n){i=(n+F.length)%F.length;var f=F[i];
  var img=document.getElementById('img');img.src=f.img;img.alt=f.headline+' (ad frame '+(i+1)+')';
  ['angle','primary','headline','cta'].forEach(function(k){document.getElementById(k).textContent=f[k]});
- var d=document.getElementById('dest');d.href=f.dest;d.textContent=f.dest.replace('../','Skill Quest /');
+ var d=document.getElementById('dest');d.href=f.dest;d.textContent=f.dest.replace('../','Skills Made EZ /');
  document.getElementById('dl').href=f.img;
  document.getElementById('count').textContent=(i+1)+' / '+F.length;}
 document.getElementById('prev').onclick=function(){show(i-1)};
