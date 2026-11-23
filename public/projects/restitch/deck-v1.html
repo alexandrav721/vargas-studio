@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Restitch — story deck (old version)</title><meta name="robots" content="noindex">
+  <meta name="description" content="Twelve-slide story and pitch deck for Restitch, the thrift-flip planner. Market figures cited; founder, traction and raise left as TODO." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root { --tissue:#EFE3CF; --sheet:#FBF5EA; --ink:#2A211A; --muted:#6B5644; --line:#D8C7AA; --red:#B23A22; --red-soft:#F2B6A6; --blue:#2F5D8A; --grid:rgba(47,93,138,.08);
+      --display:"Young Serif", Georgia, serif; --sans:"Instrument Sans", system-ui, sans-serif; --mono:"IBM Plex Mono", ui-monospace, monospace;
+      --cut:2px dashed #B23A22; --grid-bg:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px); }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; height: 100%; background-color: #E4D5BD; color: var(--ink); font-family: var(--sans); overflow: hidden; }
+    .studio-back { position: fixed; top: 0.65rem; left: 0.65rem; z-index: 9999; padding: 0.45rem 0.8rem; border: 1px solid var(--line); border-radius: 2px; background: var(--sheet); color: var(--ink); font: 600 0.72rem var(--sans); letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; }
+    .studio-back:hover { color: var(--blue); border-color: var(--blue); }
+    .viewport { position: fixed; inset: 0 0 56px 0; overflow: hidden; }
+    .deck { width: 1280px; height: 720px; position: absolute; left: 50%; top: 50%; transform-origin: center center; box-shadow: 0 0 0 1px var(--line), 0 24px 48px -30px rgba(42,33,26,.45); }
+    .slide { position: absolute; inset: 0; display: none; padding: 64px 80px 56px; overflow: hidden;
+      background: var(--grid-bg), var(--tissue); background-size: 24px 24px, 24px 24px, auto; }
+    .slide.on { display: flex; flex-direction: column; }
+    .kicker { font: 600 13px var(--mono); letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin: 0 0 16px; }
+    h1, h2 { font-family: var(--display); font-weight: 400; letter-spacing: -0.015em; line-height: 1.06; margin: 0; }
+    h1 { font-size: 80px; }
+    h2 { font-size: 48px; max-width: 28ch; }
+    h2 em, h1 em { font-style: normal; color: var(--red); }
+    .body { flex: 1; display: flex; flex-direction: column; justify-content: center; min-height: 0; }
+    .src { margin-top: auto; padding-top: 14px; border-top: var(--cut); font: 500 12px/1.5 var(--mono); color: var(--muted); display: flex; justify-content: space-between; gap: 24px; }
+    .src span:last-child { white-space: nowrap; }
+    p { margin: 0; }
+    .lead { font-size: 22px; color: var(--ink); line-height: 1.45; max-width: 46ch; }
+    .cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .card { padding: 22px 24px; background: var(--sheet); border: 1px solid var(--line); border-radius: 2px; box-shadow: 0 14px 30px -22px rgba(42,33,26,.45); }
+    .card h3 { margin: 0 0 10px; font: 400 25px/1.12 var(--display); letter-spacing: -0.01em; }
+    .card p { font-size: 16.5px; color: var(--ink); line-height: 1.45; }
+    .big { font: 600 72px/1 var(--mono); letter-spacing: -0.04em; color: var(--ink); }
+    .stat { padding-top: 18px; border-top: 1px solid var(--ink); }
+    .stat p.l { font-size: 17px; color: var(--ink); margin-top: 10px; line-height: 1.4; }
+    .todo { display: inline-block; padding: 4px 10px; border: 1.5px dashed var(--red); border-radius: 2px; background: var(--sheet); color: var(--red); font: 600 14px var(--mono); letter-spacing: 0.02em; }
+    table { width: 100%; border-collapse: collapse; font-size: 15.5px; background: var(--sheet); border: 1px solid var(--line); }
+    th { text-align: left; font: 600 11.5px var(--mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); padding: 14px 12px 10px 14px; }
+    td { padding: 10px 12px 10px 14px; border-top: 1px solid var(--line); color: var(--ink); vertical-align: top; }
+    td:first-child { font-weight: 600; }
+    tr.us td { background: var(--tissue); border-top: var(--cut); border-bottom: var(--cut); font-weight: 600; }
+    .y { color: var(--blue); } .n { color: var(--muted); }
+    tr.us .y, tr.us .n { color: var(--ink); }
+    .math { font: 500 20px/1.75 var(--sans); color: var(--ink); }
+    .math b { font-family: var(--mono); font-weight: 600; }
+    .tag { font: 600 11px var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--blue); border: 1px solid var(--blue); border-radius: 2px; padding: 2px 6px; margin-left: 6px; vertical-align: 2px; white-space: nowrap; }
+    .shots { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 20px; align-items: start; }
+    .shots figure { margin: 0; padding: 10px; background: var(--sheet); border: 1px solid var(--line); border-radius: 2px; box-shadow: 0 14px 30px -22px rgba(42,33,26,.45); }
+    .shots img { width: 100%; height: 340px; display: block; object-fit: cover; object-position: top; border: 1px solid var(--ink); }
+    .card .todo { margin-bottom: 6px; }
+    .shots figcaption { font: 500 12px/1.4 var(--mono); color: var(--muted); margin-top: 8px; }
+    /* Title slide: the one dark ink panel */
+    .slide.dark { color: var(--tissue); background: linear-gradient(rgba(239,227,207,.05) 1px,transparent 1px), linear-gradient(90deg,rgba(239,227,207,.05) 1px,transparent 1px), var(--ink); background-size: 24px 24px, 24px 24px, auto; }
+    .slide.dark .kicker, .slide.dark .lead, .slide.dark .src { color: var(--tissue); }
+    .slide.dark h1 em { color: var(--red-soft); }
+    .slide.dark .src { border-top: 2px dashed var(--red-soft); }
+    .slide.dark .todo { background: transparent; border-color: var(--red-soft); color: var(--red-soft); }
+    .slide.dark .garment { position: absolute; right: 96px; top: 120px; width: 190px; height: auto; }
+    .slide.dark .body { padding-right: 230px; }
+    .nav { position: fixed; bottom: 12px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; align-items: center; z-index: 50; font: 500 12.5px var(--mono); color: var(--ink); }
+    .nav button { font: 600 13px var(--sans); color: var(--ink); background: var(--sheet); border: 1px solid var(--line); border-radius: 2px; padding: 7px 12px; cursor: pointer; }
+    .nav button:hover, .nav button:focus-visible { border-color: var(--blue); color: var(--blue); }
+    .nav a { color: var(--blue); white-space: nowrap; font-family: var(--sans); font-weight: 500; }
+    .nav span { white-space: nowrap; }
+    @media (max-width: 520px) { .nav { gap: 6px; font-size: 11.5px; } .nav button { padding: 6px 10px; } }
+    @media print {
+      @page { size: 1280px 720px; margin: 0; }
+      html, body { overflow: visible; height: auto; background: var(--tissue); }
+      .viewport { position: static; display: block; overflow: visible; }
+      .deck { position: static; box-shadow: none; }
+      .deck { transform: none !important; width: 1280px; height: auto; }
+      .slide { position: relative; display: flex !important; flex-direction: column; width: 1280px; height: 720px; break-after: page; }
+      .nav, .studio-back { display: none; }
+    }
+  </style>
+  <link rel="stylesheet" href="/site-bar.css" />
+  <script src="/site-bar.js" data-project="restitch" data-kind="piece" defer></script>
+</head>
+<body>
+  <a class="studio-back" href="/">← Vargas Studio</a>
+  <div class="viewport">
+    <div class="deck" id="deck">
+
+      <!-- 1 Title -->
+      <section class="slide dark">
+        <svg class="garment" viewBox="0 0 120 150" aria-hidden="true"><path d="M44 8 C 52 16, 68 16, 76 8 L 86 14 L 82 40 L 92 142 L 28 142 L 38 40 L 34 14 Z" fill="none" stroke="#EFE3CF" stroke-width="1.4"/><path d="M38 96 H 82" stroke="#F2B6A6" stroke-width="1.4" stroke-dasharray="4 3"/><path d="M60 50 V 132 M 56 56 L 60 50 L 64 56 M 56 126 L 60 132 L 64 126" stroke="#EFE3CF" stroke-opacity=".6" stroke-width="1.1" fill="none"/></svg>
+        <div class="body">
+          <p class="kicker">Restitch · story deck · Nov 2026</p>
+          <h1>The photo names the shape.<br /><em>You bring the tape.</em></h1>
+          <p class="lead" style="margin-top:28px">A thrift-flip planner. Upload a garment, pick your skill, get a no-sew, a hand and a machine flip.</p>
+          <p style="margin-top:28px"><span class="todo">[TODO] Founder name · role · email</span></p>
+        </div>
+        <div class="src"><span>Live sample: vargas-studio.pages.dev/restitch.html</span><span>1 / 12</span></div>
+      </section>
+
+      <!-- 2 Problem -->
+      <section class="slide">
+        <p class="kicker">Problem</p>
+        <h2>The find was cheap. <em>The plan is the hard part.</em></h2>
+        <div class="body">
+          <div class="cols" style="grid-template-columns:1.25fr 1fr;align-items:center;gap:48px">
+            <div>
+              <p class="lead">A shopper brings home a long dress that's almost right. Every tutorial starts from someone else's garment and body. No machine, no plan, so it stays in the bag.</p>
+            </div>
+            <div class="stat">
+              <div class="big">~60%</div>
+              <p class="l">of US consumers bought secondhand in 2025.</p>
+            </div>
+          </div>
+        </div>
+        <div class="src"><span>ThredUp 14th Resale Report (2026), survey of ~3,300 US adults, via GCN, Aug 2026</span><span>2 / 12</span></div>
+      </section>
+
+      <!-- 3 Solution -->
+      <section class="slide">
+        <p class="kicker">Solution</p>
+        <h2>Photo in. Three honest flips out.</h2>
+        <div class="body">
+          <div class="cols">
+            <div class="card"><h3>Read the file</h3><p>Average color, brightness and aspect from the pixels. Labeled a visual guess.</p></div>
+            <div class="card"><h3>Match the skill</h3><p>Beginner, intermediate, advanced. One no-sew, one hand, one machine flip per read.</p></div>
+            <div class="card"><h3>Use your tape</h3><p>Each flip lists what to measure and shows the numbers you typed. Never guessed.</p></div>
+          </div>
+          <p class="lead" style="margin-top:28px;font-size:19px">No pattern PDF. No account. Closet saved in the browser.</p>
+        </div>
+        <div class="src"><span>Product behavior as built in Plan this make, Nov 2026</span><span>3 / 12</span></div>
+      </section>
+
+      <!-- 4 Product -->
+      <section class="slide">
+        <p class="kicker">Product · live</p>
+        <h2 style="font-size:44px">The real planner, run on a sample drawing.</h2>
+        <div class="body" style="justify-content:flex-start;margin-top:22px">
+          <div class="shots">
+            <figure><img src="shots/plan-upload.png" alt="Plan this make with a sample dress drawing uploaded and the Your tape fields" /><figcaption>Upload + typed tape</figcaption></figure>
+            <figure><img src="shots/plan-read.png" alt="The read: #3F5E85, brightness 35%, aspect 0.38, reads as a long column; flips for intermediate" /><figcaption>Read: #3F5E85 · 35% · aspect 0.38 → “long column” · flips at Intermediate</figcaption></figure>
+          </div>
+        </div>
+        <div class="src"><span>Screens captured from the built site, 21 Nov 2026. The input is a flat drawing, not a customer photo.</span><span>4 / 12</span></div>
+      </section>
+
+      <!-- 5 Why now -->
+      <section class="slide">
+        <p class="kicker">Why now</p>
+        <h2>Flipping went from niche to <em>search behavior.</em></h2>
+        <div class="body">
+          <div class="cols">
+            <div class="stat"><div class="big">+610%</div><p class="l">Pinterest searches for “thrift flip ideas”; “refashion clothes upcycling” +230%.</p></div>
+            <div class="stat"><div class="big">~50%</div><p class="l">of shoppers now discover secondhand through social, creators and influencers.</p></div>
+            <div class="stat"><div class="big">71%</div><p class="l">of US secondhand growth through 2030 comes from Gen Z and Millennials.</p></div>
+          </div>
+        </div>
+        <div class="src"><span>Pinterest 2026 Hobbies Trend Report (Aug 2026; comparison window not stated) · ThredUp 14th Resale Report (Apr 2026)</span><span>5 / 12</span></div>
+      </section>
+
+      <!-- 6 Market -->
+      <section class="slide">
+        <p class="kicker">Market</p>
+        <h2>Big pond, small honest slice.</h2>
+        <div class="body">
+          <div class="cols" style="grid-template-columns:1fr 1.25fr;gap:44px;align-items:start">
+            <div>
+              <p class="kicker">Context, top-down</p>
+              <div class="big" style="font-size:60px">$55.5B</div>
+              <p class="lead" style="font-size:17px;margin-top:6px">US secondhand apparel, 2025. Global: $393B.</p>
+            </div>
+            <div>
+              <p class="kicker">Bottom-up</p>
+              <p class="math">
+                <b>30M</b> US people who sew <span class="tag">weak est.</span><br />
+                × <b>20%</b> flip a thrift piece a year <span class="tag">assumption</span> = <b>6M</b> SAM<br />
+                × <b>$19/yr</b> <span class="tag">assumption</span> = <b>$114M</b> SAM revenue<br />
+                Year 3: <b>0.5%</b> pay = <b>30k × $19 ≈ $570k</b> <span class="tag">projection</span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="src"><span>ThredUp 14th Resale Report via GCN (2026) · ThredUp newsroom (Apr 2026) · 30M sewists: Customcy est., Feb 2025, via K-LOVE</span><span>6 / 12</span></div>
+      </section>
+
+      <!-- 7 Traction -->
+      <section class="slide">
+        <p class="kicker">Traction · honest</p>
+        <h2>Built and live. <em>Not yet measured.</em></h2>
+        <div class="body">
+          <div class="cols">
+            <div class="card"><h3>Built</h3><p>Working planner: upload, read, 3 skills, 29 flip recipes, browser closet.</p></div>
+            <div class="card"><h3>Users</h3><p><span class="todo">[TODO] 0 counted</span><br />No analytics installed; the closet never leaves the browser.</p></div>
+            <div class="card"><h3>Next test</h3><p>$150 Meta over 14 days, 3 angles. Keep if ≥25% of landing visitors open the planner.</p></div>
+          </div>
+        </div>
+        <div class="src"><span>Recipe count from the flip engine source. Test budget and threshold are assumptions.</span><span>7 / 12</span></div>
+      </section>
+
+      <!-- 8 Business model -->
+      <section class="slide">
+        <p class="kicker">Business model · plan, not live</p>
+        <h2>Free now. Charge for <em>more recipes</em>, not for the read.</h2>
+        <div class="body">
+          <div class="cols">
+            <div class="card"><h3>Stage 1 · now</h3><p>Free, no account. Cost to serve ≈ $0: static site, no AI calls. Trigger to charge: 40% “very disappointed” in a survey.</p></div>
+            <div class="card"><h3>Stage 2 · Plus</h3><p>$19/yr <span class="tag">assumption</span>: creator-written flip packs, closet sync. Anchors: ReStitch $29.99/yr, Stash Hub $32.99/yr.</p></div>
+            <div class="card"><h3>Stage 3 · in person</h3><p>Flip nights with thrift stores and sewing studios, notions kits. <span class="tag">planned</span></p></div>
+          </div>
+        </div>
+        <div class="src"><span>App Store listings for ReStitch and Stash Hub (checked Nov 2026). App stores take 15–30% if it goes native.</span><span>8 / 12</span></div>
+      </section>
+
+      <!-- 9 GTM -->
+      <section class="slide">
+        <p class="kicker">Go-to-market</p>
+        <h2>Go where flips are searched and watched.</h2>
+        <div class="body">
+          <div class="cols">
+            <div class="card"><h3>Pinterest</h3><p>Pins of real reads and before/after sketches against “thrift flip ideas” searches.</p></div>
+            <div class="card"><h3>Reels / TikTok</h3><p>Before → read → after. The honesty is the hook: “what a photo can't tell you.”</p></div>
+            <div class="card"><h3>First 1,000</h3><p><span class="todo">[TODO] 5 creator collabs + 2 thrift-store flip nights</span></p></div>
+          </div>
+        </div>
+        <div class="src"><span>Channel picks follow the Pinterest and ThredUp discovery data on slide 5.</span><span>9 / 12</span></div>
+      </section>
+
+      <!-- 10 Competition -->
+      <section class="slide">
+        <p class="kicker">Competition</p>
+        <h2 style="font-size:44px">Others promise smart analysis. Restitch shows its work.</h2>
+        <div class="body">
+          <table>
+            <thead><tr><th>Option</th><th>From a photo</th><th>Your own tape</th><th>No account</th><th>Price</th></tr></thead>
+            <tbody>
+              <tr><td>ReStitch (iOS app)</td><td class="y">Ideas + “smart analysis”</td><td>Custom measurements</td><td class="n">App install</td><td>$12.99/mo · $29.99/yr</td></tr>
+              <tr><td>Rethread (Cait Conquers)</td><td class="y">Scan → creator tutorials</td><td>Not stated</td><td class="n">Pre-launch app</td><td>First scan free</td></tr>
+              <tr><td>Stash Hub</td><td class="n">No: tracks stash</td><td class="y">Stores measurements</td><td class="n">App install</td><td>$3.49/mo · $32.99/yr</td></tr>
+              <tr><td>YouTube / TikTok how-tos</td><td class="n">Someone else's garment</td><td class="n">No</td><td class="y">Yes</td><td>Free</td></tr>
+              <tr><td>Depop / Vinted</td><td class="n">Sell it instead</td><td>n/a</td><td class="n">Account</td><td>US seller fee $0</td></tr>
+              <tr class="us"><td>Restitch</td><td>Color, brightness, aspect; labeled</td><td>Yes, typed</td><td>Yes</td><td>Free</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="src"><span>App Store listings (2025–26) · builtbyfoundry.io/rethread · Depop newsroom (2024). Name risk: an iOS app is already called ReStitch.</span><span>10 / 12</span></div>
+      </section>
+
+      <!-- 11 Team -->
+      <section class="slide">
+        <p class="kicker">Team</p>
+        <h2>Who builds this.</h2>
+        <div class="body">
+          <div class="cols" style="grid-template-columns:1fr 1fr">
+            <div class="card"><h3>Alexandra Vargas · Designer</h3><p>Designed and shipped the live planner in Vargas Studio.</p><p style="margin-top:12px"><span class="todo">[TODO] Unfair advantage: sewing / thrift background?</span></p></div>
+            <div class="card"><h3><span class="todo">[TODO]</span></h3><p>Sewing educator or creator partner to write and test flip recipes.</p></div>
+          </div>
+        </div>
+        <div class="src"><span>No advisors, hires or partners exist yet.</span><span>11 / 12</span></div>
+      </section>
+
+      <!-- 12 Ask -->
+      <section class="slide">
+        <p class="kicker">The ask</p>
+        <h2>What a small check would prove.</h2>
+        <div class="body">
+          <p><span class="todo">[TODO] Amount · round · use of funds</span></p>
+          <div class="cols" style="margin-top:26px">
+            <div class="card"><h3>Prove demand</h3><p>Ad test + analytics: who opens the planner, who saves a flip.</p></div>
+            <div class="card"><h3>Prove recipes</h3><p>Creator-tested flip packs; a real photo set, not drawings.</p></div>
+            <div class="card"><h3>Prove price</h3><p>Fake-door Plus at $19/yr; keep if ≥3% of planner users click.</p></div>
+          </div>
+        </div>
+        <div class="src"><span>Milestones and thresholds are assumptions to set with the founder.</span><span>12 / 12</span></div>
+      </section>
+
+    </div>
+  </div>
+  <div class="nav">
+    <button type="button" id="prev" aria-label="Previous slide">←</button>
+    <span id="n" aria-live="polite">1 / 12</span>
+    <button type="button" id="next" aria-label="Next slide">→</button>
+    <a href="notes.md">Notes &amp; sources</a>
+  </div>
+  <script>
+    var slides = [].slice.call(document.querySelectorAll(".slide"));
+    var q = new URLSearchParams(location.search);
+    var i = Math.max(0, Math.min(slides.length - 1, (+q.get("slide") || 1) - 1));
+    var deck = document.getElementById("deck");
+    function fit() { var s = Math.min(innerWidth / 1280, (innerHeight - (q.has("bare") ? 0 : 56)) / 720); deck.style.transform = "translate(-50%, -50%) scale(" + s + ")"; }
+    function show(n) {
+      i = Math.max(0, Math.min(slides.length - 1, n));
+      slides.forEach(function (s, k) { s.classList.toggle("on", k === i); });
+      document.getElementById("n").textContent = (i + 1) + " / " + slides.length;
+      var u = new URL(location.href); u.searchParams.set("slide", i + 1); history.replaceState(null, "", u);
+    }
+    document.getElementById("prev").onclick = function () { show(i - 1); };
+    document.getElementById("next").onclick = function () { show(i + 1); };
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowRight" || e.key === "PageDown" || e.key === " ") { e.preventDefault(); show(i + 1); }
+      if (e.key === "ArrowLeft" || e.key === "PageUp") { e.preventDefault(); show(i - 1); }
+      if (e.key === "Home") show(0); if (e.key === "End") show(slides.length - 1);
+    });
+    if (q.has("bare")) { document.querySelector(".viewport").style.bottom = "0"; document.querySelector(".nav").style.display = "none"; document.querySelector(".studio-back").style.display = "none"; }
+    addEventListener("resize", fit); fit(); show(i);
+  </script>
+</body>
+</html>

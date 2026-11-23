@@ -4,7 +4,7 @@
     "tagline": "A portfolio of business ideas built with Claude",
     "owner": "Alexandra Vargas",
     "role": "Designer",
-    "forWhom": "Friends \u2014 one link to see what she can build, project by project.",
+    "forWhom": "Friends: one link to see what she builds, project by project.",
     "intro": "Alexandra designs and ships product ideas with Claude. Browse the project index, open one for the story and live links, then compare the same visual columns side by side.",
     "howToNav": "Projects = index + detail. Compare = pick projects and scan a craft matrix. Craft holds skills and agents outside the visual grid."
   },
@@ -12,45 +12,70 @@
     {
       "id": "website",
       "name": "Website",
-      "blurb": "Brand / product home \u2014 the full story."
+      "blurb": "The product's home page."
     },
     {
       "id": "landing",
       "name": "Landing",
-      "blurb": "Short campaign page \u2014 often the Meta destination."
+      "blurb": "A short page an ad sends people to."
     },
     {
       "id": "funnel",
       "name": "Funnel",
-      "blurb": "Waitlist / multi-step email capture."
+      "blurb": "Where people sign up or join the waitlist."
     },
     {
       "id": "meta-ads",
-      "name": "Meta ads",
-      "blurb": "Creative frames and ad variations."
+      "name": "Ads",
+      "blurb": "Ad pictures for Instagram and Facebook."
     },
     {
       "id": "product-ui",
-      "name": "Product UI",
-      "blurb": "App or prototype screens friends can open or view."
+      "name": "App",
+      "blurb": "The app or prototype you can tap through."
     },
     {
       "id": "deck",
-      "name": "Deck / story",
-      "blurb": "Narrative boards \u2014 decks, first-ad boards, pitches."
+      "name": "Pitch deck",
+      "blurb": "The story in slides."
     },
     {
       "id": "print",
-      "name": "Print / physical",
-      "blurb": "Planner PDFs, book sneaks, handouts."
+      "name": "Printable",
+      "blurb": "Things to print: planners, cards, flyers."
     },
     {
       "id": "social",
-      "name": "Social",
-      "blurb": "Organic proof \u2014 Instagram and similar."
+      "name": "Social posts",
+      "blurb": "Posts and carousels for Instagram."
     }
   ],
   "now": [
+    {
+      "date": "2026-11-23",
+      "projectId": "loop",
+      "text": "Loop's story now lives at celebrateloop.com, with a sample household you can try without an account."
+    },
+    {
+      "date": "2026-11-23",
+      "projectId": "scrolll",
+      "text": "Scrolll's game asks what one look at you is worth, then lets ads bounce off your price."
+    },
+    {
+      "date": "2026-11-23",
+      "projectId": "habit-game",
+      "text": "Lumen's game asks what's in your way lately, then keeps your streak with a return ticket."
+    },
+    {
+      "date": "2026-11-23",
+      "projectId": "restitch",
+      "text": "Restitch reads a photo of your thrift find and gives you a no-sew, hand or machine flip."
+    },
+    {
+      "date": "2026-11-23",
+      "projectId": "weekline",
+      "text": "Weekline builds your Brooklyn or Manhattan week from live NYC Parks events; tear off what you'd go to."
+    },
     {
       "date": "2026-11-22",
       "projectId": "shelf-paid",
@@ -73,18 +98,8 @@
     },
     {
       "date": "2026-11-21",
-      "projectId": "weekline",
-      "text": "Weekline added as its own project with all eight pieces: the working app and pitch site run in the studio, plus a landing page, invite demo, ads, deck, social set and printable week sheet."
-    },
-    {
-      "date": "2026-11-21",
       "projectId": "skill-quest",
       "text": "Skills Made EZ's scorer is real: a Claude Code plugin scored idea-innovate on hidden tasks against plain Claude (Epic 81). The deck now says Anthropic already scores skills and Skills Made EZ makes it fun for beginners."
-    },
-    {
-      "date": "2026-11-21",
-      "projectId": "restitch",
-      "text": "Every section is now filled across all seven projects: Restitch gets a landing page, deck, ads, worksheet and social set; Scrolll a clickable feed app; Planner a deck and ads; print and social pieces everywhere."
     },
     {
       "date": "2026-11-21",
@@ -93,33 +108,8 @@
     },
     {
       "date": "2026-11-20",
-      "projectId": "restitch",
-      "text": "Restitch \u2014 upload a garment photo, pick a skill, type your tape, and save the flip in the browser closet."
-    },
-    {
-      "date": "2026-11-20",
-      "projectId": "loop",
-      "text": "Loop columns refreshed to live celebrateloop.com + in-studio onboarding, Meta ads, and Handshake story."
-    },
-    {
-      "date": "2026-11-20",
-      "projectId": "scrolll",
-      "text": "Scrolll friend demos hosted at /projects/scrolll/ \u2014 site, Meta join funnel, deck, ad frames."
-    },
-    {
-      "date": "2026-11-20",
       "projectId": "planner-book",
       "text": "Planner + book shop, printable sample hosted in-studio."
-    },
-    {
-      "date": "2026-11-20",
-      "projectId": "habit-game",
-      "text": "Lumen marketing, lab, product UI, first-ad board, and premium waitlist hosted at /projects/lumen/."
-    },
-    {
-      "date": "2026-11-20",
-      "projectId": "nostalgia",
-      "text": "Scrollback Meta ads gallery + waitlist + landing in-studio \u2014 romantic & fun ship pack; clarity/Lizzie as earlier chapters."
     }
   ],
   "projects": [
@@ -167,7 +157,7 @@
         },
         "deck": {
           "label": "Investor deck",
-          "detail": "12 slides with cited NYC numbers. Zero users said plainly; team and the ask left as TODO.",
+          "detail": "12 slides with cited NYC numbers. Zero users, said plainly. Not raising yet.",
           "url": "/projects/weekline/deck.html",
           "state": "live"
         },
@@ -196,7 +186,7 @@
       "id": "restitch",
       "name": "Restitch",
       "aka": null,
-      "oneLiner": "Thrift-flip planner \u2014 the photo names the shape, you bring the tape.",
+      "oneLiner": "Thrift-flip planner. The photo names the shape; you bring the tape.",
       "audience": "Thrifters who want to flip a piece, sewing machine or not",
       "pays": "Free now. A $19/yr Plus plan is an untested idea.",
       "status": "active",
@@ -223,7 +213,7 @@
           "state": "live"
         },
         "meta-ads": {
-          "label": "Meta creative pack",
+          "label": "Ad frames",
           "detail": "Six 4:5 frames, three angles: no machine needed, your fit, keep it in rotation. One at a time.",
           "url": "/projects/restitch/ads.html",
           "state": "live"
@@ -235,8 +225,8 @@
           "state": "live"
         },
         "deck": {
-          "label": "Story / pitch deck",
-          "detail": "12 slides with cited resale and thrift-flip data and a revenue view. Founder and raise marked TODO.",
+          "label": "Pitch deck",
+          "detail": "12 slides with cited resale and thrift-flip data. Not raising yet.",
           "url": "/projects/restitch/deck.html",
           "state": "live"
         },
@@ -256,7 +246,7 @@
       "code": [
         {
           "label": "vargas-studio",
-          "summary": "Plan this make sample lives in this share site. Friend-facing copy is in content/portfolio.json.",
+          "summary": "Plan this make runs inside this site.",
           "url": "https://github.com/alexandrav721/vargas-studio"
         }
       ],
@@ -331,7 +321,7 @@
               ]
             }
           ],
-          "body": "The four numbers above are stand-ins for what you would type. They are not a finished size. Still take this tape list \u2014 the photo fixed the shape and the tape fixes the size. This page does not print centimeters from the photo."
+          "body": "The four numbers above are stand-ins for what you would type. They are not a finished size. Still take this tape list: the photo fixed the shape and the tape fixes the size. This page does not print centimeters from the photo."
         },
         "make": {
           "title": "Make plan",
@@ -440,12 +430,12 @@
       "id": "nostalgia",
       "name": "Nostalgia Project",
       "aka": "Scrollback",
-      "oneLiner": "Millennial nostalgia by year \u2014 websites, items, and style.",
+      "oneLiner": "Pick the year you were 15. Walk back into its websites, things and style.",
       "audience": "Millennials who came of age between 1995 and 2012",
       "pays": "Not decided yet.",
       "status": "hot",
       "updated": "2026-11-22",
-      "summary": "Pick your generation and years, then explore formative websites, physical items, and style eras (roughly 1995\u20132012). Working product name: Scrollback. Offer: Feel 2001\u20132004 \u00b7 buy era-only \u00b7 talk with people who get it. Dated nostalgia \u2014 not vague vibes.",
+      "summary": "Pick your years, roughly 1995 to 2012, and explore the websites, things and style you grew up with. Open a real archived page from your year in an old monitor, fill a bedroom with what you had, and find the toy you never got. Dated memories, not vague vibes.",
       "latest": "Three new moments in the explorer: open the real archived page from your years inside an old monitor, tick what you had to fill your bedroom and save it as a card, and keep a list of the things you never got with where to find one now.",
       "visuals": {
         "website": {
@@ -467,7 +457,7 @@
           "state": "live"
         },
         "meta-ads": {
-          "label": "Meta creative pack",
+          "label": "Ad frames",
           "detail": "Romantic home + Fun primary packs \u2014 one frame at a time (prev/next); Clarity + Lizzie-era as earlier chapters. Real image frames.",
           "url": "/projects/nostalgia/ads.html",
           "state": "live"
@@ -479,8 +469,8 @@
           "state": "live"
         },
         "deck": {
-          "label": "Story / pitch board",
-          "detail": "Feel \u00b7 Buy \u00b7 Talk + romantic vs fun tone lanes \u2014 keyboard storyboard.",
+          "label": "Pitch deck",
+          "detail": "The pitch in slides, with the year-you-were-15 game inside.",
           "url": "/projects/nostalgia/story.html",
           "state": "live"
         },
@@ -500,7 +490,7 @@
       "code": [
         {
           "label": "Origin \u00b7 lumen-d678/nostalgia",
-          "summary": "Scrollback Vite app + catalog JSON + research docs.",
+          "summary": "The Scrollback app, its catalog and research notes.",
           "url": "https://origin.cursor.com/git/alexandra-vargas/lumen-d678"
         }
       ]
@@ -509,12 +499,12 @@
       "id": "scrolll",
       "name": "Get Paid to Scroll",
       "aka": "Scrolll",
-      "oneLiner": "Doomscroll \u2014 but earn for your attention.",
+      "oneLiner": "You scroll anyway. Get paid for the ads you see.",
       "audience": "People who scroll anyway, and brands buying real attention",
-      "pays": "Advertisers pay per counted view; viewers get a cut (split TBD).",
+      "pays": "Advertisers pay per counted view, and viewers get a cut. The split isn't set yet.",
       "status": "hot",
       "updated": "2026-11-20",
-      "summary": "Fairness-forward scroll product. People and creators earn for attention; marketers buy reach on Scrolll inventory. Brand story + Meta join funnel + interactive story deck.",
+      "summary": "Name the price of one look at you. Ads that pay less bounce; ads that pay more get your attention, and you keep a cut. Brands buy real attention from people who chose to see them.",
       "latest": "Friend-facing marketing, join funnel, deck, and Meta frames hosted at /projects/scrolll/ (sourced from Origin lumen-d678/scrolll copy).",
       "visuals": {
         "website": {
@@ -524,7 +514,7 @@
           "state": "live"
         },
         "landing": {
-          "label": "Meta destination",
+          "label": "Ad landing page",
           "detail": "Join entry for Meta traffic \u2014 /projects/scrolll/join.html?src=meta.",
           "url": "/projects/scrolll/join.html?src=meta",
           "state": "live"
@@ -536,7 +526,7 @@
           "state": "live"
         },
         "meta-ads": {
-          "label": "Meta frames",
+          "label": "Ad frames",
           "detail": "Headline pack: Doomscroll. Earn for attention.",
           "url": "/projects/scrolll/ads.html",
           "state": "live"
@@ -548,8 +538,8 @@
           "state": "live"
         },
         "deck": {
-          "label": "Story deck",
-          "detail": "Keyboard + click narrative beats \u2014 fairness inversion story.",
+          "label": "Pitch deck",
+          "detail": "The pitch in slides, with the name-your-price game inside.",
           "url": "/projects/scrolll/deck.html",
           "state": "live"
         },
@@ -561,7 +551,7 @@
         },
         "social": {
           "label": "Explainer + carousel",
-          "detail": "How Scrolll pays in one picture (3 sizes), plus a 5-slide carousel. Split stays TBD.",
+          "detail": "How Scrolll pays in one picture (3 sizes), plus a 5-slide carousel.",
           "url": "/projects/scrolll/social.html",
           "state": "live"
         }
@@ -569,7 +559,7 @@
       "code": [
         {
           "label": "Origin \u00b7 lumen-d678 (/scrolll)",
-          "summary": "Marketing routes, join funnel, deck, waitlist API.",
+          "summary": "The Scrolll site, join pages, deck and waitlist.",
           "url": "https://origin.cursor.com/git/alexandra-vargas/lumen-d678"
         }
       ]
@@ -583,7 +573,7 @@
       "pays": "Free to borrow and sell. Premium ($2.99/mo) is planned.",
       "status": "hot",
       "updated": "2026-11-20",
-      "summary": "Neighborhood borrow / lend / inventory. Live product on celebrateloop.com (sample inventory, community browse). Friends-first Handshake story + Meta creatives also hosted in-studio.",
+      "summary": "Before you buy, check if your friends and neighbors already have it: borrow it, buy it from them, or ask what they think. Then earn from your own stuff. Opening in New York's Financial District. Try a sample household on celebrateloop.com with no account.",
       "latest": "Live site rebuilt: website + /demo product + /community + /ads creatives. Onboarding funnel and Meta ad landing hosted at /projects/loop/.",
       "visuals": {
         "website": {
@@ -593,19 +583,19 @@
           "state": "live"
         },
         "landing": {
-          "label": "Meta ad landing",
+          "label": "Ad landing page",
           "detail": "Short hero + waitlist \u2014 Ask \u00b7 share \u00b7 Handshake. Hosted in-studio (live /ad retired).",
           "url": "/projects/loop/ad/",
           "state": "live"
         },
         "funnel": {
-          "label": "Onboarding funnel",
+          "label": "Sign-up",
           "detail": "Club door \u2192 Handshake story \u2192 waitlist signal chips. Hosted in-studio.",
           "url": "/projects/loop/",
           "state": "live"
         },
         "meta-ads": {
-          "label": "Meta creatives",
+          "label": "Ad frames",
           "detail": "Five 1080\u00d71350 frames \u2014 umbrellas, hours, pile, earns, ask your block.",
           "url": "https://celebrateloop.com/ads",
           "state": "live"
@@ -638,7 +628,7 @@
       "code": [
         {
           "label": "celebrateloop-site",
-          "summary": "Marketing splash, onboarding, ad landing, Weekline experiment.",
+          "summary": "The website, sign-up, ad landing page and the first Weekline test.",
           "url": "https://github.com/alexandrav721/celebrateloop-site"
         },
         {
@@ -653,7 +643,7 @@
         },
         {
           "label": "loop-waitlist",
-          "summary": "Earlier ChatGPT Sites waitlist handoff.",
+          "summary": "An earlier waitlist page.",
           "url": "https://github.com/alexandrav721/loop-waitlist"
         }
       ]
@@ -662,12 +652,12 @@
       "id": "planner-book",
       "name": "Planner and Book",
       "aka": null,
-      "oneLiner": "Physical goal planner + illustrated book \u2014 print craft meets premium unlock.",
+      "oneLiner": "Printable planners you cut, spin and play with, plus one made just for you.",
       "audience": "People who still plan on paper",
-      "pays": "Free printable, then a paid planner and book (prices TBD).",
+      "pays": "Free planner PDFs. A printed Personalized Planner Kit is $39 plus shipping.",
       "status": "active",
       "updated": "2026-11-22",
-      "summary": "Goals on paper and a beautiful book in hand: free printable Physical Goal Planner, premium illustrated book unlock. Sits beside the Habit game \u2014 same world, different artifact.",
+      "summary": "Five free printable planners for getting started, goals, habits, low-energy weeks and moving more, with spinners, sliders and dials to cut out. Make yours: answer six questions and get pages with your name, goal and rewards printed in, or order it printed as a $39 kit.",
       "latest": "Shop + printable Season Chapter sample hosted at /projects/planner/. Weekline now has its own project.",
       "visuals": {
         "website": {
@@ -689,7 +679,7 @@
           "state": "live"
         },
         "meta-ads": {
-          "label": "Planner Meta ads",
+          "label": "Planner ads",
           "detail": "Six 4:5 frames, three angles: paper remembers, no backlog debt, phone down. Not run yet.",
           "url": "/projects/planner/ads.html",
           "state": "live"
@@ -702,7 +692,7 @@
         },
         "deck": {
           "label": "Planner pitch deck",
-          "detail": "12 slides with cited planner-market numbers. Founder, traction and raise left as TODO.",
+          "detail": "The planners in 12 slides: the five PDFs, Make yours and the $39 kit.",
           "url": "/projects/planner/deck.html",
           "state": "live"
         },
@@ -714,7 +704,7 @@
         },
         "social": {
           "label": "Explainer + carousel",
-          "detail": "Explainer in 3 sizes, plus a 5-slide how-to for the free Season Chapter sheet. Prices TBD.",
+          "detail": "Explainer in 3 sizes, plus a 5-slide how-to for the free Season Chapter sheet.",
           "url": "/projects/planner/social.html",
           "state": "live"
         }
@@ -722,7 +712,7 @@
       "code": [
         {
           "label": "Origin \u00b7 lumen-d678 (/planner)",
-          "summary": "Printable planner + premium book sneak / waitlist UI.",
+          "summary": "The first printable planner and book preview.",
           "url": "https://origin.cursor.com/git/alexandra-vargas/lumen-d678"
         }
       ]
@@ -731,13 +721,13 @@
       "id": "habit-game",
       "name": "Habit game",
       "aka": "Lumen",
-      "oneLiner": "Psychology-powered goal game \u2014 chic, streaky follow-through.",
+      "oneLiner": "A goal game that keeps your streak alive after a bad day.",
       "audience": "People who quit goals after one bad week",
       "pays": "Core game free. A premium AI coach is on a waitlist.",
       "status": "active",
       "updated": "2026-11-20",
-      "summary": "Name season and annual goals, check in daily, protect a streak, play short stuck games when you drift. Dream Life Studio places a selfie into dream scenes. Conversion lab scores landing copy without live A/B. Premium AI coach / SMS journal is waitlist-only.",
-      "latest": "Friend demos at /projects/lumen/ \u2014 marketing, pinned landing, conversion lab, product UI shell, GTM first-ad board, premium waitlist.",
+      "summary": "Name a season goal, check in daily, and keep your streak with return tickets when you miss a day. When you drift, a short game asks what's in your way and helps clear it. Dream Life Studio puts your selfie into the life you're working toward. A premium AI coach is waitlist-only.",
+      "latest": "Lumen's marketing page, landing page, lab, app screens, first ad board and premium waitlist all open in the studio.",
       "visuals": {
         "website": {
           "label": "Lumen marketing",
@@ -758,7 +748,7 @@
           "state": "live"
         },
         "meta-ads": {
-          "label": "GTM first-ad board",
+          "label": "First ad board",
           "detail": "Designed HTML first-ad pack (go/no-go framing).",
           "url": "/projects/lumen/ads.html",
           "state": "live"
@@ -791,12 +781,12 @@
       "code": [
         {
           "label": "Origin \u00b7 lumen-d678",
-          "summary": "Main Habit game / Lumen product, labs, Nightcrew.",
+          "summary": "The main Lumen app, its labs and the overnight agent crew.",
           "url": "https://origin.cursor.com/git/alexandra-vargas/lumen-d678"
         },
         {
           "label": "GitHub \u00b7 Lumen (stub)",
-          "summary": "Thin public repo \u2014 expand when the product ships there.",
+          "summary": "A small public repo for now.",
           "url": "https://github.com/alexandrav721/Lumen"
         }
       ]
@@ -810,7 +800,7 @@
       "pays": "Sponsored battles, Pro at $8/mo, Teams at $20/seat.",
       "status": "active",
       "updated": "2026-11-22",
-      "summary": "Quests walk beginners through building real Claude skills. Every skill gets tested on hidden tasks against plain Claude by a blind judge and becomes a shareable card (Power, Lift, Clarity, Speed, Finds it), and battles put skills head to head. Anthropic already scores skills; Skills Made EZ makes it fun for beginners. Money plan: sponsored battles, then Pro at $8/mo, then Teams at $20/seat.",
+      "summary": "Quests walk beginners through building real Claude skills. Each skill is tested on hidden tasks against plain Claude by a blind judge and becomes a card (Power, Lift, Clarity, Speed, Finds it). Battles put skills head to head. Build Kit plans an app so AI stops guessing. Money plan: sponsored battles, then Pro at $8/mo, then Teams at $20/seat.",
       "latest": "New: Build Kit, a game that turns an app idea into the plan AI coding tools read, and a worker prototype. The scorer works as a Claude Code plugin (idea-innovate scored Epic 81) but isn't public yet.",
       "visuals": {
         "website": {
@@ -932,19 +922,19 @@
     "skills": [
       {
         "name": "Editorial product design",
-        "detail": "Serif display + tight sans, atmospheric gradients, one-composition heroes."
+        "detail": "A serif headline, a tight sans for the rest, and one strong picture per page."
       },
       {
         "name": "Demand testing",
-        "detail": "First-ad boards, Meta destinations, waitlist heat \u2014 ship the test before the full app."
+        "detail": "Run the ad and the sign-up page before building the full app."
       },
       {
         "name": "Agent orchestration",
-        "detail": "Agent SDK subagents, overnight schedules, human run/skip/refine checkpoints."
+        "detail": "Teams of AI helpers that run overnight, with me deciding what ships."
       },
       {
         "name": "Idea skills",
-        "detail": "My own Claude skills for every step: spark new ideas, find the feeling, map the journey, test demand, model the money."
+        "detail": "My own Claude skills for every step: spark new ideas, find the feeling, plan the path through the product, test demand, model the money."
       },
       {
         "name": "Planner skills",
@@ -954,12 +944,12 @@
     "agents": [
       {
         "name": "GTM Alexandra",
-        "detail": "Reusable co-pilot: fuzzy idea \u2192 brief \u2192 story \u2192 prototype \u2192 first-ad \u2192 deck. Cursor skills /alexandra-gtm + children.",
+        "detail": "My co-pilot: rough idea, then brief, story, prototype, first ad and deck.",
         "status": "active"
       },
       {
         "name": "Lumen Nightcrew",
-        "detail": "Overnight specialist crew: research, games, dreamscape UX, webcraft, preflight scoring.",
+        "detail": "An overnight crew of AI helpers: research, games, design and a final check.",
         "status": "active"
       },
       {
@@ -971,15 +961,15 @@
     "reusable": [
       {
         "name": "Visual GTM packs",
-        "detail": "Ship designed HTML (real slides), not markdown dumps \u2014 alexandra-visuals skill."
+        "detail": "Every plan ships as a designed page or real slides, never a wall of notes."
       },
       {
         "name": "Conversion lab pattern",
-        "detail": "Score landing copy without live A/B traffic (Habit game /lab)."
+        "detail": "Score a landing page's words before buying any ad traffic (Lumen lab)."
       },
       {
         "name": "Fancy Farm brand book",
-        "detail": "Logo / brand explorations inside lumen-d678 \u2014 own venture when ready."
+        "detail": "Logo and brand sketches for a future venture."
       },
       {
         "name": "Build Kit",
