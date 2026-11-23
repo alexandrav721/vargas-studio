@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Community library · Skills Made EZ</title>
+<meta name="description" content="Claude skills made by people, each with real examples, people's ratings and a blind test against plain Claude. Find one, add it to Claude, or share your own.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="library.css">
+<link rel="stylesheet" href="/site-bar.css" />
+<script src="/site-bar.js" data-project="skill-quest" data-kind="piece" defer></script>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="#/"><span>Community library</span><small>Skills Made <b>EZ</b></small></a>
+  <nav class="nav" id="nav" aria-label="Library"></nav>
+</header>
+
+<main id="app" tabindex="-1" aria-live="polite">
+  <p class="loading">Opening the library…</p>
+</main>
+
+<footer class="foot">
+  <a href="../templates/">Ready-made skills</a>
+  <a href="../build-kit/">Build Kit</a>
+  <a href="../prototype/v2.html">Make your own skill</a>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" defer></script>
+<script src="../passport.js" defer></script>
+<script src="data.js" defer></script>
+<script src="library.js" defer></script>
+</body>
+</html>
