@@ -20,9 +20,29 @@
   <section class="intro">
     <h1>Start with a skill that's already good.</h1>
     <p class="sub" id="introSub">The things people ask AI for most, each made into a Claude skill and tested blind against plain Claude.</p>
+    <p class="ways"><a href="#grid">Pick a ready-made one</a> <span>or</span> <a href="#scratch">start from scratch</a></p>
   </section>
 
   <ul class="grid" id="grid" aria-label="Ready-made skills"></ul>
+
+  <section class="scratch" id="scratch">
+    <h2>Or start from scratch</h2>
+    <div class="paths">
+      <a class="path" href="../prototype/v2.html">
+        <b>Make your own skill</b>
+        <span>Teach Claude one thing you do every week. Answer a few questions, get your own recipe.</span>
+        <em>Start</em>
+      </a>
+      <a class="path" href="../build-kit/">
+        <b>Plan your own app</b>
+        <span>Room by room, so AI stops guessing. Start blank or from a starter plan.</span>
+        <em>Open Build Kit</em>
+      </a>
+    </div>
+    <p class="note">Already have a ready-made skill? Open its file and change anything. It's yours.</p>
+  </section>
+
+  <section data-passport></section>
 
   <section class="how">
     <h2>How we test them</h2>
@@ -34,11 +54,6 @@
     <p class="note">One test per skill so far: a reading, not a verdict. Both answers came from the same Claude model. The requests are samples we made up. Tested 23 Nov 2026.</p>
   </section>
 
-  <section class="bigger">
-    <h2>Want to build something bigger?</h2>
-    <p class="sub">Plan it in Build Kit so AI stops guessing, then build it in your own tool.</p>
-    <a class="btn" href="../build-kit/">Open Build Kit</a>
-  </section>
 </main>
 
 <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="dName" hidden>
@@ -75,6 +90,7 @@
 <div class="toast" id="toast" aria-live="polite"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js" defer></script>
+<script src="../passport.js" defer></script>
 <script src="templates.js" defer></script>
 </body>
 </html>

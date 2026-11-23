@@ -221,7 +221,7 @@
     await wait(reduced ? 0 : 1500);
     $("#to-yours").classList.add("is-in");
   }
-  $("#to-yours").addEventListener("click", function () { paintBlank(); show("beat-yours"); });
+  $("#to-yours").addEventListener("click", function () { paintBlank(); show("beat-yours"); if (window.SMEZ) SMEZ.stamp("spot"); });
 
   /* ---------- 4. Yours ---------- */
   function slug(s) {

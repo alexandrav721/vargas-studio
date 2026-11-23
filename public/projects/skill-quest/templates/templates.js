@@ -66,6 +66,7 @@
     $("#sheet").hidden = false; document.body.style.overflow = "hidden";
     $("#close").focus();
     history.replaceState(null, "", "#" + cur.slug);
+    if (window.SMEZ) SMEZ.stamp("open");
   }
   function close() {
     $("#sheet").hidden = true; document.body.style.overflow = "";
@@ -75,6 +76,7 @@
 
   document.addEventListener("click", function (e) {
     var t = e.target.closest(".tile"); if (t) return open(+t.dataset.i);
+    if (e.target.closest("#dZip") && window.SMEZ) { if (SMEZ.stamp("home")) setTimeout(function () { toast("Stamped: Took a skill home"); }, 400); }
     if (e.target.closest("#close") || e.target.id === "sheet") return close();
     if (e.target.closest("#fSkill")) return flipTo("skill");
     if (e.target.closest("#fPlain")) return flipTo("plain");

@@ -85,3 +85,17 @@ main{max-width:1080px;margin:0 auto;padding:0 16px 64px}
 .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(120px);background:var(--ink);color:var(--paper);padding:10px 16px;border-radius:999px;font-weight:700;z-index:30;transition:transform .3s var(--ease)}
 .toast.on{transform:translateX(-50%)}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* two ways in */
+.ways{margin:-4px 0 18px;font-weight:700;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.ways a{color:var(--ink);text-underline-offset:4px;text-decoration-thickness:2px}
+.ways span{color:var(--muted);font-weight:500}
+.scratch{margin-top:44px}
+.paths{display:grid;grid-template-columns:1fr;gap:14px}
+@media (min-width:760px){.paths{grid-template-columns:1fr 1fr}}
+.path{display:flex;flex-direction:column;gap:6px;padding:18px;border:2.5px dashed var(--ink);border-radius:var(--r);background:var(--card);color:var(--ink);text-decoration:none;transition:transform .2s var(--ease)}
+.path:hover{transform:translateY(-2px)}
+.path b{font-size:21px;letter-spacing:-.01em}
+.path span{color:var(--muted);font-size:15.5px}
+.path em{font-style:normal;font-weight:800;color:var(--accent);margin-top:4px}
+[data-passport]{margin-top:40px}

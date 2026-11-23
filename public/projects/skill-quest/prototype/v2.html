@@ -341,7 +341,7 @@ let step=0, task=null, checks={}, picked={never:new Set(),check:new Set(),rule:n
 const N=10;
 
 function show(s){
-  step=s; document.querySelectorAll("section").forEach(x=>x.classList.toggle("on",+x.dataset.s===s));
+  step=s; if(s>=5&&window.SMEZ)SMEZ.stamp("own"); document.querySelectorAll("section").forEach(x=>x.classList.toggle("on",+x.dataset.s===s));
   $("dots").style.width=((s+1)/N*100)+"%";
   window.scrollTo({top:0,behavior:"instant"}); render(); }
 const NEXT_LABEL=["Start","Next","Next","Write my recipe","Next","Looks good","","Make it a habit","Done","Start over"];
@@ -473,5 +473,6 @@ document.addEventListener("keydown",e=>{ if(e.key==="Escape") $("sheet").classLi
   if(step===6&&!$("calls").hidden&&!$("sheet").classList.contains("on")){ const k=e.key.toUpperCase(); const m={A:"A",T:"tie",B:"B"}[k]; if(m) $("calls").querySelector(`[data-c="${m}"]`).click(); } });
 show(0);
 </script>
+<script src="../passport.js" defer></script>
 </body>
 </html>

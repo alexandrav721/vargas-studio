@@ -118,14 +118,29 @@
 
   /* ---------- idea ---------- */
   function drawIdea() { const a = ans("prd"); $("ideaName").value = a.name || ""; $("ideaOne").value = a.one || ""; }
-  $("useSample").onclick = () => { $("ideaName").value = "Walkies (sample)"; $("ideaOne").value = "Book a trusted dog walker who lives in your building."; play("tap"); };
+  /* starter plans: every room pre-answered for a common app */
+  const STARTERS = window.KIT_STARTERS || [];
+  if (STARTERS.length) {
+    $("startersBox").hidden = false;
+    $("starters").innerHTML = STARTERS.map((t, i) => `<button class="starter press" data-i="${i}">${icon(t.icon)}<b>${esc(t.name)}</b><span>${esc(t.one)}</span></button>`).join("");
+    $("starters").onclick = (e) => {
+      const b = e.target.closest(".starter"); if (!b) return;
+      const t = STARTERS[+b.dataset.i];
+      if (S.a.prd && S.a.prd.name && S.a.prd.name !== t.name && !confirm("Start from " + t.name + "? This replaces your answers on this device.")) return;
+      const before = guessLeft();
+      S.a = JSON.parse(JSON.stringify(t.answers)); S.done = []; S.app = null; S.starter = t.name; if (!S.tier || S.tier < t.tier) S.tier = t.tier; save();
+      play("lift"); meter(); show("plan");
+      toast(`${Math.max(0, before - guessLeft())} guesses gone`);
+    };
+  }
+  $("useSample").onclick = () => { S.starter = null; $("ideaName").value = "Walkies (sample)"; $("ideaOne").value = "Book a trusted dog walker who lives in your building."; play("tap"); };
 
   /* ---------- the blueprint ---------- */
   function drawPlan() {
     const rs = rooms(); const nm = (S.a.prd && S.a.prd.name) || "Your app";
     const sample = / \(sample\)$/.test(nm); $("planTitle").textContent = nm.replace(/ \(sample\)$/, "") + " blueprint";
     const nDone = rs.filter((r) => S.done.includes(r.id)).length;
-    $("planSub").textContent = (sample ? "Sample idea. " : "") + (nDone === rs.length ? "Every room planned. Get your kit." : nDone ? `${nDone} of ${rs.length} rooms planned. Keep going.` : "Tap a room. Each answer is one less guess.");
+    $("planSub").textContent = S.starter && S.starter === nm && nDone < rs.length ? "Starter plan: every room is filled in. Tap one to make it yours, or get your kit." : (sample ? "Sample idea. " : "") + (nDone === rs.length ? "Every room planned. Get your kit." : nDone ? `${nDone} of ${rs.length} rooms planned. Keep going.` : "Tap a room. Each answer is one less guess.");
     const nextId = (rs.find((r) => !S.done.includes(r.id)) || {}).id;
     $("blueprint").innerHTML = rs.map((r) => {
       const wide = r.id === "prd" || r.id === "agents";
@@ -207,7 +222,7 @@
   async function afterRoom() {
     const rs = rooms();
     if (rs.every((r) => S.done.includes(r.id)) && !S.seen.includes("finale" + S.tier)) {
-      S.seen.push("finale" + S.tier); if (!S.rules.includes(8)) S.rules.push(8); save();
+      S.seen.push("finale" + S.tier); if (!S.rules.includes(8)) S.rules.push(8); save(); if (window.SMEZ) SMEZ.stamp("plan");
       $("blueprint").classList.add("cleared"); play("lift"); toast("The fog's gone. AI knows your plan.");
       await wait(1400); show("done");
     }
@@ -290,7 +305,7 @@ ${RULES.map((r) => `- **${r.t}:** ${r.d}`).join("\n")}
     await wait(350); st.classList.add("on"); play(all ? "stamp" : "even");
   }
   $("loop").onclick = (e) => { const b = e.target.closest("[data-i]"); if (b) copy(LOOP[+b.dataset.i].p(S.a.prd || {}), "Prompt copied"); };
-  $("download").onclick = () => { play("tap"); download(); };
+  $("download").onclick = () => { play("tap"); download(); if (window.SMEZ) SMEZ.stamp("kit"); };
   $("copyKick").onclick = () => copy(LOOP[0].p(S.a.prd || {}), "First prompt copied");
   $("backToPlan").onclick = () => { play("tap"); show("plan"); };
   $("startOver").onclick = () => { if (!confirm("Start a new plan? This clears your answers on this device.")) return; S = fresh(); save(); introRan = false; lastLeft = null; show("intro"); };

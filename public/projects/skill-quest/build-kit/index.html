@@ -47,6 +47,11 @@
     <label class="ql" for="ideaOne">In one sentence</label>
     <textarea id="ideaOne" rows="3" placeholder="Book a trusted dog walker who lives in your building."></textarea>
     <button class="link" id="useSample">Use a sample idea</button>
+    <div class="starters" id="startersBox" hidden>
+      <h3 class="sec">Or start from a starter plan</h3>
+      <p class="sub">Every room already answered for a common app. Walk through and make it yours.</p>
+      <div class="starter-grid" id="starters"></div>
+    </div>
   </section>
 
   <!-- the blueprint -->
@@ -120,6 +125,8 @@
     <h3 class="sec">Rules you collected</h3>
     <div class="rules" id="rulesAll"></div>
 
+    <div data-passport></div>
+
     <div class="end-links">
       <button class="link" id="backToPlan">Back to my blueprint</button>
       <button class="link" id="startOver">Start a new plan</button>
@@ -143,6 +150,8 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" defer></script>
 <script src="rooms.js" defer></script>
+<script src="../passport.js" defer></script>
+<script src="starters.js" defer></script>
 <script src="kit.js" defer></script>
 </body>
 </html>
