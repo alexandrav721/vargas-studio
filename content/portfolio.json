@@ -53,6 +53,11 @@
   "now": [
     {
       "date": "2026-11-23",
+      "projectId": "weekline",
+      "text": "Weekline v2: sign in and it remembers your goals, learns what you like, and plans your week, month and year with friends."
+    },
+    {
+      "date": "2026-11-23",
       "projectId": "loop",
       "text": "Loop's story now lives at celebrateloop.com, with a sample household you can try without an account."
     },
@@ -151,8 +156,8 @@
         },
         "product-ui": {
           "label": "Weekline app",
-          "detail": "The real app: plan a crew week or a Seeking calendar. NYC Parks events load live; other rows are labeled.",
-          "url": "/projects/weekline/app/",
+          "detail": "Sign in and it remembers your goals, learns what you like, plans your week, month and year, and lets friends say I'm in.",
+          "url": "/projects/weekline/v2/",
           "state": "live"
         },
         "deck": {
