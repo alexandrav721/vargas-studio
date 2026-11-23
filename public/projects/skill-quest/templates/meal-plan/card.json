@@ -1,0 +1,14 @@
+{
+  "slug": "meal-plan",
+  "name": "Meal plan + grocery list",
+  "oneLine": "A week of dinners and one list to shop.",
+  "forWho": "Anyone cooking for a household on a budget, with allergies or picky eaters.",
+  "youGet": [
+    "Seven dinners, weeknights in 30 minutes",
+    "One grocery list sorted by aisle, with ticks",
+    "A Sunday prep plan that saves weeknight time"
+  ],
+  "woah": "One pack of chicken turns into three different dinners.",
+  "whyBetter": "Plain Claude gives seven unrelated recipes. This reuses ingredients, plans leftovers, checks every allergy and adds up a list that fits your budget.",
+  "tryPrompt": "Plan a week of dinners and a grocery list. We are [how many people], allergies: [any], budget: [$ a week]. We like:"
+}

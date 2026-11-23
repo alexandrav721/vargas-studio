@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trip plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Young+Serif&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#fbfaf6;--card:#fff;--ink:#17212b;--soft:#4f5b66;--rule:#dcd8cc;--warn:#8a4b00;--warnbg:#fff4e0;--rain:#1f4e79;--rainbg:#eaf2fa;--focus:#0b63ce}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.5 "Atkinson Hyperlegible",system-ui,sans-serif}
+main{max-width:720px;margin:0 auto;padding:0 16px 48px}
+h1,h2,h3{font-family:"Young Serif",Georgia,serif;font-weight:400;line-height:1.15;margin:0}
+h1{font-size:2.1rem;margin-top:28px}
+h2{font-size:1.5rem}
+h3{font-size:1.1rem;font-family:inherit;font-weight:700}
+a{color:inherit}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.sub{color:var(--soft);margin:6px 0 0}
+.honest{margin:16px 0 0;padding:10px 12px;border-left:4px solid var(--ink);background:var(--card);font-size:.95rem}
+.assume{margin:10px 0 0;padding-left:20px;color:var(--soft);font-size:.95rem}
+nav.days{position:sticky;top:0;z-index:5;background:var(--paper);display:flex;gap:8px;overflow-x:auto;padding:12px 0;margin-top:16px;border-bottom:1px solid var(--rule)}
+nav.days a{flex:none;text-decoration:none;border:2px solid var(--line);border-radius:999px;padding:6px 12px;font-size:.9rem;background:var(--card);min-height:44px;display:flex;align-items:center}
+nav.days a b{color:var(--line);filter:brightness(.75);margin-right:6px}
+section{margin-top:32px}
+.day{background:var(--card);border:1px solid var(--rule);border-top:8px solid var(--line);border-radius:6px;padding:16px;margin-top:24px;scroll-margin-top:76px}
+.day .meta{color:var(--soft);font-size:.95rem;margin-top:4px}
+.day .area{font-weight:700;color:var(--ink)}
+ol.line{list-style:none;margin:16px 0 0;padding:0}
+ol.line li{position:relative;padding:0 0 14px 34px}
+ol.line li::before{content:"";position:absolute;left:11px;top:6px;bottom:-6px;width:4px;background:var(--line)}
+ol.line li:last-child::before{display:none}
+ol.line li.stop::after{content:"";position:absolute;left:4px;top:4px;width:18px;height:18px;border-radius:50%;background:#fff;border:4px solid var(--line)}
+ol.line li.anchor::after{width:22px;height:22px;left:2px;top:2px;background:var(--line)}
+ol.line li.move{color:var(--soft);font-size:.9rem;padding-bottom:14px}
+ol.line li.move::before{background:repeating-linear-gradient(var(--line) 0 6px,transparent 6px 11px)}
+.when{font-size:.8rem;letter-spacing:.04em;text-transform:uppercase;color:var(--soft)}
+.tag{display:inline-block;font-size:.75rem;border:1px solid var(--ink);border-radius:3px;padding:0 5px;margin-left:6px;vertical-align:2px}
+.stop p{margin:2px 0 0}
+.links{margin-top:4px;font-size:.95rem}
+.links a{display:inline-block;padding:6px 0;margin-right:14px}
+.check{display:block;margin-top:6px;background:var(--warnbg);color:var(--warn);padding:6px 8px;border-radius:4px;font-size:.92rem}
+.rain{margin-top:8px;background:var(--rainbg);color:var(--rain);padding:10px 12px;border-radius:4px}
+.rain p{margin:2px 0 0}
+.route{display:inline-block;margin-top:12px;font-weight:700}
+table{width:100%;border-collapse:collapse;margin-top:12px;background:var(--card);font-size:.95rem}
+th,td{text-align:left;padding:8px;border-bottom:1px solid var(--rule);vertical-align:top}
+td.n,th.n{text-align:right;white-space:nowrap}
+tfoot td{font-weight:700;border-bottom:none}
+.badge{display:inline-block;background:var(--ink);color:#fff;font-size:.75rem;padding:1px 7px;border-radius:3px;vertical-align:4px;margin-left:8px;font-family:"Atkinson Hyperlegible",sans-serif}
+.small{font-size:.9rem;color:var(--soft)}
+ul.warn{list-style:none;padding:0;margin:12px 0 0}
+ul.warn li{background:var(--warnbg);color:var(--warn);padding:10px 12px;border-radius:4px;margin-bottom:8px}
+.group{margin-top:16px}
+.group ul{list-style:none;margin:6px 0 0;padding:0}
+.group label{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--rule);cursor:pointer;min-height:44px}
+.group input{width:22px;height:22px;flex:none;margin:1px 0 0;accent-color:var(--ink)}
+.group input:checked+span{text-decoration:line-through;color:var(--soft)}
+.bar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:8px}
+button{font:inherit;background:var(--card);color:var(--ink);border:1px solid var(--ink);border-radius:4px;padding:8px 12px;min-height:44px;cursor:pointer}
+footer{margin-top:40px;color:var(--soft);font-size:.85rem}
+.err{background:#fde8e8;color:#8a1111;padding:12px;margin-top:24px}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+@media print{
+ body{background:#fff;font-size:12pt}
+ nav.days,button,.noprint,.links{display:none!important}
+ .day{border-left-color:#999;border-right-color:#999;border-bottom-color:#999}
+ ol.line li,.rain,tr,.group li{break-inside:avoid}
+ h2,h3{break-after:avoid}
+ .day,section{margin-top:14px}
+ a{text-decoration:none}
+ .links{display:none}
+ .check,.rain,ul.warn li{border:1px solid #999}
+}
+</style>
+</head>
+<body>
+<main id="app"></main>
+
+<!-- TRIP DATA: replace only this JSON. Keep valid JSON (double quotes, no trailing commas). -->
+<script type="application/json" id="trip">
+{
+  "lang": "en",
+  "title": "Porto, 2 easy days",
+  "subtitle": "Sat 9 and Sun 10 May · 2 adults · mid budget",
+  "currency": "EUR",
+  "assumptions": ["You arrive Friday night and stay near Aliados.", "You like walking, so most days are on foot."],
+  "days": [
+    {
+      "label": "Day 1", "date": "Sat 9 May", "area": "Ribeira and the river", "mode": "walking",
+      "getting": "On foot all day, about 5 km with hills",
+      "stops": [
+        {"when": "Morning", "kind": "slow", "title": "Slow breakfast near your hotel", "note": "No alarm. Coffee and a pastry, then walk downhill.", "map": "pastelaria near Avenida dos Aliados Porto"},
+        {"move": "15 min walk downhill"},
+        {"when": "Late morning", "kind": "anchor", "title": "Livraria Lello", "note": "Famous bookshop. Short visit, about 30 minutes.", "map": "Livraria Lello Porto", "check": "Timed tickets are usually needed. Check the official site and book before you go."},
+        {"move": "10 min walk"},
+        {"when": "Afternoon", "kind": "anchor", "title": "Ribeira riverfront and Dom Luis I Bridge", "note": "Lunch on the river, then cross the top deck of the bridge for the view.", "map": "Dom Luis I Bridge Porto"},
+        {"when": "Evening", "kind": "food", "title": "Dinner in Ribeira or Vila Nova de Gaia", "note": "Pick a place on the day. Busy on Saturdays, so book or go early.", "map": "restaurants Vila Nova de Gaia riverside"}
+      ],
+      "rain": {"title": "Port cellar tour in Gaia", "note": "Indoors, about an hour, next to the bridge.", "map": "port wine cellars Vila Nova de Gaia", "check": "Tour times vary. Check and book before you go."}
+    }
+  ],
+  "warnings": [
+    "Many shops and some sights close or open late on Sundays. Check opening days before you go.",
+    "Wear shoes with grip. Porto streets are steep cobbles."
+  ],
+  "costs": [
+    {"item": "Hotel, mid range", "for": "2 nights, one room", "low": 180, "high": 300},
+    {"item": "Food", "for": "2 people, 2 days", "low": 120, "high": 200},
+    {"item": "Tickets and tours", "for": "2 people", "low": 30, "high": 70}
+  ],
+  "costNote": "Rough estimate from typical prices. Real prices change by season, so check before you book.",
+  "checklist": [
+    {"group": "Before you go", "items": ["Book Livraria Lello tickets", "Check Sunday opening days"]},
+    {"group": "Pack", "items": ["Walking shoes with grip", "Light rain jacket", "Plug adapter (type F)"]}
+  ]
+}
+</script>
+
+<script>
+(function(){
+  var app=document.getElementById('app');
+  var LINES=['#d1495b','#00798c','#edae49','#30638e','#6a994e','#8d5a97','#c2571a','#3d405b'];
+  function el(tag,attrs,kids){var n=document.createElement(tag);if(attrs)for(var k in attrs){if(k==='text')n.textContent=attrs[k];else if(k==='style')n.style.cssText=attrs[k];else n.setAttribute(k,attrs[k]);}(kids||[]).forEach(function(c){if(c)n.appendChild(typeof c==='string'?document.createTextNode(c):c);});return n;}
+  function mapUrl(q){return 'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(q);}
+  function mapLink(q,name){return el('a',{href:mapUrl(q),target:'_blank',rel:'noopener','aria-label':'Open '+name+' in Google Maps'},['Map']);}
+  function store(){try{return window.localStorage;}catch(e){return null;}}
+  var d;
+  try{d=JSON.parse(document.getElementById('trip').textContent);}catch(e){app.appendChild(el('p',{'class':'err',text:'This plan could not load: the trip data has a typo. Ask Claude to fix the JSON.'}));return;}
+  document.documentElement.lang=d.lang||'en';
+  document.title=d.title||'Trip plan';
+  var money;
+  try{money=new Intl.NumberFormat(d.lang||'en',{style:'currency',currency:d.currency||'USD',maximumFractionDigits:0});}catch(e){money={format:function(n){return (d.currency||'')+' '+n;}};}
+
+  app.appendChild(el('h1',{text:d.title}));
+  if(d.subtitle)app.appendChild(el('p',{'class':'sub',text:d.subtitle}));
+  app.appendChild(el('p',{'class':'honest',text:'Every place here is well known, but hours, prices and bookings change. Tap a map link to see where it is, and check anything marked before you go.'}));
+  if(d.assumptions&&d.assumptions.length){app.appendChild(el('ul',{'class':'assume','aria-label':'What this plan assumes'},d.assumptions.map(function(a){return el('li',{text:a});})));}
+
+  var days=d.days||[];
+  var nav=el('nav',{'class':'days','aria-label':'Jump to a day'});
+  days.forEach(function(day,i){var c=LINES[i%LINES.length];nav.appendChild(el('a',{href:'#day'+(i+1),style:'--line:'+c},[el('b',{text:String(i+1)}),day.area||day.label]));});
+  if(days.length>1)app.appendChild(nav);
+
+  days.forEach(function(day,i){
+    var c=LINES[i%LINES.length];
+    var art=el('article',{'class':'day',id:'day'+(i+1),style:'--line:'+c,'aria-labelledby':'h-day'+(i+1)});
+    art.appendChild(el('h2',{id:'h-day'+(i+1),text:(day.label||('Day '+(i+1)))+(day.date?' · '+day.date:'')}));
+    art.appendChild(el('p',{'class':'meta'},[el('span',{'class':'area',text:day.area||''}),day.getting?' · '+day.getting:'']));
+    var ol=el('ol',{'class':'line'});var pts=[];
+    (day.stops||[]).forEach(function(s){
+      if(s.move){ol.appendChild(el('li',{'class':'move'},[s.move]));return;}
+      var li=el('li',{'class':'stop'+(s.kind==='anchor'?' anchor':'')});
+      var head=el('div',{},[el('span',{'class':'when',text:s.when||''}),s.kind==='anchor'?el('span',{'class':'tag',text:'Main stop'}):null]);
+      li.appendChild(head);
+      li.appendChild(el('h3',{text:s.title}));
+      if(s.note)li.appendChild(el('p',{text:s.note}));
+      if(s.map){li.appendChild(el('div',{'class':'links'},[mapLink(s.map,s.title)]));pts.push(s.map);}
+      if(s.check)li.appendChild(el('span',{'class':'check'},['Check before you go: '+s.check]));
+      ol.appendChild(li);
+    });
+    art.appendChild(ol);
+    if(day.rain){
+      var r=day.rain;
+      art.appendChild(el('div',{'class':'rain'},[el('h3',{text:'If it rains: '+r.title}),r.note?el('p',{text:r.note}):null,r.map?el('div',{'class':'links'},[mapLink(r.map,r.title)]):null,r.check?el('span',{'class':'check'},['Check before you go: '+r.check]):null]));
+    }
+    if(pts.length>1){
+      var u='https://www.google.com/maps/dir/?api=1&origin='+encodeURIComponent(pts[0])+'&destination='+encodeURIComponent(pts[pts.length-1])+'&travelmode='+encodeURIComponent(day.mode||'walking');
+      if(pts.length>2)u+='&waypoints='+encodeURIComponent(pts.slice(1,-1).join('|'));
+      art.appendChild(el('a',{'class':'route noprint',href:u,target:'_blank',rel:'noopener'},['Open this day as a route in Google Maps']));
+    }
+    app.appendChild(art);
+  });
+
+  if(d.warnings&&d.warnings.length){
+    app.appendChild(el('section',{'aria-labelledby':'h-warn'},[el('h2',{id:'h-warn',text:'Check before you go'}),el('ul',{'class':'warn'},d.warnings.map(function(w){return el('li',{text:w});}))]));
+  }
+
+  if(d.costs&&d.costs.length){
+    var lo=0,hi=0;
+    var tb=el('tbody',{},d.costs.map(function(r){lo+=+r.low||0;hi+=+r.high||0;return el('tr',{},[el('td',{},[r.item,r['for']?el('div',{'class':'small',text:r['for']}):null]),el('td',{'class':'n',text:money.format(r.low)+' to '+money.format(r.high)})]);}));
+    var t=el('table',{},[el('thead',{},[el('tr',{},[el('th',{scope:'col',text:'What'}),el('th',{scope:'col','class':'n',text:'Estimate'})])]),tb,el('tfoot',{},[el('tr',{},[el('td',{text:'Total'}),el('td',{'class':'n',text:money.format(lo)+' to '+money.format(hi)})])])]);
+    var h=el('h2',{id:'h-cost'},['Rough costs',el('span',{'class':'badge',text:'Estimate'})]);
+    app.appendChild(el('section',{'aria-labelledby':'h-cost'},[h,t,el('p',{'class':'small',text:d.costNote||'Rough estimate. Check real prices before you book.'})]));
+  }
+
+  if(d.checklist&&d.checklist.length){
+    var key='trip:'+(d.title||'plan');var saved={};var ls=store();
+    try{saved=JSON.parse(ls.getItem(key)||'{}')||{};}catch(e){saved={};}
+    var boxes=[];var count=el('span',{'class':'small','aria-live':'polite'});
+    function upd(){var n=boxes.filter(function(b){return b.checked;}).length;count.textContent=n+' of '+boxes.length+' done';}
+    function save(){var o={};boxes.forEach(function(b){if(b.checked)o[b.id]=1;});try{ls.setItem(key,JSON.stringify(o));}catch(e){}upd();}
+    var sec=el('section',{'aria-labelledby':'h-list'},[el('h2',{id:'h-list',text:'Before you go and packing'})]);
+    d.checklist.forEach(function(g,gi){
+      var ul=el('ul');
+      (g.items||[]).forEach(function(it,ii){
+        var id='c'+gi+'-'+ii;var cb=el('input',{type:'checkbox',id:id});cb.checked=!!saved[id];cb.addEventListener('change',save);boxes.push(cb);
+        ul.appendChild(el('li',{},[el('label',{'for':id},[cb,el('span',{text:it})])]));
+      });
+      sec.appendChild(el('div',{'class':'group'},[el('h3',{text:g.group}),ul]));
+    });
+    var reset=el('button',{type:'button'},['Clear ticks']);
+    reset.addEventListener('click',function(){boxes.forEach(function(b){b.checked=false;});save();});
+    var pr=el('button',{type:'button'},['Print']);pr.addEventListener('click',function(){window.print();});
+    sec.appendChild(el('div',{'class':'bar'},[count,el('span',{},[pr,' ',reset])]));
+    app.appendChild(sec);upd();
+  }
+  app.appendChild(el('footer',{text:'Made with the Trip planner skill. Ticks save on this device only.'}));
+})();
+</script>
+</body>
+</html>

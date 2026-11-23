@@ -1,0 +1,20 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [
+      "public/projects/skill-quest/templates/*/result-plain.html",
+      "public/projects/skill-quest/templates/*/result-skill.html"
+    ],
+    "ignoreValues": [
+      {
+        "rule": "cream-palette",
+        "value": "*",
+        "files": [
+          "public/projects/skill-quest/**"
+        ],
+        "createdAt": "2026-11-23T15:36:38.499Z",
+        "reason": "user confirmed: Skills Made EZ Card Shop paper-and-ink direction (#F6F1E7), picked 21 Nov 2026"
+      }
+    ]
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "slug": "study-buddy",
+  "name": "Study buddy",
+  "oneLine": "Your notes become a quiz you can play.",
+  "forWho": "Students and anyone with a test coming up who has notes but no time to make flashcards.",
+  "youGet": [
+    "A quiz that asks why, not just what",
+    "Flashcards from your key words",
+    "Missed questions come back until they stick"
+  ],
+  "woah": "It brings back the ones you got wrong, like a tutor.",
+  "whyBetter": "Plain Claude asks easy recall questions, adds facts your notes never said, and forgets your misses. This sticks to your notes and drills misses.",
+  "tryPrompt": "Turn my notes into a quiz I can practice with. Here are my notes:"
+}

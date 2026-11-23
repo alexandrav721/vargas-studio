@@ -1,0 +1,14 @@
+{
+  "slug": "one-page-site",
+  "name": "My one-page website",
+  "oneLine": "A personal site built around your real work.",
+  "forWho": "Makers, freelancers and creators who need one good page to send people to.",
+  "youGet": [
+    "One ready-to-share web page",
+    "A look picked for your kind of work",
+    "Your email one tap away"
+  ],
+  "woah": "It looks like a designer made it just for me.",
+  "whyBetter": "Plain Claude makes the same template site for everyone. This builds the page around your actual work, with your facts, your colors and no filler.",
+  "tryPrompt": "Make me a one-page website. Here's who I am, three things I've made, and how to reach me:"
+}

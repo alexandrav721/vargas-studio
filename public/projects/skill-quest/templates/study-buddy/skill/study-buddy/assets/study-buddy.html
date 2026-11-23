@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Study buddy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Young+Serif&display=swap" rel="stylesheet">
+<!--
+  STUDY BUDDY STARTER. Change ONLY the JSON inside <script id="deck">.
+  Everything else (quiz, flashcards, missed-ones-come-back, scoring, saving) is tested and works.
+-->
+<script id="deck" type="application/json">
+{
+  "title": "Photosynthesis",
+  "subtitle": "From your biology notes",
+  "questions": [
+    {"type": "mc", "q": "A plant is moved into a dark cupboard for a week. Why does it start to struggle?", "options": ["It cannot make glucose without light energy", "It cannot take in water in the dark", "Its roots stop growing at night", "Chlorophyll turns into starch"], "answer": "It cannot make glucose without light energy", "why": "Photosynthesis needs light energy to turn carbon dioxide and water into glucose. No light, no new food.", "from": "Light energy is used to turn CO2 and water into glucose."},
+    {"type": "tf", "q": "Oxygen is the main product the plant makes photosynthesis for.", "answer": false, "why": "Glucose is the goal. Oxygen is a by-product that gets released.", "from": "Oxygen is released as a by-product."},
+    {"type": "fill", "q": "The green pigment that captures light is called ___.", "answer": "chlorophyll", "accept": ["chlorophyl"], "why": "Chlorophyll sits in the chloroplasts and absorbs light, mostly red and blue.", "from": "Chlorophyll in the chloroplasts absorbs the light."},
+    {"type": "mc", "q": "Which change would most likely speed up photosynthesis on a cool, bright day?", "options": ["Warming the plant a little", "Moving it into shade", "Giving it less water", "Removing some leaves"], "answer": "Warming the plant a little", "why": "On a bright day light isn't the limit, so temperature is. A little warmth speeds up the reactions.", "from": "Rate depends on light, CO2 and temperature."},
+    {"type": "tf", "q": "Plants take in carbon dioxide through small openings in their leaves.", "answer": true, "why": "Those openings are the stomata. CO2 goes in, oxygen and water vapour go out.", "from": "CO2 enters through the stomata."}
+  ],
+  "cards": [
+    {"front": "Chlorophyll", "back": "Green pigment in chloroplasts that absorbs light."},
+    {"front": "Stomata", "back": "Small openings in leaves where CO2 goes in and oxygen goes out."},
+    {"front": "By-product of photosynthesis", "back": "Oxygen."}
+  ]
+}
+</script>
+<style>
+:root{
+  --paper:#F3F5F1; --card:#FFFFFF; --ink:#16232A; --ink-2:#44545C; --line:#CBD5D2;
+  --grid:rgba(22,35,42,.06); --mark:#E9F36B; --mark-ink:#16232A;
+  --ok:#17704A; --ok-bg:#E3F3EA; --no:#A3271F; --no-bg:#FBE9E6;
+  --focus:#0B5FA5; --btn:#16232A; --btn-ink:#FFFFFF;
+  --r:10px; --shadow:0 1px 0 rgba(22,35,42,.08),0 6px 18px -10px rgba(22,35,42,.25);
+  --display:"Young Serif",Georgia,"Times New Roman",serif;
+  --body:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme:dark){:root{
+  --paper:#11191D; --card:#1A252A; --ink:#EEF2EF; --ink-2:#B4C2C6; --line:#33444B;
+  --grid:rgba(238,242,239,.05); --mark:#DDE85A; --mark-ink:#16232A;
+  --ok:#6FD3A0; --ok-bg:#163327; --no:#FF9D92; --no-bg:#3A1D1A;
+  --focus:#7DBCFF; --btn:#EEF2EF; --btn-ink:#11191D;
+  --shadow:0 1px 0 rgba(0,0,0,.3),0 8px 20px -12px rgba(0,0,0,.6);
+}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;min-height:100vh;background:var(--paper);color:var(--ink);font:17px/1.5 var(--body);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px}
+.wrap{max-width:640px;margin:0 auto;padding:16px 16px 48px}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px;border-radius:6px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+header{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+header h1{font:400 1.35rem/1.2 var(--display);margin:0;flex:1;min-width:0;overflow-wrap:anywhere}
+.icon-btn{background:transparent;border:1px solid var(--line);border-radius:999px;width:44px;height:44px;display:grid;place-items:center;flex:none}
+.icon-btn svg{width:20px;height:20px}
+.bar{height:8px;background:var(--line);border-radius:99px;overflow:hidden;margin:0 0 6px}
+.bar i{display:block;height:100%;width:0;background:var(--ink);border-radius:99px;transition:width .35s ease}
+.meta{display:flex;justify-content:space-between;font-size:.85rem;color:var(--ink-2);margin-bottom:16px;gap:8px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:22px 20px}
+.kicker{font-size:.8rem;font-weight:700;letter-spacing:.02em;color:var(--ink-2);margin:0 0 8px}
+.q{font:400 1.32rem/1.35 var(--display);margin:0 0 18px;overflow-wrap:anywhere}
+.q .blank{display:inline-block;min-width:4.5em;border-bottom:2px solid var(--ink);margin:0 .15em}
+.opts{display:grid;gap:10px}
+.opt{display:flex;gap:12px;align-items:flex-start;text-align:left;width:100%;background:var(--card);border:1.5px solid var(--line);border-radius:var(--r);padding:13px 14px;min-height:52px;transition:border-color .15s,background .15s}
+.opt:hover:not(:disabled){border-color:var(--ink)}
+.opt .k{flex:none;width:26px;height:26px;border-radius:6px;border:1.5px solid var(--line);display:grid;place-items:center;font-size:.8rem;font-weight:700;color:var(--ink-2)}
+.opt:disabled{cursor:default}
+.opt.right{border-color:var(--ok);background:var(--ok-bg)}
+.opt.right .k{border-color:var(--ok);color:var(--ok)}
+.opt.wrong{border-color:var(--no);background:var(--no-bg)}
+.opt.wrong .k{border-color:var(--no);color:var(--no)}
+.opt.dim{opacity:.6}
+.tf{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tf .opt{justify-content:center;font-weight:700;font-size:1.05rem}
+.fill{display:flex;gap:10px;flex-wrap:wrap}
+.fill input{flex:1 1 200px;min-width:0;border:1.5px solid var(--line);border-radius:var(--r);padding:12px 14px;background:var(--card);min-height:52px}
+.fill input:focus-visible{outline-offset:1px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;background:var(--btn);color:var(--btn-ink);border-radius:var(--r);padding:12px 18px;min-height:48px;font-weight:700}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--ink)}
+.btn.wide{width:100%}
+.btn kbd,.opt kbd{font:inherit;font-size:.75rem;opacity:.7;font-weight:400}
+.feedback{margin-top:16px;border-radius:var(--r);padding:14px 16px;border-left:5px solid}
+.feedback.ok{background:var(--ok-bg);border-color:var(--ok)}
+.feedback.no{background:var(--no-bg);border-color:var(--no)}
+.feedback h3{margin:0 0 4px;font-size:1.05rem}
+.feedback.ok h3{color:var(--ok)} .feedback.no h3{color:var(--no)}
+.feedback p{margin:0 0 6px}
+.from{font-size:.9rem;color:var(--ink-2);margin:8px 0 0}
+.from mark{background:var(--mark);color:var(--mark-ink);padding:0 .2em;border-radius:2px}
+.next-row{margin-top:14px;display:flex;justify-content:flex-end}
+.home h2{font:400 2rem/1.15 var(--display);margin:4px 0 6px}
+.home .sub{color:var(--ink-2);margin:0 0 18px}
+.choices{display:grid;gap:12px;margin:18px 0 8px}
+.choice{display:flex;gap:14px;align-items:center;text-align:left;background:var(--card);border:1.5px solid var(--line);border-radius:var(--r);padding:16px;min-height:76px}
+.choice:hover{border-color:var(--ink)}
+.choice svg{flex:none;width:40px;height:40px}
+.choice b{display:block;font-size:1.1rem}
+.choice span{color:var(--ink-2);font-size:.92rem}
+.choice.main{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.choice.main span{color:inherit;opacity:.8}
+.stats{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:.9rem;color:var(--ink-2);margin-top:14px}
+.stats b{color:var(--ink)}
+.linkish{background:none;border:0;padding:8px 0;color:var(--ink-2);text-decoration:underline;text-underline-offset:3px;font-size:.9rem;min-height:44px}
+.flip{perspective:1200px;margin-bottom:14px}
+.flip-in{position:relative;min-height:240px;transition:transform .45s cubic-bezier(.2,.7,.2,1);transform-style:preserve-3d}
+.flip.on .flip-in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:24px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);width:100%}
+.face.back{transform:rotateY(180deg)}
+.face .t{font:400 1.5rem/1.3 var(--display);overflow-wrap:anywhere}
+.face .hint{position:absolute;bottom:12px;font-size:.8rem;color:var(--ink-2)}
+.face .lines{position:absolute;left:0;right:0;top:46px;border-top:2px solid #E7A59D;opacity:.6}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.done{text-align:center}
+.stamp{display:inline-block;margin:6px auto 10px;padding:8px 18px;border:3px solid var(--no);color:var(--no);font:400 1.6rem/1 var(--display);border-radius:8px;transform:rotate(-6deg)}
+.stamp.good{border-color:var(--ok);color:var(--ok)}
+.anim .stamp{animation:stamp .5s cubic-bezier(.2,1.6,.4,1) both .15s}
+@keyframes stamp{from{transform:rotate(-6deg) scale(2.4);opacity:0}to{transform:rotate(-6deg) scale(1);opacity:1}}
+.big{font:400 4.2rem/1 var(--display);margin:6px 0 0}
+.big small{font-size:1.4rem;color:var(--ink-2)}
+.done .sub{color:var(--ink-2);margin:6px 0 18px}
+.tricky{text-align:left;margin:16px 0;padding:0;list-style:none;border-top:1px solid var(--line)}
+.tricky li{padding:12px 0;border-bottom:1px solid var(--line)}
+.tricky .a{display:block;color:var(--ok);font-weight:700;margin-top:2px}
+.stack{display:grid;gap:10px}
+.banner{font-size:.85rem;background:var(--mark);color:var(--mark-ink);padding:8px 12px;border-radius:8px;margin-bottom:12px}
+.streak{font-weight:700;color:var(--ink)}
+.pop{animation:pop .3s ease}
+@keyframes pop{50%{transform:scale(1.04)}}
+@media (max-width:420px){.q{font-size:1.18rem}.home h2{font-size:1.7rem}.panel{padding:18px 16px}.big{font-size:3.6rem}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1 id="title">Study buddy</h1>
+    <button class="icon-btn" id="sound" type="button" aria-pressed="true" aria-label="Sound on"></button>
+    <button class="icon-btn" id="homeBtn" type="button" aria-label="Back to start" hidden>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11l8-7 8 7"/><path d="M6 10v10h12V10"/></svg>
+    </button>
+  </header>
+  <div id="storeWarn" class="banner" role="status" hidden>This browser isn't saving progress. You can still study; it resets when you close the page.</div>
+  <main id="app" aria-live="polite"></main>
+</div>
+<script>
+(function(){
+"use strict";
+var DECK;
+try{DECK=JSON.parse(document.getElementById("deck").textContent)}catch(e){DECK={title:"Study buddy",questions:[],cards:[]}}
+var Q=(DECK.questions||[]).filter(function(x){return x&&x.q&&x.type}).map(function(x,i){x.id="q"+i+"_"+hash(x.q);return x});
+var C=(DECK.cards||[]).filter(function(x){return x&&x.front&&x.back}).map(function(x,i){x.id="c"+i+"_"+hash(x.front);return x});
+var $=function(s,r){return (r||document).querySelector(s)};
+var app=$("#app");
+document.title=DECK.title?DECK.title+" · Study buddy":"Study buddy";
+$("#title").textContent=DECK.title||"Study buddy";
+
+/* ---------- storage (may be blocked) ---------- */
+var KEY="studybuddy:"+hash(DECK.title+"|"+Q.map(function(q){return q.q}).join("|"));
+var mem={};
+function load(){try{var s=localStorage.getItem(KEY);return s?JSON.parse(s):null}catch(e){return null}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S));return true}catch(e){return false}}
+var S=load()||{boxes:{},rounds:0,best:null,sound:true,last:null};
+if(!S.boxes)S.boxes={};
+(function(){try{localStorage.setItem(KEY+":t","1");localStorage.removeItem(KEY+":t")}catch(e){$("#storeWarn").hidden=false}})();
+
+/* ---------- sound + buzz ---------- */
+var ac=null;
+function tone(freqs,dur,type,gap){
+  if(!S.sound)return;
+  try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();
+    var t=ac.currentTime;
+    freqs.forEach(function(f,i){var o=ac.createOscillator(),g=ac.createGain();o.type=type||"sine";o.frequency.value=f;
+      var st=t+i*(gap||0.09);g.gain.setValueAtTime(0.0001,st);g.gain.exponentialRampToValueAtTime(0.18,st+0.015);g.gain.exponentialRampToValueAtTime(0.0001,st+dur);
+      o.connect(g);g.connect(ac.destination);o.start(st);o.stop(st+dur+0.02)});
+  }catch(e){}
+}
+function buzz(p){try{if(navigator.vibrate)navigator.vibrate(p)}catch(e){}}
+var sfx={ok:function(){tone([660,880],0.18,"triangle");buzz(12)},no:function(){tone([220],0.22,"sine");buzz([20,40,20])},
+  done:function(){tone([523,659,784,1047],0.3,"triangle",0.11);buzz([15,60,15,60,30])}};
+var soundBtn=$("#sound");
+function paintSound(){soundBtn.setAttribute("aria-pressed",S.sound?"true":"false");soundBtn.setAttribute("aria-label",S.sound?"Sound on":"Sound off");
+  soundBtn.innerHTML=S.sound?'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/></svg>'
+  :'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M17 9l5 6M22 9l-5 6"/></svg>'}
+soundBtn.onclick=function(){S.sound=!S.sound;save();paintSound()};paintSound();
+$("#homeBtn").onclick=function(){home()};
+
+/* ---------- helpers ---------- */
+function hash(s){var h=0;s=String(s);for(var i=0;i<s.length;i++){h=(h*31+s.charCodeAt(i))|0}return (h>>>0).toString(36)}
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+function norm(s){return String(s).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[^a-z0-9 ]+/g," ").replace(/\b(the|a|an)\b/g," ").replace(/\s+/g," ").trim()}
+function lev(a,b){if(a===b)return 0;var m=a.length,n=b.length,d=[],i,j;for(i=0;i<=m;i++){d[i]=[i]}for(j=0;j<=n;j++){d[0][j]=j}
+  for(i=1;i<=m;i++)for(j=1;j<=n;j++){d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1))}return d[m][n]}
+function fillOk(given,q){var g=norm(given);if(!g)return false;var all=[q.answer].concat(q.accept||[]);
+  return all.some(function(a){a=norm(a);if(g===a)return true;var tol=a.length>=9?2:a.length>=5?1:0;return lev(g,a)<=tol})}
+function box(id){return S.boxes[id]||1}
+function el(html){var d=document.createElement("div");d.innerHTML=html;return d}
+function focusFirst(sel){var f=$(sel,app);if(f)setTimeout(function(){try{f.focus({preventScroll:false})}catch(e){f.focus()}},30)}
+function setBar(done,total,label){return '<div class="bar" role="progressbar" aria-label="'+esc(label)+'" aria-valuemin="0" aria-valuemax="'+total+'" aria-valuenow="'+done+'"><i style="width:'+(total?Math.round(done/total*100):0)+'%"></i></div>'}
+
+/* ---------- home ---------- */
+function home(){
+  R=null;F=null;
+  $("#homeBtn").hidden=true;
+  var mastered=Q.filter(function(q){return box(q.id)>=2}).length;
+  var dueN=pickRound().length;
+  var types={mc:0,tf:0,fill:0};Q.forEach(function(q){if(types[q.type]!=null)types[q.type]++});
+  var mix=[types.mc?types.mc+" multiple choice":"",types.fill?types.fill+" fill in":"",types.tf?types.tf+" true or false":""].filter(Boolean).join(", ");
+  app.innerHTML='<section class="home">'+
+    '<p class="kicker">'+esc(DECK.subtitle||"From your notes")+'</p>'+
+    '<h2>'+(S.rounds?"Welcome back.":"Ready when you are.")+'</h2>'+
+    '<p class="sub">'+Q.length+' questions'+(mix?" ("+mix+")":"")+(C.length?" and "+C.length+" flashcards":"")+'. Anything you miss comes back until it sticks.</p>'+
+    '<div class="choices">'+
+    (Q.length?'<button class="choice main" id="goQuiz" type="button"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="5" width="26" height="30" rx="3"/><path d="M13 14l3 3 5-6M13 25h14M13 30h9"/></svg><div><b>Quiz me</b><span>'+dueN+' questions this round</span></div></button>':'')+
+    (C.length?'<button class="choice" id="goCards" type="button"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="24" height="18" rx="3"/><path d="M11 7h21a3 3 0 0 1 3 3v15"/></svg><div><b>Flashcards</b><span>Flip, then say if you knew it</span></div></button>':'')+
+    '</div>'+
+    (S.rounds?'<div class="stats"><span>Rounds played: <b>'+S.rounds+'</b></span><span>Learned: <b>'+mastered+' of '+Q.length+'</b></span>'+(S.best!=null?'<span>Best first try: <b>'+S.best+'%</b></span>':'')+'</div>'+
+      '<button class="linkish" id="reset" type="button">Forget my progress</button>':'')+
+    (!Q.length&&!C.length?'<p class="sub">No questions yet. Paste your notes to Claude and ask again.</p>':'')+
+    '</section>';
+  var a=$("#goQuiz",app);if(a)a.onclick=startQuiz;
+  var b=$("#goCards",app);if(b)b.onclick=startCards;
+  var r=$("#reset",app);if(r)r.onclick=function(){if(r.dataset.armed){S.boxes={};S.rounds=0;S.best=null;save();home();return}
+    r.dataset.armed="1";r.textContent="Tap again to forget everything";setTimeout(function(){if(r.isConnected){delete r.dataset.armed;r.textContent="Forget my progress"}},4000)};
+  focusFirst(".choice");
+}
+
+/* ---------- picking a round (simple spaced repetition: 3 boxes) ---------- */
+function pickRound(){
+  var n=(S.rounds||0)+1;
+  var due=Q.filter(function(q){var b=box(q.id);return b===1||(b===2&&n%2===0)||(b===3&&n%4===0)});
+  var minN=Math.min(8,Q.length);
+  if(due.length<minN){var rest=Q.filter(function(q){return due.indexOf(q)<0}).sort(function(a,b){return box(a.id)-box(b.id)});due=due.concat(rest.slice(0,minN-due.length))}
+  due=shuffle(due).sort(function(a,b){return box(a.id)-box(b.id)});
+  return due.slice(0,15);
+}
+
+/* ---------- quiz ---------- */
+var R;
+function startQuiz(list){
+  var round=Array.isArray(list)?list:pickRound();
+  R={queue:round.slice(),total:round.length,cleared:0,first:0,missed:{},tries:{},streak:0,bestStreak:0,cur:null,answered:false,mode:"quiz"};
+  $("#homeBtn").hidden=false;nextQ();
+}
+function nextQ(){
+  if(!R.queue.length)return finish();
+  R.cur=R.queue.shift();R.answered=false;
+  var q=R.cur,again=R.tries[q.id]>0;
+  var label={mc:"Pick one",tf:"True or false?",fill:"Fill in the blank"}[q.type]||"";
+  var qText=q.type==="fill"?esc(q.q).replace(/_{2,}/,'<span class="blank" aria-label="blank"></span>'):esc(q.q);
+  var body="";
+  if(q.type==="mc"){
+    q._opts=shuffle(q.options||[]);
+    body='<div class="opts" role="group" aria-label="Answers">'+q._opts.map(function(o,i){return '<button class="opt" type="button" data-i="'+i+'"><span class="k" aria-hidden="true">'+(i+1)+'</span><span>'+esc(o)+'</span></button>'}).join("")+'</div>';
+  }else if(q.type==="tf"){
+    body='<div class="tf" role="group" aria-label="True or false"><button class="opt" type="button" data-v="true">True <kbd aria-hidden="true">T</kbd></button><button class="opt" type="button" data-v="false">False <kbd aria-hidden="true">F</kbd></button></div>';
+  }else{
+    body='<form class="fill" id="fillForm" autocomplete="off"><label class="sr" for="fillIn">Your answer</label><input id="fillIn" type="text" inputmode="text" autocapitalize="off" spellcheck="false" placeholder="Type your answer"><button class="btn" type="submit">Check</button></form>';
+  }
+  app.innerHTML=setBar(R.cleared,R.total,"Round progress")+
+    '<div class="meta"><span>'+R.cleared+' of '+R.total+' done</span><span>'+(R.streak>=3?'<span class="streak">'+R.streak+' in a row</span>':(again?"This one came back":""))+'</span></div>'+
+    '<section class="panel" id="card"><p class="kicker">'+label+(again?" · second look":"")+'</p><h2 class="q">'+qText+'</h2>'+body+'<div id="fb"></div></section>';
+  if(q.type==="mc")app.querySelectorAll(".opt").forEach(function(b){b.onclick=function(){answerMC(+b.dataset.i)}});
+  if(q.type==="tf")app.querySelectorAll(".opt").forEach(function(b){b.onclick=function(){answerTF(b.dataset.v==="true")}});
+  if(q.type==="fill"){$("#fillForm").onsubmit=function(e){e.preventDefault();var v=$("#fillIn").value;if(!v.trim()){$("#fillIn").focus();return}answerFill(v)};focusFirst("#fillIn")}
+  else focusFirst(".opt");
+}
+function answerMC(i){if(R.answered)return;var q=R.cur,pick=q._opts[i],ok=pick===q.answer;
+  app.querySelectorAll(".opt").forEach(function(b,j){b.disabled=true;var o=q._opts[j];if(o===q.answer)b.classList.add("right");else if(j===i)b.classList.add("wrong");else b.classList.add("dim")});
+  resolve(ok,q.answer)}
+function answerTF(v){if(R.answered)return;var q=R.cur,ok=v===!!q.answer;
+  app.querySelectorAll(".opt").forEach(function(b){b.disabled=true;var bv=b.dataset.v==="true";if(bv===!!q.answer)b.classList.add("right");else if(bv===v)b.classList.add("wrong");else b.classList.add("dim")});
+  resolve(ok,q.answer?"True":"False")}
+function answerFill(v){if(R.answered)return;var q=R.cur,ok=fillOk(v,q);var inp=$("#fillIn");inp.disabled=true;$("#fillForm button").disabled=true;
+  inp.style.borderColor=ok?"var(--ok)":"var(--no)";resolve(ok,q.answer)}
+function resolve(ok,answerText){
+  var q=R.cur;R.answered=true;var firstTry=!R.tries[q.id];R.tries[q.id]=(R.tries[q.id]||0)+1;
+  if(ok){R.cleared++;R.streak++;R.bestStreak=Math.max(R.bestStreak,R.streak);
+    if(firstTry){R.first++;S.boxes[q.id]=Math.min(3,box(q.id)+1)}else{S.boxes[q.id]=1}
+    sfx.ok();
+  }else{R.streak=0;R.missed[q.id]=q;S.boxes[q.id]=1;
+    R.queue.splice(Math.min(R.queue.length,3),0,q);sfx.no()}
+  save();
+  var head=ok?(firstTry?["Right.","Nice."][R.cleared%2]:"Got it this time."):"Not quite.";
+  var ansLine=ok?"":'<p>The answer is <b>'+esc(answerText)+'</b>.</p>';
+  var comeback=ok?"":'<p class="from">This one will come back in a moment.</p>';
+  var fb=$("#fb");
+  fb.innerHTML='<div class="feedback '+(ok?"ok":"no")+'" role="status"><h3>'+head+'</h3>'+ansLine+(q.why?'<p>'+esc(q.why)+'</p>':'')+
+    (q.from?'<p class="from">From your notes: <mark>'+esc(q.from)+'</mark></p>':'')+comeback+'</div>'+
+    '<div class="next-row"><button class="btn" id="next" type="button">'+(R.queue.length?"Next":"See my score")+' <kbd aria-hidden="true">Enter</kbd></button></div>';
+  var card=$("#card");if(ok&&card){card.classList.remove("pop");void card.offsetWidth;card.classList.add("pop")}
+  $("#next").onclick=nextQ;focusFirst("#next");
+  var meta=app.querySelector(".meta span");if(meta)meta.textContent=R.cleared+" of "+R.total+" done";
+  var bar=app.querySelector(".bar");if(bar){bar.setAttribute("aria-valuenow",R.cleared);bar.firstChild.style.width=Math.round(R.cleared/R.total*100)+"%"}
+}
+function finish(){
+  S.rounds=(S.rounds||0)+1;var pct=R.total?Math.round(R.first/R.total*100):0;
+  if(S.best==null||pct>S.best)S.best=pct;S.last=Date.now();save();
+  var missed=Object.keys(R.missed).map(function(k){return R.missed[k]});
+  var word=pct>=90?"Nailed it":pct>=70?"Solid":pct>=50?"Getting there":"Good start";
+  var mastered=Q.filter(function(q){return box(q.id)>=2}).length;
+  var ans=function(q){return q.type==="tf"?(q.answer?"True":"False"):q.answer};
+  app.innerHTML='<section class="panel done anim"><div class="stamp'+(pct>=70?" good":"")+'">'+word+'</div>'+
+    '<p class="big">'+R.first+'<small> / '+R.total+'</small></p>'+
+    '<p class="sub">right on the first try'+(R.bestStreak>=3?", best run "+R.bestStreak+" in a row":"")+'. '+(missed.length?"You fixed every miss before the end.":"No misses at all.")+'</p>'+
+    (missed.length?'<h3 style="text-align:left;margin:0">The tricky ones</h3><ul class="tricky">'+missed.map(function(q){return '<li>'+esc(q.q.replace(/_{2,}/,"___"))+'<span class="a">'+esc(ans(q))+'</span></li>'}).join("")+'</ul>':'')+
+    '<div class="stack">'+(missed.length?'<button class="btn wide" id="again" type="button">Practice the tricky ones</button>':'')+
+    '<button class="btn '+(missed.length?"ghost ":"")+'wide" id="more" type="button">Next round</button>'+
+    (C.length?'<button class="btn ghost wide" id="cards" type="button">Flashcards</button>':'')+
+    '</div><p class="sub" style="margin-top:14px">Learned so far: '+mastered+' of '+Q.length+'. The ones you know come up less often, the shaky ones more.</p></section>';
+  sfx.done();
+  var a=$("#again",app);if(a)a.onclick=function(){startQuiz(shuffle(missed))};
+  $("#more",app).onclick=function(){startQuiz()};
+  var c=$("#cards",app);if(c)c.onclick=startCards;
+  focusFirst(".btn");
+}
+
+/* ---------- flashcards ---------- */
+var F;
+function startCards(){F={queue:shuffle(C),total:C.length,known:0,missed:{},cur:null,flipped:false,mode:"cards"};$("#homeBtn").hidden=false;R=null;nextCard()}
+function nextCard(){
+  if(!F.queue.length)return cardsDone();
+  F.cur=F.queue.shift();F.flipped=false;var again=!!F.missed[F.cur.id];
+  app.innerHTML=setBar(F.known,F.total,"Flashcards progress")+
+    '<div class="meta"><span>'+F.known+' of '+F.total+' known</span><span>'+(again?"This one came back":"")+'</span></div>'+
+    '<div class="flip" id="flip"><div class="flip-in"><button class="face front" type="button" id="face" aria-label="Card. Tap to flip."><span class="lines" aria-hidden="true"></span><span class="t">'+esc(F.cur.front)+'</span><span class="hint">Tap or press Space to flip</span></button>'+
+    '<div class="face back" aria-hidden="true"><span class="kicker">'+esc(F.cur.front)+'</span><span class="t" style="font-size:1.2rem">'+esc(F.cur.back)+'</span></div></div></div>'+
+    '<div class="two" id="judge" hidden><button class="btn ghost" type="button" id="nope">Not yet <kbd aria-hidden="true">1</kbd></button><button class="btn" type="button" id="yep">I knew it <kbd aria-hidden="true">2</kbd></button></div>';
+  $("#face").onclick=flipCard;focusFirst("#face");
+}
+function flipCard(){if(F.flipped)return;F.flipped=true;$("#flip").classList.add("on");var back=app.querySelector(".face.back");back.removeAttribute("aria-hidden");back.setAttribute("role","status");
+  $("#face").setAttribute("aria-hidden","true");$("#face").tabIndex=-1;
+  $("#judge").hidden=false;$("#nope").onclick=function(){judge(false)};$("#yep").onclick=function(){judge(true)};focusFirst("#yep")}
+function judge(k){var c=F.cur;if(k){F.known++;sfx.ok()}else{F.missed[c.id]=c;F.queue.splice(Math.min(F.queue.length,3),0,c);buzz(15)}nextCard()}
+function cardsDone(){
+  var miss=Object.keys(F.missed).length;
+  app.innerHTML='<section class="panel done anim"><div class="stamp good">All '+F.total+' known</div>'+
+    '<p class="sub">'+(miss?miss+" needed a second look. They're stuck now.":"Every card on the first flip.")+'</p>'+
+    '<div class="stack">'+(Q.length?'<button class="btn wide" id="quiz" type="button">Now quiz me</button>':'')+'<button class="btn ghost wide" id="again" type="button">Shuffle again</button></div></section>';
+  sfx.done();var q=$("#quiz",app);if(q)q.onclick=function(){startQuiz()};$("#again",app).onclick=startCards;focusFirst(".btn");
+}
+
+/* ---------- keyboard ---------- */
+document.addEventListener("keydown",function(e){
+  if(e.metaKey||e.ctrlKey||e.altKey)return;
+  var inField=e.target&&e.target.tagName==="INPUT";
+  if(R&&R.cur&&!R.answered&&!inField){
+    if(R.cur.type==="mc"&&/^[1-9]$/.test(e.key)){var i=+e.key-1;if(R.cur._opts&&i<R.cur._opts.length){e.preventDefault();answerMC(i)}return}
+    if(R.cur.type==="tf"){var k=e.key.toLowerCase();if(k==="t"){e.preventDefault();answerTF(true);return}if(k==="f"){e.preventDefault();answerTF(false);return}}
+  }
+  if(R&&R.answered&&e.key==="Enter"&&!inField){var n=$("#next");if(n&&document.activeElement!==n){e.preventDefault();n.click()}return}
+  if(F&&F.cur&&!R){
+    if(!F.flipped&&(e.key===" "||e.key==="Enter")&&document.activeElement&&document.activeElement.id==="face")return;
+    if(!F.flipped&&e.key===" "){e.preventDefault();flipCard();return}
+    if(F.flipped&&(e.key==="1"||e.key==="ArrowLeft")){e.preventDefault();judge(false);return}
+    if(F.flipped&&(e.key==="2"||e.key==="ArrowRight")){e.preventDefault();judge(true);return}
+  }
+});
+home();
+})();
+</script>
+</body>
+</html>

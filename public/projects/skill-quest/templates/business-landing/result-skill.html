@@ -1,0 +1,273 @@
+<!-- Look: Route map, because Dani comes to the dog. Call to action: "Text Dani to book". Fill in: two review spots and the photo frame. -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Two Blocks Dog Co., small-group dog walks, Jamaica Plain, Boston</title>
+<meta name="description" content="Dani Reyes walks dogs in groups of 4 or fewer around Pondside, Hyde Square and the Arboretum side of Jamaica Plain. Walks from $24.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@700;800&family=Rethink+Sans:wght@400;600&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "Two Blocks Dog Co.",
+  "description": "Small-group dog walks, solo walks and puppy drop-in visits in Jamaica Plain, Boston.",
+  "telephone": "+1-617-555-0143",
+  "email": "dani@twoblocksdog.co",
+  "areaServed": ["Pondside", "Hyde Square", "Arboretum side", "Jamaica Plain, Boston"],
+  "priceRange": "$20-$38",
+  "openingHoursSpecification": [
+    {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "09:00", "closes": "17:00"},
+    {"@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "08:00", "closes": "12:00"}
+  ]
+}
+</script>
+<style>
+:root{
+  --bg:#F3F6F1; --ink:#15281F; --muted:#4D5E54; --green:#1F5C42; --leash:#F5C518; --white:#fff;
+  --display:"Gabarito",Georgia,"Times New Roman",serif;
+  --body:"Rethink Sans",Georgia,"Times New Roman",serif;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:1.0625rem;line-height:1.55;padding-bottom:88px}
+::selection{background:var(--green);color:var(--white)}
+a{color:var(--green);text-underline-offset:.2em}
+:focus-visible{outline:3px solid var(--green);outline-offset:3px}
+.wrap{max-width:1120px;margin-inline:auto;padding-inline:20px}
+section{padding-block:48px;border-top:1px solid rgb(21 40 31 / .18)}
+h1,h2{font-family:var(--display);font-weight:800;line-height:1.05;margin:0 0 .5em;text-wrap:balance}
+h1{font-size:clamp(2.6rem,11vw,5.4rem);letter-spacing:-.01em}
+h2{font-size:clamp(1.7rem,5vw,2.4rem)}
+p{margin:0 0 1em}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:12px 24px;background:var(--leash);color:var(--ink);font-family:var(--body);font-weight:600;font-size:1.0625rem;text-decoration:none;border-radius:6px;border:2px solid var(--ink)}
+.btn:hover{background:#ffd940}
+.num{font-variant-numeric:tabular-nums}
+
+/* top */
+header{padding-block:32px 48px}
+.top{display:grid;gap:28px}
+.lead{font-size:1.25rem;max-width:30ch;margin-bottom:1.2em}
+.facts{margin:18px 0 0;color:var(--muted);font-variant-numeric:tabular-nums}
+.map{width:100%;aspect-ratio:13/10;display:block;background:#fff;border:1px solid rgb(21 40 31 / .2);border-radius:8px}
+.map text{font-family:var(--body);font-weight:600;font-size:15px;fill:var(--ink);paint-order:stroke;stroke:#fff;stroke-width:5px;stroke-linejoin:round}
+
+/* lists */
+.list{list-style:none;margin:0;padding:0}
+.list li{padding:12px 0;border-bottom:1px solid rgb(21 40 31 / .18)}
+.get li{display:block}
+.prices li{display:grid;grid-template-columns:1fr auto;gap:4px 16px;align-items:baseline}
+.prices .name{font-weight:600}
+.prices .what{grid-column:1;color:var(--muted);font-size:.975rem}
+.prices .cost{grid-row:1;grid-column:2;font-family:var(--display);font-weight:800;font-size:1.5rem;font-variant-numeric:tabular-nums}
+.two{display:grid;gap:12px 48px}
+.limit{color:var(--muted)}
+.proof-list{display:grid;gap:12px;margin-bottom:24px}
+.spot{border:2px dashed var(--green);background:#fff;color:var(--muted);font-style:italic;padding:18px;border-radius:6px;margin:0}
+.spots{display:grid;gap:14px}
+.steps{padding-left:1.3em;margin:0 0 24px}
+.steps li{padding:6px 0 6px 6px}
+.steps li::marker{font-family:var(--display);font-weight:800;color:var(--green)}
+table{border-collapse:collapse;width:100%;max-width:420px;font-variant-numeric:tabular-nums;margin-bottom:20px}
+th,td{text-align:left;padding:12px 0;border-bottom:1px solid rgb(21 40 31 / .18);font-weight:400}
+th{font-weight:600}
+td{text-align:right}
+.photo{aspect-ratio:4/3;border:2px dashed var(--green);background:#fff;display:flex;align-items:center;justify-content:center;text-align:center;padding:16px;color:var(--muted);font-style:italic;border-radius:6px}
+details{border-bottom:1px solid rgb(21 40 31 / .18);padding:4px 0}
+summary{cursor:pointer;min-height:44px;display:flex;align-items:center;font-weight:600}
+details p{color:var(--muted)}
+footer{padding-block:40px;border-top:1px solid rgb(21 40 31 / .18)}
+footer p{margin-bottom:.5em}
+
+/* mobile bar */
+.bar{position:fixed;inset:auto 0 0 0;background:var(--bg);border-top:1px solid rgb(21 40 31 / .25);padding:10px 20px;transform:translateY(110%);visibility:hidden;transition:none;z-index:5}
+.bar.on{transform:none;visibility:visible}
+.bar .btn{width:100%}
+
+@media (min-width:760px){
+  .wrap{padding-inline:32px}
+  section{padding-block:72px}
+  header{padding-block:56px 72px}
+  .top{grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+  .two{grid-template-columns:1fr 1fr}
+  .spots{grid-template-columns:1fr 1fr}
+  .bar{display:none}
+  body{padding-bottom:0}
+}
+
+@media (prefers-reduced-motion:no-preference){
+  #draw{stroke-dasharray:1;stroke-dashoffset:1;animation:draw 1.4s ease-out .2s forwards}
+  .dot{opacity:0;animation:pop .4s ease-out 1.6s forwards}
+  .bar{transition:transform .25s ease-out,visibility .25s}
+  @keyframes draw{to{stroke-dashoffset:0}}
+  @keyframes pop{to{opacity:1}}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap top">
+    <div>
+      <h1>Two Blocks Dog Co.</h1>
+      <p class="lead">Small-group dog walks in Jamaica Plain, weekdays and Saturday mornings.</p>
+      <a class="btn" id="cta" href="sms:+16175550143?&body=Hi%20Dani%2C%20I%27d%20like%20to%20book%20a%20meet%20and%20greet.%0ADog%20name%20and%20age%3A%0AWalk%20I%27m%20after%3A%0AMy%20street%3A">Text Dani to book</a>
+      <p class="facts">Walks from $24. Pondside, Hyde Square, Arboretum side. Closed Sundays.</p>
+    </div>
+    <svg class="map" viewBox="0 0 650 500" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Sketch map of the walking route through Hyde Square, Pondside and the Arboretum side of Jamaica Plain">
+      <defs>
+        <mask id="reveal" maskUnits="userSpaceOnUse" x="0" y="0" width="650" height="500">
+          <path id="draw" pathLength="1" d="M95 120 C190 150 230 230 320 255 C410 280 470 330 540 400" fill="none" stroke="#fff" stroke-width="12" stroke-linecap="round"/>
+        </mask>
+      </defs>
+      <g stroke="#4D5E54" stroke-opacity=".25" stroke-width="2" fill="none">
+        <path d="M0 80H650M0 190H650M0 300H650M0 410H650"/>
+        <path d="M70 0V500M200 0V500M330 0V500M460 0V500M590 0V500"/>
+        <path d="M0 440L650 330" />
+      </g>
+      <path d="M230 285 C250 250 330 240 390 270 C430 295 420 340 360 350 C290 360 215 335 230 285Z" fill="#1F5C42" fill-opacity=".22" stroke="#1F5C42" stroke-width="2"/>
+      <path d="M440 380 C480 350 560 360 610 400 C630 430 600 470 540 475 C480 478 420 430 440 380Z" fill="#1F5C42" fill-opacity=".22" stroke="#1F5C42" stroke-width="2"/>
+      <text x="318" y="320" text-anchor="middle">Jamaica Pond</text>
+      <path d="M95 120 C190 150 230 230 320 255 C410 280 470 330 540 400" fill="none" stroke="#1F5C42" stroke-width="4" stroke-linecap="round" stroke-dasharray="2 11" mask="url(#reveal)"/>
+      <g class="dot" fill="#1F5C42" stroke="#fff" stroke-width="3">
+        <circle cx="95" cy="120" r="8"/>
+        <circle cx="320" cy="255" r="8"/>
+        <circle cx="540" cy="400" r="8"/>
+      </g>
+      <g class="dot">
+        <text x="95" y="96" text-anchor="start">Hyde Square</text>
+        <text x="320" y="228" text-anchor="middle">Pondside</text>
+        <text x="540" y="445" text-anchor="middle">Arboretum side</text>
+      </g>
+    </svg>
+  </div>
+</header>
+
+<main>
+  <section id="get">
+    <div class="wrap">
+      <h2>What you get</h2>
+      <ul class="list get">
+        <li>Max 4 dogs in a group, always.</li>
+        <li>A GPS map of the route and a photo after every walk.</li>
+        <li>Solo walks if your dog likes a quiet one.</li>
+        <li>Puppy drop-ins: potty break and feeding.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="prices">
+    <div class="wrap">
+      <h2>Prices</h2>
+      <ul class="list prices">
+        <li><span class="name">Group walk, 30 min</span><span class="cost">$24</span></li>
+        <li><span class="name">Group walk, 60 min</span><span class="cost">$38</span></li>
+        <li><span class="name">Solo walk, 30 min</span><span class="what">Just your dog.</span><span class="cost">$30</span></li>
+        <li><span class="name">Puppy drop-in visit</span><span class="what">Potty break and feeding.</span><span class="cost">$20</span></li>
+        <li><span class="name">Second dog, same home</span><span class="cost">+$8</span></li>
+      </ul>
+      <p style="margin-top:16px">The first meet and greet is free.</p>
+    </div>
+  </section>
+
+  <section id="for">
+    <div class="wrap">
+      <h2>Who it's for</h2>
+      <p>Dogs over 1 year join group walks. Puppies get their own drop-in visits.</p>
+      <p class="limit">I walk in Jamaica Plain only.</p>
+    </div>
+  </section>
+
+  <section id="proof">
+    <div class="wrap">
+      <h2>Why you can trust me with your dog</h2>
+      <ul class="list proof-list">
+        <li>Insured.</li>
+        <li>Pet CPR certified.</li>
+        <li>About 22 regular dogs.</li>
+      </ul>
+      <div class="spots">
+        <p class="spot">Your first review goes here. Ask a regular for two sentences and their first name.</p>
+        <p class="spot">Your first review goes here. Ask a regular for two sentences and their first name.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="book">
+    <div class="wrap two">
+      <div>
+        <h2>How to book</h2>
+        <ol class="steps">
+          <li>Text 617-555-0143.</li>
+          <li>Free meet and greet, about 20 min at your place.</li>
+          <li>First walk.</li>
+        </ol>
+        <a class="btn" href="sms:+16175550143?&body=Hi%20Dani%2C%20I%27d%20like%20to%20book%20a%20meet%20and%20greet.%0ADog%20name%20and%20age%3A%0AWalk%20I%27m%20after%3A%0AMy%20street%3A">Text Dani to book</a>
+      </div>
+      <!-- To swap in a photo: replace this div with <img src="dani-and-dogs.jpg" alt="Dani walking four dogs near Jamaica Pond" width="800" height="600"> -->
+      <div class="photo" role="img" aria-label="Photo placeholder">Photo of Dani with a group on the Pond path goes here.</div>
+    </div>
+  </section>
+
+  <section id="hours">
+    <div class="wrap">
+      <h2>Where and when</h2>
+      <table>
+        <caption style="text-align:left;position:absolute;left:-9999px">Hours</caption>
+        <tbody>
+          <tr><th scope="row">Monday to Friday</th><td>9am to 5pm</td></tr>
+          <tr><th scope="row">Saturday</th><td>8am to 12pm</td></tr>
+          <tr><th scope="row">Sunday</th><td>Closed</td></tr>
+        </tbody>
+      </table>
+      <p>Pondside, Hyde Square and the Arboretum side, near Jamaica Pond.</p>
+      <p><a href="https://www.google.com/maps/search/?api=1&query=Jamaica%20Pond%2C%20Jamaica%20Plain%2C%20Boston%20MA">Open in Maps</a></p>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="wrap">
+      <h2>Questions</h2>
+      <details>
+        <summary>What if it rains?</summary>
+        <p>In pouring rain or a thunderstorm we do a shorter walk. I text you first.</p>
+      </details>
+      <details>
+        <summary>What does the meet and greet involve?</summary>
+        <p>It is free and takes about 20 min at your place.</p>
+      </details>
+      <details>
+        <summary>Can my puppy come on a group walk?</summary>
+        <p>Not yet. Group walks are for dogs over 1 year. Puppies get a drop-in visit.</p>
+      </details>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p><a href="sms:+16175550143?&body=Hi%20Dani%2C%20I%27d%20like%20to%20book%20a%20meet%20and%20greet.%0ADog%20name%20and%20age%3A%0AWalk%20I%27m%20after%3A%0AMy%20street%3A">Text Dani to book</a> at 617-555-0143.</p>
+    <p>Or email <a href="mailto:dani@twoblocksdog.co?subject=Dog%20walk%20in%20Jamaica%20Plain&body=Hi%20Dani%2C%0ADog%20name%20and%20age%3A%0AWalk%20I%27m%20after%3A%0AMy%20street%3A">dani@twoblocksdog.co</a>.</p>
+    <p class="limit">Two Blocks Dog Co. &middot; Dani Reyes &middot; Jamaica Plain, Boston</p>
+  </div>
+</footer>
+
+<div class="bar" id="bar">
+  <a class="btn" href="sms:+16175550143?&body=Hi%20Dani%2C%20I%27d%20like%20to%20book%20a%20meet%20and%20greet.%0ADog%20name%20and%20age%3A%0AWalk%20I%27m%20after%3A%0AMy%20street%3A">Text Dani to book</a>
+</div>
+
+<script>
+(function(){
+  var top = document.querySelector('header'), bar = document.getElementById('bar');
+  if(!('IntersectionObserver' in window)){ bar.classList.add('on'); return; }
+  new IntersectionObserver(function(e){
+    bar.classList.toggle('on', !e[0].isIntersecting);
+  }).observe(top);
+})();
+</script>
+</body>
+</html>
