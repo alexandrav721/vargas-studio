@@ -79,7 +79,7 @@
     {
       "date": "2026-11-21",
       "projectId": "skill-quest",
-      "text": "Skill Quest's scorer is real: a Claude Code plugin scored idea-innovate on hidden tasks against plain Claude (Epic 81). The deck now says Anthropic already scores skills and Skill Quest makes it fun for beginners."
+      "text": "Skills Made EZ's scorer is real: a Claude Code plugin scored idea-innovate on hidden tasks against plain Claude (Epic 81). The deck now says Anthropic already scores skills and Skills Made EZ makes it fun for beginners."
     },
     {
       "date": "2026-11-21",
@@ -89,7 +89,7 @@
     {
       "date": "2026-11-21",
       "projectId": "skill-quest",
-      "text": "Skill Quest added: landing + A/B variants, clickable prototype and pitch deck for a game that teaches AI skill building."
+      "text": "Skills Made EZ added: landing + A/B variants, clickable prototype and pitch deck for a game that teaches AI skill building."
     },
     {
       "date": "2026-11-20",
@@ -810,11 +810,11 @@
       "pays": "Sponsored battles, Pro at $8/mo, Teams at $20/seat.",
       "status": "active",
       "updated": "2026-11-22",
-      "summary": "Quests walk beginners through building real Claude skills. Every skill gets tested on hidden tasks against plain Claude by a blind judge and becomes a shareable card (Power, Lift, Clarity, Speed, Finds it), and battles put skills head to head. Anthropic already scores skills; Skill Quest makes it fun for beginners. Money plan: sponsored battles, then Pro at $8/mo, then Teams at $20/seat.",
+      "summary": "Quests walk beginners through building real Claude skills. Every skill gets tested on hidden tasks against plain Claude by a blind judge and becomes a shareable card (Power, Lift, Clarity, Speed, Finds it), and battles put skills head to head. Anthropic already scores skills; Skills Made EZ makes it fun for beginners. Money plan: sponsored battles, then Pro at $8/mo, then Teams at $20/seat.",
       "latest": "New: Build Kit, a game that turns an app idea into the plan AI coding tools read, and a worker prototype. The scorer works as a Claude Code plugin (idea-innovate scored Epic 81) but isn't public yet.",
       "visuals": {
         "website": {
-          "label": "Skill Quest home",
+          "label": "Skills Made EZ home",
           "detail": "Quest \u00b7 Score \u00b7 Battle story, pricing with a Pro fake door, FAQ.",
           "url": "/projects/skill-quest/landing/index.html",
           "state": "live"
