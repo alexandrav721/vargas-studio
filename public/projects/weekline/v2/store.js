@@ -33,7 +33,7 @@ export function fmtTime(h, mi) { return `${h % 12 || 12}:${String(mi).padStart(2
 const KEY = "weekline.v2";
 const blank = () => ({
   v: 1, device: rid(16), profile: null, signals: [], locks: {}, skips: {}, checkins: {}, kept: {},
-  invites: [], polls: [], local: { rsvps: {}, votes: {} }, myRsvp: {}, myVote: {}, uploadedFor: null, friendCounts: {},
+  invites: [], polls: [], local: { rsvps: {}, votes: {} }, myRsvp: {}, myVote: {}, uploadedFor: null, friendCounts: {}, calOk: {},
 });
 function rid(n) { const a = new Uint8Array(n); crypto.getRandomValues(a); return Array.from(a, (b) => (b % 36).toString(36)).join(""); }
 function load() {
@@ -41,7 +41,7 @@ function load() {
   return blank();
 }
 export const S = load();
-export const session = { mode: "unknown", user: null, liveStatus: "idle", liveCount: 0, note: "" };
+export const session = { mode: "unknown", user: null, liveStatus: "idle", liveCount: 0, note: "", google: { loaded: false, configured: false, connected: false } };
 export function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { /* storage blocked: keeps working in memory */ } }
 export function resetLocal() { const d = S.device; Object.keys(S).forEach((k) => delete S[k]); Object.assign(S, blank(), { device: d }); save(); }
 
@@ -117,11 +117,60 @@ export async function signIn(email, password) {
 }
 export async function signOut() {
   try { await api("POST", "signout"); } catch (e) { /* fine */ }
-  session.user = null; resetLocal();
+  session.user = null; resetLocal(); forgetBusy();
 }
 export async function deleteAccount() {
   if (session.user) await api("DELETE", "me");
-  session.user = null; resetLocal();
+  session.user = null; resetLocal(); forgetBusy();
+}
+
+/* ---------- Google Calendar: busy times only, never what they are ---------- */
+const busyMem = new Map(); // range key -> [[startWall, endWall], ...] in New York wall clock
+function forgetBusy() { busyMem.clear(); session.google.connected = false; }
+export async function googleStatus() {
+  try {
+    const r = await api("GET", "google/status");
+    session.google = { loaded: true, configured: !!r.configured, connected: !!r.connected };
+  } catch (e) { session.google = { loaded: true, configured: false, connected: false }; }
+  if (!session.google.connected) busyMem.clear();
+  return session.google;
+}
+export async function disconnectGoogle() {
+  await api("POST", "google/disconnect");
+  forgetBusy();
+}
+const NYW = new Intl.DateTimeFormat("en-CA", { timeZone: "America/New_York", hourCycle: "h23", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit" });
+/** An instant -> "YYYY-MM-DDTHH:MM" on New York's clock, so it compares as text with row times. */
+export function nyWall(iso) {
+  const p = Object.fromEntries(NYW.formatToParts(new Date(iso)).map((x) => [x.type, x.value]));
+  return `${p.year}-${p.month}-${p.day}T${p.hour}:${p.minute}`;
+}
+/** Busy blocks for New York dates first..last (inclusive). Cached in memory per range. null = not connected. */
+export async function fetchBusy(first, last) {
+  const key = first + "_" + last;
+  if (busyMem.has(key)) return busyMem.get(key);
+  // Pad a day each side in UTC so the whole New York range is covered; extra blocks never match a row.
+  const from = addDays(first, -1) + "T00:00:00Z", to = addDays(last, 2) + "T00:00:00Z";
+  const r = await api("GET", `google/busy?from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}`);
+  if (r.connected === false) { forgetBusy(); return null; }
+  const list = (r.busy || []).map((b) => [nyWall(b.start), nyWall(b.end)]);
+  busyMem.set(key, list);
+  return list;
+}
+export const overlaps = (busy, a, b) => !!busy && busy.some(([s, e]) => s < b && e > a);
+const hm = (h) => { const hh = Math.min(23, Math.floor(h)), mm = h >= 24 ? 59 : Math.round((h % 1) * 60); return `${String(hh).padStart(2, "0")}:${String(Math.min(59, mm)).padStart(2, "0")}`; };
+/** The evening window (5 to 11 pm) on a date. */
+export const eveningBusy = (busy, date) => overlaps(busy, `${date}T17:00`, `${date}T23:00`);
+/** Does a row's own time (start to end, or 2 hours) hit a busy block? */
+export function rowBusy(busy, ev) {
+  const start = ev.h + (ev.mi || 0) / 60;
+  const end = ev.endH && ev.endH > start ? ev.endH : start + 2;
+  return overlaps(busy, `${ev.date}T${hm(start)}`, `${ev.date}T${hm(Math.min(24, end))}`);
+}
+export function lockBusy(busy, l) {
+  const s = String(l.start || "").slice(0, 16), e0 = String(l.end || "").slice(0, 16);
+  if (!s) return false;
+  return overlaps(busy, s, e0 > s ? e0 : `${l.date}T${hm(Math.min(24, (l.h ?? 18) + (l.mi || 0) / 60 + 2))}`);
 }
 async function uploadOnce() {
   if (!session.user || S.uploadedFor === session.user.id) return;
@@ -371,7 +420,7 @@ export function planDates(p, today) {
   return DAYS.map((_, i) => addDays(ws, i));
 }
 
-export function buildWeek(p, events, today) {
+export function buildWeek(p, events, today, busy = null) {
   const dates = planDates(p, today);
   const m = model();
   const visiting = !!(p.visit && p.visit.from);
@@ -389,13 +438,26 @@ export function buildWeek(p, events, today) {
 
   const days = dates.map((date) => {
     const lock = Object.values(S.locks).find((l) => l.date === date);
-    const cands = scored.filter((c) => c.ev.date === date).sort((a, b) => b.score - a.score);
-    return { date, d: dow(date), holiday: HOLIDAYS[date] || null, isFree: free.includes(dow(date)), lock, cands, past: date < today };
+    let cands = scored.filter((c) => c.ev.date === date).sort((a, b) => b.score - a.score);
+    const isFree = free.includes(dow(date));
+    // Google Calendar: weeknights are busy if anything overlaps 5 to 11 pm; weekends drop only the rows that clash.
+    let calBusy = false;
+    if (busy && !lock && isFree && !HOLIDAYS[date] && date >= today && !S.calOk[date]) {
+      if (dow(date) < 5) calBusy = eveningBusy(busy, date);
+      else {
+        const ok = cands.filter((c) => !rowBusy(busy, c.ev));
+        calBusy = cands.length > 0 && ok.length === 0;
+        cands = ok;
+      }
+      if (calBusy) cands = [];
+    }
+    const clash = !!(busy && lock && date >= today && lockBusy(busy, lock));
+    return { date, d: dow(date), holiday: HOLIDAYS[date] || null, isFree, lock, cands, past: date < today, calBusy, clash };
   });
 
   const goalsSet = p.goals || [];
   const targetSum = goalsSet.reduce((a, g) => a + (GOALS.find((x) => x.id === g)?.target || 0), 0);
-  const usable = days.filter((d) => d.isFree && !d.holiday && (!d.past || d.lock));
+  const usable = days.filter((d) => d.isFree && !d.holiday && !d.calBusy && (!d.past || d.lock));
   const y = goalsSet.length ? Math.min(targetSum, usable.length) : usable.length;
   const keepOpen = goalsSet.includes("calm") ? Math.min(2, usable.length) : 0;
   const lockedCount = usable.filter((d) => d.lock).length;
@@ -427,7 +489,7 @@ export function buildWeek(p, events, today) {
     if (d.holiday) d.suggest = d.suggest.filter((c) => c.ev.cost === 0 && !c.ev.tags.includes("nightlife") && c.ev.h < 18)
       .sort((a, b) => (b.ev.tags.includes("calm") || b.ev.tags.includes("walk") ? 1 : 0) - (a.ev.tags.includes("calm") || a.ev.tags.includes("walk") ? 1 : 0)).slice(0, 2);
     else d.suggest = d.suggest.slice(0, 3);
-    d.kind = d.lock ? "lock" : d.holiday ? "holiday" : !d.isFree ? "busy" : d.plan ? "plan" : "free";
+    d.kind = d.lock ? "lock" : d.holiday ? "holiday" : !d.isFree ? "busy" : d.calBusy ? "cal" : d.plan ? "plan" : "free";
   }
   // goal nights: planned or locked rows that fit a goal, plus nights kept free for "Feel less busy"
   let x = days.filter((d) => (d.kind === "lock" && fitsGoal(d.lock, goalsSet)) || (d.kind === "plan" && d.plan.goalFit >= 1)).length;

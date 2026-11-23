@@ -405,3 +405,15 @@ a.chip { text-decoration: none; }
 .weekacts .btn { padding: 12px 10px; font-size: 15px; }
 .field { min-width: 0; }
 .field input { width: 100%; min-width: 0; }
+
+/* ---------- Google Calendar busy times ---------- */
+.srcline.cal { justify-content: flex-start; }
+.day.cal .calrow { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; }
+.day.cal .ti { display: inline-flex; align-items: center; gap: 6px; font-family: var(--serif); font-style: italic; font-size: 17px; color: var(--ink-2); }
+.clash { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; color: #8E2A14; margin-bottom: 4px; }
+.gcal { display: grid; gap: 12px; padding: 14px 0 4px; }
+.gcal p { font-size: 15px; line-height: 1.45; }
+.gcal .btn { justify-self: start; }
+.gcal.off { grid-template-columns: 1fr auto; align-items: center; color: var(--ink-2); padding-bottom: 10px; border-bottom: 1px solid var(--rule); }
+.gcal.off small { font-size: 12px; white-space: nowrap; }
+.gcal.on p b { font-weight: 500; color: var(--live); }

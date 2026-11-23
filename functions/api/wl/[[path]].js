@@ -7,6 +7,11 @@
 // Calendar   POST feed {reset?} -> {url, webcal} · GET ics/<token>.ics
 // Crew       POST invites {event} · GET invites/<token> · POST invites/<token>/rsvp {name, status, device}
 //            POST polls {question, options} · GET polls/<token> · POST polls/<token>/vote {option, device}
+// Google     GET google/status · GET google/start (302 to Google) · GET google/callback (302 back to #/you)
+//            GET google/busy?from=<RFC3339>&to=<RFC3339> -> {busy:[{start,end}]} · POST google/disconnect
+//            Scope is calendar.freebusy only: busy blocks, never event names. Secrets: GOOGLE_CLIENT_ID,
+//            GOOGLE_CLIENT_SECRET, WL_TOKEN_KEY (base64, 32 bytes, AES-GCM for refresh tokens at rest).
+//            GOOGLE_MOCK=1 (localhost only) fakes Google for local tests.
 //
 // Passwords and tokens are never logged. Session tokens are stored only as SHA-256 hashes.
 
@@ -155,6 +160,7 @@ function originOk(req, path) {
   const o = req.headers.get('origin');
   const readOnly = req.method === 'GET' || req.method === 'HEAD';
   if (readOnly && path.startsWith('ics/')) return true; // calendar apps fetch the feed from anywhere
+  if (readOnly && (path === 'google/start' || path === 'google/callback')) return true; // top-level navigations; state + session protect them
   if (!o) return readOnly; // browsers always send Origin on POST/PUT/DELETE
   return ALLOWED_ORIGINS.some((r) => r.test(o));
 }
@@ -333,6 +339,255 @@ function optionalActor(user, v) {
 }
 const TOKEN = /^[A-Za-z0-9_-]{16,64}$/;
 
+// ---------- Google Calendar (busy times only) ----------
+
+const G_SCOPE = 'https://www.googleapis.com/auth/calendar.freebusy';
+const G_AUTH = 'https://accounts.google.com/o/oauth2/v2/auth';
+const G_TOKEN = 'https://oauth2.googleapis.com/token';
+const G_REVOKE = 'https://oauth2.googleapis.com/revoke';
+const G_FREEBUSY = 'https://www.googleapis.com/calendar/v3/freeBusy';
+const G_MAX_DAYS = 62;
+const YOU_URL = APP_PATH + '#/you';
+const G_DOWN = "Google Calendar didn't answer. Try again soon.";
+
+const b64e = (buf) => btoa(String.fromCharCode(...new Uint8Array(buf)));
+const b64d = (s) => Uint8Array.from(atob(s), (c) => c.charCodeAt(0));
+const b64url = (buf) => b64e(buf).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+
+/** All three secrets present (and the key really is 32 bytes), plus KV for the one-time state. */
+function gConfigured(env) {
+  if (!env.GOOGLE_CLIENT_ID || !env.GOOGLE_CLIENT_SECRET || !env.WL_TOKEN_KEY || !env.BUILDS) return false;
+  try { return b64d(String(env.WL_TOKEN_KEY).trim()).length === 32; } catch { return false; }
+}
+/** Fake Google for local tests. Only when GOOGLE_MOCK is exactly "1" AND the request is to localhost. */
+function gMock(env, req) {
+  return env.GOOGLE_MOCK === '1' && ['127.0.0.1', 'localhost'].includes(new URL(req.url).hostname);
+}
+async function aesKey(env) {
+  return crypto.subtle.importKey('raw', b64d(String(env.WL_TOKEN_KEY).trim()), 'AES-GCM', false, ['encrypt', 'decrypt']);
+}
+/** Encrypt a token for one user (user id bound as additional data, so rows can't be swapped). */
+async function seal(env, userId, plain) {
+  const iv = crypto.getRandomValues(new Uint8Array(12));
+  const ct = await crypto.subtle.encrypt({ name: 'AES-GCM', iv, additionalData: enc.encode('wl-google:' + userId) }, await aesKey(env), enc.encode(plain));
+  return { enc: b64e(ct), iv: b64e(iv) };
+}
+async function unseal(env, userId, encB64, ivB64) {
+  const pt = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: b64d(ivB64), additionalData: enc.encode('wl-google:' + userId) }, await aesKey(env), b64d(encB64));
+  return new TextDecoder().decode(pt);
+}
+function redirect(location) {
+  return new Response(null, { status: 302, headers: { location, 'cache-control': 'no-store', 'referrer-policy': 'no-referrer' } });
+}
+/** POST a form to Google. Returns {ok, status, data}; never throws on a Google error body. */
+async function gForm(url, params) {
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: { 'content-type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams(params).toString(),
+    signal: AbortSignal.timeout(8000),
+  });
+  let data = {};
+  try { data = await res.json(); } catch { /* revoke answers with an empty body */ }
+  return { ok: res.ok, status: res.status, data };
+}
+const gatKey = (userId) => `wl:gat:${userId}`;
+const gRow = (env, userId) => env.WL.prepare('SELECT enc_refresh, iv, scope, connected_at FROM google_tokens WHERE user_id = ?').bind(userId).first();
+
+async function cacheAccess(env, userId, token, expiresIn) {
+  const secs = Math.max(0, Math.floor(Number(expiresIn) || 3600) - 60);
+  if (secs < 60 || !token) return; // KV's shortest TTL is 60 s
+  const sealed = await seal(env, userId, token);
+  await env.BUILDS.put(gatKey(userId), JSON.stringify({ ...sealed, exp: Date.now() + secs * 1000 }), { expirationTtl: secs });
+}
+/** A fresh access token, from the KV cache or by refreshing. Returns null when Google says the grant is gone. */
+async function gAccess(env, userId, row, { mock, force = false } = {}) {
+  if (mock) return 'mock-access';
+  if (!force) {
+    const c = await env.BUILDS.get(gatKey(userId), 'json');
+    if (c && c.exp > Date.now()) {
+      try { return await unseal(env, userId, c.enc, c.iv); } catch { /* key changed: refresh below */ }
+    }
+  }
+  const refresh = await unseal(env, userId, row.enc_refresh, row.iv);
+  const r = await gForm(G_TOKEN, { client_id: env.GOOGLE_CLIENT_ID, client_secret: env.GOOGLE_CLIENT_SECRET, refresh_token: refresh, grant_type: 'refresh_token' });
+  if (!r.ok) {
+    if (r.data && r.data.error === 'invalid_grant') return null;
+    throw new Bad(G_DOWN, 502);
+  }
+  await cacheAccess(env, userId, r.data.access_token, r.data.expires_in);
+  return r.data.access_token;
+}
+async function gForget(env, userId) {
+  await env.WL.prepare('DELETE FROM google_tokens WHERE user_id = ?').bind(userId).run();
+  if (env.BUILDS) await env.BUILDS.delete(gatKey(userId));
+}
+/** Tell Google to drop the grant. Best effort: never blocks a disconnect or account delete. */
+async function gRevoke(env, req, userId, row) {
+  if (!row || gMock(env, req) || !gConfigured(env)) return;
+  try {
+    const refresh = await unseal(env, userId, row.enc_refresh, row.iv);
+    await gForm(G_REVOKE, { token: refresh });
+  } catch { /* already revoked, network, or old key */ }
+}
+const RFC3339 = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2}(\.\d{1,9})?)?(Z|[+-]\d{2}:\d{2})$/;
+function instant(v, label) {
+  const s = typeof v === 'string' ? v.trim() : '';
+  const t = RFC3339.test(s) ? Date.parse(s) : NaN;
+  if (!Number.isFinite(t)) throw new Bad(`${cap(label)} should look like 2026-11-23T00:00:00Z.`);
+  return t;
+}
+
+// New York wall clock -> UTC, for the mock's fake blocks.
+function nyOffsetMin(ms) {
+  const p = Object.fromEntries(
+    new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', hourCycle: 'h23', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' })
+      .formatToParts(new Date(ms)).map((x) => [x.type, x.value])
+  );
+  return Math.round((Date.UTC(+p.year, +p.month - 1, +p.day, +p.hour, +p.minute, +p.second) - ms) / 60000);
+}
+function nyToUtc(y, mo, d, h) {
+  const guess = Date.UTC(y, mo, d, h);
+  return guess - nyOffsetMin(guess) * 60000;
+}
+/** Deterministic fake week: Mon and Thu 6 to 9 pm, Sat 1 to 4 pm (New York). */
+function mockBusy(fromMs, toMs) {
+  const out = [];
+  const plan = { 1: [18, 21], 4: [18, 21], 6: [13, 16] };
+  for (let t = fromMs - 864e5; t < toMs + 864e5; t += 864e5) {
+    const d = new Date(t);
+    const hours = plan[d.getUTCDay()];
+    if (!hours) continue;
+    const s = nyToUtc(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate(), hours[0]);
+    const e = nyToUtc(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate(), hours[1]);
+    if (s < toMs && e > fromMs) out.push({ start: new Date(s).toISOString(), end: new Date(e).toISOString() });
+  }
+  return out;
+}
+
+async function googleRoutes(env, req, path, m, origin) {
+  const mock = gMock(env, req);
+  const configured = gConfigured(env);
+
+  if (path === 'google/status' && m === 'GET') {
+    const u = await currentUser(env, req);
+    const row = u && configured ? await gRow(env, u.id) : null;
+    return json({ configured, connected: !!row, ...(row ? { connected_at: row.connected_at } : {}) });
+  }
+
+  if (path === 'google/start' && m === 'GET') {
+    const nav = req.headers.get('sec-fetch-mode') === 'navigate';
+    const fail = (why, status) => (nav ? redirect(`${origin}${YOU_URL}?google=error`) : json({ error: why }, status));
+    if (!configured) return fail("Google Calendar isn't set up on Weekline yet.", 409);
+    const u = await currentUser(env, req);
+    if (!u) return fail('Sign in first.', 401);
+    await take(env, req, 'g-start', 20, 600, 'Too many tries. Wait 10 minutes and try again.');
+    const state = randToken(24);
+    const verifier = randToken(48);
+    const challenge = b64url(await crypto.subtle.digest('SHA-256', enc.encode(verifier)));
+    await env.BUILDS.put(`wl:gstate:${state}`, JSON.stringify({ u: u.id, v: verifier }), { expirationTtl: 600 });
+    const redirectUri = `${origin}/api/wl/google/callback`;
+    if (mock) return redirect(`${redirectUri}?${new URLSearchParams({ code: 'mock-code', state })}`);
+    const q = new URLSearchParams({
+      response_type: 'code', client_id: env.GOOGLE_CLIENT_ID, redirect_uri: redirectUri, scope: G_SCOPE,
+      access_type: 'offline', prompt: 'consent', include_granted_scopes: 'false', state,
+      code_challenge: challenge, code_challenge_method: 'S256',
+    });
+    return redirect(`${G_AUTH}?${q}`);
+  }
+
+  if (path === 'google/callback' && m === 'GET') {
+    const done = (result) => redirect(`${origin}${YOU_URL}?google=${result}`);
+    try {
+      if (!configured) return done('error');
+      const sp = new URL(req.url).searchParams;
+      const state = sp.get('state') || '';
+      if (!/^[A-Za-z0-9_-]{16,64}$/.test(state)) return done('error');
+      const key = `wl:gstate:${state}`;
+      const saved = await env.BUILDS.get(key, 'json');
+      if (!saved) return done('error');
+      await env.BUILDS.delete(key); // one time only
+      const u = await currentUser(env, req);
+      if (!u || u.id !== saved.u) return done('error');
+      if (sp.get('error')) return done(sp.get('error') === 'access_denied' ? 'denied' : 'error');
+      const code = sp.get('code') || '';
+      if (!code || code.length > 2048) return done('error');
+      let refresh, scope;
+      if (mock) {
+        refresh = 'mock-refresh-' + randHex(16);
+        scope = G_SCOPE;
+      } else {
+        const r = await gForm(G_TOKEN, {
+          code, client_id: env.GOOGLE_CLIENT_ID, client_secret: env.GOOGLE_CLIENT_SECRET,
+          redirect_uri: `${origin}/api/wl/google/callback`, grant_type: 'authorization_code', code_verifier: saved.v,
+        });
+        if (!r.ok || !r.data.refresh_token) return done('error');
+        scope = String(r.data.scope || '');
+        if (!scope.split(/\s+/).includes(G_SCOPE)) {
+          // They unticked the calendar box on Google's screen: nothing useful was shared.
+          await gForm(G_REVOKE, { token: r.data.refresh_token }).catch(() => {});
+          return done('denied');
+        }
+        refresh = r.data.refresh_token;
+        await cacheAccess(env, u.id, r.data.access_token, r.data.expires_in);
+      }
+      const sealed = await seal(env, u.id, refresh);
+      await env.WL.prepare(
+        'INSERT INTO google_tokens (user_id, enc_refresh, iv, scope, connected_at) VALUES (?, ?, ?, ?, ?) ' +
+          'ON CONFLICT(user_id) DO UPDATE SET enc_refresh = excluded.enc_refresh, iv = excluded.iv, scope = excluded.scope, connected_at = excluded.connected_at'
+      ).bind(u.id, sealed.enc, sealed.iv, scope.slice(0, 500), Date.now()).run();
+      return done('connected');
+    } catch (e) {
+      console.error('weekline google callback:', e && e.name, e && e.message);
+      return done('error');
+    }
+  }
+
+  if (path === 'google/busy' && m === 'GET') {
+    const u = await needUser(env, req);
+    if (!configured) throw new Bad("Google Calendar isn't set up on Weekline yet.", 409);
+    const sp = new URL(req.url).searchParams;
+    const from = instant(sp.get('from'), 'from');
+    const to = instant(sp.get('to'), 'to');
+    if (to <= from) throw new Bad('"to" has to be after "from".');
+    if (to - from > G_MAX_DAYS * 864e5) throw new Bad(`Ask for ${G_MAX_DAYS} days or fewer.`);
+    await take(env, req, 'g-busy', 120, 3600, 'Too many calendar checks. Try again in an hour.');
+    const row = await gRow(env, u.id);
+    if (!row) return json({ connected: false, busy: [] });
+    if (mock) return json({ connected: true, busy: mockBusy(from, to) });
+    let token = await gAccess(env, u.id, row);
+    if (!token) { await gForget(env, u.id); return json({ connected: false, busy: [] }); }
+    const body = JSON.stringify({ timeMin: new Date(from).toISOString(), timeMax: new Date(to).toISOString(), timeZone: 'America/New_York', items: [{ id: 'primary' }] });
+    const ask = (t) => fetch(G_FREEBUSY, { method: 'POST', headers: { authorization: `Bearer ${t}`, 'content-type': 'application/json' }, body, signal: AbortSignal.timeout(8000) });
+    let res = await ask(token);
+    if (res.status === 401) {
+      token = await gAccess(env, u.id, row, { force: true });
+      if (!token) { await gForget(env, u.id); return json({ connected: false, busy: [] }); }
+      res = await ask(token);
+    }
+    if (!res.ok) throw new Bad(G_DOWN, 502);
+    const data = await res.json().catch(() => ({}));
+    const cal = data.calendars && data.calendars.primary;
+    if (!cal || (Array.isArray(cal.errors) && cal.errors.length)) throw new Bad(G_DOWN, 502);
+    const busy = [];
+    for (const b of Array.isArray(cal.busy) ? cal.busy.slice(0, 1000) : []) {
+      const s = Date.parse(b && b.start), e = Date.parse(b && b.end);
+      if (Number.isFinite(s) && Number.isFinite(e) && e > s) busy.push({ start: new Date(s).toISOString(), end: new Date(e).toISOString() });
+    }
+    return json({ connected: true, busy });
+  }
+
+  if (path === 'google/disconnect' && m === 'POST') {
+    const u = await needUser(env, req);
+    const row = await gRow(env, u.id);
+    await gRevoke(env, req, u.id, row);
+    await gForget(env, u.id);
+    return json({ connected: false });
+  }
+
+  return null;
+}
+
 // ---------- routes ----------
 
 async function handle({ request: req, env, params }) {
@@ -342,6 +597,11 @@ async function handle({ request: req, env, params }) {
   const origin = new URL(req.url).origin;
   if (!originOk(req, path)) return json({ error: 'Not allowed.' }, 403);
   if (!env.WL) return json({ error: 'Weekline accounts are not switched on yet.' }, 503);
+
+  if (path.startsWith('google/')) {
+    const g = await googleRoutes(env, req, path, m, origin);
+    if (g) return g;
+  }
 
   // ----- accounts -----
   if (path === 'signup' && m === 'POST') {
@@ -396,7 +656,10 @@ async function handle({ request: req, env, params }) {
     const u = await needUser(env, req);
     const id = u.id;
     const q = (sql, ...a) => env.WL.prepare(sql).bind(...a);
+    await gRevoke(env, req, id, await gRow(env, id));
+    if (env.BUILDS) await env.BUILDS.delete(gatKey(id));
     await env.WL.batch([
+      q('DELETE FROM google_tokens WHERE user_id = ?', id),
       q('DELETE FROM votes WHERE user_id = ? OR device = ? OR poll_token IN (SELECT token FROM polls WHERE owner_id = ?)', id, 'u:' + id, id),
       q('DELETE FROM polls WHERE owner_id = ?', id),
       q('DELETE FROM rsvps WHERE user_id = ? OR device = ? OR invite_token IN (SELECT token FROM invites WHERE owner_id = ?)', id, 'u:' + id, id),
@@ -414,7 +677,7 @@ async function handle({ request: req, env, params }) {
     const u = await needUser(env, req);
     const id = u.id;
     const all = (sql, ...a) => env.WL.prepare(sql).bind(...a).all().then((r) => r.results);
-    const [profile, signals, feeds, invites, polls, myRsvps, myVotes] = await Promise.all([
+    const [profile, signals, feeds, invites, polls, myRsvps, myVotes, google] = await Promise.all([
       loadProfile(env, id),
       all('SELECT event_id, kind, reason, tags, at FROM signals WHERE user_id = ? ORDER BY at, id', id),
       all('SELECT token, created_at FROM feeds WHERE user_id = ?', id),
@@ -422,6 +685,7 @@ async function handle({ request: req, env, params }) {
       all('SELECT token, question, options, created_at FROM polls WHERE owner_id = ? ORDER BY created_at', id),
       all('SELECT invite_token, name, status, at FROM rsvps WHERE user_id = ? OR device = ?', id, 'u:' + id),
       all('SELECT poll_token, option, at FROM votes WHERE user_id = ? OR device = ?', id, 'u:' + id),
+      gRow(env, id),
     ]);
     const inviteOut = [];
     for (const i of invites) {
@@ -441,6 +705,8 @@ async function handle({ request: req, env, params }) {
       polls: pollOut,
       my_rsvps: myRsvps,
       my_votes: myVotes,
+      // Never the token: just whether it's connected, when, and the one scope it asked for.
+      google: google ? { connected: true, connected_at: google.connected_at, scope: google.scope } : { connected: false },
     };
     return json(data, 200, { 'content-disposition': 'attachment; filename="weekline-export.json"' });
   }
@@ -634,7 +900,7 @@ async function handle({ request: req, env, params }) {
     return json(await pollView(env, token, dev));
   }
 
-  const known = /^(signup|signin|signout|me|export|profile|locks|signals|feed|invites|polls)$|^(invites|polls)\/[^/]+(\/(rsvp|vote))?$|^ics\//;
+  const known = /^(signup|signin|signout|me|export|profile|locks|signals|feed|invites|polls)$|^(invites|polls)\/[^/]+(\/(rsvp|vote))?$|^ics\/|^google\/(status|start|callback|busy|disconnect)$/;
   if (known.test(path)) return json({ error: 'That method is not allowed here.' }, 405);
   return json({ error: 'Not found.' }, 404);
 }
