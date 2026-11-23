@@ -20,6 +20,7 @@ const ui = {
 let liveRows = null;
 let evById = new Map();
 let lastWeek = null;
+const busyState = {}; // "first_last" -> "loading" | [[start, end], ...] | "failed"
 
 /* ---------- helpers ---------- */
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -98,8 +99,19 @@ function focusSelector() {
   ["data-id", "data-date", "data-v", "data-i"].forEach((k) => { const v = a.getAttribute(k); if (v !== null) sel += `[${k}="${CSS.escape(v)}"]`; });
   return sel;
 }
+const GOOGLE_TOASTS = {
+  connected: "Google Calendar connected. Busy nights stay open.",
+  denied: "Not connected. Nothing was shared.",
+  error: "Couldn't connect Google Calendar. Try again.",
+};
 function after(r) {
   if (ui.justLit) setTimeout(() => { ui.justLit = null; }, 50);
+  const g = r.q.get("google");
+  if (r.name === "you" && g) {
+    history.replaceState(null, "", location.pathname + location.search + "#/you");
+    if (GOOGLE_TOASTS[g]) toast(GOOGLE_TOASTS[g]);
+    W.googleStatus().then(() => { Object.keys(busyState).forEach((k) => delete busyState[k]); if (route().name === "you") render({ keepFocus: true }); });
+  }
   if (r.name === "share") drawShares();
   if (r.name === "crew") loadCrew();
   if (r.name === "e" || r.name === "p") loadPage(r);
@@ -129,8 +141,30 @@ function week() {
   const dates = W.planDates(p, TODAY);
   const evs = W.catalog(dates, session.liveStatus === "live" ? liveRows : null);
   evById = new Map(evs.map((e) => [e.id, e]));
-  lastWeek = W.buildWeek(p, evs, TODAY);
+  lastWeek = W.buildWeek(p, evs, TODAY, busyFor(dates[0], dates[dates.length - 1]));
   return lastWeek;
+}
+/** Google busy blocks for a date range, fetched once per range; re-renders when they land. */
+function busyFor(first, last) {
+  if (!session.user || !session.google.connected) return null;
+  const key = first + "_" + last;
+  const v = busyState[key];
+  if (v === undefined) {
+    busyState[key] = "loading";
+    W.fetchBusy(first, last)
+      .then((list) => { busyState[key] = list || "failed"; })
+      .catch(() => { busyState[key] = "failed"; })
+      .finally(() => { if (["week", "month", "crew", "share"].includes(route().name)) render({ keepFocus: true }); });
+    return null;
+  }
+  return Array.isArray(v) ? v : null;
+}
+function calLine(first, last) {
+  if (!session.user || !session.google.connected) return "";
+  const v = busyState[first + "_" + last];
+  if (v === "loading" || v === undefined) return `<span>Checking your Google Calendar…</span>`;
+  if (v === "failed") return `<span>Couldn't read your Google Calendar, so busy nights aren't blocked.</span>`;
+  return `<span>Busy times from Google Calendar. Only when, never what.</span>`;
 }
 
 /* ---------- Welcome ---------- */
@@ -189,6 +223,7 @@ async function submitAuth(form) {
     else await W.signIn(email, password);
     const was = ui.auth;
     ui.authBusy = false; ui.auth = null;
+    W.googleStatus();
     toast(was === "signup" ? "Account made. Your week is saved." : "Signed in.");
     go(P() && P().onboarded ? "#/week" : "#/onboard/1");
   } catch (e) {
@@ -334,6 +369,7 @@ function weekView() {
       </div>
     </section>
     <div class="srcline">${status}</div>
+    ${calLine(wk.dates[0], wk.dates[wk.dates.length - 1]) ? `<div class="srcline cal">${calLine(wk.dates[0], wk.dates[wk.dates.length - 1])}</div>` : ""}
     ${p.guest && !goalsOn && !visiting ? `<div class="banner"><p>A surprise week. Want it built around your goals?</p><a class="btn sm ink" href="#/onboard/1">Tell it your goals</a></div>` : ""}
     ${pending.length ? `<section class="check" aria-labelledby="ci-h">
       <h2 id="ci-h">${pending.every((l) => l.date >= lastWeekStart) ? "Last week: did you go?" : "Did you go?"}</h2>
@@ -385,6 +421,7 @@ function dayRow(d) {
       ${dayCell(d)}<div class="t">${esc(ev.time)}</div>
       <div>
         ${d.holiday ? `<p class="hol-name">${d.holiday.name}</p>` : ""}
+        ${d.clash ? `<p class="clash">${icon("cal")}Clashes with something on your calendar</p>` : ""}
         <h3 class="ti" style="font-family:inherit;letter-spacing:0">${esc(ev.title)}</h3>
         <p class="pl">${d.kind === "plan" ? `${esc(ev.hood)} · ${why}` : why}${missed ? " · Missed" : ""}</p>
         <div class="act"><a class="src" href="${esc(ev.url)}" target="_blank" rel="noopener">${srcLabel(ev.kind)}${fr ? ` · <em>${fr}</em>` : ""}</a>
@@ -397,6 +434,10 @@ function dayRow(d) {
       <p class="hol-name">${d.holiday.name}</p><p class="ti">${esc(d.holiday.line)}</p>
       ${d.suggest.length && !d.past ? `<p class="pl" style="margin-top:6px">If you want some air:</p>${sugg(d)}` : `<p class="pl">Enjoy the table.</p>`}
     </div></article>`;
+  }
+  if (d.kind === "cal") {
+    return `<article class="day busy cal" id="d-${d.date}">${dayCell(d)}<div class="t">${d.d < 5 ? "evening" : ""}</div><div class="calrow">
+      <p class="ti">${icon("cal")}Busy on your calendar</p><button class="linkbtn" data-act="anyway" data-date="${d.date}">Plan anyway</button></div></article>`;
   }
   if (d.kind === "busy") {
     return `<article class="day busy ${d.past ? "past" : ""}">${dayCell(d)}<div class="t"></div><div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
@@ -459,6 +500,10 @@ function monthView() {
     return `<div class="mg r" style="--w:${weeks.length}"><div class="gn">${esc(g.short)}<small>${g.target} ${g.unit}</small></div>${cells}</div>`;
   }).join("");
   const nLocked = locks.filter((l) => l.date >= first && l.date < nextFirst).length;
+  const lastDay = W.addDays(nextFirst, -1);
+  const mBusy = busyFor(first, lastDay);
+  const nBusy = mBusy ? Array.from({ length: W.daysBetween(first, nextFirst) }, (_, i) => W.addDays(first, i))
+    .filter((dt) => dt >= TODAY && W.dow(dt) < 5 && W.eveningBusy(mBusy, dt)).length : 0;
   const fresh = ui.monthOff > 0 || W.dayNum(TODAY) <= 7;
   const mName = MONTHS[mIdx];
   return `<section class="mhero on-photo">
@@ -474,6 +519,7 @@ function monthView() {
       <div class="mg hd" style="--w:${weeks.length}"><span style="text-align:left">Goal</span>${weeks.map((ws, i) => `<span>${W.dayNum(ws)}${i === 0 || W.monthIdx(ws) !== W.monthIdx(weeks[i - 1]) ? `<small>${MON3[W.monthIdx(ws)]}</small>` : ""}</span>`).join("")}</div>
       ${rows}
       <div class="legend"><span><i class="g"></i>Went</span><span><i class="f"></i>Planned</span><span><i></i>Open</span>${cb ? `<span><i class="cb"></i>Comeback night, ${shortDate(cb.date)}</span>` : ""}</div>
+      ${mBusy ? `<p class="fine" style="margin-top:8px">${icon("cal")} ${nBusy ? `${nBusy} ${nBusy === 1 ? "weeknight" : "weeknights"} left this month ${nBusy === 1 ? "is" : "are"} busy on your Google Calendar. Weekline won't plan those.` : "No busy weeknights left this month on your Google Calendar."}</p>` : ""}
     </section>
     ${cb ? `<section class="comeback"><h3><em>Comeback night,</em> ${shortDate(cb.date)}</h3>
       <p>You missed ${esc(cb.title)}. Don't miss twice: one easy plan on your next free night.</p>
@@ -760,6 +806,7 @@ function youView() {
       <p class="fine">From ${L.total} things you did: ${countBits.join(", ")}. Went counts most, then locks and calendar saves; a skip only moves the reason you gave. Older taps fade over 8 weeks.</p>`
       : `<p>Nothing yet.</p><p class="fine">Lock, skip with a reason, or tell it whether you went. It only learns from what you do here.</p>`}
     </section>
+    ${googleSection()}
     <section class="sec" aria-labelledby="data-h"><h2 id="data-h">Your data</h2>
       <div class="row2"><button class="btn line" data-act="export">${icon("down")}Export my data</button>${session.user ? `<button class="btn line" data-act="signout">Sign out</button>` : `<button class="btn line" data-act="startover">Start over</button>`}</div>
       <button class="linkbtn danger" data-act="delete">${session.user ? "Delete my account" : "Clear everything on this device"}</button>
@@ -767,7 +814,6 @@ function youView() {
     <section class="sec" aria-labelledby="nx-h"><h2 id="nx-h">Coming next</h2>
       <p class="fine">Working today: live NYC Parks listings, .ics download, a calendar feed you can subscribe to, and invite links by text, WhatsApp or copy.</p>
       <ul class="next-list" style="margin-top:8px">
-        <li>Google Calendar busy times<small>Next</small></li>
         <li>NYC Events Calendar listings<small>Next</small></li>
         <li>Ticketmaster and SeatGeek shows<small>Next</small></li>
         <li>Subway times to each place<small>Next</small></li>
@@ -781,8 +827,32 @@ function youView() {
       <div class="row2"><button class="btn line" data-act="delcancel">Keep it</button><button class="btn ink" data-act="delyes">Delete</button></div></dialog>`;
 }
 
+function googleSection() {
+  const g = session.google;
+  const promise = "Weekline sees busy times only, never what they are.";
+  let body;
+  if (!g.configured) {
+    body = `<div class="gcal off"><p>Skip the nights you're already busy.</p><small>Coming soon</small></div>`;
+  } else if (!session.user) {
+    body = `<div class="gcal"><p>Skip the nights you're already busy. ${promise}</p>
+      <a class="btn sm line" href="#/welcome" data-act="authgo" data-v="signin">Sign in to connect</a></div>`;
+  } else if (!g.connected) {
+    body = `<div class="gcal"><p>Skip the nights you're already busy. ${promise}</p>
+      <a class="btn sm ink" href="/api/wl/google/start">${icon("cal")}Connect Google Calendar</a></div>`;
+  } else {
+    body = `<div class="gcal on"><p><b>Connected.</b> ${promise}</p>
+      <button class="btn sm line" data-act="gdisconnect">Disconnect</button></div>`;
+  }
+  return `<section class="sec" aria-labelledby="gc-h"><h2 id="gc-h">Google Calendar</h2>${body}</section>`;
+}
+
 /* ---------- events ---------- */
 const actions = {
+  anyway: (b) => { S.calOk[b.dataset.date] = true; W.save(); render({ keepFocus: true }); toast("Okay. Planning that night anyway."); },
+  gdisconnect: async () => {
+    try { await W.disconnectGoogle(); Object.keys(busyState).forEach((k) => delete busyState[k]); render(); toast("Disconnected. Weekline can't see your calendar now."); }
+    catch (e) { toast(W.isOffline(e) ? "Can't reach the server right now." : e.message); }
+  },
   gzone: (b) => { ui.guestZone = b.dataset.v; render({ keepFocus: true }); },
   guest: () => startGuest(),
   auth: (b) => { ui.auth = b.dataset.v; ui.authErr = ""; render(); app.querySelector("input")?.focus(); },
@@ -932,6 +1002,7 @@ app.addEventListener("change", (e) => {
 (async function boot() {
   if (qs.get("demo") === "1" && !(S.profile && S.profile.demo)) W.seedDemo(TODAY);
   await W.boot();
+  if (session.mode === "server") await W.googleStatus();
   if (S.invites.length) W.refreshFriendCounts().then(() => { if (["week", "share"].includes(route().name)) render({ keepFocus: true }); });
   render();
   ensureLive();
