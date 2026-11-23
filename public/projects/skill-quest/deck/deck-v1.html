@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Skills Made EZ pitch deck (old version)</title><meta name="robots" content="noindex">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#F6F1E7;--paper-2:#EDE5D4;--ink:#161412;--ink-2:#4A443D;--tomato:#C7391F;--sun:#F5B82E;--teal:#1F7A6B;
+  --display:"Bricolage Grotesque",system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%;background:#2a2622;overflow:hidden}
+body{font-family:var(--display);color:var(--ink)}
+#deck{position:absolute;width:1280px;height:720px;left:50%;top:50%;transform-origin:center}
+.slide{position:absolute;inset:0;background:var(--paper);padding:64px 80px;display:none;flex-direction:column;overflow:hidden}
+.slide.on{display:flex}
+.tag{font:700 15px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--tomato)}
+h1{font-size:96px;line-height:.92;font-weight:800;letter-spacing:-.03em}
+h2{font-size:56px;line-height:1;font-weight:800;letter-spacing:-.02em;margin:16px 0 36px;max-width:22ch}
+em{font-style:normal;background:var(--sun);padding:0 .1em;border-radius:8px}
+p,li{font-size:24px;line-height:1.4}
+.muted{color:var(--ink-2)}
+.row{display:grid;gap:24px;flex:1;align-content:start}
+.c2{grid-template-columns:1fr 1fr}.c3{grid-template-columns:repeat(3,1fr)}.c4{grid-template-columns:repeat(4,1fr)}
+.box{background:#fff;border:3px solid var(--ink);border-radius:22px;padding:26px;box-shadow:6px 6px 0 var(--ink)}
+.box h3{font-size:28px;line-height:1.1;margin-bottom:8px}
+.big{font:800 64px/1 var(--display)}
+.dark{background:var(--ink);color:var(--paper)}.dark .muted{color:#bdb3a6}.dark .box{background:#24201C;color:var(--paper);border-color:#5a5148;box-shadow:none}
+.todo{background:#FFE9A8;border:2px dashed var(--ink);border-radius:8px;padding:0 8px;font:700 .8em var(--mono)}
+table{border-collapse:collapse;width:100%;font-size:21px}
+th,td{border-bottom:2px solid var(--ink);padding:12px 10px;text-align:left}
+th{font:700 14px var(--mono);text-transform:uppercase;letter-spacing:.06em}
+.foot{position:absolute;left:80px;right:80px;bottom:28px;display:flex;justify-content:space-between;font:500 14px var(--mono);color:var(--ink-2)}
+.phone{width:250px;height:522px;border:8px solid #0d0c0b;border-radius:36px;overflow:hidden;background:var(--paper);flex:none}
+.phone iframe{width:390px;height:844px;border:0;transform:scale(.6);transform-origin:0 0}
+.src{font:500 13px var(--mono);color:var(--ink-2);margin-top:auto}
+.quad{position:relative;height:420px;border-left:3px solid var(--ink);border-bottom:3px solid var(--ink);margin:0 0 0 40px}
+.quad span{position:absolute;font:700 18px var(--display);background:#fff;border:2px solid var(--ink);border-radius:99px;padding:8px 14px;white-space:nowrap}
+.quad .me{background:var(--tomato);color:#fff;font-size:22px}
+.ax{position:absolute;font:700 14px var(--mono);text-transform:uppercase;color:var(--ink-2)}
+</style>
+  <link rel="stylesheet" href="/site-bar.css" />
+  <script src="/site-bar.js" data-project="skill-quest" data-kind="piece" defer></script>
+</head>
+<body>
+<div id="deck">
+
+<!-- 1 Title -->
+<section class="slide">
+  <span class="tag">2026</span>
+  <h1 style="margin-top:auto">Skills Made EZ</h1>
+  <p style="font-size:36px;margin:24px 0 0;max-width:24ch">The game that turns anyone into an <em>AI builder</em>.</p>
+  <p class="muted" style="margin-top:auto">Alexandra Vargas · vargas-studio.pages.dev/projects/skill-quest/landing</p>
+</section>
+
+<!-- 2 Problem -->
+<section class="slide">
+  <span class="tag">Problem</span>
+  <h2>Millions can now build AI skills. Most quit before the first one works.</h2>
+  <div class="row c3">
+    <div class="box"><h3>"Is my skill any good?"</h3><p class="muted">No feedback. Skills fail quietly.</p></div>
+    <div class="box"><h3>"Tutorials are boring."</h3><p class="muted">Docs and videos are passive, and people drop off.</p></div>
+    <div class="box"><h3>"Why would anyone see mine?"</h3><p class="muted">Tens of thousands of skills listed, ranked only by installs.</p></div>
+  </div>
+  <p class="muted" style="margin-top:28px">Sample person, Maya: ops lead, 3 months into Claude, sees "I automated my week" posts, and has no idea where to start.</p>
+</section>
+
+<!-- 3 Solution -->
+<section class="slide" style="padding:0">
+  <img src="../graphic/explainer-wide.png" alt="Skills Made EZ: learn to build AI skills by playing. 1 Quest: build a real skill, step by step. 2 Card: it gets tested and scored. 3 Battle: compete on a new theme weekly. Who pays: sponsors host battles, Pro $8/mo, Teams $20/seat." style="width:100%;height:calc(100% - 34px);object-fit:contain;object-position:center top;display:block">
+</section>
+
+<!-- 4 Product -->
+<section class="slide">
+  <span class="tag">Product</span>
+  <div style="display:flex;gap:56px;align-items:center;flex:1">
+    <div>
+      <h2 style="margin-bottom:20px">The aha moment: your skill becomes a card.</h2>
+      <p class="muted">Build in 15 minutes → tested on 5 real tasks → card flips with Power, Clarity, Speed → 3 fixes to level up.</p>
+      <p class="muted" style="margin-top:16px;font-size:18px">Clickable prototype: prototype/prototype.html</p>
+    </div>
+    <div class="phone"><iframe src="../prototype/prototype.html?screen=4" title="Skill card reveal"></iframe></div>
+  </div>
+</section>
+
+<!-- 5 Why now -->
+<section class="slide dark">
+  <span class="tag" style="color:var(--sun)">Why now</span>
+  <h2>Skills just went mainstream, and nobody made them fun.</h2>
+  <div class="row c3">
+    <div class="box"><h3>Skills became a standard</h3><p class="muted">Agent skills spread across AI tools in 2025–26.</p></div>
+    <div class="box"><h3>Builders aren't coders anymore</h3><p class="muted">Claude Code and Cowork put agent building in non-technical hands.</p></div>
+    <div class="box"><h3>Most homemade skills don't help yet</h3><p class="muted">In SkillsBench, curated skills added +16.2 points; self-written ones gave no benefit on average.</p></div>
+  </div>
+  <p class="src" style="color:#bdb3a6">Sources: localskills.sh marketplace guide (2026); agensi.io marketplaces compared (2026); SkillsBench, arXiv 2602.12670 (Feb 2026).</p>
+</section>
+
+<!-- 6 Market -->
+<section class="slide">
+  <span class="tag">Market (bottom-up, all inputs are assumptions)</span>
+  <h2>~$640k a year by year 3 in the base case, from three payers.</h2>
+  <table>
+    <tr><th>Year-3 revenue</th><th>Low</th><th>Base</th><th>High</th></tr>
+    <tr><td>Pro · active users × % paying × $96/yr</td><td>$29k</td><td><b>$288k</b></td><td>$864k</td></tr>
+    <tr><td>Teams · companies × 20 seats × $240/yr</td><td>$48k</td><td><b>$192k</b></td><td>$720k</td></tr>
+    <tr><td>Sponsored battles · 40 a year × price</td><td>$60k</td><td><b>$160k</b></td><td>$320k</td></tr>
+    <tr><td><b>Total</b></td><td>$137k</td><td><b>$640k</b></td><td>$1.9M</td></tr>
+  </table>
+  <p class="muted" style="font-size:20px;margin-top:18px">Base case: 60,000 monthly players, 4% paying (Duolingo ≈ 9%, Chess.com &lt; 2%). Every number is a projection.</p>
+</section>
+
+<!-- 7 Traction -->
+<section class="slide">
+  <span class="tag">Validation</span>
+  <h2>Pre-launch. The scorer works; demand is next.</h2>
+  <table>
+    <tr><th>Test</th><th>Target</th><th>Result</th></tr>
+    <tr><td>Score a real skill end to end (3 hidden tasks, blind judge)</td><td>Runs; scores feel fair</td><td><b>Done, 21 Nov.</b> idea-innovate: Epic 81, won 1 · tied 1 · lost 1 vs plain Claude</td></tr>
+    <tr><td>Landing page signup (3 angles, Reddit ads)</td><td>≥ 10%</td><td>Not run yet</td></tr>
+    <tr><td>Pro fake-door clicks ($8/mo)</td><td>≥ 2% of visitors</td><td>Not run yet</td></tr>
+    <tr><td>"10 popular skills, scored" card post</td><td>≥ 50 shares/saves</td><td>Not run yet</td></tr>
+    <tr><td>Prototype tests (5 beginners)</td><td>4/5 finish unaided</td><td>Not run yet</td></tr>
+    <tr><td>Battle #0, run by hand with waitlisters</td><td>≥ 30 entries</td><td>Not run yet</td></tr>
+  </table>
+</section>
+
+<!-- 8 Business model -->
+<section class="slide">
+  <span class="tag">Business model</span>
+  <h2>Three payers: sponsors first, then players, then companies.</h2>
+  <div class="row c3">
+    <div class="box"><h3>1 · Sponsors</h3><p class="big">$500<span style="font-size:24px">+</span></p><p class="muted" style="margin-top:10px">AI tool companies host a weekly battle on their tool. First revenue, no paywall needed.</p></div>
+    <div class="box" style="background:var(--sun)"><h3>2 · Pro players</h3><p class="big">$8<span style="font-size:24px">/mo</span></p><p style="margin-top:10px">$72/yr. Free tier capped at 5 quests + 3 cards.</p></div>
+    <div class="box"><h3>3 · Teams</h3><p class="big">$20<span style="font-size:24px">/seat</span></p><p class="muted" style="margin-top:10px">Company AI-upskilling battles. Similar products: ~$25–27.50/seat.</p></div>
+  </div>
+  <p class="muted" style="font-size:20px;margin-top:22px">Pro gross margin ≈ 68% (ASSUMPTION: ~$0.10 AI cost per card test). Break-even ≈ 830 Pro, or 3 sponsored battles a month. Battle #0 measures the real cost.</p>
+</section>
+
+<!-- 9 GTM -->
+<section class="slide">
+  <span class="tag">Go-to-market</span>
+  <h2>The cards are the marketing.</h2>
+  <div class="row c3">
+    <div class="box"><h3>1 · Card content</h3><p class="muted">"We scored the 10 most popular skills": free, shareable, built for Reddit and X.</p></div>
+    <div class="box"><h3>2 · Community ads</h3><p class="muted">Low-cost Reddit ads in r/ClaudeAI and r/ClaudeCode to test messaging.</p></div>
+    <div class="box"><h3>3 · Sponsored battles</h3><p class="muted">AI tool companies and creators host battles and bring their own audiences.</p></div>
+  </div>
+  <p style="margin-top:26px"><b>First 1,000 players:</b> waitlist from card posts → invite in waves of 100 → every card shared links back to the game.</p>
+</section>
+
+<!-- 10 Competition -->
+<section class="slide">
+  <span class="tag">Competition</span>
+  <div style="display:grid;grid-template-columns:1fr 1.1fr;gap:56px;flex:1;align-items:center">
+    <div><h2>Anthropic already scores skills. We make building good ones <em>fun</em>, for beginners.</h2><p class="src" style="margin-top:18px">Scoring builds on Anthropic's skill-creator eval method (Apache-2.0). Sources: claude.com skill-creator blog (Mar 2026); docs.tessl.io; happycapy.ai/skill-arena (both opened 21 Nov 2026).</p></div>
+    <div class="quad">
+      <span class="ax" style="left:-36px;top:-4px;transform:rotate(-90deg) translateX(-100%);transform-origin:0 0">Fun / motivating →</span>
+      <span class="ax" style="right:0;bottom:-30px">Real skills you keep →</span>
+      <span style="left:4%;top:10%">Promptle · Prompt Royal</span>
+      <span style="left:56%;top:72%">skills.sh · SkillsMP</span>
+      <span style="left:52%;top:52%">skill-creator · Tessl scores</span>
+      <span style="left:6%;top:44%">Happycapy Skill Arena</span>
+      <span style="left:4%;top:78%">YouTube tutorials</span>
+      <span style="left:40%;top:26%">Agent.ai challenges</span>
+      <span class="me" style="left:66%;top:6%">Skills Made EZ</span>
+    </div>
+  </div>
+</section>
+
+<!-- 11 Team -->
+<section class="slide">
+  <span class="tag">Team</span>
+  <h2>Built by the customer.</h2>
+  <div class="row c2">
+    <div class="box"><h3>Alexandra Vargas</h3><p class="muted">Non-technical founder who learned to build Claude skills and agents and shipped a live consumer app with them. Has already built the first quest line (a 6-skill idea-testing system).</p></div>
+    <div class="box"><h3>Hiring first</h3><p class="muted">Part-time full-stack engineer (evals + scoring), community lead for weekly battles.</p></div>
+  </div>
+</section>
+
+<!-- 12 Ask -->
+<section class="slide dark">
+  <span class="tag" style="color:var(--sun)">What's next</span>
+  <h2>Not raising yet. Next: prove it, then reach 10,000 players.</h2>
+  <div class="row c3">
+    <div class="box"><h3>6 months</h3><p class="muted">10 quests live, weekly battles, first sponsors paying</p></div>
+    <div class="box"><h3>12 months</h3><p class="muted">8,000 monthly players, 4% Pro, 3 Teams pilots, ~$64k run-rate (base case) <span class="todo" style="color:var(--ink)">[targets]</span></p></div>
+    <div class="box"><h3>18 months</h3><p class="muted">Teams sales motion, Claude Code plugin, seed round</p></div>
+  </div>
+  <p style="margin-top:auto;font-size:30px;font-weight:800">Level up by building real AI skills.</p>
+</section>
+
+</div>
+<div class="foot" id="foot" style="position:fixed;left:auto;right:16px;bottom:12px;gap:16px;color:#EDE5D4;background:#161412;border-radius:99px;padding:6px 14px"><span>Skills Made EZ · draft</span><span id="pg"></span></div>
+<script>
+const slides=[...document.querySelectorAll('.slide')];let i=0;
+function show(n){i=Math.max(0,Math.min(slides.length-1,n));slides.forEach((s,k)=>s.classList.toggle('on',k===i));document.getElementById('pg').textContent=(i+1)+' / '+slides.length+'  ·  ← → to move'}
+function fit(){const s=Math.min(innerWidth/1280,innerHeight/720);document.getElementById('deck').style.transform=`translate(-50%,-50%) scale(${s})`}
+addEventListener('resize',fit);
+addEventListener('keydown',e=>{if(['ArrowRight',' ','PageDown'].includes(e.key))show(i+1);if(['ArrowLeft','PageUp'].includes(e.key))show(i-1)});
+addEventListener('click',e=>{if(e.target.closest('iframe'))return;show(e.clientX>innerWidth/2?i+1:i-1)});
+const p=new URLSearchParams(location.search).get('slide');show(p?p-1:0);fit();
+</script>
+<style media="print">
+html,body{overflow:visible;background:#fff}#deck{position:static;transform:none!important;width:auto;height:auto}
+.slide{display:flex!important;position:relative;width:1280px;height:720px;page-break-after:always}#foot{display:none}
+@page{size:1280px 720px;margin:0}
+</style>
+</body>
+</html>
