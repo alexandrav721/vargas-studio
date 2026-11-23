@@ -189,25 +189,43 @@
   function subName(s) { var sub = subOf(s.category, s.sub), c = catOf(s.category); return s.sub_name || (sub ? sub.name : (c ? c.name : "")); }
 
   /* ---------- shared pieces ---------- */
-  function miniCard(s, champ) {
-    var c = catOf(s.category) || { id: "fun" };
-    return h("a", { class: "mc " + frameCls(s, champ), href: "#/s/" + encodeURIComponent(s.id) },
-      h("span", { class: "mc-band" }, icon(c.id), h("span", { text: subName(s) }), champ ? h("span", { class: "champ-tag" }, icon("trophy"), "Champion") : null),
-      h("span", { class: "mc-body" },
+  /* every tested item, across pages (capped at 10 pages) */
+  function allTested() {
+    var out = [];
+    function page(n) {
+      return api("GET", "skills?tested=yes&sort=tested&page=" + n).then(function (j) {
+        out = out.concat(j.items || []);
+        return n < Math.min(num(j.pages) || 1, 10) ? page(n + 1) : { items: out };
+      });
+    }
+    return page(1);
+  }
+  /* our own tested skills have real screenshots of their output */
+  function thumbOf(s) { return s.official && D.seedMap[s.slug || s.id] ? "../templates/" + (s.slug || s.id) + "/thumb.jpg" : null; }
+  /* one scoreboard row: rank · picture · name · blind test · people */
+  function miniCard(s, champ, rank) {
+    var c = catOf(s.category) || { id: "fun" }, th = thumbOf(s), l = lift(s);
+    var testCell = s.test
+      ? h("span", { class: "mc-test" },
+          h("strong", null, sc(s.test.skill_score), h("em", { text: " vs " + sc(s.test.plain_score) })),
+          h("span", { class: "mc-bar", "aria-hidden": "true" }, h("i", { style: "width:" + Math.round(num(s.test.skill_score) / 5 * 100) + "%" })),
+          h("small", { class: l > 0 ? "up" : "", text: l === 0 || s.test.winner === "tie" ? "Tied plain Claude" : (l > 0 ? "+" : "") + sc(l) + " over plain" }))
+      : h("span", { class: "mc-test none" }, h("strong", { text: "Not tested" }), h("small", { text: "No blind test yet" }));
+    return h("a", { class: "mc" + (champ ? " is-champ" : ""), href: "#/s/" + encodeURIComponent(s.id) },
+      rank ? h("span", { class: "mc-rank", text: String(rank) }) : null,
+      h("span", { class: "mc-pic" }, th ? h("img", { src: th, alt: "", loading: "lazy" }) : icon(c.id)),
+      h("span", { class: "mc-main" },
         h("b", { class: "mc-name", text: s.name }),
         h("span", { class: "mc-line", text: s.one_line }),
-        h("span", { class: "mc-by", text: "by " + makerName(s) })),
-      h("span", { class: "mc-scores" },
-        h("span", { class: "sc" }, h("small", { text: "People" }), h("strong", { text: peopleShort(s) })),
-        h("span", { class: "sc" + (s.test ? "" : " none") }, h("small", { text: "Blind test" }), h("strong", { text: testShort(s) }))),
-      badges(s));
+        h("span", { class: "mc-meta" }, champ ? h("span", { class: "champ-tag" }, icon("trophy"), "Champion") : null,
+          h("span", { text: subName(s) + " · by " + makerName(s) }), badges(s))),
+      testCell,
+      h("span", { class: "mc-people" }, h("strong", { text: s.helped_n >= 5 ? pct(s) + "%" : "New" }), h("small", { text: s.helped_n >= 5 ? "helped (" + s.helped_n + ")" : s.helped_n + " of 5 ratings" })));
   }
   function badges(s) {
     var b = [];
     if (s.kind !== "skill") b.push(h("span", { class: "bdg kind-" + s.kind }, icon(s.kind), kindOf(s.kind).name));
     if (s.parent_id) b.push(h("span", { class: "bdg" }, icon("remix"), "Remix"));
-    if (s.official) b.push(h("span", { class: "bdg off", text: "Official" }));
-    (s.works_in || []).forEach(function (w) { if (w === "claude-code" || w === "Claude Code") b.push(h("span", { class: "bdg", text: "Claude Code" })); });
     if (s.remix_count) b.push(h("span", { class: "bdg", text: s.remix_count + (s.remix_count === 1 ? " remix" : " remixes") }));
     return b.length ? h("span", { class: "mc-bdgs" }, b) : null;
   }
@@ -367,6 +385,7 @@
     add(nav, [
       a("#/", "Browse", ""),
       a("#/requests", "Requests", "requests"),
+      a("#/how", "How we test", "how", "nav-how"),
       ME && (ME.is_admin || ME.admin) ? a("#/review", "Review", "review") : null,
       ME ? a("#/me", "Me", "me") : a("#/signin", "Sign in", "signin"),
       a("#/submit", "Share", "submit", "nav-cta")
@@ -401,7 +420,7 @@
         if (tok !== RT) return;
         var list = (j.skills || j.items || []).map(norm), total = num(j.total) || list.length;
         if (page === 1) clear(grid);
-        list.forEach(function (s) { grid.appendChild(miniCard(s)); });
+        list.forEach(function (s, i) { grid.appendChild(miniCard(s, false, (page - 1) * PER_PAGE + i + 1)); });
         count.textContent = st.q ? things(total) + " for “" + st.q + "”" : things(total);
         if (!total) add(grid, [h("div", { class: "box empty" },
           h("p", { text: st.q ? "Nothing matches “" + st.q + "” yet." : "Nothing matches those filters." }),
@@ -427,7 +446,7 @@
           if (tok !== RT) return;
           var list = (j.skills || j.items || []).map(norm).filter(d[2]).slice(0, 8);
           if (!list.length) return row.remove();
-          clear(track); list.forEach(function (s) { track.appendChild(miniCard(s)); });
+          clear(track); list.slice(0, 5).forEach(function (s, i) { track.appendChild(miniCard(s, false, i + 1)); });
         }).catch(function () { row.remove(); });
       });
     }
@@ -454,11 +473,26 @@
       h("label", { for: "q", text: "What do you want help with?" }),
       h("span", { class: "search-box" }, icon("search"), search));
 
+    var record = h("aside", { class: "record", "aria-label": "Our blind-test record" }, h("small", { text: "Our blind-test record" }), loading(""));
+    allTested().then(function (j) {
+      var list = (j.items || []).map(norm), w = 0, t = 0, lo = 0, sum = 0;
+      list.forEach(function (x) { if (x.test.winner === "skill") w++; else if (x.test.winner === "plain") lo++; else t++; sum += num(lift(x)); });
+      if (!list.length) return record.remove();
+      clear(record);
+      add(record, [h("small", { text: "Our blind-test record" }),
+        h("div", { class: "wl" },
+          h("div", null, h("b", { text: w + "–" + lo + (t ? "–" + t : "") }), h("span", { text: t ? "wins–losses–ties vs plain Claude" : "wins–losses vs plain Claude" })),
+          h("div", null, h("b", { text: (sum / list.length >= 0 ? "+" : "") + (sum / list.length).toFixed(1) }), h("span", { text: "average lead, on a 1–5 score" }))),
+        h("p", null, list.length + (list.length === 1 ? " item tested" : " items tested") + ", losses included. ", h("a", { class: "link", href: "#/how", text: "How we test" }))]);
+    }).catch(function () { record.remove(); });
     mount(
       h("section", { class: "hero" },
-        h("h1", { text: "Skills, prompts and kits people made. Tested against plain Claude." }),
-        form,
-        h("p", { class: "ask-line" }, "Can't find it? ", h("a", { class: "link", href: "#/requests", text: "Ask for it" }), " and makers can build it.")),
+        h("div", { class: "hero-l" },
+          h("h1", { text: "Claude skills that win blind tests." }),
+          h("p", { class: "sub", text: "Skills, prompts and kits made by people. Each one is checked by a person and scored against plain Claude." }),
+          form,
+          h("p", { class: "ask-line" }, "Can't find it? ", h("a", { class: "link", href: "#/requests", text: "Ask for it" }), ".")),
+        record),
       types,
       h("nav", { class: "tiles", "aria-label": "Categories" }, D.cats.map(function (c) {
         return h("a", { class: "tile", href: "#/c/" + c.id }, h("span", { class: "tile-ic" }, icon(c.id)), h("span", { text: c.short }));
@@ -467,7 +501,8 @@
       h("section", { class: "all" }, h("div", { class: "all-top" }, allH, count), filters, grid, more),
       h("section", { class: "make" },
         h("div", null, h("h2", { text: "Made something that works?" }), h("p", { class: "sub" }, "Share a skill, a prompt or a kit with an example. A person checks it before it goes live. ", h("a", { class: "link", href: "#/rules", text: "How we review" }))),
-        h("a", { class: "btn", href: "#/submit", text: "Share yours" })));
+        h("a", { class: "btn", href: "#/submit", text: "Share yours" })),
+      h("p", { class: "made-by" }, "Skills Made EZ is made by ", h("b", { text: "Alexandra Vargas" }), ". ", h("a", { class: "link", href: "/", text: "See her other work" })));
     rowsBox.hidden = !!active();
     allH.textContent = active() ? (st.type && !st.q ? kindOf(st.type).plural : "Results") : "Everything";
     if (!active()) rows();
@@ -518,7 +553,8 @@
         return;
       }
       var pinned = champ && champBox.firstChild;
-      list.forEach(function (s) { if (pinned && champ.id === s.id) return; grid.appendChild(miniCard(s, champ && champ.id === s.id)); });
+      var rk = (page - 1) * PER_PAGE;
+      list.forEach(function (s) { rk++; if (pinned && champ.id === s.id) return; grid.appendChild(miniCard(s, champ && champ.id === s.id, rk)); });
       var pages = Math.ceil(total / PER_PAGE);
       clear(pager);
       if (pages > 1) {
@@ -551,6 +587,7 @@
 
     var big = h("article", { class: "big " + frameCls(s, champ) },
       h("div", { class: "big-band" }, icon(c.id), h("span", { text: c.short + " · " + subName(s) }), champ ? h("span", { class: "champ-tag" }, icon("trophy"), "Champion") : null),
+      thumbOf(s) ? h("div", { class: "big-pic" }, h("img", { src: thumbOf(s), alt: "What " + s.name + " made in our blind test" })) : null,
       h("div", { class: "big-body" },
         h("h1", { text: s.name }),
         h("p", { class: "big-line", text: s.one_line }),
@@ -1440,6 +1477,42 @@
     load();
   }
 
+  /* ---------- How we test: the method and the full record, ties and losses included ---------- */
+  function pageHow(tok) {
+    document.title = "How we test · Skills Made EZ";
+    var table = h("div", { class: "rec-wrap" }, loading());
+    mount(
+      h("header", { class: "how-head" }, h("h1", { text: "How we test" }),
+        h("p", { class: "sub", text: "Every score on this site comes from the same blind test. Here is the method, then every result." })),
+      h("ol", { class: "method" },
+        h("li", null, h("b", { text: "Same request, twice." }), " One realistic request goes to Claude with the skill, and again in a fresh chat without it."),
+        h("li", null, h("b", { text: "A blind judge." }), " A separate Claude judge sees the two answers as A and B, never which used the skill, and is told that longer isn't better."),
+        h("li", null, h("b", { text: "Four scores, 1 to 5." }), " Correct (facts and constraints), complete (everything asked for), useful (a person could act on it now), clear (easy to scan, no padding)."),
+        h("li", null, h("b", { text: "We publish all of it." }), " Wins, ties and losses, the judge's reason, and the date. A skill that changes gets tested again.")),
+      h("p", { class: "note how-limits", text: "Honest limits: so far each item is tested on one request, and the judge is an AI model, not a panel of people. That's why people's ratings sit next to every blind-test score." }),
+      h("h2", { text: "Every result" }), table,
+      h("p", null, h("a", { class: "btn ghost", href: "#/rules", text: "How we review items" }), " ", h("a", { class: "btn", href: "#/", text: "Browse the library" })));
+    Promise.all([allTested(), fetch("../templates/templates.json").then(function (r) { return r.json(); }).catch(function () { return []; })]).then(function (res) {
+      if (tok !== RT) return;
+      var list = (res[0].items || []).map(norm), firsts = {};
+      (res[1] || []).forEach(function (t) { if (t.result && t.result.first) firsts[t.slug] = t.result.first; });
+      clear(table);
+      if (!list.length) return add(table, [h("p", { class: "note", text: "No results yet." })]);
+      add(table, [h("table", { class: "rec" },
+        h("thead", null, h("tr", null, ["Item", "With it", "Plain Claude", "Result", "Tested"].map(function (x) { return h("th", { scope: "col", text: x }); }))),
+        h("tbody", null, list.map(function (x) {
+          var f = firsts[x.slug || x.id];
+          var res2 = x.test.winner === "skill" ? "Win" : x.test.winner === "plain" ? "Loss" : "Tie";
+          return h("tr", null,
+            h("td", null, h("a", { class: "link", href: "#/s/" + encodeURIComponent(x.id), text: x.name }), f ? h("small", { text: "First run: " + (f.winner === "tie" ? "tie" : f.winner) + " " + sc(f.skillScore) + " vs " + sc(f.plainScore) + ". Fixed, retested." }) : null),
+            h("td", { class: "num", text: sc(x.test.skill_score) }),
+            h("td", { class: "num", text: sc(x.test.plain_score) }),
+            h("td", null, h("span", { class: "res res-" + res2.toLowerCase(), text: res2 })),
+            h("td", { class: "num", text: fmtDate(x.test.tested_at) }));
+        })))]);
+    }).catch(function (e) { if (tok === RT) { clear(table); add(table, [fail(e, route)]); } });
+  }
+
   /* ---------- How we review (the public policy) ---------- */
   function pageRules() {
     document.title = "How we review · Community library";
@@ -1534,6 +1607,7 @@
       case "signin": return pageSignin(q);
       case "requests": return pageRequests(q, tok);
       case "rules": return pageRules();
+      case "how": return pageHow(tok);
       default: return mount(errorBox("That page doesn't exist."), h("a", { class: "btn", href: "#/", text: "Browse the library" }));
     }
   }
