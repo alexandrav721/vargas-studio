@@ -155,6 +155,19 @@
   outline: 3px solid var(--fog);
   outline-offset: 3px;
 }
+.proj-extra {
+  margin-top: 10px;
+  background: transparent;
+  color: var(--paper, #fff);
+  border: 2px solid var(--citrus);
+  padding: 0 16px;
+  text-align: center;
+  line-height: 1.25;
+}
+.proj-extra:hover {
+  background: rgba(226, 247, 141, 0.12);
+  color: var(--paper, #fff);
+}
 .proj-sub {
   margin: 40px 0 14px;
   font: 600 22px/1.2 var(--display);

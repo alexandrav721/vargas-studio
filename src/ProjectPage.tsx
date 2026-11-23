@@ -49,6 +49,11 @@ export default function ProjectPage({ id }: { id: string }) {
           <a className="proj-play" href={m.play} target={m.external ? "_blank" : undefined} rel={m.external ? "noopener" : undefined}>
             {m.playLabel}
           </a>
+          {m.extra && (
+            <a className="proj-play proj-extra" href={m.extra.href}>
+              {m.extra.label}
+            </a>
+          )}
 
           <h2 className="proj-sub">Everything I made for it</h2>
           <ul className="proj-grid">
