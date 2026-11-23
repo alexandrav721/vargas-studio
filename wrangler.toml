@@ -1,0 +1,14 @@
+# Cloudflare Pages settings for vargas-studio (deployed with `wrangler pages deploy dist`).
+# The Claude API key is a secret: `wrangler pages secret put ANTHROPIC_API_KEY --project-name vargas-studio`.
+name = "vargas-studio"
+pages_build_output_dir = "dist"
+compatibility_date = "2026-11-01"
+
+# Build Kit daily limits (approved 22 Nov 2026)
+[[kv_namespaces]]
+binding = "BUILDS"
+id = "afdb48a0ad8447b0a4a5cf1cbdec3d69"
+
+[vars]
+BUILD_LIMIT_IP = "5"
+BUILD_LIMIT_DAY = "40"
