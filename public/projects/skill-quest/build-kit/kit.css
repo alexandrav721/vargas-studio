@@ -168,7 +168,7 @@ pre{white-space:pre-wrap;background:var(--card);border:2px solid var(--ink);bord
 .bp-name{font-weight:800;font-size:34px;letter-spacing:-.03em;line-height:1}
 .bp-one{margin-top:6px;opacity:.9;max-width:44ch}
 .bp-stats{display:flex;gap:8px;margin:14px 0}
-.bp-stats div{flex:1;border:2px solid var(--bp-line);border-radius:8px;text-align:center;padding:6px 2px}
+.bp-stats div{flex:1;border:2px solid var(--bp-line);border-radius:8px;text-align:center;padding:6px 8px}
 .bp-stats b{display:block;font-size:28px;font-weight:800;font-variant-numeric:tabular-nums}
 .bp-stats span{font:700 11px var(--mono)}
 .mini-plan{display:grid;grid-template-columns:repeat(6,1fr);gap:4px}
