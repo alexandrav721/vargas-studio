@@ -222,7 +222,7 @@
   function frameSrc(u) { return /^\/projects\/skill-quest\/templates\/[a-z0-9-]+\/[A-Za-z0-9._-]+\.html$/.test(String(u || "")) ? u : null; }
   function outBody(text, link, title, tab) {
     var src = frameSrc(link);
-    if (src) return h("div", { class: "xf-out xf-frame", tabindex: tab }, h("iframe", { src: src, title: title, sandbox: "allow-scripts", loading: "lazy", referrerpolicy: "no-referrer" }));
+    if (src) return h("div", { class: "xf-out xf-frame", tabindex: tab }, h("iframe", { src: src, title: title, sandbox: "allow-scripts allow-same-origin", loading: "lazy", referrerpolicy: "no-referrer" }));
     return h("div", { class: "xf-out", tabindex: tab, text: text || "" });
   }
   function exampleFlip(ex, i, total) {
