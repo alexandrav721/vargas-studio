@@ -1,0 +1,14 @@
+{
+  "slug": "resume-tailor",
+  "name": "Resume tailor",
+  "oneLine": "Your resume fitted to one job, plus cover letter.",
+  "forWho": "Job seekers who want each application to fit the post without making things up.",
+  "youGet": [
+    "A table of how you match the job",
+    "A tailored resume that hiring software can read",
+    "A cover letter under 200 words"
+  ],
+  "woah": "It found the match I didn't know how to say.",
+  "whyBetter": "Plain Claude invents numbers and stuffs in skills you don't have. This uses only your real experience and shows your gaps honestly.",
+  "tryPrompt": "Tailor my resume to this job and write a short cover letter. Job post and resume below:"
+}

@@ -1,0 +1,14 @@
+{
+  "slug": "habit-tracker",
+  "name": "Habit tracker",
+  "oneLine": "Tap once a day. Watch your streak grow.",
+  "forWho": "Anyone who wants a few small daily habits to stick, without an app store, an account or ads.",
+  "youGet": [
+    "One-tap check-ins for your own habits",
+    "A month calendar and gentle stats",
+    "Streaks that survive one missed day"
+  ],
+  "woah": "Miss a day and a return ticket saves your streak.",
+  "whyBetter": "Plain Claude makes a pretty list that forgets everything on reload and resets your streak for one bad day. This saves, forgives, and backs up.",
+  "tryPrompt": "Use the Habit tracker skill. I want to drink more water, read 20 minutes and stretch."
+}

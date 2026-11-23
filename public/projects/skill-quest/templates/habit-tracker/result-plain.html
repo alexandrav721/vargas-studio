@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>My Habit Tracker</title>
+<style>
+  :root { --green:#2e7d32; --light:#e8f5e9; --mid:#a5d6a7; --dark:#1b5e20; }
+  * { box-sizing:border-box; }
+  body { font-family:system-ui,sans-serif; background:var(--light); margin:0; padding:20px; color:#1f2d1f; }
+  .wrap { max-width:720px; margin:0 auto; }
+  h1 { color:var(--dark); margin:0 0 4px; }
+  .sub { color:#4a6b4a; margin-bottom:20px; }
+  .card { background:#fff; border-radius:14px; padding:16px; margin-bottom:16px; box-shadow:0 2px 6px rgba(0,0,0,.08); }
+  .nav { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
+  button { background:var(--green); color:#fff; border:0; border-radius:8px; padding:8px 14px; cursor:pointer; font-size:14px; }
+  button:hover { background:var(--dark); }
+  .habit { display:flex; align-items:center; gap:12px; padding:12px 0; border-bottom:1px solid #eef3ee; }
+  .habit:last-child { border-bottom:0; }
+  .habit .name { flex:1; font-weight:600; }
+  .habit .streak { font-size:13px; color:#4a6b4a; }
+  .check { width:34px; height:34px; border-radius:50%; border:2px solid var(--mid); background:#fff; cursor:pointer; font-size:18px; color:#fff; padding:0; }
+  .check.done { background:var(--green); border-color:var(--green); }
+  .bar { height:10px; background:var(--light); border-radius:5px; overflow:hidden; margin-top:8px; }
+  .bar > div { height:100%; background:var(--green); width:0; transition:width .3s; }
+  table { width:100%; border-collapse:collapse; font-size:13px; }
+  th,td { text-align:center; padding:6px 2px; }
+  th:first-child, td:first-child { text-align:left; }
+  .cell { width:24px; height:24px; border-radius:6px; border:1px solid var(--mid); background:#fff; cursor:pointer; padding:0; }
+  .cell.done { background:var(--green); border-color:var(--green); }
+  .cell.today { outline:2px solid var(--dark); }
+  .water { display:flex; gap:6px; margin-top:6px; flex-wrap:wrap; }
+  .cup { font-size:22px; cursor:pointer; opacity:.25; user-select:none; }
+  .cup.on { opacity:1; }
+  .small { font-size:12px; color:#6a8a6a; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🌿 My Habit Tracker</h1>
+  <div class="sub" id="today"></div>
+
+  <div class="card">
+    <strong>Today</strong>
+    <div class="bar"><div id="prog"></div></div>
+    <div class="small" id="progText"></div>
+    <div id="habits"></div>
+    <div id="waterBox" style="margin-top:10px">
+      <span class="small">Water cups today (tap to count, goal 8)</span>
+      <div class="water" id="cups"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="nav">
+      <button id="prev">&larr;</button>
+      <strong id="monthLabel"></strong>
+      <button id="next">&rarr;</button>
+    </div>
+    <div style="overflow-x:auto"><table id="grid"></table></div>
+  </div>
+
+  <div class="small">Saved automatically in your browser.</div>
+</div>
+
+<script>
+const HABITS = [
+  { id:"water",   name:"💧 Drink more water" },
+  { id:"read",    name:"📖 Read 20 min before bed" },
+  { id:"stretch", name:"🧘 Stretch in the morning" }
+];
+const KEY = "habitTrackerV1";
+let data = JSON.parse(localStorage.getItem(KEY) || '{"days":{},"cups":{}}');
+const save = () => localStorage.setItem(KEY, JSON.stringify(data));
+const fmt = d => d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+const todayKey = fmt(new Date());
+let view = new Date(); view.setDate(1);
+
+const isDone = (id,k) => !!(data.days[k] && data.days[k][id]);
+function toggle(id,k){
+  data.days[k] = data.days[k] || {};
+  data.days[k][id] = !data.days[k][id];
+  save(); render();
+}
+function streak(id){
+  let d = new Date(), n = 0;
+  if(!isDone(id,fmt(d))) d.setDate(d.getDate()-1);
+  while(isDone(id,fmt(d))){ n++; d.setDate(d.getDate()-1); }
+  return n;
+}
+function render(){
+  document.getElementById("today").textContent =
+    new Date().toLocaleDateString(undefined,{weekday:"long",month:"long",day:"numeric"});
+
+  const box = document.getElementById("habits"); box.innerHTML="";
+  let done=0;
+  HABITS.forEach(h=>{
+    const d = isDone(h.id,todayKey); if(d) done++;
+    const s = streak(h.id);
+    const row = document.createElement("div"); row.className="habit";
+    row.innerHTML = `<button class="check ${d?"done":""}">${d?"✓":""}</button>
+      <span class="name">${h.name}</span>
+      <span class="streak">${s?"🔥 "+s+" day"+(s>1?"s":""):""}</span>`;
+    row.querySelector("button").onclick=()=>toggle(h.id,todayKey);
+    box.appendChild(row);
+  });
+  document.getElementById("prog").style.width = (done/HABITS.length*100)+"%";
+  document.getElementById("progText").textContent = done+" of "+HABITS.length+" done"+(done===HABITS.length?" — great day! 🎉":"");
+
+  const cups = data.cups[todayKey]||0;
+  const c = document.getElementById("cups"); c.innerHTML="";
+  for(let i=1;i<=8;i++){
+    const s=document.createElement("span");
+    s.className="cup"+(i<=cups?" on":""); s.textContent="💧";
+    s.onclick=()=>{
+      data.cups[todayKey] = (cups===i)? i-1 : i;
+      data.days[todayKey] = data.days[todayKey]||{};
+      data.days[todayKey].water = data.cups[todayKey]>=8;
+      save(); render();
+    };
+    c.appendChild(s);
+  }
+
+  // month grid
+  const y=view.getFullYear(), m=view.getMonth();
+  document.getElementById("monthLabel").textContent = view.toLocaleDateString(undefined,{month:"long",year:"numeric"});
+  const days = new Date(y,m+1,0).getDate();
+  let html="<tr><th></th>";
+  for(let d=1; d<=days; d++) html+=`<th>${d}</th>`;
+  html+="</tr>";
+  HABITS.forEach(h=>{
+    html+=`<tr><td>${h.name.split(" ")[0]}</td>`;
+    for(let d=1; d<=days; d++){
+      const k=fmt(new Date(y,m,d));
+      html+=`<td><button class="cell ${isDone(h.id,k)?"done":""} ${k===todayKey?"today":""}" data-h="${h.id}" data-k="${k}"></button></td>`;
+    }
+    html+="</tr>";
+  });
+  const g=document.getElementById("grid"); g.innerHTML=html;
+  g.querySelectorAll(".cell").forEach(b=>b.onclick=()=>toggle(b.dataset.h,b.dataset.k));
+}
+document.getElementById("prev").onclick=()=>{view.setMonth(view.getMonth()-1);render();};
+document.getElementById("next").onclick=()=>{view.setMonth(view.getMonth()+1);render();};
+render();
+</script>
+</body>
+</html>

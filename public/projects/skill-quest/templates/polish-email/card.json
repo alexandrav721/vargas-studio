@@ -1,0 +1,14 @@
+{
+  "slug": "polish-email",
+  "name": "Polish my email",
+  "oneLine": "Your rough draft, shorter and clearer, still you.",
+  "forWho": "Anyone who writes emails or work messages and worries how they come across.",
+  "youGet": [
+    "A ready-to-send email with a subject line",
+    "A short list of what changed",
+    "Warnings before you hit send"
+  ],
+  "woah": "It got shorter, and it still sounds like me.",
+  "whyBetter": "Plain Claude makes emails longer, stiffer and full of pleasantries you never say. This keeps your words, cuts the rest and never adds facts.",
+  "tryPrompt": "Polish this email so it still sounds like me. Here's my draft:"
+}

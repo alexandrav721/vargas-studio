@@ -1,0 +1,14 @@
+{
+  "slug": "trip-planner",
+  "name": "Trip planner",
+  "oneLine": "A day-by-day trip plan you can actually follow.",
+  "forWho": "Anyone planning a city trip who wants a calm plan, not a packed list.",
+  "youGet": [
+    "Two or three stops a day, close together",
+    "A map link and a rain plan for every day",
+    "Rough costs and a packing list you can tick"
+  ],
+  "woah": "Every day opens as a walking route in Google Maps.",
+  "whyBetter": "Plain Claude packs every hour and invents places. This keeps days near one area, shows travel time, and flags what to check first.",
+  "tryPrompt": "Plan 4 days in Lisbon in May for me and my partner. Mid budget. We like food and walking, not museums."
+}
