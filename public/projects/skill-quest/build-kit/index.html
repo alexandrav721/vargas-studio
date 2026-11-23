@@ -87,9 +87,32 @@
       </div>
       <div class="mini-plan" id="miniPlan" aria-hidden="true"></div>
     </div>
+    <section class="build" id="build" aria-labelledby="buildTitle">
+      <h3 class="sec" id="buildTitle">Now build it</h3>
+      <p class="sub" id="buildSub">AI reads your plan and builds a first working version you can tap through.</p>
+      <button class="btn" id="buildBtn">Build my first version</button>
+      <div class="build-run" id="buildRun" hidden>
+        <ol class="steps" id="steps"><li data-s="read">Reading your plan</li><li data-s="write">Writing your app <span id="lineN"></span></li><li data-s="open">Opening it</li></ol>
+        <pre class="code" id="code" aria-label="Code being written"></pre>
+      </div>
+      <div class="build-done" id="buildDone" hidden>
+        <div class="versions" id="versions" role="tablist" aria-label="Versions"></div>
+        <div class="phone"><iframe id="preview" title="Your app" sandbox="allow-scripts allow-forms allow-modals"></iframe></div>
+        <div class="build-actions">
+          <button class="btn ghost" id="bigView">Full screen</button>
+          <button class="btn ghost" id="saveApp">Download the app</button>
+        </div>
+        <div class="checks-box" id="checksBox"></div>
+        <label class="ql" for="changeIn">Change something</label>
+        <div class="chips" id="changeChips"></div>
+        <textarea id="changeIn" rows="2" maxlength="600" placeholder="e.g. Make the book button bigger and add a cancel option"></textarea>
+        <button class="btn" id="changeBtn">Make the change</button>
+      </div>
+      <p class="note" id="buildNote"></p>
+    </section>
     <button class="btn" id="download">Download my kit (.zip)</button>
     <button class="btn ghost" id="copyKick">Copy the first prompt</button>
-    <p class="note">Unzip it into your project folder. Works with Claude, Cursor, Lovable, Replit, Bolt and others.</p>
+    <p class="note">Want to keep building in your own tool? Unzip the kit into your project folder. Works with Claude, Cursor, Lovable, Replit, Bolt and others.</p>
 
     <h3 class="sec">Then build in a loop</h3>
     <ol class="loop" id="loop"></ol>
@@ -114,6 +137,7 @@
     <button class="btn ghost" id="sheetClose">Close</button>
   </div>
 </div>
+<div class="full" id="full" role="dialog" aria-modal="true" aria-label="Your app, full screen"><button class="btn ghost" id="fullClose">Close</button><iframe id="fullFrame" title="Your app" sandbox="allow-scripts allow-forms allow-modals"></iframe></div>
 <div class="toast" id="toast" aria-live="polite"></div>
 <div class="fx" id="fx" aria-hidden="true"></div>
 

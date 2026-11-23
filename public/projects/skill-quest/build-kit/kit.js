@@ -10,7 +10,7 @@
 
   /* ---------- state (per-viewer convenience only) ---------- */
   const KEY = "smez-buildkit-v1";
-  const fresh = () => ({ tier: 0, a: {}, done: [], traps: [], rules: [], seen: [] });
+  const fresh = () => ({ tier: 0, a: {}, done: [], traps: [], rules: [], seen: [], app: null });
   let S = fresh();
   try { const raw = localStorage.getItem(KEY); if (raw) S = Object.assign(fresh(), JSON.parse(raw)); } catch (e) {}
   const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} };
@@ -45,6 +45,7 @@
     stamp(t) { thump(t, 90, 1); hiss(t, 0.05, 1500, 600, 0.25); },
     even(t) { wood(t, 440, 0.28); wood(t + 0.14, 440, 0.28); },
     card(t) { thump(t, 160, 0.6); hiss(t, 0.03, 2600, 1800, 0.35); mallet(t + 0.05, C6, 0.18, 0.4); },
+    tick(t) { wood(t, 1300 + Math.random() * 400, 0.05); },
     lift(t) { hiss(t, 1.1, 300, 4200, 0.18, 0.7); [C5, E5, G5, C6].forEach((f, i) => mallet(t + 0.5 + i * 0.12, f, 0.3, 0.8)); },
   };
   const BUZZ = { stamp: [30], card: [20, 60, 30], lift: [20, 70, 40] };
@@ -239,7 +240,7 @@
   function drawPlanIfOpen() { if (screen === "plan") drawPlan(); }
   $("sheetClose").onclick = closeSheet;
   $("sheet").onclick = (e) => { if (e.target === $("sheet")) closeSheet(); };
-  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && $("sheet").classList.contains("on")) closeSheet(); });
+  document.addEventListener("keydown", (e) => { if (e.key !== "Escape") return; if ($("full").classList.contains("on")) $("fullClose").click(); else if ($("sheet").classList.contains("on")) closeSheet(); });
 
   /* ---------- docs ---------- */
   function mdFor(r) { return r.md(S.a[r.id] || {}, S.a, rooms()); }
@@ -267,6 +268,7 @@ ${RULES.map((r) => `- **${r.t}:** ${r.d}`).join("\n")}
     if (!window.JSZip) { sheet("Copy your plan", `<p class="sub">The download didn't load. Copy everything as one file instead.</p><pre>${esc(rs.map((r) => mdFor(r)).join("\n\n---\n\n"))}</pre>`); return; }
     const z = new JSZip(); const folder = z.folder("docs");
     rs.filter((r) => r.id !== "agents").forEach((r) => folder.file(r.file, mdFor(r)));
+    if (curHtml()) z.file("app/index.html", curHtml());
     z.file("AGENTS.md", mdFor(byId.agents)); z.file("CLAUDE.md", "Read AGENTS.md and everything in /docs before working on this project.\n"); z.file("START-HERE.md", startHere());
     const blob = await z.generateAsync({ type: "blob" });
     const slug = ((S.a.prd && S.a.prd.name) || "my-app").toLowerCase().replace(/\(sample\)/, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "my-app";
@@ -284,6 +286,7 @@ ${RULES.map((r) => `- **${r.t}:** ${r.d}`).join("\n")}
     const st = $("readyStamp"); st.textContent = all ? "READY TO BUILD" : "IN PROGRESS"; st.classList.toggle("wip", !all); st.classList.remove("on");
     $("loop").innerHTML = LOOP.map((s, i) => `<li><b>${esc(s.k)}</b><p>${esc(s.d)}</p><button class="link" data-i="${i}">Copy prompt</button></li>`).join("");
     $("rulesAll").innerHTML = RULES.map((r, i) => `<div class="rule${S.rules.includes(i) ? " got" : ""}"><b>${S.rules.includes(i) ? esc(r.t) : "Not yet"}</b><span>${S.rules.includes(i) ? esc(r.d) : "Plan more rooms to collect it."}</span></div>`).join("");
+    drawApp(false);
     await wait(350); st.classList.add("on"); play(all ? "stamp" : "even");
   }
   $("loop").onclick = (e) => { const b = e.target.closest("[data-i]"); if (b) copy(LOOP[+b.dataset.i].p(S.a.prd || {}), "Prompt copied"); };
@@ -291,6 +294,74 @@ ${RULES.map((r) => `- **${r.t}:** ${r.d}`).join("\n")}
   $("copyKick").onclick = () => copy(LOOP[0].p(S.a.prd || {}), "First prompt copied");
   $("backToPlan").onclick = () => { play("tap"); show("plan"); };
   $("startOver").onclick = () => { if (!confirm("Start a new plan? This clears your answers on this device.")) return; S = fresh(); save(); introRan = false; lastLeft = null; show("intro"); };
+
+  /* ---------- build it (AI writes the first version) ---------- */
+  const CHANGE_IDEAS = ["Make it simpler", "Add more sample data", "Bigger buttons", "Closer to my colors"];
+  let building = false;
+  const curHtml = () => (S.app && S.app.v && S.app.v[S.app.cur]) || "";
+  function docsPayload() { const o = {}; rooms().forEach((r) => (o[r.file] = mdFor(r))); return o; }
+  function setStep(k, st) { const li = document.querySelector(`#steps [data-s="${k}"]`); if (!li) return; li.classList.remove("on", "ok"); if (st) li.classList.add(st); }
+  function busy(on) { building = on; $("buildBtn").disabled = on; $("changeBtn").disabled = on; }
+  function failBuild(msg) { busy(false); $("buildRun").hidden = true; $("buildNote").textContent = msg; play("even"); }
+  async function runBuild(change) {
+    if (building) return; busy(true);
+    $("buildNote").textContent = ""; $("buildRun").hidden = false; $("code").textContent = ""; $("lineN").textContent = "";
+    ["read", "write", "open"].forEach((k) => setStep(k, null)); setStep("read", "on");
+    $("buildRun").scrollIntoView({ block: "start" }); play("tap");
+    let res;
+    try {
+      res = await fetch("/api/build", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(change ? { docs: docsPayload(), html: curHtml(), change } : { docs: docsPayload() }) });
+    } catch (e) { return failBuild("Couldn't reach the builder. Check your connection and try again."); }
+    if (!res.ok) {
+      let m = "Something went wrong. Try again in a minute.";
+      try { m = (await res.json()).error || m; } catch (e) { if (res.status === 404 || res.status === 405) m = "Building only works on the live site."; }
+      return failBuild(m);
+    }
+    const left = res.headers.get("x-builds-left");
+    setStep("read", "ok"); setStep("write", "on");
+    const rd = res.body.getReader(), dec = new TextDecoder(); let text = "", last = 0;
+    for (;;) {
+      const { done, value } = await rd.read(); if (done) break;
+      text += dec.decode(value, { stream: true });
+      const lines = text.split("\n"); $("code").textContent = lines.slice(-16).join("\n"); $("lineN").textContent = `· ${lines.length} lines`;
+      const now = performance.now(); if (now - last > 240) { last = now; play("tick"); }
+    }
+    const err = (text.match(/<!--BUILD_ERROR:(\w+)-->/) || [])[1];
+    const m = text.match(/<!doctype html[\s\S]*<\/html>/i);
+    if (!m) return failBuild(err === "refused" ? "AI wouldn't build this plan. Try rewording it." : err === "busy" ? "The builder is busy. Try again in a minute." : "The build didn't finish. Try again.");
+    setStep("write", "ok"); setStep("open", "on"); await wait(400); setStep("open", "ok");
+    const app = S.app || (S.app = { v: [], cur: 0 }); app.v.push(m[0]); if (app.v.length > 5) app.v.shift(); app.cur = app.v.length - 1; save();
+    busy(false); $("changeIn").value = "";
+    drawApp(true);
+    $("buildNote").textContent = left !== null ? `${left} build${left === "1" ? "" : "s"} left today.` : "";
+    play("lift"); toast(change ? "Change made" : "Your app is ready");
+  }
+  function drawApp(scroll) {
+    const app = S.app;
+    if (!app || !app.v || !app.v.length) { $("buildDone").hidden = true; $("buildBtn").textContent = "Build my first version"; return; }
+    $("buildDone").hidden = false; $("buildRun").hidden = true; $("buildBtn").textContent = "Build again from the plan";
+    $("versions").innerHTML = app.v.map((_, i) => `<button role="tab" aria-selected="${i === app.cur}" data-v="${i}">Version ${i + 1}</button>`).join("");
+    $("preview").srcdoc = curHtml();
+    const never = (S.a.testing && S.a.testing.never) || [], must = (S.a.prd && S.a.prd.must) || [];
+    const items = (never.length ? never : must).slice(0, 3);
+    $("checksBox").innerHTML = `<b>Now check it: tap through these</b>` + (items.length ? items : ["The main path works, start to finish"]).map((t) => `<label><input type="checkbox"> ${esc(t)}</label>`).join("");
+    $("changeChips").innerHTML = CHANGE_IDEAS.map((c) => `<button class="chip">${esc(c)}</button>`).join("");
+    if (scroll) $("buildDone").scrollIntoView({ block: "start" });
+  }
+  $("buildBtn").onclick = () => runBuild(null);
+  $("changeBtn").onclick = () => { const c = $("changeIn").value.trim(); if (!c) { $("changeIn").focus(); toast("Say what to change"); return; } runBuild(c); };
+  $("changeChips").onclick = (e) => { const b = e.target.closest(".chip"); if (!b) return; play("tap"); $("changeIn").value = b.textContent; $("changeIn").focus(); };
+  $("versions").onclick = (e) => { const b = e.target.closest("[data-v]"); if (!b) return; play("tap"); S.app.cur = +b.dataset.v; save(); drawApp(false); };
+  $("checksBox").onchange = () => {
+    const boxes = [...$("checksBox").querySelectorAll("input")]; play("tap");
+    if (boxes.length && boxes.every((x) => x.checked)) { play("sig"); toast("Proved it works"); if (!S.rules.includes(6)) { S.rules.push(6); save(); } }
+  };
+  $("bigView").onclick = () => { $("fullFrame").srcdoc = curHtml(); $("full").classList.add("on"); $("fullClose").focus(); };
+  $("fullClose").onclick = () => { $("full").classList.remove("on"); $("fullFrame").srcdoc = ""; };
+  $("saveApp").onclick = () => {
+    const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([curHtml()], { type: "text/html" }));
+    a.download = "index.html"; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 4000); play("sig");
+  };
 
   show("intro");
 })();
