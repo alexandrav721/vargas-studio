@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="try.css">
 <style>
   .grid{display:grid;gap:28px;margin-top:20px}
-  @media(min-width:760px){.grid{grid-template-columns:1fr 1fr}}
+  @media(min-width:760px){.grid{grid-template-columns:1fr 1fr 1fr}}
   .col h2{font-size:26px}
   .stat{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--line)}
   .stat b{font:700 18px var(--mono)}
@@ -35,7 +35,7 @@
   }).then(function (j) {
     function n(page, ev) { var x = j.counts.find(function (c) { return c.page === page && c.event === ev; }); return x ? x.n : 0; }
     function pct(a, b) { return b ? (100 * a / b).toFixed(1) + "%" : "–"; }
-    var P = { marketers: "Marketing kit · $39", everyday: "Cooking school · $19" };
+    var P = { marketers: "Marketing kit · $39", smallbiz: "Shop owner kit · $19", everyday: "Cooking school · $19" };
     var cols = Object.keys(P).map(function (p) {
       var v = n(p, "view"), c = n(p, "cta"), r = n(p, "reserve");
       return '<div class="col"><h2>' + P[p] + '</h2>' +
@@ -44,12 +44,13 @@
         '<div class="stat"><span>Reserved with email</span><b>' + r + ' · ' + pct(r, v) + '</b></div>' +
         '<p class="note"><a href="' + p + '/">Open the page</a></p></div>';
     }).join("");
-    var mv = n("marketers", "view"), mr = n("marketers", "reserve"), ev = n("everyday", "view"), er = n("everyday", "reserve");
-    var mRate = mv ? mr / mv : 0, eRate = ev ? er / ev : 0;
-    var verdict = mv + ev < 100 ? "Too early to call: fewer than 100 visitors in total."
-      : (mr >= 10 || (mv >= 300 && mRate >= 0.03)) && mRate >= 2 * eRate ? "Marketers look like the first paid audience (10+ reservations, at least 2x the everyday page)."
-      : mr < 5 && er < 5 ? "Neither page has 5 reservations yet. Fix the offer and the proof before choosing."
-      : "No clear winner yet. Keep sending the same effort to both.";
+    var stats = Object.keys(P).map(function (p) { var v = n(p, "view"), r = n(p, "reserve"); return { p: p, v: v, r: r, rate: v ? r / v : 0 }; });
+    var total = stats.reduce(function (t, x) { return t + x.v; }, 0);
+    var best = stats.slice().sort(function (a, b) { return b.rate - a.rate; });
+    var verdict = total < 100 ? "Too early to call: fewer than 100 visitors in total."
+      : best.every(function (x) { return x.r < 5; }) ? "No page has 5 reservations yet. Fix the offer and the proof before choosing."
+      : (best[0].r >= 10 || (best[0].v >= 300 && best[0].rate >= 0.03)) && best[0].rate >= 2 * best[1].rate ? P[best[0].p] + " looks like the first paid audience (10+ reservations, at least 2x the next page)."
+      : "No clear winner yet. Keep sending the same effort to each page.";
     var rows = j.reservations.map(function (x) { return "<tr><td>" + esc(x.page) + "</td><td>" + esc(x.email) + "</td><td>" + esc(x.role) + "</td><td>" + esc(x.source) + "</td><td>" + new Date(x.at).toLocaleDateString("en-GB", { day: "numeric", month: "short" }) + "</td></tr>"; }).join("");
     var src = j.sources.map(function (x) { return "<tr><td>" + esc(x.page) + "</td><td>" + esc(x.source) + "</td><td>" + x.n + "</td></tr>"; }).join("");
     out.innerHTML = '<h1 style="font-size:clamp(32px,5vw,46px)">Which kitchen do people want?</h1>' +

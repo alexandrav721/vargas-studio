@@ -1095,7 +1095,7 @@ async function handle({ request: req, env, params }) {
   if (path === 'demand' && m === 'POST') {
     await take(env, ip, 'demand', 120, 3600, 'Too many requests. Try again later.');
     const b = await readJson(req);
-    const page = b.page === 'marketers' || b.page === 'everyday' ? b.page : null;
+    const page = ['marketers', 'everyday', 'smallbiz'].includes(b.page) ? b.page : null;
     const event = ['view', 'cta', 'reserve'].includes(b.event) ? b.event : null;
     const visitor = typeof b.visitor === 'string' && /^[a-z0-9]{12,40}$/.test(b.visitor) ? b.visitor : null;
     if (!page || !event || !visitor) throw new Bad('Bad request.');
