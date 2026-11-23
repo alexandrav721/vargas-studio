@@ -1,0 +1,229 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex"/>
+<title>Planner and Book · deck (old version)</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,550&family=Source+Sans+3:wght@500;700&display=swap" rel="stylesheet"/>
+<style>
+:root{--ink:#1c1917;--chalk:#f7f3ee;--sage:#5f7a6b;--deep:#3f5548;--mute:#6b645e;--gold:#c9a227;--display:"Fraunces",Georgia,serif;--sans:"Source Sans 3",system-ui,sans-serif}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:#d9dcd6;font-family:var(--sans);color:var(--ink);overflow:hidden}
+.studio-back{position:fixed;top:12px;left:12px;z-index:40;font:600 11px/1 var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--mute);text-decoration:none;background:#fff;border:1px solid rgba(28,25,23,.12);padding:.55rem .8rem}
+.viewport{position:fixed;inset:0;display:grid;place-items:center}
+.deck{width:1280px;height:720px;position:absolute;left:50%;top:50%;transform-origin:center center}
+.s{position:absolute;inset:0;display:none;padding:64px 72px 56px;background:linear-gradient(165deg,#e8ece8,#f7f3ee 48%,#ebe4da);box-shadow:0 20px 60px rgba(28,25,23,.18);overflow:hidden;flex-direction:column}
+.s.on{display:flex}
+.s.dark{background:#1c1917;color:var(--chalk)}
+.k{font:700 15px/1 var(--sans);letter-spacing:.18em;text-transform:uppercase;color:var(--deep);margin:0}
+.dark .k{color:var(--gold)}
+h1,h2{font-family:var(--display);font-weight:700;letter-spacing:-.01em;margin:14px 0 0;color:var(--deep)}
+.dark h1,.dark h2{color:var(--chalk)}
+h1{font-size:76px;line-height:1.02}
+h2{font-size:50px;line-height:1.06}
+.sub{font-size:24px;line-height:1.4;color:#3d3833;margin:18px 0 0;max-width:900px}
+.dark .sub{color:rgba(247,243,238,.84)}
+.body{flex:1;display:flex;gap:28px;align-items:center;margin-top:30px;min-height:0}
+.src{font-size:14px;line-height:1.4;color:var(--mute);margin-top:auto;padding-top:14px}
+.dark .src{color:rgba(247,243,238,.66)}
+.num{font-family:var(--display);font-weight:700;font-size:64px;line-height:1;color:var(--deep)}
+.card{flex:1;background:rgba(255,255,255,.78);border:1px solid rgba(28,25,23,.12);border-radius:20px;padding:24px 26px}
+.dark .card{background:rgba(247,243,238,.06);border-color:rgba(247,243,238,.16)}
+.card h3{font:700 30px/1.15 var(--display);margin:0 0 8px;color:var(--deep)}
+.dark .card h3{color:var(--chalk)}
+.card p{margin:0;font-size:22px;line-height:1.4;color:#3d3833}
+.dark .card p{color:rgba(247,243,238,.8)}
+.lbl{font:700 13px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin:12px 0 0}
+.todo{display:inline-block;background:#fff3c4;color:#5c4a00;border:1px dashed #b38f00;border-radius:8px;padding:2px 8px;font-weight:700}
+.dark .todo{background:#3a3110;color:#f3d977;border-color:#c9a227}
+.shots{display:flex;gap:22px;flex:1;min-height:0}
+.shots figure{margin:0;flex:1;display:flex;flex-direction:column;min-height:0}
+.s-two-shots .shots img{flex:none;height:430px}
+.shots img{width:100%;flex:1;min-height:0;object-fit:contain;object-position:top center;background:#f3efe8;border-radius:14px;border:1px solid rgba(28,25,23,.15)}
+.shots figcaption{font:700 16px/1.3 var(--sans);color:var(--deep);margin-top:10px}
+table{width:100%;border-collapse:collapse;font-size:21px}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid rgba(28,25,23,.14);vertical-align:top}
+th{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
+tr.us td{background:rgba(95,122,107,.14);font-weight:700}
+.math{font:600 22px/1.5 var(--sans)}
+.math b{font-family:var(--display);color:var(--deep)}
+.flow{display:flex;align-items:center;gap:16px;flex:1}
+.flow .card{display:flex;flex-direction:column}
+.arrow{font:700 36px/1 var(--sans);color:var(--sage)}
+.nav{position:fixed;bottom:12px;right:12px;z-index:40;display:flex;gap:6px;align-items:center;font:700 12px var(--sans);color:var(--mute)}
+.nav button{appearance:none;border:1px solid rgba(28,25,23,.2);background:#fff;padding:6px 10px;border-radius:999px;cursor:pointer;font:700 12px var(--sans);color:var(--deep)}
+body.render .studio-back,body.render .nav{display:none}
+body.render{background:#fff}
+@media print{@page{size:1280px 720px;margin:0}html,body{overflow:visible;height:auto;background:#fff}.studio-back,.nav{display:none}.viewport{position:static;display:block}.deck{transform:none!important;position:static;width:1280px;height:auto}.s{position:relative;display:flex!important;width:1280px;height:720px;box-shadow:none;page-break-after:always;break-after:page}}
+</style>  <link rel="stylesheet" href="/site-bar.css" />
+  <script src="/site-bar.js" data-project="planner-book" data-kind="piece" defer></script>
+</head><body>
+<a class="studio-back" href="/">← Vargas Studio</a>
+<div class="viewport"><div class="deck" id="deck">
+
+<!-- 1 Title -->
+<section class="s dark">
+  <p class="k">Lumen · paper edition</p>
+  <h1 style="font-size:92px;margin-top:120px">Planner and Book</h1>
+  <p class="sub" style="font-size:30px">Physical goal planner + illustrated book: print craft meets premium unlock.</p>
+  <p class="sub" style="margin-top:40px">Founder: <span class="todo">[TODO name]</span> · <span class="todo">[TODO email]</span></p>
+  <p class="src">Pitch draft · numbers on each slide are cited; anything not cited is marked assumption or TODO.</p>
+</section>
+
+<!-- 2 Problem -->
+<section class="s">
+  <p class="k">Problem</p>
+  <h2>Planners punish the week you missed.</h2>
+  <p class="sub">Dated pages turn one bad week into a stack of blanks. Most people stop there, and the goal goes with the planner.</p>
+  <div class="body">
+    <div class="card"><h3>The moment</h3><p>Three empty weeks in March. Starting again means facing them, or buying a new planner. <span class="lbl" style="display:block">Illustrative, not a real user</span></p></div>
+    <div class="card"><h3>What we know</h3><p>Undated planners are already a paid category: Passion Planner, BestSelf and Erin Condren all sell them.</p></div>
+    <div class="card"><h3>What we still need</h3><p><span class="todo">[TODO]</span> Interview 20 lapsed planner buyers: how many abandoned one after a missed stretch?</p></div>
+  </div>
+  <p class="src">Undated lines: passionplanner.com weekly collection; bestself.co Self Journal (13-week, undated); erincondren.com/planners (Undated LifePlanner). All checked Nov 2026.</p>
+</section>
+
+<!-- 3 Solution -->
+<section class="s">
+  <p class="k">Solution</p>
+  <h2>One goal on paper, and a way back after any gap.</h2>
+  <div class="body">
+    <div class="card"><h3>Physical Goal Planner</h3><p>The Next Chapter: one goal, a next step sized small / full / rest, an obstacle toolkit, a chapter record.</p></div>
+    <div class="card"><h3>Return ticket</h3><p>After a gap: continue, shrink, pause or revise. Undated, so there is no backlog debt.</p></div>
+    <div class="card"><h3>It Was Always You</h3><p>Illustrated book by Johanna J. 37 chapters in five parts, unlocked in Premium.</p></div>
+  </div>
+  <p class="src">Product names and features as on /projects/planner/ and /projects/planner/print.html.</p>
+</section>
+
+<!-- 4 Product -->
+<section class="s s-two-shots">
+  <p class="k">Product today</p>
+  <h2 style="font-size:42px">Two pieces exist as web demos.</h2>
+  <div class="body" style="margin-top:22px">
+    <div class="shots">
+      <figure><img src="deck/shot-print.png" alt="Season Chapter free printable page"/><figcaption>Free printable · Season Chapter</figcaption></figure>
+      <figure><img src="deck/shot-shop.png" alt="Shop page with the planner and the book"/><figcaption>Shop · planner + book sneak</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- 5 Why now -->
+<section class="s">
+  <p class="k">Why now</p>
+  <h2>Paper planners are growing again.</h2>
+  <div class="body">
+    <div class="card"><div class="num">$50M+</div><p style="margin-top:10px">Papier’s expected 2025 sales. Planner sales up 20% year over year.</p></div>
+    <div class="card"><div class="num">10M+</div><p style="margin-top:10px">Hobonichi Techo copies sold all-time; users in 100+ countries.</p></div>
+    <div class="card"><div class="num">57M</div><p style="margin-top:10px">TikTok posts tagged “stationerycore”.</p></div>
+  </div>
+  <p class="sub" style="font-size:21px">Papier’s CEO credits people choosing not to let their lives go fully digital.</p>
+  <p class="src">Modern Retail, “Papier’s sales swell to $50M…”, 9 Dec 2025 (Papier, stationerycore). Hobonichi, 1101.com Techo 2026 About page (figure as of Sep 2024).</p>
+</section>
+
+<!-- 6 Market -->
+<section class="s">
+  <p class="k">Market</p>
+  <h2>Proven scale above, a small honest start below.</h2>
+  <div class="body">
+    <div class="card"><h3>Comparable scale</h3><p>Hobonichi: ~900,000 copies of its 2024 edition. Papier: $50M+ in 2025. One focused planner can sell at this size.</p>
+      <p class="lbl" style="margin-top:18px">Top-down reports</p><p>Published “planner market” figures disagree by 7× or more. We don’t use them.</p></div>
+    <div class="card" style="flex:1.25"><h3>Bottom-up, year 3 <span class="lbl" style="display:inline">projection</span></h3>
+      <p class="math"><b>50,000</b> printable downloads<br/>× <b>4%</b> buy the planner<br/>× <b>$40</b> price<br/>= <b>$80,000</b> / year in planners</p>
+      <p style="margin-top:10px;font-size:16px;color:var(--mute)">All three inputs are assumptions. $40 sits inside the $36–$60 range of comparable goal planners; our price is TBD. Premium (book) revenue not included: price TBD.</p></div>
+  </div>
+  <p class="src">Good News Network citing The Japan Times, Jan 2025 (Hobonichi 2024 units). Modern Retail, Dec 2025 (Papier). Price range: bestself.co, passionplanner.com, erincondren.com, Nov 2026.</p>
+</section>
+
+<!-- 7 Traction -->
+<section class="s">
+  <p class="k">Traction</p>
+  <h2>Pre-launch. Here is the first test.</h2>
+  <div class="body">
+    <div class="card"><h3>Today</h3><p>Free printable and shop page are live as web pages.</p><p style="margin-top:12px">Downloads: <span class="todo">[TODO]</span><br/>Book list sign-ups: <span class="todo">[TODO]</span> (form is a demo)</p></div>
+    <div class="card"><h3>Two-week ad test</h3><p>$180 on Meta across three angles, all pointing to the free printable or the shop.</p><p style="margin-top:12px">Keep an angle if CTR ≥ 1% and a printable visit costs ≤ $0.80 <span class="lbl" style="display:inline">assumption</span></p></div>
+    <div class="card"><h3>The real signal</h3><p>Pre-orders for the printed planner at a stated price.</p><p style="margin-top:12px">Target: <span class="todo">[TODO set]</span></p></div>
+  </div>
+</section>
+
+<!-- 8 Business model -->
+<section class="s">
+  <p class="k">Business model</p>
+  <h2>Free sheet → paid planner → Premium book.</h2>
+  <div class="body">
+    <div class="flow">
+      <div class="card"><h3>Free</h3><p>Season Chapter printable. Builds the list.</p><p class="lbl">Like Passion Planner’s free PDFs</p></div>
+      <span class="arrow" aria-hidden="true">→</span>
+      <div class="card"><h3>Planner</h3><p>One-time purchase. Price TBD.</p><p class="lbl">Comps $36–$60</p></div>
+      <span class="arrow" aria-hidden="true">→</span>
+      <div class="card"><h3>Premium</h3><p>Unlocks the full illustrated book. Price TBD.</p><p class="lbl">Shared with Lumen</p></div>
+    </div>
+  </div>
+  <div class="card" style="flex:0 0 auto;margin-top:18px"><p><b>Unit math (assumptions):</b> $40 price − $12 print-on-demand cost = $28 before shipping and ads (70%). Lulu lists coil-bound color planners from $5.80 a copy at its smallest spec, so $12 leaves room for page count.</p></div>
+  <p class="src">Lulu.com “Print Workbooks &amp; Textbooks” page: Planners, 6×9 coil bound, standard color, from $5.80 (checked Nov 2026). Passion Planner free downloads page.</p>
+</section>
+
+<!-- 9 GTM -->
+<section class="s">
+  <p class="k">Go-to-market</p>
+  <h2>Lead with the free sheet. Two channels.</h2>
+  <div class="body">
+    <div class="card"><h3>Meta ads → printable</h3><p>Three angles already drawn: Paper remembers, No backlog debt, Phone down. CTA is “Download”, which is true.</p></div>
+    <div class="card"><h3>TikTok + Instagram, organic</h3><p>Show the sheet being filled in. Papier’s TikTok traffic nearly doubled in a year; Hobonichi grew on user posts.</p></div>
+    <div class="card"><h3>First 1,000</h3><p>Printable downloaders get a pre-order offer for the printed planner.</p><p class="lbl" style="margin-top:12px">Plan, not results</p></div>
+  </div>
+  <p class="src">Modern Retail, Dec 2025 (Papier TikTok traffic). Japan Times via Good News Network, Jan 2025 (Hobonichi social community).</p>
+</section>
+
+<!-- 10 Competition -->
+<section class="s">
+  <p class="k">Competition</p>
+  <h2 style="font-size:42px">Good planners exist. Few plan for the comeback.</h2>
+  <div class="body" style="margin-top:18px;display:block">
+    <table>
+      <tr><th>Brand</th><th>Price seen</th><th>Built around</th><th>After a missed stretch</th></tr>
+      <tr><td>Passion Planner</td><td>$45–$55 undated weekly</td><td>Goals + weekly layout</td><td>Undated option</td></tr>
+      <tr><td>BestSelf Self Journal</td><td>$36</td><td>13-week goal sprint</td><td>Undated</td></tr>
+      <tr><td>Erin Condren</td><td>$60.50 undated LifePlanner</td><td>Decorated scheduling</td><td>Undated option</td></tr>
+      <tr><td>Hobonichi Techo</td><td>not checked</td><td>A page a day, journaling</td><td>Dated daily pages</td></tr>
+      <tr><td>Papier</td><td>not checked</td><td>Personalized design</td><td>not checked</td></tr>
+      <tr class="us"><td>Planner and Book</td><td>TBD</td><td>One goal + a book</td><td>Undated + return ticket</td></tr>
+    </table>
+  </div>
+  <p class="src">Regular prices from each brand’s store, Nov 2026 (Passion Planner product feed; bestself.co; erincondren.com/planners). Hobonichi and Papier prices vary by edition.</p>
+</section>
+
+<!-- 11 Team -->
+<section class="s">
+  <p class="k">Team</p>
+  <h2>Why us</h2>
+  <div class="body">
+    <div class="card"><h3>Founder</h3><p><span class="todo">[TODO name, background]</span></p></div>
+    <div class="card"><h3>Author</h3><p>Johanna J., It Was Always You (illustrated edition). <span class="todo">[TODO bio + rights status]</span></p></div>
+    <div class="card"><h3>Unfair advantage</h3><p>Same world as Lumen, the daily game, so app users are a warm audience. <span class="todo">[TODO Lumen user count]</span></p></div>
+  </div>
+</section>
+
+<!-- 12 Ask -->
+<section class="s dark">
+  <p class="k">The ask</p>
+  <h2>Raise <span class="todo">[TODO amount]</span> to print the first run.</h2>
+  <div class="body">
+    <div class="card"><h3>Use of funds</h3><p>Planner print run or print-on-demand setup · book illustration + layout · ad tests. <span class="todo">[TODO split]</span></p></div>
+    <div class="card"><h3>18-month milestones</h3><p>Planner on sale · Premium book unlock live · <span class="todo">[TODO download + sales targets]</span></p></div>
+    <div class="card"><h3>Next step</h3><p>Run the two-week printable test, then set the planner price from pre-orders.</p></div>
+  </div>
+  <p class="src">Full sources, speaker notes and investor Q&amp;A: notes.md</p>
+</section>
+
+</div></div>
+<div class="nav"><button type="button" id="p" aria-label="Previous slide">←</button><span id="c">1 / 12</span><button type="button" id="n" aria-label="Next slide">→</button></div>
+<script>
+const S=[...document.querySelectorAll('.s')],q=new URLSearchParams(location.search);
+let i=Math.max(0,Math.min(S.length-1,(parseInt(q.get('slide'))||1)-1));
+if(q.has('render'))document.body.classList.add('render');
+function fit(){const d=document.getElementById('deck');const k=Math.min(innerWidth/1280,innerHeight/720)*(q.has('render')?1:.96);d.style.transform='translate(-50%,-50%) scale('+k+')';}
+function go(n){i=Math.max(0,Math.min(S.length-1,n));S.forEach((s,j)=>s.classList.toggle('on',j===i));document.getElementById('c').textContent=(i+1)+' / '+S.length;const u=new URL(location);u.searchParams.set('slide',i+1);history.replaceState(null,'',u);}
+addEventListener('keydown',e=>{if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();go(i+1)}if(['ArrowLeft','PageUp'].includes(e.key))go(i-1);if(e.key==='Home')go(0);if(e.key==='End')go(S.length-1);});
+document.getElementById('p').onclick=()=>go(i-1);document.getElementById('n').onclick=()=>go(i+1);
+addEventListener('resize',fit);fit();go(i);
+</script>
+</body></html>

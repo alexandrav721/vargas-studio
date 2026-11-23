@@ -55,11 +55,7 @@ a:hover {
   inset: 0;
   pointer-events: none;
   z-index: 0;
-  background:
-    radial-gradient(900px 620px at 8% -10%, rgba(214, 242, 106, 0.14), transparent 55%),
-    radial-gradient(800px 520px at 92% 12%, rgba(240, 201, 160, 0.1), transparent 50%),
-    radial-gradient(700px 700px at 70% 85%, rgba(72, 120, 96, 0.22), transparent 60%),
-    linear-gradient(165deg, #0c1612 0%, #101c17 42%, #0a1210 100%);
+  background: #0e1814;
 }
 
 .atmosphere::after {
@@ -200,6 +196,7 @@ a:hover {
   background: radial-gradient(circle at 35% 35%, rgba(214, 242, 106, 0.2), transparent 62%);
   animation: drift 10s ease-in-out infinite alternate;
   pointer-events: none;
+  display: none;
 }
 
 .eyebrow {

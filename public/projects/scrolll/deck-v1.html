@@ -1,0 +1,39 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Scrolll — Story deck (old version)</title>
+<meta name="robots" content="noindex">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="styles.css"/>  <link rel="stylesheet" href="/site-bar.css" />
+  <script src="/site-bar.js" data-project="scrolll" data-kind="piece" defer></script>
+</head><body>
+<a class="studio-back" href="/">← Vargas Studio</a><div class="wrap"><nav class="top" aria-label="Scrolll">
+<a href="index.html">Home</a><a href="for-you.html">For you</a><a href="for-creators.html">Creators</a>
+<a href="advertise.html">Advertise</a><a href="join.html">Join</a><a href="deck.html" aria-current="page">Deck</a><a href="ads.html">Meta ads</a>
+</nav>
+<p class="kicker">Narrative board · ← → or click</p>
+<div class="deck-stage" id="deck">
+  <div>
+    <p class="kicker" id="deck-k">01</p>
+    <h2 id="deck-h">Everyone is already an influencer.</h2>
+    <p class="lede" id="deck-p" style="margin-left:auto;margin-right:auto">Any post advertises clothes, makeup, places. Brands should pay the poster.</p>
+  </div>
+</div>
+<div class="deck-nav">
+  <button class="btn btn-ghost" type="button" id="prev">← Prev</button>
+  <button class="btn" type="button" id="next">Next →</button>
+</div>
+<script>
+const slides=[
+{k:'01',h:'Everyone is already an influencer.',p:'Consumers buy everything and already do the advertising.'},
+{k:'02',h:'They sell your eyes. Platforms keep the check.',p:'Scrolll routes a fairer cut to the person actually watching.'},
+{k:'03',h:'You pick the persona. You pick the ads.',p:'Opt into paid attention — or go ad-free.'},
+{k:'04',h:'Not an Instagram plugin.',p:'Our own feed — videos, pictures, and ads we control.'},
+{k:'05',h:'Doomscroll. Earn for attention.',p:'Join early access — fair split TBD, disclosed before you earn.'}
+];
+let i=0;const deckk=document.getElementById('deck-k'),deckh=document.getElementById('deck-h'),deckp=document.getElementById('deck-p');
+const paint2=()=>{deckk.textContent=slides[i].k;deckh.textContent=slides[i].h;deckp.textContent=slides[i].p};
+document.getElementById('next').onclick=()=>{i=(i+1)%slides.length;paint2()};
+document.getElementById('prev').onclick=()=>{i=(i-1+slides.length)%slides.length;paint2()};
+addEventListener('keydown',e=>{if(e.key==='ArrowRight')document.getElementById('next').click();if(e.key==='ArrowLeft')document.getElementById('prev').click()});
+</script>
+</div></body></html>

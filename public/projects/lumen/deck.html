@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lumen pitch deck</title>
+<meta name="description" content="Lumen, the habit game: miss a day and you're still in. 12 slides by Alexandra Vargas.">
+<meta name="theme-color" content="#12151c">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#12151c;--ink-2:#1a2030;--ink-3:#232a3a;--gold:#c9a227;--gold-soft:rgba(201,162,39,.14);--sage:#5c8a6e;--chalk:#f4f1ea;--paper:#f8f7f3;
+  --dim:rgba(244,241,234,.72);--line:rgba(244,241,234,.18);--paper-ink:#1c1f26;--paper-dim:#545a66;
+  --display:"Fraunces",Georgia,serif;--sans:"DM Sans",system-ui,sans-serif;--mono:"DM Mono",ui-monospace,monospace}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%;background:#0b0d12;overflow:hidden}
+body{font-family:var(--sans);color:var(--chalk)}
+#deck{position:absolute;width:1280px;height:720px;left:50%;top:50%;transform-origin:center}
+.slide{position:absolute;inset:0;background:var(--ink);padding:60px 80px 72px;display:none;flex-direction:column;overflow:hidden}
+.slide.on{display:flex}
+.paper{background:var(--paper);color:var(--paper-ink)}
+.paper .dim{color:var(--paper-dim)}
+.paper .src{color:var(--paper-dim)}
+h1{font:700 150px/.9 var(--display);letter-spacing:-.035em}
+h2{font:700 52px/1.04 var(--display);letter-spacing:-.02em;max-width:25ch;position:relative;z-index:3}
+h3{font:700 26px/1.15 var(--display);letter-spacing:-.01em}
+p,li{font-size:22px;line-height:1.4}
+.dim{color:var(--dim)}
+.gold{color:var(--gold)}
+.lab{font:500 13px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--sage)}
+.paper .lab{color:#3f6b51}
+.src{position:absolute;left:80px;right:300px;bottom:26px;font:400 12.5px/1.45 var(--mono);color:rgba(244,241,234,.55);z-index:3}
+.src a{color:inherit}
+.body{position:relative;z-index:3;flex:1;display:flex;flex-direction:column;justify-content:center}
+
+/* fog: a gradient that depicts fog */
+.fog{position:absolute;inset:0;pointer-events:none;z-index:1;overflow:hidden}
+.fog i{position:absolute;width:900px;height:460px;border-radius:50%;background:radial-gradient(closest-side,rgba(220,226,230,.26),rgba(220,226,230,0));filter:blur(14px);animation:drift 24s ease-in-out infinite alternate}
+.fog i:nth-child(1){left:-320px;top:40px}
+.fog i:nth-child(2){right:-360px;top:220px;animation-duration:30s;animation-delay:-8s}
+.fog i:nth-child(3){left:180px;bottom:-280px;animation-duration:34s;animation-delay:-14s}
+@keyframes drift{from{transform:translateX(-50px)}to{transform:translateX(70px)}}
+
+/* streak squares, the Lumen motif */
+.sq{display:inline-grid;place-items:center;width:44px;height:44px;border-radius:10px;border:1.5px solid var(--line);position:relative;flex:none}
+.sq.done{background:var(--gold);border-color:var(--gold)}
+.sq.done::after{content:"";width:40%;height:22%;border-left:3px solid var(--ink);border-bottom:3px solid var(--ink);transform:translateY(-15%) rotate(-45deg)}
+.sq.miss{border-style:dashed;border-color:rgba(244,241,234,.4)}
+.sq.stub::before{content:"";position:absolute;inset:14%;border-radius:6px;border:2px dashed var(--gold);background:rgba(201,162,39,.25)}
+.week{display:flex;gap:8px}
+.days{display:flex;gap:8px;font:500 12px/1 var(--mono);color:var(--dim)}
+.days span{width:44px;text-align:center}
+
+/* punch-card return ticket */
+.ticket{position:relative;border:2px dashed var(--gold);border-radius:14px;background:var(--gold-soft);padding:26px 34px}
+.ticket::before,.ticket::after{content:"";position:absolute;top:50%;width:26px;height:26px;margin-top:-13px;border-radius:50%;background:var(--ink);border:2px dashed var(--gold)}
+.ticket::before{left:-15px}.ticket::after{right:-15px}
+.ticket .hole{position:absolute;right:34px;top:24px;width:22px;height:22px;border-radius:50%;background:var(--ink);border:1.5px solid rgba(201,162,39,.5)}
+
+.phone{width:250px;height:522px;border:8px solid #05070a;border-radius:36px;overflow:hidden;background:var(--ink);flex:none;box-shadow:0 0 0 1px var(--line)}
+.phone iframe{width:390px;height:892px;border:0;transform:scale(.6);transform-origin:0 0;margin-top:-29px;display:block}
+.cap{font:400 13px/1.4 var(--mono);color:var(--dim);margin-top:12px;text-align:center;max-width:250px}
+
+table{border-collapse:collapse;width:100%;font-size:18px;line-height:1.35}
+th,td{border-bottom:1.5px solid rgba(28,31,38,.22);padding:11px 12px 11px 0;text-align:left;vertical-align:top}
+th{font:500 12px var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--paper-dim)}
+td.m{font:400 13.5px/1.4 var(--mono);color:var(--paper-dim)}
+.nr{font:500 14px var(--mono);color:var(--paper-dim);white-space:nowrap}
+.ok{font:500 14px var(--mono);color:#3f6b51;white-space:nowrap}
+
+/* competition map */
+.map{position:relative;width:620px;height:470px;border-left:1.5px solid var(--line);border-bottom:1.5px solid var(--line);flex:none}
+.map .pin{position:absolute;padding:8px 13px;border:1.5px solid var(--line);border-radius:10px;background:var(--ink-2);font:700 17px/1.1 var(--sans);white-space:nowrap}
+.map .pin small{display:block;font:400 12px/1.3 var(--mono);color:var(--dim);margin-top:3px}
+.map .me{background:var(--gold);color:var(--ink);border-color:var(--gold);font:700 22px/1 var(--display)}
+.map .me small{color:var(--ink)}
+.ax{position:absolute;font:500 12px/1.2 var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--dim)}
+
+.grid100{display:grid;grid-template-columns:repeat(10,26px);gap:6px}
+.grid100 b{width:26px;height:26px;border-radius:6px;border:1.5px dashed rgba(244,241,234,.35)}
+.grid100 b.g{background:var(--gold);border:1.5px solid var(--gold)}
+
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;position:relative;z-index:3}
+.step svg{width:96px;height:96px;margin-bottom:18px}
+.step p{font-size:19px;margin-top:8px}
+.art{fill:none;stroke:var(--gold);stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round}
+.art .soft{stroke:var(--chalk);opacity:.55}
+
+.thumbs{display:flex;gap:22px;align-items:flex-end}
+.thumbs figure{margin:0}
+.thumbs img{display:block;border-radius:8px;border:1px solid var(--line)}
+.thumbs figcaption{font:400 12.5px/1.3 var(--mono);color:var(--dim);margin-top:8px}
+
+.next{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;position:relative;z-index:3}
+.next .sq{display:grid;margin-bottom:16px}
+.next p{font-size:19px;margin-top:8px}
+
+/* slide counter drawn as a streak */
+#foot{position:fixed;right:16px;bottom:12px;z-index:50;display:flex;align-items:center;gap:12px;background:rgba(12,14,19,.92);border:1px solid var(--line);border-radius:12px;padding:8px 12px;font:500 12px var(--mono);color:var(--dim)}
+#streak{display:flex;gap:4px}
+#streak i{width:11px;height:11px;border-radius:3px;border:1px solid rgba(244,241,234,.35)}
+#streak i.past{background:var(--gold);border-color:var(--gold)}
+#streak i.now{border:1.5px dashed var(--gold);background:rgba(201,162,39,.3)}
+@media (prefers-reduced-motion:reduce){.fog i{animation:none}}
+</style>
+<link rel="stylesheet" href="/site-bar.css" />
+<script src="/site-bar.js" data-project="habit-game" data-kind="piece" defer></script>
+</head>
+<body>
+<div id="deck">
+
+<!-- 1 Title -->
+<section class="slide" aria-label="Title">
+  <div class="fog" aria-hidden="true"><i></i><i></i><i></i></div>
+  <div class="body" style="justify-content:flex-end">
+    <div class="week" aria-label="A streak with one return ticket in it" style="margin-bottom:40px">
+      <span class="sq done"></span><span class="sq done"></span><span class="sq done"></span><span class="sq done"></span><span class="sq stub"></span><span class="sq done"></span><span class="sq done"></span><span class="sq done"></span><span class="sq done"></span><span class="sq"></span><span class="sq"></span><span class="sq"></span>
+    </div>
+    <h1>Lumen</h1>
+    <p style="font:700 44px/1.1 var(--display);margin-top:22px" class="gold">Miss a day. You're still in.</p>
+    <p class="dim" style="margin-top:14px;font-size:24px">A goal game for people who quit after one bad week.</p>
+  </div>
+  <p class="src" style="font-size:15px;right:80px">Alexandra Vargas · vargas-studio.pages.dev/projects/lumen/</p>
+</section>
+
+<!-- 2 Problem -->
+<section class="slide" aria-label="Problem">
+  <h2>One missed Tuesday can end a goal that was going fine.</h2>
+  <div class="body" style="flex-direction:row;align-items:center;gap:64px">
+    <div style="display:grid;gap:30px">
+      <div>
+        <p class="lab" style="margin-bottom:12px">A streak app</p>
+        <div style="display:flex;align-items:center;gap:26px">
+          <div><div class="days"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span></div>
+          <div class="week" style="margin-top:8px"><span class="sq done"></span><span class="sq miss"></span><span class="sq"></span><span class="sq"></span><span class="sq"></span><span class="sq"></span><span class="sq"></span></div></div>
+          <p style="font:700 64px/1 var(--display)" class="dim">0</p>
+        </div>
+      </div>
+      <div>
+        <p class="lab" style="margin-bottom:12px">Lumen</p>
+        <div style="display:flex;align-items:center;gap:26px">
+          <div><div class="days"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span></div>
+          <div class="week" style="margin-top:8px"><span class="sq done"></span><span class="sq stub"></span><span class="sq done"></span><span class="sq"></span><span class="sq"></span><span class="sq"></span><span class="sq"></span></div></div>
+          <p style="font:700 40px/1 var(--display)" class="gold">23 · kept</p>
+        </div>
+      </div>
+    </div>
+    <div style="max-width:400px">
+      <p class="lab" style="margin-bottom:12px">Sample person</p>
+      <p>Dana is on day 23 of writing one page each morning. Tuesday her kid is sick.</p>
+      <p style="margin-top:14px">Wednesday the app says 0. She doesn't open it again.</p>
+    </div>
+  </div>
+  <p class="src">Dana is a sample, not a user. In 7 studies, a broken streak in a log lowered later engagement, less so when people could repair it. Silverman &amp; Barasch, Journal of Consumer Research 49(6), 2023. doi.org/10.1093/jcr/ucac029</p>
+</section>
+
+<!-- 3 Product -->
+<section class="slide" aria-label="Product">
+  <div style="display:flex;gap:56px;align-items:center;flex:1">
+    <div style="flex:1">
+      <h2 style="max-width:15ch">Six taps name your fog. A missed day costs one ticket.</h2>
+      <p class="dim" style="margin-top:24px;max-width:28ch">"What's in your way lately?" Answer six cards, watch the fog lift, then punch a return ticket for a missed Tuesday.</p>
+      <p class="dim" style="margin-top:18px;font-size:17px">The left phone is live. Tap it.</p>
+    </div>
+    <div style="text-align:center"><div class="phone"><iframe src="/projects/lumen/play.html" title="Lumen fog game, live"></iframe></div><p class="cap">Live: What's your fog?</p></div>
+    <div style="text-align:center"><div class="phone"><iframe src="/projects/lumen/play.html?shot=45" title="A return ticket punched for a missed day" tabindex="-1"></iframe></div><p class="cap">Beat 4: the ticket punch</p></div>
+  </div>
+  <p class="src">Front door at /projects/lumen/play.html, built 22 Nov 2026. Right phone uses sample answers.</p>
+</section>
+
+<!-- 4 How it works -->
+<section class="slide" aria-label="How it works">
+  <h2>A season is 13 weeks, three return tickets and one small move a day.</h2>
+  <div class="body">
+    <div class="steps">
+      <div class="step">
+        <svg viewBox="0 0 96 96" class="art" aria-hidden="true"><rect x="10" y="14" width="76" height="70" rx="8"/><path d="M10 32h76M30 8v12M66 8v12"/><path class="soft" d="M24 48h10M43 48h10M62 48h10M24 64h10M43 64h10"/></svg>
+        <h3>Name one season goal.</h3>
+        <p class="dim">Add a cue you already have: "When I pour coffee, I write one line."</p>
+      </div>
+      <div class="step">
+        <svg viewBox="0 0 96 96" class="art" aria-hidden="true"><rect x="14" y="14" width="68" height="68" rx="14"/><path d="M32 49l11 11 22-24"/></svg>
+        <h3>Check in each day.</h3>
+        <p class="dim">Two minutes counts. Totals only go up.</p>
+      </div>
+      <div class="step">
+        <svg viewBox="0 0 96 96" class="art" aria-hidden="true"><path d="M8 30h80v12a8 8 0 0 0 0 16v12H8V58a8 8 0 0 0 0-16z" stroke-dasharray="6 5"/><circle cx="68" cy="50" r="6"/><path class="soft" d="M22 46h28M22 56h18"/></svg>
+        <h3>Miss a day? Punch a ticket.</h3>
+        <p class="dim">Three a season. The streak stays. No backlog debt.</p>
+      </div>
+      <div class="step">
+        <svg viewBox="0 0 96 96" class="art" aria-hidden="true"><path class="soft" d="M10 40c10-8 20-8 30 0s20 8 30 0 14-6 18-4M10 58c10-8 20-8 30 0s20 8 30 0 14-6 18-4"/><circle cx="48" cy="74" r="4"/><path d="M48 18v34"/></svg>
+        <h3>Stuck twice? Clear the fog.</h3>
+        <p class="dim">Pick what's in the way. Play its 2-minute game.</p>
+      </div>
+    </div>
+  </div>
+  <p class="src">Rules from the free fridge card: /projects/lumen/print.html. Six fogs: The Echo, The Loyal Heart, The Wanderer, The Dreamer, The Perfectionist, The Low Battery.</p>
+</section>
+
+<!-- 5 Psychology -->
+<section class="slide paper" aria-label="The psychology">
+  <h2 style="max-width:26ch">Each rule in the game comes from a published study.</h2>
+  <div class="body" style="justify-content:flex-start;margin-top:26px">
+    <table>
+      <tr><th style="width:24%">In Lumen</th><th>What the study found</th><th style="width:30%">Study</th></tr>
+      <tr><td><b>Return tickets</b></td><td>Broken streaks lowered later engagement. Less so when the streak could be repaired.</td><td class="m">Silverman &amp; Barasch, J. Consumer Research, 2023 · 7 studies</td></tr>
+      <tr><td><b>Only three a season</b></td><td>Goals with a few skips that cost something beat rigid goals and loose ones.</td><td class="m">Sharif &amp; Shu, J. Marketing Research 54(3), 2017</td></tr>
+      <tr><td><b>One miss is fine</b></td><td>Habits took 66 days on average (18 to 254). Missing one chance didn't undo it.</td><td class="m">Lally et al., Eur. J. Social Psychology, 2010 · 96 people</td></tr>
+      <tr><td><b>The if-then cue</b></td><td>"When X, I will Y" plans helped people reach goals, d = .65.</td><td class="m">Gollwitzer &amp; Sheeran, Adv. Exp. Social Psych. 38, 2006 · 94 tests</td></tr>
+      <tr><td><b>Fresh page on Mondays</b></td><td>Gym visits and goal sign-ups rose after new weeks, months and birthdays.</td><td class="m">Dai, Milkman &amp; Riis, Management Science 60(10), 2014</td></tr>
+    </table>
+  </div>
+  <p class="src">doi.org/10.1093/jcr/ucac029 · 10.1509/jmr.15.0231 · 10.1002/ejsp.674 · 10.1016/S0065-2601(06)38002-1 · 10.1287/mnsc.2014.1901. The 254 days is the study's projection.</p>
+</section>
+
+<!-- 6 Who pays -->
+<section class="slide" aria-label="Who pays">
+  <h2>The game stays free. A coach comes later, and its price isn't set.</h2>
+  <div class="body" style="flex-direction:row;gap:56px;align-items:center;padding:0 16px">
+    <div class="ticket" style="flex:1.1">
+      <p class="lab" style="color:var(--gold)">Free forever</p>
+      <p style="font:700 34px/1.1 var(--display);margin:10px 0 14px">The whole game</p>
+      <p class="dim" style="font-size:19px">Season goal, daily check-ins, three return tickets, six fog games, the printable fridge card.</p>
+      <i class="hole"></i>
+    </div>
+    <div class="ticket" style="flex:1;background:transparent">
+      <p class="lab" style="color:var(--gold)">Premium · waitlist</p>
+      <p style="font:700 34px/1.1 var(--display);margin:10px 0 14px">AI coach + SMS journal</p>
+      <p class="dim" style="font-size:19px">Price: not set.</p>
+    </div>
+  </div>
+  <p style="position:relative;z-index:3;font-size:18px;margin-bottom:8px" class="dim">ASSUMPTION: at $6 a month with 5% paying, a signup is worth about $3.60. Paid ads at $10 to $75 a signup can't cover that, so people have to arrive through shared cards.</p>
+  <p class="src">Waitlist: /projects/lumen/waitlist.html. The $6, 5% and ad costs are guesses from the paper validation plan, 22 Nov 2026.</p>
+</section>
+
+<!-- 7 Market -->
+<section class="slide" aria-label="Market">
+  <div style="display:flex;gap:70px;align-items:center;flex:1">
+    <div class="grid100" aria-label="46 of 100 squares filled gold">
+      <b class="g"></b><b class="g"></b><b class="g"></b><b class="g"></b><b class="g"></b><b class="g"></b><b class="g"></b><b class="g"></b><b class="g"></b><b class="g"></b>
+      <b class="g"></b><b class="g"></b><b class="g"></b><b class="g"></b><b class="g"></b><b class="g"></b><b class="g"></b><b class="g"></b><b class="g"></b><b class="g"></b>
+      <b class="g"></b><b class="g"></b><b class="g"></b><b class="g"></b><b class="g"></b><b class="g"></b><b class="g"></b><b class="g"></b><b class="g"></b><b class="g"></b>
+      <b class="g"></b><b class="g"></b><b class="g"></b><b class="g"></b><b class="g"></b><b class="g"></b><b class="g"></b><b class="g"></b><b class="g"></b><b class="g"></b>
+      <b class="g"></b><b class="g"></b><b class="g"></b><b class="g"></b><b class="g"></b><b class="g"></b><b></b><b></b><b></b><b></b>
+      <b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b>
+      <b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b>
+      <b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b>
+      <b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b>
+      <b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b>
+    </div>
+    <div style="flex:1">
+      <h2 style="max-width:17ch">Fewer than half of New Year's resolvers are still on track by summer.</h2>
+      <p class="dim" style="margin-top:22px">A study followed 159 resolvers by phone. At six months, 46% had kept going. The dashed 54% are who Lumen is for.</p>
+      <p style="margin-top:22px;font-size:18px;border-top:1px solid var(--line);padding-top:16px">Habit-tracking apps, 2024: <b class="gold">$0.5B to $1.5B</b>, by vendor estimate. The reports disagree threefold. Lumen's slice is not sized yet.</p>
+    </div>
+  </div>
+  <p class="src">Norcross, Mrykalo &amp; Blagys, J. Clinical Psychology 58(4), 2002, "Auld lang syne". DataHorizzon Research ($512M) and Market Research Future ($1.5B), habit tracking app reports, opened 23 Nov 2026.</p>
+</section>
+
+<!-- 8 Competition -->
+<section class="slide" aria-label="Competition">
+  <div style="display:flex;gap:56px;align-items:center;flex:1">
+    <div style="flex:1">
+      <h2 style="max-width:13ch">Others forgive a miss or turn it into a game. Lumen does both.</h2>
+      <p class="dim" style="margin-top:22px;font-size:20px">The new part: your shared card carries a spare ticket you give a friend. A quick search found no app that does this.</p>
+    </div>
+    <div class="map" aria-label="Map: how a miss is treated, against tracking versus playing">
+      <span class="ax" style="left:-34px;bottom:0;transform:rotate(-90deg);transform-origin:0 0;white-space:nowrap">Tracks days &#8594; plays with what's in the way</span>
+      <span class="ax" style="left:0;bottom:-26px">A miss costs you</span>
+      <span class="ax" style="right:0;bottom:-26px">A miss is forgiven &#8594;</span>
+      <span class="pin" style="left:4%;top:8%">Habitica<small>RPG; missed dailies cost health</small></span>
+      <span class="pin pb" style="left:4%;top:81%">Streaks<small>iOS tracker; resets</small></span>
+      <span class="pin" style="left:24%;top:46%">Duolingo<small>freezes cost gems</small></span>
+      <span class="pin" style="left:55%;top:58%">Finch<small>self-care pet</small></span>
+      <span class="pin pb" style="right:3%;top:81%">Kintsu<small>gold for comebacks</small></span>
+      <span class="pin me" style="right:3%;top:8%">Lumen<small>3 tickets, 6 fog games</small></span>
+    </div>
+  </div>
+  <p class="src">Placement is my read, not data. Duolingo blog (streak freeze); Habitica wiki (dailies, damage); Finch and Streaks App Store listings; Kintsu on Product Hunt. Checked 23 Nov 2026.</p>
+</section>
+
+<!-- 9 Proof -->
+<section class="slide paper" aria-label="Proof so far">
+  <h2>Pre-launch. The front door works, and no stranger has played it yet.</h2>
+  <div class="body" style="justify-content:flex-start;margin-top:24px">
+    <table>
+      <tr><th>Test</th><th style="width:30%">Target</th><th style="width:22%">Result</th></tr>
+      <tr><td>Fog game, cold read at 375 px</td><td>Reveal in under a minute</td><td class="ok">Done, 22 Nov: 7 taps, ~30 s</td></tr>
+      <tr><td>5 people who quit a goal play it, unhelped</td><td>4 of 5 reach "Still in" in 90 s</td><td class="nr">Not run yet</td></tr>
+      <tr><td>Ticket screen vs a "streak 0" screen</td><td>3 of 5 name relief, nobody "guilty"</td><td class="nr">Not run yet</td></tr>
+      <tr><td>7-day ads, 3 angles, fog game to season start</td><td>8% start a season</td><td class="nr">Not run yet</td></tr>
+      <tr><td>Two weeks later: back after a missed day</td><td>30% of starters</td><td class="nr">Not run yet</td></tr>
+      <tr><td>"Send with a ticket" taps per reveal</td><td>10% after 200 reveals</td><td class="nr">Not run yet</td></tr>
+    </table>
+  </div>
+  <p class="src">Targets are starting guesses from the Lumen validation, emotion and share plans (22 Nov 2026), not benchmarks. Kill line: under 3% start a season.</p>
+</section>
+
+<!-- 10 First 1,000 -->
+<section class="slide" aria-label="Go to market">
+  <div style="display:flex;gap:60px;align-items:center;flex:1">
+    <div style="text-align:center"><div class="phone"><iframe src="/projects/lumen/play.html?shot=5" title="The share card with a spare ticket" tabindex="-1"></iframe></div><p class="cap">The card, made in the browser</p></div>
+    <div style="flex:1">
+      <h2 style="max-width:17ch">The first 1,000 arrive on cards that carry a spare ticket.</h2>
+      <ol style="margin-top:26px;padding-left:24px;display:grid;gap:12px">
+        <li>Alexandra posts her own card: The Perfectionist, "ugly first draft".</li>
+        <li>Seed it in New Year and Monday-reset threads, study-with-me and writing groups.</li>
+        <li>A friend's link opens on "A friend sent you a spare ticket."</li>
+        <li>Push hardest on the 1st and on Mondays, when people restart anyway.</li>
+      </ol>
+    </div>
+  </div>
+  <p class="src">Loop from the Lumen share plan, 22 Nov 2026. Card shown with sample answers. Restart timing: fresh-start effect, Dai, Milkman &amp; Riis, 2014.</p>
+</section>
+
+<!-- 11 Team -->
+<section class="slide" aria-label="Team">
+  <h2>One person has made every piece so far.</h2>
+  <div class="body" style="flex-direction:row;align-items:center;gap:56px">
+    <div style="flex:1;max-width:380px">
+      <p style="font:700 40px/1.05 var(--display)">Alexandra Vargas</p>
+      <p class="dim" style="margin-top:14px">Designs and builds Lumen with Claude. Made the fog game, the fridge card, the social pack and this deck.</p>
+      <p style="margin-top:14px">Not hiring yet.</p>
+    </div>
+    <div class="thumbs">
+      <figure><img src="print/streak-card-p1.png" alt="The printable season streak card" width="200" height="259"><figcaption>Fridge card PDF</figcaption></figure>
+      <figure><img src="social/carousel-2.png" alt="Carousel slide: So Lumen's streak forgives" width="207" height="259"><figcaption>Carousel</figcaption></figure>
+      <figure><img src="social/explainer-square.png" alt="Lumen explainer graphic" width="259" height="259"><figcaption>Explainer</figcaption></figure>
+    </div>
+  </div>
+  <p class="src">All pieces live at vargas-studio.pages.dev/projects/lumen/.</p>
+</section>
+
+<!-- 12 What's next -->
+<section class="slide" aria-label="What's next">
+  <div class="fog" aria-hidden="true"><i></i><i></i><i></i></div>
+  <h2>Not raising yet. First, five people play the fog game.</h2>
+  <div class="body">
+    <div class="next">
+      <div><span class="sq stub"></span><h3>This week</h3><p class="dim">5 people who quit a goal play it on their phones. 5 friends compare the ticket screen with a "streak 0" screen.</p></div>
+      <div><span class="sq"></span><h3>Then</h3><p class="dim">A 7-day ad test with 3 angles. Keep going at 8% season starts.</p></div>
+      <div><span class="sq"></span><h3>After that</h3><p class="dim">Price the coach. Build Welcome Back, the morning-after screen, in the app.</p></div>
+    </div>
+  </div>
+  <p style="position:relative;z-index:3;font:700 34px/1 var(--display)" class="gold close">Miss a day. You're still in.</p>
+</section>
+
+</div>
+<div id="foot" aria-live="polite"><span id="streak" aria-hidden="true"></span><span id="pg"></span></div>
+<script>
+const slides=[...document.querySelectorAll('.slide')];let i=0;
+const st=document.getElementById('streak');slides.forEach(()=>st.appendChild(document.createElement('i')));
+function show(n){i=Math.max(0,Math.min(slides.length-1,n));slides.forEach((s,k)=>s.classList.toggle('on',k===i));
+  [...st.children].forEach((d,k)=>{d.className=k<i?'past':k===i?'now':''});
+  document.getElementById('pg').textContent=(i+1)+' / '+slides.length}
+function fit(){const bar=document.querySelector('.site-bar')?48:0;const s=Math.min(innerWidth/1280,(innerHeight-bar)/720);
+  const d=document.getElementById('deck');d.style.top=(bar+(innerHeight-bar)/2)+'px';d.style.transform=`translate(-50%,-50%) scale(${s})`}
+addEventListener('resize',fit);addEventListener('load',fit);setTimeout(fit,300);
+addEventListener('keydown',e=>{if(['ArrowRight',' ','PageDown'].includes(e.key)){e.preventDefault();show(i+1)}if(['ArrowLeft','PageUp'].includes(e.key))show(i-1)});
+addEventListener('click',e=>{if(innerWidth<=700||e.target.closest('iframe,a,nav'))return;show(e.clientX>innerWidth/2?i+1:i-1)});
+let tx=null;addEventListener('touchstart',e=>{tx=e.touches[0].clientX},{passive:true});
+addEventListener('touchend',e=>{if(tx===null||innerWidth<=700)return;const dx=e.changedTouches[0].clientX-tx;if(Math.abs(dx)>50)show(dx<0?i+1:i-1);tx=null});
+const p=new URLSearchParams(location.search).get('slide');show(p?p-1:0);fit();
+</script>
+<style media="print">
+html,body{overflow:visible;background:#fff}.site-bar{display:none!important}#deck{position:static;transform:none!important;width:auto;height:auto}
+.slide{display:flex!important;position:relative;width:1280px;height:720px;page-break-after:always;-webkit-print-color-adjust:exact;print-color-adjust:exact}#foot{display:none}
+.fog i{animation:none}
+@page{size:1280px 720px;margin:0}
+</style>
+<style>
+/* Phone: slides stack and reflow instead of shrinking to unreadable 16:9 tiles */
+@media (max-width:700px){
+  html,body{overflow:auto;height:auto;background:var(--ink)}
+  #deck{position:static;transform:none!important;width:auto;height:auto}
+  .slide{display:flex!important;position:relative;inset:auto;padding:36px 20px 28px;border-bottom:1px solid var(--line)}
+  h1{font-size:76px}
+  h2{font-size:30px;max-width:none!important}
+  h3{font-size:21px}
+  p,li{font-size:17px}
+  .slide [style*="font-size:44px"],.slide [style*="font:700 44px"]{font-size:26px!important}
+  .slide [style*="font:700 34px"],.slide [style*="font:700 40px"]{font-size:24px!important}
+  .slide [style*="font-size:24px"]{font-size:18px!important}
+  .slide [style*="font-size:20px"],.slide [style*="font-size:19px"],.slide [style*="font-size:18px"]{font-size:16px!important}
+  .body{flex:none;margin-top:20px!important}
+  .slide>div[style*="display:flex"],.body[style*="flex-direction:row"]{flex-direction:column!important;align-items:stretch!important;gap:26px!important;padding:0!important}
+  .slide>div[style*="display:flex"]{margin-top:0}
+  .src{position:static;margin-top:22px;font-size:12px}
+  .sq{width:34px;height:34px;border-radius:8px}
+  .week,.days{gap:6px}.days span{width:34px}
+  .slide:first-child .week .sq:nth-child(n+10){display:none}
+  .slide:first-child .body{min-height:440px}
+  .steps,.next{grid-template-columns:1fr 1fr;gap:20px}
+  .step svg{width:64px;height:64px;margin-bottom:10px}
+  .step p,.next p{font-size:15px}
+  .phone{margin:0 auto}
+  .cap{margin:10px auto 0}
+  table{font-size:14px}th{font-size:12px}td.m{font-size:12px}.nr,.ok{font-size:12px;white-space:normal}
+  th,td{padding:8px 8px 8px 0}
+  .ticket{padding:22px 26px}
+  .grid100{grid-template-columns:repeat(10,1fr);gap:4px;max-width:340px}
+  .grid100 b{width:auto;aspect-ratio:1;height:auto}
+  .map{width:auto;height:420px;margin:0 0 30px 24px}
+  .map .pin{font-size:13px;padding:6px 8px;white-space:normal;max-width:48%}
+  .map .pin small{font-size:12px}
+  .map .me{font-size:16px}
+  .map .pb{top:74%!important}
+  .close{margin-top:30px}
+  .ax{font-size:12px}
+  .thumbs{flex-wrap:wrap;gap:12px}
+  .thumbs figure{width:calc(33% - 8px)}
+  .thumbs img{width:100%;height:auto}
+  #foot{display:none}
+}
+@media (max-width:420px){.steps,.next{grid-template-columns:1fr}}
+</style>
+</body>
+</html>

@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Restitch — story deck</title>
-  <meta name="description" content="Twelve-slide story and pitch deck for Restitch, the thrift-flip planner. Market figures cited; founder, traction and raise left as TODO." />
+  <meta name="description" content="Twelve-slide story and pitch deck for Restitch, the thrift-flip planner. Market figures cited; not raising yet." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet" />
@@ -68,6 +68,52 @@
     .nav a { color: var(--blue); white-space: nowrap; font-family: var(--sans); font-weight: 500; }
     .nav span { white-space: nowrap; }
     @media (max-width: 520px) { .nav { gap: 6px; font-size: 11.5px; } .nav button { padding: 6px 10px; } }
+    /* Phone: all 12 slides stacked and reflowed, page scrolls normally */
+    @media (max-width: 700px) {
+      html, body { overflow: auto; height: auto; }
+      .viewport { position: static; overflow: visible; }
+      .deck { position: static; transform: none !important; width: auto; height: auto; box-shadow: none; }
+      .slide { position: relative; inset: auto; display: flex !important; flex-direction: column; overflow: visible; padding: 36px 22px 32px; border-bottom: 2px dashed var(--red); }
+      .slide.dark { border-bottom-color: var(--red-soft); }
+      .kicker { font-size: 12px; margin-bottom: 12px; }
+      h1 { font-size: 42px; }
+      h2, .slide h2[style] { font-size: 31px !important; max-width: none; }
+      .body { flex: none; justify-content: flex-start; margin-top: 22px; }
+      .body[style] { margin-top: 22px !important; }
+      .lead, .lead[style*="font-size"] { font-size: 17px !important; max-width: none; }
+      .slide.dark .lead[style], .slide.dark .body > p[style] { margin-top: 20px !important; }
+      .slide.dark .body > p:not(.kicker):not(.lead) { font-size: 15px; overflow-wrap: anywhere; }
+      .slide.dark .garment { position: static; display: block; width: 110px; margin: 0 0 20px; }
+      .slide.dark .body { padding-right: 0; }
+      .cols, .cols[style*="grid-template-columns"] { grid-template-columns: 1fr !important; gap: 14px !important; }
+      .cols[style*="gap:4"] { gap: 28px !important; }
+      .card { padding: 18px 20px; }
+      .card h3 { font-size: 22px; }
+      .card p, .stat p.l, .body > p { font-size: 16px; }
+      .big { font-size: 52px; }
+      .big[style] { font-size: 48px !important; }
+      .math { font-size: 16px; line-height: 1.8; }
+      .shots { grid-template-columns: 1fr; gap: 16px; }
+      .shots img { height: auto; max-height: 420px; max-width: 100%; }
+      .slide img, .slide svg { max-width: 100%; }
+      table, thead, tbody, tr, th, td { display: block; }
+      table { font-size: 15px; }
+      thead { display: none; }
+      tr { padding: 12px 14px; border-top: 1px solid var(--line); }
+      tr:first-child { border-top: 0; }
+      td { padding: 2px 0; border-top: 0; }
+      td:first-child { font: 400 19px/1.2 var(--display); margin-bottom: 4px; }
+      td:not(:first-child)::before { font: 600 11px var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-right: 6px; }
+      td:nth-child(2)::before { content: "Photo"; }
+      td:nth-child(3)::before { content: "Tape"; }
+      td:nth-child(4)::before { content: "Account"; }
+      td:nth-child(5)::before { content: "Price"; }
+      tr.us { background: var(--tissue); border-top: var(--cut); border-bottom: var(--cut); }
+      tr.us td { border: 0; background: transparent; }
+      .src { margin-top: 24px; flex-direction: column; gap: 6px; font-size: 12px; overflow-wrap: anywhere; }
+      .nav { display: none; }
+      .studio-back { position: static; display: inline-block; margin: 12px 22px; }
+    }
     @media print {
       @page { size: 1280px 720px; margin: 0; }
       html, body { overflow: visible; height: auto; background: var(--tissue); }
@@ -93,7 +139,7 @@
           <p class="kicker">Restitch · story deck · Nov 2026</p>
           <h1>The photo names the shape.<br /><em>You bring the tape.</em></h1>
           <p class="lead" style="margin-top:28px">A thrift-flip planner. Upload a garment, pick your skill, get a no-sew, a hand and a machine flip.</p>
-          <p style="margin-top:28px"><span class="todo">[TODO] Founder name · role · email</span></p>
+          <p style="margin-top:28px">Alexandra Vargas · vargas-studio.pages.dev/projects/restitch/</p>
         </div>
         <div class="src"><span>Live sample: vargas-studio.pages.dev/restitch.html</span><span>1 / 12</span></div>
       </section>
@@ -190,7 +236,7 @@
         <div class="body">
           <div class="cols">
             <div class="card"><h3>Built</h3><p>Working planner: upload, read, 3 skills, 29 flip recipes, browser closet.</p></div>
-            <div class="card"><h3>Users</h3><p><span class="todo">[TODO] 0 counted</span><br />No analytics installed; the closet never leaves the browser.</p></div>
+            <div class="card"><h3>Users</h3><p>0 counted so far.<br />No analytics installed; the closet never leaves the browser.</p></div>
             <div class="card"><h3>Next test</h3><p>$150 Meta over 14 days, 3 angles. Keep if ≥25% of landing visitors open the planner.</p></div>
           </div>
         </div>
@@ -219,7 +265,7 @@
           <div class="cols">
             <div class="card"><h3>Pinterest</h3><p>Pins of real reads and before/after sketches against “thrift flip ideas” searches.</p></div>
             <div class="card"><h3>Reels / TikTok</h3><p>Before → read → after. The honesty is the hook: “what a photo can't tell you.”</p></div>
-            <div class="card"><h3>First 1,000</h3><p><span class="todo">[TODO] 5 creator collabs + 2 thrift-store flip nights</span></p></div>
+            <div class="card"><h3>First 1,000</h3><p>Planned: 5 creator collabs and 2 thrift-store flip nights. Not run yet.</p></div>
           </div>
         </div>
         <div class="src"><span>Channel picks follow the Pinterest and ThredUp discovery data on slide 5.</span><span>9 / 12</span></div>
@@ -251,8 +297,8 @@
         <h2>Who builds this.</h2>
         <div class="body">
           <div class="cols" style="grid-template-columns:1fr 1fr">
-            <div class="card"><h3>Alexandra Vargas · Designer</h3><p>Designed and shipped the live planner in Vargas Studio.</p><p style="margin-top:12px"><span class="todo">[TODO] Unfair advantage: sewing / thrift background?</span></p></div>
-            <div class="card"><h3><span class="todo">[TODO]</span></h3><p>Sewing educator or creator partner to write and test flip recipes.</p></div>
+            <div class="card"><h3>Alexandra Vargas · Designer</h3><p>Designed and shipped the live planner in Vargas Studio.</p></div>
+            <div class="card"><h3>Hiring first</h3><p>Sewing educator or creator partner to write and test flip recipes.</p></div>
           </div>
         </div>
         <div class="src"><span>No advisors, hires or partners exist yet.</span><span>11 / 12</span></div>
@@ -260,10 +306,10 @@
 
       <!-- 12 Ask -->
       <section class="slide">
-        <p class="kicker">The ask</p>
-        <h2>What a small check would prove.</h2>
+        <p class="kicker">What's next</p>
+        <h2>Not raising yet. Next: prove people flip.</h2>
         <div class="body">
-          <p><span class="todo">[TODO] Amount · round · use of funds</span></p>
+          <p>Run the flip nights and count real flips.</p>
           <div class="cols" style="margin-top:26px">
             <div class="card"><h3>Prove demand</h3><p>Ad test + analytics: who opens the planner, who saves a flip.</p></div>
             <div class="card"><h3>Prove recipes</h3><p>Creator-tested flip packs; a real photo set, not drawings.</p></div>
@@ -296,6 +342,7 @@
     document.getElementById("prev").onclick = function () { show(i - 1); };
     document.getElementById("next").onclick = function () { show(i + 1); };
     document.addEventListener("keydown", function (e) {
+      if (innerWidth <= 700) return;
       if (e.key === "ArrowRight" || e.key === "PageDown" || e.key === " ") { e.preventDefault(); show(i + 1); }
       if (e.key === "ArrowLeft" || e.key === "PageUp") { e.preventDefault(); show(i - 1); }
       if (e.key === "Home") show(0); if (e.key === "End") show(slides.length - 1);
