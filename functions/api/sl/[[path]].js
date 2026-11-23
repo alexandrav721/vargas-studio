@@ -1091,6 +1091,32 @@ async function handle({ request: req, env, params }) {
     return json({ ok: true });
   }
 
+  // ----- demand test (two twin pages; counts only, no IPs) -----
+  if (path === 'demand' && m === 'POST') {
+    await take(env, ip, 'demand', 120, 3600, 'Too many requests. Try again later.');
+    const b = await readJson(req);
+    const page = b.page === 'marketers' || b.page === 'everyday' ? b.page : null;
+    const event = ['view', 'cta', 'reserve'].includes(b.event) ? b.event : null;
+    const visitor = typeof b.visitor === 'string' && /^[a-z0-9]{12,40}$/.test(b.visitor) ? b.visitor : null;
+    if (!page || !event || !visitor) throw new Bad('Bad request.');
+    const source = typeof b.source === 'string' ? b.source.replace(/[^a-z0-9_.-]/gi, '').slice(0, 40) || null : null;
+    const now = Date.now();
+    if (event === 'reserve') {
+      const em = email(b.email);
+      const role = text(b.role, 60, 'the role');
+      await env.SMEZ.prepare('INSERT OR IGNORE INTO demand_reservations (page, email, role, source, at) VALUES (?, ?, ?, ?, ?)').bind(page, em, role, source, now).run();
+    }
+    await env.SMEZ.prepare('INSERT OR IGNORE INTO demand_events (page, event, visitor, source, at) VALUES (?, ?, ?, ?, ?)').bind(page, event, visitor, source, now).run();
+    return json({ ok: true });
+  }
+  if (path === 'demand/stats' && m === 'GET') {
+    await needAdmin(env, req);
+    const rows = await env.SMEZ.prepare('SELECT page, event, COUNT(*) AS n FROM demand_events GROUP BY page, event').all();
+    const src = await env.SMEZ.prepare("SELECT page, COALESCE(source, '(none)') AS source, COUNT(*) AS n FROM demand_events WHERE event = 'view' GROUP BY page, source ORDER BY n DESC LIMIT 40").all();
+    const res = await env.SMEZ.prepare('SELECT page, email, role, source, at FROM demand_reservations ORDER BY at DESC LIMIT 500').all();
+    return json({ counts: rows.results, sources: src.results, reservations: res.results });
+  }
+
   // ----- admin -----
   if (path === 'review' && m === 'GET') {
     const a = await needAdmin(env, req);
@@ -1192,7 +1218,7 @@ async function handle({ request: req, env, params }) {
     return json({ ok: true, did, skill: await detail(env, row, { me: a, owner: false, admin: true }) });
   }
 
-  const known = /^(signup|signin|signout|me|taxonomy|check|skills|review|requests)$|^requests\/[^/]+\/(vote|made|close)$|^skills\/[^/]+(\/(use|rate|ratings|report))?$|^review\/[^/]+(\/test)?$/;
+  const known = /^(signup|signin|signout|me|taxonomy|check|skills|review|requests|demand|demand\/stats)$|^requests\/[^/]+\/(vote|made|close)$|^skills\/[^/]+(\/(use|rate|ratings|report))?$|^review\/[^/]+(\/test)?$/;
   if (known.test(path)) return json({ error: 'That method is not allowed here.' }, 405);
   return json({ error: 'Not found.' }, 404);
 }
