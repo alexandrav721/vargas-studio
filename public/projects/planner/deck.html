@@ -1,228 +1,399 @@
 <!DOCTYPE html><html lang="en"><head>
 <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Planner and Book · deck</title>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,550&family=Source+Sans+3:wght@500;700&display=swap" rel="stylesheet"/>
+<title>Planners pitch deck</title>
+<meta name="description" content="Planners: five fun printable planners you cut out and play, a quiz that picks yours, and a $39 printed kit. Pitch deck by Alexandra Vargas."/>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@500&family=Caveat:wght@600&display=swap" rel="stylesheet"/>
 <style>
-:root{--ink:#1c1917;--chalk:#f7f3ee;--sage:#5f7a6b;--deep:#3f5548;--mute:#6b645e;--gold:#c9a227;--display:"Fraunces",Georgia,serif;--sans:"Source Sans 3",system-ui,sans-serif}
-*{box-sizing:border-box}
-html,body{margin:0;height:100%}
-body{background:#d9dcd6;font-family:var(--sans);color:var(--ink);overflow:hidden}
-.studio-back{position:fixed;top:12px;left:12px;z-index:40;font:600 11px/1 var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--mute);text-decoration:none;background:#fff;border:1px solid rgba(28,25,23,.12);padding:.55rem .8rem}
-.viewport{position:fixed;inset:0;display:grid;place-items:center}
-.deck{width:1280px;height:720px;position:absolute;left:50%;top:50%;transform-origin:center center}
-.s{position:absolute;inset:0;display:none;padding:64px 72px 56px;background:linear-gradient(165deg,#e8ece8,#f7f3ee 48%,#ebe4da);box-shadow:0 20px 60px rgba(28,25,23,.18);overflow:hidden;flex-direction:column}
-.s.on{display:flex}
-.s.dark{background:#1c1917;color:var(--chalk)}
-.k{font:700 15px/1 var(--sans);letter-spacing:.18em;text-transform:uppercase;color:var(--deep);margin:0}
-.dark .k{color:var(--gold)}
-h1,h2{font-family:var(--display);font-weight:700;letter-spacing:-.01em;margin:14px 0 0;color:var(--deep)}
-.dark h1,.dark h2{color:var(--chalk)}
-h1{font-size:76px;line-height:1.02}
-h2{font-size:50px;line-height:1.06}
-.sub{font-size:24px;line-height:1.4;color:#3d3833;margin:18px 0 0;max-width:900px}
-.dark .sub{color:rgba(247,243,238,.84)}
-.body{flex:1;display:flex;gap:28px;align-items:center;margin-top:30px;min-height:0}
-.src{font-size:14px;line-height:1.4;color:var(--mute);margin-top:auto;padding-top:14px}
-.dark .src{color:rgba(247,243,238,.66)}
-.num{font-family:var(--display);font-weight:700;font-size:64px;line-height:1;color:var(--deep)}
-.card{flex:1;background:rgba(255,255,255,.78);border:1px solid rgba(28,25,23,.12);border-radius:20px;padding:24px 26px}
-.dark .card{background:rgba(247,243,238,.06);border-color:rgba(247,243,238,.16)}
-.card h3{font:700 30px/1.15 var(--display);margin:0 0 8px;color:var(--deep)}
-.dark .card h3{color:var(--chalk)}
-.card p{margin:0;font-size:22px;line-height:1.4;color:#3d3833}
-.dark .card p{color:rgba(247,243,238,.8)}
-.lbl{font:700 13px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin:12px 0 0}
-.todo{display:inline-block;background:#fff3c4;color:#5c4a00;border:1px dashed #b38f00;border-radius:8px;padding:2px 8px;font-weight:700}
-.dark .todo{background:#3a3110;color:#f3d977;border-color:#c9a227}
-.shots{display:flex;gap:22px;flex:1;min-height:0}
-.shots figure{margin:0;flex:1;display:flex;flex-direction:column;min-height:0}
-.s-two-shots .shots img{flex:none;height:430px}
-.shots img{width:100%;flex:1;min-height:0;object-fit:contain;object-position:top center;background:#f3efe8;border-radius:14px;border:1px solid rgba(28,25,23,.15)}
-.shots figcaption{font:700 16px/1.3 var(--sans);color:var(--deep);margin-top:10px}
-table{width:100%;border-collapse:collapse;font-size:21px}
-th,td{text-align:left;padding:9px 10px;border-bottom:1px solid rgba(28,25,23,.14);vertical-align:top}
-th{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
-tr.us td{background:rgba(95,122,107,.14);font-weight:700}
-.math{font:600 22px/1.5 var(--sans)}
-.math b{font-family:var(--display);color:var(--deep)}
-.flow{display:flex;align-items:center;gap:16px;flex:1}
-.flow .card{display:flex;flex-direction:column}
-.arrow{font:700 36px/1 var(--sans);color:var(--sage)}
-.nav{position:fixed;bottom:12px;right:12px;z-index:40;display:flex;gap:6px;align-items:center;font:700 12px var(--sans);color:var(--mute)}
-.nav button{appearance:none;border:1px solid rgba(28,25,23,.2);background:#fff;padding:6px 10px;border-radius:999px;cursor:pointer;font:700 12px var(--sans);color:var(--deep)}
-body.render .studio-back,body.render .nav{display:none}
-body.render{background:#fff}
-@media print{@page{size:1280px 720px;margin:0}html,body{overflow:visible;height:auto;background:#fff}.studio-back,.nav{display:none}.viewport{position:static;display:block}.deck{transform:none!important;position:static;width:1280px;height:auto}.s{position:relative;display:flex!important;width:1280px;height:720px;box-shadow:none;page-break-after:always;break-after:page}}
-</style>  <link rel="stylesheet" href="/site-bar.css" />
+:root{--paper:#f7f3ee;--card:#fff;--rule:#d9d2c6;--ink:#26231f;--ink-2:#6f6a62;--tomato:#e0583b;--blush:#fde4dc;--cobalt:#1f3a8a;--forest:#2f5d46;--violet:#43347a;--teal:#0b5e60;--slate:#293241;--sun:#ffd166;
+  --head:"Fredoka","Avenir Next Rounded",system-ui,sans-serif;--body:"DM Sans","Avenir Next",system-ui,sans-serif;--hand:"Caveat","Bradley Hand",cursive;--mono:"DM Mono",ui-monospace,monospace}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%;overflow:hidden}
+body{background:#3a352f;font-family:var(--body);color:var(--ink)}
+.studio-back{position:fixed;top:12px;left:12px;z-index:40;font:700 11px/1 var(--body);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);text-decoration:none;background:#fff;padding:.55rem .8rem;border-radius:99px}
+#deck{position:absolute;width:1280px;height:720px;left:50%;top:50%;transform-origin:center}
+.slide{position:absolute;inset:0;display:none;flex-direction:column;overflow:hidden;padding:56px 80px 48px;background-color:var(--paper);background-image:radial-gradient(rgba(38,35,31,.13) 1.2px,transparent 1.3px);background-size:22px 22px}
+.slide.on{display:flex}
+.tag{display:flex;align-items:center;gap:14px;font:700 15px/1 var(--body);letter-spacing:.16em;text-transform:uppercase;color:#c4462b}
+.tag::after{content:"";flex:1;height:1.5px;background:var(--rule)}
+h1{font:700 132px/.9 var(--head);letter-spacing:-.02em}
+h2{font:700 52px/1.02 var(--head);letter-spacing:-.01em;margin:16px 0 0;max-width:23ch}
+.hand{font:600 34px/1.1 var(--hand);color:var(--tomato)}
+p{font-size:23px;line-height:1.4}
+.muted{color:var(--ink-2)}
+.src{font:500 13px/1.45 var(--mono);color:var(--ink-2);margin-top:auto;padding-top:14px}
+.dark{background-color:var(--ink);background-image:radial-gradient(rgba(247,243,238,.08) 1.2px,transparent 1.3px);color:var(--paper)}
+.dark .muted,.dark .src{color:#c9c1b5}.dark .tag{color:var(--sun)}.dark .tag::after{background:rgba(247,243,238,.2)}
+.cut{border:2px dashed var(--ink);border-radius:14px;background:var(--card);padding:22px 24px}
+.badge{display:inline-flex;align-items:center;gap:6px;background:var(--tomato);color:#fff;border-radius:99px;padding:6px 14px;font:700 13px/1 var(--body);letter-spacing:.1em;text-transform:uppercase}
+.sample{font:700 12px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);border:1.5px solid var(--ink-2);border-radius:6px;padding:4px 7px;display:inline-block}
+.page{background:#fff;border-radius:4px;box-shadow:0 2px 0 rgba(38,35,31,.08),0 10px 24px rgba(38,35,31,.16);display:block}
+/* title */
+.fan{position:absolute;right:40px;top:96px;width:560px;height:520px}
+.fan img{position:absolute;width:250px;left:155px;top:40px;border-radius:6px;box-shadow:0 14px 30px rgba(38,35,31,.25);transform-origin:50% 115%}
+/* problem drawing */
+.weeks{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:2.5px solid var(--ink);border-radius:10px;background:#fff;overflow:hidden}
+.weeks div{height:150px;border-right:1.5px solid var(--rule);padding:12px 14px;font:600 26px/1.15 var(--hand);color:var(--cobalt)}
+.weeks div:last-child{border-right:0}
+.weeks b{display:block;font:700 12px/1 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2);margin-bottom:10px}
+.weeks .blank{background:repeating-linear-gradient(0deg,transparent 0 27px,#eee8df 27px 28px)}
+/* pages row */
+.pages{display:flex;align-items:flex-start;margin-top:34px;margin-right:-10px}
+.pages figure{flex:none;width:214px;margin:0 -30px 0 0;position:relative}
+.pages figure:nth-child(odd){transform:rotate(-2deg)}
+.pages figure:nth-child(even){transform:rotate(1.5deg) translateY(10px)}
+.pages figcaption{padding-left:8px}
+.pages img{width:100%}
+.pages figcaption{font:700 15px/1.25 var(--body);margin-top:12px}
+.pages figcaption span{display:block;font:500 13px/1.3 var(--mono);color:var(--ink-2);margin-top:3px}
+.dot{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:7px;vertical-align:1px}
+/* frames */
+.frames{position:relative}
+.frames .browser{position:absolute;right:0;top:0}
+.frames .phone{position:absolute;left:0;bottom:0}
+.phone{width:230px;height:460px;border:9px solid #14120f;border-radius:36px;overflow:hidden;background:var(--paper);flex:none;box-shadow:0 18px 40px rgba(38,35,31,.25)}
+.phone iframe{width:390px;height:813px;border:0;transform:scale(.5436);transform-origin:0 0;display:block}
+.browser{width:560px;flex:none;border:2.5px solid var(--ink);border-radius:14px;overflow:hidden;background:#fff;box-shadow:0 18px 40px rgba(38,35,31,.2)}
+.browser .bar{height:30px;background:#ede7de;border-bottom:2px solid var(--ink);display:flex;align-items:center;gap:7px;padding:0 12px;font:500 12px var(--mono);color:var(--ink-2)}
+.browser .bar i{width:10px;height:10px;border-radius:50%;border:1.5px solid var(--ink)}
+.browser .view{width:560px;height:380px;overflow:hidden}
+.browser iframe{width:1280px;height:853px;border:0;transform:scale(.4375);transform-origin:0 0;display:block}
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-top:40px}
+.step svg{width:100%;height:170px;display:block;background:#fff;border:2px dashed var(--ink);border-radius:14px}
+.step h3{font:700 32px/1 var(--head);margin:18px 0 6px}
+.step p{font-size:19px;line-height:1.35}
+/* money */
+.lane{display:grid;grid-template-columns:1fr 1fr 1.25fr;gap:22px;align-items:stretch;margin-top:34px}
+.lane .price{font:700 64px/1 var(--head)}
+.lane h3{font:700 26px/1.1 var(--head);margin:10px 0 8px}
+.lane p{font-size:19px;line-height:1.35}
+/* market */
+.mk{display:grid;grid-template-columns:1.1fr 1fr;gap:40px;margin-top:30px;align-items:start}
+.huge{font:700 120px/.9 var(--head);color:var(--tomato)}
+.facts p{font-size:20px;line-height:1.35;padding:12px 0;border-top:1.5px solid var(--rule)}
+.facts b{font:700 30px/1 var(--head);margin-right:8px}
+.math{font:500 22px/1.7 var(--body)}
+.math b{font:700 26px var(--head)}
+/* competition */
+.quad{position:relative;height:440px;border-left:3px solid var(--ink);border-bottom:3px solid var(--ink);margin:6px 0 30px 34px}
+.quad span{position:absolute;font:600 18px/1 var(--head);background:#fff;border:2px solid var(--ink);border-radius:99px;padding:8px 14px;white-space:nowrap}
+.quad .ax{background:none;border:0;padding:0;font:700 13px var(--mono);border-radius:0}
+.quad .me{background:var(--tomato);border-color:var(--tomato);color:#fff;font-size:22px}
+.ax{position:absolute;font:700 13px var(--mono);text-transform:uppercase;letter-spacing:.04em;color:var(--ink-2)}
+/* tables */
+table{border-collapse:collapse;width:100%;font-size:19px;margin-top:26px;background:#fff}
+th,td{border-bottom:1.5px solid var(--rule);padding:11px 12px;text-align:left;vertical-align:top}
+th{font:700 12px var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2);border-bottom:2px solid var(--ink)}
+td.ok{color:var(--forest);font-weight:700}
+td.no{color:var(--ink-2);font-family:var(--mono);font-size:16px}
+.row{display:grid;gap:22px;margin-top:30px}
+.c2{grid-template-columns:1fr 1fr}
+.list li{font-size:21px;line-height:1.35;margin:0 0 12px;padding-left:4px}
+.list{padding-left:26px}
+.tl{display:grid;grid-template-columns:repeat(3,1fr);gap:36px;margin-top:84px;border-top:3px dashed rgba(247,243,238,.45);position:relative}
+.tl::before{content:"\2702";position:absolute;left:-6px;top:-22px;font-size:30px;color:var(--sun);background:var(--ink);padding-right:8px;line-height:1}
+.tl div{position:relative;padding-top:34px}
+.tl div::before{content:"";position:absolute;top:-13px;left:48px;width:22px;height:22px;border-radius:50%;background:var(--sun)}
+.when{font:700 34px/1 var(--head);margin-bottom:10px}
+.tl .muted{font-size:21px}
+/* nav */
+#foot{position:fixed;right:16px;bottom:12px;z-index:40;display:flex;gap:10px;align-items:center;background:var(--ink);color:var(--paper);border-radius:99px;padding:5px 6px 5px 14px;font:500 13px var(--mono)}
+#foot button{appearance:none;border:0;background:var(--paper);color:var(--ink);width:30px;height:30px;border-radius:50%;font:700 15px var(--body);cursor:pointer}
+body.render .site-bar,body.render #foot,body.render .studio-back{display:none!important}
+</style>
+<style media="print">
+@page{size:1280px 720px;margin:0}
+html,body{overflow:visible;height:auto;background:#fff}
+#deck{position:static;transform:none!important;width:1280px;height:auto}
+.slide{display:flex!important;position:relative;width:1280px;height:720px;page-break-after:always;break-after:page}
+#foot,.studio-back,.site-bar{display:none!important}
+</style>
+  <link rel="stylesheet" href="/site-bar.css" />
   <script src="/site-bar.js" data-project="planner-book" data-kind="piece" defer></script>
 </head><body>
 <a class="studio-back" href="/">← Vargas Studio</a>
-<div class="viewport"><div class="deck" id="deck">
+<div id="deck">
 
 <!-- 1 Title -->
-<section class="s dark">
-  <p class="k">Lumen · paper edition</p>
-  <h1 style="font-size:92px;margin-top:120px">Planner and Book</h1>
-  <p class="sub" style="font-size:30px">Physical goal planner + illustrated book: print craft meets premium unlock.</p>
-  <p class="sub" style="margin-top:40px">Founder: <span class="todo">[TODO name]</span> · <span class="todo">[TODO email]</span></p>
-  <p class="src">Pitch draft · numbers on each slide are cited; anything not cited is marked assumption or TODO.</p>
+<section class="slide">
+  <span class="tag" style="max-width:520px">Pitch · November 2026</span>
+  <h1 style="margin-top:118px">Planners</h1>
+  <p class="hand" style="font-size:44px;margin-top:22px;max-width:15ch">Pages you cut out and play, built around how you get stuck.</p>
+  <p class="muted by" style="margin-top:auto;font-size:20px">Alexandra Vargas · vargas-studio.pages.dev/projects/planner/</p>
+  <div class="fan" aria-hidden="true">
+    <img src="downloads/02-goal-getter-cover.png" alt="" style="transform:rotate(-24deg) translateX(-70px)"/>
+    <img src="downloads/04-gentle-reset-cover.png" alt="" style="transform:rotate(-12deg) translateX(-34px)"/>
+    <img src="downloads/05-move-more-cover.png" alt="" style="transform:rotate(24deg) translateX(70px)"/>
+    <img src="downloads/03-habit-builder-cover.png" alt="" style="transform:rotate(12deg) translateX(34px)"/>
+    <img src="downloads/01-stuck-starter-cover.png" alt="The Stuck Starter cover, with four more planner covers fanned behind it" style="transform:rotate(0)"/>
+  </div>
 </section>
 
 <!-- 2 Problem -->
-<section class="s">
-  <p class="k">Problem</p>
-  <h2>Planners punish the week you missed.</h2>
-  <p class="sub">Dated pages turn one bad week into a stack of blanks. Most people stop there, and the goal goes with the planner.</p>
-  <div class="body">
-    <div class="card"><h3>The moment</h3><p>Three empty weeks in March. Starting again means facing them, or buying a new planner. <span class="lbl" style="display:block">Illustrative, not a real user</span></p></div>
-    <div class="card"><h3>What we know</h3><p>Undated planners are already a paid category: Passion Planner, BestSelf and Erin Condren all sell them.</p></div>
-    <div class="card"><h3>What we still need</h3><p><span class="todo">[TODO]</span> Interview 20 lapsed planner buyers: how many abandoned one after a missed stretch?</p></div>
+<section class="slide">
+  <span class="tag">The problem</span>
+  <h2>Planners punish the week you missed, so people quit by February.</h2>
+  <div style="display:grid;grid-template-columns:1.35fr 1fr;gap:44px;margin-top:34px;align-items:start">
+    <div>
+      <div class="weeks" role="img" aria-label="A drawn planner: two weeks written in, two weeks blank">
+        <div><b>Jan 1</b>run 3x<br/>read 10 pages<br/>call Mom</div>
+        <div><b>Jan 8</b>run 2x<br/>read…</div>
+        <div class="blank"><b>Jan 15</b></div>
+        <div class="blank"><b>Jan 22</b></div>
+      </div>
+      <p class="hand" style="font-size:30px;margin-top:16px">Two blank weeks. Starting again means facing them.</p>
+    </div>
+    <div class="cut">
+      <span class="sample">Sample person</span>
+      <p style="font:700 30px/1.1 var(--head);margin:14px 0 8px">Jess, 31</p>
+      <p style="font-size:20px">Buys a pretty planner every January. Misses one week. By February it's in a drawer, and she buys another next year.</p>
+    </div>
   </div>
-  <p class="src">Undated lines: passionplanner.com weekly collection; bestself.co Self Journal (13-week, undated); erincondren.com/planners (Undated LifePlanner). All checked Nov 2026.</p>
+  <p class="src">Pattern: Strava found the biggest drop in January workouts in the second week (17.3% fewer uploads in an analysis of 31.5M activities). BikeRadar and Coach, reporting Strava data. Jess is a sample, not a real customer.</p>
 </section>
 
-<!-- 3 Solution -->
-<section class="s">
-  <p class="k">Solution</p>
-  <h2>One goal on paper, and a way back after any gap.</h2>
-  <div class="body">
-    <div class="card"><h3>Physical Goal Planner</h3><p>The Next Chapter: one goal, a next step sized small / full / rest, an obstacle toolkit, a chapter record.</p></div>
-    <div class="card"><h3>Return ticket</h3><p>After a gap: continue, shrink, pause or revise. Undated, so there is no backlog debt.</p></div>
-    <div class="card"><h3>It Was Always You</h3><p>Illustrated book by Johanna J. 37 chapters in five parts, unlocked in Premium.</p></div>
+<!-- 3 Product: the pages -->
+<section class="slide">
+  <span class="tag">The product</span>
+  <h2>Every page is a small game you cut out and play.</h2>
+  <div class="pages">
+    <figure><img class="page" src="play/pages/task-spinner.jpg" alt="Task Spinner page: a wheel numbered 1 to 8 and a list of eight tasks"/><figcaption><i class="dot" style="background:var(--tomato)"></i>Task spinner<span>Stuck Starter</span></figcaption></figure>
+    <figure><img class="page" src="play/pages/pull-tab.jpg" alt="Progress pull-tab page"/><figcaption><i class="dot" style="background:var(--cobalt)"></i>Pull-tab slider<span>Goal Getter</span></figcaption></figure>
+    <figure><img class="page" src="play/pages/habit-bingo.jpg" alt="Habit bingo page"/><figcaption><i class="dot" style="background:var(--forest)"></i>Habit bingo<span>Habit Builder</span></figcaption></figure>
+    <figure><img class="page" src="play/pages/energy-dial.jpg" alt="Energy dial page"/><figcaption><i class="dot" style="background:var(--violet)"></i>Energy dial<span>Gentle Reset</span></figcaption></figure>
+    <figure><img class="page" src="play/pages/workout-die.jpg" alt="Workout paper die page"/><figcaption><i class="dot" style="background:var(--teal)"></i>Paper die<span>Move More</span></figcaption></figure>
+    <figure><img class="page" src="play/pages/scratch-start.jpg" alt="Scratch and Start page with scratch-off boxes"/><figcaption><i class="dot" style="background:var(--tomato)"></i>Scratch-offs<span>Stuck Starter</span></figcaption></figure>
   </div>
-  <p class="src">Product names and features as on /projects/planner/ and /projects/planner/print.html.</p>
+  <p class="src">Real pages from the five free PDFs (13 to 18 pages each, US Letter) at /projects/planner/downloads/. A sixth PDF, Make It Interactive, shows how to build every piece.</p>
 </section>
 
-<!-- 4 Product -->
-<section class="s s-two-shots">
-  <p class="k">Product today</p>
-  <h2 style="font-size:42px">Two pieces exist as web demos.</h2>
-  <div class="body" style="margin-top:22px">
-    <div class="shots">
-      <figure><img src="deck/shot-print.png" alt="Season Chapter free printable page"/><figcaption>Free printable · Season Chapter</figcaption></figure>
-      <figure><img src="deck/shot-shop.png" alt="Shop page with the planner and the book"/><figcaption>Shop · planner + book sneak</figcaption></figure>
+<!-- 4 Product: quiz and Make yours -->
+<section class="slide">
+  <span class="tag">Try it</span>
+  <div style="display:grid;grid-template-columns:420px 1fr;gap:36px;flex:1;margin-top:16px">
+    <div style="display:flex;flex-direction:column">
+      <h2 style="margin:0">A game picks your planner. Six questions put your name in it.</h2>
+      <p style="font-size:19px;margin-top:22px"><b>Which planner are you?</b> Flip ten real pages, keep the ones you'd use, scratch to see your planner.</p>
+      <p style="font-size:19px;margin-top:12px"><b>Make yours:</b> name, goal, habit, three rewards, a gift note, six colors. Live preview, print to PDF.</p>
+      <p class="src">Live and free, no sign-up: /projects/planner/play.html and /projects/planner/make/</p>
+    </div>
+    <div class="frames">
+      <div class="browser"><div class="bar"><i></i><i></i><i></i><span style="margin-left:8px">/projects/planner/make/</span></div><div class="view"><iframe data-src="make/" title="Make yours page" tabindex="-1"></iframe></div></div>
+      <div class="phone"><iframe data-src="play.html" title="Which planner are you? quiz" tabindex="-1"></iframe></div>
     </div>
   </div>
 </section>
 
-<!-- 5 Why now -->
-<section class="s">
-  <p class="k">Why now</p>
-  <h2>Paper planners are growing again.</h2>
-  <div class="body">
-    <div class="card"><div class="num">$50M+</div><p style="margin-top:10px">Papier’s expected 2025 sales. Planner sales up 20% year over year.</p></div>
-    <div class="card"><div class="num">10M+</div><p style="margin-top:10px">Hobonichi Techo copies sold all-time; users in 100+ countries.</p></div>
-    <div class="card"><div class="num">57M</div><p style="margin-top:10px">TikTok posts tagged “stationerycore”.</p></div>
-  </div>
-  <p class="sub" style="font-size:21px">Papier’s CEO credits people choosing not to let their lives go fully digital.</p>
-  <p class="src">Modern Retail, “Papier’s sales swell to $50M…”, 9 Dec 2025 (Papier, stationerycore). Hobonichi, 1101.com Techo 2026 About page (figure as of Sep 2024).</p>
-</section>
-
-<!-- 6 Market -->
-<section class="s">
-  <p class="k">Market</p>
-  <h2>Proven scale above, a small honest start below.</h2>
-  <div class="body">
-    <div class="card"><h3>Comparable scale</h3><p>Hobonichi: ~900,000 copies of its 2024 edition. Papier: $50M+ in 2025. One focused planner can sell at this size.</p>
-      <p class="lbl" style="margin-top:18px">Top-down reports</p><p>Published “planner market” figures disagree by 7× or more. We don’t use them.</p></div>
-    <div class="card" style="flex:1.25"><h3>Bottom-up, year 3 <span class="lbl" style="display:inline">projection</span></h3>
-      <p class="math"><b>50,000</b> printable downloads<br/>× <b>4%</b> buy the planner<br/>× <b>$40</b> price<br/>= <b>$80,000</b> / year in planners</p>
-      <p style="margin-top:10px;font-size:16px;color:var(--mute)">All three inputs are assumptions. $40 sits inside the $36–$60 range of comparable goal planners; our price is TBD. Premium (book) revenue not included: price TBD.</p></div>
-  </div>
-  <p class="src">Good News Network citing The Japan Times, Jan 2025 (Hobonichi 2024 units). Modern Retail, Dec 2025 (Papier). Price range: bestself.co, passionplanner.com, erincondren.com, Nov 2026.</p>
-</section>
-
-<!-- 7 Traction -->
-<section class="s">
-  <p class="k">Traction</p>
-  <h2>Pre-launch. Here is the first test.</h2>
-  <div class="body">
-    <div class="card"><h3>Today</h3><p>Free printable and shop page are live as web pages.</p><p style="margin-top:12px">Downloads: <span class="todo">[TODO]</span><br/>Book list sign-ups: <span class="todo">[TODO]</span> (form is a demo)</p></div>
-    <div class="card"><h3>Two-week ad test</h3><p>$180 on Meta across three angles, all pointing to the free printable or the shop.</p><p style="margin-top:12px">Keep an angle if CTR ≥ 1% and a printable visit costs ≤ $0.80 <span class="lbl" style="display:inline">assumption</span></p></div>
-    <div class="card"><h3>The real signal</h3><p>Pre-orders for the printed planner at a stated price.</p><p style="margin-top:12px">Target: <span class="todo">[TODO set]</span></p></div>
-  </div>
-</section>
-
-<!-- 8 Business model -->
-<section class="s">
-  <p class="k">Business model</p>
-  <h2>Free sheet → paid planner → Premium book.</h2>
-  <div class="body">
-    <div class="flow">
-      <div class="card"><h3>Free</h3><p>Season Chapter printable. Builds the list.</p><p class="lbl">Like Passion Planner’s free PDFs</p></div>
-      <span class="arrow" aria-hidden="true">→</span>
-      <div class="card"><h3>Planner</h3><p>One-time purchase. Price TBD.</p><p class="lbl">Comps $36–$60</p></div>
-      <span class="arrow" aria-hidden="true">→</span>
-      <div class="card"><h3>Premium</h3><p>Unlocks the full illustrated book. Price TBD.</p><p class="lbl">Shared with Lumen</p></div>
+<!-- 5 How it works -->
+<section class="slide">
+  <span class="tag">How it works</span>
+  <h2>Pick, print, cut, play. The spinner works with a pencil and a paperclip.</h2>
+  <div class="steps">
+    <div class="step">
+      <svg viewBox="0 0 240 170" aria-hidden="true" fill="none" stroke="#26231f" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"><rect x="62" y="34" width="70" height="96" rx="5" transform="rotate(-14 97 82)" fill="#1f3a8a"/><rect x="98" y="30" width="70" height="96" rx="5" transform="rotate(10 133 78)" fill="#2f5d46"/><rect x="80" y="38" width="70" height="96" rx="5" fill="#e0583b"/><path d="M92 110h40M92 120h26" stroke="#fff"/><circle cx="115" cy="70" r="16" stroke="#fff"/></svg>
+      <h3>Pick</h3><p>Take the quiz, or choose by how you're stuck.</p>
+    </div>
+    <div class="step">
+      <svg viewBox="0 0 240 170" aria-hidden="true" fill="none" stroke="#26231f" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"><path d="M86 30h68v34H86z" fill="#fff"/><rect x="58" y="62" width="124" height="50" rx="8" fill="#f7f3ee"/><path d="M84 96h72v48H84z" fill="#fff"/><path d="M96 112h48M96 122h36M96 132h42"/><circle cx="164" cy="78" r="4" fill="#e0583b"/></svg>
+      <h3>Print</h3><p>Free PDF at home, or the $39 printed kit.</p>
+    </div>
+    <div class="step">
+      <svg viewBox="0 0 240 170" aria-hidden="true" fill="none" stroke="#26231f" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"><circle cx="128" cy="86" r="48" stroke-dasharray="7 7"/><circle cx="62" cy="58" r="13"/><circle cx="62" cy="114" r="13"/><path d="M73 65l60 30M73 107l60-30" /><path d="M133 95l28 13M133 77l28-13" stroke="#e0583b"/></svg>
+      <h3>Cut</h3><p>Spinners, dice, sliders, dials. Dashed lines show where.</p>
+    </div>
+    <div class="step">
+      <svg viewBox="0 0 240 170" aria-hidden="true" fill="none" stroke="#26231f" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"><circle cx="120" cy="86" r="58" fill="#fff"/><path d="M120 28v116M62 86h116M79 45l82 82M161 45l-82 82" stroke-width="2"/><path d="M120 28a58 58 0 0 1 41 17L120 86z" fill="#fde4dc"/><rect x="114" y="50" width="12" height="42" rx="6" transform="rotate(32 120 86)" stroke="#e0583b"/><circle cx="120" cy="86" r="5" fill="#e0583b"/></svg>
+      <h3>Play</h3><p>Flick the clip. Where it stops is your task.</p>
     </div>
   </div>
-  <div class="card" style="flex:0 0 auto;margin-top:18px"><p><b>Unit math (assumptions):</b> $40 price − $12 print-on-demand cost = $28 before shipping and ads (70%). Lulu lists coil-bound color planners from $5.80 a copy at its smallest spec, so $12 leaves room for page count.</p></div>
-  <p class="src">Lulu.com “Print Workbooks &amp; Textbooks” page: Planners, 6×9 coil bound, standard color, from $5.80 (checked Nov 2026). Passion Planner free downloads page.</p>
+  <p class="src">Steps as printed on the Task Spinner page, The Stuck Starter, page 5.</p>
 </section>
 
-<!-- 9 GTM -->
-<section class="s">
-  <p class="k">Go-to-market</p>
-  <h2>Lead with the free sheet. Two channels.</h2>
-  <div class="body">
-    <div class="card"><h3>Meta ads → printable</h3><p>Three angles already drawn: Paper remembers, No backlog debt, Phone down. CTA is “Download”, which is true.</p></div>
-    <div class="card"><h3>TikTok + Instagram, organic</h3><p>Show the sheet being filled in. Papier’s TikTok traffic nearly doubled in a year; Hobonichi grew on user posts.</p></div>
-    <div class="card"><h3>First 1,000</h3><p>Printable downloaders get a pre-order offer for the printed planner.</p><p class="lbl" style="margin-top:12px">Plan, not results</p></div>
+<!-- 6 Who pays -->
+<section class="slide">
+  <span class="tag">Who pays</span>
+  <h2>The free PDFs bring people in. The $39 printed kit pays.</h2>
+  <div class="lane">
+    <div class="cut" style="border-style:solid;border-color:var(--rule)"><p class="price">$0</p><h3>Six free PDFs</h3><p class="muted">Five planners and the maker guide. No email needed.</p></div>
+    <div class="cut" style="border-style:solid;border-color:var(--rule)"><p class="price">$0</p><h3>Make yours</h3><p class="muted">Your name, goal, habit and rewards printed in. Print it or save as PDF.</p></div>
+    <div class="cut" style="background:var(--blush);border-color:var(--tomato)"><span class="badge">✂ Order it printed</span><p class="price" style="margin-top:14px">$39<span style="font-size:26px"> + shipping</span></p><h3>Personalized planner kit</h3><p>Coil-bound, with pre-cut spinners, sliders, brads, stickers and scratch-offs. Made by hand from each order, at first.</p></div>
   </div>
-  <p class="src">Modern Retail, Dec 2025 (Papier TikTok traffic). Japan Times via Good News Network, Jan 2025 (Hobonichi social community).</p>
+  <p style="margin-top:24px;font-size:19px" class="muted">Cost and margin per kit: not measured yet. The first orders set them.</p>
+  <p class="src">Price and kit contents as shown on /projects/planner/make/ (Shopify checkout). Comparable paper planners sell for $36 to $60.50: bestself.co, passionplanner.com, erincondren.com, Nov 2026.</p>
 </section>
 
-<!-- 10 Competition -->
-<section class="s">
-  <p class="k">Competition</p>
-  <h2 style="font-size:42px">Good planners exist. Few plan for the comeback.</h2>
-  <div class="body" style="margin-top:18px;display:block">
-    <table>
-      <tr><th>Brand</th><th>Price seen</th><th>Built around</th><th>After a missed stretch</th></tr>
-      <tr><td>Passion Planner</td><td>$45–$55 undated weekly</td><td>Goals + weekly layout</td><td>Undated option</td></tr>
-      <tr><td>BestSelf Self Journal</td><td>$36</td><td>13-week goal sprint</td><td>Undated</td></tr>
-      <tr><td>Erin Condren</td><td>$60.50 undated LifePlanner</td><td>Decorated scheduling</td><td>Undated option</td></tr>
-      <tr><td>Hobonichi Techo</td><td>not checked</td><td>A page a day, journaling</td><td>Dated daily pages</td></tr>
-      <tr><td>Papier</td><td>not checked</td><td>Personalized design</td><td>not checked</td></tr>
-      <tr class="us"><td>Planner and Book</td><td>TBD</td><td>One goal + a book</td><td>Undated + return ticket</td></tr>
-    </table>
+<!-- 7 Market -->
+<section class="slide">
+  <span class="tag">Market</span>
+  <h2>People still pay well for paper that feels like theirs.</h2>
+  <div class="mk">
+    <div>
+      <p class="huge">$50M+</p>
+      <p style="font-size:22px;margin-top:12px">Papier's expected 2025 sales. Planner sales up 20% year over year by October.</p>
+      <div class="facts" style="margin-top:22px">
+        <p><b>10M+</b>Hobonichi Techo copies sold since 2001, users in 100+ countries.</p>
+        <p><b>100,000+</b>copies of The Anti-Planner, an activity book for procrastinators (seller's own count).</p>
+      </div>
+    </div>
+    <div class="cut">
+      <span class="sample">Assumption</span>
+      <p style="font:700 26px/1.15 var(--head);margin:14px 0 10px">A first year, counted small</p>
+      <p class="math"><b>10,000</b> visitors<br/>× <b>2%</b> buy the kit<br/>× <b>$39</b><br/>= <b>$7,800</b></p>
+      <p style="font-size:17px;margin-top:10px" class="muted">All three inputs are guesses. 2% is the keep line in the validation plan. Published "planner market" reports disagree by about 7×, so we don't use them.</p>
+    </div>
   </div>
-  <p class="src">Regular prices from each brand’s store, Nov 2026 (Passion Planner product feed; bestself.co; erincondren.com/planners). Hobonichi and Papier prices vary by edition.</p>
+  <p class="src">Modern Retail, "Papier's sales swell to $50M", 9 Dec 2025 · 1101.com Hobonichi Techo 2026 About page (as of Sep 2024) · shop.adhddd.com (The Anti-Planner, Dani Donovan). Checked Nov 2026.</p>
+</section>
+
+<!-- 8 Competition -->
+<section class="slide">
+  <span class="tag">Competition</span>
+  <div style="display:grid;grid-template-columns:1fr 1.15fr;gap:48px;flex:1;align-items:center">
+    <div>
+      <h2 style="margin:0">Erin Condren puts your name on the cover. Planners builds the pages around you.</h2>
+      <p class="muted" style="margin-top:20px;font-size:20px">The Anti-Planner shows people want play. It's one book for everyone. Etsy printables are cheap, but you fill them in alone.</p>
+    </div>
+    <div class="quad" role="img" aria-label="Map: across, fill-in pages to pages you play with; up, same for everyone to built for you. Planners sits top right.">
+      <span class="ax" style="left:-30px;top:0;transform:rotate(-90deg) translateX(-100%);transform-origin:0 0">Built for you →</span>
+      <span class="ax" style="right:0;bottom:-26px">Pages you play with →</span>
+      <span style="left:4%;top:20%">Erin Condren</span>
+      <span style="left:30%;top:36%">Papier</span>
+      <span style="left:4%;top:56%">Passion Planner</span>
+      <span style="left:8%;top:80%">Hobonichi Techo</span>
+      <span style="left:40%;top:66%">Etsy printables</span>
+      <span style="left:62%;top:82%">The Anti-Planner</span>
+      <span class="me" style="left:64%;top:6%">Planners</span>
+    </div>
+  </div>
+  <p class="src">Placement is our reading of each product page: erincondren.com, papier.com, passionplanner.com, 1101.com, etsy.com, shop.adhddd.com (checked Nov 2026).</p>
+</section>
+
+<!-- 9 Proof -->
+<section class="slide">
+  <span class="tag">Proof so far</span>
+  <h2>Everything is live. Nothing is counted yet.</h2>
+  <table>
+    <tr><th>Test</th><th>Target</th><th>Result</th></tr>
+    <tr><td>Five planners and the maker guide, free to download</td><td>Live on the site</td><td class="ok">Live. Downloads not counted yet</td></tr>
+    <tr><td>Quiz and Make yours, with the $39 kit on Shopify</td><td>Anyone can order</td><td class="ok">Live since 22 Nov 2026</td></tr>
+    <tr><td>Five talks with people who quit a planner</td><td>3 of 5 print a page, 1 buys</td><td class="no">Not run yet</td></tr>
+    <tr><td>Quiz finishers who press "Print my pages"</td><td>25% or more</td><td class="no">Not run yet</td></tr>
+    <tr><td>7-day Pinterest and Instagram test, 3 angles</td><td>2% of visitors buy</td><td class="no">Not run yet</td></tr>
+    <tr><td>5-second test of the quiz's first screen</td><td>3 of 5 say "fun" or "curious"</td><td class="no">Not run yet</td></tr>
+  </table>
+  <p class="src">Targets set before testing, in the validation plan (22 Nov 2026). They are starting lines, not industry benchmarks.</p>
+</section>
+
+<!-- 10 First 1,000 -->
+<section class="slide">
+  <span class="tag">The first 1,000 people</span>
+  <h2>Planner people already trade printables. Start there.</h2>
+  <div style="display:grid;grid-template-columns:1.2fr 1fr;gap:44px;margin-top:30px;align-items:start">
+    <ol class="list">
+      <li>Five talks, five intros. End each with "Who do you know who buys a planner every January?"</li>
+      <li>Alexandra posts her own quiz result in r/planners, r/bulletjournal and #stationerycore.</li>
+      <li>The quiz link travels. A friend opens "Sam kept 6 pages. Which would you keep?" and plays the same ten.</li>
+      <li>One 7-day ad test on Pinterest and Instagram, US women 22 to 40 into planners and journaling.</li>
+    </ol>
+    <div class="cut">
+      <p class="hand" style="font-size:32px">Post on the days people restart:</p>
+      <p style="font:700 28px/1.3 var(--head);margin-top:10px">New Year, back to school, Sunday night, the week after a missed week.</p>
+    </div>
+  </div>
+  <p class="src">Plan, not results. Channels from the share and validation notes (22 Nov 2026). #stationerycore: 57M TikTok posts (Modern Retail, 9 Dec 2025).</p>
 </section>
 
 <!-- 11 Team -->
-<section class="s">
-  <p class="k">Team</p>
-  <h2>Why us</h2>
-  <div class="body">
-    <div class="card"><h3>Founder</h3><p><span class="todo">[TODO name, background]</span></p></div>
-    <div class="card"><h3>Author</h3><p>Johanna J., It Was Always You (illustrated edition). <span class="todo">[TODO bio + rights status]</span></p></div>
-    <div class="card"><h3>Unfair advantage</h3><p>Same world as Lumen, the daily game, so app users are a warm audience. <span class="todo">[TODO Lumen user count]</span></p></div>
+<section class="slide">
+  <span class="tag">Team</span>
+  <div style="display:grid;grid-template-columns:1fr 430px;gap:56px;flex:1;align-items:center">
+    <div>
+      <h2 style="margin:0">One person designs every page and makes every kit.</h2>
+      <p style="font:700 30px/1.1 var(--head);margin-top:30px">Alexandra Vargas</p>
+      <p class="muted" style="margin-top:10px;font-size:21px">Designed the five planners and the maker guide. Built the quiz, the Make yours page and the Shopify order. Cuts and binds the first kits by hand.</p>
+      <p class="muted" style="margin-top:16px;font-size:21px">The shop page also carries a sneak peek of the illustrated book <i>It Was Always You</i>.</p>
+    </div>
+    <img class="page" src="../../desk/planner.jpg" alt="The quiz's first screen: five planner covers fanned above Which planner are you?" style="width:430px;border-radius:12px"/>
   </div>
 </section>
 
-<!-- 12 Ask -->
-<section class="s dark">
-  <p class="k">The ask</p>
-  <h2>Raise <span class="todo">[TODO amount]</span> to print the first run.</h2>
-  <div class="body">
-    <div class="card"><h3>Use of funds</h3><p>Planner print run or print-on-demand setup · book illustration + layout · ad tests. <span class="todo">[TODO split]</span></p></div>
-    <div class="card"><h3>18-month milestones</h3><p>Planner on sale · Premium book unlock live · <span class="todo">[TODO download + sales targets]</span></p></div>
-    <div class="card"><h3>Next step</h3><p>Run the two-week printable test, then set the planner price from pre-orders.</p></div>
+<!-- 12 What's next -->
+<section class="slide dark">
+  <span class="tag">What's next</span>
+  <h2>Not raising yet. First, count what people print and buy.</h2>
+  <div class="tl">
+    <div><p class="when">Now</p><p class="muted">Counters on downloads, quiz plays and prints. Run the five talks.</p></div>
+    <div><p class="when">Then</p><p class="muted">The 7-day ad test. Keep going at 2% buying. Stop below 0.5% after 1,000 visitors.</p></div>
+    <div><p class="when">Later</p><p class="muted">A New Year page set, and friends' notes printed under the scratch-offs.</p></div>
   </div>
-  <p class="src">Full sources, speaker notes and investor Q&amp;A: notes.md</p>
+  <p class="hand" style="font-size:44px;color:var(--sun);margin-top:auto">Your pages. Printed tonight.</p>
 </section>
 
-</div></div>
-<div class="nav"><button type="button" id="p" aria-label="Previous slide">←</button><span id="c">1 / 12</span><button type="button" id="n" aria-label="Next slide">→</button></div>
+</div>
+<div id="foot"><button type="button" id="prev" aria-label="Previous slide">←</button><span id="pg"></span><button type="button" id="next" aria-label="Next slide">→</button></div>
 <script>
-const S=[...document.querySelectorAll('.s')],q=new URLSearchParams(location.search);
-let i=Math.max(0,Math.min(S.length-1,(parseInt(q.get('slide'))||1)-1));
+const slides=[...document.querySelectorAll('.slide')],q=new URLSearchParams(location.search);let i=0;
 if(q.has('render'))document.body.classList.add('render');
-function fit(){const d=document.getElementById('deck');const k=Math.min(innerWidth/1280,innerHeight/720)*(q.has('render')?1:.96);d.style.transform='translate(-50%,-50%) scale('+k+')';}
-function go(n){i=Math.max(0,Math.min(S.length-1,n));S.forEach((s,j)=>s.classList.toggle('on',j===i));document.getElementById('c').textContent=(i+1)+' / '+S.length;const u=new URL(location);u.searchParams.set('slide',i+1);history.replaceState(null,'',u);}
-addEventListener('keydown',e=>{if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();go(i+1)}if(['ArrowLeft','PageUp'].includes(e.key))go(i-1);if(e.key==='Home')go(0);if(e.key==='End')go(S.length-1);});
-document.getElementById('p').onclick=()=>go(i-1);document.getElementById('n').onclick=()=>go(i+1);
-addEventListener('resize',fit);fit();go(i);
+function load(el){el.querySelectorAll('iframe[data-src]').forEach(f=>{f.loading='lazy';f.src=f.dataset.src;f.removeAttribute('data-src')})}
+function show(n){i=Math.max(0,Math.min(slides.length-1,n));load(slides[i]);if(innerWidth<=700)load(document);slides.forEach((s,k)=>s.classList.toggle('on',k===i));document.getElementById('pg').textContent=(i+1)+' / '+slides.length;
+  if(q.has('slide')||i>0){const u=new URL(location);u.searchParams.set('slide',i+1);history.replaceState(null,'',u)}}
+function fit(){const d=document.getElementById('deck');if(innerWidth<=700){d.style.transform='';return}
+  const bar=document.querySelector('.site-bar'),bh=(bar&&!q.has('render'))?bar.offsetHeight:0,h=innerHeight-bh;
+  const s=Math.min(innerWidth/1280,h/720);d.style.top=(bh+h/2)+'px';d.style.transform=`translate(-50%,-50%) scale(${s})`}
+addEventListener('resize',fit);setTimeout(fit,300);addEventListener('beforeprint',()=>load(document));
+addEventListener('keydown',e=>{if(['ArrowRight',' ','PageDown'].includes(e.key)){e.preventDefault();show(i+1)}if(['ArrowLeft','PageUp'].includes(e.key))show(i-1);if(e.key==='Home')show(0);if(e.key==='End')show(slides.length-1)});
+addEventListener('click',e=>{if(innerWidth<=700||e.target.closest('iframe,a,button,.site-bar'))return;show(e.clientX>innerWidth/2?i+1:i-1)});
+let tx=null;addEventListener('touchstart',e=>{tx=e.touches[0].clientX},{passive:true});
+addEventListener('touchend',e=>{if(tx===null||innerWidth<=700)return;const dx=e.changedTouches[0].clientX-tx;if(Math.abs(dx)>50)show(dx<0?i+1:i-1);tx=null});
+document.getElementById('prev').onclick=()=>show(i-1);document.getElementById('next').onclick=()=>show(i+1);
+show((parseInt(q.get('slide'))||1)-1);fit();
 </script>
+<style>
+/* Phone: slides stack and reflow instead of shrinking to unreadable 16:9 tiles */
+@media (max-width:700px){
+  html,body{overflow:auto;height:auto;background:var(--ink)}
+  #deck{position:static;transform:none!important;width:auto;height:auto}
+  .slide{display:flex!important;position:relative;inset:auto;padding:32px 20px 36px;border-bottom:6px solid var(--ink)}
+  h1{font-size:64px;margin-top:28px!important}
+  h2{font-size:30px;margin:12px 0 0;max-width:none}
+  p{font-size:17px}
+  .hand{font-size:26px!important}
+  .tag{font-size:12px}
+  .by{order:4;margin-top:4px!important}
+  .slide h2[style*="margin:0"]{margin-top:12px!important}
+  .fan{position:relative;right:auto;top:auto;width:100%;height:270px;margin:16px 0 8px;order:3}
+  .fan img{width:130px;left:calc(50% - 65px);top:10px}
+  .slide>div[style*="grid-template-columns"],.slide div[style*="grid-template-columns"]{grid-template-columns:1fr!important;gap:20px!important}
+  .slide div[style*="display:flex"]{flex-direction:column;align-items:stretch!important}
+  .weeks div{height:110px;font-size:18px;padding:8px}
+  .weeks b{font-size:11px}
+  .pages{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-right:0}
+  .pages figure{width:auto;margin:0;transform:none!important}
+  .pages figcaption{font-size:13px}.pages figcaption span{font-size:12px}
+  .frames .browser,.frames .phone{position:static}
+  .frames{display:flex;flex-direction:column;gap:18px}
+  .phone{margin:0 auto}
+  .browser{width:100%}.browser .view{width:100%;height:300px;position:relative}
+  .browser iframe{position:absolute;top:0;left:0;transform:scale(.36)}
+  .steps{grid-template-columns:1fr 1fr;gap:14px;margin-top:20px}
+  .step svg{height:110px}.step h3{font-size:22px;margin-top:10px}.step p{font-size:15px}
+  .lane{grid-template-columns:1fr;gap:14px;margin-top:20px}
+  .lane .price{font-size:44px}.lane h3{font-size:21px}.lane p{font-size:16px}
+  .mk{grid-template-columns:1fr;gap:22px}
+  .huge{font-size:72px}.facts p{font-size:16px}.facts b{font-size:22px}.math{font-size:17px}.math b{font-size:20px}
+  .quad{height:340px;margin:20px 0 34px 22px}
+  .quad span{font-size:12px;padding:5px 8px}.quad .ax{background:none;border:0;padding:0;font:700 13px var(--mono);border-radius:0}
+.quad .me{font-size:14px}.ax{font-size:10px}
+  table{font-size:13px}th{font-size:11px}th,td{padding:7px 5px}td.no{font-size:12px}
+  .list li{font-size:16px}
+  .tl{grid-template-columns:1fr;gap:6px;margin-top:40px;border-top:0;border-left:3px dashed rgba(247,243,238,.45);padding-left:22px}
+  .tl::before{display:none}.tl div{padding-top:0;padding-bottom:16px}.tl div::before{left:-35px;top:4px;width:18px;height:18px}
+  .tl + .hand{margin-top:24px!important}
+  .when{font-size:24px}.tl .muted{font-size:16px}
+  .cut{padding:16px}
+  .slide img.page[style*="width:430px"]{width:100%!important}
+  .src{font-size:12px;margin-top:16px}
+  #foot{display:none}
+}
+</style>
 </body></html>
