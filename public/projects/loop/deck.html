@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Loop pitch deck</title>
+<meta name="description" content="Loop: stop buying what friends already own. A 12-slide deck by Alexandra Vargas.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;800&family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{--cream:#faf9f5;--paper:#fff;--ink:#17221c;--sage:#566354;--line:#dddfda;--lime:#d8ff64;--claret:#8c2e48;
+  --pink:#d81f63;--blue:#3f5bd8;--teal:#11806e;--yellow:#ffd23f;--orange:#d9823b;
+  --serif:"Instrument Serif",Georgia,serif;--sans:Archivo,system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,monospace}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#0f1713;overflow:hidden}
+body{font-family:var(--sans);color:var(--ink)}
+#deck{position:absolute;width:1280px;height:720px;left:50%;top:calc(50% + 24px);transform-origin:center}
+.slide{position:absolute;inset:0;background:var(--cream);padding:56px 72px 52px;display:none;flex-direction:column;overflow:hidden}
+.slide.on{display:flex}
+h1,h2{font-family:var(--serif);font-weight:400;letter-spacing:-.015em}
+h1{font-size:92px;line-height:.95}
+h2{font-size:60px;line-height:1.02;max-width:21ch;margin-bottom:30px}
+h1 i,h2 i{color:var(--claret)}
+p,li{font-size:22px;line-height:1.4}
+.muted{color:var(--sage)}
+.src{font:500 12.5px/1.5 var(--mono);color:var(--sage);margin-top:auto;padding-top:14px;max-width:1080px}
+.where{display:flex;align-items:center;gap:10px;font:600 14px var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--ink)}
+.where::before{content:"";width:11px;height:11px;border-radius:50%;background:var(--sage)}
+.lock{display:flex;align-items:center;gap:12px}
+.lock b{font:italic 400 34px/1 var(--serif)}
+.split{display:grid;gap:48px;flex:1;min-height:0}
+/* L O O P tiles, from the app's club door */
+.tile{display:grid;place-items:center;width:var(--s,120px);height:var(--s,120px);border:3px solid var(--ink);border-radius:22%;box-shadow:5px 6px 0 var(--ink);font:800 calc(var(--s,120px)*.46)/1 var(--sans);color:#fff}
+.t-pink{background:var(--pink)}.t-blue{background:var(--blue)}.t-teal{background:var(--teal)}.t-yellow{background:var(--yellow);color:var(--ink)}
+.cluster{position:relative;width:470px;height:470px}
+.cluster .tile{position:absolute}
+/* phone frames */
+.phone{flex:none;width:262px;height:548px;border:9px solid var(--ink);border-radius:40px;overflow:hidden;background:var(--paper);position:relative}
+.phone iframe{width:390px;height:821px;border:0;transform:scale(.6256);transform-origin:0 0;display:block}
+.phone img{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
+.cap{font:500 13px var(--mono);color:var(--sage);margin-top:10px;text-align:center}
+/* cards */
+.card{background:var(--paper);border:1.5px solid var(--line);border-radius:22px;padding:26px}
+table{border-collapse:collapse;width:100%;font-size:19px}
+th,td{border-bottom:1.5px solid var(--line);padding:13px 12px;text-align:left;vertical-align:top}
+th{font:500 13px var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--sage);border-bottom:2px solid var(--ink)}
+.no{display:inline-block;background:#efeee8;border-radius:99px;padding:2px 12px;font-size:16px;color:var(--sage)}
+.yes{display:inline-block;background:var(--lime);border-radius:99px;padding:2px 12px;font-size:16px;font-weight:600}
+.dark{background:var(--ink);color:var(--cream)}.dark .muted,.dark .src{color:#b8c2b5}.dark h2 i{color:var(--lime)}
+/* problem */
+.tag{position:relative;width:330px;background:var(--orange);color:var(--ink);border:3px solid var(--ink);border-radius:26px;padding:28px 30px;box-shadow:6px 7px 0 var(--ink);transform:rotate(-3deg)}
+.tag .n{font:400 120px/1 var(--serif)}
+.tag .used{display:inline-block;margin-top:14px;background:var(--cream);color:var(--ink);border-radius:99px;padding:6px 16px;font-weight:600;font-size:18px}
+.hall{display:flex;gap:16px;align-items:flex-end}
+.door{width:118px;height:206px;border:2.5px solid var(--ink);border-radius:12px 12px 4px 4px;background:var(--paper);position:relative;display:flex;flex-direction:column;align-items:center;padding-top:16px;font:600 18px var(--sans)}
+.door::after{content:"";position:absolute;right:16px;top:104px;width:11px;height:11px;border-radius:50%;background:var(--ink)}
+.door.has{background:var(--lime)}
+.door small{position:absolute;bottom:14px;font:500 13px var(--mono);text-align:center;padding:0 8px}
+/* how */
+.steps{display:grid;grid-template-columns:1fr 1fr 1fr;gap:34px;flex:1;min-height:0}
+.step{display:flex;flex-direction:column;gap:14px}
+.step h3{font:600 25px/1.15 var(--sans);display:flex;gap:14px;align-items:center}
+.step .tile{--s:46px;box-shadow:3px 3px 0 var(--ink);border-width:2.5px;flex:none}
+.shot{height:420px;border:7px solid var(--ink);border-radius:30px;overflow:hidden;background:var(--paper)}
+.shot img{width:100%;height:auto;display:block}
+.ask{height:420px;border-radius:30px;background:var(--paper);border:1.5px solid var(--line);padding:30px;display:flex;flex-direction:column;justify-content:center}
+.ask q{font:italic 400 36px/1.1 var(--serif);quotes:"\201C" "\201D"}
+/* phases */
+.phases{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;align-items:start}
+.ph{border:3px solid var(--ink);border-radius:26px;padding:24px 22px;box-shadow:5px 6px 0 var(--ink);min-height:250px;display:flex;flex-direction:column}
+.ph b{font:400 40px/1 var(--serif)}
+.ph p{font-size:18px;margin-top:auto}
+/* pricing */
+.price{font:400 104px/1 var(--serif)}
+.price small{font:500 24px var(--sans)}
+ul.plain{list-style:none;display:grid;gap:10px}
+ul.plain li{padding-left:28px;position:relative}
+ul.plain li::before{content:"";position:absolute;left:2px;top:.55em;width:12px;height:12px;border-radius:3px;background:var(--ink)}
+/* market */
+.hero-n{font:400 150px/.9 var(--serif);color:var(--claret);letter-spacing:-.02em}
+.facts{display:grid;gap:0;border-top:2px solid var(--ink)}
+.facts div{display:grid;grid-template-columns:170px 1fr;gap:20px;padding:16px 0;border-bottom:1.5px solid var(--line);align-items:baseline}
+.facts b{font:400 46px/1 var(--serif)}
+.facts span{font-size:19px;line-height:1.35}
+/* competition map */
+.map{position:relative;height:430px;border-left:2.5px solid var(--ink);border-bottom:2.5px solid var(--ink);margin:0 0 30px 34px}
+.map::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:1.5px;background:var(--line)}
+.map::after{content:"";position:absolute;top:50%;left:0;right:0;height:1.5px;background:var(--line);z-index:0}
+.map span{z-index:1}
+.map span{position:absolute;font:600 17px var(--sans);background:var(--paper);border:2px solid var(--ink);border-radius:99px;padding:7px 14px;white-space:nowrap}
+.map .me{background:var(--pink);color:#fff;font-size:22px;padding:9px 18px;box-shadow:4px 4px 0 var(--ink)}
+.map .ax{border:0;background:none;padding:0;font:500 13px var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--sage)}
+/* gtm */
+ol.go{list-style:none;display:grid;gap:16px;counter-reset:g}
+ol.go li{counter-increment:g;display:grid;grid-template-columns:44px 1fr;gap:16px;align-items:start;font-size:21px}
+ol.go li::before{content:counter(g);display:grid;place-items:center;width:40px;height:40px;border:2.5px solid var(--ink);border-radius:10px;font:800 19px var(--sans);background:var(--yellow)}
+ol.go li:nth-child(2)::before{background:var(--teal);color:#fff}ol.go li:nth-child(3)::before{background:var(--blue);color:#fff}ol.go li:nth-child(4)::before{background:var(--pink);color:#fff}
+.flyer{width:300px;border:1.5px solid var(--line);box-shadow:0 2px 0 var(--line);transform:rotate(2.5deg);background:#fff}
+.flyer img{width:100%;display:block}
+.made{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:18px;margin-top:26px}
+.made figure{margin:0}
+.made img{width:100%;height:180px;object-fit:cover;border-radius:14px;border:1.5px solid var(--line);display:block;background:#fff}
+.made figcaption{font:500 12.5px var(--mono);color:var(--sage);margin-top:8px}
+.dark ol.go li{font-size:27px}.dark ol.go{gap:22px;margin-top:10px}
+.dark ol.go li::before{border-color:var(--cream)}
+ol.go li:nth-child(1)::before{color:var(--ink)}
+#foot{position:fixed;right:16px;bottom:12px;display:flex;gap:16px;font:500 13px var(--mono);color:var(--cream);background:var(--ink);border-radius:99px;padding:6px 14px;z-index:5}
+</style>
+<link rel="stylesheet" href="/site-bar.css" />
+<script src="/site-bar.js" data-project="loop" data-kind="piece" defer></script>
+</head>
+<body>
+<div id="deck">
+
+<!-- 1 Title -->
+<section class="slide" aria-label="Title">
+  <div class="split" style="grid-template-columns:1.15fr .85fr;align-items:center">
+    <div style="display:flex;flex-direction:column;height:100%">
+      <p class="where">Opening in the Financial District, New York</p>
+      <h1 style="margin-top:auto">Stop buying what friends <i>already own.</i></h1>
+      <p style="font-size:24px;margin-top:28px;font-weight:600">Loop · Alexandra Vargas · celebrateloop.com</p>
+      <p class="muted" style="margin-top:auto;font-size:17px">Max Your Stuff LLC · November 2026</p>
+    </div>
+    <div class="cluster" role="img" aria-label="The L, O, O, P letter tiles from the Loop app">
+      <div class="tile t-pink" style="--s:150px;left:10px;top:20px;transform:rotate(-7deg)">L</div>
+      <div class="tile t-blue" style="--s:150px;left:150px;top:190px;transform:rotate(4deg)">O</div>
+      <div class="tile t-teal" style="--s:150px;left:290px;top:60px;transform:rotate(9deg)">O</div>
+      <div class="tile t-yellow" style="--s:150px;left:300px;top:290px;transform:rotate(-5deg)">P</div>
+    </div>
+  </div>
+</section>
+
+<!-- 2 Problem -->
+<section class="slide" aria-label="Problem">
+  <h2>Dana paid $60 for a drill she used once. Her neighbor in 12C <i>already had one.</i></h2>
+  <div class="split" style="grid-template-columns:auto 1fr;align-items:center;gap:70px">
+    <div class="tag">
+      <p style="font-weight:600;font-size:22px">Power drill</p>
+      <p class="n">$60</p>
+      <span class="used">Used 1 time, then the closet</span>
+    </div>
+    <div>
+      <div class="hall" role="img" aria-label="Four apartment doors on one floor; door 12C has a drill">
+        <div class="door">12A</div>
+        <div class="door">12B</div>
+        <div class="door has">12C<small>has a drill</small></div>
+        <div class="door">12D</div>
+      </div>
+      <p style="margin-top:26px;max-width:30ch">Nobody asked, because nobody could see it. Same story for the suitcase, the steamer and the fourth umbrella.</p>
+    </div>
+  </div>
+  <p class="src">Sample person. Dana, her building and the $60 price are an illustration, not a customer.</p>
+</section>
+
+<!-- 3 Product -->
+<section class="slide" aria-label="Product">
+  <div class="split" style="grid-template-columns:1fr auto auto;align-items:center;gap:40px">
+    <div>
+      <h2 style="font-size:56px">Loop shows what your neighbors own before you check out.</h2>
+      <p><b>Live now:</b> celebrateloop.com, with a sample household at /demo. No account needed.</p>
+      <p style="margin-top:14px"><b>iPhone app:</b> built, being prepared for the App Store.</p>
+    </div>
+    <div>
+      <div class="phone"><iframe src="https://celebrateloop.com/demo" title="Live Loop sample household at celebrateloop.com/demo" loading="eager"></iframe></div>
+      <p class="cap">Live: celebrateloop.com/demo</p>
+    </div>
+    <div>
+      <div class="phone"><img src="shots/04-list-lend.png" alt="Loop iPhone screen: List to lend a guest umbrella, free or a price per day"></div>
+      <p class="cap">iPhone app design</p>
+    </div>
+  </div>
+</section>
+
+<!-- 4 How it works -->
+<section class="slide" aria-label="How it works">
+  <h2 style="max-width:none">Ask your block first. Borrow it or buy it. Give it back.</h2>
+  <div class="steps">
+    <div class="step">
+      <h3><span class="tile t-pink">1</span>Ask before you buy</h3>
+      <div class="ask">
+        <p class="muted" style="font:500 14px var(--mono);text-transform:uppercase;letter-spacing:.08em">Asking nearby</p>
+        <q style="margin-top:14px">Does anyone have a carpet cleaner?</q>
+        <p class="muted" style="margin-top:16px;font-size:18px">Friends first, then neighbors. Or ask what they think of the one you want.</p>
+      </div>
+    </div>
+    <div class="step">
+      <h3><span class="tile t-teal">2</span>Borrow it or buy it</h3>
+      <div class="shot"><img src="shots/08-needs-you-approve.png" alt="Loop screen: Maya in 17B asks to borrow a guest umbrella tonight; approve and pick a meet spot in the lobby"></div>
+    </div>
+    <div class="step">
+      <h3><span class="tile t-yellow">3</span>Hand it back</h3>
+      <div class="shot"><img src="shots/06-sticker-handshake.png" alt="Loop Sticker Handshake screen: both people confirm the umbrella was lent and returned"></div>
+    </div>
+  </div>
+  <p class="src">Screens from the Loop iPhone app design (Handshake story). The ask is a sample.</p>
+</section>
+
+<!-- 5 Niche -->
+<section class="slide" aria-label="Niche">
+  <h2>Loop is for the stuff you only need <i>for a while.</i></h2>
+  <div class="phases">
+    <div class="ph" style="background:var(--pink);color:#fff;transform:rotate(-1.5deg)"><b>A baby</b><p>Bassinet, carrier, the bouncer they hate after six weeks.</p></div>
+    <div class="ph" style="background:var(--blue);color:#fff;transform:rotate(1deg);margin-top:26px"><b>A move</b><p>Dolly, drill, boxes, a second pair of hands.</p></div>
+    <div class="ph" style="background:var(--teal);color:#fff;transform:rotate(-.5deg);margin-top:8px"><b>A trip</b><p>Big suitcase, plug adapter, a winter coat for one week.</p></div>
+    <div class="ph" style="background:var(--yellow);transform:rotate(2deg);margin-top:30px"><b>A hobby you're trying</b><p>Tent, sewing machine, a guitar before you commit.</p></div>
+  </div>
+  <p style="margin-top:34px;font-size:24px">Your toothbrush stays off Loop. Everyday things are not the point.</p>
+  <p class="src">Items are examples of each life phase.</p>
+</section>
+
+<!-- 6 Who pays -->
+<section class="slide" aria-label="Business model">
+  <h2 style="max-width:none">Borrowing and selling stay free. Premium is planned at $2.99 a month.</h2>
+  <div class="split" style="grid-template-columns:1fr 1.15fr;align-items:start;gap:34px">
+    <div class="card">
+      <p class="price">$0</p>
+      <ul class="plain" style="margin-top:22px">
+        <li>Borrow from friends and neighbors</li>
+        <li>Lend or sell what sits idle</li>
+        <li>Ask before you buy</li>
+      </ul>
+    </div>
+    <div class="card" style="background:var(--lime);border-color:var(--ink)">
+      <p class="price">$2.99<small> / month</small></p>
+      <p style="font-weight:600;margin-top:6px">or $16 a year · Loop Premium</p>
+      <ul class="plain" style="margin-top:18px">
+        <li>Unlimited AI help</li>
+        <li>Boosted visibility for what you lend or sell</li>
+      </ul>
+    </div>
+  </div>
+  <p class="src">ASSUMPTION: if 5% of members pay $16 to $36 a year, each signup is worth about $1 to $2. Not tested. From the Loop validation plan, 22 Nov 2026.</p>
+</section>
+
+<!-- 7 Market -->
+<section class="slide" aria-label="Market">
+  <div class="split" style="grid-template-columns:1fr 1fr;align-items:start;gap:56px">
+    <div>
+      <h2 style="font-size:54px">Used clothing alone is headed for $78.8 billion in the US.</h2>
+      <p class="hero-n">$78.8B</p>
+      <p class="muted" style="margin-top:12px">US secondhand apparel by 2030. Clothes are one shelf of the closet.</p>
+    </div>
+    <div class="facts" style="margin-top:8px">
+      <div><b>+$23.3B</b><span>added to that US market between 2025 and 2030</span></div>
+      <div><b>14M+</b><span>people in Buy Nothing groups already give things to neighbors for free</span></div>
+      <div><b>70,761</b><span>people lived in Lower Manhattan in 2024, Loop's first map. The Financial District is about two-thirds.</span></div>
+      <div><b style="font-size:30px">No number</b><span>for tools, baby and travel gear. We found no sourced US total, so we don't claim one.</span></div>
+    </div>
+  </div>
+  <p class="src">ThredUp 2026 Resale Report with GlobalData (newsroom.thredup.com, 2 Apr 2026). buynothingproject.org/about. Office of the NY State Comptroller, Lower Manhattan economic snapshot (Sept 2026).</p>
+</section>
+
+<!-- 8 Competition -->
+<section class="slide" aria-label="Competition">
+  <div class="split" style="grid-template-columns:.8fr 1.2fr;align-items:center;gap:56px">
+    <div>
+      <h2 style="font-size:54px">Big marketplaces show you strangers. Loop starts with <i>people you know.</i></h2>
+      <p class="muted" style="font-size:19px">Loop's bet: you'd rather borrow from 12C than buy from a stranger across town.</p>
+    </div>
+    <div class="map" role="img" aria-label="Map. Across: strangers to people you know. Up: one way to trade to borrow, buy and ask. Loop sits top right.">
+      <span class="ax" style="left:-30px;bottom:0;transform:rotate(-90deg);transform-origin:0 0;top:auto">Borrow, buy, sell and ask →</span>
+      <span class="ax" style="right:0;bottom:-28px">People you know →</span>
+      <span class="ax" style="left:6px;bottom:-28px">Strangers</span>
+      <span style="left:4%;top:76%">Facebook Marketplace</span>
+      <span style="left:6%;top:14%">Rent the Runway</span>
+      <span style="left:12%;top:38%">Fat Llama, now Hygglo</span>
+      <span style="left:40%;top:62%">Nextdoor</span>
+      <span style="left:60%;top:82%">Buy Nothing</span>
+      <span style="left:66%;top:44%">Group chats</span>
+      <span class="me" style="left:64%;top:8%">Loop</span>
+    </div>
+  </div>
+  <p class="src">Facebook Marketplace: 1B+ monthly visitors (Meta Q1 2021 earnings call). Nextdoor: 105M+ Verified Neighbors (FY2025 10-K). Buy Nothing: 14M+ members. fatllama.com redirects to hygglo.com, UK and Nordics (checked 23 Nov 2026). Placement is Loop's own read.</p>
+</section>
+
+<!-- 9 Proof -->
+<section class="slide" aria-label="Proof so far">
+  <h2 style="max-width:none">The site and the app are built. The growth tests haven't run yet.</h2>
+  <table>
+    <tr><th>Test</th><th>Target</th><th>Result</th></tr>
+    <tr><td>Website live, sample household with no account</td><td>Anyone can look inside</td><td><span class="yes">Live</span> celebrateloop.com/demo, checked 23 Nov 2026</td></tr>
+    <tr><td>iPhone app</td><td>On the App Store</td><td><span class="no">Built</span> being prepared for review, not launched</td></tr>
+    <tr><td>New members who invite 2+ friends</td><td>30% or more</td><td><span class="no">Not run yet</span></td></tr>
+    <tr><td>Invited friends who list one thing</td><td>20% or more</td><td><span class="no">Not run yet</span></td></tr>
+    <tr><td>Members who tap Premium at $2.99</td><td>5% or more</td><td><span class="no">Not run yet</span></td></tr>
+  </table>
+  <p class="src">Targets from the Loop validation plan, 22 Nov 2026. Test size: one building or friend group, 2 weeks. No users, revenue or partners are claimed in this deck.</p>
+</section>
+
+<!-- 10 Go-to-market -->
+<section class="slide" aria-label="Go-to-market">
+  <div class="split" style="grid-template-columns:1fr auto;align-items:center;gap:60px">
+    <div>
+      <h2 style="font-size:54px">The first 1,000 neighbors could all live in one FiDi building.</h2>
+      <ol class="go">
+        <li>Start with one building. 25 Water St. alone has 1,320 apartments.</li>
+        <li>Tear-off flyers in the lobby and the mail room.</li>
+        <li>A lobby swap night: bring one thing you'd lend.</li>
+        <li>Every new member invites two friends, then the next building.</li>
+      </ol>
+    </div>
+    <div class="flyer"><img src="print/preview-flyer.png" alt="Loop lobby flyer: Before you buy it, check your block. Borrow it, buy it, earn from yours. Tear-off tabs with celebrateloop.com"></div>
+  </div>
+  <p class="src">ASSUMPTION: the plan above is untested. 25 Water St. unit count: Office of the NY State Comptroller, Lower Manhattan economic snapshot (Sept 2026). Flyer: Loop print kit, US Letter.</p>
+</section>
+
+<!-- 11 Team -->
+<section class="slide" aria-label="Team">
+  <h2>One founder designed and built all of it.</h2>
+  <div class="split" style="grid-template-columns:1.3fr 1fr;gap:34px;align-items:start">
+    <div class="card" style="display:flex;gap:26px;align-items:flex-start">
+      <div class="tile t-pink" style="--s:96px;flex:none">AV</div>
+      <div>
+        <p style="font:400 44px/1 var(--serif)">Alexandra Vargas</p>
+        <p class="muted" style="margin-top:6px">Founder, Max Your Stuff LLC</p>
+        <p style="margin-top:18px">Built celebrateloop.com, the iPhone app, the ads and the lobby flyer. Runs Vargas Studio, where Loop lives next to her other projects.</p>
+      </div>
+    </div>
+    <div class="card" style="background:transparent;border-style:dashed;border-color:var(--sage)">
+      <p style="font-weight:600">Missing today</p>
+      <p class="muted" style="margin-top:8px">A second person on the ground in the Financial District, knocking on lobby doors.</p>
+    </div>
+  </div>
+  <div class="made" aria-label="Things she made for Loop">
+    <figure><img src="print/preview-card-front.png" alt="Loop card: Max your stuff. Borrow it. Buy it. Earn from yours."><figcaption>Neighbor card</figcaption></figure>
+    <figure><img src="print/preview-flyer.png" alt="Loop lobby flyer" style="object-position:top"><figcaption>Lobby flyer</figcaption></figure>
+    <figure><img src="shots/01-club-door.png" alt="Loop app club door screen with the L O O P tiles" style="object-position:top"><figcaption>App club door</figcaption></figure>
+    <figure><img src="shots/06-sticker-handshake.png" alt="Loop Sticker Handshake screen" style="object-position:0 30%"><figcaption>Sticker Handshake</figcaption></figure>
+  </div>
+</section>
+
+<!-- 12 What's next -->
+<section class="slide dark" aria-label="What's next">
+  <h2 style="max-width:none">Not raising yet. First, prove <i>one building</i> works.</h2>
+  <ol class="go" style="max-width:860px">
+    <li>Put the iPhone app on the App Store.</li>
+    <li>Run one Financial District building for 2 weeks: invites, listings, borrows.</li>
+    <li>Then decide: keep going, change one thing, or rethink the invite loop.</li>
+  </ol>
+  <div style="margin-top:auto;display:flex;justify-content:space-between;align-items:flex-end">
+    <div>
+      <p style="font:400 40px/1 var(--serif)">hello@celebrateloop.com</p>
+      <p class="muted" style="margin-top:8px">celebrateloop.com · celebrateloop.com/demo</p>
+    </div>
+    <div style="display:flex;gap:12px" aria-hidden="true">
+      <div class="tile t-pink" style="--s:64px;box-shadow:4px 4px 0 #000">L</div><div class="tile t-blue" style="--s:64px;box-shadow:4px 4px 0 #000">O</div><div class="tile t-teal" style="--s:64px;box-shadow:4px 4px 0 #000">O</div><div class="tile t-yellow" style="--s:64px;box-shadow:4px 4px 0 #000">P</div>
+    </div>
+  </div>
+</section>
+
+</div>
+<div id="foot"><span>Loop</span><span id="pg"></span></div>
+<script>
+const slides=[...document.querySelectorAll('.slide')];let i=0;
+function show(n){i=Math.max(0,Math.min(slides.length-1,n));slides.forEach((s,k)=>s.classList.toggle('on',k===i));document.getElementById('pg').textContent=(i+1)+' / '+slides.length+'  ·  ← →'}
+function fit(){const s=Math.min(innerWidth/1280,(innerHeight-48)/720);document.getElementById('deck').style.transform=`translate(-50%,-50%) scale(${s})`}
+addEventListener('resize',fit);
+addEventListener('keydown',e=>{if(['ArrowRight',' ','PageDown'].includes(e.key))show(i+1);if(['ArrowLeft','PageUp'].includes(e.key))show(i-1)});
+addEventListener('click',e=>{if(innerWidth<=700||e.target.closest('iframe,a,.site-bar'))return;show(e.clientX>innerWidth/2?i+1:i-1)});
+let sx=null;addEventListener('touchstart',e=>{sx=e.touches[0].clientX},{passive:true});
+addEventListener('touchend',e=>{if(innerWidth<=700||sx===null)return;const d=e.changedTouches[0].clientX-sx;if(Math.abs(d)>50)show(d<0?i+1:i-1);sx=null});
+const p=new URLSearchParams(location.search).get('slide');show(p?p-1:0);fit();
+</script>
+<style media="print">
+html,body{overflow:visible;background:#fff}#deck{position:static;transform:none!important;width:auto;height:auto}
+.slide{display:flex!important;position:relative;width:1280px;height:720px;page-break-after:always}#foot{display:none}
+@page{size:1280px 720px;margin:0}
+</style>
+<style>
+/* Phone: slides stack and reflow instead of shrinking to tiny 16:9 tiles */
+@media (max-width:700px){
+  html,body{overflow:auto;height:auto;background:var(--ink)}
+  #deck{position:static;transform:none!important;width:auto;height:auto}
+  .slide{display:flex!important;position:relative;inset:auto;padding:34px 20px 38px;border-bottom:6px solid var(--ink)}
+  h1{font-size:50px}
+  h2,.slide h2[style]{font-size:34px!important;margin-bottom:20px;max-width:none}
+  p,li{font-size:17px}
+  .split,.slide .split[style]{grid-template-columns:1fr!important;gap:26px!important}
+  .cluster{transform:scale(.58);transform-origin:0 0;height:280px;width:280px;margin-top:10px}
+  .slide[aria-label="Title"] h1{margin-top:28px!important}
+  .slide [style*="font-size:24px"]{font-size:18px!important}
+  .tag{width:100%;max-width:300px}.tag .n{font-size:84px}
+  .hall{gap:8px}.door{width:23%;height:150px;font-size:15px}.door small{font-size:12px}
+  .phone{margin:0 auto;width:240px;height:502px}
+  .phone iframe{transform:scale(.5692)}
+  .steps{grid-template-columns:1fr;gap:28px}
+  .shot,.ask{height:320px}
+  .phases{grid-template-columns:1fr 1fr;gap:14px}
+  .ph{min-height:170px;padding:18px 16px;margin-top:0!important}.ph b{font-size:28px}.ph p{font-size:15px}
+  .price{font-size:68px}
+  .hero-n{font-size:84px}
+  .facts div{grid-template-columns:100px 1fr;gap:12px}.facts b{font-size:30px}.facts b[style]{font-size:20px!important}.facts span{font-size:15px}
+  .map{height:330px;margin:10px 0 40px 22px}
+  .map span{font-size:11px;padding:4px 8px;white-space:normal;max-width:46%}
+  .map .me{font-size:15px}
+  .map .ax{font-size:10px;max-width:none;white-space:nowrap}
+  table{font-size:13px}th{font-size:10px}th,td{padding:8px 5px}.yes,.no{font-size:12px;padding:1px 8px}
+  ol.go li{font-size:17px;grid-template-columns:36px 1fr;gap:12px}ol.go li::before{width:32px;height:32px;font-size:15px}
+  .flyer{width:78%;margin:0 auto}
+  .made{grid-template-columns:1fr 1fr;gap:12px}.made img{height:140px}
+  .dark ol.go li{font-size:18px}
+  .card[style*="display:flex"]{flex-direction:column}
+  .slide>div[style*="justify-content:space-between"]{flex-direction:column;align-items:flex-start!important;gap:24px;margin-top:30px!important}
+  .slide>div[style*="justify-content:space-between"] p[style*="40px"]{font-size:26px!important}
+  .src{font-size:12px;margin-top:18px}
+  #foot{display:none}
+}
+</style>
+</body>
+</html>
