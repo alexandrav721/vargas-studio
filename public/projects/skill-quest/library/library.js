@@ -116,6 +116,8 @@
     var mine = s.mine && typeof s.mine === "object" ? s.mine : null;
     return Object.assign({}, s, {
       id: String(s.id),
+      kind: s.kind === "prompt" || s.kind === "kit" ? s.kind : "skill",
+      parts: Array.isArray(s.parts) ? s.parts : jparse(s.parts, null),
       one_line: s.one_line != null ? s.one_line : "",
       works_in: Array.isArray(s.works_in) ? s.works_in : jparse(s.works_in, []),
       examples: Array.isArray(s.examples) ? s.examples : jparse(s.examples, []),
@@ -163,6 +165,22 @@
     return "People and the blind test roughly agree.";
   }
   function makerName(s) { return s.official ? "Skills Made EZ" : (s.maker_handle || "someone"); }
+  function kindOf(id) { return D.kinds.find(function (k) { return k.id === id; }) || D.kinds[0]; }
+  function word(s) { return kindOf(s.kind).name.toLowerCase(); } /* "skill" | "prompt" | "kit" */
+  function licenseOf(id) { return D.licenses.find(function (l) { return l.id === id; }) || null; }
+  function fmName(md) { var m = /^﻿?---[ \t]*\n[\s\S]*?^name:[ \t]*["']?([^\n"']+)/m.exec(String(md || "")); return m ? m[1].trim() : ""; }
+  function fileSlug(v, dflt) { return String(v || "").toLowerCase().replace(/[^a-z0-9-]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 60) || dflt; }
+  /* a kit's files in order: the start-here skill, then each part */
+  function kitFiles(s) {
+    var list = [{ md: String(s.skill_md || ""), start: true }].concat((s.parts || []).map(function (p) { return { md: String(p && p.skill_md || "") }; }));
+    var seen = {};
+    return list.map(function (f, i) {
+      var n = fileSlug(fmName(f.md), "skill-" + (i + 1));
+      while (seen[n]) n += "-" + (i + 1);
+      seen[n] = 1;
+      return { name: n, md: f.md, start: !!f.start };
+    });
+  }
   function frameCls(s, champ) {
     if (champ) return "fr-champ";
     if (!s.test) return "fr-none";
@@ -186,6 +204,7 @@
   }
   function badges(s) {
     var b = [];
+    if (s.kind !== "skill") b.push(h("span", { class: "bdg kind-" + s.kind }, icon(s.kind), kindOf(s.kind).name));
     if (s.parent_id) b.push(h("span", { class: "bdg" }, icon("remix"), "Remix"));
     if (s.official) b.push(h("span", { class: "bdg off", text: "Official" }));
     (s.works_in || []).forEach(function (w) { if (w === "claude-code" || w === "Claude Code") b.push(h("span", { class: "bdg", text: "Claude Code" })); });
@@ -347,15 +366,16 @@
     if (SETUP) return;
     add(nav, [
       a("#/", "Browse", ""),
+      a("#/requests", "Requests", "requests"),
       ME && (ME.is_admin || ME.admin) ? a("#/review", "Review", "review") : null,
       ME ? a("#/me", "Me", "me") : a("#/signin", "Sign in", "signin"),
-      a("#/submit", "Share a skill", "submit", "nav-cta")
+      a("#/submit", "Share", "submit", "nav-cta")
     ]);
   }
 
   /* ---------- Browse ---------- */
   function pageBrowse(q, tok) {
-    var st = { q: q.get("q") || "", for: q.get("for") || "", works: q.get("works") || "", tested: q.get("tested") === "1", sort: q.get("sort") || "tested", page: 1 };
+    var st = { type: q.get("type") || "", q: q.get("q") || "", for: q.get("for") || "", works: q.get("works") || "", tested: q.get("tested") === "1", sort: q.get("sort") || "tested", page: 1 };
     var search = h("input", { id: "q", type: "search", value: st.q, placeholder: "Try “landlord email” or “meal plan”", autocomplete: "off", enterkeyhint: "search" });
     var rowsBox = h("div", { class: "rows" }), grid = h("div", { class: "grid" }), more = h("div", { class: "more" }), count = h("p", { class: "count" });
     function sel(label, key, opts) {
@@ -370,9 +390,10 @@
       h("label", { class: "fl tog" }, tested, h("span", { text: "Tested only" })),
       sel("Sort", "sort", [["tested", "Best tested"], ["helpful", "Most helpful"], ["new", "New"], ["remixed", "Most remixed"]]));
 
-    function active() { return st.q || st.for || st.works || st.tested; }
+    function active() { return st.type || st.q || st.for || st.works || st.tested; }
+    function things(n) { var k = st.type ? kindOf(st.type) : null; return n + " " + (k ? (n === 1 ? k.name.toLowerCase() : k.plural.toLowerCase()) : (n === 1 ? "item" : "items")); }
     function qsFor(page) {
-      return "skills?" + new URLSearchParams({ q: st.q, for: st.for, works: st.works, tested: st.tested ? "yes" : "", sort: st.sort, page: String(page) }).toString().replace(/[^&?]+=(&|$)/g, "").replace(/&$/, "");
+      return "skills?" + new URLSearchParams({ type: st.type, q: st.q, for: st.for, works: st.works, tested: st.tested ? "yes" : "", sort: st.sort, page: String(page) }).toString().replace(/[^&?]+=(&|$)/g, "").replace(/&$/, "");
     }
     function load(page) {
       if (page === 1) { clear(grid); add(grid, [loading()]); clear(more); }
@@ -381,7 +402,7 @@
         var list = (j.skills || j.items || []).map(norm), total = num(j.total) || list.length;
         if (page === 1) clear(grid);
         list.forEach(function (s) { grid.appendChild(miniCard(s)); });
-        count.textContent = st.q ? total + (total === 1 ? " skill for “" : " skills for “") + st.q + "”" : total + (total === 1 ? " skill" : " skills");
+        count.textContent = st.q ? things(total) + " for “" + st.q + "”" : things(total);
         if (!total) add(grid, [h("div", { class: "box empty" },
           h("p", { text: st.q ? "Nothing matches “" + st.q + "” yet." : "Nothing matches those filters." }),
           h("div", { class: "btns" }, h("a", { class: "btn", href: "#/submit", text: "Make one" }),
@@ -411,13 +432,23 @@
       });
     }
     function refresh() {
-      history.replaceState(null, "", location.pathname + location.search + hashFor("/", { q: st.q, for: st.for, works: st.works, tested: st.tested ? "1" : "", sort: st.sort === "tested" ? "" : st.sort }));
+      history.replaceState(null, "", location.pathname + location.search + hashFor("/", { type: st.type, q: st.q, for: st.for, works: st.works, tested: st.tested ? "1" : "", sort: st.sort === "tested" ? "" : st.sort }));
       rowsBox.hidden = !!active();
-      allH.textContent = active() ? "Results" : "All skills";
+      allH.textContent = active() ? (st.type && !st.q ? kindOf(st.type).plural : "Results") : "Everything";
+      drawTypes();
       if (!active() && !rowsBox.firstChild) rows();
       load(1);
     }
-    var allH = h("h2", { class: "row-h", text: "All skills" });
+    var allH = h("h2", { class: "row-h", text: "Everything" });
+    var types = h("div", { class: "types", role: "group", "aria-label": "Show" });
+    function drawTypes() {
+      clear(types);
+      [{ id: "", plural: "All", what: "Skills, prompts and kits." }].concat(D.kinds).forEach(function (k) {
+        add(types, [h("button", { type: "button", class: "type-b", "aria-pressed": st.type === k.id ? "true" : "false", onclick: function () { st.type = k.id; refresh(); } },
+          k.id ? icon(k.id) : null, h("b", { text: k.plural }), h("small", { text: k.what }))]);
+      });
+    }
+    drawTypes();
     search.addEventListener("input", debounce(function () { st.q = search.value.trim().slice(0, 80); refresh(); }, 300));
     var form = h("form", { class: "search", role: "search", onsubmit: function (e) { e.preventDefault(); st.q = search.value.trim().slice(0, 80); refresh(); search.blur(); } },
       h("label", { for: "q", text: "What do you want help with?" }),
@@ -425,18 +456,20 @@
 
     mount(
       h("section", { class: "hero" },
-        h("h1", { text: "Skills people made. Tested against plain Claude." }),
-        form),
+        h("h1", { text: "Skills, prompts and kits people made. Tested against plain Claude." }),
+        form,
+        h("p", { class: "ask-line" }, "Can't find it? ", h("a", { class: "link", href: "#/requests", text: "Ask for it" }), " and makers can build it.")),
+      types,
       h("nav", { class: "tiles", "aria-label": "Categories" }, D.cats.map(function (c) {
         return h("a", { class: "tile", href: "#/c/" + c.id }, h("span", { class: "tile-ic" }, icon(c.id)), h("span", { text: c.short }));
       })),
       rowsBox,
       h("section", { class: "all" }, h("div", { class: "all-top" }, allH, count), filters, grid, more),
       h("section", { class: "make" },
-        h("div", null, h("h2", { text: "Made a skill that works?" }), h("p", { class: "sub", text: "Share it with an example. A person checks it before it goes live." })),
-        h("a", { class: "btn", href: "#/submit", text: "Share a skill" })));
+        h("div", null, h("h2", { text: "Made something that works?" }), h("p", { class: "sub" }, "Share a skill, a prompt or a kit with an example. A person checks it before it goes live. ", h("a", { class: "link", href: "#/rules", text: "How we review" }))),
+        h("a", { class: "btn", href: "#/submit", text: "Share yours" })));
     rowsBox.hidden = !!active();
-    allH.textContent = active() ? "Results" : "All skills";
+    allH.textContent = active() ? (st.type && !st.q ? kindOf(st.type).plural : "Results") : "Everything";
     if (!active()) rows();
     load(1);
   }
@@ -514,7 +547,6 @@
   function drawSkill(s, champ, tok) {
     var c = catOf(s.category) || D.cats[0];
     var own = s.is_owner || (ME && s.maker_handle && s.maker_handle === ME.handle);
-    var slug = String(s.slug || s.name || "skill").toLowerCase().replace(/[^a-z0-9-]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 60) || "skill";
     document.title = s.name + " · Community library";
 
     var big = h("article", { class: "big " + frameCls(s, champ) },
@@ -526,7 +558,7 @@
       h("div", { class: "big-scores" },
         h("div", { class: "sc" }, h("small", { text: "People say" }), h("strong", { text: s.helped_n >= 5 ? pct(s) + "% helped" : "New" }), h("span", { text: s.helped_n >= 5 ? s.helped_n + " ratings" : s.helped_n + " of 5 ratings" })),
         h("div", { class: "sc" + (s.test ? "" : " none") }, h("small", { text: "Blind test" }), h("strong", { text: s.test ? (lift(s) > 0 ? "+" : "") + sc(lift(s)) : "Not yet" }), h("span", { text: s.test ? sc(s.test.skill_score) + " vs " + sc(s.test.plain_score) + " plain" : "Not tested yet" }))),
-      h("div", { class: "big-foot" }, (s.works_in || []).map(function (w) { return h("span", { class: "bdg", text: tagName(D.worksIn, w) }); }), h("span", { class: "bdg", text: "v" + s.version })));
+      h("div", { class: "big-foot" }, s.kind !== "skill" ? h("span", { class: "bdg kind-" + s.kind }, icon(s.kind), kindOf(s.kind).name) : null, (s.works_in || []).map(function (w) { return h("span", { class: "bdg", text: tagName(D.worksIn, w) }); }), h("span", { class: "bdg", text: "v" + s.version })));
 
     var banner = null;
     if (s.status === "live" && s.pending_version) {
@@ -557,61 +589,113 @@
       v ? h("p", { class: "verdict", text: v }) : null,
       s.test && s.test.reason ? h("details", { class: "why" }, h("summary", { text: "What the judge said" }), h("p", { text: s.test.reason })) : null);
 
-    /* add to Claude */
-    var zipBtn = h("button", { class: "btn", type: "button" }, icon("download"), "Add to Claude");
-    var copyBtn = h("button", { class: "btn ghost", type: "button" }, icon("copy"), "Copy the skill");
+    /* add to Claude: a skill is a .zip, a prompt is copy / open in Claude, a kit is a plugin .zip */
+    var kind = s.kind, W = word(s);
+    var files = kind === "kit" ? kitFiles(s) : null;
     var rateSlot = h("div", { class: "rate-slot" });
-    function used(kind) {
+    function used(kind2) {
       var u = lsGet(USED_KEY, {});
       u[s.id] = { name: s.name, category: s.category, sub: s.sub, at: Date.now() };
       lsSet(USED_KEY, u);
-      if (window.SMEZ && kind === "download" && SMEZ.stamp("home")) setTimeout(function () { toast("Stamped: Took a skill home"); }, 900);
+      if (window.SMEZ && kind2 === "download" && SMEZ.stamp("home")) setTimeout(function () { toast("Stamped: Took a skill home"); }, 900);
       drawRate();
     }
-    function record(kind) { /* the server notes the use first, so a rating is allowed after */
-      return api("POST", "skills/" + encodeURIComponent(s.id) + "/use", { kind: kind }).catch(function () {});
+    function record(kind2) { /* the server notes the use first, so a rating is allowed after */
+      return api("POST", "skills/" + encodeURIComponent(s.id) + "/use", { kind: kind2 }).catch(function () {});
     }
-    zipBtn.addEventListener("click", function () {
+    function saveBlob(blob, name) {
+      var url = URL.createObjectURL(blob), a = h("a", { href: url, download: name });
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(function () { URL.revokeObjectURL(url); }, 5000);
+    }
+    function zipOf(build, name, btn) {
       if (!window.JSZip) { toast("The zip maker didn't load. Use Copy instead."); return; }
-      zipBtn.disabled = true;
+      btn.disabled = true;
       record("download").then(function () {
-      var z = new window.JSZip();
-      z.folder(slug).file("SKILL.md", String(s.skill_md || ""));
-      z.generateAsync({ type: "blob" }).then(function (blob) {
-        var url = URL.createObjectURL(blob), a = h("a", { href: url, download: slug + ".zip" });
-        document.body.appendChild(a); a.click(); a.remove();
-        setTimeout(function () { URL.revokeObjectURL(url); }, 5000);
-        toast("Downloaded " + slug + ".zip");
-        used("download");
-      }).catch(function () { toast("Couldn't make the zip. Use Copy instead."); }).then(function () { zipBtn.disabled = false; });
-      });
-    });
+        var z = new window.JSZip();
+        build(z);
+        return z.generateAsync({ type: "blob" }).then(function (blob) { saveBlob(blob, name); toast("Downloaded " + name); used("download"); });
+      }).catch(function () { toast("Couldn't make the zip. Use Copy instead."); }).then(function () { btn.disabled = false; });
+    }
     var mdPre = h("pre", { class: "md", tabindex: "0", text: String(s.skill_md || "") });
-    copyBtn.addEventListener("click", function () {
-      var txt = String(s.skill_md || "");
+    function copyText(txt, what) {
       record("copy");
-      (navigator.clipboard ? navigator.clipboard.writeText(txt) : Promise.reject()).then(function () { toast("Copied the skill"); used("copy"); }, function () {
+      (navigator.clipboard ? navigator.clipboard.writeText(txt) : Promise.reject()).then(function () { toast("Copied the " + what); used("copy"); }, function () {
         details.open = true;
         var r = document.createRange(); r.selectNodeContents(mdPre); var sel = getSelection(); sel.removeAllRanges(); sel.addRange(r);
         toast("Selected. Press copy."); used("copy");
       });
-    });
-    var details = h("details", { class: "file" }, h("summary", { text: "Read the whole skill file" }), mdPre);
-    var addSec = h("section", { class: "sec addto" }, h("h2", { text: "Add it to Claude" }),
-      h("div", { class: "btns" }, zipBtn, copyBtn),
-      h("ol", { class: "steps" },
-        h("li", null, "Tap ", h("b", { text: "Add to Claude" }), " to download ", h("code", { text: slug + ".zip" }), "."),
-        h("li", null, "In Claude, open ", h("b", { text: "Settings → Capabilities" }), " and turn on code execution and file creation."),
-        h("li", null, "Go to ", h("b", { text: "Customize → Skills" }), ", tap ", h("b", { text: "+" }), ", then ", h("b", { text: "Upload a skill" }), " and pick the .zip."),
-        h("li", { text: "Start a chat and ask for what it does." })),
-      (s.works_in || []).indexOf("claude-code") >= 0 ? h("p", { class: "note" }, "Claude Code: unzip it into ", h("code", { text: "~/.claude/skills/" }), ".") : null,
-      details);
+    }
+    var details, addSec;
+    if (kind === "prompt") {
+      var copyP = h("button", { class: "btn", type: "button", onclick: function () { copyText(String(s.skill_md || ""), "prompt"); } }, icon("copy"), "Copy the prompt");
+      var openC = h("a", { class: "btn ghost", href: "https://claude.ai/new?q=" + encodeURIComponent(String(s.skill_md || "").slice(0, 6000)), target: "_blank", rel: "noopener", onclick: function () { record("copy"); used("copy"); } }, icon("arrow"), "Open in Claude");
+      details = h("details", { class: "file", open: true }, h("summary", { text: "The prompt" }), mdPre);
+      addSec = h("section", { class: "sec addto" }, h("h2", { text: "Use it" }),
+        details,
+        h("div", { class: "btns" }, copyP, openC),
+        h("ol", { class: "steps" },
+          h("li", null, "Copy it, or tap ", h("b", { text: "Open in Claude" }), "."),
+          h("li", null, "Swap each ", h("code", { text: "[part in brackets]" }), " for your own words."),
+          h("li", { text: "Send. Nothing to install." })));
+    } else if (kind === "kit") {
+      var slug = fileSlug(s.name || s.slug, "kit");
+      var zipK = h("button", { class: "btn", type: "button" }, icon("download"), "Add the kit to Claude");
+      zipK.addEventListener("click", function () {
+        zipOf(function (z) {
+          var root = z.folder(slug);
+          root.folder(".claude-plugin").file("plugin.json", JSON.stringify({ name: slug, description: String(s.one_line || "").slice(0, 200), version: String(s.version || 1) + ".0.0", author: { name: makerName(s) } }, null, 2) + "\n");
+          files.forEach(function (f) { root.folder("skills").folder(f.name).file("SKILL.md", f.md); });
+        }, slug + ".zip", zipK);
+      });
+      var one = files.map(function (f) {
+        var b = h("button", { class: "link-btn", type: "button" }, icon("download"), f.name + (f.start ? " (start here)" : ""));
+        b.addEventListener("click", function () { zipOf(function (z) { z.folder(f.name).file("SKILL.md", f.md); }, f.name + ".zip", b); });
+        return h("li", null, b);
+      });
+      details = h("details", { class: "file" }, h("summary", { text: "Read every file in the kit" }),
+        files.map(function (f) { return h("div", null, h("p", { class: "note", text: "skills/" + f.name + "/SKILL.md" + (f.start ? " · start here" : "") }), h("pre", { class: "md", tabindex: "0", text: f.md })); }));
+      addSec = h("section", { class: "sec addto" }, h("h2", { text: "Add it to Claude" }),
+        h("p", { class: "kit-count" }, icon("kit"), h("b", { text: files.length + " skills, one upload" })),
+        h("div", { class: "btns" }, zipK),
+        h("ol", { class: "steps" },
+          h("li", null, "Tap ", h("b", { text: "Add the kit to Claude" }), " to download ", h("code", { text: slug + ".zip" }), "."),
+          h("li", null, "In Claude, go to ", h("b", { text: "Customize → Plugins" }), ", tap ", h("b", { text: "Upload plugin" }), " and pick the .zip."),
+          h("li", null, "Start a chat and ask for the job. Claude begins with ", h("b", { text: files[0].name }), ".")),
+        h("details", { class: "why" }, h("summary", { text: "No Plugins menu? Add the skills one by one" }),
+          h("p", { class: "note", text: "Download each one, then Customize → Skills → + → Upload a skill." }), h("ul", { class: "one-by-one" }, one),
+          (s.works_in || []).indexOf("claude-code") >= 0 ? h("p", { class: "note" }, "Claude Code: unzip the kit and copy each folder in ", h("code", { text: "skills/" }), " into ", h("code", { text: "~/.claude/skills/" }), ".") : null),
+        details);
+    } else {
+      var slug1 = fileSlug(s.slug || s.name, "skill");
+      var zipBtn = h("button", { class: "btn", type: "button" }, icon("download"), "Add to Claude");
+      var copyBtn = h("button", { class: "btn ghost", type: "button", onclick: function () { copyText(String(s.skill_md || ""), "skill"); } }, icon("copy"), "Copy the skill");
+      zipBtn.addEventListener("click", function () { zipOf(function (z) { z.folder(slug1).file("SKILL.md", String(s.skill_md || "")); }, slug1 + ".zip", zipBtn); });
+      details = h("details", { class: "file" }, h("summary", { text: "Read the whole skill file" }), mdPre);
+      addSec = h("section", { class: "sec addto" }, h("h2", { text: "Add it to Claude" }),
+        h("div", { class: "btns" }, zipBtn, copyBtn),
+        h("ol", { class: "steps" },
+          h("li", null, "Tap ", h("b", { text: "Add to Claude" }), " to download ", h("code", { text: slug1 + ".zip" }), "."),
+          h("li", null, "In Claude, open ", h("b", { text: "Settings → Capabilities" }), " and turn on code execution and file creation."),
+          h("li", null, "Go to ", h("b", { text: "Customize → Skills" }), ", tap ", h("b", { text: "+" }), ", then ", h("b", { text: "Upload a skill" }), " and pick the .zip."),
+          h("li", { text: "Start a chat and ask for what it does." })),
+        (s.works_in || []).indexOf("claude-code") >= 0 ? h("p", { class: "note" }, "Claude Code: unzip it into ", h("code", { text: "~/.claude/skills/" }), ".") : null,
+        details);
+    }
+    /* license + thank the maker (the link goes straight to their own page; we take nothing) */
+    var lic = licenseOf(s.license);
+    var tipOk = /^https:\/\//i.test(String(s.tip_url || ""));
+    add(addSec, [h("div", { class: "lic-tip" },
+      h("p", { class: "lic" }, h("span", { class: "muted", text: "License: " }), h("b", { text: lic ? lic.name : "Not picked yet. Ask the maker before sharing it." })),
+      tipOk && !s.official ? h("div", { class: "tip" },
+        h("a", { class: "btn ghost tip-btn", href: s.tip_url, target: "_blank", rel: "noopener nofollow ugc" }, icon("heart"), "Thank " + makerName(s)),
+        h("p", { class: "note", text: "Opens their own tip page. Skills Made EZ takes nothing." })) : null)]);
 
     /* safety box */
     var ch = normChecks({ blocks: [], warnings: (s.safety && s.safety.warnings) || (s.checks && s.checks.warnings) || [] });
     var sm = summaryOf(s);
     var safety = h("section", { class: "sec" }, h("div", { class: "safety" },
-      h("h2", null, icon("shield"), "What this skill asks Claude to do"),
+      h("h2", null, icon("shield"), "What this " + W + " asks Claude to do"),
       summaryBlock(sm),
       ch.warnings.length ? h("div", { class: "warns" }, h("p", { class: "muted", text: "Worth knowing:" }), checkList({ passed: [], errors: [], warnings: ch.warnings })) : null,
       h("p", { class: "note", text: "Passed our automatic checks (no hidden instructions, no secrets, no sending your data anywhere) and a person read it before it went live." })));
@@ -630,7 +714,7 @@
           var yes = r.helped === true || r.helped === 1 || r.helped === "1";
           bubbles.appendChild(h("figure", { class: "bub " + (yes ? "yes" : "no") },
             h("blockquote", { text: r.line }),
-            h("figcaption", null, icon(yes ? "thumbUp" : "thumbDown"), h("span", { text: (yes ? "Helped" : "Didn't help") + " · " + (r.handle || r.maker_handle || "someone") }))));
+            h("figcaption", null, icon(yes ? "thumbUp" : "thumbDown"), h("span", { text: (yes ? "Helped" : "Didn't help") + " · " + (r.handle || r.maker_handle || "someone") + (r.staff ? " (Skills Made EZ reviewer)" : "") }))));
         });
       }).catch(function () { clear(bubbles); add(bubbles, [h("p", { class: "note", text: "Couldn't load reviews." })]); });
     }
@@ -698,14 +782,14 @@
       })) : null);
     add(tree, [treeKids,
       !parent && !kids.length ? h("p", { class: "note", text: "No remixes yet." }) : null,
-      h("a", { class: "btn ghost", href: hashFor("/submit", { remix: s.id }) }, icon("remix"), "Remix this"),
-      h("p", { class: "note", text: "A remix starts from this file and credits " + makerName(s) + "." })]);
+      s.license === "all-rights" && !own ? h("p", { class: "note", text: makerName(s) + " keeps all rights to this one, so remixes are off." }) : h("a", { class: "btn ghost", href: hashFor("/submit", { remix: s.id }) }, icon("remix"), "Remix this"),
+      s.license === "all-rights" && !own ? null : h("p", { class: "note", text: "A remix starts from this " + W + " and credits " + makerName(s) + "." })]);
 
     /* version + report */
     var reportSlot = h("div");
     var meta = h("section", { class: "sec meta" },
-      h("p", { class: "note", text: "Version " + s.version + (s.uses ? " · added or copied " + s.uses + (s.uses === 1 ? " time" : " times") : "") + (s.live_at ? " · live since " + fmtDate(s.live_at) : "") + (s.updated_at ? " · updated " + fmtDate(s.updated_at) : "") + ". Changes go through review before they show here." }),
-      s.status === "live" && !own ? h("button", { class: "link-btn", type: "button", onclick: function () { drawReport(); } }, icon("flag"), "Report this skill") : null,
+      h("p", { class: "note", text: "Version " + s.version + (s.uses ? " · used " + s.uses + (s.uses === 1 ? " time" : " times") : "") + (s.live_at ? " · live since " + fmtDate(s.live_at) : "") + (s.updated_at ? " · updated " + fmtDate(s.updated_at) : "") + ". Changes go through review before they show here." }),
+      s.status === "live" && !own ? h("button", { class: "link-btn", type: "button", onclick: function () { drawReport(); } }, icon("flag"), "Report this " + W) : null,
       reportSlot);
     function drawReport() {
       clear(reportSlot);
@@ -737,11 +821,16 @@
 
   /* ---------- Submit (4 steps, saved on this device until sent) ---------- */
   var TEMPLATE = "---\nname: my-skill\ndescription: What it does and when to use it. Use the words people type, like \"fix my email\" or \"make this shorter\".\n---\n\n# My skill\n\n## What to do\n1. Read what the person gave you.\n2. Do the one thing this skill is for.\n3. Keep their words where you can.\n\n## Never\n- Never invent facts, names or numbers.\n\n## Output\nWhat the answer looks like, in order.\n";
-  function blankDraft() { return { step: 1, skill_md: "", name: "", one_line: "", category: "", sub: "", for_tag: "anyone", works_in: ["claude-ai", "claude-code"], examples: [{ input: "", output: "", plain_output: "" }], parent_id: null, parent_name: "", parent_handle: "", edit_id: null, ask_test: false }; }
+  var PROMPT_TEMPLATE = "Rewrite my [type of message] so it sounds [how you want it to sound].\n\nKeep it under [number] words. Keep my facts and names. Don't add anything I didn't say.\n\nHere it is:\n[paste your message]\n";
+  var KIT_TEMPLATE = "---\nname: start-here\ndescription: The first step of this kit. Use when someone asks for [the big job], like \"[what they'd type]\".\n---\n\n# Start here\n\n## What to do\n1. Ask the person the 3 things you need: [thing 1], [thing 2], [thing 3].\n2. Use the [second skill's name] skill for [step].\n3. Use the [third skill's name] skill for [step].\n4. End with a short list of what they have now.\n\n## Output\nWhat they get at the end, in order.\n";
+  function blankDraft() { return { step: 1, kind: "skill", parts: [], license: "", tip_url: "", skill_md: "", name: "", one_line: "", category: "", sub: "", for_tag: "anyone", works_in: ["claude-ai", "claude-code"], examples: [{ input: "", output: "", plain_output: "" }], parent_id: null, parent_name: "", parent_handle: "", edit_id: null, ask_test: false }; }
   function pageSubmit(q, tok) {
     var d = Object.assign(blankDraft(), lsGet(DRAFT_KEY, {}));
     if (!Array.isArray(d.examples) || !d.examples.length) d.examples = [{ input: "", output: "", plain_output: "" }];
+    if (!Array.isArray(d.parts)) d.parts = [];
+    if (["skill", "prompt", "kit"].indexOf(d.kind) < 0) d.kind = "skill";
     function save() { lsSet(DRAFT_KEY, d); }
+    function W() { return kindOf(d.kind).name.toLowerCase(); }
     var hasWork = !!(d.skill_md.trim() || d.name.trim());
     var remix = q.get("remix"), edit = q.get("edit");
     if (q.get("cat") && catOf(q.get("cat")) && !d.category) { d.category = q.get("cat"); d.sub = subOf(d.category, q.get("sub")) ? q.get("sub") : ""; save(); }
@@ -755,11 +844,11 @@
         if (mode === "edit") {
           var pv = s.pending_version || {};
           n.skill_md = String(pv.skill_md || s.skill_md || "");
-          Object.assign(n, { name: pv.name || s.name, one_line: pv.one_line || s.one_line, category: pv.category || s.category, sub: pv.sub || s.sub, for_tag: pv.for_tag || s.for_tag || "anyone", works_in: (pv.works_in || s.works_in || []).length ? (pv.works_in || s.works_in) : ["claude-ai"], edit_id: s.id, parent_id: s.parent_id || null, ask_test: !!s.ask_test });
+          Object.assign(n, { kind: pv.kind || s.kind, parts: (pv.parts || s.parts || []).map(function (x) { return { skill_md: String(x && x.skill_md || "") }; }), license: (pv.license !== undefined ? pv.license : s.license) || "", tip_url: (pv.tip_url !== undefined ? pv.tip_url : s.tip_url) || "", name: pv.name || s.name, one_line: pv.one_line || s.one_line, category: pv.category || s.category, sub: pv.sub || s.sub, for_tag: pv.for_tag || s.for_tag || "anyone", works_in: (pv.works_in || s.works_in || []).length ? (pv.works_in || s.works_in) : ["claude-ai"], edit_id: s.id, parent_id: s.parent_id || null, ask_test: !!s.ask_test });
           n.examples = (jparse(pv.examples, null) || s.examples || []).map(function (e) { return { input: e.input || "", output: e.output || "", plain_output: e.plain_source === "test" ? "" : (e.plain_output || "") }; });
           if (!n.examples.length) n.examples = [{ input: "", output: "", plain_output: "" }];
         } else {
-          Object.assign(n, { name: (s.name + " remix").slice(0, 40), category: s.category, sub: s.sub, for_tag: s.for_tag || "anyone", works_in: s.works_in.length ? s.works_in : ["claude-ai"], parent_id: s.id, parent_name: s.name, parent_handle: makerName(s) });
+          Object.assign(n, { kind: s.kind, parts: (s.parts || []).map(function (x) { return { skill_md: String(x && x.skill_md || "") }; }), name: (s.name + " remix").slice(0, 40), category: s.category, sub: s.sub, for_tag: s.for_tag || "anyone", works_in: s.works_in.length ? s.works_in : ["claude-ai"], parent_id: s.id, parent_name: s.name, parent_handle: makerName(s) });
         }
         d = n; save();
         history.replaceState(null, "", location.pathname + location.search + "#/submit");
@@ -781,7 +870,8 @@
     function runCheck(withEx) {
       var my = ++checkSeq;
       var exs = d.examples.filter(function (e) { return e.input.trim() || e.output.trim(); }).map(function (e) { var o = { input: e.input, output: e.output }; if (e.plain_output.trim()) o.plain_output = e.plain_output; return o; });
-      var body = { skill_md: d.skill_md };
+      var body = { skill_md: d.skill_md, kind: d.kind };
+      if (d.kind === "kit") body.parts = d.parts;
       if (withEx) body.examples = exs;
       if (d.name.trim() && d.category && d.sub) { body.name = d.name.trim(); body.category = d.category; body.sub = d.sub; }
       if (d.edit_id) body.id = d.edit_id;
@@ -791,7 +881,7 @@
 
     function draw() {
       if (tok !== RT) return;
-      var steps = ["Skill file", "About it", "Examples", "Checks"];
+      var steps = [d.kind === "prompt" ? "Prompt" : d.kind === "kit" ? "Kit files" : "Skill file", "About it", "Examples", "Checks"];
       var prog = h("ol", { class: "prog", "aria-label": "Steps" }, steps.map(function (t, i) {
         var n = i + 1;
         return h("li", { class: n < d.step ? "done" : n === d.step ? "now" : "", "aria-current": n === d.step ? "step" : null },
@@ -800,7 +890,7 @@
       var body = [stepOne, stepTwo, stepThree, stepFour][d.step - 1]();
       mount(
         h("header", { class: "sub-head" },
-          h("h1", { text: d.edit_id ? "Edit your skill" : "Share a skill" }),
+          h("h1", { text: d.edit_id ? "Edit your " + W() : "Share yours" }),
           h("p", { class: "note", text: "Saved on this device as you go. Nothing is sent until step 4." })),
         prog,
         d.parent_id ? h("p", { class: "box quiet credit" }, icon("remix"), h("span", null, "Remix of ", h("a", { class: "link", href: "#/s/" + encodeURIComponent(d.parent_id), text: d.parent_name || "the original" }), d.parent_handle ? " by " : "", d.parent_handle ? h("b", { text: d.parent_handle }) : null, ". They get credit on your page.")) : null,
@@ -824,12 +914,24 @@
     }
 
     function stepOne() {
-      var ta = h("textarea", { id: "md", class: "mono", rows: "16", spellcheck: "false", value: d.skill_md, placeholder: "---\nname: my-skill\ndescription: …\n---" });
+      var isP = d.kind === "prompt", isK = d.kind === "kit";
+      var picker = h("div", { class: "kind-pick", role: "radiogroup", "aria-label": "What are you sharing?" }, D.kinds.map(function (k) {
+        return h("button", { type: "button", role: "radio", class: "kind-card", "aria-checked": d.kind === k.id ? "true" : "false", disabled: d.edit_id && d.kind !== k.id ? true : null, onclick: function () {
+          if (d.kind === k.id) return;
+          d.kind = k.id; if (k.id === "kit" && !d.parts.length) d.parts = [{ skill_md: "" }]; save(); draw();
+        } }, icon(k.id), h("b", { text: k.name }), h("small", { text: k.what }));
+      }));
+      var max = isP ? 8000 : 40960;
+      var ta = h("textarea", { id: "md", class: "mono", rows: isP ? "10" : isK ? "12" : "16", spellcheck: isP ? "true" : "false", value: d.skill_md,
+        placeholder: isP ? "Rewrite my [type of message] so it sounds [friendly]…" : "---\nname: my-skill\ndescription: …\n---" });
       var live = h("p", { class: "live", "aria-live": "polite" });
       var size = h("span", { class: "cnt" });
-      function sz() { var kb = new Blob([ta.value]).size / 1024; size.textContent = kb.toFixed(1) + " KB of 40"; size.classList.toggle("over", kb > 40); }
+      function sz() {
+        if (isP) { size.textContent = ta.value.length + " of 8,000"; size.classList.toggle("over", ta.value.length > 8000); return; }
+        var kb = new Blob([ta.value]).size / 1024; size.textContent = kb.toFixed(1) + " KB of 40"; size.classList.toggle("over", kb > 40);
+      }
       var check = debounce(function () {
-        if (!ta.value.trim()) { live.textContent = ""; return; }
+        if (!d.skill_md.trim()) { live.textContent = ""; return; }
         live.textContent = "Checking…";
         runCheck(false).then(function (ch) {
           if (!ch) return;
@@ -846,21 +948,49 @@
         f.text().then(function (t) { ta.value = t; d.skill_md = t; save(); sz(); check(); });
       });
       sz(); if (d.skill_md.trim()) check();
+      var tpl = isP ? PROMPT_TEMPLATE : isK ? KIT_TEMPLATE : TEMPLATE;
+      var tools = h("div", { class: "btns small" },
+        isP ? null : h("label", { class: "btn ghost", for: "mdfile" }, icon("download"), "Pick a file"), isP ? null : file,
+        h("button", { class: "btn ghost", type: "button", onclick: function () {
+          if (ta.value.trim() && !confirm("Replace what's in the box with the template?")) return;
+          ta.value = tpl; d.skill_md = tpl; save(); sz(); check(); ta.focus();
+        } }, icon("plus"), "Start from a template"),
+        h("a", { class: "link", href: "#/", text: "or remix one from the library" }));
+
+      /* kit parts: 1 to 5 more skills */
+      var partsBox = null;
+      if (isK) {
+        partsBox = h("div", { class: "parts" });
+        (function drawParts() {
+          clear(partsBox);
+          d.parts.forEach(function (p, i) {
+            var t = h("textarea", { id: "part" + i, class: "mono", rows: "8", spellcheck: "false", value: p.skill_md || "", placeholder: "---\nname: second-step\ndescription: …\n---" });
+            t.addEventListener("input", function () { p.skill_md = t.value; save(); check(); });
+            partsBox.appendChild(h("div", { class: "part box" },
+              h("div", { class: "ex-top" }, h("h3", null, h("label", { for: "part" + i, text: "Skill " + (i + 2) + (fmName(p.skill_md) ? ": " + fmName(p.skill_md) : "") })),
+                h("button", { class: "link-btn", type: "button", onclick: function () { d.parts.splice(i, 1); save(); drawParts(); check(); } }, icon("x"), "Remove")),
+              t));
+          });
+          if (d.parts.length < 5) partsBox.appendChild(h("button", { class: "btn ghost", type: "button", onclick: function () { d.parts.push({ skill_md: "" }); save(); drawParts(); } }, icon("plus"), "Add a skill to the kit"));
+        })();
+      }
       return h("section", { class: "step" },
-        h("h2", { text: "Paste your SKILL.md" }),
-        h("p", { class: "sub", text: "The file Claude reads. Text only, up to 40 KB." }),
-        h("div", { class: "btns small" },
-          h("label", { class: "btn ghost", for: "mdfile" }, icon("download"), "Pick a file"), file,
-          h("button", { class: "btn ghost", type: "button", onclick: function () {
-            if (ta.value.trim() && !confirm("Replace what's in the box with the template?")) return;
-            ta.value = TEMPLATE; d.skill_md = TEMPLATE; save(); sz(); check(); ta.focus();
-          } }, icon("plus"), "Start from a template"),
-          h("a", { class: "link", href: "#/", text: "or remix one from the library" })),
-        h("label", { for: "md", class: "vh", text: "SKILL.md" }),
+        h("h2", { text: "What are you sharing?" }),
+        picker,
+        h("h2", { class: "step-h2", text: isP ? "Paste your prompt" : isK ? "Skill 1: start here" : "Paste your SKILL.md" }),
+        h("p", { class: "sub", text: isP ? "Put the parts people change in [square brackets]. Up to 8,000 characters." : isK ? "Claude starts with this one. It says which of the other skills to use, and when." : "The file Claude reads. Text only, up to 40 KB." }),
+        tools,
+        h("label", { for: "md", class: "vh", text: isP ? "Prompt" : "SKILL.md" }),
         ta, h("div", { class: "under" }, live, size),
+        partsBox,
         nav2(function () {
-          if (!d.skill_md.trim()) return "Paste your SKILL.md first, or start from the template.";
-          if (new Blob([d.skill_md]).size > 40960) return "The file is over 40 KB. Cut it down first.";
+          if (!d.skill_md.trim()) return isP ? "Paste your prompt first, or start from the template." : "Paste your SKILL.md first, or start from the template.";
+          if (isP ? d.skill_md.length > 8000 : new Blob([d.skill_md]).size > max) return isP ? "The prompt is over 8,000 characters. Cut it down first." : "The file is over 40 KB. Cut it down first.";
+          if (isK) {
+            var filled = d.parts.filter(function (p) { return String(p.skill_md || "").trim(); });
+            if (!filled.length) return "A kit needs at least one more skill. Paste it in Skill 2.";
+            if (filled.length < d.parts.length) return "One of the kit's skills is empty. Fill it in or remove it.";
+          }
           return "";
         }, true));
     }
@@ -893,6 +1023,11 @@
         } });
         return h("label", { class: "check" }, cb, h("span", { text: w.name }));
       });
+      var licSel = h("select", { id: "f-lic", onchange: function () { d.license = licSel.value; save(); } },
+        h("option", { value: "", text: "Pick one" }),
+        D.licenses.map(function (l) { return h("option", { value: l.id, selected: d.license === l.id ? true : null, text: l.name }); }));
+      var tip = h("input", { id: "f-tip", type: "url", inputmode: "url", maxlength: "300", value: d.tip_url, autocomplete: "off", placeholder: "https://ko-fi.com/yourname" });
+      tip.addEventListener("input", function () { d.tip_url = tip.value; save(); });
       return h("section", { class: "step" },
         h("h2", { text: "Name it and file it" }),
         h("div", { class: "field" }, h("label", { for: "f-name", text: "Name" }), h("div", { class: "inline" }, name, counter(name, 40))),
@@ -902,12 +1037,18 @@
         h("div", { class: "field two" },
           h("div", null, h("label", { for: "f-for", text: "Mostly for" }), forSel),
           h("fieldset", null, h("legend", { text: "Works in" }), works)),
+        h("div", { class: "field" }, h("label", { for: "f-lic", text: "License: what others may do with it" }), licSel,
+          h("p", { class: "note" }, "Not sure? Share with credit is the usual pick. ", h("a", { class: "link", href: "#/rules", target: "_blank", text: "What these mean" }))),
+        h("div", { class: "field" }, h("label", { for: "f-tip", text: "Thank-you link (optional)" }), tip,
+          h("p", { class: "note", text: "Your Ko-fi, Buy Me a Coffee, Gumroad, PayPal.me, Patreon, Venmo, Cash App, Stripe link, Liberapay or GitHub Sponsors page. People tip you there; we take nothing." })),
         nav2(function () {
           if (d.name.trim().length < 3) return "Give it a name of at least 3 characters.";
           if (d.one_line.trim().length < 10) return "Write one line (at least 10 characters) that says what someone gets.";
           if (!d.category) return "Pick a category.";
           if (!d.sub) return "Pick a subcategory.";
           if (!d.works_in.length) return "Tick where it works: Claude.ai, Claude Code or both.";
+          if (!d.license) return "Pick a license so people know what they may do with it.";
+          if (d.tip_url.trim() && !/^https:\/\/\S+$/i.test(d.tip_url.trim())) return "The thank-you link should start with https://";
           return "";
         }, true));
     }
@@ -930,8 +1071,8 @@
             h("div", { class: "ex-top" }, h("h3", { text: "Example " + (i + 1) }),
               d.examples.length > 1 ? h("button", { class: "link-btn", type: "button", onclick: function () { d.examples.splice(i, 1); save(); drawList(); } }, icon("x"), "Remove") : null),
             ta("input", "What someone asked", 4000, "can you make this sound better before I send it? …", 4),
-            ta("output", "What Claude answered with your skill", 8000, "Paste the whole answer.", 7),
-            ta("plain_output", "Plain Claude's answer (optional)", 8000, "Same request, new chat, skill turned off.", 5),
+            ta("output", "What Claude answered with your " + W(), 8000, "Paste the whole answer.", 7),
+            ta("plain_output", "Plain Claude's answer (optional)", 8000, d.kind === "prompt" ? "Same request in your own words, without the prompt." : "Same request, new chat, " + W() + " turned off.", 5),
             h("p", { class: "note", text: "The plain answer shows as “Maker's comparison”. Use real answers, not edited ones." }),
             prev));
         });
@@ -956,6 +1097,7 @@
       var sendMsg = h("p", { class: "form-msg", role: "alert" });
       var want = h("input", { type: "checkbox", checked: d.ask_test, onchange: function () { d.ask_test = want.checked; save(); } });
       var send = h("button", { class: "btn", type: "button", disabled: true }, d.edit_id ? "Send the new version" : "Send for review");
+      var W1 = W();
       var asks = h("div");
       var local = [];
       if (d.name.trim().length < 3) local.push({ message: "No name yet.", fix: "Go back to step 2 and name it." });
@@ -967,7 +1109,7 @@
           h("p", { class: "tally" }, all.errors.length ? [icon("x", "bad"), all.errors.length + (all.errors.length === 1 ? " thing to fix before sending" : " things to fix before sending")] : [icon("check", "ok"), "Everything passes."]),
           checkList(all)]);
         var sm = Array.isArray(ch.summary) && ch.summary.length ? fromList(ch.summary) : summarize(d.skill_md);
-        clear(asks); add(asks, [h("h3", { text: "What your skill asks Claude to do" }), h("p", { class: "note", text: "People see this on your page. If it reads wrong, change the first lines of your file." }), summaryBlock(sm)]);
+        clear(asks); add(asks, [h("h3", { text: "What your " + W1 + " asks Claude to do" }), h("p", { class: "note", text: "People see this on your page. If it reads wrong, change the first lines of your file." }), summaryBlock(sm)]);
         send.disabled = !!all.errors.length || !ME;
       }
       runCheck(true).then(function (ch) { if (ch) showChecks(ch); }).catch(function (e) {
@@ -975,7 +1117,7 @@
       });
       send.addEventListener("click", function () {
         sendMsg.textContent = ""; send.disabled = true;
-        var body = { name: d.name.trim(), one_line: d.one_line.trim(), category: d.category, sub: d.sub, for_tag: d.for_tag, works_in: d.works_in, skill_md: d.skill_md,
+        var body = { kind: d.kind, parts: d.kind === "kit" ? d.parts.filter(function (p) { return String(p.skill_md || "").trim(); }) : undefined, license: d.license || null, tip_url: d.tip_url.trim() || null, name: d.name.trim(), one_line: d.one_line.trim(), category: d.category, sub: d.sub, for_tag: d.for_tag, works_in: d.works_in, skill_md: d.skill_md,
           examples: d.examples.filter(function (e) { return e.input.trim() && e.output.trim(); }).map(function (e) { var o = { input: e.input, output: e.output }; if (e.plain_output.trim()) o.plain_output = e.plain_output; return o; }),
           parent_id: d.parent_id || undefined, ask_test: !!d.ask_test, submit: true };
         (d.edit_id ? api("PUT", "skills/" + encodeURIComponent(d.edit_id), body) : api("POST", "skills", body)).then(function () {
@@ -991,9 +1133,9 @@
       });
       return h("section", { class: "step" },
         h("h2", { text: "Checks" }),
-        h("p", { class: "sub", text: "We look for hidden instructions, secrets and anything that sends your data away. Red ones block sending; each says how to fix it." }),
+        h("p", { class: "sub" }, "We look for hidden instructions, secrets and anything that sends your data away. Red ones block sending; each says how to fix it. ", h("a", { class: "link", href: "#/rules", target: "_blank", text: "How we review" })),
         box, asks,
-        h("label", { class: "check big-check" }, want, h("span", null, h("b", { text: "Ask for a blind test" }), h("span", { class: "muted", text: "We run your example request with your skill and with plain Claude, and a judge who can't tell them apart scores both. The result shows on your card." }))),
+        h("label", { class: "check big-check" }, want, h("span", null, h("b", { text: "Ask for a blind test" }), h("span", { class: "muted", text: "We run your example request with your " + W1 + " and with plain Claude, and a judge who can't tell them apart scores both. The result shows on your card." }))),
         ME ? null : needSignIn("Sign in to send it. Your draft stays on this device.", "/submit"),
         sendMsg,
         h("div", { class: "btns step-nav" }, h("button", { class: "btn ghost", type: "button", text: "Back", onclick: function () { d.step--; save(); draw(); } }), send),
@@ -1020,6 +1162,7 @@
         return h("li", { class: "mine-row box" },
           h("div", { class: "mine-top" },
             h("a", { class: "mine-name", href: "#/s/" + encodeURIComponent(s.id), text: s.name }), statusChip(s.status),
+            s.kind !== "skill" ? h("span", { class: "chip", text: kindOf(s.kind).name }) : null,
             h("span", { class: "note", text: "v" + s.version + (s.updated_at ? " · " + fmtDate(s.updated_at) : "") })),
           s.status === "live" ? h("p", { class: "mine-scores", text: "People: " + peopleShort(s) + " · Blind test: " + testShort(s) }) : null,
           s.review_note && (s.status === "changes" || s.status === "hidden") ? h("p", { class: "rnote" }, h("b", { text: "Reviewer's note: " }), h("span", { text: s.review_note })) : null,
@@ -1028,7 +1171,7 @@
           h("div", { class: "btns small" },
             h("a", { class: "btn ghost", href: hashFor("/submit", { edit: s.id }) }, icon("edit"), s.status === "live" ? "Edit (goes back to review)" : "Edit"),
             h("a", { class: "link", href: "#/s/" + encodeURIComponent(s.id), text: "View" })));
-      })) : h("div", { class: "box empty" }, h("p", { text: "You haven't shared a skill yet." }), h("a", { class: "btn", href: "#/submit", text: "Share your first" }));
+      })) : h("div", { class: "box empty" }, h("p", { text: "You haven't shared anything yet." }), h("a", { class: "btn", href: "#/submit", text: "Share your first" }));
 
       /* binder: one slot per category, filled by skills you used or rated */
       var local = lsGet(USED_KEY, {}), byCat = {};
@@ -1067,7 +1210,7 @@
         h("header", { class: "me-head" },
           h("h1", null, "Hi, ", h("span", { text: u.handle || "you" })),
           h("p", { class: "note", text: (u.email ? u.email + " · " : "") + (u.created_at ? "joined " + fmtDate(u.created_at) : "") })),
-        h("section", { class: "sec" }, h("div", { class: "all-top" }, h("h2", { text: "My skills" }), h("a", { class: "btn small-btn", href: "#/submit" }, icon("plus"), "Share a skill")), mineList),
+        h("section", { class: "sec" }, h("div", { class: "all-top" }, h("h2", { text: "What I shared" }), h("a", { class: "btn small-btn", href: "#/submit" }, icon("plus"), "Share yours")), mineList),
         h("section", { class: "sec" },
           h("div", { class: "all-top" }, h("h2", { text: "My binder" }), h("span", { class: "count", text: filled + " of 10 slots filled" })),
           h("p", { class: "sub", text: "Every skill you add, copy or rate goes in its slot. Empty slots show what to try next." }),
@@ -1106,7 +1249,7 @@
   function reviewItem(s0, onDone) {
     /* a new version under review: show what's waiting, not what's live */
     var pv = s0.kind === "version" && s0.pending_version ? s0.pending_version : null;
-    var s = pv ? Object.assign({}, s0, { name: pv.name, one_line: pv.one_line, category: pv.category, sub: pv.sub, skill_md: pv.skill_md, examples: jparse(pv.examples, []), checks: jparse(pv.checks, s0.checks), version: pv.version }) : s0;
+    var s = pv ? Object.assign({}, s0, { kind: pv.kind || s0.kind, parts: pv.parts || null, license: pv.license, tip_url: pv.tip_url, name: pv.name, one_line: pv.one_line, category: pv.category, sub: pv.sub, skill_md: pv.skill_md, examples: jparse(pv.examples, []), checks: jparse(pv.checks, s0.checks), version: pv.version }) : s0;
     var ch = normChecks(s.checks, true);
     var reports = Array.isArray(s.reports) ? s.reports : [];
     var nReports = reports.length;
@@ -1153,6 +1296,7 @@
           h("p", { class: "note", text: "by " + (s.maker_handle || "someone") + " · " + (c ? c.name : s.category) + " · " + subName(s) + " · v" + s.version + (s.updated_at || s.created_at ? " · sent " + fmtDate(s.updated_at || s.created_at) : "") })),
         h("div", { class: "q-chips" }, statusChip(s.status),
           h("span", { class: "chip st-kind", text: KINDS[s.kind] || s.kind }),
+          h("span", { class: "chip", text: kindOf(s.kind).name }),
           s.ask_test ? h("span", { class: "chip st-test", text: "Wants a blind test" }) : null,
           s.flagged_ratings ? h("span", { class: "chip st-hidden", text: s.flagged_ratings + " ratings on hold" }) : null,
           s.parent_id ? h("span", { class: "chip", text: "Remix" }) : null,
@@ -1167,7 +1311,11 @@
       h("h3", { text: "What it asks Claude to do" }), summaryBlock(summaryOf(s)),
       h("h3", { text: "Examples" }),
       (s.examples || []).length ? (s.examples || []).map(function (e, i) { return exampleFlip(e, i, s.examples.length); }) : h("p", { class: "note", text: "No examples." }),
-      h("details", { class: "file", open: true }, h("summary", { text: "Full SKILL.md" }), h("pre", { class: "md", tabindex: "0", text: String(s.skill_md || "") })),
+      s.kind === "kit"
+        ? h("details", { class: "file", open: true }, h("summary", { text: "Every file in the kit (" + kitFiles(s).length + ")" }),
+          kitFiles(s).map(function (f) { return h("div", null, h("p", { class: "note", text: "skills/" + f.name + "/SKILL.md" + (f.start ? " · start here" : "") }), h("pre", { class: "md", tabindex: "0", text: f.md })); }))
+        : h("details", { class: "file", open: true }, h("summary", { text: s.kind === "prompt" ? "Full prompt" : "Full SKILL.md" }), h("pre", { class: "md", tabindex: "0", text: String(s.skill_md || "") })),
+      h("p", { class: "note" }, "License: ", h("b", { text: licenseOf(s.license) ? licenseOf(s.license).name : "not picked" }), s.tip_url ? " · Thank-you link: " : null, s.tip_url ? h("code", { text: s.tip_url }) : null),
       h("h3", { text: "Decision" }),
       h("label", { for: noteId, text: "Note to the maker (needed for Needs changes)" }), note, msg,
       h("div", { class: "btns" },
@@ -1177,6 +1325,153 @@
         s.flagged_ratings ? h("button", { class: "btn ghost", type: "button", onclick: function () { act("drop_ratings"); } }, icon("x"), "Drop held ratings") : null),
       h("details", { class: "why" }, h("summary", { text: s.test ? "Blind-test result (attached)" : "Attach a blind-test result" }), testForm));
     return item;
+  }
+
+  /* ---------- Requests: ask for something, upvote, makers answer ---------- */
+  function pageRequests(q, tok) {
+    var status = q.get("status") === "made" ? "made" : "open", sort = q.get("sort") === "new" ? "new" : "top";
+    var list = h("div", { class: "reqs" }, loading());
+    var myItems = null; /* my live items, loaded once for "I made it" */
+    function mineLive() {
+      if (myItems) return Promise.resolve(myItems);
+      return api("GET", "me").then(function (j) { myItems = (j.skills || []).map(norm).filter(function (x) { return x.status === "live"; }); return myItems; });
+    }
+    /* ask form */
+    var formSlot = h("div");
+    if (!ME) add(formSlot, [needSignIn("Sign in to ask for something or to vote.", "/requests")]);
+    else {
+      var title = h("input", { id: "rq-t", maxlength: "80", autocomplete: "off", placeholder: "Turn my class notes into flashcards" });
+      var cat = h("select", { id: "rq-c" }, h("option", { value: "", text: "Pick one" }), D.cats.map(function (c) { return h("option", { value: c.id, text: c.name }); }));
+      var det = h("textarea", { id: "rq-d", rows: "2", maxlength: "280", placeholder: "Optional: what it should do, in a sentence or two" });
+      var msg = h("p", { class: "form-msg", role: "alert" });
+      var post = h("button", { class: "btn", type: "submit", text: "Ask" });
+      add(formSlot, [h("form", { class: "box ask-form", onsubmit: function (e) {
+        e.preventDefault(); msg.textContent = "";
+        if (title.value.trim().length < 8) { msg.textContent = "Say what you want in at least 8 characters."; title.focus(); return; }
+        if (!cat.value) { msg.textContent = "Pick a category."; cat.focus(); return; }
+        post.disabled = true;
+        api("POST", "requests", { title: title.value.trim(), category: cat.value, detail: det.value.trim() }).then(function () {
+          title.value = ""; det.value = ""; cat.value = ""; toast("Posted. Your vote is already on it.");
+          if (status === "open") load(); else go("/requests");
+        }).catch(function (e2) { msg.textContent = e2.message; }).then(function () { post.disabled = false; });
+      } },
+        h("div", { class: "field" }, h("label", { for: "rq-t", text: "I want Claude to help me…" }), h("div", { class: "inline" }, title, counter2(title, 80))),
+        h("div", { class: "field two" },
+          h("div", null, h("label", { for: "rq-c", text: "Category" }), cat),
+          h("div", null, h("label", { for: "rq-d", text: "Details" }), det)),
+        msg, post)]);
+    }
+    function counter2(input, max) {
+      var c = h("span", { class: "cnt", text: "0/" + max });
+      input.addEventListener("input", function () { c.textContent = input.value.length + "/" + max; });
+      return c;
+    }
+    function row(r) {
+      var votes = h("span", { class: "v-n", text: String(r.votes) });
+      var vote = h("button", { type: "button", class: "vote", "aria-pressed": r.voted ? "true" : "false", "aria-label": (r.voted ? "Remove your vote for: " : "Vote for: ") + r.title, disabled: r.status !== "open" ? true : null },
+        icon("up"), votes);
+      vote.addEventListener("click", function () {
+        if (!ME) { go("/signin", { next: "/requests" }); return; }
+        vote.disabled = true;
+        api("POST", "requests/" + encodeURIComponent(r.id) + "/vote", {}).then(function (j) {
+          r.voted = j.voted; votes.textContent = String(j.votes);
+          vote.setAttribute("aria-pressed", j.voted ? "true" : "false");
+        }).catch(function (e) { toast(e.message); }).then(function () { vote.disabled = false; });
+      });
+      var actSlot = h("div", { class: "req-act" });
+      if (r.status === "open") {
+        add(actSlot, [h("a", { class: "btn ghost small-btn", href: hashFor("/submit", { cat: r.category }) }, icon("plus"), "Make this")]);
+        if (ME) {
+          var made = h("button", { class: "link-btn", type: "button", text: "I made it" });
+          made.addEventListener("click", function () {
+            made.disabled = true;
+            mineLive().then(function (items) {
+              clear(actSlot);
+              if (!items.length) return add(actSlot, [h("p", { class: "note", text: "Once your answer is live (a person checks it first), come back and tap I made it." })]);
+              var sel = h("select", { "aria-label": "Which of yours answers it?" }, items.map(function (x) { return h("option", { value: x.id, text: x.name + " (" + kindOf(x.kind).name + ")" }); }));
+              var ok = h("button", { class: "btn small-btn", type: "button", text: "Link it" });
+              ok.addEventListener("click", function () {
+                ok.disabled = true;
+                api("POST", "requests/" + encodeURIComponent(r.id) + "/made", { skill_id: sel.value }).then(function () { toast("Linked. Thanks for making it."); load(); })
+                  .catch(function (e) { toast(e.message); ok.disabled = false; });
+              });
+              add(actSlot, [h("div", { class: "inline" }, sel, ok)]);
+            }).catch(function (e) { toast(e.message); made.disabled = false; });
+          });
+          add(actSlot, [made]);
+        }
+        if (ME && (ME.is_admin || ME.admin)) add(actSlot, [h("button", { class: "link-btn", type: "button", text: "Close", onclick: function () {
+          if (!confirm("Close this request? It leaves the board.")) return;
+          api("POST", "requests/" + encodeURIComponent(r.id) + "/close", {}).then(function () { toast("Closed."); load(); }).catch(function (e) { toast(e.message); });
+        } })]);
+      } else if (r.made) {
+        add(actSlot, [h("a", { class: "btn small-btn", href: "#/s/" + encodeURIComponent(r.made.id) }, icon("check"), "See it")]);
+      }
+      return h("article", { class: "req" + (r.status !== "open" ? " done" : "") },
+        vote,
+        h("div", { class: "req-body" },
+          h("h3", { text: r.title }),
+          r.detail ? h("p", { class: "req-d", text: r.detail }) : null,
+          h("p", { class: "note", text: (r.category_name || (catOf(r.category) || {}).name || "") + " · asked by " + r.by + (r.made ? " · made by " + r.made.by + ": " + r.made.name : "") })),
+        actSlot);
+    }
+    function load() {
+      clear(list); add(list, [loading()]);
+      api("GET", "requests?status=" + status + "&sort=" + sort).then(function (j) {
+        if (tok !== RT) return;
+        clear(list);
+        var items = j.items || [];
+        if (!items.length) return add(list, [h("div", { class: "box empty" }, h("p", { text: status === "open" ? "No requests yet. Ask for the first one." : "Nothing made from a request yet." }))]);
+        items.forEach(function (r) { list.appendChild(row(r)); });
+      }).catch(function (e) { if (tok === RT) { clear(list); add(list, [fail(e, load)]); } });
+    }
+    function tab(label, st2, so) {
+      var on = status === st2 && (so ? sort === so : true);
+      return h("a", { class: "chip-l", href: hashFor("/requests", { status: st2 === "made" ? "made" : "", sort: so === "new" ? "new" : "" }), "aria-current": on ? "page" : null, text: label });
+    }
+    mount(
+      h("header", { class: "req-head" },
+        h("span", { class: "cat-ic" }, icon("ask")),
+        h("div", null, h("h1", { text: "What should someone make next?" }),
+          h("p", { class: "sub", text: "Ask for a skill, prompt or kit. Vote for the ones you'd use. Makers build the top ones." }))),
+      formSlot,
+      h("nav", { class: "chips", "aria-label": "Show" }, tab("Most wanted", "open", "top"), tab("Newest", "open", "new"), tab("Made", "made")),
+      list);
+    load();
+  }
+
+  /* ---------- How we review (the public policy) ---------- */
+  function pageRules() {
+    document.title = "How we review · Community library";
+    function sec(title, items) { return h("section", { class: "rule" }, h("h2", { text: title }), h("ul", null, items.map(function (t) { return h("li", { text: t }); }))); }
+    mount(
+      h("header", { class: "req-head" }, h("span", { class: "cat-ic" }, icon("shield")),
+        h("div", null, h("h1", { text: "How we review" }), h("p", { class: "sub", text: "The same rules for everyone, including us. Last updated 23 Nov 2026." }))),
+      h("div", { class: "rules" },
+        sec("Before anything goes live", [
+          "A person reads every skill, prompt and kit, and every new version. We approve what we'd install ourselves.",
+          "Automatic checks block hidden instructions, reading passwords or keys, sending your data to a web address, download commands, scripts and invisible characters.",
+          "No medical, legal or money advice. Organizing and preparing are fine.",
+          "Everything here is free to use."]),
+        sec("Reviews", [
+          "One review per person, and only after you've added or copied it.",
+          "New accounts wait 24 hours before they can review.",
+          "Makers can't review their own work. Reviews from our own reviewers say so.",
+          "We never hide a review for being bad. We only remove fake, off-topic or abusive ones, under the same rule for every item.",
+          "Nobody is paid or rewarded for a review."]),
+        sec("Licenses", D.licenses.map(function (l) {
+          return l.name + (l.id === "cc-by" ? ": anyone can share or change it if they name you." : l.id === "mit" ? ": anyone can use, change and share it; keep your name in the file." : ": people can use it themselves; remixes are off and they ask you before sharing it.");
+        }).concat(["Items with no license picked: ask the maker before sharing."])),
+        sec("Thank-you links", [
+          "A maker can add a link to their own tip page. The money goes straight to them.",
+          "Skills Made EZ takes no cut and never holds anyone's money."]),
+        sec("Copied or unsafe work", [
+          "Tap Report on the item and pick a reason. Two reports from different people hide it until a reviewer looks.",
+          "If it's copied, it comes down. If it's unsafe, it comes down and the maker hears why."]),
+        sec("Requests", [
+          "Anyone signed in can ask for something and vote. Requests are plain words only, no links.",
+          "A maker links their live item when they've made it. Reviewers close requests that break these rules."])),
+      h("p", null, h("a", { class: "btn", href: "#/", text: "Browse the library" })));
   }
 
   /* ---------- Sign in / create account ---------- */
@@ -1237,6 +1532,8 @@
       case "me": return pageMe(tok);
       case "review": return pageReview(tok);
       case "signin": return pageSignin(q);
+      case "requests": return pageRequests(q, tok);
+      case "rules": return pageRules();
       default: return mount(errorBox("That page doesn't exist."), h("a", { class: "btn", href: "#/", text: "Browse the library" }));
     }
   }
@@ -1254,6 +1551,11 @@
     var me = guest ? null : you;
     try { if (sessionStorage.getItem("sl-mock-out") === "1") me = null; } catch (e) {}
     var skills = [], ratings = {}, uses = {}, reports = {}, n = 100;
+    var requests = [
+      { id: "rq0001", title: "Sample: Turn my class notes into flashcards", detail: "Paste notes, get 20 cards I can print.", category: "study", status: "open", votes: 14, voters: {}, by: "sample-asker-1", at: NOW - 5 * HOUR },
+      { id: "rq0002", title: "Sample: Write a kind note to cancel plans", detail: "", category: "writing", status: "open", votes: 9, voters: { "u-you": 1 }, by: "sample-asker-2", at: NOW - 30 * HOUR },
+      { id: "rq0003", title: "Sample: Plan a kid's birthday party under $100", detail: "Ages 6 to 8, at home.", category: "home", status: "open", votes: 6, voters: {}, by: "you-sample", user: "u-you", at: NOW - 2 * HOUR },
+      { id: "rq0004", title: "Sample: Say no to a favor without guilt", detail: "", category: "writing", status: "made", votes: 21, voters: {}, by: "sample-asker-3", at: NOW - 9 * DAY, made: "sample-101" }];
     var LINES = ["Used it for my landlord email", "Fixed a message to my boss before I sent it", "My kid's science test, worked well", "Asked it twice, same good result", "Shorter than what I'd have written", "Planned our weekend with it", "Didn't fit my case, too long", "Cover letter for a café job"];
     function seedRatings(id, yes, total) {
       ratings[id] = [];
@@ -1308,6 +1610,14 @@
       sample({ name: "Sample: Meeting notes to actions", one_line: "Messy notes in, who-does-what-by-when out.", category: "work", sub: "meetings", handle: "you-sample", maker_id: "u-you", status: "review", ask_test: true, ageDays: 1, examples: ex("notes: sam to send deck?? budget talk next week, priya owns hiring", "Sam: send the deck, by [day]\nPriya: hiring plan, by [day]") });
       sample({ name: "Sample: Grocery price check", one_line: "Your list with the cheapest store for each item.", category: "home", sub: "meals", handle: "you-sample", maker_id: "u-you", status: "changes", ageDays: 4,
         review_note: "Sample note: add an example where a price is missing. Right now the file never says what to do then.", examples: ex("eggs, milk, rice", "Eggs: Aldi £1.89…") });
+      sample({ name: "Sample: Kinder pushback prompt", kind: "prompt", one_line: "Disagree at work without sounding cold.", category: "work", sub: "meetings", handle: "sample-maker-jo", ageDays: 4, license: "cc-by", tip_url: "https://ko-fi.com/sample",
+        skill_md: "Rewrite my reply to [who] so it disagrees with [their idea] but stays warm.\n\nKeep it under [number] words. Name one thing I agree with first. End with a question.\n\nMy draft:\n[paste it]",
+        examples: ex("who: my manager. idea: moving the launch up a week. 60 words.", "I like the push to get it out sooner. I'm worried a week early means we skip the last round of testing, and that's where we caught two bugs last time. Could we ship the core part early and keep testing on the rest?", "I understand your perspective, however I have some concerns about moving the launch date forward…") });
+      seedRatings(sample({ name: "Sample: Etsy shop launch kit", kind: "kit", one_line: "Name, listings and first-week posts for a new Etsy shop.", category: "business", sub: "sell-online", handle: "sample-maker-ana", ageDays: 6, license: "mit",
+        skill_md: "---\nname: etsy-start-here\ndescription: Start here for an Etsy shop launch. Use when someone says \"help me open my Etsy shop\".\n---\n\n# Start here\n\n## What to do\n1. Ask what they make, their price range and their style.\n2. Use the etsy-listings skill for the first 5 listings.\n3. Use the etsy-posts skill for a week of posts.\n\n## Output\nA checklist of what they have now.\n",
+        parts: [{ skill_md: "---\nname: etsy-listings\ndescription: Write Etsy listing titles, tags and descriptions. Sample.\n---\n\n# Listings\n\n## What to do\n1. Write a 140-character title with the main search words first.\n2. Give 13 tags.\n\n## Output\nOne block per listing.\n" },
+          { skill_md: "---\nname: etsy-posts\ndescription: Plan a week of posts for a new shop. Sample.\n---\n\n# Posts\n\n## What to do\n1. Make 7 short posts, one per day.\n2. Use the shop's real items only.\n\n## Output\nA 7-row table.\n" }],
+        examples: ex("I make hand-dyed cotton scarves, $28-40, earthy colors", "Shop name ideas: Rootdye, Clay & Cloth…\nListing 1: Hand-dyed cotton scarf, rust brown, lightweight…") }).id, 6, 7);
       sample({ name: "Sample: Thank-you card writer", one_line: "Short thank-you notes that sound like you.", category: "writing", sub: "letters", handle: "you-sample", maker_id: "u-you", status: "draft", ageDays: 0 });
       sample({ name: "Sample: Study timer", one_line: "A 25-minute focus timer page with breaks.", category: "study", sub: "study-tools", handle: "sample-maker-lu", status: "review", ask_test: true, ageDays: 1,
         skill_md: "---\nname: study-timer\ndescription: Make a one-page focus timer. Sample skill for testing the review queue.\n---\n\n# Study timer\n\n## What to do\n1. Build one HTML page with a 25-minute timer.\n2. Use the sound from https://example.com/bell.mp3 when time is up.\n3. Keep it to one file.\n\n## Output\nOne HTML file.\n",
@@ -1337,7 +1647,7 @@
     function item(s) {
       var c = catOf(s.category), sub = subOf(s.category, s.sub), hp = helpedOf(s.id), l = liftOf(s);
       var o = {
-        id: s.id, slug: s.slug, name: s.name, one_line: s.one_line, category: s.category, category_name: c ? c.name : s.category, sub: s.sub, sub_name: sub ? sub.name : s.sub,
+        id: s.id, slug: s.slug, kind: s.kind || "skill", license: s.license || (s.official ? "cc-by" : null), name: s.name, one_line: s.one_line, category: s.category, category_name: c ? c.name : s.category, sub: s.sub, sub_name: sub ? sub.name : s.sub,
         for_tag: s.for_tag, for_name: tagName(D.forTags, s.for_tag), works_in: s.works_in, maker: { handle: s.handle, official: !!s.official },
         parent_id: s.parent_id, version: s.version, status: s.status,
         test: s.test ? { skill_score: s.test.skill_score, plain_score: s.test.plain_score, winner: s.test.winner, tested_at: s.test.tested_at } : null,
@@ -1349,8 +1659,8 @@
     }
     function detail(s, owner, admin) {
       var o = item(s), l = liftOf(s), par = s.parent_id && find(s.parent_id);
-      var ch = runChecks(s.skill_md, s.examples, {});
-      o.skill_md = s.skill_md; o.examples = clone(s.examples); o.test = s.test ? clone(s.test) : null;
+      var ch = runChecks(s.skill_md, s.examples, { kind: s.kind });
+      o.skill_md = s.skill_md; o.parts = s.parts ? clone(s.parts) : null; o.tip_url = s.tip_url || null; o.examples = clone(s.examples); o.test = s.test ? clone(s.test) : null;
       o.safety = { summary: ch.summary, warnings: ch.warnings };
       o.parent = par ? { id: par.id, name: par.name, maker: { handle: par.handle }, lift: liftOf(par) } : null;
       o.remixes = skills.filter(function (x) { return x.parent_id === s.id && x.status === "live"; }).map(function (x) { var xl = liftOf(x); return { id: x.id, name: x.name, maker: { handle: x.handle }, lift: xl, beats_parent: xl !== null && l !== null && xl > l }; });
@@ -1391,6 +1701,7 @@
             var sub = subOf(s.category, s.sub);
             return [s.name, s.one_line, sub ? sub.name : ""].concat(s.examples.map(function (e) { return e.input; })).join(" ").toLowerCase().indexOf(term) >= 0;
           });
+          if (q.get("type")) list = list.filter(function (s) { return (s.kind || "skill") === q.get("type"); });
           var cat = q.get("cat");
           if (cat) list = list.filter(function (s) { return s.category === cat; });
           if (q.get("sub")) list = list.filter(function (s) { return s.sub === q.get("sub"); });
@@ -1417,7 +1728,7 @@
           var ch = runChecks(String(b.skill_md || ""), b.examples, b);
           if (b.submit !== false && !ch.ok) throw err(422, "Fix the red flags first.", { checks: ch });
           var ns = { id: "sample-" + (n++), slug: String(b.name || "skill").toLowerCase().replace(/[^a-z0-9]+/g, "-"), maker_id: me.id, handle: me.handle, version: 1, status: b.submit === false ? "draft" : "review", test: null, review_note: null, hidden_by: null, created_at: Date.now(), updated_at: Date.now(), live_at: null };
-          ["name", "one_line", "category", "sub", "for_tag", "works_in", "skill_md", "examples", "parent_id", "ask_test"].forEach(function (k) { ns[k] = b[k] === undefined ? null : b[k]; });
+          ["kind", "parts", "license", "tip_url", "name", "one_line", "category", "sub", "for_tag", "works_in", "skill_md", "examples", "parent_id", "ask_test"].forEach(function (k) { ns[k] = b[k] === undefined ? null : b[k]; });
           skills.push(ns); return { skill: detail(ns, true, admin), checks: ch };
         }
         if (seg[0] === "skills" && seg[1]) {
@@ -1429,7 +1740,7 @@
             if (!own) throw err(403, "You can only edit your own skills.");
             var ch2 = runChecks(String(b.skill_md || ""), b.examples, b);
             if (!ch2.ok) throw err(422, "Fix the red flags first.", { checks: ch2 });
-            ["name", "one_line", "category", "sub", "for_tag", "works_in", "skill_md", "examples", "ask_test"].forEach(function (k) { if (b[k] !== undefined) s[k] = b[k]; });
+            ["kind", "parts", "license", "tip_url", "name", "one_line", "category", "sub", "for_tag", "works_in", "skill_md", "examples", "ask_test"].forEach(function (k) { if (b[k] !== undefined) s[k] = b[k]; });
             if (s.status === "live") s.version++;
             s.status = "review"; s.updated_at = Date.now();
             return { skill: detail(s, true, admin), checks: ch2 };
@@ -1464,6 +1775,31 @@
             return { ok: true, hidden: hidden };
           }
         }
+        if (p === "requests" && method === "GET") {
+          var st = q.get("status") === "made" ? "made" : "open";
+          var rl = requests.filter(function (x) { return x.status === st; }).sort(q.get("sort") === "new" ? function (a, c) { return c.at - a.at; } : function (a, c) { return c.votes - a.votes || c.at - a.at; });
+          return { items: rl.map(function (x) {
+            var mk = x.made && find(x.made);
+            return { id: x.id, title: x.title, detail: x.detail || null, category: x.category, category_name: (catOf(x.category) || {}).name, status: x.status, votes: x.votes, created_at: x.at, by: x.by,
+              mine: !!(me && x.user === me.id), voted: !!(me && x.voters[me.id]), made: mk ? { id: mk.id, name: mk.name, by: mk.handle } : null };
+          }) };
+        }
+        if (p === "requests" && method === "POST") {
+          if (!me) throw err(401, "Sign in first.");
+          if (String(b.title || "").trim().length < 8) throw err(400, "What you want help with is too short (8 characters min).");
+          if (!catOf(b.category)) throw err(400, "Pick a category.");
+          var nv = {}; nv[me.id] = 1;
+          requests.push({ id: "rq" + (n++), title: b.title, detail: b.detail || "", category: b.category, status: "open", votes: 1, voters: nv, by: me.handle, user: me.id, at: Date.now() });
+          return { ok: true };
+        }
+        if (seg[0] === "requests" && seg[1]) {
+          if (!me) throw err(401, "Sign in first.");
+          var rq = requests.find(function (x) { return x.id === seg[1]; });
+          if (!rq) throw err(404, "That request was not found.");
+          if (seg[2] === "vote") { if (rq.voters[me.id]) { delete rq.voters[me.id]; rq.votes--; } else { rq.voters[me.id] = 1; rq.votes++; } return { ok: true, voted: !!rq.voters[me.id], votes: rq.votes }; }
+          if (seg[2] === "made") { var mine2 = find(b.skill_id); if (!mine2 || mine2.maker_id !== me.id) throw err(404, "Pick one of your own items."); rq.status = "made"; rq.made = mine2.id; return { ok: true }; }
+          if (seg[2] === "close") { if (!admin) throw err(403, "Only reviewers can close requests."); rq.status = "closed"; return { ok: true }; }
+        }
         if (seg[0] === "review") {
           if (!admin) throw err(403, "Reviewers only.");
           if (!seg[1]) return { items: skills.filter(function (s) { return s.status === "review" || (s.status === "hidden" && s.hidden_by === "reports"); }).map(function (s) {
@@ -1487,7 +1823,9 @@
       var blocks = [], warnings = [];
       function block(rule, line, fix, where) { blocks.push({ rule: rule, where: where || "SKILL.md", line: line, fix: fix }); }
       var fm = md.match(/^﻿?---[ \t]*\n([\s\S]*?)\n---/);
-      if (!md.trim()) block("frontmatter", 1, "Paste your SKILL.md. It starts with --- then name: and description: lines, then ---.");
+      var isPrompt = meta && meta.kind === "prompt";
+      if (isPrompt) { if (!md.trim()) block("prompt", 1, "Paste your prompt.", "the prompt"); }
+      else if (!md.trim()) block("frontmatter", 1, "Paste your SKILL.md. It starts with --- then name: and description: lines, then ---.");
       else if (!fm) block("frontmatter", 1, "Start the file with a frontmatter block: a line with ---, then name: and description:, then ---.");
       else {
         if (!/^name:[ \t]*\S/m.test(fm[1])) block("frontmatter", 2, "Add a name: line to the frontmatter, like name: polish-email.");
