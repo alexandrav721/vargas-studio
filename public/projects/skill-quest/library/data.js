@@ -59,7 +59,13 @@
     shield: '<path d="M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/>',
     edit: '<path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/>',
     eye: '<path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="2.8"/>',
-    slot: '<rect x="5" y="3.5" width="14" height="17" rx="2"/><path d="M12 9v6M9 12h6"/>'
+    slot: '<rect x="5" y="3.5" width="14" height="17" rx="2"/><path d="M12 9v6M9 12h6"/>',
+    prompt: '<path d="M4 5.5h16v10.5h-9l-4.5 3.5V16H4z"/><path d="M9 8.8H7.8v4.4H9M15 8.8h1.2v4.4H15"/>',
+    kit: '<path d="M3.5 8.5L12 4l8.5 4.5v9L12 22l-8.5-4.5z"/><path d="M3.5 8.5L12 13l8.5-4.5M12 13v9"/>',
+    skill: '<path d="M6 3.5h9l4 4v13H6z"/><path d="M15 3.5v4h4M9 12h7M9 15.5h7M9 8.5h3"/>',
+    heart: '<path d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.2a4.3 4.3 0 0 1 7.5 2.6C19.5 15.4 12 20 12 20z"/>',
+    up: '<path d="M12 19V6M6 11.5L12 5.5l6 6"/>',
+    ask: '<path d="M12 21a9 9 0 1 0-9-9c0 1.6.4 3.1 1.1 4.4L3 21l4.6-1.1A9 9 0 0 0 12 21z"/><path d="M9.6 9.4a2.5 2.5 0 1 1 3.6 2.3c-.8.4-1.2 1-1.2 1.8v.3M12 16.6v.3"/>'
   };
 
   window.SL_DATA = {
@@ -67,6 +73,12 @@
     /* ids match the API; GET /api/sl/taxonomy replaces these when it answers */
     forTags: [{ id: "anyone", name: "Anyone" }, { id: "student", name: "Student" }, { id: "parent", name: "Parent" }, { id: "small-business", name: "Small business" }, { id: "job-seeker", name: "Job seeker" }, { id: "creator", name: "Creator" }],
     worksIn: [{ id: "claude-ai", name: "Claude.ai" }, { id: "claude-code", name: "Claude Code" }],
+    kinds: [{ id: "skill", name: "Skill", plural: "Skills", what: "Claude learns a job and does it the same way every time." },
+      { id: "prompt", name: "Prompt", plural: "Prompts", what: "Copy, fill in the [blanks], send. Nothing to install." },
+      { id: "kit", name: "Kit", plural: "Kits", what: "A few skills that do one big job together. One upload." }],
+    licenses: [{ id: "cc-by", name: "Free to share with credit (CC BY 4.0)", short: "Share with credit" },
+      { id: "mit", name: "Free to use and change (MIT)", short: "Use and change freely" },
+      { id: "all-rights", name: "Use it yourself; ask before sharing", short: "Ask before sharing" }],
     reportReasons: [["unsafe", "Unsafe"], ["broken", "Doesn't work"], ["copied", "Copied from someone"], ["spam", "Spam"]],
     statuses: { draft: "Draft", review: "In review", live: "Live", changes: "Needs changes", hidden: "Hidden" },
     icons: icons,

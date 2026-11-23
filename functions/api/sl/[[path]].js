@@ -7,7 +7,11 @@
 //           PUT skills/<id> (same body; a live skill gets a pending version, the old one stays live until approved)
 //           POST skills/<id>/use {kind} · POST skills/<id>/rate {helped, line} · GET skills/<id>/ratings
 //           POST skills/<id>/report {reason, note} · POST check {skill_md, examples, name?, category?, sub?}
+//           Items have kind skill | prompt | kit, license, tip_url, and (kits) parts [{skill_md}]. GET skills?type=<kind>.
+// Requests  GET requests?sort=top|new&status=open|made · POST requests {title, detail, category}
+//           POST requests/<id>/vote (toggles) · POST requests/<id>/made {skill_id} (your own live item answers it)
 // Admin     GET review · POST review/<id> {action: approve|changes|hide|drop_ratings, note} · POST review/<id>/test {...}
+//           POST requests/<id>/close
 //           Admins = emails in the secret SMEZ_ADMIN_EMAILS (comma-separated). None set means nobody is admin.
 //
 // Passwords and tokens are never logged. Session tokens are stored only as SHA-256 hashes.
@@ -44,10 +48,19 @@ const FOR = new Map([['anyone', 'Anyone'], ['student', 'Student'], ['parent', 'P
 const WORKS = new Map([['claude-ai', 'Claude.ai'], ['claude-code', 'Claude Code']]);
 const REPORT_REASONS = new Set(['unsafe', 'broken', 'copied', 'spam']);
 const SORTS = new Set(['tested', 'helpful', 'new', 'remixed']);
+const KINDS = new Map([['skill', 'Skill'], ['prompt', 'Prompt'], ['kit', 'Kit']]);
+const LICENSES = new Map([['cc-by', 'Free to share with credit (CC BY 4.0)'], ['mit', 'Free to use and change (MIT)'], ['all-rights', 'Use it yourself; ask before sharing']]);
+const MAX_PROMPT = 8000;
+const MAX_PARTS = 5;
+// Tip links may only point at well-known tip / payment pages (never arbitrary sites).
+const TIP_HOSTS = [/^(www\.)?ko-fi\.com$/, /^(www\.)?buymeacoffee\.com$/, /^([a-z0-9-]+\.)?gumroad\.com$/, /^(www\.)?paypal\.me$/, /^(www\.)?patreon\.com$/,
+  /^(account\.)?venmo\.com$/, /^cash\.app$/, /^buy\.stripe\.com$/, /^(www\.)?liberapay\.com$/, /^github\.com$/];
 const TAXONOMY = {
   categories: CATEGORIES.map(([id, name, subs]) => ({ id, name, subs: subs.map(([sid, sname]) => ({ id: sid, name: sname })) })),
   for: [...FOR].map(([id, name]) => ({ id, name })),
   works_in: [...WORKS].map(([id, name]) => ({ id, name })),
+  kinds: [...KINDS].map(([id, name]) => ({ id, name })),
+  licenses: [...LICENSES].map(([id, name]) => ({ id, name })),
   report_reasons: [...REPORT_REASONS],
   sorts: [...SORTS],
 };
@@ -376,21 +389,54 @@ function close(a, b) {
 }
 
 /** Runs every automatic check. `raw` fields may still hold hidden Unicode; they're scanned as sent. */
-async function runChecks(env, { skill_md, examples, name, category, sub, selfId }) {
-  const blocks = [], warnings = [], urls = new Set();
-  const md = typeof skill_md === 'string' ? skill_md : '';
-  if (!md.trim()) blocks.push({ rule: 'frontmatter', where: 'SKILL.md', line: 1, fix: 'Paste your SKILL.md. It starts with --- then name: and description: lines, then ---.' });
+/** Frontmatter + size + binary checks for one SKILL.md (`where` names it in messages). Returns the parsed frontmatter. */
+function checkSkillFile(md, where, blocks) {
+  if (!md.trim()) { blocks.push({ rule: 'frontmatter', where, line: 1, fix: `Paste the ${where}. It starts with --- then name: and description: lines, then ---.` }); return null; }
   const bytes = enc.encode(md).length;
-  if (bytes > MAX_SKILL_BYTES) blocks.push({ rule: 'size', where: 'SKILL.md', line: 1, fix: `Make SKILL.md shorter: it is ${Math.ceil(bytes / 1024)} KB and the limit is 40 KB.` });
-  if (/[\u0000-\u0008\u000E-\u001F]/.test(md)) blocks.push({ rule: 'text-only', where: 'SKILL.md', line: 1, fix: 'This looks like a binary file. Paste plain text only.' });
-  const fm = md.trim() ? frontmatter(md) : null;
-  if (md.trim() && !fm) blocks.push({ rule: 'frontmatter', where: 'SKILL.md', line: 1, fix: 'Start the file with a frontmatter block: a line with ---, then name: and description:, then ---.' });
-  else if (fm) {
-    if (!fm.data.name) blocks.push({ rule: 'frontmatter', where: 'SKILL.md', line: 2, fix: 'Add a name: line to the frontmatter, like name: polish-email.' });
-    if (!fm.data.description) blocks.push({ rule: 'frontmatter', where: 'SKILL.md', line: 2, fix: 'Add a description: line to the frontmatter saying what it does and when to use it.' });
-    else if (fm.data.description.length > 1024) blocks.push({ rule: 'frontmatter', where: 'SKILL.md', line: 2, fix: 'Shorten the description to 1,024 characters or fewer.' });
+  if (bytes > MAX_SKILL_BYTES) blocks.push({ rule: 'size', where, line: 1, fix: `Make ${where} shorter: it is ${Math.ceil(bytes / 1024)} KB and the limit is 40 KB.` });
+  if (/[\u0000-\u0008\u000E-\u001F]/.test(md)) blocks.push({ rule: 'text-only', where, line: 1, fix: 'This looks like a binary file. Paste plain text only.' });
+  const fm = frontmatter(md);
+  if (!fm) blocks.push({ rule: 'frontmatter', where, line: 1, fix: 'Start the file with a frontmatter block: a line with ---, then name: and description:, then ---.' });
+  else {
+    if (!fm.data.name) blocks.push({ rule: 'frontmatter', where, line: 2, fix: 'Add a name: line to the frontmatter, like name: polish-email.' });
+    if (!fm.data.description) blocks.push({ rule: 'frontmatter', where, line: 2, fix: 'Add a description: line to the frontmatter saying what it does and when to use it.' });
+    else if (fm.data.description.length > 1024) blocks.push({ rule: 'frontmatter', where, line: 2, fix: 'Shorten the description to 1,024 characters or fewer.' });
   }
-  scan(md, 'SKILL.md', blocks, warnings, urls);
+  return fm;
+}
+
+async function runChecks(env, { skill_md, examples, name, category, sub, selfId, kind, parts }) {
+  const blocks = [], warnings = [], urls = new Set();
+  const k = KINDS.has(kind) ? kind : 'skill';
+  const md = typeof skill_md === 'string' ? skill_md : '';
+  let fm = null;
+  if (k === 'prompt') {
+    if (!md.trim()) blocks.push({ rule: 'prompt', where: 'the prompt', line: 1, fix: 'Paste your prompt. Put the parts people fill in inside [square brackets].' });
+    if (md.length > MAX_PROMPT) blocks.push({ rule: 'size', where: 'the prompt', line: 1, fix: `Make the prompt shorter: ${MAX_PROMPT.toLocaleString('en-US')} characters max.` });
+    if (/[\u0000-\u0008\u000E-\u001F]/.test(md)) blocks.push({ rule: 'text-only', where: 'the prompt', line: 1, fix: 'Paste plain text only.' });
+    scan(md, 'the prompt', blocks, warnings, urls);
+  } else {
+    const where = k === 'kit' ? 'start-here SKILL.md' : 'SKILL.md';
+    fm = checkSkillFile(md, where, blocks);
+    scan(md, where, blocks, warnings, urls);
+  }
+  if (k === 'kit') {
+    const list = Array.isArray(parts) ? parts : [];
+    if (!list.length) blocks.push({ rule: 'kit-parts', where: 'kit', line: 1, fix: 'A kit needs at least one more skill besides the start-here one. Add a part.' });
+    if (list.length > MAX_PARTS) blocks.push({ rule: 'kit-parts', where: 'kit', line: 1, fix: `Keep a kit to ${MAX_PARTS} extra skills or fewer.` });
+    const names = new Set(fm && fm.data.name ? [norm(fm.data.name)] : []);
+    list.slice(0, MAX_PARTS).forEach((p, i) => {
+      const where = `part ${i + 1} SKILL.md`;
+      const pmd = plainObject(p) && typeof p.skill_md === 'string' ? p.skill_md : '';
+      const pfm = checkSkillFile(pmd, where, blocks);
+      if (pfm && pfm.data.name) {
+        const n = norm(pfm.data.name);
+        if (names.has(n)) blocks.push({ rule: 'kit-parts', where, line: 2, fix: 'Two skills in this kit have the same name:. Give each one its own name.' });
+        names.add(n);
+      }
+      scan(pmd, where, blocks, warnings, urls);
+    });
+  }
 
   const ex = Array.isArray(examples) ? examples : [];
   if (examples !== undefined) {
@@ -443,11 +489,43 @@ function cleanExamples(v) {
 }
 
 /** Validate a submit/edit body. Returns cleaned fields (skill_md keeps hidden Unicode so the checks can flag it). */
+function cleanFile(v, label) {
+  if (typeof v !== 'string' || !v.trim()) throw new Bad(`Paste ${label}.`);
+  if (v.length > MAX_SKILL_BYTES * 2) throw new Bad(`${cap(label)} is too big (40 KB max).`, 413);
+  const s = v.replace(/\r\n?/g, '\n').replace(CONTROL_KEEP_LINES, '');
+  if (enc.encode(s).length > MAX_SKILL_BYTES) throw new Bad(`${cap(label)} is too big (40 KB max).`, 413);
+  return s;
+}
+function cleanTip(v) {
+  if (v === undefined || v === null || v === '') return null;
+  if (typeof v !== 'string' || v.length > 300) throw new Bad('That tip link is too long.');
+  let u;
+  try { u = new URL(v.trim()); } catch { throw new Bad('Paste the full tip link, starting with https://'); }
+  if (u.protocol !== 'https:' || u.username || u.password) throw new Bad('Tip links must start with https://');
+  const host = u.hostname.toLowerCase();
+  if (!TIP_HOSTS.some((r) => r.test(host)) || (host === 'github.com' && !/^\/sponsors\/[A-Za-z0-9-]+\/?$/.test(u.pathname)))
+    throw new Bad('Tip links can go to Ko-fi, Buy Me a Coffee, Gumroad, PayPal.me, Patreon, Venmo, Cash App, Stripe payment links, Liberapay or GitHub Sponsors.');
+  return u.toString();
+}
+
 function cleanSkill(b) {
-  if (typeof b.skill_md !== 'string' || !b.skill_md.trim()) throw new Bad('Paste your SKILL.md.');
-  if (b.skill_md.length > MAX_SKILL_BYTES * 2) throw new Bad('SKILL.md is too big (40 KB max).', 413);
-  const skill_md = b.skill_md.replace(/\r\n?/g, '\n').replace(CONTROL_KEEP_LINES, '');
-  if (enc.encode(skill_md).length > MAX_SKILL_BYTES) throw new Bad('SKILL.md is too big (40 KB max).', 413);
+  const kind = b.kind === undefined || b.kind === null ? 'skill' : b.kind;
+  if (!KINDS.has(kind)) throw new Bad('Pick what it is: a skill, a prompt or a kit.');
+  let skill_md;
+  if (kind === 'prompt') {
+    skill_md = longText(b.skill_md, MAX_PROMPT, 'your prompt', true);
+  } else {
+    skill_md = cleanFile(b.skill_md, kind === 'kit' ? 'the start-here SKILL.md' : 'your SKILL.md');
+  }
+  let parts = null;
+  if (kind === 'kit') {
+    if (!Array.isArray(b.parts) || !b.parts.length) throw new Bad('A kit needs at least one more skill. Add a part.');
+    if (b.parts.length > MAX_PARTS) throw new Bad(`Keep a kit to ${MAX_PARTS} extra skills or fewer.`);
+    parts = b.parts.map((p, i) => ({ skill_md: cleanFile(plainObject(p) ? p.skill_md : null, `part ${i + 1}'s SKILL.md`) }));
+  }
+  const license = b.license === undefined || b.license === null || b.license === '' ? null : b.license;
+  if (license !== null && !LICENSES.has(license)) throw new Bad('Pick a license from the list.');
+  const tip_url = cleanTip(b.tip_url);
   const name = text(b.name, 40, 'a name', true, 3);
   const one_line = text(b.one_line, 90, 'a one-line description', true, 10);
   const category = typeof b.category === 'string' ? b.category : '';
@@ -460,14 +538,14 @@ function cleanSkill(b) {
   if (!Array.isArray(works_in) || !works_in.length || works_in.some((w) => !WORKS.has(w))) throw new Bad('Pick where it works: Claude.ai, Claude Code or both.');
   works_in = [...WORKS.keys()].filter((w) => works_in.includes(w));
   const examples = cleanExamples(b.examples);
-  const fm = frontmatter(skill_md);
-  const slug = (norm(fm && fm.data.name) || norm(name)).replace(/ /g, '-').slice(0, 64) || 'skill';
-  return { skill_md, name, one_line, category, sub, for_tag, works_in, examples, slug, ask_test: b.ask_test === true ? 1 : 0, example_inputs: examples.map((e) => e.input).join('\n\n') };
+  const fm = kind === 'prompt' ? null : frontmatter(skill_md);
+  const slug = (norm(fm && fm.data.name) || norm(name)).replace(/ /g, '-').slice(0, 64) || kind;
+  return { kind, skill_md, parts, license, tip_url, name, one_line, category, sub, for_tag, works_in, examples, slug, ask_test: b.ask_test === true ? 1 : 0, example_inputs: examples.map((e) => e.input).join('\n\n') };
 }
 
 // ---------- reading skills ----------
 
-const LIST_COLS = `s.id, s.slug, s.name, s.one_line, s.category, s.sub, s.for_tag, s.works_in, s.parent_id, s.version, s.status, s.test, s.test_skill, s.test_plain,
+const LIST_COLS = `s.id, s.slug, s.kind, s.license, s.name, s.one_line, s.category, s.sub, s.for_tag, s.works_in, s.parent_id, s.version, s.status, s.test, s.test_skill, s.test_plain,
   s.rate_n, s.rate_yes, s.wilson, s.uses, s.created_at, s.updated_at, s.live_at, u.handle AS maker_handle, u.is_system AS maker_system,
   (SELECT COUNT(*) FROM skills r WHERE r.parent_id = s.id AND r.status = 'live') AS remix_count`;
 
@@ -493,7 +571,8 @@ function listItem(r) {
   const h = helped(r.rate_n, r.rate_yes);
   const cat = CAT.get(r.category);
   return {
-    id: r.id, slug: r.slug, name: r.name, one_line: r.one_line,
+    id: r.id, slug: r.slug, kind: r.kind || 'skill', kind_name: KINDS.get(r.kind) || 'Skill', name: r.name, one_line: r.one_line,
+    license: r.license || null, license_name: r.license ? LICENSES.get(r.license) || r.license : null,
     category: r.category, category_name: cat ? cat.name : r.category,
     sub: r.sub, sub_name: cat && cat.subs.get(r.sub) || r.sub,
     for_tag: r.for_tag, for_name: FOR.get(r.for_tag) || r.for_tag,
@@ -507,13 +586,13 @@ function listItem(r) {
   };
 }
 async function getSkillRow(env, id) {
-  return env.SMEZ.prepare(`SELECT ${LIST_COLS}, s.maker_id, s.skill_md, s.examples, s.checks, s.review_note, s.hidden_by, s.ask_test, s.burst_flag
+  return env.SMEZ.prepare(`SELECT ${LIST_COLS}, s.maker_id, s.skill_md, s.parts, s.tip_url, s.examples, s.checks, s.review_note, s.hidden_by, s.ask_test, s.burst_flag
     FROM skills s LEFT JOIN users u ON u.id = s.maker_id WHERE s.id = ?`).bind(id).first();
 }
 async function ensureChecks(env, row) {
   let checks = parse(row.checks, null);
   if (!checks) {
-    checks = await runChecks(null, { skill_md: row.skill_md, examples: parse(row.examples, []) });
+    checks = await runChecks(null, { skill_md: row.skill_md, examples: parse(row.examples, []), kind: row.kind, parts: parse(row.parts, null) });
     await env.SMEZ.prepare('UPDATE skills SET checks = ? WHERE id = ?').bind(JSON.stringify(checks), row.id).run();
   }
   return checks;
@@ -534,6 +613,8 @@ async function detail(env, row, { me, owner, admin }) {
   const out = {
     ...base,
     skill_md: row.skill_md,
+    parts: parse(row.parts, null),
+    tip_url: row.tip_url || null,
     examples: parse(row.examples, []),
     test: parse(row.test, null),
     safety: { summary: checks.summary || [], warnings: checks.warnings || [] },
@@ -560,6 +641,7 @@ async function detail(env, row, { me, owner, admin }) {
 function versionView(v) {
   return {
     version: v.version, status: v.status, review_note: v.review_note || null, name: v.name, one_line: v.one_line,
+    kind: v.kind || 'skill', license: v.license || null, tip_url: v.tip_url || null, parts: parse(v.parts, null),
     category: v.category, sub: v.sub, for_tag: v.for_tag, works_in: parse(v.works_in, []), slug: v.slug,
     skill_md: v.skill_md, examples: parse(v.examples, []), checks: parse(v.checks, null), ask_test: !!v.ask_test,
     created_at: v.created_at, updated_at: v.updated_at,
@@ -592,6 +674,8 @@ async function listSkills(env, sp) {
       where.push('s.sub = ?'); args.push(sub);
     }
   } else if (sp.get('sub')) throw new Bad('Pick a category with the subcategory.');
+  const ty = sp.get('type');
+  if (ty) { if (!KINDS.has(ty)) throw new Bad('Type should be skill, prompt or kit.'); where.push('s.kind = ?'); args.push(ty); }
   const f = sp.get('for');
   if (f) { if (!FOR.has(f)) throw new Bad('Unknown "for" filter.'); where.push('s.for_tag = ?'); args.push(f); }
   const w = sp.get('works');
@@ -717,6 +801,10 @@ async function handle({ request: req, env, params }) {
     const q = (sql, ...a) => env.SMEZ.prepare(sql).bind(...a);
     const rated = await env.SMEZ.prepare('SELECT skill_id FROM ratings WHERE user_id = ?').bind(id).all();
     await env.SMEZ.batch([
+      q("UPDATE requests SET status = 'open', made_id = NULL, made_by = NULL WHERE made_by = ? OR made_id IN (SELECT id FROM skills WHERE maker_id = ?)", id, id),
+      q('DELETE FROM request_votes WHERE user_id = ? OR request_id IN (SELECT id FROM requests WHERE user_id = ?)', id, id),
+      q('DELETE FROM requests WHERE user_id = ?', id),
+      q('UPDATE requests SET votes = (SELECT COUNT(*) FROM request_votes v WHERE v.request_id = requests.id)'),
       q('UPDATE skills SET parent_id = NULL WHERE parent_id IN (SELECT id FROM skills WHERE maker_id = ?)', id),
       q('DELETE FROM ratings WHERE user_id = ? OR skill_id IN (SELECT id FROM skills WHERE maker_id = ?)', id, id),
       q('DELETE FROM reports WHERE user_id = ? OR skill_id IN (SELECT id FROM skills WHERE maker_id = ?)', id, id),
@@ -743,7 +831,9 @@ async function handle({ request: req, env, params }) {
     const cat = typeof b.category === 'string' && CAT.has(b.category) ? b.category : null;
     const sub = cat && typeof b.sub === 'string' && CAT.get(cat).subs.has(b.sub) ? b.sub : null;
     const name = typeof b.name === 'string' ? b.name.slice(0, 40) : null;
-    return json(await runChecks(env, { skill_md: md, examples: b.examples, name, category: cat, sub, selfId: typeof b.id === 'string' ? b.id : null }));
+    const kind = KINDS.has(b.kind) ? b.kind : 'skill';
+    const parts = kind === 'kit' && Array.isArray(b.parts) ? b.parts.slice(0, MAX_PARTS + 1).map((x) => ({ skill_md: plainObject(x) && typeof x.skill_md === 'string' ? x.skill_md.replace(/\r\n?/g, '\n').slice(0, MAX_SKILL_BYTES * 2) : '' })) : null;
+    return json(await runChecks(env, { skill_md: md, examples: b.examples, name, category: cat, sub, selfId: typeof b.id === 'string' ? b.id : null, kind, parts }));
   }
 
   if (path === 'skills' && m === 'GET') return json(await listSkills(env, sp));
@@ -755,8 +845,9 @@ async function handle({ request: req, env, params }) {
     let parent_id = null;
     if (b.parent_id !== undefined && b.parent_id !== null && b.parent_id !== '') {
       const pid = skillId(b.parent_id);
-      const p = await env.SMEZ.prepare('SELECT id, status, maker_id FROM skills WHERE id = ?').bind(pid).first();
+      const p = await env.SMEZ.prepare('SELECT id, status, maker_id, license FROM skills WHERE id = ?').bind(pid).first();
       if (!p || (p.status !== 'live' && p.maker_id !== u.id)) throw new Bad('The skill you are remixing was not found.', 404);
+      if (p.license === 'all-rights' && p.maker_id !== u.id) throw new Bad('The maker keeps all rights to that one, so it can\'t be remixed.', 403);
       parent_id = p.id;
     }
     const submit = b.submit !== false;
@@ -766,9 +857,9 @@ async function handle({ request: req, env, params }) {
     const checks = await runChecks(env, { ...f, selfId: null });
     if (submit && !checks.ok) throw new Bad('Fix the red flags first.', 422, { checks });
     const id = newId(), now = Date.now();
-    await env.SMEZ.prepare(`INSERT INTO skills (id, slug, name, one_line, category, sub, for_tag, works_in, skill_md, examples, example_inputs, maker_id, parent_id, version, status, checks, ask_test, created_at, updated_at)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, ?, ?, ?, ?, ?)`)
-      .bind(id, f.slug, f.name, f.one_line, f.category, f.sub, f.for_tag, JSON.stringify(f.works_in), f.skill_md, JSON.stringify(f.examples), f.example_inputs,
+    await env.SMEZ.prepare(`INSERT INTO skills (id, slug, kind, license, tip_url, parts, name, one_line, category, sub, for_tag, works_in, skill_md, examples, example_inputs, maker_id, parent_id, version, status, checks, ask_test, created_at, updated_at)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, ?, ?, ?, ?, ?)`)
+      .bind(id, f.slug, f.kind, f.license, f.tip_url, f.parts ? JSON.stringify(f.parts) : null, f.name, f.one_line, f.category, f.sub, f.for_tag, JSON.stringify(f.works_in), f.skill_md, JSON.stringify(f.examples), f.example_inputs,
         u.id, parent_id, submit ? 'review' : 'draft', JSON.stringify(checks), f.ask_test, now, now).run();
     const row = await getSkillRow(env, id);
     return json({ skill: await detail(env, row, { me: u, owner: true, admin: u.is_admin }), checks }, 201);
@@ -798,21 +889,21 @@ async function handle({ request: req, env, params }) {
     if (row.status === 'live' || row.status === 'hidden') {
       // No rug pulls: the change waits in review; the current version stays as it is.
       if (!checks.ok) throw new Bad('Fix the red flags first.', 422, { checks });
-      await env.SMEZ.prepare(`INSERT INTO skill_versions (skill_id, version, name, one_line, category, sub, for_tag, works_in, slug, skill_md, examples, example_inputs, checks, ask_test, status, review_note, created_at, updated_at)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'review', NULL, ?, ?)
-        ON CONFLICT(skill_id) DO UPDATE SET name = excluded.name, one_line = excluded.one_line, category = excluded.category, sub = excluded.sub,
+      await env.SMEZ.prepare(`INSERT INTO skill_versions (skill_id, version, kind, license, tip_url, parts, name, one_line, category, sub, for_tag, works_in, slug, skill_md, examples, example_inputs, checks, ask_test, status, review_note, created_at, updated_at)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'review', NULL, ?, ?)
+        ON CONFLICT(skill_id) DO UPDATE SET kind = excluded.kind, license = excluded.license, tip_url = excluded.tip_url, parts = excluded.parts, name = excluded.name, one_line = excluded.one_line, category = excluded.category, sub = excluded.sub,
           for_tag = excluded.for_tag, works_in = excluded.works_in, slug = excluded.slug, skill_md = excluded.skill_md, examples = excluded.examples,
           example_inputs = excluded.example_inputs, checks = excluded.checks, ask_test = excluded.ask_test, status = 'review', review_note = NULL, updated_at = excluded.updated_at`)
-        .bind(id, row.version + 1, f.name, f.one_line, f.category, f.sub, f.for_tag, JSON.stringify(f.works_in), f.slug, f.skill_md, JSON.stringify(f.examples), f.example_inputs,
+        .bind(id, row.version + 1, f.kind, f.license, f.tip_url, f.parts ? JSON.stringify(f.parts) : null, f.name, f.one_line, f.category, f.sub, f.for_tag, JSON.stringify(f.works_in), f.slug, f.skill_md, JSON.stringify(f.examples), f.example_inputs,
           JSON.stringify(checks), f.ask_test, now, now).run();
     } else {
       const submit = b.submit !== false;
       if (submit && !checks.ok) throw new Bad('Fix the red flags first.', 422, { checks });
       const status = submit ? 'review' : row.status === 'review' ? 'review' : row.status === 'changes' ? 'changes' : 'draft';
       if (row.status === 'review' && !checks.ok) throw new Bad('Fix the red flags first.', 422, { checks });
-      await env.SMEZ.prepare(`UPDATE skills SET slug = ?, name = ?, one_line = ?, category = ?, sub = ?, for_tag = ?, works_in = ?, skill_md = ?, examples = ?, example_inputs = ?,
+      await env.SMEZ.prepare(`UPDATE skills SET slug = ?, kind = ?, license = ?, tip_url = ?, parts = ?, name = ?, one_line = ?, category = ?, sub = ?, for_tag = ?, works_in = ?, skill_md = ?, examples = ?, example_inputs = ?,
         checks = ?, ask_test = ?, status = ?, updated_at = ? WHERE id = ?`)
-        .bind(f.slug, f.name, f.one_line, f.category, f.sub, f.for_tag, JSON.stringify(f.works_in), f.skill_md, JSON.stringify(f.examples), f.example_inputs,
+        .bind(f.slug, f.kind, f.license, f.tip_url, f.parts ? JSON.stringify(f.parts) : null, f.name, f.one_line, f.category, f.sub, f.for_tag, JSON.stringify(f.works_in), f.skill_md, JSON.stringify(f.examples), f.example_inputs,
           JSON.stringify(checks), f.ask_test, status, now, id).run();
     }
     const fresh = await getSkillRow(env, id);
@@ -890,12 +981,14 @@ async function handle({ request: req, env, params }) {
       if (!s || (s.status !== 'live' && !(me && (me.is_admin || me.id === s.maker_id)))) throw new Bad('That skill was not found.', 404);
       let page = parseInt(sp.get('page') || '1', 10);
       if (!Number.isFinite(page) || page < 1) page = 1;
-      const rows = await env.SMEZ.prepare(`SELECT r.helped, r.line, r.updated_at, u.handle FROM ratings r JOIN users u ON u.id = r.user_id
+      const rows = await env.SMEZ.prepare(`SELECT r.helped, r.line, r.updated_at, u.handle, u.email FROM ratings r JOIN users u ON u.id = r.user_id
         WHERE r.skill_id = ? AND r.counted = 1 ORDER BY r.updated_at DESC LIMIT 20 OFFSET ?`).bind(id, (page - 1) * 20).all();
       const mine = me ? await env.SMEZ.prepare('SELECT helped, line, counted, updated_at FROM ratings WHERE skill_id = ? AND user_id = ?').bind(id, me.id).first() : null;
+      const staff = adminSet(env);
       return json({
         helped: helped(s.rate_n, s.rate_yes),
-        items: rows.results.map((r) => ({ handle: r.handle, helped: !!r.helped, line: r.line, at: r.updated_at })),
+        // Reviews by our own reviewers are labeled (FTC rule on insider reviews). Emails never leave the server.
+        items: rows.results.map((r) => ({ handle: r.handle, helped: !!r.helped, line: r.line, at: r.updated_at, staff: staff.has(r.email) })),
         page,
         mine: mine ? { helped: !!mine.helped, line: mine.line, counted: !!mine.counted, updated_at: mine.updated_at } : null,
       });
@@ -924,10 +1017,84 @@ async function handle({ request: req, env, params }) {
     return json({ error: 'That method is not allowed here.' }, 405);
   }
 
+  // ----- requests board -----
+  if (path === 'requests' && m === 'GET') {
+    const me = await currentUser(env, req);
+    const sort = sp.get('sort') === 'new' ? 'new' : 'top';
+    const status = sp.get('status') === 'made' ? 'made' : 'open';
+    const rows = await env.SMEZ.prepare(`SELECT r.id, r.title, r.detail, r.category, r.status, r.votes, r.created_at, r.made_id, u.handle,
+        mu.handle AS made_handle, s.name AS made_name, s.status AS made_status,
+        ${me ? '(SELECT 1 FROM request_votes v WHERE v.request_id = r.id AND v.user_id = ?)' : 'NULL'} AS voted, r.user_id
+      FROM requests r JOIN users u ON u.id = r.user_id LEFT JOIN users mu ON mu.id = r.made_by LEFT JOIN skills s ON s.id = r.made_id
+      WHERE r.status = ? ORDER BY ${sort === 'new' ? 'r.created_at DESC' : 'r.votes DESC, r.created_at DESC'} LIMIT 100`)
+      .bind(...(me ? [me.id, status] : [status])).all();
+    return json({
+      sort, status,
+      items: rows.results.map((r) => ({
+        id: r.id, title: r.title, detail: r.detail || null, category: r.category, category_name: CAT.has(r.category) ? CAT.get(r.category).name : r.category,
+        status: r.status, votes: r.votes, created_at: r.created_at, by: r.handle, mine: !!(me && r.user_id === me.id), voted: !!r.voted,
+        made: r.made_id && r.made_status === 'live' ? { id: r.made_id, name: r.made_name, by: r.made_handle || 'someone' } : null,
+      })),
+    });
+  }
+
+  if (path === 'requests' && m === 'POST') {
+    const u = await needUser(env, req);
+    const b = await readJson(req);
+    const title = text(b.title, 80, 'what you want help with', true, 8);
+    const det = text(b.detail, 280, 'the details');
+    const category = typeof b.category === 'string' && CAT.has(b.category) ? b.category : null;
+    if (!category) throw new Bad('Pick a category.');
+    const checks = { blocks: [], warnings: [], urls: new Set() };
+    scan(title + '\n' + (det || ''), 'request', checks.blocks, checks.warnings, checks.urls);
+    if (checks.blocks.length || checks.urls.size) throw new Bad('Keep requests to plain words, with no links or code.');
+    await take(env, 'u:' + u.id, 'request', 5, 86400, 'You can post 5 requests a day. Try again tomorrow.');
+    const id = newId(), now = Date.now();
+    await env.SMEZ.batch([
+      env.SMEZ.prepare('INSERT INTO requests (id, user_id, title, detail, category, status, votes, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, 1, ?, ?)').bind(id, u.id, title, det, category, 'open', now, now),
+      env.SMEZ.prepare('INSERT INTO request_votes (request_id, user_id, at) VALUES (?, ?, ?)').bind(id, u.id, now),
+    ]);
+    return json({ ok: true, id }, 201);
+  }
+
+  mm = path.match(/^requests\/([a-z0-9]{6,40})\/(vote|made|close)$/);
+  if (mm && m === 'POST') {
+    const u = await needUser(env, req);
+    const id = mm[1];
+    const r = await env.SMEZ.prepare('SELECT id, status FROM requests WHERE id = ?').bind(id).first();
+    if (!r) throw new Bad('That request was not found.', 404);
+    const now = Date.now();
+    if (mm[2] === 'vote') {
+      if (r.status !== 'open') throw new Bad('That request is already answered.', 409);
+      await take(env, 'u:' + u.id, 'vote', 200, 86400, 'That is a lot of votes for one day. Try again tomorrow.');
+      const had = await env.SMEZ.prepare('SELECT 1 FROM request_votes WHERE request_id = ? AND user_id = ?').bind(id, u.id).first();
+      await env.SMEZ.batch([
+        had ? env.SMEZ.prepare('DELETE FROM request_votes WHERE request_id = ? AND user_id = ?').bind(id, u.id)
+          : env.SMEZ.prepare('INSERT INTO request_votes (request_id, user_id, at) VALUES (?, ?, ?)').bind(id, u.id, now),
+        env.SMEZ.prepare('UPDATE requests SET votes = (SELECT COUNT(*) FROM request_votes WHERE request_id = ?1) WHERE id = ?1').bind(id),
+      ]);
+      const n = await env.SMEZ.prepare('SELECT votes FROM requests WHERE id = ?').bind(id).first();
+      return json({ ok: true, voted: !had, votes: n.votes });
+    }
+    if (mm[2] === 'made') {
+      if (r.status !== 'open') throw new Bad('That request is already answered.', 409);
+      const b = await readJson(req);
+      const sid = skillId(b.skill_id);
+      const s = await env.SMEZ.prepare('SELECT id, maker_id, status FROM skills WHERE id = ?').bind(sid).first();
+      if (!s || s.maker_id !== u.id) throw new Bad('Pick one of your own items.', 404);
+      if (s.status !== 'live') throw new Bad('It has to be live first. Send it for review, then come back.', 409);
+      await env.SMEZ.prepare("UPDATE requests SET status = 'made', made_id = ?, made_by = ?, updated_at = ? WHERE id = ?").bind(sid, u.id, now, id).run();
+      return json({ ok: true });
+    }
+    if (!u.is_admin) throw new Bad('Only reviewers can close requests.', 403);
+    await env.SMEZ.prepare("UPDATE requests SET status = 'closed', updated_at = ? WHERE id = ?").bind(now, id).run();
+    return json({ ok: true });
+  }
+
   // ----- admin -----
   if (path === 'review' && m === 'GET') {
     const a = await needAdmin(env, req);
-    const rows = await env.SMEZ.prepare(`SELECT ${LIST_COLS}, s.maker_id, s.skill_md, s.examples, s.checks, s.review_note, s.hidden_by, s.ask_test, s.burst_flag,
+    const rows = await env.SMEZ.prepare(`SELECT ${LIST_COLS}, s.maker_id, s.skill_md, s.parts, s.tip_url, s.examples, s.checks, s.review_note, s.hidden_by, s.ask_test, s.burst_flag,
         (SELECT status FROM skill_versions v WHERE v.skill_id = s.id) AS v_status
       FROM skills s LEFT JOIN users u ON u.id = s.maker_id
       WHERE s.status = 'review' OR (s.status = 'hidden' AND s.hidden_by = 'reports') OR s.burst_flag = 1
@@ -982,9 +1149,9 @@ async function handle({ request: req, env, params }) {
         q("UPDATE skills SET status = 'live', review_note = ?, hidden_by = NULL, live_at = COALESCE(live_at, ?), updated_at = ? WHERE id = ?", note, now, now, id);
         did = 'live';
       } else if (v && v.status === 'review') {
-        q(`UPDATE skills SET name = ?, one_line = ?, category = ?, sub = ?, for_tag = ?, works_in = ?, slug = ?, skill_md = ?, examples = ?, example_inputs = ?, checks = ?,
+        q(`UPDATE skills SET kind = ?, license = ?, tip_url = ?, parts = ?, name = ?, one_line = ?, category = ?, sub = ?, for_tag = ?, works_in = ?, slug = ?, skill_md = ?, examples = ?, example_inputs = ?, checks = ?,
             ask_test = ?, version = ?, status = 'live', hidden_by = NULL, review_note = ?, live_at = ?, updated_at = ?, test = NULL, test_skill = NULL, test_plain = NULL WHERE id = ?`,
-          v.name, v.one_line, v.category, v.sub, v.for_tag, v.works_in, v.slug, v.skill_md, v.examples, v.example_inputs, v.checks, v.ask_test, v.version, note, now, now, id);
+          v.kind || 'skill', v.license, v.tip_url, v.parts, v.name, v.one_line, v.category, v.sub, v.for_tag, v.works_in, v.slug, v.skill_md, v.examples, v.example_inputs, v.checks, v.ask_test, v.version, note, now, now, id);
         q('DELETE FROM skill_versions WHERE skill_id = ?', id);
         q('UPDATE reports SET resolved = 1 WHERE skill_id = ?', id);
         did = 'version-live';
@@ -1025,7 +1192,7 @@ async function handle({ request: req, env, params }) {
     return json({ ok: true, did, skill: await detail(env, row, { me: a, owner: false, admin: true }) });
   }
 
-  const known = /^(signup|signin|signout|me|taxonomy|check|skills|review)$|^skills\/[^/]+(\/(use|rate|ratings|report))?$|^review\/[^/]+(\/test)?$/;
+  const known = /^(signup|signin|signout|me|taxonomy|check|skills|review|requests)$|^requests\/[^/]+\/(vote|made|close)$|^skills\/[^/]+(\/(use|rate|ratings|report))?$|^review\/[^/]+(\/test)?$/;
   if (known.test(path)) return json({ error: 'That method is not allowed here.' }, 405);
   return json({ error: 'Not found.' }, 404);
 }
