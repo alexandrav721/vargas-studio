@@ -1,11 +1,11 @@
-/* Cooking school: shared lesson list, the Chef's passport (lesson stamps, this device only), big-text mode, toast. */
+/* AI Made EZ: shared lesson list, the Chef's passport (lesson stamps, this device only), big-text mode, toast. */
 (function () {
   "use strict";
   var KEY = "smez-school-v1", MAKER = "smez-passport-v1";
   var LESSONS = [
     { n: 1, id: "l1", short: "Meet the chef", name: "Meet the chef", leave: "A week of dinners", href: "lesson-1.html" },
-    { n: 2, id: "l2", short: "Your order", name: "Placing your order", leave: "A birthday message" },
-    { n: 3, id: "l3", short: "Like this", name: "“Make it like this”", leave: "An email ready to send" },
+    { n: 2, id: "l2", short: "Your order", name: "Placing your order", leave: "A birthday message", href: "lesson-2.html" },
+    { n: 3, id: "l3", short: "Like this", name: "“Make it like this”", leave: "An email ready to send", href: "lesson-3.html" },
     { n: 4, id: "l4", short: "Taste test", name: "Taste before you serve", leave: "A safe-kitchen card" },
     { n: 5, id: "l5", short: "Your station", name: "Your own station", leave: "A family-trip project" },
     { n: 6, id: "l6", short: "Take-home", name: "Take-home containers", leave: "A checklist to share" },

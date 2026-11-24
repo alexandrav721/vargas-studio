@@ -2,7 +2,7 @@
    t = title, y = type chip, d = one plain line, u = link, g = where it lives (learn | ready | make | play | proof | community | behind | about), k = extra words people might type. */
 window.SMEZ_INDEX = [
   /* learn */
-  { t: "Cooking school", y: "Course", g: "learn", u: "/projects/skill-quest/school/", d: "Learn AI the way you learned to cook. 8 short lessons and a Chef's passport.", k: "course class lessons learn beginner basics teach mom passport stamps" },
+  { t: "AI Made EZ", y: "Course", g: "learn", u: "/projects/skill-quest/school/", d: "Learn AI the way you learned to cook. 8 short lessons and a Chef's passport.", k: "course class lessons learn beginner basics teach mom passport stamps" },
   { t: "Lesson 1: Meet the chef", y: "Lesson", g: "learn", u: "/projects/skill-quest/school/lesson-1.html", d: "What AI is and isn't, in 8 minutes. Leave with a week of dinners.", k: "lesson one start first beginner what is ai chef fridge dinners made up hallucination" },
   { t: "Chef's passport", y: "Your stamps", g: "learn", u: "/projects/skill-quest/school/", d: "A stamp for every lesson, plus your Maker stamps.", k: "passport stamps progress badges collect" },
   { t: "Prompt = your order", y: "Idea", g: "learn", u: "/projects/skill-quest/school/lesson-1.html", d: "What you ask Claude for. More detail gets a better dish.", k: "prompt order ask question request" },
