@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Holiday letter · AI Made EZ</title>
+<meta name="description" content="Answer a few easy questions about your year and get a holiday letter ready to print on one page.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=Caveat:wght@600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../school/school.css">
+<link rel="stylesheet" href="letter.css">
+</head>
+<body class="ltr">
+<header class="top">
+  <a class="logo" href="./">AI Made EZ<small>Holiday letter</small></a>
+  <div class="tools">
+    <button class="chip" id="undo" type="button" disabled>Undo</button>
+    <button class="chip" id="sound" type="button" aria-pressed="false">Sound on</button>
+  </div>
+</header>
+<main class="studio" id="app">
+  <section class="ask" id="ask" aria-live="polite"></section>
+  <section class="out" aria-label="Your letter">
+    <div class="ohead"><h2 id="otitle">Your letter</h2><div id="otools"></div></div>
+    <div id="view"></div>
+  </section>
+  <section class="plan" aria-label="What I'll ask">
+    <h2>What I'll ask you</h2>
+    <div class="seg" role="group" aria-label="How many questions">
+      <button type="button" data-depth="short" aria-pressed="false">Short<small>4 questions</small></button>
+      <button type="button" data-depth="full" aria-pressed="true">Full<small>7 questions</small></button>
+      <button type="button" data-depth="all" aria-pressed="false">Everything<small>9 questions</small></button>
+    </div>
+    <ol class="qs" id="qs"></ol>
+    <details class="peek"><summary>See what Claude reads</summary><pre id="prompt"></pre></details>
+    <button class="linkb" type="button" id="restart">Start a new letter</button>
+  </section>
+</main>
+<footer class="foot"><a href="./">All planners</a><a href="../school/">AI Made EZ</a><span>Your letter is saved on this device only.</span><span>Not affiliated with Anthropic</span></footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="../sounds.js" defer></script>
+<script src="../school/school.js" defer></script>
+<script src="letter.js" defer></script>
+<script src="/projects/skill-quest/smez-index.js" defer></script>
+<script src="/projects/skill-quest/smez-nav.js" data-section="school" defer></script>
+</body>
+</html>
