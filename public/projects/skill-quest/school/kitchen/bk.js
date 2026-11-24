@@ -186,6 +186,17 @@ function rec(t, ok) { if (t && window.BKM) window.BKM.record(t, ok); }
           '<div class="breaks"><b>Where the kitchen idea breaks</b>' + L.breaks.where + "</div>" + nextBtn("Take the quiz"));
 
         if (step === 5) {
+          if (!L._gen && window.BK_WORDS) {
+            L._gen = 1;
+            var have = L.quiz.map(function (x) { return x.term; }).concat(L.game.type === "match" ? L.game.pairs.map(function (p) { return p[0]; }) : []);
+            var W = window.BK_WORDS, byName = {}; W.forEach(function (w) { byName[w[0]] = w; });
+            var todo = L.terms.filter(function (t) { return byName[t] && have.indexOf(t) < 0; }).sort(function () { return Math.random() - 0.5; }).slice(0, 3);
+            todo.forEach(function (t) {
+              var w = byName[t], m = /^(Large language model|Retrieval-augmented generation|Model Context Protocol): /.test(w[2]) ? w[2].slice(w[2].indexOf(": ") + 2) : w[2];
+              var others = L.terms.filter(function (o) { return o !== t && byName[o]; }).sort(function () { return Math.random() - 0.5; }).slice(0, 2);
+              L.quiz.push({ term: t, q: "Which word means: " + esc(m), a: [t].concat(others).map(esc), ok: 0, why: "Right. " + esc(t) + ": " + esc(w[1].charAt(0).toLowerCase() + w[1].slice(1)) + "." });
+            });
+          }
           var Q = L.quiz.map(function (x) { var idx = x.a.map(function (_, j) { return [Math.random(), j]; }).sort(function (a, b) { return a[0] - b[0]; }).map(function (p) { return p[1]; }); return { q: x.q, why: x.why, term: x.term, a: idx.map(function (j) { return x.a[j]; }), ok: idx.indexOf(x.ok) }; }), got = 0, answered = {}, tried = {}, first = 0;
           show("<h2>Quick questions.</h2><p class=\"muted\">Your first tap counts toward the words you know.</p>" + Q.map(function (x, i) {
             return '<div style="margin:18px 0"><p><b>' + (i + 1) + ". " + x.q + '</b></p><ul class="claims">' + x.a.map(function (a, j) { return '<li><button type="button" data-q="' + i + '" data-a="' + j + '">' + a + "</button></li>"; }).join("") + '</ul><div id="q' + i + '" role="status" aria-live="polite"></div></div>';
