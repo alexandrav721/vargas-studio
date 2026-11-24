@@ -299,6 +299,7 @@ async function reveal() {
     tag.hidden = false;
   }
 
+  $("#print").href = printLink();
   await wait(400);
   if (inGroup()) return void paintGroup(had);
   paintPile(had.slice(0, 5));
@@ -359,6 +360,7 @@ function paintGroup(meHad) {
   const shared = common.map((x) => ITEM_BY_NAME.get(x.name)).filter(Boolean);
   if (shared.length) paintPile(shared.slice(0, 5), common.map((x) => x.count));
   else paintPile((meHad || []).slice(0, 5));
+  $("#print-group").href = `./print-yours.html${encodeGroup(groupYear, withKeys(all), ITEM_NAMES)}`;
   const add = $("#add-friends");
   const note = $("#group-note");
   if (!meHad) {
@@ -373,11 +375,11 @@ function paintGroup(meHad) {
   }
 }
 
+// old one-person links carry no persona key: work it out from their picks
+const withKeys = (all) => all.map((p) => ({ ...p, key: p.key || personaKey(p.had.map((n) => ITEM_BY_NAME.get(n)).filter(Boolean)) }));
 function groupLink() {
   const u = new URL(location.href);
-  // old one-person links carry no persona key: work it out from their picks
-  const all = lastGroup.all.map((p) => ({ ...p, key: p.key || personaKey(p.had.map((n) => ITEM_BY_NAME.get(n)).filter(Boolean)) }));
-  return `${u.origin}${u.pathname}${encodeGroup(groupYear, all, ITEM_NAMES)}`;
+  return `${u.origin}${u.pathname}${encodeGroup(groupYear, withKeys(lastGroup.all), ITEM_NAMES)}`;
 }
 function groupCard() {
   const { all, meIndex } = lastGroup;
@@ -519,6 +521,11 @@ function shareLink() {
   if (ids.length) u.searchParams.set("had", ids.map((n) => n.toString(36)).join("."));
   u.searchParams.set("via", "card");
   return u.href;
+}
+/* The print designer reads the same picks as the share link (the away message stays in this browser). */
+function printLink() {
+  const ids = hadItems().map((it) => ITEM_NAMES.indexOf(it.name)).filter((n) => n >= 0);
+  return `./print-yours.html?year=${year}${ids.length ? `&had=${ids.map((n) => n.toString(36)).join(".")}` : ""}`;
 }
 async function card() {
   return makeCard({ had: hadItems(), from: year, to: year, away: $("#away").value });
