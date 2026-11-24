@@ -152,3 +152,5 @@ details.more summary{cursor:pointer;font-weight:600;min-height:28px}
 .bk .vq details summary::-webkit-details-marker{display:none}
 .bk .vq details summary::after{content:"Show";margin-left:auto;padding-left:10px;font-size:.8rem;color:var(--accent);font-weight:700}
 .bk .vq details[open] summary::after{content:"Hide"}
+.bk .modes{flex-wrap:nowrap;max-width:100%}
+.bk .modes .chip{white-space:nowrap;padding:7px 14px}
