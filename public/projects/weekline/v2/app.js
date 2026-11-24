@@ -5,7 +5,7 @@ import {
 } from "./data.js";
 import * as W from "./store.js";
 import { S, session } from "./store.js";
-import { fontsReady, loadImage, drawStory, drawRecap, saveCanvas, shareCanvas } from "./share.js";
+import { fontsReady, loadImage, drawStory, drawLock, drawRecap, saveCanvas, shareCanvas } from "./share.js";
 
 const app = document.getElementById("app");
 const tabsEl = document.getElementById("tabs");
@@ -406,6 +406,7 @@ function weekView() {
       <button class="btn line" data-act="ics" ${locked.length ? "" : 'aria-disabled="true"'}>${icon("down")}Add to calendar</button>
       <button class="btn line" data-act="subscribe">${icon("feed")}Subscribe</button>
       <a class="btn sun full" href="#/share">${icon("share")}Share my week</a>
+      <p style="text-align:center;margin-top:6px"><a class="linkbtn" href="#/share?k=lock">Put it on my lock screen</a> · <a class="linkbtn" href="sms:&body=${encodeURIComponent(weekText())}">Text it to me</a></p>
     </div>
     ${!locked.length ? `<p class="fine wrap" style="margin-top:8px">Add to calendar saves your locked nights. Lock one first.</p>` : ""}
     ${feedBox()}
@@ -740,15 +741,16 @@ async function loadPage(r) {
 
 /* ---------- Share ---------- */
 function shareView(r) {
-  const k = r.q.get("k") === "recap" ? "recap" : "story";
-  return `<div class="wrap" style="padding-top:26px"><h1 style="font-size:44px;line-height:1">Post <em>your ${k === "recap" ? "month" : "week"}</em></h1>
-    <p class="hint" style="margin-top:8px"><span>1080 × ${k === "recap" ? "1350" : "1920"} PNG. Drawn on this phone.</span></p>
+  const k = ["recap", "lock"].includes(r.q.get("k")) ? r.q.get("k") : "story";
+  return `<div class="wrap" style="padding-top:26px"><h1 style="font-size:44px;line-height:1">${k === "lock" ? "Your week, <em>on your lock screen</em>" : `Post <em>your ${k === "recap" ? "month" : "week"}</em>`}</h1>
+    <p class="hint" style="margin-top:8px"><span>${k === "lock" ? "1179 × 2556 PNG, sized for iPhone. Save it, then set it as your wallpaper." : `1080 × ${k === "recap" ? "1350" : "1920"} PNG. Drawn on this phone.`}</span></p>
     <div class="mtabs" style="padding:12px 0 0" role="group" aria-label="Poster">
       <a class="chip ${k === "story" ? "on" : ""}" href="#/share" aria-current="${k === "story"}">My week, 9:16</a>
       <a class="chip ${k === "recap" ? "on" : ""}" href="#/share?k=recap" aria-current="${k === "recap"}">Month recap, 4:5</a>
+      <a class="chip ${k === "lock" ? "on" : ""}" href="#/share?k=lock" aria-current="${k === "lock"}">Lock screen</a>
     </div></div>
     <div class="shares">
-      <figure><canvas id="poster" class="${k === "recap" ? "recap-c" : "story-c"}" role="img" aria-label="${k === "recap" ? "Month recap poster" : "My week story poster"}"></canvas>
+      <figure><canvas id="poster" class="${k === "recap" ? "recap-c" : k === "lock" ? "lock-c" : "story-c"}" role="img" aria-label="${k === "recap" ? "Month recap poster" : k === "lock" ? "Lock screen with your week" : "My week story poster"}"></canvas>
       <figcaption>${ui.own ? "Your photo. It stays on this device." : `Photo: ${esc(PHOTOS[k === "recap" ? "manhattan-gold" : "domino"].credit)}`}</figcaption></figure>
       <div>
         <div class="filepick"><input id="ownphoto" type="file" accept="image/*" aria-label="Use my own photo">
@@ -756,17 +758,58 @@ function shareView(r) {
         ${ui.own ? `<button class="linkbtn" data-act="ownclear">Back to the city photo</button>` : ""}
         <p class="fine" style="margin:8px 0 16px">Your photo never leaves this phone unless you share the poster.</p>
         <div class="row2"><button class="btn line" data-act="save" data-v="${k}">${icon("down")}Save</button><button class="btn sun" data-act="share" data-v="${k}">${icon("share")}Share</button></div>
+        ${k === "lock" ? `<details class="howto"><summary>Make it your wallpaper</summary><ol><li>Tap Save, or Share then Save Image.</li><li>Open Photos, tap the picture, then the share button, then Use as Wallpaper.</li><li>Every Sunday, make a fresh one here.</li></ol></details>` : ""}
+        <h2 class="as-text">Or as text</h2>
+        <div class="row2"><a class="btn line" href="sms:&body=${encodeURIComponent(weekText())}">${icon("msg")}Text it to me</a><button class="btn line" data-act="copyweek">${icon("link")}Copy for Notes</button></div>
+        <p class="fine" style="margin-top:8px">Text it to yourself or paste it into Notes. Plain text, works anywhere.</p>
       </div>
     </div>`;
 }
+/** The week as plain text, for Messages or Notes. */
+function weekText() {
+  const p = P(); if (!p) return "";
+  const wk = lastWeek || week();
+  const a = wk.dates[0], b = wk.dates[wk.dates.length - 1];
+  const lines = [`My week, ${W.dayNum(a)}–${W.dayNum(b)} ${MONTHS[W.monthIdx(b)]}`];
+  wk.days.filter((d) => !d.past || d.kind === "lock").forEach((d) => {
+    const day = `${DAYS[d.d]} ${W.dayNum(d.date)}`;
+    if (d.kind === "lock" || d.kind === "plan") {
+      const ev = d.kind === "lock" ? d.lock : d.plan.ev;
+      lines.push(`${day}: ${ev.time ? ev.time + " " : ""}${ev.title}${ev.hood ? ` (${ev.hood})` : ""}${d.kind === "plan" ? " - maybe" : ""}`);
+    } else if (d.mine && d.mine.length) lines.push(`${day}: ${d.mine[0].title}`);
+    else if (d.kind === "holiday") lines.push(`${day}: ${d.holiday.name}`);
+    else if (d.kind === "busy" || d.kind === "cal") lines.push(`${day}: busy`);
+    else lines.push(`${day}: free`);
+  });
+  lines.push("", "Made with Weekline");
+  return lines.join("\n");
+}
 async function drawShares() {
   const cv = document.getElementById("poster"); if (!cv) return;
-  const k = route().q.get("k") === "recap" ? "recap" : "story";
+  const k = ["recap", "lock"].includes(route().q.get("k")) ? route().q.get("k") : "story";
   await fontsReady();
   const img = ui.own || (await loadImage(photoUrl(k === "recap" ? "manhattan-gold" : "domino")));
   const credit = ui.own ? "" : photoCredit(k === "recap" ? "manhattan-gold" : "domino");
   const p = P(); const wk = lastWeek || week();
   const friendsAll = new Set();
+  if (k === "lock") {
+    const today = wk.days.find((d) => d.date === TODAY) || wk.days.find((d) => d.date > TODAY) || wk.days[0];
+    const evOf = (d) => (d.kind === "lock" ? d.lock : d.kind === "plan" ? d.plan.ev : null);
+    const tev = evOf(today);
+    const tonight = tev ? tev.title : today.mine && today.mine.length ? today.mine[0].title : today.kind === "holiday" ? today.holiday.name : "A free night, on purpose";
+    const meta = tev ? `${tev.time || ""}${tev.hood ? " · " + tev.hood : ""}` : today.mine && today.mine.length ? (SRC_NAMES[today.mine[0].source] || "") : "";
+    const rows = wk.days.filter((d) => d.date > today.date).map((d) => {
+      const ev = evOf(d);
+      if (ev) return { day: DAYS[d.d], title: ev.title };
+      if (d.mine && d.mine.length) return { day: DAYS[d.d], title: d.mine[0].title };
+      if (d.kind === "holiday") return { day: DAYS[d.d], title: d.holiday.name, free: true };
+      return { day: DAYS[d.d], title: d.kind === "busy" || d.kind === "cal" ? "Busy" : "Free", free: true };
+    });
+    const a = wk.dates[0], b = wk.dates[wk.dates.length - 1];
+    const sample = p.demo || wk.days.some((d) => (d.lock && d.lock.kind !== "live" && d.lock.kind !== "tm") || (d.plan && !["live", "tm"].includes(d.plan.ev.kind)));
+    drawLock(cv, { img, own: !!ui.own, tonightLabel: today.date === TODAY ? "Tonight" : DAYS_LONG[today.d], tonight, tonightMeta: meta, rows, sample, range: `${W.dayNum(a)}–${W.dayNum(b)} ${MONTHS[W.monthIdx(b)]}` });
+    return;
+  }
   if (k === "story") {
     const rows = wk.days.filter((d) => !(d.kind === "busy")).map((d) => {
       if (d.kind === "lock" || d.kind === "plan") {
@@ -982,10 +1025,11 @@ const actions = {
   webshare: async (b) => { try { await navigator.share({ text: b.dataset.text, url: b.dataset.url }); } catch (e) { /* dismissed */ } },
   moff: (b) => { ui.monthOff = Number(b.dataset.v); render({ keepFocus: true }); },
   ownclear: () => { if (ui.ownUrl) URL.revokeObjectURL(ui.ownUrl); ui.own = null; ui.ownUrl = null; render(); },
-  save: async (b) => { const cv = document.getElementById("poster"); await saveCanvas(cv, b.dataset.v === "recap" ? "weekline-month.png" : "weekline-my-week.png"); toast("Saved."); },
+  save: async (b) => { const cv = document.getElementById("poster"); await saveCanvas(cv, b.dataset.v === "recap" ? "weekline-month.png" : b.dataset.v === "lock" ? "weekline-lock-screen.png" : "weekline-my-week.png"); toast("Saved."); },
+  copyweek: async () => { try { await navigator.clipboard.writeText(weekText()); toast("Copied. Paste it into Notes."); } catch (e) { toast("Couldn't copy here. Try Text it to me."); } },
   share: async (b) => {
     const cv = document.getElementById("poster");
-    try { const r = await shareCanvas(cv, b.dataset.v === "recap" ? "weekline-month.png" : "weekline-my-week.png", "My week, made with Weekline"); toast(r === "shared" ? "Shared." : "This browser can't share files, so it saved instead."); }
+    try { const r = await shareCanvas(cv, b.dataset.v === "recap" ? "weekline-month.png" : b.dataset.v === "lock" ? "weekline-lock-screen.png" : "weekline-my-week.png", "My week, made with Weekline"); toast(r === "shared" ? "Shared." : "This browser can't share files, so it saved instead."); }
     catch (e) { /* dismissed */ }
   },
   "inv-ics": () => {
