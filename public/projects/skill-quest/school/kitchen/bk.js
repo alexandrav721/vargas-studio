@@ -30,8 +30,10 @@
     return '<div class="terms">' + terms.map(function (t) { return '<a class="term" href="glossary.html#' + esc(t.toLowerCase().replace(/[^a-z0-9]+/g, "-")) + '">' + esc(t) + "</a>"; }).join("") + "</div>";
   }
 
+function rec(t, ok) { if (t && window.BKM) window.BKM.record(t, ok); }
+  function taught() { var W = window.BK_WORDS || [], U = window.BK_UNTAUGHT || []; return W.map(function (w) { return w[0]; }).filter(function (t) { return U.indexOf(t) < 0; }); }
   window.BK = {
-    TRACK: TRACK, KEY: KEY, done: read, esc: esc, ticket: ticket, termChips: termChips,
+    TRACK: TRACK, KEY: KEY, done: read, taught: taught, esc: esc, ticket: ticket, termChips: termChips,
     mark: function (id) { var s = read(); var first = !s[id]; if (first) { s[id] = new Date().toISOString().slice(0, 10); write(s); } return first; },
     run: function (L) {
       var app = document.getElementById("app");
@@ -91,7 +93,7 @@
             b.onclick = function () {
               if (b.classList.contains("right")) return;
               app.querySelectorAll("[data-t]").forEach(function (x) { x.setAttribute("aria-pressed", "false"); });
-              b.setAttribute("aria-pressed", "true"); pickedTerm = +b.dataset.t; play("pick");
+              b.setAttribute("aria-pressed", "true"); pickedTerm = +b.dataset.t; play("pick"); G._w = G._w || {};
             };
           });
           app.querySelectorAll("[data-m]").forEach(function (b) {
@@ -101,10 +103,10 @@
               if (pickedTerm === null) { fb.innerHTML = '<p class="fb try">Tap a term on the left first.</p>'; return; }
               if (+b.dataset.m === pickedTerm) {
                 b.classList.add("right"); var t = app.querySelector('[data-t="' + pickedTerm + '"]'); t.classList.add("right"); t.setAttribute("aria-pressed", "false");
-                matched++; pickedTerm = null; play("tick", matched);
+                rec(G.pairs[pickedTerm][0], !G._w[pickedTerm]); matched++; pickedTerm = null; play("tick", matched);
                 if (matched === G.pairs.length) { fb.innerHTML = '<p class="fb good">' + G.right + "</p>"; fbDone(fb); }
                 else fb.innerHTML = '<p class="fb good">Match. ' + (G.pairs.length - matched) + " to go.</p>";
-              } else { b.classList.add("wrong"); setTimeout(function () { b.classList.remove("wrong"); }, 600); play("pick"); fb.innerHTML = '<p class="fb try">Not that one. Try another.</p>'; }
+              } else { G._w[pickedTerm] = 1; b.classList.add("wrong"); setTimeout(function () { b.classList.remove("wrong"); }, 600); play("pick"); fb.innerHTML = '<p class="fb try">Not that one. Try another.</p>'; }
             };
           });
         }
@@ -180,8 +182,8 @@
           '<div class="breaks"><b>Where the kitchen idea breaks</b>' + L.breaks.where + "</div>" + nextBtn("Take the quiz"));
 
         if (step === 5) {
-          var Q = L.quiz.map(function (x) { var idx = x.a.map(function (_, j) { return j; }); if (Math.random() < 0.5) idx.reverse(); return { q: x.q, why: x.why, a: idx.map(function (j) { return x.a[j]; }), ok: idx.indexOf(x.ok) }; }), got = 0, answered = {};
-          show("<h2>Two quick questions.</h2>" + Q.map(function (x, i) {
+          var Q = L.quiz.map(function (x) { var idx = x.a.map(function (_, j) { return [Math.random(), j]; }).sort(function (a, b) { return a[0] - b[0]; }).map(function (p) { return p[1]; }); return { q: x.q, why: x.why, term: x.term, a: idx.map(function (j) { return x.a[j]; }), ok: idx.indexOf(x.ok) }; }), got = 0, answered = {}, tried = {}, first = 0;
+          show("<h2>Quick questions.</h2><p class=\"muted\">Your first tap counts toward the words you know.</p>" + Q.map(function (x, i) {
             return '<div style="margin:18px 0"><p><b>' + (i + 1) + ". " + x.q + '</b></p><ul class="claims">' + x.a.map(function (a, j) { return '<li><button type="button" data-q="' + i + '" data-a="' + j + '">' + a + "</button></li>"; }).join("") + '</ul><div id="q' + i + '" role="status" aria-live="polite"></div></div>';
           }).join("") + '<div id="qdone"></div>');
           app.querySelectorAll("[data-q]").forEach(function (b) {
@@ -189,10 +191,10 @@
               var i = +b.dataset.q, x = Q[i];
               if (answered[i]) return;
               if (+b.dataset.a === x.ok) {
-                answered[i] = 1; got++; b.classList.add("right"); play("tick", got);
+                if (!tried[i]) { first++; rec(x.term, true); } tried[i] = 1; answered[i] = 1; got++; b.classList.add("right"); play("tick", got);
                 document.getElementById("q" + i).innerHTML = '<p class="fb good">' + x.why + "</p>";
-                if (got === Q.length) { document.getElementById("qdone").innerHTML = '<div class="btns"><button class="btn" id="finish" type="button">Get my stamp</button></div>'; document.getElementById("finish").onclick = function () { step = 6; render(); }; }
-              } else { b.classList.add("wrong"); play("pick"); document.getElementById("q" + i).innerHTML = '<p class="fb try">Not quite. Try the other one.</p>'; }
+                if (got === Q.length) { document.getElementById("qdone").innerHTML = '<p class="fb good">' + first + " of " + Q.length + ' on the first try.</p><div class="btns"><button class="btn" id="finish" type="button">Get my stamp</button></div>'; document.getElementById("finish").onclick = function () { step = 6; render(); }; }
+              } else { if (!tried[i]) rec(x.term, false); tried[i] = 1; b.classList.add("wrong"); play("pick"); document.getElementById("q" + i).innerHTML = '<p class="fb try">Not quite. Try another.</p>'; }
             };
           });
           return;
@@ -205,7 +207,8 @@
           '<div class="stamp-wrap"><div class="stamp land" aria-hidden="true">' + School.stampSvg(L.stamp, L.n, true) + "</div></div>" +
           '<h1 style="text-align:center">' + (all ? "Builder’s passport complete." : "Lesson " + L.n + ", stamped.") + "</h1>" +
           '<p class="muted" style="text-align:center">' + (all ? "All " + TRACK.length + " stamps. You can follow a builder conversation now." : (first ? count + " of " + TRACK.length + " Builder’s Kitchen stamps." : "You already had this stamp. Nice refresher.")) + "</p>" +
-          '<div class="kept"><p><b>Words you now know:</b></p>' + termChips(L.terms) +
+          '<div class="kept"><p><b>Words from this lesson:</b></p>' + termChips(L.terms) +
+          (window.BKM ? (function () { var T = taught(), k = window.BKM.knownCount(T), due = window.BKM.due(T).length; return "<p><b>Words you know: " + k + " of " + T.length + ".</b> A word counts once you get it right on 2 different days." + (due ? ' <a href="challenge.html?review=1">Review ' + due + " now</a>." : " Come back tomorrow for a 2-minute review.") + "</p>"; })() : "") +
           "<p><b>You leave with:</b> " + L.keep + "</p></div>" +
           '<div class="btns"><button class="btn" id="save" type="button">' + esc(L.cardLabel || "Copy my card") + "</button>" +
           (nxt ? '<a class="btn ghost" href="' + nxt.href + '">Next lesson →</a>' : "") +

@@ -2,7 +2,7 @@
 (function () {
   var L = {
     n: 1, id: "b1", mins: 6, title: "How AI kitchens work.", stamp: "Kitchen",
-    terms: ["Model", "LLM", "Prompt", "Token", "Context window", "Model family"],
+    seen: ["Training cutoff", "Compaction"], terms: ["Model", "LLM", "Prompt", "Token", "Context window", "Model family"],
     teaser: ["THE KITCHEN", "how it works", "You place the order (prompt).<br>The chef cooks it (model).<br>The counter holds it all (context window).", "Six words. Eight minutes."],
     lines: [
       ["Claude is a model.", "A model is the chef. It learned from a huge library of text, and now it writes on request."],
@@ -62,8 +62,8 @@
       where: "A real chef remembers and tastes. This one predicts the next piece of text from what’s on the counter. It doesn’t know when it’s wrong, so it can sound sure and still be wrong."
     },
     quiz: [
-      { q: "What’s a token?", a: ["A small piece of text the model counts and charges by", "One full word"], ok: 0, why: "Right. Tokens are the pieces. Limits and prices are counted in them." },
-      { q: "A very long chat starts missing early details. Why?", a: ["The counter (context window) is crowded, so early details get less attention", "The model learned something new mid-chat"], ok: 0, why: "Right. A crowded counter blurs early details. Start a fresh chat with the key facts." }
+      { term: "Token", q: "What’s a token?", a: ["A small piece of text the model counts and charges by", "One full word", "The price of one chat"], ok: 0, why: "Right. Tokens are the pieces. Limits and prices are counted in them." },
+      { term: "Context window", q: "A very long chat starts missing early details. Why?", a: ["The counter (context window) is crowded, so early details get less attention", "The model learned something new mid-chat", "The API key expired"], ok: 0, why: "Right. A crowded counter blurs early details. Start a fresh chat with the key facts." }
     ],
     keep: "5 questions for any AI vendor, and a cheat sheet ticket for your job.",
     cardLabel: "Copy my card",

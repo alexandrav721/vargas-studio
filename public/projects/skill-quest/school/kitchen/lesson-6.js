@@ -60,8 +60,9 @@
       where: "A real binder sits on a shelf and the chef flips through it. Claude never sees the binder, only the pages someone hands it."
     },
     quiz: [
-      { q: "Does RAG train the model on your documents?", a: ["No, it places the right pages in each request", "Yes, a little each time it reads them"], ok: 0, why: "Right. Nothing is trained. It’s looked up each time." },
-      { q: "Recall from Lesson 5: what’s an MCP server?", a: ["An appliance with a standard plug, for one service", "A newer Claude model"], ok: 0, why: "Right. A Drive or Notion server is one way to fetch pages for the binder." }
+      { term: "RAG", q: "Does RAG train the model on your documents?", a: ["No, it places the right pages in each request", "Yes, a little each time it reads them", "Only the first time"], ok: 0, why: "Right. Nothing is trained. It’s looked up each time." },
+      { term: "MCP server", q: "Recall from Lesson 5: what’s an MCP server?", a: ["An appliance with a standard plug, for one service", "A newer Claude model", "The app you chat in"], ok: 0, why: "Right. A Drive or Notion server is one way to fetch pages for the binder." },
+      {q: "From Lesson 3: what’s a hallucination?", a: ["A confident wrong answer", "A very long answer", "A refused request"], ok: 0, why: "Right. Give facts and an honest exit to make it rarer.", term: "Hallucination"}
     ],
     keep: "5 questions about AI that answers from documents, and a ticket for a setup plan.",
     cardLabel: "Copy my card",

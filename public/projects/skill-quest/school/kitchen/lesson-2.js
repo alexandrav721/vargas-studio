@@ -63,8 +63,8 @@
       where: "A real order window has a cook who remembers regulars. A basic API call forgets you the moment the plate leaves. The app resends the chat each time."
     },
     quiz: [
-      { q: "What does an API key do?", a: ["Proves the request is yours and bills your account", "Unlocks a smarter model"], ok: 0, why: "Right. It’s a badge and a tab. Keep it secret." },
-      { q: "Recall from Lesson 1: what’s the context window?", a: ["The counter: everything the chef can see at once", "The order window"], ok: 0, why: "Right. The window takes orders; the counter is what the chef can see." }
+      { term: "API key", q: "What does an API key do?", a: ["Proves the request is yours and bills your account", "Unlocks a smarter model", "Stores your past chats"], ok: 0, why: "Right. It’s a badge and a tab. Keep it secret." },
+      { term: "Context window", q: "Recall from Lesson 1: what’s the context window?", a: ["The counter: everything the chef can see at once", "The order window", "The list of models you can pick"], ok: 0, why: "Right. The window takes orders; the counter is what the chef can see." }
     ],
     keep: "5 questions about how a product reaches Claude, and the habit of keeping keys secret.",
     cardLabel: "Copy my card",

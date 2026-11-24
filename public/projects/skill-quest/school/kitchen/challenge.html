@@ -30,23 +30,32 @@
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <footer class="foot"><a href="./">Builder’s passport</a><a href="glossary.html">Kitchen dictionary</a><span>Not affiliated with Anthropic</span><span>Made by Alexandra Vargas</span></footer>
 <script src="../../sounds.js" defer></script>
-<script src="../school.js" defer></script><script src="bk.js" defer></script><script src="words.js" defer></script>
+<script src="../school.js" defer></script><script src="bk.js" defer></script><script src="words.js" defer></script><script src="mem.js" defer></script>
 <script>
 document.addEventListener("DOMContentLoaded", function () {
   var W = window.BK_WORDS, esc = BK.esc, app = document.getElementById("app"), N = 15;
   function play(n, x) { if (window.SQSound) window.SQSound.play(n, x); }
   function shuffle(a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
   var qs, i, right, missed, seen = [];
+  var U = window.BK_UNTAUGHT || [], doneL = BK.done(), REVIEW = /review=1/.test(location.search);
+  var TW = W.filter(function (w) { return U.indexOf(w[0]) < 0; });
+  var finished = BK.TRACK.filter(function (l) { return doneL[l.id]; }).map(function (l) { return l.n; });
+  var POOL = finished.length >= 2 ? TW.filter(function (w) { return finished.indexOf(w[4]) >= 0; }) : TW;
   function start() {
-    // one or two words from every lesson, so the whole kitchen gets tested
-    var byL = {}; W.forEach(function (w) { (byL[w[4]] = byL[w[4]] || []).push(w); });
+    var dueT = window.BKM ? BKM.due(POOL.map(function (w) { return w[0]; })) : [];
+    var dueW = shuffle(POOL.filter(function (w) { return dueT.indexOf(w[0]) >= 0; }));
+    var byL = {}; POOL.forEach(function (w) { (byL[w[4]] = byL[w[4]] || []).push(w); });
     var fresh = function (w) { return seen.indexOf(w[0]) < 0; };
-    if (W.filter(fresh).length < N) seen = [];
-    var pick = []; Object.keys(byL).forEach(function (k) { var c = shuffle(byL[k].filter(fresh)); if (c.length) pick.push(c[0]); });
-    var rest = shuffle(W.filter(function (w) { return pick.indexOf(w) < 0 && fresh(w); }));
-    pick = shuffle(pick.concat(rest.slice(0, N - pick.length)));
+    if (POOL.filter(fresh).length < N) seen = [];
+    var pick = dueW.slice(0, N);
+    if (!REVIEW || pick.length < 5) {
+      Object.keys(byL).forEach(function (k) { if (pick.length >= N) return; var c = shuffle(byL[k].filter(function (w) { return fresh(w) && pick.indexOf(w) < 0; })); if (c.length) pick.push(c[0]); });
+      var rest = shuffle(POOL.filter(function (w) { return pick.indexOf(w) < 0 && fresh(w); }));
+      pick = pick.concat(rest.slice(0, N - pick.length));
+    }
+    pick = shuffle(pick.slice(0, N));
     qs = pick.map(function (w, k) {
-      var kind = k % 3; // 0 kitchen picture → word, 1 real meaning → word, 2 a line you might hear → word
+      var kind = [1, 2, 1, 0, 1, 2, 1, 2, 1, 0][k % 10]; // mostly real meaning (1) and meeting lines (2), some kitchen pictures (0)
       var re = new RegExp(w[0].replace(/[.*+?^${}()|[\]\\]/g, "\\$&").replace(/ /g, "[ -]?") + "(s|ed|ing|en)?", "i");
       var heard = w[5] && re.test(w[5]) ? "“" + w[5].replace(re, "___") + "”" : null;
       if (kind === 2 && !heard) kind = 0;
@@ -72,7 +81,7 @@ document.addEventListener("DOMContentLoaded", function () {
     app.querySelectorAll("[data-j]").forEach(function (b) {
       b.onclick = function () {
         if (app.querySelector(".fbdone")) return;
-        var o = q.opts[+b.dataset.j], ok = o === q.w, fb = document.getElementById("fb");
+        var o = q.opts[+b.dataset.j], ok = o === q.w, fb = document.getElementById("fb"); if (window.BKM) BKM.record(q.w[0], ok);
         b.classList.add(ok ? "right" : "wrong");
         if (ok) { right++; play("tick", right); } else { missed.push(q.w); play("pick"); app.querySelectorAll("[data-j]").forEach(function (x) { if (q.opts[+x.dataset.j] === q.w) x.classList.add("right"); }); }
         fb.innerHTML = '<p class="fb ' + (ok ? "good" : "try") + ' fbdone">' + (ok ? "Yes. <b>" + esc(q.w[0]) + "</b>: " : "It’s <b>" + esc(q.w[0]) + "</b>: ") + esc(q.w[2]) + '</p><div class="btns"><button class="btn" id="nx" type="button">' + (i + 1 < qs.length ? "Next" : "See my score") + "</button></div>";
@@ -85,6 +94,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var pct = right / qs.length, line = pct === 1 ? "Perfect. You speak builder." : pct >= 0.8 ? "You speak builder." : pct >= 0.5 ? "Getting fluent. Review the words below." : "A good start. Each word below links to its lesson.";
     try { var best = +(localStorage.getItem("smez-builders-best") || 0); if (right > best) localStorage.setItem("smez-builders-best", String(right)); } catch (e) {}
     app.innerHTML = '<p class="label" style="text-align:center">Builder words challenge</p><p class="score">' + right + "/" + qs.length + '</p><h1 style="text-align:center">' + line + "</h1>" +
+      (window.BKM ? '<p class="muted" style="text-align:center">Words you know: ' + BKM.knownCount(TW.map(function (w) { return w[0]; })) + " of " + TW.length + ". Missed words come back first next time.</p>" : "") +
       (missed.length ? '<h2>Words to review</h2><ul class="review">' + missed.map(function (w) { var l = BK.TRACK[w[4] - 1]; return '<li><b>' + esc(w[0]) + "</b> = " + esc(w[1]) + ' · <a href="glossary.html#' + w[0].toLowerCase().replace(/[^a-z0-9]+/g, "-") + '">look it up</a> · <a href="' + l.href + '">Lesson ' + l.n + "</a></li>"; }).join("") + "</ul>" : "") +
       '<div class="btns"><button class="btn" id="again" type="button">New 15 words</button><button class="btn ghost" id="copy" type="button">Copy my score</button></div>';
     document.getElementById("again").onclick = start;
@@ -93,8 +103,10 @@ document.addEventListener("DOMContentLoaded", function () {
       (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(function () { School.toast("Score copied"); }, function () { School.toast("Select the text and copy it"); });
     };
   }
-  app.innerHTML = '<p class="label">Builder words challenge · 15 questions · about 4 minutes</p><h1>Do you speak builder?</h1>' +
-    '<p class="muted">Words from every lesson, mixed up. New words every round.</p><div class="btns"><button class="btn" id="go" type="button">Start</button></div>';
+  var KT = window.BKM ? BKM.knownCount(TW.map(function (w) { return w[0]; })) : 0, DUE = window.BKM ? BKM.due(POOL.map(function (w) { return w[0]; })).length : 0;
+  app.innerHTML = '<p class="label">' + (REVIEW ? "Review" : "Builder words challenge") + ' · up to 15 questions · about 4 minutes</p><h1>' + (REVIEW ? "Quick review." : "Do you speak builder?") + "</h1>" +
+    '<p class="muted">Words you know: ' + KT + " of " + TW.length + "." + (DUE ? " " + DUE + " due for review, they come first." : "") + (finished.length >= 2 ? " Only words from lessons you’ve finished." : "") + "</p>" +
+    '<div class="btns"><button class="btn" id="go" type="button">Start</button></div>';
   document.getElementById("go").onclick = start;
 });
 </script>

@@ -2,7 +2,7 @@
 (function () {
   var L = {
     n: 5, id: "b5", mins: 6, title: "Standard outlets.", stamp: "MCP",
-    terms: ["MCP", "MCP server", "MCP client", "Connector", "Resources", "Prompt injection"],
+    seen: ["Host"], terms: ["MCP", "MCP server", "MCP client", "Connector", "Resources", "Prompt injection"],
     teaser: ["OUTLETS", "MCP", "One outlet shape.<br>Any appliance plugs in.<br>Any kitchen can use it.", "Six words. Eight minutes."],
     lines: [
       ["MCP is a standard outlet.", "Model Context Protocol: one shared plug shape, so tools work in any AI app that supports it."],
@@ -52,8 +52,9 @@
       where: "A wall outlet just passes power. An MCP server passes words, and words can carry instructions. That’s a risk kitchens don’t have."
     },
     quiz: [
-      { q: "Why does MCP exist?", a: ["So a tool built once works in many AI apps", "So Claude can learn from your files"], ok: 0, why: "Right. It’s a standard, like one outlet shape." },
-      { q: "Recall from Lesson 4: who runs a tool when Claude asks?", a: ["The app or server, not Claude", "Claude itself"], ok: 0, why: "Right. Claude picks; the kitchen presses the button." }
+      { term: "MCP", q: "Why does MCP exist?", a: ["So a tool built once works in many AI apps", "So Claude can learn from your files", "To make replies faster"], ok: 0, why: "Right. It’s a standard, like one outlet shape." },
+      { term: "Tool call", q: "Recall from Lesson 4: who runs a tool when Claude asks?", a: ["The app or server, not Claude", "Claude itself", "Anthropic, always"], ok: 0, why: "Right. Claude picks; the kitchen presses the button." },
+      {q: "From Lesson 2: what is streaming?", a: ["The reply appears bit by bit as it’s written", "A faster model", "Sending many requests at once"], ok: 0, why: "Right. Same speed, you just read sooner.", term: "Streaming"}
     ],
     keep: "5 questions to ask before connecting your apps, and a ticket for an IT-ready connector plan.",
     cardLabel: "Copy my card",

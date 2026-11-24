@@ -2,7 +2,7 @@
 (function () {
   var L = {
     n: 3, id: "b3", mins: 6, title: "House rules on the wall.", stamp: "Rules",
-    terms: ["System prompt", "Prompt engineering", "Examples", "XML tags", "Thinking", "Hallucination"],
+    seen: ["Jailbreak", "Temperature"], terms: ["System prompt", "Prompt engineering", "Examples", "XML tags", "Thinking", "Hallucination"],
     teaser: ["HOUSE RULES", "on the wall", "1. Answer like our shop.<br>2. Under 80 words.<br>3. If unsure, say so.", "Six words. Nine minutes."],
     lines: [
       ["The system prompt is the house rules on the wall.", "The builder writes it once. It shapes every plate, whatever the customer orders."],
@@ -61,8 +61,8 @@
       where: "Kitchen staff follow the poster or get fired. Claude usually follows it, with no boss to answer to."
     },
     quiz: [
-      { q: "Who usually writes the system prompt?", a: ["The person building the app", "Anthropic, for every app"], ok: 0, why: "Right. The builder hangs the rules; the customer places orders." },
-      { q: "Recall from Lesson 2: does the API remember the last chat?", a: ["No, the app resends it each time", "Yes, for 24 hours"], ok: 0, why: "Right. The window forgets. Your app carries the history." }
+      { term: "System prompt", q: "Who usually writes the system prompt?", a: ["The person building the app", "Anthropic, for every app", "The customer typing"], ok: 0, why: "Right. The builder hangs the rules; the customer places orders." },
+      { term: "Messages", q: "Recall from Lesson 2: does the API remember the last chat?", a: ["No, the app resends it each time", "Yes, for 24 hours", "Only if you pay more"], ok: 0, why: "Right. The window forgets. Your app carries the history." }
     ],
     keep: "5 questions about a bot’s rules, and a ticket that tests house rules for a real business.",
     cardLabel: "Copy my card",

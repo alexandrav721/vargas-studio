@@ -2,7 +2,7 @@
 (function () {
   var L = {
     n: 8, id: "b8", mins: 6, title: "The chef in your own kitchen.", stamp: "Code",
-    terms: ["Claude Code", "CLAUDE.md", "Skill", "Slash command", "Hook", "Plugin"],
+    seen: ["Git"], terms: ["Claude Code", "CLAUDE.md", "Skill", "Slash command", "Hook", "Plugin"],
     teaser: ["YOUR KITCHEN", "Claude Code", "Claude chat: you order at its restaurant.<br>Claude Code: it cooks in your project,<br>with your files and your tools.", "Six words. Nine minutes."],
     lines: [
       ["Claude Code works inside your project.", "It reads your files, writes code and runs commands. It’s an agent working in your project."],
@@ -55,8 +55,9 @@
       where: "A cook in your home knows not to throw out your grandma’s recipe. Claude Code only knows what your notes and save points protect."
     },
     quiz: [
-      { q: "Where do you put a rule that must ALWAYS hold in Claude Code?", a: ["A hook or a permission mode", "CLAUDE.md"], ok: 0, why: "Right. CLAUDE.md guides; hooks and permissions are enforced." },
-      { q: "Recall from Lesson 7: is Claude Code an agent?", a: ["Yes, it loops: read, act, check", "No, it just chats"], ok: 0, why: "Right. It’s an agent with your files as its tools." }
+      { term: "Hook", q: "Where do you put a rule that must ALWAYS hold in Claude Code?", a: ["A hook or a permission mode", "CLAUDE.md", "A skill"], ok: 0, why: "Right. CLAUDE.md guides; hooks and permissions are enforced." },
+      { term: "Claude Code", q: "Recall from Lesson 7: is Claude Code an agent?", a: ["Yes, it loops: read, act, check", "No, it just chats", "Only on the web"], ok: 0, why: "Right. It’s an agent with your files as its tools." },
+      {q: "From Lesson 5: what’s prompt injection?", a: ["Hidden orders inside content Claude reads", "A longer system prompt", "A user typing fast"], ok: 0, why: "Right. Treat content as information, keep a person on risky actions.", term: "Prompt injection"}
     ],
     keep: "5 questions to ask whoever builds your site with AI, and a ticket that drafts a CLAUDE.md.",
     cardLabel: "Copy my card",

@@ -62,8 +62,9 @@
       where: "A head chef feels when a dish is off. An agent only knows what its tools report. If the tool says “done,” it believes it."
     },
     quiz: [
-      { q: "What’s the agent loop?", a: ["Think, use a tool, check the result, repeat", "Running the same fixed steps every time"], ok: 0, why: "Right. It keeps going until the job is done or it hits a limit." },
-      { q: "Recall from Lesson 4: what does an agent use to act?", a: ["Tools", "A bigger context window"], ok: 0, why: "Right. No tools, no actions. Agents are tools in a loop." }
+      { term: "Agent loop", q: "What’s the agent loop?", a: ["Think, use a tool, check the result, repeat", "Running the same fixed steps every time", "Asking the same question twice"], ok: 0, why: "Right. It keeps going until the job is done or it hits a limit." },
+      { term: "Tool use", q: "Recall from Lesson 4: what does an agent use to act?", a: ["Tools", "A bigger context window", "Its system prompt alone"], ok: 0, why: "Right. No tools, no actions. Agents are tools in a loop." },
+      {q: "From Lesson 4: what’s a tool definition?", a: ["The label: name, what it does, what it needs", "The tool’s result", "A list of every app Claude can use"], ok: 0, why: "Right. Claude reads the label to choose.", term: "Tool definition"}
     ],
     keep: "6 questions to ask anyone selling an agent, and a ticket that sorts a real job.",
     cardLabel: "Copy my card",

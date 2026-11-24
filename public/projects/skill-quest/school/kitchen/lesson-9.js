@@ -59,8 +59,9 @@
       where: "A food critic can taste anything. An eval only measures what your scorecard asks. If you forgot to check for allergies, it won’t either."
     },
     quiz: [
-      { q: "What’s a regression?", a: ["Something that used to work breaks after a change", "A test question you skip"], ok: 0, why: "Right. Evals catch them before your users do." },
-      { q: "Recall from Lesson 6: if a RAG bot gives wrong answers, what’s often the problem?", a: ["Search pulled the wrong page", "Claude needs training"], ok: 0, why: "Right. An eval on the search step finds it fast." }
+      { term: "Regression", q: "What’s a regression?", a: ["Something that used to work breaks after a change", "A test question you skip", "A model getting older"], ok: 0, why: "Right. Evals catch them before your users do." },
+      { term: "RAG", q: "Recall from Lesson 6: if a RAG bot gives wrong answers, what’s often the problem?", a: ["Search pulled the wrong page", "Claude needs training", "The context window is too big"], ok: 0, why: "Right. An eval on the search step finds it fast." },
+      {q: "From Lesson 6: what do embeddings do?", a: ["Turn text into numbers by meaning, so similar ideas can be found", "Train the model on your files", "Shrink long chats"], ok: 0, why: "Right. That’s how “refund” finds “money back”.", term: "Embeddings"}
     ],
     keep: "5 questions that expose “it’s accurate” claims, and a ticket for a mini taste test.",
     cardLabel: "Copy my card",
