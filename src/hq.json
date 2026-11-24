@@ -351,7 +351,7 @@
   "who": "Everyday people new to AI, and people who want to build with it",
   "problem": "Everyone says AI is easy. I don't get it, and I'm unsure it's safe.",
   "money": "Free, all of it. Donations through Patreon keep it going.",
-  "edge": "No gatekeeping: every prompt on the page, every AI word in plain words, two makers free.",
+  "edge": "AI is layers, and we show every one. Every prompt on the page, every word in plain words.",
   "hooks": [
    "Learn AI the way you learned to cook.",
    "Lesson 1: a week of dinners from your fridge.",
@@ -359,9 +359,9 @@
   ],
   "live": [
    "Level 1 and Level 2 lessons, 18 in all",
-   "AI words dictionary",
-   "Skill maker and kit maker",
-   "Keep up: best practices and this week in AI"
+   "Plain words: every AI term",
+   "Kit maker with templates and search",
+   "This week in AI, every Friday"
   ],
   "next": [
    "Post 3 times a week: easy, no gatekeeping, news",

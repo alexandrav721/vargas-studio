@@ -14,7 +14,8 @@
     { n: 7, id: "b7", stamp: "Agents", short: "Head chef", name: "The head chef (agents)", href: "lesson-7.html", use: "everyone is pitching “agents”" },
     { n: 8, id: "b8", stamp: "Code", short: "Your kitchen", name: "A chef in your kitchen (Claude Code)", href: "lesson-8.html", use: "a developer mentions Claude Code or skills" },
     { n: 9, id: "b9", stamp: "Evals", short: "Taste tests", name: "Taste tests at scale (evals)", href: "lesson-9.html", use: "someone asks “is the new version better?”" },
-    { n: 10, id: "b10", stamp: "Architect", short: "Graduation", name: "Plan your own kitchen", href: "lesson-10.html", use: "you plan your own AI project" }
+    { n: 10, id: "b10", stamp: "Architect", short: "Graduation", name: "Plan your own kitchen", href: "lesson-10.html", use: "you plan your own AI project" },
+    { n: 11, id: "b11", stamp: "Layers", short: "Bonus: layers", name: "Everything is a wrapper", href: "lesson-11.html", use: "someone pitches you an “AI-powered” app", bonus: true }
   ];
   function read() { try { return JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (e) { return {}; } }
   function write(v) { try { localStorage.setItem(KEY, JSON.stringify(v)); } catch (e) {} }
@@ -222,12 +223,13 @@ function rec(t, ok) { if (t && window.BKM) window.BKM.record(t, ok); }
 
         /* the stamp */
         if (window.BKM) window.BKM.touch(L.terms.filter(function (t) { return taught().indexOf(t) >= 0; }));
-        var first = BK.mark(L.id), have = read(), count = TRACK.filter(function (t) { return have[t.id]; }).length, nxt = TRACK[L.n];
-        var all = count === TRACK.length;
+        var CORE = TRACK.filter(function (t) { return !t.bonus; });
+        var first = BK.mark(L.id), have = read(), count = CORE.filter(function (t) { return have[t.id]; }).length, nxt = TRACK[L.n];
+        var all = count === CORE.length && !L.bonus;
         app.innerHTML = '<section class="step">' +
           '<div class="stamp-wrap"><div class="stamp land" aria-hidden="true">' + School.stampSvg(L.stamp, L.n, true) + "</div></div>" +
           '<h1 style="text-align:center">' + (all ? "Builder’s passport complete." : "Lesson " + L.n + ", stamped.") + "</h1>" +
-          '<p class="muted" style="text-align:center">' + (all ? "All " + TRACK.length + " stamps. You can follow a builder conversation now." : (first ? count + " of " + TRACK.length + " Builder’s Kitchen stamps." : "You already had this stamp. Nice refresher.")) + "</p>" +
+          '<p class="muted" style="text-align:center">' + (L.bonus ? "A bonus stamp. It sits next to your " + CORE.length + " Builder’s Kitchen stamps." : all ? "All " + CORE.length + " stamps. You can follow a builder conversation now." : (first ? count + " of " + CORE.length + " Builder’s Kitchen stamps." : "You already had this stamp. Nice refresher.")) + "</p>" +
           '<div class="kept"><p><b>Words from this lesson:</b></p>' + termChips(L.terms) +
           (window.BKM ? (function () { var T = taught(), k = window.BKM.knownCount(T), due = window.BKM.due(pool()).length; var lw = L.terms.filter(function (t) { return T.indexOf(t) >= 0; }).length;
             return "<p><b>" + lw + " new words today.</b> Lock them in tomorrow with a 2-minute review." + (k ? " You already know " + k + (k === 1 ? " word" : " words") + " for good." : "") + (due ? ' <a href="challenge.html?review=1">Practice: ' + window.BKM.due(pool()).slice(0, 4).join(", ") + (due > 4 ? " and " + (due - 4) + " more" : "") + "</a>." : "") + "</p>"; })() : "") +

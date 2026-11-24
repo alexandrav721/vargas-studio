@@ -5,7 +5,7 @@ window.SMEZ_INDEX = [
   { t: "AI Made EZ", y: "Course", g: "learn", u: "/projects/skill-quest/school/", d: "Learn AI the way you learned to cook. 8 short lessons and a Chef's passport.", k: "course class lessons learn beginner basics teach mom passport stamps" },
   { t: "Lesson 1: Meet the chef", y: "Lesson", g: "learn", u: "/projects/skill-quest/school/lesson-1.html", d: "What AI is and isn't, in 8 minutes. Leave with a week of dinners.", k: "lesson one start first beginner what is ai chef fridge dinners made up hallucination" },
   { t: "Builder's Kitchen", y: "Course", g: "learn", u: "/projects/skill-quest/school/kitchen/", d: "How AI products are built: API, prompts, tools, MCP, RAG, agents, Claude Code, evals. 10 lessons.", k: "level 2 builder developer architect api mcp agents rag evals claude code course anthropic" },
-  { t: "Kitchen dictionary", y: "Glossary", g: "learn", u: "/projects/skill-quest/school/kitchen/glossary.html", d: "Every AI builder word in plain words, with a kitchen picture.", k: "glossary dictionary terms words definitions vocabulary jargon token context window" },
+  { t: "Plain words (AI dictionary)", y: "Glossary", g: "learn", u: "/projects/skill-quest/school/kitchen/glossary.html", d: "Every AI builder word in plain words, with a kitchen picture.", k: "glossary dictionary terms words definitions vocabulary jargon token context window" },
   { t: "Builder lesson 1: How AI kitchens work", y: "Lesson", g: "learn", u: "/projects/skill-quest/school/kitchen/lesson-1.html", d: "Builder’s Kitchen lesson 1.", k: "model llm token context window haiku sonnet opus fable" },
   { t: "Builder lesson 2: The order window (API)", y: "Lesson", g: "learn", u: "/projects/skill-quest/school/kitchen/lesson-2.html", d: "Builder’s Kitchen lesson 2.", k: "api key request response streaming cost" },
   { t: "Builder lesson 3: House rules (prompting)", y: "Lesson", g: "learn", u: "/projects/skill-quest/school/kitchen/lesson-3.html", d: "Builder’s Kitchen lesson 3.", k: "system prompt prompt engineering xml examples hallucination thinking temperature" },
@@ -16,6 +16,7 @@ window.SMEZ_INDEX = [
   { t: "Builder lesson 8: Your own kitchen (Claude Code)", y: "Lesson", g: "learn", u: "/projects/skill-quest/school/kitchen/lesson-8.html", d: "Builder’s Kitchen lesson 8.", k: "claude code claude.md skill hook plugin slash command git" },
   { t: "Builder lesson 9: Taste tests (evals)", y: "Lesson", g: "learn", u: "/projects/skill-quest/school/kitchen/lesson-9.html", d: "Builder’s Kitchen lesson 9.", k: "evals eval test set grader judge regression" },
   { t: "Builder lesson 10: Plan your own kitchen", y: "Lesson", g: "learn", u: "/projects/skill-quest/school/kitchen/lesson-10.html", d: "Builder’s Kitchen lesson 10.", k: "architect architecture plan cost latency guardrails" },
+  { t: "Lesson 11: Everything is a wrapper", y: "Lesson", g: "learn", u: "/projects/skill-quest/school/kitchen/lesson-11.html", d: "AI is layers: you, apps, models, chips, electricity. What every AI product is made of.", k: "wrapper wrappers layers nvidia chips model app lovable cursor chatgpt how ai works what is ai made of" },
   { t: "Chef's passport", y: "Your stamps", g: "learn", u: "/projects/skill-quest/school/", d: "A stamp for every lesson, plus your Maker stamps.", k: "passport stamps progress badges collect" },
   { t: "Prompt = your order", y: "Idea", g: "learn", u: "/projects/skill-quest/school/lesson-1.html", d: "What you ask Claude for. More detail gets a better dish.", k: "prompt order ask question request" },
   { t: "Skill = a recipe card", y: "Idea", g: "learn", u: "/projects/skill-quest/templates/", d: "Instructions Claude pulls out when your request matches its title.", k: "skill recipe card skill.md instructions what is a skill" },
@@ -42,10 +43,8 @@ window.SMEZ_INDEX = [
   { t: "Share yours", y: "Library", g: "community", u: "/projects/skill-quest/library/#/submit", d: "Share a skill, prompt or kit. A person checks it first.", k: "share submit upload publish my skill" },
 
   /* make */
-  { t: "Best practices", y: "Keep up", g: "learn", u: "/projects/skill-quest/keep-up/#habits", d: "8 habits that work with any AI, in plain words.", k: "best practices tips habits rules how to use ai well good prompts safety" },
-  { t: "This week in AI", y: "Keep up", g: "learn", u: "/projects/skill-quest/keep-up/#news", d: "The week's AI news in plain words, every Friday.", k: "news trends latest updates this week new features scams" },
-  { t: "Skill maker", y: "Tool", g: "make", u: "/projects/skill-quest/make/skill.html", d: "Answer a few questions. Get a skill for something you do every week.", k: "make create build write my own skill diy recipe" },
-  { t: "Kit maker", y: "Tool", g: "make", u: "/projects/skill-quest/make/kit.html", d: "Plan an app room by room, so AI stops guessing. 8 starter plans.", k: "build kit app planner plan website app idea starter" },
+  { t: "This week in AI", y: "Keep up", g: "learn", u: "/projects/skill-quest/keep-up/", d: "The week's AI news in plain words, every Friday.", k: "news trends latest updates this week new features scams" },
+  { t: "Kit maker", y: "Tool", g: "make", u: "/projects/skill-quest/build-kit/", d: "Plan an app room by room, so AI stops guessing. 8 starter plans.", k: "build kit app planner plan website app idea starter" },
 
   /* play */
   { t: "Spot the skill", y: "Game", g: "play", u: "/projects/skill-quest/play.html", d: "Three real answers. Guess which one used a skill.", k: "game play spot guess quiz fun" },

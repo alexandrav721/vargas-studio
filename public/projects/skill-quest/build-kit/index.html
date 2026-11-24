@@ -3,18 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Build Kit</title>
+<title>Kit maker · AI Made EZ</title>
 <meta name="description" content="Plan your app so AI stops guessing. Answer plain questions room by room and get the docs folder your AI coding tool reads.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="kit.css">
 <link rel="stylesheet" href="/site-bar.css" />
-<script src="/site-bar.js" data-project="skill-quest" data-kind="piece" defer></script>
+<script src="/site-bar.js" data-project="ai-made-ez" data-kind="piece" defer></script>
 </head>
 <body>
 <header class="top">
   <button class="back" id="back" aria-label="Back" hidden><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
-  <div class="brand"><span>Build Kit</span><small>AI Made <b>EZ</b></small></div>
+  <div class="brand"><span>Kit maker</span><small>AI Made <b>EZ</b></small></div>
   <div class="meter" id="meter" hidden aria-live="polite">
     <div class="meter-text"><b id="guessN">0</b> guesses left</div>
     <div class="meter-track"><div class="meter-fill" id="meterFill"></div></div>
@@ -23,6 +23,14 @@
 </header>
 
 <main id="app">
+  <div class="kitbar" id="kitbar" hidden>
+    <div class="ksearch">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5l5 5"/></svg>
+      <input type="search" id="kq" placeholder="Search the plan: payments, sign in, delete…" aria-label="Search the plan" autocomplete="off">
+      <ul class="kres" id="kres" hidden></ul>
+    </div>
+    <nav class="rail" id="rail" aria-label="Every room in your plan"></nav>
+  </div>
 
   <!-- intro: the problem, felt -->
   <section id="s-intro" class="screen on">
@@ -47,11 +55,6 @@
     <label class="ql" for="ideaOne">In one sentence</label>
     <textarea id="ideaOne" rows="3" placeholder="Book a trusted dog walker who lives in your building."></textarea>
     <button class="link" id="useSample">Use a sample idea</button>
-    <div class="starters" id="startersBox" hidden>
-      <h3 class="sec">Or start from a starter plan</h3>
-      <p class="sub">Every room already answered for a common app. Walk through and make it yours.</p>
-      <div class="starter-grid" id="starters"></div>
-    </div>
   </section>
 
   <!-- the blueprint -->
@@ -59,6 +62,21 @@
     <div class="plan-head">
       <h2 id="planTitle">Your blueprint</h2>
       <p class="sub" id="planSub">Tap a room. Each answer is one less guess.</p>
+    </div>
+    <div class="plan-tools">
+      <div class="pt-idea">
+        <label class="ql" for="pName">Name</label>
+        <input id="pName" type="text" autocomplete="off" placeholder="Sudsy Paws Booking">
+        <label class="ql" for="pOne">In one sentence</label>
+        <input id="pOne" type="text" autocomplete="off" placeholder="Book a dog grooming slot in under a minute.">
+      </div>
+      <p class="ql">How big?</p>
+      <div class="choice" id="pSize" role="group" aria-label="How big"></div>
+      <details class="tpl" id="startersBox" hidden>
+        <summary>Start from a template</summary>
+        <p class="sub">Every room already filled in for a common app. Make it yours.</p>
+        <div class="starter-grid" id="starters"></div>
+      </details>
     </div>
     <div class="blueprint" id="blueprint" role="list"></div>
     <div class="rules-row"><span id="rulesLabel"></span><div class="rules-strip" id="rulesStrip" aria-label="Rules collected"></div></div>
@@ -71,6 +89,7 @@
       <div><h2 id="roomName"></h2><span class="file-tag" id="roomFile"></span></div>
     </div>
     <p class="sub" id="roomWhy"></p>
+    <details class="easy" id="roomEasy"></details>
     <div class="qdots" id="qdots" aria-hidden="true"></div>
     <div class="qcard" id="qcard"></div>
     <div class="qnav">
@@ -150,6 +169,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" defer></script>
 <script src="rooms.js" defer></script>
+<script src="easy.js" defer></script>
 <script src="../passport.js" defer></script>
 <script src="starters.js" defer></script>
 <script src="kit.js" defer></script>

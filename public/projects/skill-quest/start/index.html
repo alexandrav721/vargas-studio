@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Start here · AI Made EZ</title>
-<meta name="description" content="AI Made EZ: free AI lessons in plain words, an AI dictionary, a skill maker, a kit maker, and best practices and news made easy.">
+<meta name="description" content="AI Made EZ: AI is layers. Free lessons, plain words for every AI term, a Kit maker, and the week's AI news in plain words.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
@@ -29,6 +29,25 @@ main{max-width:1040px}
 .words li{padding:14px 16px;border-radius:12px;background:var(--track)}
 .words b{font:800 1.1em var(--display)}
 .words span{display:block;color:var(--muted)}
+.layers{list-style:none;margin:26px 0 0;padding:0;display:grid;gap:6px;max-width:620px}
+.layers li{display:grid;grid-template-columns:120px 1fr;gap:14px;align-items:center;padding:12px 16px;border-radius:12px;border:2px solid var(--ink);background:var(--card)}
+.layers li b{font:800 1.05em/1.1 var(--display);letter-spacing:-.01em}
+.layers li span{color:var(--muted);font-size:.95em;line-height:1.35}
+.layers li:nth-child(1){background:var(--ink);color:#fff}.layers li:nth-child(1) span{color:#d8d4cc}
+.layers li:nth-child(2){background:#FBE3DC}
+.layers li:nth-child(3){background:#F6EBD3}
+.layers li:nth-child(4){background:#E3F1ED}
+.layers li:nth-child(5){background:#E9E5DD}
+.layers-note{margin:12px 0 0;max-width:620px;font-weight:600}
+@media (max-width:480px){.layers li{grid-template-columns:1fr;gap:2px}}
+.big-tile{display:grid;grid-template-columns:1fr;border:2px solid var(--ink);border-radius:18px;overflow:hidden;background:var(--card);text-decoration:none;color:var(--ink);margin-top:16px;max-width:760px}
+@media (min-width:700px){.big-tile{grid-template-columns:1.1fr 1fr}}
+.big-tile img{display:block;width:100%;height:100%;min-height:220px;object-fit:cover;object-position:top}
+.big-tile div{padding:20px}
+.big-tile b{display:block;font:800 1.6em/1.05 var(--display);letter-spacing:-.025em}
+.big-tile span{display:block;margin-top:8px;color:var(--muted)}
+.big-tile em{display:inline-flex;margin-top:14px;font-style:normal;font-weight:700;color:var(--accent)}
+.big-tile:hover{color:var(--ink)}
 @media (prefers-reduced-motion:reduce){.tile{transition:none}}
 </style>
 <link rel="stylesheet" href="/site-bar.css" />
@@ -45,6 +64,15 @@ main{max-width:1040px}
     <h1>AI, in plain words.</h1>
     <p class="muted">AI isn't fancy. It's a kitchen: Claude is the chef, and you write the orders. Learn it here, for free.</p>
     <div class="btns"><a class="btn" href="../school/lesson-1.html">Start Lesson 1</a><a class="btn ghost" href="../school/kitchen/glossary.html">Look up a word</a></div>
+    <h2 style="margin-top:34px">AI is layers. That's the whole secret.</h2>
+    <ol class="layers" aria-label="The layers of AI, top to bottom">
+      <li><b>You</b><span>Ask for what you want.</span></li>
+      <li><b>Apps</b><span>ChatGPT, the Claude app, Lovable, Cursor, this site. Each one wraps a model.</span></li>
+      <li><b>Models</b><span>Claude, GPT, Gemini. The part that writes.</span></li>
+      <li><b>Chips</b><span>NVIDIA and others. A chip turns electricity into math.</span></li>
+      <li><b>Electricity</b><span>Where it all starts.</span></li>
+    </ol>
+    <p class="layers-note">Every layer is built on the one below, and charges for what it adds. Once you see the layers, nothing is magic. <a href="../school/kitchen/lesson-11.html">Learn the layers in 6 minutes →</a></p>
   </section>
 
   <section class="part" aria-labelledby="learn-h">
@@ -57,7 +85,7 @@ main{max-width:1040px}
   </section>
 
   <section class="part" aria-labelledby="words-h">
-    <div class="part-h"><span class="n">02</span><h2 id="words-h">AI words</h2></div>
+    <div class="part-h"><span class="n">02</span><h2 id="words-h">Plain words</h2></div>
     <p class="muted">Every word people use to sound fancy, in plain words.</p>
     <ul class="words">
       <li><b>Prompt</b><span>= your order to the chef</span></li>
@@ -69,21 +97,14 @@ main{max-width:1040px}
   </section>
 
   <section class="part" id="make" aria-labelledby="make-h">
-    <div class="part-h"><span class="n">03</span><h2 id="make-h">Make your own</h2></div>
-    <p class="muted">Two makers. Answer a few questions, leave with something you can use in Claude.</p>
-    <div class="tiles">
-      <a class="tile" href="../make/skill.html"><img src="/desk/learn-skill.jpg" alt="" loading="lazy"><div><b>Skill maker</b><span>Teach Claude one weekly job. Leave with your own skill file.</span></div></a>
-      <a class="tile" href="../make/kit.html"><img src="/desk/learn-buildkit.jpg" alt="" loading="lazy"><div><b>Kit maker</b><span>Plan an app so AI stops guessing. Leave with a kit file.</span></div></a>
-    </div>
+    <div class="part-h"><span class="n">03</span><h2 id="make-h">Kit maker</h2></div>
+    <p class="muted">Building an app with AI? Answer what AI would otherwise guess, room by room.</p>
+    <a class="big-tile" href="../build-kit/"><img src="/desk/learn-buildkit.jpg" alt="" loading="lazy"><div><b>Plan an app so AI stops guessing.</b><span>Start from a template like Sudsy Paws Booking, search any part of the plan, and leave with a kit your AI coding tool reads first. Every part explained the easy way, then what it really means.</span><em>Open the Kit maker →</em></div></a>
   </section>
 
   <section class="part" aria-labelledby="keep-h">
-    <div class="part-h"><span class="n">04</span><h2 id="keep-h">Keep up, made easy</h2></div>
-    <p class="muted">No hype. What works, and what changed this week.</p>
-    <div class="tiles">
-      <a class="tile" href="../keep-up/#habits"><img src="/desk/learn-habits.jpg" alt="" loading="lazy"><div><b>Best practices</b><span>8 habits that work with any AI.</span></div></a>
-      <a class="tile" href="../keep-up/#news"><img src="/desk/learn-news.jpg" alt="" loading="lazy"><div><b>This week in AI</b><span>The news in plain words, every Friday.</span></div></a>
-    </div>
+    <div class="part-h"><span class="n">04</span><h2 id="keep-h">This week in AI</h2></div>
+    <p class="muted">The news in plain words, every Friday. <a href="../keep-up/">Read this week →</a></p>
   </section>
 
   <p class="freebox" style="margin-top:44px"><b>Free, all of it.</b> If it helped, <a href="../school/support.html">help keep it free</a>.</p>

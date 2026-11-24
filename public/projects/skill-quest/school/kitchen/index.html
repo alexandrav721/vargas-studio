@@ -42,7 +42,7 @@
 
   <section class="sec">
     <h2>Your passport</h2>
-    <p class="muted" style="margin-top:6px">Four kitchen stations, ten stamps. Tap one to start.</p>
+    <p class="muted" style="margin-top:6px">Four kitchen stations, ten stamps, plus a bonus. Tap one to start.</p>
     <div class="map" id="map"></div>
   </section>
 
@@ -75,7 +75,7 @@
     <p class="small" style="margin-top:10px">All links go to Claude Academy, checked 24 Nov 2026. Anthropic also offers a <a href="https://anthropic-partners.skilljar.com/page/faq-certifications" target="_blank" rel="noopener">Claude Certified Architect exam</a>, but only to companies in its partner network.</p>
   </section>
 </main>
-<footer class="foot"><a href="../">AI Made EZ · Level 1</a><a href="glossary.html">Kitchen dictionary</a><span>Not affiliated with Anthropic</span><span>Made by Alexandra Vargas</span></footer>
+<footer class="foot"><a href="../">AI Made EZ · Level 1</a><a href="glossary.html">Plain words</a><span>Not affiliated with Anthropic</span><span>Made by Alexandra Vargas</span></footer>
 <script src="../school.js" defer></script><script src="bk.js" defer></script><script src="words.js" defer></script><script src="mem.js" defer></script>
 <script>
 document.addEventListener("DOMContentLoaded", function () {
@@ -89,7 +89,7 @@ document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("wk").innerHTML = (ST ? "<b>" + (KN ? "You know " + KN + (KN === 1 ? " word" : " words") + " for good" : ST + " words started") + ".</b> " + (KN ? "" : "Get each right on 2 different days to lock it in. ") : "") + (DU ? '<a class="btn ghost" href="challenge.html?review=1">Practice ' + Math.min(DU, 15) + (DU === 1 ? " word" : " words") + (Math.min(DU, 15) <= 8 ? " (2 min)" : " (4 min)") + "</a>" : (ST ? "Nothing due today. " : "")) + (ST && !DU ? '<a class="btn ghost" href="challenge.html?n=5">1-minute practice</a>' : "") + (window.BKM && BKM.streak() > 1 ? '<span class="streak">' + BKM.streak() + " days in a row. Nice.</span>" : "");
   var lastD = T.map(function (l) { return done[l.id] || ""; }).sort().pop() || "", lastL = T.filter(function (l) { return done[l.id]; }).pop();
   var back = n && window.BKM && (window.BKM.lastDay() || lastD) < window.BKM.today(), sk = window.BKM ? BKM.streak() : 0;
-  if (n) document.getElementById("sum").textContent = n === 10 ? "Passport complete. You know the builder words now." : back ? "Welcome back." + (lastL ? " Last time you finished Lesson " + lastL.n + ", " + lastL.short.toLowerCase() + "." : "") + (sk > 1 ? " " + sk + " days in a row." : "") : n + " of 10 stamps.";
+  if (n) document.getElementById("sum").textContent = n >= 10 ? "Passport complete. You know the builder words now." : back ? "Welcome back." + (lastL ? " Last time you finished Lesson " + lastL.n + ", " + lastL.short.toLowerCase() + "." : "") + (sk > 1 ? " " + sk + " days in a row." : "") : n + " of 10 stamps.";
   if (back && DU && nextL) document.getElementById("cta").innerHTML = '<a class="btn" href="challenge.html?review=1&then=' + nextL.n + '">Start: ' + Math.min(DU, 15) + "-word review, then Lesson " + nextL.n + '</a><a class="btn ghost" href="' + nextL.href + '">Skip to Lesson ' + nextL.n + "</a>";
   if (back && DU) { var wb = document.querySelector("#wk .btn"); if (wb) wb.remove(); }
   if (back && sk > 1) { var ss = document.querySelector("#wk .streak"); if (ss) ss.remove(); }
@@ -97,7 +97,8 @@ document.addEventListener("DOMContentLoaded", function () {
     ["The chef", "What the model is, and how apps order from it.", [1, 2, 3]],
     ["The equipment", "How Claude acts and reaches your stuff.", [4, 5, 6]],
     ["The brigade", "Agents, and the chef in your own kitchen.", [7, 8]],
-    ["The pass", "Testing the food, and planning a kitchen.", [9, 10]]
+    ["The pass", "Testing the food, and planning a kitchen.", [9, 10]],
+    ["Bonus: the big picture", "What every AI product is made of.", [11]]
   ];
   document.getElementById("map").innerHTML = stations.map(function (s) {
     return '<div class="station"><b>' + s[0] + "</b><span>" + s[1] + '</span><div class="st">' + s[2].map(function (i) {

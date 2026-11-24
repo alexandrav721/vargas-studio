@@ -111,6 +111,10 @@ var PILLARS = [
       cap: "No DMs. No email list. Here's the whole prompt. Swap in what's in your fridge.\n\nEvery prompt we teach is right on the page, free. Link in bio. #AIMadeEZ #nogatekeeping" },
     { id: "need", html: function () { return '<div class="post free"><p class="ptag">No gatekeeping</p><h3>To use AI, you don\'t need:</h3><ul class="big-list"><li><s>to code</s></li><li><s>a pricey course</s></li><li><s>a secret prompt</s></li><li class="yes">You need a clear order.</li></ul>' + foot("You can do this") + "</div>"; },
       cap: "If someone makes AI sound complicated, they're usually selling something. Say what you want, what you have, and what to avoid. That's it.\n\n#AIMadeEZ" },
+    { id: "layers", html: function () { return '<div class="post free"><p class="ptag">No gatekeeping</p><h3>It\'s all wrappers.</h3><ul class="plines">' +
+        [["You", "ask"], ["Apps", "wrap a model"], ["Models", "write"], ["Chips", "do the math"], ["Electricity", "powers it all"]]
+        .map(function (r) { return '<li style="color:#151411"><b>' + r[0] + "</b><span>" + r[1] + "</span></li>"; }).join("") + "</ul>" + foot("Lesson 11") + "</div>"; },
+      cap: "Most AI apps don't have a secret. They sit on a model (Claude, GPT, Gemini) and add their own screens and steps. That's fine. Just ask what they add before you pay.\n\nThe whole lesson is free, 6 minutes. Link in bio. #AIMadeEZ #nogatekeeping" },
     { id: "words", html: function () { return '<div class="post free"><p class="ptag">No gatekeeping</p><h3>Words people use to sound fancy</h3><ul class="plines" style="--x:0">' +
         [["API","the order window"],["MCP","a standard outlet"],["RAG","the recipe binder"],["Agent","a chef running dinner alone"]]
         .map(function (r) { return '<li style="color:#151411"><b>' + r[0] + "</b><span>= " + r[1] + "</span></li>"; }).join("") + "</ul>" + foot("Level 2") + "</div>"; },
