@@ -2,13 +2,14 @@
 import { WEBSITES, ITEMS } from "./catalog-data.js";
 import { ITEM_MEDIA, SITE_MEDIA } from "./media.js";
 import { primaryEra } from "./data.js";
-import { iconFor, personaFor, makeCard } from "./moments.js";
+import { iconFor, personaFor, signatureFor, personaLine, makeCard } from "./moments.js";
+import { dialUp, click, blip, chime, fanfare, bindMute } from "./sound.js";
 
 const OWN_KEY = "scrollback.own.v1";
 const SITE_KEY = "scrollback.sites.v1";
 const AWAY_KEY = "scrollback.away.v1";
 const FIRST = 1995;
-const LAST = 2012;
+const LAST = 2016;
 const ROUNDS = 10;
 
 const $ = (s, r = document) => r.querySelector(s);
@@ -84,8 +85,9 @@ function show(id) {
 }
 
 /* ---------- 2. Dial in ---------- */
-async function start() {
+async function start(fromTap = true) {
   const era = primaryEra(year - 2, year + 2);
+  if (fromTap) dialUp();
   show("beat-dial");
   const t = $("#dial-text");
   t.textContent = "";
@@ -112,7 +114,8 @@ function buildDeck() {
   // friend's picks first, so the comparison means something
   const fromFriend = items.filter((it) => friendHad.has(it.name));
   const rest = items.filter((it) => !friendHad.has(it.name));
-  const pickItems = [...fromFriend, ...rest].slice(0, 7);
+  // up to 3 old websites; when a year has fewer, more things fill the deck
+  const pickItems = [...fromFriend, ...rest].slice(0, ROUNDS - Math.min(3, sites.length));
   const pickSites = sites.slice(0, ROUNDS - pickItems.length);
   deck = [];
   let si = 0;
@@ -166,6 +169,9 @@ async function answer(kind) {
   const row = deck[i];
   if (!row) return;
   answers[row.name] = { kind, row };
+  if (kind === "had") chime();
+  else if (kind === "wanted") blip();
+  else click();
   const card = $("#deck .card");
   if (card) {
     card.classList.add(`out--${kind}`);
@@ -236,10 +242,13 @@ async function reveal() {
   const lead = $("#reveal-lead");
   const name = $("#reveal-name");
   const pile = $("#pile");
+  const tag = $("#reveal-tag");
   name.textContent = "";
+  tag.textContent = "";
+  tag.hidden = true;
   pile.innerHTML = "";
   $("#away").value = load(AWAY_KEY, "");
-  $("#room-link").href = `./index.html?gen=millennial&mode=range&from=${year - 2}&to=${year + 2}&lens=room`;
+  $("#room-link").href = `./explore.html?gen=millennial&mode=range&from=${year - 2}&to=${year + 2}&lens=room`;
 
   if (!had.length && !sitesHad) {
     lead.textContent = `None of ${year} rang a bell.`;
@@ -254,8 +263,16 @@ async function reveal() {
   name.classList.remove("is-in");
   await wait(700);
   name.textContent = personaFor(had.length ? had : [{ category: "tech" }], year - 2, year + 2);
+  fitName(name);
   void name.offsetWidth;
   name.classList.add("is-in");
+  fanfare();
+  // v2: the name carries one real thing you tapped "Had it"
+  const sig = signatureFor(had, year - 2, year + 2);
+  if (sig) {
+    tag.textContent = sig.tag;
+    tag.hidden = false;
+  }
 
   const common = had.filter((it) => friendHad.has(it.name)).length;
   const c = $("#reveal-common");
@@ -272,6 +289,19 @@ async function reveal() {
     );
   });
 }
+
+/* Long names ("The Front-Camera Early Adopter") shrink until they fit the phone. */
+function fitName(el) {
+  el.style.fontSize = "";
+  let size = parseFloat(getComputedStyle(el).fontSize);
+  // fit the width, and keep it to three lines so the photos stay on screen
+  const tooBig = () => el.scrollWidth > el.clientWidth + 1 || el.scrollHeight > size * 0.95 * 3.3;
+  while (tooBig() && size > 22) {
+    size -= 2;
+    el.style.fontSize = `${size}px`;
+  }
+}
+window.addEventListener("resize", () => { if ($("#beat-reveal").classList.contains("is-on")) fitName($("#reveal-name")); });
 
 $("#away").addEventListener("input", (e) => save(AWAY_KEY, e.target.value.slice(0, 60)));
 
@@ -306,7 +336,7 @@ $("#send").addEventListener("click", async () => {
   btn.disabled = false;
   btn.textContent = "Send to a friend";
   const link = shareLink();
-  const text = `In ${year} I was ${$("#reveal-name").textContent}. Who were you?`;
+  const text = `In ${year} I was ${personaLine(hadItems(), year - 2, year + 2)}. Who were you?`;
   try {
     const file = blob && new File([blob], `who-i-was-${year}.png`, { type: "image/png" });
     if (file && navigator.canShare?.({ files: [file] })) return void (await navigator.share({ files: [file], text: `${text} ${link}` }));
@@ -329,5 +359,6 @@ $("#again").addEventListener("click", () => {
 });
 
 /* ---------- go ---------- */
+bindMute($("#mute"));
 paintWheel();
-if (friendHad.size && params.get("year")) start();
+if (friendHad.size && params.get("year")) start(false);

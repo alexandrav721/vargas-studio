@@ -286,6 +286,139 @@ export const ITEM_MEDIA = {
   "author": "Executive Office of the President (Obama White House Gift Office), via DPLA",
   "license": "Public domain",
   "source": "https://commons.wikimedia.org/wiki/File:Converse_All-Star_Chuck_Taylor_Shoe_-_DPLA_-_215e6f66263950c10d6cb1bf4f7e222e_(page_1).jpg"
+ },
+ "Pokémon trading cards": {
+  "file": "img/items/pokemon-trading-cards.jpg",
+  "title": "File:Pokemon collection.jpg",
+  "author": "Jarek Tuszyński",
+  "license": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Pokemon_collection.jpg"
+ },
+ "Mix CDs / CD binders": {
+  "file": "img/items/mix-cds-cd-binders.jpg",
+  "title": "File:A bunch of compact discs is scattered across a wooden tableundefined.jpg",
+  "author": "Shixart1985",
+  "license": "CC BY 2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:A_bunch_of_compact_discs_is_scattered_across_a_wooden_tableundefined.jpg"
+ },
+ "Bratz dolls": {
+  "file": "img/items/bratz-dolls.jpg",
+  "title": "File:Bratz world - Flickr - Timo Tervo.jpg",
+  "author": "Timo Tervo from Finland",
+  "license": "CC BY-SA 2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Bratz_world_-_Flickr_-_Timo_Tervo.jpg"
+ },
+ "Abercrombie & Fitch shopping bags": {
+  "file": "img/items/abercrombie-fitch-shopping-bags.jpg",
+  "title": "File:AFChainFront.jpg",
+  "author": "Sam Weber at English Wikipedia",
+  "license": "CC BY 2.5",
+  "source": "https://commons.wikimedia.org/wiki/File:AFChainFront.jpg"
+ },
+ "Von Dutch trucker hat": {
+  "file": "img/items/von-dutch-trucker-hat.jpg",
+  "title": "File:Von Dutch Cap.JPG",
+  "author": "United14",
+  "license": "CC BY-SA 3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Von_Dutch_Cap.JPG"
+ },
+ "Webkinz plush + adoption code": {
+  "file": "img/items/webkinz-plush-adoption-code.jpg",
+  "title": "File:Webkinz kids by David Shankbone 2.jpg",
+  "author": "David Shankbone (crop by Oblongo)",
+  "license": "CC BY-SA 3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Webkinz_kids_by_David_Shankbone_2.jpg"
+ },
+ "Selfie stick": {
+  "file": "img/items/selfie-stick.jpg",
+  "title": "File:Portable Selfie Stick.jpg",
+  "author": "河中桥",
+  "license": "CC BY-SA 3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Portable_Selfie_Stick.jpg"
+ },
+ "Fitbit Flex": {
+  "file": "img/items/fitbit-flex.jpg",
+  "title": "File:Fitibit Flex.jpg",
+  "author": "MorePix",
+  "license": "CC BY-SA 3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Fitibit_Flex.jpg"
+ },
+ "iPhone 5c": {
+  "file": "img/items/iphone-5c.jpg",
+  "title": "File:Apple iPhone 5c (14865201840).jpg",
+  "author": "Maurizio Pesce from Milan, Italia",
+  "license": "CC BY 2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Apple_iPhone_5c_(14865201840).jpg"
+ },
+ "Hoverboard (self-balancing scooter)": {
+  "file": "img/items/hoverboard-self-balancing-scooter.jpg",
+  "title": "File:Hoverboard 1.jpg",
+  "author": "Nulall",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Hoverboard_1.jpg"
+ },
+ "Apple Watch (first model)": {
+  "file": "img/items/apple-watch-first-model.jpg",
+  "title": "File:Apple Watch Sport.jpg",
+  "author": "thomersch",
+  "license": "CC BY 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Apple_Watch_Sport.jpg"
+ },
+ "Beats headphones": {
+  "file": "img/items/beats-headphones.jpg",
+  "title": "File:BEATS BY DR.DRE SOLO HD MONSTER HEADPHONE (3).jpg",
+  "author": "Dinkun Chen",
+  "license": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:BEATS_BY_DR.DRE_SOLO_HD_MONSTER_HEADPHONE_(3).jpg"
+ },
+ "Adult coloring books": {
+  "file": "img/items/adult-coloring-books.jpg",
+  "title": "File:Kerinin - 23760219470.jpg",
+  "author": "kerinin",
+  "license": "CC BY-SA 2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Kerinin_-_23760219470.jpg"
+ },
+ "Pokémon Go on your phone": {
+  "file": "img/items/pokemon-go-on-your-phone.jpg",
+  "title": "File:Pokémon GO gathering.jpg",
+  "author": "Cyclonebiskit",
+  "license": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Pok%C3%A9mon_GO_gathering.jpg"
+ },
+ "Amazon Echo": {
+  "file": "img/items/amazon-echo.jpg",
+  "title": "File:Alexa (27429933550).jpg",
+  "author": "osseous",
+  "license": "CC BY 2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Alexa_(27429933550).jpg"
+ },
+ "PlayStation 4": {
+  "file": "img/items/playstation-4.jpg",
+  "title": "File:Sony-PlayStation-4-PS4-wDualShock-4.jpg",
+  "author": "Evan-Amos",
+  "license": "Public domain",
+  "source": "https://commons.wikimedia.org/wiki/File:Sony-PlayStation-4-PS4-wDualShock-4.jpg"
+ },
+ "Beanie Babies": {
+  "file": "img/items/beanie-babies.jpg",
+  "title": "File:Mom's Beanies (9120344523).jpg",
+  "author": "daryl_mitchell from Saskatoon, Saskatchewan, Canada",
+  "license": "CC BY-SA 2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Mom%27s_Beanies_(9120344523).jpg"
+ },
+ "GoPro HERO3 / HERO4": {
+  "file": "img/items/gopro-hero3-hero4.jpg",
+  "title": "File:GoProHero3BlackEdition.jpg",
+  "author": "ROTFLOLEB",
+  "license": "CC BY-SA 3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:GoProHero3BlackEdition.jpg"
+ },
+ "Rainbow Loom bracelets": {
+  "file": "img/items/rainbow-loom-bracelets.jpg",
+  "title": "File:Rainbow Loom materials.jpg",
+  "author": "Franklin Park Library",
+  "license": "CC BY 2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Rainbow_Loom_materials.jpg"
  }
 };
 export const SITE_MEDIA = {

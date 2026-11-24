@@ -446,7 +446,7 @@
         "website": {
           "label": "Scrollback explorer",
           "detail": "Year-range picker \u2192 websites / items / style. Era feel + era-only buys + talk \u2014 Feel \u00b7 Buy \u00b7 Talk.",
-          "url": "/projects/nostalgia/",
+          "url": "/projects/nostalgia/explore.html",
           "state": "live"
         },
         "landing": {
@@ -468,8 +468,8 @@
           "state": "live"
         },
         "product-ui": {
-          "label": "Explorer UI",
-          "detail": "Same Scrollback app \u2014 the product is the year-dated catalog UI.",
+          "label": "The game",
+          "detail": "What year were you 15? Swipe real photos from that year, then meet who you were.",
           "url": "/projects/nostalgia/",
           "state": "live"
         },

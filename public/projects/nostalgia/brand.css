@@ -1,0 +1,119 @@
+/* Scrollback: one look for every page around the game.
+   Same tokens, type and buttons as the game's first screen (styles.css dialup era + play.css).
+   Loaded after each page's own <style>, so it wins on tokens, background, nav and buttons. */
+
+:root {
+  --bg0: #0a0a0a;
+  --bg1: #121018;
+  --ink: #f4f0e6;
+  --muted: #b7ae9a;
+  --line: rgba(244, 240, 230, 0.14);
+  --brand: #b8ff00;
+  --brand-2: #ff00aa;
+  --panel: rgba(18, 16, 26, 0.78);
+  --case: #cfc6b4;
+  --display: "Syne", "Arial Narrow", sans-serif;
+  --body: "IBM Plex Sans", "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+  --radius: 0;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Flat dark ground with the game's faint scanlines. No glow blobs. */
+body:not(.sb-deck) {
+  background: linear-gradient(170deg, var(--bg0), var(--bg1) 60%, var(--bg0));
+  background-attachment: fixed;
+  color: var(--ink);
+  font-family: var(--body);
+}
+body:not(.sb-deck)::before {
+  content: "";
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: repeating-linear-gradient(0deg, transparent 0 2px, rgba(0, 0, 0, 0.08) 2px 3px);
+  opacity: 0.35;
+}
+
+h1, h2, h3 { font-family: var(--display); }
+
+/* The page nav reads like the game's quiet links: sentence case, mono, underline for "you are here". */
+nav.top {
+  font: 500 0.85rem/1.2 var(--mono);
+  letter-spacing: 0;
+  text-transform: none;
+}
+nav.top a { color: var(--muted); text-decoration: none; text-underline-offset: 5px; }
+nav.top a:hover { color: var(--ink); }
+nav.top a[aria-current="page"] { color: var(--ink); text-decoration: underline; text-decoration-color: var(--brand); text-decoration-thickness: 2px; }
+
+/* Small labels stay small, but not shouted. */
+.kicker,
+.pillars span,
+.filters button,
+.controls button,
+.controls a,
+.how strong,
+.post strong,
+.badge,
+.chapter-head p,
+.slide .job,
+.carousel-controls button,
+.lb-nav button,
+.lb-close,
+.sb-deck .feel,
+.sb-deck .person .who,
+.sb-deck .ax,
+.studio-back {
+  text-transform: none;
+  letter-spacing: 0;
+}
+.kicker { font: 500 0.85rem var(--mono); color: var(--muted); }
+
+/* Buttons: the game's Go button. */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font: 700 1rem/1 var(--display);
+  letter-spacing: -0.01em;
+  padding: 0.95rem 1.6rem;
+  border: 1px solid var(--brand);
+  border-radius: 0;
+  background: var(--brand);
+  color: var(--bg0);
+  text-decoration: none;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  transition: transform 160ms var(--ease);
+}
+.btn:hover { transform: translateY(-2px); }
+.btn-ghost {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--line);
+  box-shadow: none;
+}
+.filters button.is-active { background: var(--brand); border-color: var(--brand); color: var(--bg0); }
+
+/* Panels and photos sit on the same paper-and-ink cards as the game. */
+.stack div,
+.step,
+.how div,
+figure {
+  border-radius: 0;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid var(--brand);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn { transition: none; }
+  .btn:hover { transform: none; }
+}

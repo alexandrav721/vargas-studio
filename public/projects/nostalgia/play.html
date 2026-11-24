@@ -2,81 +2,17 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Scrollback — Who were you?</title>
-  <meta name="description" content="Pick the year you were 15. Tap what you had. Find out who you were." />
-  <meta property="og:title" content="Who were you? — Scrollback" />
-  <meta property="og:description" content="Pick the year you were 15. Tap what you had. Find out who you were." />
-  <meta name="theme-color" content="#0a0a0a" />
-  <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="./styles.css" />
-  <link rel="stylesheet" href="./play.css" />
-  <link rel="stylesheet" href="/site-bar.css" />
-  <script src="/site-bar.js" data-project="nostalgia" data-kind="game" defer></script>
+  <meta name="robots" content="noindex" />
+  <link rel="canonical" href="./" />
+  <script>
+    // The game lives at the project root now. Keep friend links (?year=…&had=…) intact.
+    location.replace("./" + location.search + location.hash);
+  </script>
+  <noscript><meta http-equiv="refresh" content="0; url=./" /></noscript>
 </head>
-<body data-era="dialup" class="play-body">
-  <a class="studio-back" href="/">← Vargas Studio</a>
-
-  <!-- 1. Boot -->
-  <section class="beat is-on" id="beat-boot" aria-label="Pick your year">
-    <div class="crt-big">
-      <div class="crt-glass">
-        <p class="boot-line">C:\SCROLLBACK&gt; boot</p>
-        <h1 class="boot-ask">What year were you 15?</h1>
-        <div class="wheel" role="group" aria-label="Year">
-          <button class="wheel-step" type="button" data-step="-1" aria-label="Earlier year">‹</button>
-          <div class="wheel-strip" id="wheel" tabindex="0" aria-live="polite"></div>
-          <button class="wheel-step" type="button" data-step="1" aria-label="Later year">›</button>
-        </div>
-      </div>
-    </div>
-    <button class="go-btn" type="button" id="go">Go</button>
-    <a class="quiet-link" href="./index.html">Just browse</a>
-  </section>
-
-  <!-- 2. Dial in -->
-  <section class="beat" id="beat-dial" aria-label="Connecting">
-    <div class="dial-text" id="dial-text" aria-live="polite"></div>
-  </section>
-
-  <!-- 3. Play -->
-  <section class="beat" id="beat-play" aria-label="Was this yours?">
-    <div class="play-top">
-      <h2 class="play-ask">Was this yours?</h2>
-      <span class="play-count" id="play-count"></span>
-    </div>
-    <div class="deck" id="deck"></div>
-    <div class="answers">
-      <button class="ans ans--nope" type="button" data-ans="nope">Nope</button>
-      <button class="ans ans--want" type="button" data-ans="wanted">Wanted it</button>
-      <button class="ans ans--had" type="button" data-ans="had">Had it</button>
-    </div>
-  </section>
-
-  <!-- 4. Reveal -->
-  <section class="beat" id="beat-reveal" aria-label="Who you were">
-    <p class="reveal-lead" id="reveal-lead"></p>
-    <h2 class="reveal-name" id="reveal-name"></h2>
-    <p class="reveal-common" id="reveal-common" hidden></p>
-    <div class="pile" id="pile" aria-hidden="true"></div>
-    <label class="reveal-away">
-      <span>Away message to 15-year-old you</span>
-      <input id="away" maxlength="60" placeholder="brb, growing up" />
-    </label>
-    <div class="reveal-actions">
-      <button class="go-btn" type="button" id="send">Send to a friend</button>
-      <button class="ghost-btn" type="button" id="save">Save card</button>
-    </div>
-    <div class="reveal-more">
-      <button class="quiet-link" type="button" id="again">Play another year</button>
-      <a class="quiet-link" id="room-link" href="./index.html">Walk into your room →</a>
-      <a class="quiet-link" href="./credits.html">Photo credits</a>
-    </div>
-  </section>
-
-  <script type="module" src="./play.js"></script>
+<body>
+  <p><a href="./">Play Scrollback</a></p>
 </body>
 </html>
