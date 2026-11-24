@@ -20,6 +20,7 @@
 .dict h3 a{font-family:"Schibsted Grotesk",sans-serif;font-size:.78rem;font-weight:600;color:var(--muted);text-decoration:none;white-space:nowrap}
 .dict .k{margin:4px 0 0;font-weight:600}
 .dict .r{margin:4px 0 0}
+.dict .heard{margin:6px 0 0;font-size:.9rem;font-style:italic}
 .dict .no{margin:6px 0 0;font-size:.88rem;color:var(--muted)}
 .dict .got{display:inline-block;margin-left:6px;font-size:.75rem;color:var(--ok)}
 .count{font-size:.88rem;color:var(--muted);margin-top:10px}
@@ -53,11 +54,11 @@ document.addEventListener("DOMContentLoaded", function () {
     T.map(function (l) { return '<button class="chip" type="button" data-l="' + l.n + '" aria-pressed="false">' + l.n + ". " + esc(l.short) + "</button>"; }).join("");
   function draw() {
     var s = q.value.trim().toLowerCase();
-    var rows = W.filter(function (w) { return (!lesson || w[4] === lesson) && (!s || (w[0] + " " + w[1] + " " + w[2]).toLowerCase().indexOf(s) >= 0); });
+    var rows = W.filter(function (w) { return (!lesson || w[4] === lesson) && (!s || (w[0] + " " + w[1] + " " + w[2] + " " + (w[5] || "")).toLowerCase().indexOf(s) >= 0); });
     list.innerHTML = rows.map(function (w) {
       var l = T[w[4] - 1], got = done[l.id];
       return '<li id="' + slug(w[0]) + '"><h3><span>' + esc(w[0]) + (got ? '<span class="got">✓ learned</span>' : "") + '</span><a href="' + l.href + '">Lesson ' + l.n + "</a></h3>" +
-        '<p class="k">' + esc(w[1]) + '</p><p class="r">' + esc(w[2]) + "</p>" + (w[3] ? '<p class="no">' + esc(w[3]) + "</p>" : "") + "</li>";
+        '<p class="k">' + esc(w[1]) + '</p><p class="r">' + esc(w[2]) + "</p>" + (w[5] ? '<p class="heard">You might hear: “' + esc(w[5]) + '”</p>' : "") + (w[3] ? '<p class="no">' + esc(w[3]) + "</p>" : "") + "</li>";
     }).join("") || '<li>No word matches. Try “token” or “agent”.</li>';
     document.getElementById("count").textContent = rows.length + " of " + W.length + " words";
   }

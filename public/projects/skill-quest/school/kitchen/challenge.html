@@ -44,12 +44,16 @@ document.addEventListener("DOMContentLoaded", function () {
     var rest = shuffle(W.filter(function (w) { return pick.indexOf(w) < 0; }));
     pick = shuffle(pick.concat(rest.slice(0, N - pick.length)));
     qs = pick.map(function (w, k) {
-      var asKitchen = k % 2 === 0; // alternate: kitchen picture → word, real meaning → word
+      var kind = k % 3; // 0 kitchen picture → word, 1 real meaning → word, 2 a line you might hear → word
+      var re = new RegExp(w[0].replace(/[.*+?^${}()|[\]\\]/g, "\\$&").replace(/ /g, "[ -]?") + "(s|ed|ing|en)?", "i");
+      var heard = w[5] && re.test(w[5]) ? "“" + w[5].replace(re, "___") + "”" : null;
+      if (kind === 2 && !heard) kind = 0;
+      var asKitchen = kind === 0;
       var lw = w[0].toLowerCase();
       var others = shuffle(W.filter(function (o) { var lo = o[0].toLowerCase(); return o !== w && o[4] !== w[4] && lo.indexOf(lw) < 0 && lw.indexOf(lo) < 0; })).slice(0, 2);
       var meaning = w[2].indexOf(": ") > 0 && w[2].indexOf(": ") < 40 ? w[2].slice(w[2].indexOf(": ") + 2) : w[2];
       meaning = meaning.charAt(0).toUpperCase() + meaning.slice(1);
-      return { w: w, prompt: asKitchen ? w[1] : meaning, kind: asKitchen ? "In the kitchen, this is…" : "Which word means…", opts: shuffle([w].concat(others)) };
+      return { w: w, prompt: kind === 2 ? heard : asKitchen ? w[1] : meaning, kind: kind === 2 ? "In a meeting you hear… which word fills the gap?" : asKitchen ? "In the kitchen, this is…" : "Which word means…", opts: shuffle([w].concat(others)) };
     });
     i = 0; right = 0; missed = []; draw();
   }
