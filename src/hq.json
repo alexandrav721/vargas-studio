@@ -158,8 +158,8 @@
  "ai-made-ez": {
   "who": "Everyday people new to AI, including people who love to print",
   "problem": "Everyone says AI is easy. I don't get it, and I'm unsure it's safe.",
-  "money": "Free today. Ideas: a $19 starter course, mailed letters, printed calendars, puzzle books.",
-  "edge": "Every course ends with something you made, and your own taste-tested recipe card.",
+  "money": "Free today. A $19 starter course pre-order is the first test.",
+  "edge": "Every lesson ends with something you made, and the Build Kit turns an idea into a plan.",
   "hooks": [
    "Learn AI the way you learned to cook.",
    "Lesson 1: a week of dinners from your fridge.",
@@ -168,16 +168,15 @@
   "live": [
    "Level 1: Cooking with Claude, 8 lessons",
    "Level 2: Speak AI builder, 10 lessons",
-   "Holiday letter, invitations, birthday calendar makers",
-   "Printable puzzle book maker"
+   "Build Kit: app idea to a build plan",
+   "Kitchen dictionary and poster"
   ],
   "next": [
    "Test a $19 starter course pre-order page",
-   "Check the name before any ads",
-   "Add printed and mailed versions of the makers"
+   "Rewrite the pitch deck for the courses",
+   "Check the name before any ads"
   ],
   "waiting": [
-   "Set the AI key so makers write for real",
    "Decide the brand name",
    "Say yes to taking pre-orders"
   ]

@@ -26,17 +26,11 @@
   <div class="btns" id="cta"></div>
 
   <a class="ezcard" href="kitchen/"><b>Level 2: Speak AI builder</b><span>API, MCP, agents, RAG, explained as a kitchen. 10 short lessons, no coding.</span></a>
-  <a class="ezcard" href="../ez/"><b>One-tap planners: talk, and watch your plan appear</b><span>Meals, your week, a party, a trip.</span></a>
+  <a class="ezcard" href="../build-kit/"><b>Build Kit: plan an app so AI stops guessing</b><span>Answer the questions AI would guess at. Leave with a plan any AI coding tool can read.</span></a>
 
   <section class="sec">
     <h2>The course</h2>
     <div class="pass" id="pass"></div>
-  </section>
-
-  <section class="sec">
-    <h2>Kitchen extras</h2>
-    <p class="muted" style="margin-top:10px">Stamps from the rest of Skills Made EZ. They count toward your Maker card.</p>
-    <div class="extras" id="extras"></div>
   </section>
 
   <section class="sec">
@@ -67,10 +61,6 @@ document.addEventListener("DOMContentLoaded", function () {
     return "<" + tag + (l.href ? ' href="' + l.href + '"' : "") + ' class="' + (l.href && !got ? "open" : "") + '">' +
       School.stampSvg(l.short, l.n, got) +
       "<b>" + l.name + "</b><span>" + (got ? "Stamped " + new Date(done[l.id] + "T12:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" }) : l.href ? "Leave with: " + l.leave : "Coming soon") + "</span></" + tag + ">";
-  }).join("");
-  document.getElementById("extras").innerHTML = School.EXTRAS.map(function (x, i) {
-    var got = !!maker[x.id];
-    return '<a href="' + x.href + '">' + School.stampSvg(" ", i + 1, got) + "<span>" + x.name + (got ? " ✓" : "") + "</span></a>";
   }).join("");
 });
 </script>

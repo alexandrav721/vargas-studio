@@ -4,7 +4,7 @@ export type Meta = { name: string; pic: string; play: string; playLabel: string;
 export const META: Record<string, Meta> = {
   nostalgia: { name: "Scrollback", pic: "/thumbs/nostalgia-website.jpg", play: "/projects/nostalgia/explore.html", playLabel: "Open Scrollback", line: "The internet and stuff of your teens." },
   "skill-quest": { name: "Skills Made EZ", pic: "/thumbs/skill-quest-website.jpg", play: "/projects/skill-quest/start/", playLabel: "Open Skills Made EZ", line: "Learn to build AI skills, step by step.", extra: { href: "/projects/skill-quest/templates/", label: "New: 8 ready-made skills, tested against plain Claude" }, more: [{ href: "/projects/skill-quest/start/", label: "Start here: everything in Skills Made EZ, with search" }, { href: "/projects/skill-quest/library/", label: "Community library: skills people made, rated and tested" }, { href: "/projects/skill-quest/build-kit/", label: "Build Kit: plan an app so AI stops guessing" }] },
-  "ai-made-ez": { name: "AI Made EZ", pic: "/desk/ai-made-ez.jpg", play: "/projects/skill-quest/ez/", playLabel: "Make something", line: "Everyday AI made easy: answer a few questions, get something to print.", more: [{ href: "/projects/skill-quest/school/", label: "Course, Level 1: learn AI like learning to cook" }, { href: "/projects/skill-quest/school/kitchen/", label: "Course, Level 2: speak AI builder, no coding" }, { href: "/projects/skill-quest/school/kitchen/ask.html", label: "Buying AI? The questions to ask" }] },
+  "ai-made-ez": { name: "AI Made EZ", pic: "/desk/learn-l1.jpg", play: "/projects/skill-quest/school/", playLabel: "Start the course", line: "Learn AI like learning to cook. Short lessons, no coding.", more: [{ href: "/projects/skill-quest/school/kitchen/", label: "Level 2: speak AI builder, no coding" }, { href: "/projects/skill-quest/build-kit/", label: "Build Kit: plan an app so AI stops guessing" }] },
   weekline: { name: "Weekline", pic: "/thumbs/weekline-v2.jpg", play: "/projects/weekline/v2/", playLabel: "Open Weekline", line: "Your best New York week, planned." },
   restitch: { name: "Restitch", pic: "/thumbs/restitch-website.jpg", play: "/restitch.html", playLabel: "Open Restitch", line: "Turn a thrift find into a flip." },
   "planner-book": { name: "Planners", pic: "/thumbs/planner-book-website.jpg", play: "/projects/planner/", playLabel: "Open the planners", line: "Printable planners that fit how you work.", extra: { href: "/projects/planner/make/", label: "New: Make yours, a planner with your name in it" } },
@@ -14,24 +14,12 @@ export const META: Record<string, Meta> = {
   loop: { name: "Loop", pic: "/desk/loop.jpg", play: "https://celebrateloop.com", playLabel: "Visit Loop ↗", line: "Borrow from friends before you buy.", external: true },
 };
 
-/* The "New" row at the top of home: the latest things built, one tap away. */
+/* The "Learn" section: AI Made EZ, kept simple (24 Nov 2026): two courses and the Build Kit. */
 export type Fresh = { href: string; pic: string; name: string; line: string; external?: boolean };
-export const NEW: Fresh[] = [
-  { href: "/projects/skill-quest/ez/puzzle.html", pic: "/desk/new-puzzle.jpg", name: "Family puzzle book", line: "Large-print puzzles of your family" },
-  { href: "/projects/skill-quest/ez/letter.html", pic: "/desk/new-letter.jpg", name: "Holiday letter", line: "Your year, on one printed page" },
-  { href: "/projects/skill-quest/ez/calendar.html", pic: "/desk/new-calendar.jpg", name: "Birthday calendar", line: "Every family birthday, printed in" },
-  { href: "/projects/skill-quest/ez/invites.html", pic: "/desk/new-invites.jpg", name: "Birthday invitations", line: "3 designs, pick your favorite" },
-];
-
-/* The "Make" section: AI Made EZ makers, the things people go to AI for, done for them. */
-export const MAKE: Fresh[] = [
-  { href: "/projects/skill-quest/ez/invites.html", pic: "/desk/new-invites.jpg", name: "Invitations", line: "Birthday party invites" },
-  { href: "/projects/skill-quest/ez/letter.html", pic: "/desk/new-letter.jpg", name: "Holiday letter", line: "Your year on one page" },
-  { href: "/projects/skill-quest/ez/calendar.html", pic: "/desk/new-calendar.jpg", name: "Birthday calendar", line: "12 months, every birthday" },
-  { href: "/projects/skill-quest/ez/puzzle.html", pic: "/desk/new-puzzle.jpg", name: "Family puzzle book", line: "Word searches and a crossword" },
-  { href: "/projects/planner/make/", pic: "/desk/new-make-yours.jpg", name: "Your own planner", line: "With your name in it" },
-  { href: "/projects/skill-quest/ez/", pic: "/desk/ai-made-ez.jpg", name: "Meals, week, party, trip", line: "Plans that write themselves" },
-  { href: "/projects/skill-quest/school/kitchen/", pic: "/desk/new-kitchen.jpg", name: "Learn AI words", line: "Short courses, no coding" },
+export const LEARN: Fresh[] = [
+  { href: "/projects/skill-quest/school/", pic: "/desk/learn-l1.jpg", name: "Level 1: Cooking with Claude", line: "8 short lessons" },
+  { href: "/projects/skill-quest/school/kitchen/", pic: "/desk/learn-l2.jpg", name: "Level 2: Speak AI builder", line: "10 lessons, no coding" },
+  { href: "/projects/skill-quest/build-kit/", pic: "/desk/learn-buildkit.jpg", name: "Build Kit", line: "Plan an app so AI stops guessing" },
 ];
 
 /* Ideas on home, grouped by who they're for. */

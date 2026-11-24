@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import data from "../content/portfolio.json";
 
-import { GROUPS, MAKE, META, NEW, type Fresh } from "./meta";
+import { GROUPS, LEARN, META, type Fresh } from "./meta";
 import { projectHref } from "./lib";
 
-/* The short home: one line, two doors (Make · Ideas), what is new, then every idea as a picture,
+/* The short home: one line, two doors (Learn · Ideas), the courses, then every idea as a picture,
    grouped by who it's for. Every detail (full index, Compare, Tools) lives one tap away at #/all. */
 const TABS = [
-  { id: "make", label: "Make" },
+  { id: "make", label: "Learn" },
   { id: "ideas", label: "Ideas" },
 ];
 
@@ -75,20 +75,15 @@ export default function Home() {
           <p className="eyebrow">{data.site.owner} · built with Claude</p>
           <h1 className="brand-hero">Ideas you can try.</h1>
           <div className="doors">
-            <a href="#make" onClick={(e) => jump(e, "make")}><b>Make something</b><span>Invites, letters, puzzles</span></a>
+            <a href="#make" onClick={(e) => jump(e, "make")}><b>Learn AI</b><span>Short courses, no coding</span></a>
             <a href="#ideas" onClick={(e) => jump(e, "ideas")}><b>See the ideas</b><span>{data.projects.length} so far</span></a>
           </div>
         </header>
 
-        <section className="section" id="new" data-section>
-          <h2>Just built</h2>
-          <Tiles list={NEW} />
-        </section>
-
         <section className="section" id="make" data-section>
-          <h2>Make something</h2>
-          <p className="section-lede">Answer a few questions. Pick from 3 versions. Print it.</p>
-          <Tiles list={MAKE} />
+          <h2>Learn AI</h2>
+          <p className="section-lede">Short lessons. You leave each one with something real.</p>
+          <Tiles list={LEARN} />
         </section>
 
         <section className="section" id="ideas" data-section>
