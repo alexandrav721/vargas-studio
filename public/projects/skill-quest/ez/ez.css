@@ -172,3 +172,10 @@ body{overflow-x:hidden}
 .mini.lt u{display:block;height:5px;border-radius:3px;background:#e7e1d6;text-decoration:none}
 .mini.lt u.s{width:60%}
 .mini.lt em{font:600 17px "Caveat",cursive;color:#8e1d1d;font-style:normal;margin-top:auto}
+
+/* hub: birthday calendar card (a tiny month) */
+.mini.cal{background:var(--track);place-items:center}
+.mini.cal i{width:min(100%,300px);background:#fff;display:grid;grid-template-columns:repeat(7,1fr);gap:2px;padding:8px;box-shadow:0 1px 3px rgba(0,0,0,.12);border:0;font-style:normal}
+.mini.cal i b{grid-column:1/-1;font:800 15px var(--display);color:#2f6b4f;border-bottom:2px solid #2f6b4f;margin-bottom:3px}
+.mini.cal s{display:block;height:22px;border:1px solid #e7e1d6;text-decoration:none;font:700 7.5px/1.1 var(--text);color:#2f6b4f;padding:2px;overflow:hidden}
+.mini.cal s.y{background:rgba(47,107,79,.1)}
