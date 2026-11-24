@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Keep it free · AI Made EZ</title>
+<meta name="description" content="AI Made EZ is free: no paywall, no secret prompts. Chip in to keep it that way.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="school.css">
+<style>
+.no{list-style:none;margin:22px 0 0;padding:0;display:grid;gap:10px}
+.no li{display:flex;gap:12px;align-items:baseline;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:var(--card)}
+.no s{color:var(--muted);text-decoration-color:var(--accent);text-decoration-thickness:2px}
+.no b{font:800 1.05em var(--display);letter-spacing:-.01em}
+.give-box{margin:28px 0 0;padding:20px;border-radius:14px;background:var(--ink);color:#fff}
+.give-box h2{margin:0;font:800 26px/1.15 var(--display);letter-spacing:-.02em;color:#fff}
+.give-box p{margin:8px 0 0;color:#d8d4cc}
+.give-box .btn{margin-top:16px;width:100%}
+.give-box .btn[aria-disabled=true]{background:#3a3833;color:#bdb8ae;pointer-events:none}
+</style>
+<link rel="stylesheet" href="/site-bar.css" />
+<script src="/site-bar.js" data-project="ai-made-ez" data-kind="piece" defer></script>
+</head>
+<body>
+<header class="top">
+  <a class="logo" href="./">AI Made EZ</a>
+  <div class="tools"><button class="chip" id="big" type="button" aria-pressed="false">Bigger text</button></div>
+</header>
+<main>
+  <p class="label">Why it's free</p>
+  <h1>AI isn't fancy.<br>Learning it shouldn't cost you.</h1>
+
+  <ul class="no">
+    <li><s>"Comment PROMPT and I'll DM you"</s><b>Every prompt is on the page.</b></li>
+    <li><s>Pricey AI masterclasses</s><b>Free lessons, about 10 minutes each.</b></li>
+    <li><s>Words that make you feel behind</s><b>Plain words. A kitchen you already know.</b></li>
+  </ul>
+
+  <section class="give-box" aria-labelledby="give-h">
+    <h2 id="give-h">Keep it free for the next person</h2>
+    <p>If a lesson helped you, chip in what you like. It pays for the time to keep it up to date.</p>
+    <a class="btn" id="patreon" href="#" aria-disabled="true">Patreon page opening soon</a>
+  </section>
+
+  <div class="btns">
+    <button class="btn ghost" id="share" type="button">Send it to a friend</button>
+    <a class="btn ghost" href="./">Back to the lessons</a>
+  </div>
+</main>
+<script src="school.js"></script>
+<script>
+/* Set her Patreon link here and the button goes live. */
+var PATREON = "";
+(function () {
+  var a = document.getElementById("patreon");
+  if (PATREON) {
+    a.href = PATREON; a.target = "_blank"; a.rel = "noopener";
+    a.removeAttribute("aria-disabled"); a.textContent = "Support on Patreon ↗";
+  } else {
+    a.removeAttribute("href");
+  }
+  var s = document.getElementById("share"), url = location.origin + "/projects/skill-quest/school/";
+  s.addEventListener("click", function () {
+    var text = "Free AI lessons in plain words. No secret prompts.";
+    if (navigator.share) { navigator.share({ title: "AI Made EZ", text: text, url: url }).catch(function () {}); return; }
+    try { navigator.clipboard.writeText(text + " " + url); s.textContent = "Link copied"; } catch (e) { s.textContent = url; }
+  });
+  var big = document.getElementById("big");
+  if (big && window.School && School.bindBig) School.bindBig(big);
+})();
+</script>
+</body>
+</html>

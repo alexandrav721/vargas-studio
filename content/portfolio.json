@@ -733,7 +733,7 @@
       "aka": null,
       "oneLiner": "Learn AI the way you learned to cook: two short courses and a Build Kit, no coding.",
       "audience": "Everyday people, including people who love to print",
-      "pays": "Free today. A $19 starter course is the idea to test.",
+      "pays": "Free, all of it. Donations (Patreon) keep it going.",
       "status": "hot",
       "updated": "2026-11-24",
       "summary": "Two cooking-themed courses that teach AI words in plain language (Level 1 for everyone, Level 2 for people who buy or manage AI), plus makers built for people who print: birthday invitations, a holiday letter, a family birthday calendar, and meal, week, party and trip plans. Each one asks a few big, friendly questions, shows 3 versions, and prints right.",
@@ -782,9 +782,9 @@
           "state": "na"
         },
         "social": {
-          "label": "Story poster",
-          "detail": "The AI kitchen in one picture.",
-          "url": "/projects/skill-quest/school/kitchen/poster.html",
+          "label": "Instagram posts",
+          "detail": "AI made easy, no gatekeeping, AI news in plain words. Captions included.",
+          "url": "/projects/skill-quest/school/social/",
           "state": "live"
         }
       },

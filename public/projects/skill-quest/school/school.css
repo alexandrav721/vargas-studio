@@ -154,3 +154,10 @@ details.more summary{cursor:pointer;font-weight:600;min-height:28px}
 .bk .vq details[open] summary::after{content:"Hide"}
 .bk .modes{flex-wrap:nowrap;max-width:100%}
 .bk .modes .chip{white-space:nowrap;padding:7px 14px}
+/* free + support */
+.tools{display:flex;gap:8px;align-items:center}
+.chip.give{display:inline-flex;align-items:center;color:var(--accent);border-color:var(--accent);text-decoration:none}
+.chip.give:hover{background:var(--accent);color:#fff}
+.freebox{margin:16px 0 0;padding:14px 16px;border-radius:12px;background:var(--ok-bg);color:var(--ink);font-size:.95em;line-height:1.45}
+.freebox b{font-weight:700}
+@media (max-width:440px){.chip.give{padding:6px 10px}}
