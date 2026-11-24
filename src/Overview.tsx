@@ -233,6 +233,7 @@ function Studio({ route }: { route: Route }) {
           </p>
           <h1 className="brand-hero">{data.site.brand}</h1>
           <p className="tagline">{data.site.tagline}</p>
+          <p className="tagline"><a href="#/">← Back to the short home</a></p>
         </header>
 
         <section className="section" id="new" data-section>
@@ -285,10 +286,7 @@ function Studio({ route }: { route: Route }) {
                   >
                     <span className="index-num">{String(i + 1).padStart(2, "0")}</span>
                     <span className="index-main">
-                      <span className="index-title">
-                        {p.name}
-                        {p.aka ? <em> · {p.aka}</em> : null}
-                      </span>
+                      <span className="index-title">{META[p.id]?.name ?? p.name}</span>
                       <span className="index-line">{p.oneLiner}</span>
                     </span>
                     <span className="index-meta">
@@ -329,12 +327,11 @@ function Studio({ route }: { route: Route }) {
                 hidden={!isOpen}
               >
                 <div className="project-head">
-                  <h3>{p.name}</h3>
+                  <h3>{META[p.id]?.name ?? p.name}</h3>
                   <span className={`badge badge-${p.status}`}>
                     {statusLabel[p.status as Status]}
                   </span>
                 </div>
-                {p.aka ? <p className="aka">Also known as {p.aka}</p> : null}
                 <p className="one-liner">{p.oneLiner}</p>
                 <p className="body">{p.summary}</p>
 
