@@ -1,4 +1,4 @@
-/* Maker passport: six stamps you collect across Skills Made EZ, saved on this device only.
+/* Maker passport: six stamps you collect across AI Made EZ, saved on this device only.
    Pages call SMEZ.stamp("id") when you earn one; any element with data-passport shows the strip. */
 (function () {
   "use strict";
@@ -60,7 +60,7 @@
     x.fillStyle = "rgba(22,20,18,.06)"; for (var gx = 6; gx < W; gx += 14) for (var gy = 6; gy < H; gy += 14) x.fillRect(gx, gy, 2, 2);
     rr(96, 96, 900, 1170, 40); x.fillStyle = INK; x.fill();            // offset shadow
     rr(80, 80, 900, 1170, 40); x.fillStyle = "#fff"; x.fill(); x.lineWidth = 8; x.strokeStyle = INK; x.stroke();
-    x.fillStyle = INK; x.font = "700 30px " + M; x.fillText("SKILLS MADE EZ", 140, 172);
+    x.fillStyle = INK; x.font = "700 30px " + M; x.fillText("AI MADE EZ", 140, 172);
     x.fillStyle = RED; x.font = "800 190px " + D; x.fillText("Maker", 130, 360);
     var nm = (name || "").trim();
     x.fillStyle = INK; x.font = "800 58px " + D; if (nm) x.fillText(nm, 140, 450);

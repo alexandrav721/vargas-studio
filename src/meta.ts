@@ -3,8 +3,8 @@ export type Meta = { name: string; pic: string; play: string; playLabel: string;
 
 export const META: Record<string, Meta> = {
   nostalgia: { name: "Scrollback", pic: "/thumbs/nostalgia-website.jpg", play: "/projects/nostalgia/explore.html", playLabel: "Open Scrollback", line: "The internet and stuff of your teens." },
-  "skill-quest": { name: "Skills Made EZ", pic: "/thumbs/skill-quest-website.jpg", play: "/projects/skill-quest/start/", playLabel: "Open Skills Made EZ", line: "Learn to build AI skills, step by step.", extra: { href: "/projects/skill-quest/templates/", label: "New: 8 ready-made skills, tested against plain Claude" }, more: [{ href: "/projects/skill-quest/start/", label: "Start here: everything in Skills Made EZ, with search" }, { href: "/projects/skill-quest/library/", label: "Community library: skills people made, rated and tested" }, { href: "/projects/skill-quest/build-kit/", label: "Build Kit: plan an app so AI stops guessing" }] },
-  "ai-made-ez": { name: "AI Made EZ", pic: "/desk/learn-l1.jpg", play: "/projects/skill-quest/school/", playLabel: "Start the course", line: "Learn AI like learning to cook. Short lessons, no coding.", more: [{ href: "/projects/skill-quest/school/kitchen/", label: "Level 2: speak AI builder, no coding" }, { href: "/projects/skill-quest/build-kit/", label: "Build Kit: plan an app so AI stops guessing" }] },
+  "skill-quest": { name: "AI Made EZ skill tests", pic: "/thumbs/skill-quest-website.jpg", play: "/projects/skill-quest/templates/", playLabel: "See the tested skills", line: "Skills blind-tested against plain Claude. Now part of AI Made EZ." },
+  "ai-made-ez": { name: "AI Made EZ", pic: "/desk/learn-start.jpg", play: "/projects/skill-quest/start/", playLabel: "Open AI Made EZ", line: "AI in plain words. Free lessons, AI words, a skill maker and a kit maker.", more: [{ href: "/projects/skill-quest/school/", label: "Level 1: Cooking with Claude" }, { href: "/projects/skill-quest/school/kitchen/", label: "Level 2: Speak AI builder" }, { href: "/projects/skill-quest/prototype/v2.html", label: "Skill maker" }, { href: "/projects/skill-quest/build-kit/", label: "Kit maker" }, { href: "/projects/skill-quest/keep-up/", label: "Keep up: best practices and this week in AI" }] },
   weekline: { name: "Weekline", pic: "/thumbs/weekline-v2.jpg", play: "/projects/weekline/v2/", playLabel: "Open Weekline", line: "Your best New York week, planned." },
   restitch: { name: "Restitch", pic: "/thumbs/restitch-website.jpg", play: "/restitch.html", playLabel: "Open Restitch", line: "Turn a thrift find into a flip." },
   "planner-book": { name: "Planners", pic: "/thumbs/planner-book-website.jpg", play: "/projects/planner/", playLabel: "Open the planners", line: "Printable planners that fit how you work.", extra: { href: "/projects/planner/make/", label: "New: Make yours, a planner with your name in it" } },
@@ -19,14 +19,15 @@ export type Fresh = { href: string; pic: string; name: string; line: string; ext
 export const LEARN: Fresh[] = [
   { href: "/projects/skill-quest/school/", pic: "/desk/learn-l1.jpg", name: "Level 1: Cooking with Claude", line: "8 short lessons" },
   { href: "/projects/skill-quest/school/kitchen/", pic: "/desk/learn-l2.jpg", name: "Level 2: Speak AI builder", line: "10 lessons, no coding" },
-  { href: "/projects/skill-quest/build-kit/", pic: "/desk/learn-buildkit.jpg", name: "Build Kit", line: "Plan an app so AI stops guessing" },
+  { href: "/projects/skill-quest/prototype/v2.html", pic: "/desk/learn-skill.jpg", name: "Skill maker", line: "Teach AI one weekly job" },
+  { href: "/projects/skill-quest/build-kit/", pic: "/desk/learn-buildkit.jpg", name: "Kit maker", line: "Plan an app so AI stops guessing" },
+  { href: "/projects/skill-quest/keep-up/", pic: "/desk/learn-habits.jpg", name: "Keep up", line: "Best practices and AI news" },
 ];
 
 /* Ideas on home, grouped by who they're for. */
 export const GROUPS: { title: string; ids: string[] }[] = [
   { title: "For everyone", ids: ["ai-made-ez", "planner-book", "nostalgia", "habit-game"] },
   { title: "Startup ideas", ids: ["loop", "weekline", "restitch", "shelf-paid", "scrolll"] },
-  { title: "For AI builders", ids: ["skill-quest"] },
 ];
 
 /* Column ids → plain labels a friend understands. */

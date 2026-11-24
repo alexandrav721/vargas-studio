@@ -8,7 +8,7 @@
   "use strict";
   var NAMES = {
     weekline: "Weekline", restitch: "Restitch", nostalgia: "Scrollback", scrolll: "Get Paid to Scroll",
-    loop: "Loop", "planner-book": "Planners", "habit-game": "Lumen", "skill-quest": "Skills Made EZ",
+    loop: "Loop", "planner-book": "Planners", "habit-game": "Lumen", "skill-quest": "AI Made EZ",
     "ai-made-ez": "AI Made EZ", "shelf-paid": "Shelf Paid"
   };
   var me = document.currentScript;

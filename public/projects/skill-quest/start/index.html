@@ -3,248 +3,93 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Start here · Skills Made EZ</title>
-<meta name="description" content="Everything in Skills Made EZ in one place: tested Claude skills, a community library, the AI Made EZ course, tools to make your own, and a game. Search it all.">
+<title>Start here · AI Made EZ</title>
+<meta name="description" content="AI Made EZ: free AI lessons in plain words, an AI dictionary, a skill maker, a kit maker, and best practices and news made easy.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/site-bar.css" />
-<script src="/site-bar.js" data-project="skill-quest" data-kind="piece" defer></script>
+<link rel="stylesheet" href="../school/school.css">
 <style>
-  :root{--paper:#FBFAF7;--card:#fff;--ink:#151411;--muted:#5d5952;--track:#F1EEE7;--line:#E4E0D7;--line2:#CFCAC0;--accent:#C7391F;--accent-d:#A92F18;--teal:#1F7A6B;
-    --display:"Bricolage Grotesque",system-ui,sans-serif;--text:"Schibsted Grotesk",system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace}
-  *{box-sizing:border-box;margin:0}
-  html{-webkit-text-size-adjust:100%}
-  body{background:var(--paper);color:var(--ink);font:400 17.5px/1.55 var(--text);font-variant-numeric:proportional-nums}
-  a{color:inherit;text-underline-offset:3px;text-decoration-thickness:1px}
-  :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-  [hidden]{display:none!important}
-  main{max-width:1100px;margin:0 auto;padding:0 18px 70px}
-  h1,h2{font-family:var(--display);font-weight:800;letter-spacing:-.035em;line-height:1.02;text-wrap:balance}
-  h1{font-size:clamp(36px,6.4vw,60px);max-width:18ch;margin:34px 0 12px}
-  h2{font-size:clamp(26px,3.8vw,34px);margin-bottom:6px}
-  .lede{color:var(--muted);max-width:60ch;font-size:18.5px}
-  .num{font-family:var(--mono);font-variant-numeric:tabular-nums;letter-spacing:-.03em}
-
-  /* search first */
-  .find{margin:22px 0 8px;max-width:760px}
-  .find label{display:block;font-weight:700;margin-bottom:8px}
-  .box{display:flex;gap:8px;align-items:center;background:#fff;border:1.5px solid var(--ink);border-radius:12px;padding:6px 6px 6px 14px}
-  .box svg{width:20px;height:20px;fill:none;stroke:var(--muted);stroke-width:2.2;stroke-linecap:round;flex:none}
-  .box input{flex:1;min-width:0;border:0;font:500 19px var(--text);padding:10px 2px;background:transparent;color:var(--ink)}
-  .box input:focus{outline:none}
-  .box:focus-within{outline:2px solid var(--accent);outline-offset:2px}
-  .box button{border:0;background:var(--accent);color:#fff;border-radius:8px;padding:0 18px;min-height:46px;font:700 16px var(--text);cursor:pointer}
-  .box button:hover{background:var(--accent-d)}
-  .results{list-style:none;padding:0;margin:8px 0 0;border:1px solid var(--line);border-radius:12px;background:#fff;max-width:760px}
-  .results:empty{display:none}
-  .results li a{display:grid;grid-template-columns:auto 1fr;gap:2px 12px;padding:12px 14px;border-bottom:1px solid var(--line);text-decoration:none}
-  .results li:last-child a{border-bottom:0}
-  .results li a:hover,.results li a[aria-selected=true]{background:var(--track)}
-  .results .ty{grid-row:1/3;font:600 12px var(--text);border:1px solid var(--line2);border-radius:999px;padding:2px 9px;white-space:nowrap;align-self:start;margin-top:3px;background:#fff}
-  .results .ty.Skill,.results .ty.Tool{background:#E3F1ED;border-color:#B8DBD2;color:#155c4f}
-  .results .ty.Lesson,.results .ty.Course{background:#FCE6E0;border-color:#F0BFB2;color:#8f2a17}
-  .results b{font-weight:700}.results .dl{color:var(--muted);font-size:15px}
-  .hint{font-size:14.5px;color:var(--muted);margin-top:8px}
-  .hint button{background:none;border:0;padding:0;font:600 14.5px var(--text);color:var(--ink);text-decoration:underline;text-underline-offset:3px;cursor:pointer;margin:0 4px}
-  .empty{margin-top:10px;max-width:760px}
-  .empty .smez-doors{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
-  .empty .smez-doors a{border:1px solid var(--line2);border-radius:999px;padding:8px 12px;text-decoration:none;font-weight:600;background:#fff}
-
-  /* summary */
-  .about{display:grid;gap:24px;margin:44px 0 0;padding-top:22px;border-top:2px solid var(--ink)}
-  @media(min-width:860px){.about{grid-template-columns:1.3fr .7fr}}
-  .about p{max-width:60ch}
-  .rec{display:flex;gap:30px}
-  .rec b{display:block;font:700 40px/1 var(--mono);letter-spacing:-.05em}
-  .rec span{font-size:13.5px;color:var(--muted)}
-
-  /* where to go for what */
-  .doors{margin-top:54px}
-  .door{display:grid;gap:20px;padding:26px 0;border-top:1px solid var(--line);align-items:start}
-  @media(min-width:820px){.door{grid-template-columns:260px minmax(0,1fr)}}
-  .door figure{border-radius:10px;overflow:hidden;border:1px solid var(--line);background:var(--track);aspect-ratio:16/11}
-  @media(max-width:819px){.door figure{aspect-ratio:auto;max-height:200px}}
-  .door figure img{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
-  .door h3{font:800 26px/1.1 var(--display);letter-spacing:-.03em;margin-bottom:4px}
-  .door .why{color:var(--muted);margin-bottom:12px}
-  .door ul{list-style:none;padding:0;border-top:2px solid var(--ink)}
-  .door li a{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;padding:13px 0;border-bottom:1px solid var(--line);text-decoration:none}
-  .door li a b{display:block;font-size:17.5px}
-  .door li a span{color:var(--muted);font-size:15px}
-  .door li a i{font-style:normal;font-weight:700;color:var(--accent);white-space:nowrap}
-  .door li a:hover b{text-decoration:underline;text-underline-offset:4px}
-
-  /* new here */
-  .path{margin-top:54px;background:var(--ink);color:var(--paper);border-radius:14px;padding:26px 22px}
-  .path h2{color:#fff}
-  .path ol{list-style:none;padding:0;margin:16px 0 0;display:grid;gap:10px;counter-reset:p}
-  @media(min-width:820px){.path ol{grid-template-columns:repeat(3,minmax(0,1fr))}}
-  .path li{counter-increment:p}
-  .path li a{display:block;border:1px solid #47423b;border-radius:10px;padding:14px 16px;text-decoration:none;height:100%}
-  .path li a::before{content:counter(p);display:block;font:700 22px var(--mono);color:#F5B82E;margin-bottom:6px}
-  .path li a b{display:block;font-size:18px;color:#fff}
-  .path li a span{color:#C9C2B6;font-size:15px}
-  .path li a:hover{border-color:#F5B82E}
-
-  /* everything A–Z */
-  .az{margin-top:54px}
-  .az-list{columns:2 300px;column-gap:40px;margin-top:14px;border-top:2px solid var(--ink);padding-top:6px}
-  .az-list a{display:block;break-inside:avoid;padding:9px 0;border-bottom:1px solid var(--line);text-decoration:none}
-  .az-list a b{font-weight:700}
-  .az-list a small{font:600 12px var(--text);color:var(--muted);margin-left:6px}
-  .az-list a span{display:block;color:var(--muted);font-size:14.5px}
-  .foot{max-width:1100px;margin:0 auto;padding:22px 18px 44px;border-top:1px solid var(--line);font-size:14.5px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px 18px}
+main{max-width:1040px}
+.hero h1{max-width:14ch;font-size:clamp(40px,7vw,68px)}
+.hero p.muted{max-width:46ch;font-size:1.1em}
+.part{margin-top:44px}
+.part-h{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.part-h .n{font:700 14px var(--mono);color:var(--accent);letter-spacing:.06em}
+.part-h h2{margin:0}
+.part > p.muted{margin-top:4px}
+.tiles{display:grid;gap:16px;margin-top:16px;grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
+.tile{display:grid;grid-template-rows:auto 1fr;border:1px solid var(--line2);border-radius:16px;overflow:hidden;background:var(--card);text-decoration:none;color:var(--ink);transition:transform .2s ease,box-shadow .2s ease}
+.tile:hover{transform:translateY(-2px);box-shadow:0 16px 28px -20px rgba(21,20,17,.6);color:var(--ink)}
+.tile img{display:block;width:100%;aspect-ratio:15/11;object-fit:cover;object-position:top;border-bottom:1px solid var(--line)}
+.tile div{padding:14px 16px 16px}
+.tile b{display:block;font:800 1.2em/1.15 var(--display);letter-spacing:-.02em}
+.tile span{display:block;margin-top:4px;color:var(--muted);font-size:.95em}
+.words{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
+.words li{padding:14px 16px;border-radius:12px;background:var(--track)}
+.words b{font:800 1.1em var(--display)}
+.words span{display:block;color:var(--muted)}
+@media (prefers-reduced-motion:reduce){.tile{transition:none}}
 </style>
+<link rel="stylesheet" href="/site-bar.css" />
+<script src="/site-bar.js" data-project="ai-made-ez" data-kind="piece" defer></script>
 </head>
 <body>
-<main id="main">
-  <h1>Get Claude to do the job your way.</h1>
-  <p class="lede">Skills Made EZ is where you find, make and learn Claude skills: short instructions that teach Claude a task. Every ready-made skill here won a blind test against plain Claude.</p>
+<header class="top">
+  <a class="logo" href="./">Start here</a>
+  <div class="tools"><a class="chip give" href="../school/support.html" aria-label="Keep it free">♥<span class="gt"> Keep it free</span></a><button class="chip" id="big" type="button" aria-pressed="false">Bigger text</button></div>
+</header>
+<main>
+  <section class="hero">
+    <p class="label">Free · no secret prompts · no coding</p>
+    <h1>AI, in plain words.</h1>
+    <p class="muted">AI isn't fancy. It's a kitchen: Claude is the chef, and you write the orders. Learn it here, for free.</p>
+    <div class="btns"><a class="btn" href="../school/lesson-1.html">Start Lesson 1</a><a class="btn ghost" href="../school/kitchen/glossary.html">Look up a word</a></div>
+  </section>
 
-  <div class="find" role="search">
-    <label for="q">What do you want to do?</label>
-    <form class="box" id="find">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5l5 5"/></svg>
-      <input id="q" type="search" placeholder="Try &ldquo;meal plan&rdquo; or &ldquo;email&rdquo;" autocomplete="off" aria-controls="results">
-      <button type="submit">Search</button>
-    </form>
-    <p class="hint" id="hint">Popular: <button type="button" data-q="meal plan">meal plan</button>·<button type="button" data-q="email">email</button>·<button type="button" data-q="lesson">lesson</button>·<button type="button" data-q="make my own">make my own</button>·<button type="button" data-q="game">game</button></p>
-    <ul class="results" id="results" aria-live="polite"></ul>
-    <div class="empty" id="empty" hidden></div>
-  </div>
-
-  <section class="about" aria-label="What this is">
-    <div>
-      <h2>What this is</h2>
-      <p>Claude is like a chef who can cook anything but has never tasted food. A <b>skill</b> is a recipe card you give it, so it does a task the same good way every time. Here you can use recipe cards that already won taste tests, share and rate your own, and learn the basics in 10-minute lessons.</p>
-      <p class="hint">Made by Alexandra Vargas. Not affiliated with Anthropic. Free to use.</p>
-    </div>
-    <div>
-      <p style="font-weight:700;margin-bottom:6px">Our blind-test record</p>
-      <div class="rec"><div><b>8–0</b><span>vs plain Claude</span></div><div><b>+1.0</b><span>average lead, 1–5 score</span></div></div>
-      <p class="hint"><a href="../library/#/how">How we test, every result</a></p>
+  <section class="part" aria-labelledby="learn-h">
+    <div class="part-h"><span class="n">01</span><h2 id="learn-h">Lessons</h2></div>
+    <p class="muted">About 10 minutes each. You leave every lesson with something real.</p>
+    <div class="tiles">
+      <a class="tile" href="../school/"><img src="/desk/learn-l1.jpg" alt="" loading="lazy"><div><b>Level 1: Cooking with Claude</b><span>8 lessons for everyday life. Start here.</span></div></a>
+      <a class="tile" href="../school/kitchen/"><img src="/desk/learn-l2.jpg" alt="" loading="lazy"><div><b>Level 2: Speak AI builder</b><span>API, MCP, agents, RAG. 10 lessons, no coding.</span></div></a>
     </div>
   </section>
 
-  <section class="doors" aria-labelledby="doors-h">
-    <h2 id="doors-h">Where to go for what</h2>
+  <section class="part" aria-labelledby="words-h">
+    <div class="part-h"><span class="n">02</span><h2 id="words-h">AI words</h2></div>
+    <p class="muted">Every word people use to sound fancy, in plain words.</p>
+    <ul class="words">
+      <li><b>Prompt</b><span>= your order to the chef</span></li>
+      <li><b>Skill</b><span>= a recipe card it pulls out when it fits</span></li>
+      <li><b>MCP</b><span>= a standard plug, so apps can connect to AI</span></li>
+      <li><b>Agent</b><span>= a chef running the whole dinner alone</span></li>
+    </ul>
+    <div class="btns"><a class="btn ghost" href="../school/kitchen/glossary.html">See all the words →</a></div>
+  </section>
 
-    <div class="door">
-      <figure><img src="img/school.jpg" alt="Lesson 1 of AI Made EZ on a phone" loading="lazy"></figure>
-      <div>
-        <h3>Learn the basics</h3>
-        <p class="why">New to AI, or doing it with your mom? Start here.</p>
-        <ul>
-          <li><a href="../school/lesson-1.html"><span><b>Lesson 1: Meet the chef</b><span>8 minutes. Leave with a week of dinners.</span></span><i>Start →</i></a></li>
-          <li><a href="../school/"><span><b>AI Made EZ and Chef's passport</b><span>8 short lessons, a stamp for each.</span></span><i>Open →</i></a></li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="door">
-      <figure><img src="/desk/new-templates.jpg" alt="The ready-made skills gallery" loading="lazy"></figure>
-      <div>
-        <h3>Use one that's ready</h3>
-        <p class="why">Pick a skill that already beat plain Claude, add it in a minute.</p>
-        <ul>
-          <li><a href="../templates/"><span><b>Ready-made skills</b><span>8 skills: email, meal plan, trip, resume and more.</span></span><i>Pick one →</i></a></li>
-          <li><a href="../library/"><span><b>Community library</b><span>Skills, prompts and kits people made, with ratings.</span></span><i>Browse →</i></a></li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="door">
-      <figure><img src="/desk/new-prototype.jpg" alt="The make-your-own-skill flow" loading="lazy"></figure>
-      <div>
-        <h3>Make your own</h3>
-        <p class="why">Teach Claude something you do every week, or plan an app.</p>
-        <ul>
-          <li><a href="../prototype/v2.html"><span><b>Make your own skill</b><span>Answer a few questions, get your recipe card.</span></span><i>Start →</i></a></li>
-          <li><a href="../build-kit/"><span><b>Build Kit</b><span>Plan an app room by room, so AI stops guessing.</span></span><i>Plan →</i></a></li>
-          <li><a href="../library/#/submit"><span><b>Share yours</b><span>Put it in the library. A person checks it first.</span></span><i>Share →</i></a></li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="door">
-      <figure><img src="/desk/skill-quest.jpg" alt="The Spot the skill game" loading="lazy"></figure>
-      <div>
-        <h3>Play</h3>
-        <p class="why">Three rounds, two minutes. Can you tell which answer used a skill?</p>
-        <ul>
-          <li><a href="../play.html"><span><b>Spot the skill</b><span>A guessing game with real answers.</span></span><i>Play →</i></a></li>
-          <li><a href="../templates/#passport"><span><b>Maker passport and card</b><span>Collect 6 stamps across the site, get a card to share.</span></span><i>See →</i></a></li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="door">
-      <figure><img src="img/how.jpg" alt="The How we test page with every result" loading="lazy"></figure>
-      <div>
-        <h3>Check that it works</h3>
-        <p class="why">Every score comes from the same blind test. Ties and losses included.</p>
-        <ul>
-          <li><a href="../library/#/how"><span><b>How we test</b><span>The method, then every result.</span></span><i>Read →</i></a></li>
-          <li><a href="../library/#/rules"><span><b>How we review</b><span>What gets approved, how ratings work, licenses.</span></span><i>Read →</i></a></li>
-          <li><a href="../cards/"><span><b>A real skill card</b><span>Scored Epic 81. Won 1, tied 1, lost 1.</span></span><i>See →</i></a></li>
-        </ul>
-      </div>
+  <section class="part" id="make" aria-labelledby="make-h">
+    <div class="part-h"><span class="n">03</span><h2 id="make-h">Make your own</h2></div>
+    <p class="muted">Two makers. Answer a few questions, leave with something you can use in Claude.</p>
+    <div class="tiles">
+      <a class="tile" href="../prototype/v2.html"><img src="/desk/learn-skill.jpg" alt="" loading="lazy"><div><b>Skill maker</b><span>Teach AI one thing you do every week. Leave with a recipe card.</span></div></a>
+      <a class="tile" href="../build-kit/"><img src="/desk/learn-buildkit.jpg" alt="" loading="lazy"><div><b>Kit maker</b><span>Plan an app so AI stops guessing. Leave with a kit of files.</span></div></a>
     </div>
   </section>
 
-  <section class="path" aria-labelledby="path-h">
-    <h2 id="path-h">New here? Do these three.</h2>
-    <ol>
-      <li><a href="../school/lesson-1.html"><b>Meet the chef</b><span>What AI is, in 8 minutes.</span></a></li>
-      <li><a href="../play.html"><b>Spot the skill</b><span>See what a skill changes.</span></a></li>
-      <li><a href="../prototype/v2.html"><b>Make your own</b><span>Your first recipe card.</span></a></li>
-    </ol>
+  <section class="part" aria-labelledby="keep-h">
+    <div class="part-h"><span class="n">04</span><h2 id="keep-h">Keep up, made easy</h2></div>
+    <p class="muted">No hype. What works, and what changed this week.</p>
+    <div class="tiles">
+      <a class="tile" href="../keep-up/#habits"><img src="/desk/learn-habits.jpg" alt="" loading="lazy"><div><b>Best practices</b><span>8 habits that work with any AI.</span></div></a>
+      <a class="tile" href="../keep-up/#news"><img src="/desk/learn-news.jpg" alt="" loading="lazy"><div><b>This week in AI</b><span>The news in plain words, every Friday.</span></div></a>
+    </div>
   </section>
 
-  <section class="az" aria-labelledby="az-h">
-    <h2 id="az-h">Everything, A to Z</h2>
-    <p class="lede">Every page on Skills Made EZ, including the behind-the-scenes ones.</p>
-    <div class="az-list" id="az"></div>
-  </section>
+  <p class="freebox" style="margin-top:44px"><b>Free, all of it.</b> If it helped, <a href="../school/support.html">help keep it free</a>.</p>
 </main>
-<footer class="foot"><span>Skills Made EZ, made by Alexandra Vargas</span><a href="../landing/">About and waitlist</a><a href="../landing/privacy.html">Privacy</a><a href="/">Vargas Studio</a></footer>
-<script src="../smez-index.js" defer></script>
-<script src="../smez-nav.js" data-section="start" defer></script>
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-  var q = document.getElementById("q"), res = document.getElementById("results"), empty = document.getElementById("empty"), hint = document.getElementById("hint");
-  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
-  /* inline search, same engine as the bar's */
-  var sel = -1;
-  function draw() {
-    var v = q.value.trim(); sel = -1;
-    if (v.length < 2) { res.innerHTML = ""; empty.hidden = true; hint.hidden = false; return; }
-    hint.hidden = true;
-    var list = SMEZNav.search(v);
-    res.innerHTML = list.map(function (it) { return '<li><a href="' + esc(it.u) + '"><span class="ty ' + esc(it.y.split(" ")[0]) + '">' + esc(it.y) + "</span><b>" + esc(it.t) + '</b><span class="dl">' + esc(it.d) + "</span></a></li>"; }).join("");
-    empty.hidden = !!list.length;
-    if (!list.length) empty.innerHTML = "<p>No matches for “" + esc(v) + "”. Try a shorter word, or go straight to:</p>" + SMEZNav.doors() + '<p class="hint">Can\'t find it? <a href="../library/#/requests">Ask the community to make it</a>.</p>';
-  }
-  q.addEventListener("input", draw);
-  q.addEventListener("keydown", function (e) {
-    var a = res.querySelectorAll("a");
-    if (e.key === "ArrowDown") { e.preventDefault(); sel = Math.min(a.length - 1, sel + 1); }
-    else if (e.key === "ArrowUp") { e.preventDefault(); sel = Math.max(-1, sel - 1); }
-    else return;
-    a.forEach(function (x, i) { x.setAttribute("aria-selected", String(i === sel)); });
-  });
-  document.getElementById("find").addEventListener("submit", function (e) {
-    e.preventDefault(); draw();
-    var a = res.querySelectorAll("a"); var pick = a[sel < 0 ? 0 : sel];
-    if (pick) location.href = pick.href;
-  });
-  hint.addEventListener("click", function (e) { var b = e.target.closest("[data-q]"); if (!b) return; q.value = b.dataset.q; draw(); q.focus(); });
-  if (location.hash === "#search") q.focus();
-  /* A to Z from the same list */
-  var az = SMEZ_INDEX.filter(function (x) { return x.y !== "Idea"; }).slice().sort(function (a, b) { return a.t.localeCompare(b.t); });
-  document.getElementById("az").innerHTML = az.map(function (it) { return '<a href="' + esc(it.u) + '"><b>' + esc(it.t) + "</b><small>" + esc(it.y) + "</small><span>" + esc(it.d) + "</span></a>"; }).join("");
-});
-</script>
+<script src="../school/school.js" defer></script>
+<script src="/projects/skill-quest/smez-index.js" defer></script>
+<script src="/projects/skill-quest/smez-nav.js" data-section="start" defer></script>
 </body>
 </html>

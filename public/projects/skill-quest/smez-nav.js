@@ -1,12 +1,12 @@
-/* Skills Made EZ top bar + search, shared by every page. Add:
+/* AI Made EZ top bar + search, shared by every page. Add:
    <script src="/projects/skill-quest/smez-index.js" defer></script>
    <script src="/projects/skill-quest/smez-nav.js" data-section="ready" defer></script>
-   data-section: start | ready | make | school | community (highlights the current place). */
+   data-section: start | school | words | make | kit | keepup (highlights the current place). */
 (function () {
   "use strict";
   var me = document.currentScript, section = me && me.dataset.section || "";
   var BASE = "/projects/skill-quest/";
-  var LINKS = [["start", "Start here", BASE + "start/"], ["ready", "Ready-made", BASE + "templates/"], ["make", "Make a skill", BASE + "prototype/v2.html"], ["school", "AI Made EZ", BASE + "school/"], ["community", "Community", BASE + "library/"]];
+  var LINKS = [["start", "Start here", BASE + "start/"], ["school", "Lessons", BASE + "school/"], ["words", "AI words", BASE + "school/kitchen/glossary.html"], ["make", "Skill maker", BASE + "prototype/v2.html"], ["kit", "Kit maker", BASE + "build-kit/"], ["keepup", "Keep up", BASE + "keep-up/"]];
   function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
   function css() { if (document.getElementById("smez-nav-css")) return; var l = document.createElement("link"); l.id = "smez-nav-css"; l.rel = "stylesheet"; l.href = BASE + "smez-nav.css"; document.head.appendChild(l); }
 
@@ -45,7 +45,7 @@
   }
   function doorsHTML() {
     return '<div class="smez-doors">' + LINKS.map(function (l) { return '<a href="' + l[2] + '">' + l[1] + "</a>"; }).join("") +
-      '<a href="' + BASE + 'play.html">Play a game</a><a href="' + BASE + 'library/#/how">How we test</a></div>';
+      "</div>";
   }
   /* wire any search box: input, results list, empty slot */
   function wire(input, list, emptyEl, hintEl) {
@@ -83,8 +83,8 @@
     if (!panel) {
       panel = document.createElement("div");
       panel.className = "smez-search"; panel.hidden = true;
-      panel.setAttribute("role", "dialog"); panel.setAttribute("aria-modal", "true"); panel.setAttribute("aria-label", "Search Skills Made EZ");
-      panel.innerHTML = '<div class="smez-panel"><div class="smez-box"><input type="search" id="smez-q" placeholder="Search skills, lessons, tools…" aria-label="Search Skills Made EZ" autocomplete="off"><button type="button" data-close>Close</button></div>' +
+      panel.setAttribute("role", "dialog"); panel.setAttribute("aria-modal", "true"); panel.setAttribute("aria-label", "Search AI Made EZ");
+      panel.innerHTML = '<div class="smez-panel"><div class="smez-box"><input type="search" id="smez-q" placeholder="Search skills, lessons, tools…" aria-label="Search AI Made EZ" autocomplete="off"><button type="button" data-close>Close</button></div>' +
         '<p class="smez-hint" id="smez-hint">Popular right now</p><ul class="smez-res" id="smez-res"></ul><div class="smez-empty" id="smez-empty" hidden></div></div>';
       document.body.appendChild(panel);
       panel.addEventListener("click", function (e) { if (e.target === panel || e.target.closest("[data-close]")) closeSearch(); });
@@ -106,8 +106,8 @@
     if (skipTarget && !skipTarget.id) skipTarget.id = "smez-main";
     var skip = document.createElement("a"); skip.className = "smez-skip"; skip.href = "#" + (skipTarget ? skipTarget.id : ""); skip.textContent = "Skip to content";
     var nav = document.createElement("nav");
-    nav.className = "smez-bar"; nav.setAttribute("aria-label", "Skills Made EZ");
-    nav.innerHTML = '<div class="smez-in"><a class="smez-logo" href="' + BASE + 'start/">Skills Made <b>EZ</b></a>' +
+    nav.className = "smez-bar"; nav.setAttribute("aria-label", "AI Made EZ");
+    nav.innerHTML = '<div class="smez-in"><a class="smez-logo" href="' + BASE + 'start/">AI Made <b>EZ</b></a>' +
       '<ul class="smez-links">' + LINKS.map(function (l) { return '<li><a href="' + l[2] + '"' + (l[0] === section ? ' aria-current="page"' : "") + ">" + l[1] + "</a></li>"; }).join("") + "</ul>" +
       '<button type="button" class="smez-sbtn"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5l5 5"/></svg>Search<kbd>/</kbd></button>' +
       '<button type="button" class="smez-mbtn" aria-expanded="false">Menu</button></div>';

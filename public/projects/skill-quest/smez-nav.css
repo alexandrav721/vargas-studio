@@ -1,4 +1,4 @@
-/* Skills Made EZ: one top bar on every page + search. Same order everywhere; text labels, no icon-only buttons. */
+/* AI Made EZ: one top bar on every page + search. Same order everywhere; text labels, no icon-only buttons. */
 .smez-skip{position:absolute;left:-9999px;top:0;z-index:100;background:#151411;color:#fff;padding:10px 14px;font:600 15px "Schibsted Grotesk",system-ui,sans-serif}
 .smez-skip:focus{left:8px;top:8px}
 .smez-bar{position:relative;z-index:40;background:#FBFAF7;border-bottom:1px solid #E4E0D7;font:500 15px/1.2 "Schibsted Grotesk",system-ui,sans-serif;color:#151411}

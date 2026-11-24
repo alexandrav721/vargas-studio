@@ -22,7 +22,7 @@ type HQ = {
 const HQS = hqData as Record<string, HQ>;
 
 // The order you walk through the ideas: the order of the home page.
-const ORDER = [...GROUPS.flatMap((g) => g.ids), ...data.projects.map((p) => p.id)].filter(
+const ORDER = GROUPS.flatMap((g) => g.ids).filter(
   (id, i, all) => all.indexOf(id) === i && data.projects.some((p) => p.id === id),
 );
 

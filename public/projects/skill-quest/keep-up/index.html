@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Keep up · AI Made EZ</title>
+<meta name="description" content="AI best practices and this week's AI news, in plain words. Free.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../school/school.css">
+<style>
+main{max-width:860px}
+.habits{list-style:none;margin:18px 0 0;padding:0;display:grid;gap:12px;counter-reset:h}
+@media (min-width:700px){.habits{grid-template-columns:1fr 1fr}}
+.habits li{counter-increment:h;position:relative;padding:18px 18px 16px 64px;border:1px solid var(--line2);border-radius:14px;background:var(--card)}
+.habits li::before{content:counter(h);position:absolute;left:18px;top:16px;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:#fff;font:700 16px var(--mono)}
+.habits b{display:block;font:800 1.1em/1.2 var(--display);letter-spacing:-.015em}
+.habits span{display:block;margin-top:4px;color:var(--muted);font-size:.95em}
+.habits a{display:inline-block;margin-top:8px;font-size:.9em;font-weight:600;color:var(--accent)}
+.news{list-style:none;margin:18px 0 0;padding:0;display:grid;gap:0;border-top:2px solid var(--ink)}
+.news li{padding:16px 0;border-bottom:1px solid var(--line)}
+.news b{display:block;font:800 1.2em/1.2 var(--display);letter-spacing:-.015em}
+.news p{margin:6px 0 0}
+.news .you{margin-top:8px;padding:10px 12px;border-radius:10px;background:var(--ok-bg)}
+.news small{display:block;margin-top:8px;font:600 13px var(--mono);color:var(--muted)}
+.news small a{color:inherit}
+</style>
+<link rel="stylesheet" href="/site-bar.css" />
+<script src="/site-bar.js" data-project="ai-made-ez" data-kind="piece" defer></script>
+</head>
+<body>
+<header class="top">
+  <a class="logo" href="./">Keep up</a>
+  <div class="tools"><a class="chip give" href="../school/support.html" aria-label="Keep it free">♥<span class="gt"> Keep it free</span></a><button class="chip" id="big" type="button" aria-pressed="false">Bigger text</button></div>
+</header>
+<main>
+  <p class="label">Keep up, made easy</p>
+  <h1>What works, and what's new.</h1>
+  <p class="muted">No hype. Eight habits that work with any AI, and the week's news in plain words.</p>
+
+  <section class="sec" id="habits" aria-labelledby="habits-h">
+    <h2 id="habits-h">Best practices</h2>
+    <ol class="habits" id="habit-list"></ol>
+  </section>
+
+  <section class="sec" id="news" aria-labelledby="news-h">
+    <h2 id="news-h">This week in AI, in plain words</h2>
+    <p class="muted" id="news-week"></p>
+    <ul class="news" id="news-list"></ul>
+  </section>
+
+  <p class="freebox" style="margin-top:32px"><b>Free, all of it.</b> New news every Friday. <a href="../school/social/">See our Instagram posts</a>.</p>
+</main>
+<script src="../school/school.js" defer></script>
+<script>
+var L1 = "../school/lesson-", L2 = "../school/kitchen/lesson-";
+var HABITS = [
+  ["Give a full order.", "Say what you want, who it's for, and the limits. Vague order, vague dinner.", L1 + "2.html", "Lesson 2"],
+  ["Show one example.", "Paste something you wrote and say \"make it like this.\"", L1 + "3.html", "Lesson 3"],
+  ["Taste before you serve.", "Check names, dates, prices and addresses. AI can sound sure and be wrong.", L1 + "4.html", "Lesson 4"],
+  ["Keep private things out.", "No passwords, card numbers or medical records in a chat.", L1 + "4.html", "Lesson 4"],
+  ["Give it a station.", "Put your files and rules in a project once, so you stop repeating yourself.", L1 + "5.html", "Lesson 5"],
+  ["Keep the pantry door on \"always ask.\"", "When AI is connected to your email or calendar, make it ask before it acts.", L1 + "7.html", "Lesson 7"],
+  ["Save what works as a recipe card.", "A skill is a saved order AI pulls out when it fits. Make one with the Skill maker.", "../prototype/v2.html", "Skill maker"],
+  ["Content isn't orders.", "An email or web page can hide \"ignore your rules.\" Read it as information, not instructions.", L2 + "5.html", "Level 2, Lesson 5"]
+];
+/* Update every Friday from real sources (same list as the Friday Instagram post). */
+var NEWS = { week: "Week of Nov 17, 2026", items: [
+  { headline: "ChatGPT now types as you talk", what: "OpenAI rolled out Live Dictation to every ChatGPT plan. Your words appear as you speak, with no 10-minute limit.", you: "Tap the mic to dictate long notes or messages, even on the free plan.", source: "OpenAI", url: "https://help.openai.com/en/articles/6825453-chatgpt-release-notes", date: "Nov 18" },
+  { headline: "That panicked grandkid call could be fake", what: "The FTC warned that scammers clone a grandchild's voice or fake a video call, then demand urgent, secret payment.", you: "Hang up and call another relative to check before sending any money or gift cards.", source: "Federal Trade Commission", url: "https://consumer.ftc.gov/consumer-alerts/2026/11/grandpa-i-need-your-help-how-spot-and-avoid-grandkid-scams", date: "Nov 18" },
+  { headline: "New York sets up an AI watchdog team", what: "New York's attorney general created a unit to enforce a new AI safety law and police AI scams and privacy.", you: "New Yorkers get a place to report AI harms. The law starts January 1, 2027.", source: "New York State Attorney General", url: "https://ag.ny.gov/press-release/2026/attorney-general-james-announces-creation-ai-safety-standards-enforcement-and", date: "Nov 17" }
+] };
+function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+document.getElementById("habit-list").innerHTML = HABITS.map(function (h) {
+  return "<li><b>" + esc(h[0]) + "</b><span>" + esc(h[1]) + '</span><a href="' + h[2] + '">Learn it: ' + esc(h[3]) + " →</a></li>";
+}).join("");
+document.getElementById("news-week").textContent = NEWS.week;
+document.getElementById("news-list").innerHTML = NEWS.items.map(function (n) {
+  return "<li><b>" + esc(n.headline) + "</b><p>" + esc(n.what) + '</p><p class="you"><b style="display:inline;font:inherit;font-weight:700">For you:</b> ' + esc(n.you) + '</p><small><a href="' + esc(n.url) + '" target="_blank" rel="noopener">' + esc(n.source) + "</a> · " + esc(n.date) + "</small></li>";
+}).join("");
+</script>
+<script src="/projects/skill-quest/smez-index.js" defer></script>
+<script src="/projects/skill-quest/smez-nav.js" data-section="keepup" defer></script>
+</body>
+</html>

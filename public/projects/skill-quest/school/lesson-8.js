@@ -102,7 +102,7 @@
           var pickedCard = b.dataset.c === "1";
           b.classList.add(pickedCard ? "right" : "wrong"); play(pickedCard ? "win" : "pick");
           fb.innerHTML = '<p class="fb ' + (pickedCard ? "good" : "try") + '">' + (pickedCard ? "You picked B. B used the recipe card: one specific thing, how it helped, a warm line." : "You picked A. A was plain Claude, no card. B used the recipe card. That’s why taste tests are blind: you judge the dish, not the name.") + "</p>" +
-            '<div class="breaks"><b>That’s a taste test</b>Run your card and plain Claude on the same request, hide which is which, and pick. If your card doesn’t win, fix one step and try again. Skills Made EZ does this for you.</div>' +
+            '<div class="breaks"><b>That’s a taste test</b>Run your card and plain Claude on the same request, hide which is which, and pick. If your card doesn’t win, fix one step and try again. AI Made EZ does this for you.</div>' +
             '<div class="btns"><button class="btn" data-next type="button">Next</button><a class="btn ghost" href="../prototype/v2.html" target="_blank" rel="noopener">Score my recipe card</a></div>';
           fb.querySelector("[data-next]").onclick = next;
         };

@@ -1,4 +1,4 @@
-/* Everything in Skills Made EZ, one list. Powers the "Start here" page and the search on every page.
+/* Everything in AI Made EZ, one list. Powers the "Start here" page and the search on every page.
    t = title, y = type chip, d = one plain line, u = link, g = where it lives (learn | ready | make | play | proof | community | behind | about), k = extra words people might type. */
 window.SMEZ_INDEX = [
   /* learn */
@@ -10,7 +10,7 @@ window.SMEZ_INDEX = [
   { t: "Builder lesson 2: The order window (API)", y: "Lesson", g: "learn", u: "/projects/skill-quest/school/kitchen/lesson-2.html", d: "Builder’s Kitchen lesson 2.", k: "api key request response streaming cost" },
   { t: "Builder lesson 3: House rules (prompting)", y: "Lesson", g: "learn", u: "/projects/skill-quest/school/kitchen/lesson-3.html", d: "Builder’s Kitchen lesson 3.", k: "system prompt prompt engineering xml examples hallucination thinking temperature" },
   { t: "Builder lesson 4: Appliances (tool use)", y: "Lesson", g: "learn", u: "/projects/skill-quest/school/kitchen/lesson-4.html", d: "Builder’s Kitchen lesson 4.", k: "tool use function calling tools web search code execution" },
-  { t: "Builder lesson 5: Standard outlets (MCP)", y: "Lesson", g: "learn", u: "/projects/skill-quest/school/kitchen/lesson-5.html", d: "Builder’s Kitchen lesson 5.", k: "mcp model context protocol server client connector" },
+  { t: "Builder lesson 5: Plug your apps into AI (MCP)", y: "Lesson", g: "learn", u: "/projects/skill-quest/school/kitchen/lesson-5.html", d: "Builder’s Kitchen lesson 5.", k: "mcp model context protocol server client connector" },
   { t: "Builder lesson 6: The recipe binder (RAG)", y: "Lesson", g: "learn", u: "/projects/skill-quest/school/kitchen/lesson-6.html", d: "Builder’s Kitchen lesson 6.", k: "rag retrieval embeddings vector database chunking caching" },
   { t: "Builder lesson 7: The head chef (agents)", y: "Lesson", g: "learn", u: "/projects/skill-quest/school/kitchen/lesson-7.html", d: "Builder’s Kitchen lesson 7.", k: "agent agents loop subagent orchestrator workflow" },
   { t: "Builder lesson 8: Your own kitchen (Claude Code)", y: "Lesson", g: "learn", u: "/projects/skill-quest/school/kitchen/lesson-8.html", d: "Builder’s Kitchen lesson 8.", k: "claude code claude.md skill hook plugin slash command git" },
@@ -42,8 +42,10 @@ window.SMEZ_INDEX = [
   { t: "Share yours", y: "Library", g: "community", u: "/projects/skill-quest/library/#/submit", d: "Share a skill, prompt or kit. A person checks it first.", k: "share submit upload publish my skill" },
 
   /* make */
-  { t: "Make your own skill", y: "Tool", g: "make", u: "/projects/skill-quest/prototype/v2.html", d: "Answer a few questions. Get a skill for something you do every week.", k: "make create build write my own skill diy recipe" },
-  { t: "Build Kit", y: "Tool", g: "make", u: "/projects/skill-quest/build-kit/", d: "Plan an app room by room, so AI stops guessing. 8 starter plans.", k: "build kit app planner plan website app idea starter" },
+  { t: "Best practices", y: "Keep up", g: "learn", u: "/projects/skill-quest/keep-up/#habits", d: "8 habits that work with any AI, in plain words.", k: "best practices tips habits rules how to use ai well good prompts safety" },
+  { t: "This week in AI", y: "Keep up", g: "learn", u: "/projects/skill-quest/keep-up/#news", d: "The week's AI news in plain words, every Friday.", k: "news trends latest updates this week new features scams" },
+  { t: "Skill maker", y: "Tool", g: "make", u: "/projects/skill-quest/prototype/v2.html", d: "Answer a few questions. Get a skill for something you do every week.", k: "make create build write my own skill diy recipe" },
+  { t: "Kit maker (Build Kit)", y: "Tool", g: "make", u: "/projects/skill-quest/build-kit/", d: "Plan an app room by room, so AI stops guessing. 8 starter plans.", k: "build kit app planner plan website app idea starter" },
 
   /* play */
   { t: "Spot the skill", y: "Game", g: "play", u: "/projects/skill-quest/play.html", d: "Three real answers. Guess which one used a skill.", k: "game play spot guess quiz fun" },
@@ -56,10 +58,10 @@ window.SMEZ_INDEX = [
   { t: "Real card report", y: "Proof", g: "proof", u: "/projects/skill-quest/cards/idea-innovate-report.html", d: "The full report behind that card: tasks, judge notes, what to fix.", k: "report card details judge" },
 
   /* about + behind the scenes */
-  { t: "About Skills Made EZ", y: "Page", g: "about", u: "/projects/skill-quest/landing/", d: "What it is, the game, and the waitlist.", k: "about home landing waitlist join pricing pro" },
+  { t: "About AI Made EZ", y: "Page", g: "about", u: "/projects/skill-quest/landing/", d: "What it is, the game, and the waitlist.", k: "about home landing waitlist join pricing pro" },
   { t: "Privacy", y: "Page", g: "about", u: "/projects/skill-quest/landing/privacy.html", d: "What we keep and what we don't.", k: "privacy data email" },
   { t: "Pitch deck", y: "Behind the scenes", g: "behind", u: "/projects/skill-quest/deck/deck.html", d: "The business in 12 slides.", k: "deck pitch investors slides business plan" },
-  { t: "Explainer graphic", y: "Behind the scenes", g: "behind", u: "/projects/skill-quest/graphic/explainer.html", d: "Skills Made EZ in one picture.", k: "explainer graphic picture diagram" },
+  { t: "Explainer graphic", y: "Behind the scenes", g: "behind", u: "/projects/skill-quest/graphic/explainer.html", d: "AI Made EZ in one picture.", k: "explainer graphic picture diagram" },
   { t: "Ads", y: "Behind the scenes", g: "behind", u: "/projects/skill-quest/ads/", d: "The ad frames we test with.", k: "ads ad meta instagram creative" },
   { t: "Print and sponsor kit", y: "Behind the scenes", g: "behind", u: "/projects/skill-quest/print/", d: "Printable pages and the sponsor kit.", k: "print sponsor kit pdf flyer" },
   { t: "The first prototype", y: "Behind the scenes", g: "behind", u: "/projects/skill-quest/prototype/prototype.html", d: "Where it started: scoring a skill like a game.", k: "prototype first version v1 original" }
