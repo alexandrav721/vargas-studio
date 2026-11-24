@@ -1,0 +1,694 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Glow Squares Deck</title>
+  <meta name="description" content="Twelve-slide pitch deck for Glow Squares, one collagen chocolate square a night. Pre-product; every number sourced or marked estimate; not raising yet." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --linen:#f4ece3; --card:#fffaf4; --cocoa:#2a1712; --rose:#e8a6b8; --accent:#b8475f; --gold:#d9b276;
+      --muted:#6f5a4f; --line:#e0cfbf; --choc:#3b2119; --choc-hi:#55311f;
+      --serif:"Instrument Serif", Georgia, serif; --sans:"Manrope", system-ui, sans-serif; --mono:"IBM Plex Mono", ui-monospace, monospace;
+      --weave: repeating-linear-gradient(0deg, rgba(42,23,18,.025) 0 1px, transparent 1px 3px), repeating-linear-gradient(90deg, rgba(42,23,18,.02) 0 1px, transparent 1px 4px);
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; height: 100%; background: #e9dccf; color: var(--cocoa); font-family: var(--sans); overflow: hidden; }
+    .studio-back { position: fixed; top: 10px; left: 10px; z-index: 60; padding: 7px 12px; border: 1px solid var(--line); border-radius: 2px; background: var(--card); color: var(--cocoa); font: 600 12px var(--sans); text-decoration: none; }
+    .viewport { position: fixed; top: 0; left: 0; right: 0; bottom: 56px; overflow: hidden; }
+    .deck { width: 1280px; height: 720px; position: absolute; left: 50%; top: 50%; transform-origin: center center; box-shadow: 0 0 0 1px var(--line), 0 30px 60px -36px rgba(42,23,18,.55); }
+    .slide { position: absolute; inset: 0; display: none; padding: 54px 76px 40px; overflow: hidden; background: var(--weave), var(--linen); }
+    .slide.on { display: flex; flex-direction: column; }
+    .kicker { font: 600 12.5px var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--accent); margin: 0 0 14px; }
+    h1, h2 { font-family: var(--serif); font-weight: 400; letter-spacing: -.012em; line-height: 1.02; margin: 0; }
+    h1 { font-size: 132px; line-height: .92; }
+    h2 { font-size: 54px; max-width: 36ch; }
+    h2 em, h1 em { font-style: italic; color: var(--accent); }
+    p { margin: 0; }
+    .body { flex: 1; display: flex; flex-direction: column; justify-content: center; min-height: 0; }
+    .lead { font-size: 21px; line-height: 1.45; max-width: 44ch; }
+    .small { font-size: 15.5px; line-height: 1.5; color: var(--muted); }
+    .src { margin-top: auto; padding-top: 12px; border-top: 1px solid var(--line); font: 500 11.5px/1.5 var(--mono); color: var(--muted); display: flex; justify-content: space-between; gap: 28px; }
+    .src span:last-child { white-space: nowrap; }
+    .est { font: 600 10.5px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--accent); border: 1px solid var(--accent); border-radius: 2px; padding: 2px 6px; vertical-align: 3px; white-space: nowrap; }
+    .row { display: grid; gap: 44px; align-items: center; }
+
+    /* 1 Title: the one cocoa slide */
+    .slide.dark { background: var(--cocoa); color: var(--linen); }
+    .slide.dark .kicker { color: var(--rose); }
+    .slide.dark .src { color: #cdb9a9; border-top-color: rgba(244,236,227,.16); }
+    .title-grid { display: grid; grid-template-columns: 1fr 300px; gap: 60px; align-items: center; }
+    .promise { font: 400 36px/1.2 var(--serif); max-width: 24ch; margin-top: 30px; color: var(--linen); }
+    .promise em { color: var(--rose); }
+    .byline { margin-top: 34px; font: 600 15px var(--sans); color: var(--gold); letter-spacing: .02em; }
+    .hanger { position: relative; width: 250px; height: 470px; margin: 0 auto; background: var(--linen); color: var(--cocoa); border-radius: 125px 125px 10px 10px; padding: 150px 28px 28px; text-align: center; transform: rotate(4deg); box-shadow: 0 30px 40px -24px rgba(0,0,0,.6); }
+    .hanger::before { content: ""; position: absolute; top: 34px; left: 50%; width: 86px; height: 86px; margin-left: -43px; border-radius: 50%; background: var(--cocoa); }
+    .hanger::after { content: ""; position: absolute; top: 120px; left: 50%; width: 2px; height: 20px; margin-left: -1px; background: var(--cocoa); opacity: .25; }
+    .hanger b { display: block; font: 400 46px/.95 var(--serif); }
+    .hanger i { display: block; margin: 18px auto 0; width: 60px; height: 1px; background: var(--accent); }
+    .hanger p { margin-top: 18px; font: 500 14.5px/1.45 var(--sans); }
+    .hanger small { position: absolute; left: 0; right: 0; bottom: 22px; font: 600 10.5px var(--mono); letter-spacing: .16em; color: var(--accent); }
+
+    /* 2 Problem */
+    .quote { font: 400 44px/1.12 var(--serif); max-width: 20ch; }
+    .quote em { color: var(--accent); }
+    .who { margin-top: 18px; font: 600 14px var(--sans); color: var(--muted); }
+    .words { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+    .words span { font: 400 25px var(--serif); padding: 6px 14px 7px; background: var(--card); border: 1px solid var(--line); border-radius: 999px; }
+    .words span:nth-child(2) { border-color: var(--accent); color: var(--accent); }
+    .persona { margin-top: 22px; padding: 18px 20px; background: var(--card); border-left: 3px solid var(--rose); }
+    .persona p { font-size: 16.5px; line-height: 1.5; }
+    .lab { font: 600 10.5px var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 6px; }
+
+    /* 3 Product: tray, coded square, note */
+    .product { display: grid; grid-template-columns: 440px 1fr; gap: 54px; align-items: center; }
+    .tray { padding: 16px; background: var(--card); border: 1px solid var(--line); border-radius: 4px; box-shadow: 0 24px 36px -26px rgba(42,23,18,.55); }
+    .tray-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 7px; }
+    .cell { position: relative; aspect-ratio: 1; background: #f7efe6; border: 1px solid var(--line); border-radius: 2px; display: flex; align-items: center; justify-content: center; }
+    .cell::after { content: attr(data-n); position: absolute; left: 4px; bottom: 2px; font: 600 7.5px var(--mono); color: var(--muted); letter-spacing: .04em; }
+    .cell .w { width: 66%; height: 66%; border-radius: 2px; background: linear-gradient(135deg, #f2c1cf 0%, var(--rose) 45%, #d88ea2 100%); box-shadow: 0 2px 3px rgba(42,23,18,.25); }
+    .cell .w.g { background: linear-gradient(135deg, #ecd3a4 0%, var(--gold) 50%, #bf9558 100%); }
+    .cell.eaten .w { display: none; }
+    .cell.eaten { background: var(--card); }
+    .cell.eaten::before { content: ""; width: 54%; height: 14px; background: repeating-linear-gradient(180deg, rgba(42,23,18,.28) 0 1.5px, transparent 1.5px 5px); }
+    .cell.now { outline: 2px solid var(--accent); outline-offset: 1px; }
+    .tray-cap { display: flex; justify-content: space-between; margin-top: 10px; font: 600 10.5px var(--mono); letter-spacing: .1em; color: var(--muted); text-transform: uppercase; }
+    .hero-sq { position: relative; height: 330px; }
+    .choc { position: absolute; left: 0; top: 0; width: 210px; height: 210px; border-radius: 8px; background: linear-gradient(145deg, var(--choc-hi), var(--choc) 55%, #2b160f); box-shadow: inset 0 0 0 14px rgba(0,0,0,.12), inset 0 0 0 15px rgba(255,220,190,.08), 0 26px 34px -18px rgba(42,23,18,.7); transform: rotate(-6deg); }
+    .choc::before { content: ""; position: absolute; left: 50%; top: 16px; bottom: 16px; width: 3px; margin-left: -1.5px; background: rgba(0,0,0,.35); box-shadow: 1px 0 0 rgba(255,220,190,.1); }
+    .choc span { position: absolute; right: 24px; bottom: 22px; font: 400 30px var(--serif); color: rgba(255,225,200,.22); }
+    .note { position: absolute; left: 150px; top: 150px; width: 300px; padding: 22px 24px 20px; background: var(--card); border: 1px solid var(--line); box-shadow: 0 20px 30px -20px rgba(42,23,18,.5); transform: rotate(2.5deg); }
+    .note .lab { color: var(--accent); }
+    .note p { font: 400 27px/1.15 var(--serif); }
+    .facts { margin-top: 18px; font-size: 15.5px; line-height: 1.6; }
+    .facts b { font-weight: 700; }
+    .placeholder { display: inline-block; margin-top: 14px; font: 600 11px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--accent); border: 1.5px dashed var(--accent); padding: 5px 9px; border-radius: 2px; }
+
+    /* 4 A night */
+    .night { display: grid; grid-template-columns: 1.15fr 1fr 1.15fr .8fr; gap: 0; border-top: 1px solid var(--cocoa); margin-top: 8px; }
+    .step { padding: 22px 26px 0 0; }
+    .step + .step { padding-left: 26px; border-left: 1px solid var(--line); }
+    .step svg { display: block; height: 150px; width: auto; max-width: 100%; }
+    .step .t { font: 600 12px var(--mono); color: var(--accent); letter-spacing: .1em; text-transform: uppercase; margin-top: 18px; }
+    .step h3 { font: 400 40px/1 var(--serif); margin: 6px 0 10px; }
+    .step p { font-size: 16px; line-height: 1.5; }
+    .step.dot h3 { font-size: 30px; }
+
+    /* 5 Different: dose bars */
+    .diff { display: grid; grid-template-columns: 1.35fr 1fr; gap: 54px; align-items: start; }
+    .bars { display: grid; gap: 15px; }
+    .bar-row { display: grid; grid-template-columns: 210px 1fr 74px; gap: 14px; align-items: center; }
+    .bar-row .nm { font-size: 15px; font-weight: 600; line-height: 1.25; }
+    .bar-row .nm small { display: block; font: 500 11.5px var(--mono); color: var(--muted); margin-top: 2px; font-weight: 500; }
+    .track { height: 26px; background: var(--card); border: 1px solid var(--line); border-radius: 2px; position: relative; }
+    .fill { position: absolute; left: 0; top: 0; bottom: 0; background: #b9a596; border-radius: 1px; }
+    .bar-row.us .fill { background: var(--accent); }
+    .bar-row.us .nm { color: var(--accent); }
+    .bar-row .v { font: 600 17px var(--mono); text-align: right; }
+    .studied { position: absolute; right: -1px; top: -8px; bottom: -8px; border-right: 2px dashed var(--cocoa); }
+    .side h3 { font: 400 30px/1.1 var(--serif); margin: 0 0 8px; }
+    .side p { font-size: 16px; line-height: 1.5; }
+    .side .blk + .blk { margin-top: 26px; padding-top: 22px; border-top: 1px solid var(--line); }
+    .mini-note { margin-top: 12px; padding: 12px 16px; background: var(--card); border: 1px solid var(--line); font: 400 21px/1.2 var(--serif); }
+    .honest { margin-top: 18px; font-size: 14px; color: var(--muted); line-height: 1.5; }
+
+    /* 6 Pricing */
+    .price { display: grid; grid-template-columns: 1.1fr 1fr; gap: 56px; align-items: center; }
+    .sub-card { padding: 30px 34px; background: var(--card); border: 1px solid var(--line); border-top: 4px solid var(--accent); }
+    .sub-card .big { font: 400 110px/.9 var(--serif); }
+    .sub-card .big small { font-size: 36px; }
+    .sub-card p { font-size: 17px; line-height: 1.5; margin-top: 12px; }
+    .unit { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--line); font: 500 15px/1.8 var(--mono); }
+    .unit b { color: var(--accent); }
+    .plist { width: 100%; border-collapse: collapse; }
+    .plist td { padding: 11px 0; border-bottom: 1px solid var(--line); font-size: 16.5px; vertical-align: baseline; }
+    .plist td:last-child { text-align: right; font: 400 32px var(--serif); white-space: nowrap; padding-left: 16px; }
+    .plist td small { display: block; color: var(--muted); font-size: 13.5px; margin-top: 2px; }
+    .terms { margin-top: 16px; font-size: 14.5px; color: var(--muted); line-height: 1.5; }
+
+    /* 7 Market */
+    .market { display: grid; grid-template-columns: 1fr 1.15fr; gap: 60px; align-items: center; }
+    .hero-stat .n { font: 400 120px/.9 var(--serif); }
+    .hero-stat .n small { font-size: 48px; color: var(--accent); }
+    .hero-stat p { font-size: 18px; line-height: 1.45; margin-top: 14px; max-width: 30ch; }
+    .stat-list { display: grid; }
+    .stat-list div { display: grid; grid-template-columns: 170px 1fr; gap: 20px; padding: 16px 0; border-top: 1px solid var(--line); align-items: baseline; }
+    .stat-list div:last-child { border-bottom: 1px solid var(--line); }
+    .stat-list b { font: 400 40px var(--serif); font-weight: 400; }
+    .stat-list p { font-size: 15.5px; line-height: 1.45; }
+    .stat-list p small { display: block; font: 500 11px var(--mono); color: var(--muted); margin-top: 3px; }
+
+    /* 8 Map */
+    .mapwrap { display: grid; grid-template-columns: 760px 1fr; gap: 40px; align-items: center; }
+    .mapbox { padding-left: 96px; }
+    .map { position: relative; height: 340px; background: var(--card); border: 1px solid var(--line); }
+    .map .lane { position: absolute; top: 0; bottom: 0; border-left: 1px dashed var(--line); }
+    .map .lane span { position: absolute; bottom: -24px; left: 6px; font: 600 10.5px var(--mono); letter-spacing: .05em; color: var(--muted); white-space: nowrap; text-transform: uppercase; }
+    .map .ylab { position: absolute; left: -8px; font: 600 10.5px var(--mono); letter-spacing: .05em; color: var(--muted); text-transform: uppercase; transform: translateX(-100%); white-space: nowrap; }
+    .pin { position: absolute; transform: translate(-6px, 50%); display: flex; align-items: center; gap: 7px; font-size: 13.5px; font-weight: 600; white-space: nowrap; }
+    .pin i { width: 12px; height: 12px; border-radius: 50%; background: var(--cocoa); flex: none; }
+    .pin.l { flex-direction: row-reverse; }
+    .pin.unk i { background: transparent; border: 2px dashed var(--cocoa); }
+    .pin.us { font: 400 24px var(--serif); color: var(--accent); }
+    .pin.us { transform: translate(-10px, 50%); }
+    .pin.us i { width: 20px; height: 20px; background: var(--accent); box-shadow: 0 0 0 5px rgba(184,71,95,.18); }
+    .map-axes { margin-top: 32px; font: 600 11px var(--mono); letter-spacing: .06em; color: var(--cocoa); text-transform: uppercase; }
+    .map-side p { font-size: 16.5px; line-height: 1.5; }
+    .map-side p + p { margin-top: 14px; }
+
+    /* 9 Proof table */
+    table.t { width: 100%; border-collapse: collapse; background: var(--card); border: 1px solid var(--line); font-size: 15px; }
+    table.t th { text-align: left; font: 600 11px var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); padding: 13px 14px 9px; }
+    table.t td { padding: 11px 14px; border-top: 1px solid var(--line); vertical-align: top; line-height: 1.4; }
+    table.t td:first-child { font-weight: 700; }
+    .st { font: 600 12px var(--mono); letter-spacing: .04em; white-space: nowrap; }
+    .st.no { color: var(--accent); }
+    .st.yes { color: #4d6b45; }
+    .st.zero { color: var(--cocoa); }
+
+    /* 10 GTM */
+    .gtm { display: grid; grid-template-columns: 1.1fr 1fr 1fr 1.1fr; border-top: 1px solid var(--cocoa); }
+    .gtm > div { padding: 18px 22px 0 0; }
+    .gtm > div + div { padding-left: 22px; border-left: 1px solid var(--line); }
+    .gtm .d { font: 600 12px var(--mono); color: var(--accent); letter-spacing: .08em; text-transform: uppercase; }
+    .gtm .n { font: 400 54px/1 var(--serif); margin: 10px 0 6px; }
+    .gtm h3 { font: 700 16px var(--sans); margin: 0 0 6px; }
+    .gtm p { font-size: 15px; line-height: 1.5; }
+    .budget { margin-top: 30px; }
+    .budget .lab { margin-bottom: 8px; }
+    .stack { display: flex; height: 34px; border: 1px solid var(--cocoa); }
+    .stack div { display: flex; align-items: center; padding: 0 8px; font: 600 11px var(--mono); white-space: nowrap; overflow: hidden; border-right: 1px solid var(--cocoa); color: var(--cocoa); }
+    .stack div:last-child { border-right: 0; }
+
+    /* 11 Money */
+    .money { display: grid; grid-template-columns: 1.3fr 1fr; gap: 50px; align-items: center; }
+    .rev { display: grid; gap: 14px; margin-top: 4px; }
+    .rev-row { display: grid; grid-template-columns: 70px 1fr; gap: 14px; align-items: center; }
+    .rev-row .k { font: 600 12px var(--mono); text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+    .rev-row .b { height: 44px; background: #cdbcaf; display: flex; align-items: center; padding-left: 12px; font: 600 15px var(--mono); white-space: nowrap; }
+    .rev-row.base .b { background: var(--accent); color: var(--card); }
+    .rev-row.base .k { color: var(--accent); }
+    .mt { width: 100%; border-collapse: collapse; margin-top: 22px; font-size: 14.5px; }
+    .mt th { text-align: right; font: 600 10.5px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); padding: 0 0 8px; }
+    .mt th:first-child, .mt td:first-child { text-align: left; }
+    .mt td { text-align: right; padding: 8px 0; border-top: 1px solid var(--line); font-family: var(--mono); font-size: 14px; }
+    .mt td:first-child { font-family: var(--sans); font-weight: 600; }
+    .mt tr.base td { color: var(--accent); font-weight: 600; }
+    .cost { padding: 26px 28px; background: var(--card); border: 1px solid var(--line); }
+    .cost .n { font: 400 64px/1 var(--serif); margin: 6px 0 8px; }
+    .cost p { font-size: 15.5px; line-height: 1.5; }
+    .cost hr { border: 0; border-top: 1px solid var(--line); margin: 18px 0; }
+
+    /* 12 Next: gates */
+    .gates { position: relative; display: grid; grid-template-columns: repeat(4, 1fr) .8fr; margin-top: 10px; }
+    .gates::before { content: ""; position: absolute; left: 0; right: 0; top: 9px; border-top: 2px solid var(--cocoa); }
+    .gate { position: relative; padding: 34px 24px 0 0; }
+    .gate::before { content: ""; position: absolute; left: 0; top: 0; width: 20px; height: 20px; border-radius: 50%; background: var(--linen); border: 2px solid var(--cocoa); }
+    .gate.last::before { background: var(--accent); border-color: var(--accent); }
+    .gate .d { font: 400 36px/1 var(--serif); }
+    .gate h3 { font: 700 15.5px var(--sans); margin: 8px 0 6px; }
+    .gate p { font-size: 14.5px; line-height: 1.45; }
+    .gate .if { margin-top: 10px; font-size: 13.5px; color: var(--accent); line-height: 1.4; }
+    .ask { margin-top: 38px; display: flex; gap: 30px; align-items: baseline; padding-top: 22px; border-top: 1px solid var(--line); }
+    .ask b { font: 400 40px/1 var(--serif); white-space: nowrap; }
+    .ask p { font-size: 16.5px; line-height: 1.5; max-width: 62ch; }
+
+    /* nav */
+    .nav { position: fixed; bottom: 12px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; align-items: center; z-index: 50; font: 600 12.5px var(--mono); color: var(--cocoa); }
+    .nav button { font: 600 14px var(--sans); color: var(--cocoa); background: var(--card); border: 1px solid var(--line); border-radius: 2px; padding: 7px 13px; cursor: pointer; }
+    .nav button:hover, .nav button:focus-visible { border-color: var(--accent); color: var(--accent); }
+    .nav span { min-width: 56px; text-align: center; }
+
+    /* Phone: slides stack and scroll */
+    @media (max-width: 700px) {
+      html, body { overflow: auto; height: auto; }
+      .viewport { position: static; overflow: visible; }
+      .deck { position: static; transform: none !important; width: auto; height: auto; box-shadow: none; }
+      .slide { position: relative; inset: auto; display: flex !important; flex-direction: column; overflow: visible; padding: 38px 18px 30px; border-bottom: 1px solid var(--line); }
+      .slide.dark { border-bottom: 0; }
+      h1 { font-size: 76px; }
+      h2 { font-size: 34px; max-width: none; }
+      .body { flex: none; justify-content: flex-start; margin-top: 24px; }
+      .lead { font-size: 17px; }
+      .row, .title-grid, .product, .diff, .price, .market, .mapwrap, .money { grid-template-columns: 1fr !important; gap: 30px; }
+      .promise { font-size: 27px; margin-top: 20px; }
+      .hanger { width: 200px; height: 360px; border-radius: 100px 100px 8px 8px; padding: 118px 20px 20px; }
+      .hanger::before { width: 70px; height: 70px; margin-left: -35px; top: 26px; }
+      .hanger::after { top: 98px; }
+      .hanger b { font-size: 36px; }
+      .hanger p { font-size: 13px; }
+      .quote { font-size: 32px; }
+      .words span { font-size: 20px; }
+      .hero-sq { height: 300px; }
+      .choc { width: 170px; height: 170px; }
+      .note { left: auto; right: 0; top: 150px; width: 230px; padding: 16px 18px; }
+      .note p { font-size: 22px; }
+      .cell::after { font-size: 6px; left: 2px; bottom: 1px; }
+      .tray-grid { gap: 4px; }
+      .tray { padding: 10px; }
+      .night, .gtm, .gates { grid-template-columns: 1fr !important; border-top: 0; }
+      .step, .step + .step { padding: 22px 0; border-left: 0; border-top: 1px solid var(--line); }
+      .step svg { height: 110px; }
+      .step h3 { font-size: 34px; }
+      .bar-row { grid-template-columns: 1fr 60px; gap: 6px 10px; }
+      .bar-row .nm { grid-column: 1 / -1; }
+      .bar-row .v { font-size: 15px; }
+      .sub-card { padding: 22px 20px; }
+      .sub-card .big { font-size: 80px; }
+      .plist td:last-child { font-size: 26px; }
+      .hero-stat .n { font-size: 82px; }
+      .stat-list div { grid-template-columns: 1fr; gap: 4px; }
+      .stat-list b { font-size: 34px; }
+      .mapbox { padding-left: 58px; }
+      .map { height: 360px; }
+      .pin.r { flex-direction: row-reverse; transform: translate(calc(-100% + 5px), 50%); }
+      .pin.us.r { transform: translate(calc(-100% + 7px), 50%); }
+      .map .ylab { font-size: 8.5px; left: -5px; white-space: normal; width: 52px; text-align: right; }
+      .map .lane span { font-size: 8px; white-space: normal; width: 52px; left: 3px; line-height: 1.15; bottom: -30px; }
+      .pin { font-size: 11px; gap: 4px; }
+      .pin i { width: 9px; height: 9px; }
+      .pin.us { font-size: 18px; }
+      .pin.us i { width: 14px; height: 14px; }
+      .map-axes { margin-top: 48px; }
+      table.t, table.t tbody, table.t tr, table.t td { display: block; }
+      table.t thead { display: none; }
+      table.t tr { padding: 12px 14px; border-top: 1px solid var(--line); }
+      table.t tr:first-child { border-top: 0; }
+      table.t td { padding: 2px 0; border-top: 0; }
+      table.t td:first-child { font: 400 21px/1.2 var(--serif); margin-bottom: 4px; }
+      table.t td:nth-child(2)::before { content: "Target: "; font-weight: 700; }
+      .gtm > div, .gtm > div + div { padding: 18px 0; border-left: 0; border-top: 1px solid var(--line); }
+      .stack { flex-direction: column; height: auto; }
+      .stack div { width: auto !important; padding: 8px 10px; border-right: 0; border-bottom: 1px solid var(--cocoa); white-space: normal; }
+      .stack div:last-child { border-bottom: 0; }
+      .rev-row .b { font-size: 13px; }
+      .mt { font-size: 12px; }
+      .mt td { font-size: 12px; }
+      .mt th:nth-child(2), .mt td:nth-child(2), .mt th:nth-child(4), .mt td:nth-child(4) { display: none; }
+      .mt th, .mt td { padding-left: 8px; }
+      .gates::before { left: 9px; right: auto; top: 0; bottom: 0; border-top: 0; border-left: 2px solid var(--cocoa); }
+      .gate { padding: 0 0 26px 40px; }
+      .gate::before { top: 4px; }
+      .ask { flex-direction: column; gap: 10px; }
+      .src { margin-top: 26px; flex-direction: column; gap: 6px; overflow-wrap: anywhere; }
+      .nav { display: none; }
+      .studio-back { position: static; display: inline-block; margin: 12px 18px; }
+    }
+    @media print {
+      @page { size: 1280px 720px; margin: 0; }
+      html, body { overflow: visible; height: auto; }
+      .viewport, .deck { position: static; transform: none !important; height: auto; box-shadow: none; }
+      .slide { position: relative; display: flex !important; flex-direction: column; width: 1280px; height: 720px; break-after: page; }
+      .nav, .studio-back, .site-bar { display: none; }
+    }
+  </style>
+  <link rel="stylesheet" href="/site-bar.css" />
+  <script src="/site-bar.js" data-project="glow-squares" data-kind="piece" defer></script>
+</head>
+<body>
+  <a class="studio-back" href="/">← Vargas Studio</a>
+  <div class="viewport" id="viewport">
+    <div class="deck" id="deck">
+
+      <!-- 1 Title -->
+      <section class="slide dark" aria-label="Title">
+        <div class="body">
+          <div class="title-grid">
+            <div>
+              <p class="kicker">Pitch deck · November 2026 · pre-launch</p>
+              <h1>Glow<br />Squares</h1>
+              <p class="promise">One chocolate square after dinner, with the <em>2.5 g of collagen</em> the skin studies used.</p>
+              <p class="byline">Johanna J, founder</p>
+            </div>
+            <div class="hanger" aria-label="Drawing of the Do Not Disturb door hanger that ships on the box">
+              <b>Do Not<br />Disturb</b><i></i>
+              <p>Please make up the room. Someone else. Ideally not you.</p>
+              <small>RM 01–30</small>
+            </div>
+          </div>
+        </div>
+        <div class="src"><span>Door hanger drawn from the packaging design (concept/packaging.html). Collagen wording pending attorney review. glowsquares.com</span><span>1 / 12</span></div>
+      </section>
+
+      <!-- 2 Problem -->
+      <section class="slide" aria-label="The problem">
+        <p class="kicker">The problem</p>
+        <h2>Women buy the collagen powder, then quit, because it turns into <em>one more chore</em>.</h2>
+        <div class="body">
+          <div class="row" style="grid-template-columns:1.05fr 1fr">
+            <div>
+              <p class="quote">“I was so done <em>forcing down</em> collagen powder.”</p>
+              <p class="who">Johanna J, 34, founder. Every night she still ate something sweet after dinner.</p>
+            </div>
+            <div>
+              <span class="lab">Her customers' own words</span>
+              <div class="words"><span>“treat”</span><span>“I hate the taste”</span><span>“routine”</span><span>“does it actually work”</span><span>“that is my one thing”</span></div>
+              <div class="persona">
+                <span class="lab">Sample customer</span>
+                <p>A working mom of teens, 35 to 55, who finally sits down at 9 pm. She has a collagen tub she stopped using. Her fear: one more wellness thing from a brand that overpromises.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="src"><span>Johanna's customer research, Nov 2026 (research/her-full-brief.txt) · founder story in her words (content/founder-story.md). The sample customer is a composite, not one person.</span><span>2 / 12</span></div>
+      </section>
+
+      <!-- 3 Product -->
+      <section class="slide" aria-label="The product">
+        <p class="kicker">The product</p>
+        <h2>Thirty foil-wrapped squares in a tray, and a joke under every one.</h2>
+        <div class="body">
+          <div class="product">
+            <div class="tray" aria-label="Drawing of the 30-night tray, rooms 01 to 30, nights 1 to 13 already eaten, gold squares on nights 15 and 30">
+              <div class="tray-grid" id="tray"></div>
+              <div class="tray-cap"><span>The tray · RM 01–30</span><span>Gold foil on 15 and 30</span></div>
+            </div>
+            <div>
+              <div class="hero-sq">
+                <div class="choc" aria-label="Drawing of one chocolate square with a score line down the middle"><span>GS</span></div>
+                <div class="note"><span class="lab">Night 23 · printed under the square</span><p>Breaking news: local woman sits down. More at eleven.</p></div>
+              </div>
+              <p class="facts"><b>In the box:</b> 30 squares, a 30-dot progress card, a hidden note under Night 30, and the door hanger.</p>
+              <span class="placeholder">Drawn in code · photo coming after samples</span>
+            </div>
+          </div>
+        </div>
+        <div class="src"><span>Box spec: product/30-nights.md · note from Volume 1 (product/notes-v2.md), picked by 3 reviewers. No samples exist yet, so nothing here is a photo.</span><span>3 / 12</span></div>
+      </section>
+
+      <!-- 4 A night -->
+      <section class="slide" aria-label="How a night works">
+        <p class="kicker">How a night works</p>
+        <h2>Every night is the same small ceremony: <em>snap, unwrap, read.</em></h2>
+        <div class="body">
+          <div class="night">
+            <div class="step">
+              <svg viewBox="0 0 200 150" aria-hidden="true"><rect x="22" y="30" width="72" height="90" rx="4" fill="#3b2119" transform="rotate(-8 58 75)"/><rect x="106" y="30" width="72" height="90" rx="4" fill="#3b2119" transform="rotate(8 142 75)"/><path d="M100 14 L100 4 M88 18 L82 9 M112 18 L118 9" stroke="#b8475f" stroke-width="3" stroke-linecap="round"/><path d="M100 40 L96 60 L104 78 L97 98 L102 118" stroke="#b8475f" stroke-width="2" fill="none" stroke-dasharray="4 4"/></svg>
+              <p class="t">9:00 pm</p>
+              <h3>Snap</h3>
+              <p>Tonight's square breaks clean along its score line. The sound is the start of the evening.</p>
+            </div>
+            <div class="step">
+              <svg viewBox="0 0 200 150" aria-hidden="true"><rect x="58" y="34" width="84" height="84" rx="4" fill="#3b2119"/><path d="M58 34 L142 34 L142 70 Q120 52 100 92 Q82 60 58 76 Z" fill="#e8a6b8"/><path d="M142 34 L176 12 L184 44 L142 70 Z" fill="#d88ea2"/></svg>
+              <p class="t">9:01</p>
+              <h3>Unwrap</h3>
+              <p>Rose foil off. Real chocolate, with 2.5 g of Verisol® collagen inside.</p>
+            </div>
+            <div class="step">
+              <svg viewBox="0 0 200 150" aria-hidden="true"><rect x="20" y="22" width="160" height="106" fill="#fffaf4" stroke="#2a1712" stroke-width="1.5"/><path d="M40 52 H150 M40 70 H160 M40 88 H120" stroke="#2a1712" stroke-width="4" stroke-linecap="round" opacity=".75"/><text x="40" y="116" font-family="IBM Plex Mono, monospace" font-size="11" fill="#b8475f" letter-spacing="1">RM 14</text></svg>
+              <p class="t">9:02</p>
+              <h3>Read</h3>
+              <p>The joke was under the square the whole time. Nights 3, 15, 24 and 30 share a running bit about the laundry.</p>
+            </div>
+            <div class="step dot">
+              <svg viewBox="0 0 120 150" aria-hidden="true"><g fill="#2a1712"><circle cx="20" cy="30" r="8"/><circle cx="46" cy="30" r="8"/><circle cx="72" cy="30" r="8"/><circle cx="98" cy="30" r="8"/><circle cx="20" cy="58" r="8"/><circle cx="46" cy="58" r="8"/><circle cx="72" cy="58" r="8"/><circle cx="98" cy="58" r="8"/></g><g fill="none" stroke="#2a1712" stroke-width="1.5"><circle cx="20" cy="86" r="8"/><circle cx="46" cy="86" r="8"/><circle cx="72" cy="86" r="8"/><circle cx="98" cy="86" r="8"/><circle cx="20" cy="114" r="8"/><circle cx="46" cy="114" r="8"/><circle cx="72" cy="114" r="8"/><circle cx="98" cy="114" r="8"/></g><circle cx="20" cy="86" r="8" fill="#b8475f"/></svg>
+              <p class="t">Then</p>
+              <h3>Mark a dot</h3>
+              <p>30 dots on a card. The full card is made to be photographed.</p>
+            </div>
+          </div>
+        </div>
+        <div class="src"><span>Ritual and card: product/30-nights.md. Score line is a mold detail to confirm with the chocolate maker. Collagen wording pending attorney review.</span><span>4 / 12</span></div>
+      </section>
+
+      <!-- 5 Different -->
+      <section class="slide" aria-label="What is different">
+        <p class="kicker">What's different</p>
+        <h2>Most beauty gummies carry a sliver of the studied dose. <em>One square carries all of it.</em></h2>
+        <div class="body">
+          <div class="diff">
+            <div>
+              <span class="lab">Collagen per serving, from labels · dashed line = 2.5 g studied dose</span>
+              <div class="bars" style="margin-top:12px">
+                <div class="bar-row"><span class="nm">Nature's Bounty<small>per 2 gummies</small></span><div class="track"><div class="fill" style="width:4%"></div><div class="studied"></div></div><span class="v">0.1 g</span></div>
+                <div class="bar-row"><span class="nm">Lemme Glow<small>per 2 gummies</small></span><div class="track"><div class="fill" style="width:8%"></div><div class="studied"></div></div><span class="v">0.2 g</span></div>
+                <div class="bar-row"><span class="nm">OLLY Collagen Rings<small>per 2 rings</small></span><div class="track"><div class="fill" style="width:100%"></div><div class="studied"></div></div><span class="v">2.5 g</span></div>
+                <div class="bar-row"><span class="nm">Vital Proteins gummies<small>per 4 gummies</small></span><div class="track"><div class="fill" style="width:100%"></div><div class="studied"></div></div><span class="v">2.5 g</span></div>
+                <div class="bar-row us"><span class="nm">Glow Squares<small>per 1 square · target until samples</small></span><div class="track"><div class="fill" style="width:100%"></div><div class="studied"></div></div><span class="v">2.5 g</span></div>
+              </div>
+              <p class="honest">The honest part: the studies ran 8 to 12 weeks, results vary, and most were funded by ingredient makers. Studies that weren't industry-funded found no effect.</p>
+            </div>
+            <div class="side">
+              <div class="blk"><h3>It owns the evening.</h3><p>Powders, gummies and greens packs are morning routines. This is the thing you already do after dinner.</p></div>
+              <div class="blk"><h3>The jokes show before you buy.</h3><p>Notes are posted on the site and in videos, so the box sells as a gift too.</p><p class="mini-note">“The laundry can't see you. Stay very still.”</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="src"><span>Doses: brand labels via research/competitors.md (Nov 2026). Science: IJDVL 2025 meta-analysis; AJM 2025 (non-industry studies). Glow Squares dose depends on samples due 7 Dec.</span><span>5 / 12</span></div>
+      </section>
+
+      <!-- 6 Who pays -->
+      <section class="slide" aria-label="Who pays and how">
+        <p class="kicker">Who pays and how</p>
+        <h2>She pays $49 a month for her evening, and someone else pays $59 to give one.</h2>
+        <div class="body">
+          <div class="price">
+            <div class="sub-card">
+              <span class="lab">The business · monthly subscription</span>
+              <p class="big">$49<small> / month</small></p>
+              <p>$1.63 a night. New notes in every box. Skip or cancel online anytime.</p>
+              <p class="unit">$49 − $18 box cost − $8 shipping ≈ <b>$21 a month</b> <span class="est">estimate</span><br />A $40 customer pays back in month 2.</p>
+            </div>
+            <div>
+              <table class="plist">
+                <tr><td>One box, 30 nights<small>One-time, $1.97 a night</small></td><td>$59</td></tr>
+                <tr><td>Founder box<small>First box for the first 500 on the waitlist, then $49</small></td><td>$39</td></tr>
+                <tr><td>Gift one box<small>Pick the ship week, gift card, prices hidden</small></td><td>$59</td></tr>
+                <tr><td>Gift 3 months<small>Prepaid, ends on its own</small></td><td>$147</td></tr>
+              </table>
+              <p class="terms">Free shipping. If it melts, it's replaced. Full refund on the first box within 30 days. Competitors' hero products sit at $1.00 to $1.70 a day.</p>
+            </div>
+          </div>
+        </div>
+        <div class="src"><span>Prices set by the founder, 23 Nov 2026 (HANDOFF.md). Unit math and payback: finance/budget-and-projections.md, estimates until real quotes. Per-day range: research/competitors.md §3.</span><span>6 / 12</span></div>
+      </section>
+
+      <!-- 7 Market -->
+      <section class="slide" aria-label="Market">
+        <p class="kicker">Market</p>
+        <h2>The money is moving toward supplements that feel like a treat.</h2>
+        <div class="body">
+          <div class="market">
+            <div class="hero-stat">
+              <p class="n">$24.4<small>B</small></p>
+              <p>Gummy supplements worldwide in 2025, growing 14.4% a year toward $47.8B by 2030. The format grows faster than the ingredient.</p>
+            </div>
+            <div class="stat-list">
+              <div><b>$1.29B</b><p>Functional chocolate worldwide, growing 9.4% a year.<small>Meticulous Research</small></p></div>
+              <div><b>$426M</b><p>US collagen supplements. Global estimates range from $1.8B to $6.4B.<small>MRFR (US) · Fortune BI and others (global)</small></p></div>
+              <div><b>$40.8B</b><p>US candy, up 4.5% in the 52 weeks to 2 Nov 2025.<small>NCA / Circana</small></p></div>
+            </div>
+          </div>
+          <p class="small" style="margin-top:22px">Market reports disagree a lot. These numbers show direction; they are not a forecast for Glow Squares.</p>
+        </div>
+        <div class="src"><span>MarketsandMarkets (gummy supplements) · Meticulous Research (functional chocolate, to 2036) · Market Research Future (US collagen) · NCA/Circana Nov 2025. All via research/competitors.md §1.</span><span>7 / 12</span></div>
+      </section>
+
+      <!-- 8 Competition -->
+      <section class="slide" aria-label="Competition">
+        <p class="kicker">Competition</p>
+        <h2>The full dose only comes in gummies, and real chocolate has none. <em>That corner is empty.</em></h2>
+        <div class="body">
+          <div class="mapwrap">
+            <div class="mapbox">
+              <div class="map" id="map">
+                <div class="lane" style="left:0"><span>None listed</span></div>
+                <div class="lane" style="left:30%"><span>Under 0.5 g</span></div>
+                <div class="lane" style="left:52%"><span>Not disclosed</span></div>
+                <div class="lane" style="left:72%"><span>2.5 g studied</span></div>
+                <span class="ylab" style="top:6px">Dessert</span>
+                <span class="ylab" style="top:48%">Candy-like</span>
+                <span class="ylab" style="bottom:6px">Supplement</span>
+                <div class="pin" style="left:9%;bottom:89%"><i></i>Hu</div>
+                <div class="pin" style="left:9%;bottom:77%"><i></i>Raaka Mini Doses</div>
+                <div class="pin" style="left:9%;bottom:66%"><i></i>Mid-Day Squares</div>
+                <div class="pin" style="left:9%;bottom:44%"><i></i>Grüns</div>
+                <div class="pin" style="left:36%;bottom:40%"><i></i>Lemme</div>
+                <div class="pin unk" style="left:57%;bottom:56%"><i></i>k2o</div>
+                <div class="pin r" style="left:77%;bottom:38%"><i></i>OLLY</div>
+                <div class="pin r" style="left:77%;bottom:16%"><i></i>Vital Proteins</div>
+                <div class="pin us r" style="left:77%;bottom:85%"><i></i>Glow Squares</div>
+              </div>
+              <p class="map-axes">→ Collagen per serving &nbsp;·&nbsp; ↑ How it eats</p>
+            </div>
+            <div class="map-side">
+              <p><b>Closest format:</b> Raaka Mini Doses, a $30 box of 30 small chocolates with a message inside. No collagen.</p>
+              <p><b>Closest pitch:</b> k2o by Kylie Jenner uses Verisol and calls itself a ritual for your nights. Dose not shown in what we saw.</p>
+              <p><b>Biggest:</b> Lemme did $13M on TikTok Shop in one month with 0.2 g a serving.</p>
+            </div>
+          </div>
+        </div>
+        <div class="src"><span>Doses and prices from labels and sites (research/competitors.md, ads/research.md, Nov 2026). Lemme TikTok Shop figure: reported Nov 2025. Vertical placement is our read of format, not a measurement.</span><span>8 / 12</span></div>
+      </section>
+
+      <!-- 9 Proof -->
+      <section class="slide" aria-label="Proof so far">
+        <p class="kicker">Proof so far</p>
+        <h2>Nothing is proven yet. The research is done and the waitlist is live, with 0 signups.</h2>
+        <div class="body">
+          <table class="t">
+            <thead><tr><th>Test</th><th>Target</th><th>Result</th></tr></thead>
+            <tbody>
+              <tr><td>Waitlist page</td><td>Live, signups saving</td><td><span class="st zero">Live 23 Nov · 0 signups</span> (no ad traffic sent yet)</td></tr>
+              <tr><td>Ad smoke test, 3 angles</td><td>≥ 15% of ad visitors join · kill under 5% after $300</td><td><span class="st no">Not run yet</span> · $150–300 planned</td></tr>
+              <tr><td>Samples</td><td>2.5 g in one square that still tastes great and snaps</td><td><span class="st no">Not run yet</span> · due 7 Dec</td></tr>
+              <tr><td>Founder pre-orders</td><td>≥ 10% of the waitlist pays $39 · rethink under 3%</td><td><span class="st no">Not run yet</span> · opens 11 Jan</td></tr>
+              <tr><td>Customer research</td><td>Her fear, desire and words, written down</td><td><span class="st yes">Done</span> · used on every page</td></tr>
+              <tr><td>Notes, Volume 1</td><td>30 notes that pass 3 blind reviewers</td><td><span class="st yes">Done</span> · rewritten once after review</td></tr>
+              <tr><td>Name</td><td>Clear on the US trademark register</td><td><span class="st yes">Search clear</span> · not filed; owns .com + Instagram</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="src"><span>Keep/kill lines: brief.md "Bet". Signups: Supabase glow_waitlist, 23 Nov 2026 (one test row deleted). Trademark: knockout search only, not legal advice.</span><span>9 / 12</span></div>
+      </section>
+
+      <!-- 10 GTM -->
+      <section class="slide" aria-label="Go to market">
+        <p class="kicker">Go-to-market · the first 1,000 customers</p>
+        <h2>The first 1,000 come from her camera, 60 creators and one date: Valentine's.</h2>
+        <div class="body">
+          <div class="gtm">
+            <div><p class="d">Now</p><p class="n">2–3</p><h3>Founder TikToks a day</h3><p>Johanna on camera: “I'm 34, I love candy, and I'm done with collagen powder.” The same play Behave used to reach Target.</p></div>
+            <div><p class="d">Dec–Feb</p><p class="n">60</p><h3>Creators found, 15 picked</h3><p>Midlife humor, skincare 35+, Pilates, non-diet dietitians. Gift boxes, then 20–25% affiliate pay.</p></div>
+            <div><p class="d">11 Jan</p><p class="n">$39</p><h3>Valentine's pre-orders</h3><p>Waitlist first at the founder price, then public. Ships 8–9 Feb. Gifts at $59 and $147.</p></div>
+            <div><p class="d">From 9 Feb</p><p class="n">$25–100</p><h3>A day for pop-ups</h3><p>Galentine's pop-up, Pilates studios, markets. Tasting squares, QR to the list, a wall of finished dot cards.</p></div>
+          </div>
+          <div class="budget">
+            <span class="lab">Marketing budget · $15,000 over 6 months · plan</span>
+            <div class="stack">
+              <div style="width:30%;background:#e8a6b8">Ads $4.5k</div>
+              <div style="width:23.3%;background:#f2c9d4">Creator samples $3.5k</div>
+              <div style="width:16.7%;background:#d9b276">Creator content $2.5k</div>
+              <div style="width:10%;background:#ead6b0">Software $1.5k</div>
+              <div style="width:10%;background:#fffaf4">Events $1.5k</div>
+              <div style="width:6.7%;background:#f4ece3">Expo $1k</div>
+              <div style="width:3.3%;background:#fffaf4" title="Photos $500">$.5k</div>
+            </div>
+          </div>
+        </div>
+        <div class="src"><span>Plan: plan.md, influencers/first-wave.md (nothing sent yet). Behave: Modern Retail. Pop-up cost: research/marketing-playbook.md. 1,000 is a goal; the base model has 1,507 new customers in 2027 (estimate).</span><span>10 / 12</span></div>
+      </section>
+
+      <!-- 11 Money -->
+      <section class="slide" aria-label="Money">
+        <p class="kicker">Money · 2027 <span class="est">estimates</span></p>
+        <h2>In the base case, 2027 brings in about $166k and earns back the startup cost by month 9.</h2>
+        <div class="body">
+          <div class="money">
+            <div>
+              <div class="rev">
+                <div class="rev-row"><span class="k">Low</span><div class="b" style="width:16.4%">$69k</div></div>
+                <div class="rev-row base"><span class="k">Base</span><div class="b" style="width:39.6%">$166k</div></div>
+                <div class="rev-row"><span class="k">High</span><div class="b" style="width:100%">$419k revenue</div></div>
+              </div>
+              <table class="mt">
+                <thead><tr><th>Case</th><th>Cost / customer</th><th>Customers</th><th>Boxes</th><th>Margin</th><th>Left after mktg</th></tr></thead>
+                <tbody>
+                  <tr><td>Low</td><td>$60</td><td>731</td><td>1,333</td><td>38%</td><td>$4,010</td></tr>
+                  <tr class="base"><td>Base</td><td>$40</td><td>1,507</td><td>3,277</td><td>45%</td><td>$52,494</td></tr>
+                  <tr><td>High</td><td>$28</td><td>3,262</td><td>8,387</td><td>52%</td><td>$197,740</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="cost">
+              <span class="lab">Startup cost before marketing</span>
+              <p class="n">$14k–33k</p>
+              <p>LLC, trademark, attorney, insurance, samples and mold, lab tests, packaging and the first 500–1,000 boxes.</p>
+              <hr />
+              <p><b>All-in to launch and run 6 months:</b> ≈ $29k–48k, with the $15k marketing budget. January pre-order cash covers part of the inventory.</p>
+            </div>
+          </div>
+        </div>
+        <div class="src"><span>finance/budget-and-projections.md + projections-2027.csv (23 Nov 2026). Every figure is an estimate until quotes arrive. "Left after" is before salary and startup costs.</span><span>11 / 12</span></div>
+      </section>
+
+      <!-- 12 Next -->
+      <section class="slide" aria-label="What is next">
+        <p class="kicker">What's next</p>
+        <h2>Four dates in the next seven weeks decide whether Valentine's happens.</h2>
+        <div class="body">
+          <div class="gates">
+            <div class="gate"><p class="d">7 Dec</p><h3>Samples</h3><p>Does 2.5 g of collagen still taste like real chocolate and snap?</p><p class="if">If not: a bigger square, or launch on Mother's Day.</p></div>
+            <div class="gate"><p class="d">14 Dec</p><h3>Packaging proofs</h3><p>Box, tray, foils, dot card. Formula picked.</p><p class="if">Lead time sets the order date.</p></div>
+            <div class="gate"><p class="d">9 Jan</p><h3>Label sign-off</h3><p>Attorney clears the label and every claim.</p><p class="if">If not: pre-orders say “ships late Feb”.</p></div>
+            <div class="gate"><p class="d">11 Jan</p><h3>Pre-orders open</h3><p>Waitlist first, at $39. The first real money test.</p><p class="if">Under 3% pre-order: rethink.</p></div>
+            <div class="gate last"><p class="d">9 Feb</p><h3>Boxes ship</h3><p>Packed by hand with 2–3 helpers.</p></div>
+          </div>
+          <div class="ask"><b>Not raising yet.</b><p>The launch runs on a ≈ $29k–48k budget <span class="est">estimate</span>. The conversation worth having comes after the first pre-order numbers in January.</p></div>
+        </div>
+        <div class="src"><span>Gates and fallbacks: plan.md "Valentine's sprint" · packing: founder decision 23 Nov 2026 · budget: finance/budget-and-projections.md.</span><span>12 / 12</span></div>
+      </section>
+
+    </div>
+  </div>
+  <div class="nav">
+    <button type="button" id="prev" aria-label="Previous slide">←</button>
+    <span id="n" aria-live="polite">1 / 12</span>
+    <button type="button" id="next" aria-label="Next slide">→</button>
+  </div>
+  <script>
+    (function () {
+      // tray: 30 rooms, nights 1–13 eaten, 14 tonight, gold on 15 and 30
+      var tray = document.getElementById("tray"), h = "";
+      for (var k = 1; k <= 30; k++) {
+        var n = (k < 10 ? "0" : "") + k;
+        h += '<div class="cell' + (k < 14 ? " eaten" : "") + (k === 14 ? " now" : "") + '" data-n="RM ' + n + '"><span class="w' + (k === 15 || k === 30 ? " g" : "") + '"></span></div>';
+      }
+      tray.innerHTML = h;
+
+      var slides = [].slice.call(document.querySelectorAll(".slide"));
+      var q = new URLSearchParams(location.search);
+      var i = Math.max(0, Math.min(slides.length - 1, (parseInt(q.get("slide"), 10) || 1) - 1));
+      var deck = document.getElementById("deck"), vp = document.getElementById("viewport");
+      function phone() { return innerWidth <= 700; }
+      function fit() {
+        if (phone()) { vp.style.top = ""; return; }
+        var bar = document.querySelector(".site-bar");
+        var top = bar ? bar.getBoundingClientRect().height : 0;
+        vp.style.top = top + "px";
+        var s = Math.min(innerWidth / 1280, (innerHeight - top - 56) / 720);
+        deck.style.transform = "translate(-50%, -50%) scale(" + s + ")";
+      }
+      function show(n) {
+        i = Math.max(0, Math.min(slides.length - 1, n));
+        slides.forEach(function (s, k) { s.classList.toggle("on", k === i); });
+        document.getElementById("n").textContent = (i + 1) + " / " + slides.length;
+        var u = new URL(location.href); u.searchParams.set("slide", i + 1); history.replaceState(null, "", u);
+      }
+      document.getElementById("prev").onclick = function () { show(i - 1); };
+      document.getElementById("next").onclick = function () { show(i + 1); };
+      document.addEventListener("keydown", function (e) {
+        if (phone()) return;
+        if (e.key === "ArrowRight" || e.key === "PageDown" || e.key === " ") { e.preventDefault(); show(i + 1); }
+        if (e.key === "ArrowLeft" || e.key === "PageUp") { e.preventDefault(); show(i - 1); }
+        if (e.key === "Home") show(0);
+        if (e.key === "End") show(slides.length - 1);
+      });
+      // click: right two-thirds of the stage goes forward, left third goes back
+      vp.addEventListener("click", function (e) {
+        if (phone() || e.target.closest("a, button")) return;
+        var r = deck.getBoundingClientRect();
+        show(e.clientX < r.left + r.width / 3 ? i - 1 : i + 1);
+      });
+      // swipe
+      var sx = null, sy = null;
+      vp.addEventListener("touchstart", function (e) { sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive: true });
+      vp.addEventListener("touchend", function (e) {
+        if (phone() || sx === null) return;
+        var dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy;
+        if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) show(dx < 0 ? i + 1 : i - 1);
+        sx = null;
+      });
+      // phone: a deep link scrolls to that slide
+      if (phone() && q.has("slide")) setTimeout(function () { slides[i].scrollIntoView(); }, 50);
+      addEventListener("resize", fit);
+      document.addEventListener("DOMContentLoaded", function () { setTimeout(fit, 0); });
+      addEventListener("load", fit);
+      fit(); show(i);
+    })();
+  </script>
+</body>
+</html>

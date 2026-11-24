@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Glow Squares · Social</title>
+<meta name="description" content="Sample Instagram for @glowsquares in the Turndown look: a 9-post grid, two carousels and three stories, with captions. Nothing has been posted.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap">
+<style>
+:root{
+  --linen:#f4ece3; --card:#fffaf4; --cocoa:#2a1712; --rose:#e8a6b8; --accent:#b8475f; --gold:#d9b276;
+  --dim:#6b4a40; --line:#e0d2c4; --plain:#e8ddd0;
+  --serif:"Instrument Serif", Georgia, serif; --sans:"Manrope", system-ui, sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--linen);color:var(--cocoa);font:16px/1.55 var(--sans);-webkit-font-smoothing:antialiased}
+a{color:var(--accent)}
+.wrap{max-width:1120px;margin:0 auto;padding:0 16px}
+header.top{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 18px;padding:18px 0 14px;border-bottom:1px solid var(--line)}
+.brand{font:400 24px/1 var(--serif);margin-right:auto}
+.brand em{color:var(--accent)}
+header.top nav{display:flex;flex-wrap:wrap;gap:4px}
+header.top nav a{color:var(--cocoa);text-decoration:none;font-size:14px;padding:5px 10px;border-radius:999px}
+header.top nav a[aria-current="page"]{background:var(--cocoa);color:var(--linen);font-weight:700}
+h1{font:400 clamp(40px,6vw,68px)/1.02 var(--serif);margin:36px 0 12px;max-width:17ch;text-wrap:balance}
+h1 em{color:var(--accent)}
+.lede{font-size:18px;color:var(--dim);max-width:58ch;margin:0 0 10px}
+h2{font:400 clamp(30px,4vw,42px)/1.05 var(--serif);margin:0 0 6px}
+.tag{display:inline-block;font:800 11px/1 var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--accent);border:1.5px solid var(--accent);border-radius:999px;padding:5px 9px;vertical-align:middle}
+section.set{padding:44px 0 10px;border-top:1px solid var(--line);margin-top:30px}
+.set .intro{color:var(--dim);max-width:62ch;margin:0 0 18px}
+
+/* materials */
+.foil{position:relative;aspect-ratio:1;border-radius:8%;background:repeating-linear-gradient(135deg,#f2bfcd 0 .9cqw,#e7a9ba .9cqw 1.8cqw);box-shadow:inset 0 0 0 .5cqw rgba(255,255,255,.3),0 1cqw 2cqw rgba(0,0,0,.25)}
+.foil.gold{background:repeating-linear-gradient(135deg,#f4dcae 0 .9cqw,#e6c48b .9cqw 1.8cqw)}
+.sq{position:relative;aspect-ratio:1;border-radius:8%;background:#3a1f17;box-shadow:inset 0 0 0 .7cqw #4b2a1f, inset 0 -1.2cqw 0 #21100b, 0 1.5cqw 3cqw rgba(42,23,18,.35)}
+.sq::before{content:"";position:absolute;inset:16%;border:.5cqw solid #4f2d22;border-radius:5%}
+
+/* profile mock */
+.grid-wrap{display:grid;grid-template-columns:minmax(0,430px) minmax(0,1fr);gap:36px;align-items:start}
+.phone{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 12px 30px rgba(42,23,18,.12)}
+.prof{display:grid;grid-template-columns:72px minmax(0,1fr);gap:14px;align-items:center;padding:18px 16px 10px}
+.avatar{width:72px;height:72px;border-radius:50%;background:var(--cocoa);display:grid;place-items:center;container-type:inline-size}
+.avatar .sq{width:58%}
+.handle{font-weight:800;font-size:16px}
+.pname{font-size:14px;color:var(--dim)}
+.bio{padding:0 16px 12px;font-size:14px;line-height:1.45}
+.bio a{font-weight:700;text-decoration:none}
+.sample{margin:0 16px 12px;font:700 12px var(--sans);color:var(--accent)}
+.ig{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2px;background:var(--line)}
+.p{position:relative;aspect-ratio:4/5;container-type:inline-size;overflow:hidden;display:block;text-decoration:none;color:inherit}
+.p:focus-visible{outline:3px solid var(--accent);outline-offset:-3px}
+.p .pin{font-style:normal;position:absolute;right:4cqw;top:4cqw;width:13cqw;height:13cqw;border-radius:50%;background:var(--card);color:var(--cocoa);font:800 7cqw/13cqw var(--sans);text-align:center;box-shadow:0 0 0 1px var(--line);z-index:2}
+
+/* tiles */
+.t-pre{background:var(--accent);color:var(--card);padding:10% 18% 10% 9%}
+.t-pre b{display:block;font:400 17cqw/.95 var(--serif)}
+.t-pre span{display:block;font:700 6.4cqw/1.3 var(--sans);margin-top:8cqw;color:#f7dbe2}
+.t-price{background:var(--linen);padding:10% 9%}
+.t-price b{display:block;font:400 25cqw/.9 var(--serif)}
+.t-price .per{font:400 italic 11cqw/1 var(--serif);color:var(--accent)}
+.t-price small{display:block;position:absolute;left:9cqw;right:9cqw;bottom:9cqw;font:600 5.4cqw/1.35 var(--sans);color:var(--dim)}
+.t-note{padding:11% 9%}
+.t-note .n{font:800 5cqw/1 var(--sans);letter-spacing:.14em;text-transform:uppercase}
+.t-note p{margin:6cqw 0 0;font:400 italic 13cqw/1.04 var(--serif)}
+.t-note.dark{background:var(--cocoa);color:var(--card)}
+.t-note.dark .n{color:var(--rose)}
+.t-note.light{background:var(--linen)}
+.t-note.light .n{color:var(--accent)}
+.t-note .bit{position:absolute;right:9cqw;bottom:9cqw;width:20cqw;transform:rotate(-8deg)}
+.t-line{background:var(--card);padding:11% 16% 11% 9%}
+.t-line p{margin:0;font:400 15cqw/1 var(--serif)}
+.t-line p em{color:var(--accent)}
+.t-photo{background:var(--plain);outline:2px dashed #b9a593;outline-offset:-8px;display:grid;place-items:center;text-align:center;padding:14%}
+.t-photo span{font:700 6.4cqw/1.35 var(--sans);color:#7a5e50}
+.t-hang{background:var(--rose)}
+.hg{position:absolute;left:50%;top:9cqw;width:44cqw;height:84cqw;transform:translateX(-50%) rotate(-4deg);transform-origin:50% 0;background:var(--card);border-radius:0 0 5cqw 5cqw;display:flex;flex-direction:column;align-items:center;text-align:center;padding-top:5cqw;box-shadow:0 3cqw 6cqw rgba(42,23,18,.25)}
+.hg i{width:16cqw;aspect-ratio:1;border-radius:50%;background:var(--rose)}
+.hg span{font:400 10cqw/.96 var(--serif);margin-top:13cqw}
+.hg em{font:800 3.2cqw var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-style:normal;margin-top:6cqw}
+.t-tray{background:var(--cocoa);padding:10% 8%}
+.tray{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:2.2cqw;background:#3a1f17;padding:3.4cqw;border-radius:3cqw;box-shadow:inset 0 1cqw 3cqw rgba(0,0,0,.5)}
+.t-tray .rm{position:absolute;left:8cqw;bottom:6cqw;font:800 4.4cqw var(--sans);letter-spacing:.16em;color:var(--gold)}
+.t-quote{background:var(--card);padding:10% 18% 10% 9%}
+.t-quote p{margin:0;font:400 11.4cqw/1.04 var(--serif)}
+.t-quote span{position:absolute;left:9cqw;bottom:8cqw;font:700 5.4cqw var(--sans);color:var(--accent)}
+
+/* captions */
+.caps{list-style:none;margin:0;padding:0;counter-reset:c}
+.caps li{display:grid;grid-template-columns:28px minmax(0,1fr);gap:12px;padding:14px 0;border-top:1px solid var(--line);scroll-margin-top:20px}
+.caps li:first-child{border-top:0;padding-top:0}
+.caps .num{width:28px;height:28px;border-radius:50%;background:var(--card);border:1px solid var(--line);font:800 13px/26px var(--sans);text-align:center}
+.caps h3{margin:0 0 4px;font:700 13px var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--dim)}
+.caps p{margin:0}
+.caps li:target{background:var(--card);border-radius:8px;outline:2px solid var(--rose);outline-offset:4px}
+
+/* carousels */
+.car{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 2px 14px;-webkit-overflow-scrolling:touch}
+.slide{flex:0 0 min(250px,68%);scroll-snap-align:start}
+.slide .p{border-radius:6px;box-shadow:0 8px 20px rgba(42,23,18,.12)}
+.slide .k{font:700 12px var(--sans);color:var(--dim);margin-top:7px;display:block}
+.capbox{background:var(--card);border-left:3px solid var(--accent);padding:12px 14px;max-width:70ch;margin-top:4px}
+.capbox b{font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--dim)}
+.capbox p{margin:4px 0 0}
+.c-end{background:var(--cocoa);color:var(--card);padding:10% 8%}
+.c-end .tray{margin-top:0}
+.c-end b{display:block;font:400 12cqw/1 var(--serif);margin-top:8cqw}
+.c-end span{display:block;font:700 5.4cqw var(--sans);color:var(--rose);margin-top:3cqw}
+.c-box{background:var(--linen);padding:9% 8%}
+.c-box .obj{display:grid;place-items:center;height:58%}
+.c-box p{position:absolute;left:8cqw;right:8cqw;bottom:8cqw;margin:0;font:400 italic 9cqw/1.08 var(--serif)}
+.c-box .one{width:40cqw}
+.c-box .hg{top:6cqw;width:38cqw;height:66cqw}
+.c-box .hg span{font-size:6.4cqw;line-height:1.15;margin:9cqw 4cqw 0}
+.dots{display:grid;grid-template-columns:repeat(6,1fr);gap:3.4cqw;background:var(--card);border:1px solid var(--line);padding:6cqw;border-radius:2cqw;width:76cqw}
+.dots i{aspect-ratio:1;border-radius:50%;border:.5cqw solid var(--cocoa)}
+.dots i.f{background:var(--accent);border-color:var(--accent)}
+
+/* stories */
+.stories{display:grid;grid-template-columns:repeat(3,minmax(0,250px));gap:18px}
+.st{position:relative;aspect-ratio:9/16;container-type:inline-size;overflow:hidden;border-radius:10px;box-shadow:0 10px 26px rgba(42,23,18,.14)}
+.st .bars{position:absolute;left:4cqw;right:4cqw;top:3cqw;display:flex;gap:1.5cqw}
+.st .bars i{flex:1;height:.8cqw;border-radius:1cqw;background:rgba(255,250,244,.45)}
+.st .bars i.on{background:var(--card)}
+.st .who{position:absolute;left:4cqw;top:6.5cqw;display:flex;align-items:center;gap:2.4cqw;font:700 4.4cqw var(--sans)}
+.st .who i{width:8cqw;height:8cqw;border-radius:50%;background:var(--cocoa);box-shadow:0 0 0 .6cqw var(--card)}
+.st .body{position:absolute;left:8cqw;right:8cqw;top:20%}
+.s-poll{background:var(--cocoa);color:var(--card)}
+.s-poll .q{font:400 11cqw/1.04 var(--serif);margin:0}
+.poll{margin-top:9cqw;background:var(--card);color:var(--cocoa);border-radius:4cqw;padding:5cqw;display:grid;gap:3cqw}
+.poll .pq{font:800 4.8cqw/1.3 var(--sans);text-align:center;margin-bottom:1cqw}
+.poll span{display:block;border:.5cqw solid var(--line);border-radius:3cqw;padding:3cqw 4cqw;font:700 5cqw var(--sans);text-align:center}
+.s-note{background:var(--linen)}
+.s-note .who{color:var(--cocoa)}
+.s-note .bars i{background:rgba(42,23,18,.2)}
+.s-note .bars i.on{background:var(--cocoa)}
+.s-note .card{background:var(--card);border:1px solid var(--line);border-radius:3cqw;padding:7cqw 6cqw}
+.s-note .card .n{font:800 4cqw var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.s-note .card p{margin:4cqw 0 0;font:400 italic 10cqw/1.06 var(--serif)}
+.qbox{margin-top:7cqw;background:var(--accent);color:var(--card);border-radius:4cqw;padding:5cqw;text-align:center}
+.qbox b{display:block;font:800 5cqw/1.3 var(--sans)}
+.qbox span{display:block;margin-top:3cqw;background:rgba(255,250,244,.92);color:#8a6a5c;border-radius:2.4cqw;padding:3cqw;font:600 4.2cqw var(--sans)}
+.s-link{background:var(--rose)}
+.s-link .who{color:var(--cocoa)}
+.s-link .bars i{background:rgba(42,23,18,.2)}
+.s-link .bars i.on{background:var(--cocoa)}
+.s-link .big{font:400 14cqw/.98 var(--serif);margin:0}
+.s-link .lk{display:inline-block;margin-top:8cqw;background:var(--card);border-radius:3cqw;padding:3cqw 5cqw;font:800 5cqw var(--sans);color:var(--accent)}
+.s-link .pr{margin:6cqw 0 0;font:600 4.4cqw/1.4 var(--sans)}
+.st .reply{position:absolute;left:4cqw;right:4cqw;bottom:4cqw;height:10cqw;border-radius:5cqw;border:.5cqw solid rgba(255,250,244,.6)}
+.s-note .reply,.s-link .reply{border-color:rgba(42,23,18,.3)}
+.st-k{font:700 12px var(--sans);color:var(--dim);margin-top:8px}
+.stnote{color:var(--dim);font-size:14px;margin-top:12px;max-width:70ch}
+
+.checks{padding:30px 0 60px;border-top:1px solid var(--line);margin-top:36px;font-size:14px;color:var(--dim)}
+.checks table{border-collapse:collapse;width:100%;max-width:860px}
+.checks td,.checks th{text-align:left;vertical-align:top;padding:8px 10px;border-bottom:1px solid var(--line)}
+.checks th{color:var(--cocoa);font-weight:700;width:9em}
+
+@media (max-width:860px){
+  .grid-wrap{grid-template-columns:minmax(0,1fr);gap:26px}
+  .stories{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:64%;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:12px}
+  .stories > div{scroll-snap-align:start}
+}
+</style>
+<link rel="stylesheet" href="/site-bar.css" />
+<script src="/site-bar.js" data-project="glow-squares" data-kind="piece" defer></script>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <span class="brand">Glow <em>Squares</em></span>
+    <nav aria-label="Glow Squares pieces">
+      <a href="landing.html">Waitlist</a>
+      <a href="store.html">Store</a>
+      <a href="packaging.html">Packaging</a>
+      <a href="designs.html">Site designs</a>
+      <a href="ads.html">Ads</a>
+      <a href="social.html" aria-current="page">Social</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1>The first nine posts, <em>still in the drafts.</em></h1>
+    <p class="lede">A sample @glowsquares grid, two carousels and three stories, with the captions Johanna would post. <span class="tag">Sample · not posted</span></p>
+
+    <!-- ================= GRID ================= -->
+    <section class="set" aria-labelledby="g">
+      <h2 id="g">The grid</h2>
+      <p class="intro">Newest top left, so post 1 sits bottom right. The small numbers are for this page only; tap one to jump to its caption.</p>
+      <div class="grid-wrap">
+        <div class="phone">
+          <div class="prof">
+            <div class="avatar"><div class="sq"></div></div>
+            <div><div class="handle">glowsquares</div><div class="pname">Glow Squares · Chocolate</div></div>
+          </div>
+          <p class="bio">One chocolate square after dinner. A note under every wrapper. Pre-orders open January 11.<br><a href="https://glowsquares.com">glowsquares.com</a></p>
+          <p class="sample">Sample profile. Nothing posted, no follower numbers shown.</p>
+          <div class="ig">
+            <a class="p t-pre" href="#c9" aria-label="Post 9: Pre-orders open January 11."><i class="pin">9</i><b>Pre-orders open January 11.</b><span>Boxes go out in early February.</span></a>
+            <a class="p t-price" href="#c8" aria-label="Post 8: 1 dollar 63 a night. 49 dollars a month, renews monthly, skip or cancel anytime."><i class="pin">8</i><b>$1.63</b><span class="per">a night</span><small>$49/month, renews monthly, skip or cancel anytime</small></a>
+            <a class="p t-note dark" href="#c7" aria-label="Post 7: Night 3. The laundry can't see you. Stay very still."><i class="pin">7</i><div class="n">Night 3</div><p>The laundry can't see you. Stay very still.</p></a>
+            <a class="p t-line" href="#c6" aria-label="Post 6: Dark chocolate. 2.5&nbsp;g collagen. One square after dinner."><i class="pin">6</i><p>Dark chocolate. 2.5&nbsp;g collagen. <em>One square after dinner.</em></p></a>
+            <a class="p t-photo" href="#c5" aria-label="Post 5: photo coming after samples, the snap."><i class="pin">5</i><span>Photo coming after samples: the snap, close up</span></a>
+            <a class="p t-hang" href="#c4" aria-label="Post 4: the Do Not Disturb door hanger on rose."><i class="pin">4</i><div class="hg"><i></i><span>Do Not Disturb</span><em>Rooms 01–30</em></div></a>
+            <a class="p t-note light" href="#c3" aria-label="Post 3: Night 23. Breaking news: local woman sits down. More at eleven."><i class="pin">3</i><div class="n">Night 23</div><p>Breaking news: local woman sits down. More at eleven.</p><div class="bit"><div class="foil"></div></div></a>
+            <a class="p t-tray" href="#c2" aria-label="Post 2: the tray of 30 rose-foil squares, one gold at Night 15."><i class="pin">2</i><div class="tray" id="trayA"></div><span class="rm">RM 01–30</span></a>
+            <a class="p t-quote" href="#c1" aria-label="Post 1: I'm 34, I love candy, and I was so done with collagen powder. So I put the collagen in the candy. Johanna J."><i class="pin">1</i><p>"I'm 34, I love candy, and I was so done with collagen powder. So I put the collagen in the candy."</p><span>Johanna J</span></a>
+          </div>
+        </div>
+
+        <ol class="caps" aria-label="Captions, in posting order">
+          <li id="c1"><span class="num">1</span><div><h3>Her story</h3><p>Hi, I'm Johanna. I bought the collagen powder, like everyone. Then it sat in the cupboard while I ate candy after dinner, every night. So I stopped trying to become a scoop person and made the thing I'd actually eat: one dark chocolate square with 2.5&nbsp;g of collagen in it, and a note underneath. Johanna J</p></div></li>
+          <li id="c2"><span class="num">2</span><div><h3>The tray</h3><p>Thirty squares, numbered like rooms. One a night, after dinner. Room 01 is top left, for anyone who needs to know where to start. The gold one is not a mistake.</p></div></li>
+          <li id="c3"><span class="num">3</span><div><h3>Night 23</h3><p>Night 23 of 30. There's a note under every wrapper, and you only get tonight's. I won't tell you what Night 24 says. It involves the laundry.</p></div></li>
+          <li id="c4"><span class="num">4</span><div><h3>The hanger</h3><p>Every box comes with one of these. Hang it on any door that closes. What happens on the other side is your business.</p></div></li>
+          <li id="c5"><span class="num">5</span><div><h3>The snap</h3><p>The samples arrive in December. The first thing I'm filming is the snap: quiet kitchen, phone very close, ten takes. You'll get the good one.</p></div></li>
+          <li id="c6"><span class="num">6</span><div><h3>One line</h3><p>The whole thing fits on one line, so here it is on one line. It's sold as chocolate, with Nutrition Facts on the box. No scoop, no shaker, no pill.</p></div></li>
+          <li id="c7"><span class="num">7</span><div><h3>Night 3</h3><p>Night 3. The laundry comes back later in the month. It does not take being ignored well.</p></div></li>
+          <li id="c8"><span class="num">8</span><div><h3>The math</h3><p>$49 a month gets you 30 squares, which is $1.63 a night. It renews monthly, and you can skip or cancel anytime. One box on its own is $59. People on the waitlist get their first box for $39, until the first 500 boxes are gone.</p></div></li>
+          <li id="c9"><span class="num">9</span><div><h3>Pre-orders</h3><p>Pre-orders open January 11. Boxes go out in early February, before the 14th. The waitlist hears first. Link in bio.</p></div></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ================= CAROUSEL 1 ================= -->
+    <section class="set" aria-labelledby="k1">
+      <h2 id="k1">Carousel · 6 of the 30 notes</h2>
+      <p class="intro">Seven 4:5 slides: six notes from Volume 1, then the tray. Swipe sideways.</p>
+      <div class="car" tabindex="0" aria-label="Carousel slides, scroll sideways">
+        <div class="slide"><div class="p t-note light"><div class="n">Night 5</div><p>The dishwasher is full of clean dishes. Legally, that's a cupboard now.</p></div><span class="k">Slide 1</span></div>
+        <div class="slide"><div class="p t-note dark"><div class="n">Night 2</div><p>Tonight's to-do list: 1. Unwrap. 2. There is no 2.</p></div><span class="k">Slide 2</span></div>
+        <div class="slide"><div class="p t-note light"><div class="n">Night 7</div><p>Falling asleep during the show counts as watching it. We checked with nobody.</p></div><span class="k">Slide 3</span></div>
+        <div class="slide"><div class="p t-note dark"><div class="n">Night 19</div><p>The crumbs on the floor have formed a small government. Tomorrow's problem.</p></div><span class="k">Slide 4</span></div>
+        <div class="slide"><div class="p t-note light"><div class="n">Night 26</div><p>Unread messages: 47. Squares read: 26. Priorities look correct from here.</p></div><span class="k">Slide 5</span></div>
+        <div class="slide"><div class="p t-note dark"><div class="n">Night 29</div><p>Tomorrow's the last one. Act casual.</p></div><span class="k">Slide 6</span></div>
+        <div class="slide"><div class="p c-end"><div class="tray" id="trayB"></div><b>Pre-orders open January 11.</b><span>glowsquares.com</span></div><span class="k">Slide 7 · end</span></div>
+      </div>
+      <div class="capbox"><b>Caption</b><p>Six of the thirty. The other twenty-four stay under their wrappers until you get there. Which one would you read out loud?</p></div>
+    </section>
+
+    <!-- ================= CAROUSEL 2 ================= -->
+    <section class="set" aria-labelledby="k2">
+      <h2 id="k2">Carousel · What's in the box</h2>
+      <p class="intro">Five 4:5 slides drawn from the print files. Each becomes a photo of the real piece once samples and proofs arrive.</p>
+      <div class="car" tabindex="0" aria-label="Carousel slides, scroll sideways">
+        <div class="slide"><div class="p c-box"><div class="obj"><div class="tray" id="trayC" style="width:78cqw"></div></div><p>The tray. Thirty rooms, one square in each.</p></div><span class="k">Slide 1 · tray</span></div>
+        <div class="slide"><div class="p c-box"><div class="hg"><i style="background:var(--linen)"></i><span>Please make up the room. Someone else. Ideally not you.</span></div><p>The back of the door hanger.</p></div><span class="k">Slide 2 · hanger, back</span></div>
+        <div class="slide"><div class="p c-box"><div class="obj"><div class="dots" id="dots"></div></div><p>A dot for every night. Fill them in, or don't.</p></div><span class="k">Slide 3 · dot card</span></div>
+        <div class="slide"><div class="p c-box"><div class="obj"><div class="foil gold one"></div></div><p>Night 15 is wrapped in gold. What's under it stays under it.</p></div><span class="k">Slide 4 · gold Night 15</span></div>
+        <div class="slide"><div class="p c-box" style="background:var(--cocoa);color:var(--card)"><div class="obj"><div class="foil one"></div></div><p>Night 30 stays sealed until Night 30.</p></div><span class="k">Slide 5 · sealed Night 30</span></div>
+      </div>
+      <div class="capbox"><b>Caption</b><p>What's in the box, minus the parts I'm keeping quiet about. A tray of 30 squares, a door hanger, a card with 30 dots, one gold square at the halfway mark, and Night 30, which you don't get to open early.</p></div>
+    </section>
+
+    <!-- ================= STORIES ================= -->
+    <section class="set" aria-labelledby="s">
+      <h2 id="s">Stories</h2>
+      <p class="intro">9:16. The poll is her customer question, asked at scale. Stickers sit in the middle so the reply bar and the handle never cover them.</p>
+      <div class="stories">
+        <div>
+          <div class="st s-poll" role="img" aria-label="Story 1, poll. What do you have after dinner most nights? Options: Something sweet. Tea. Nothing, yet.">
+            <div class="bars"><i class="on"></i><i></i><i></i></div>
+            <div class="who"><i></i>glowsquares</div>
+            <div class="body">
+              <p class="q">Quick one before the dishes.</p>
+              <div class="poll"><div class="pq">What do you have after dinner most nights?</div><span>Something sweet</span><span>Tea</span><span>Nothing, yet</span></div>
+            </div>
+            <div class="reply"></div>
+          </div>
+          <div class="st-k">Story 1 · poll sticker</div>
+        </div>
+        <div>
+          <div class="st s-note" role="img" aria-label="Story 2. Night 3 note card: The laundry can't see you. Stay very still. Question sticker: What would yours say?">
+            <div class="bars"><i class="on"></i><i class="on"></i><i></i></div>
+            <div class="who"><i></i>glowsquares</div>
+            <div class="body">
+              <div class="card"><div class="n">Night 3</div><p>The laundry can't see you. Stay very still.</p></div>
+              <div class="qbox"><b>What would yours say?</b><span>Type something…</span></div>
+            </div>
+            <div class="reply"></div>
+          </div>
+          <div class="st-k">Story 2 · question sticker</div>
+        </div>
+        <div>
+          <div class="st s-link" role="img" aria-label="Story 3. Pre-orders open January 11. Link sticker: glowsquares.com. 49 dollars a month, renews monthly, skip or cancel anytime. Or 59 dollars for one box.">
+            <div class="bars"><i class="on"></i><i class="on"></i><i class="on"></i></div>
+            <div class="who"><i></i>glowsquares</div>
+            <div class="body">
+              <p class="big">Pre-orders open January 11.</p>
+              <span class="lk">glowsquares.com</span>
+              <p class="pr">$49/month, renews monthly, skip or cancel anytime. Or $59 for one box.</p>
+            </div>
+            <div class="reply"></div>
+          </div>
+          <div class="st-k">Story 3 · link sticker</div>
+        </div>
+      </div>
+      <p class="stnote">Poll answers go into the customer research file as they come in. Answers to "What would yours say?" can become Volume 2 notes only with the writer's yes.</p>
+    </section>
+
+    <section class="checks" aria-labelledby="chk">
+      <h2 id="chk" style="font-size:28px">Checks</h2>
+      <table>
+        <tr><th>Claims</th><td>No skin, aging, sugar, weight or study wording. The dose appears only as "2.5&nbsp;g collagen". Prices carry the renewal line. No follower counts, likes or comments invented.</td></tr>
+        <tr><th>Voice</th><td>Short, dry, about the evening. No hype words, no emoji, no hashtag stacks. Founder line from her own words.</td></tr>
+        <tr><th>Pictures</th><td>Printed pieces and foil are coded; the one photo post is a plain frame until samples.</td></tr>
+      </table>
+    </section>
+  </main>
+</div>
+<script>
+  // Fill the trays (30 rooms, gold at 15) and the dot card (4 nights filled).
+  ['trayA','trayB','trayC'].forEach(function(id){
+    var t=document.getElementById(id); if(!t) return;
+    for(var i=1;i<=30;i++){var d=document.createElement('div');d.className='foil'+(i===15?' gold':'');t.appendChild(d);}
+  });
+  var dots=document.getElementById('dots');
+  if(dots){for(var j=1;j<=30;j++){var e=document.createElement('i');if(j<=4)e.className='f';dots.appendChild(e);}}
+</script>
+</body>
+</html>

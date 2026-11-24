@@ -10,6 +10,7 @@
     weekline: "Weekline", restitch: "Restitch", nostalgia: "Scrollback", scrolll: "Get Paid to Scroll",
     loop: "Loop", "planner-book": "Planners", "habit-game": "Lumen", "skill-quest": "Skills Made EZ"
   };
+  NAMES["glow-squares"] = "Glow Squares";
   var me = document.currentScript;
   var pid = me && me.getAttribute("data-project");
   var kind = (me && me.getAttribute("data-kind")) || "piece";

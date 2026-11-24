@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Glow Squares · Packaging directions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;600;700&family=Libre+Caslon+Display&family=Courier+Prime:wght@400;700&family=Anton&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&display=swap">
+<style>
+/* Concept board: three packaging directions shown in use (lid, open tray, wrapper, ad tile). Design mockups, not product photos. */
+:root{--bg:#f6f1ee;--ink:#231815;--dim:#6b5a54;--line:#e2d6d1}
+*{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 Manrope,system-ui,sans-serif}
+.wrap{max-width:1120px;margin:0 auto;padding:28px max(16px,env(safe-area-inset-left)) 60px}
+h1{font:400 40px/1.05 "Instrument Serif",serif;margin:0 0 6px}
+.sub{color:var(--dim);margin:0 0 22px}
+.compare{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:34px}
+.compare a{display:block;text-decoration:none;color:inherit;border:1px solid var(--line);border-radius:14px;padding:14px;background:#fff}
+.compare b{display:block;font-size:16px}
+.compare span{font-size:13px;color:var(--dim)}
+.dir{border-top:1px solid var(--line);padding-top:26px;margin-top:26px}
+.dir h2{font:600 22px Manrope,sans-serif;margin:0} .dir .idea{color:var(--dim);margin:2px 0 16px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;align-items:start}
+.tile{border-radius:12px;overflow:hidden;min-width:0}
+.cap{font-size:12px;color:var(--dim);margin-top:6px}
+.meta{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:16px;margin-top:16px;font-size:13px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{display:flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:999px;padding:3px 10px 3px 4px;background:#fff}
+.chip i{width:16px;height:16px;border-radius:50%;display:inline-block;border:1px solid rgba(0,0,0,.1)}
+.risk{color:#8a3b2a}
+/* shared mockup pieces */
+.lid{aspect-ratio:2/1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;position:relative;padding:14px}
+.tray{aspect-ratio:6/5;display:grid;grid-template-columns:repeat(6,1fr);gap:5px;padding:10px}
+.tray{grid-template-columns:repeat(6,minmax(0,1fr))!important}.tray div{min-width:0;overflow:hidden;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:7.5px;line-height:1.15;text-align:center;padding:3px}
+.wrapper{aspect-ratio:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:16px;position:relative}
+.ad{aspect-ratio:1;display:flex;flex-direction:column;justify-content:space-between;padding:16px}
+
+/* A · Night Box */
+.A .lid{background:#1e120e;color:#f3e6dc}
+.A .lid .w{font:400 34px "Instrument Serif",serif} .A .lid .w em{color:#e8a6b8}
+.A .lid .s{font:600 10px Manrope;letter-spacing:.2em;text-transform:uppercase;color:#e8a6b8;margin-top:6px}
+.A .tray{background:#3a241c} .A .tray div{background:repeating-linear-gradient(135deg,#f2bfcd 0 3px,#e7a9ba 3px 6px);color:#5a2d3a;font-weight:700}
+.A .tray div.o{background:#2b1a14;color:#f3e6dc;font:italic 8px "Instrument Serif",serif}
+.A .wrapper{background:repeating-linear-gradient(135deg,#f2bfcd 0 4px,#e7a9ba 4px 8px);color:#4a2230}
+.A .wrapper b{font:400 40px "Instrument Serif",serif} .A .wrapper span{font:700 9px Manrope;letter-spacing:.14em;text-transform:uppercase}
+.A .ad{background:#1e120e;color:#f3e6dc} .A .ad p{font:400 26px/1.05 "Instrument Serif",serif;margin:0} .A .ad p em{color:#e8a6b8} .A .ad small{color:#c9b2a6;font-size:11px}
+
+/* B · Turndown Service */
+.B .lid{background:#f4ece3;color:#3b1f1a;border:1px solid #e3d5c8;padding-right:70px;align-items:flex-start;text-align:left}
+.B .tag{position:absolute;right:12px;top:-2px;width:46px;height:96px;background:#b8475f;color:#fff;border-radius:0 0 8px 8px;display:flex;flex-direction:column;align-items:center;padding-top:8px;font:700 6.5px/1.2 "Courier Prime",monospace;text-align:center;box-shadow:0 2px 4px rgba(0,0,0,.15)}
+.B .tag::before{content:"";width:18px;height:18px;border-radius:50%;background:#f4ece3;margin-bottom:6px}
+.B .lid .w{font:400 clamp(20px,2.4vw,28px) "Libre Caslon Display",serif;letter-spacing:.02em}
+.B .lid .s{font:400 11px "Courier Prime",monospace;margin-top:6px;color:#6b4a40}
+.B .tray{background:#e9dccf} .B .tray div{background:#3b1f1a;color:#f4ece3;font:700 8px "Courier Prime",monospace}
+.B .tray div.o{background:#fffaf4;color:#3b1f1a;border:1px solid #e3d5c8;font:400 7.5px "Courier Prime",monospace}
+.B .wrapper{background:#3b1f1a;color:#f4ece3}
+.B .wrapper b{font:400 30px "Libre Caslon Display",serif} .B .wrapper span{font:400 10px "Courier Prime",monospace;margin-top:4px}
+.B .wrapper::after{content:"";position:absolute;left:10%;right:10%;bottom:14%;border-bottom:1px dashed rgba(244,236,227,.5)}
+.B .ad{background:#fffaf4;color:#3b1f1a;border:1px solid #e3d5c8} .B .ad .card{font:400 clamp(11px,1.4vw,15px)/1.35 "Courier Prime",monospace} .B .ad .h{font:400 22px "Libre Caslon Display",serif} .B .ad small{font:400 10px "Courier Prime",monospace;color:#6b4a40}
+
+/* C · The Evening Edition */
+.C .lid{background:#f3efe6;color:#141414;border:1px solid #d9d2c3}
+.C .lid .w{font:400 clamp(18px,2.6vw,30px)/1 Anton,sans-serif;letter-spacing:.02em;text-transform:uppercase;border-top:3px solid #141414;border-bottom:1px solid #141414;padding:4px 10px}
+.C .lid .s{font:italic 400 12px Newsreader,serif;margin-top:6px} .C .lid .s b{color:#c0365a;font-style:normal}
+.C .tray{background:#d9d2c3} .C .tray div{background:#141414;color:#f3efe6;font:400 9px Anton,sans-serif}
+.C .tray div.o{background:#f3efe6;color:#141414;font:600 7px/1.1 Newsreader,serif;text-transform:uppercase}
+.C .wrapper{background:#f3efe6;color:#141414;border:1px solid #d9d2c3}
+.C .wrapper b{font:400 40px Anton,sans-serif} .C .wrapper span{font:italic 11px Newsreader,serif} .C .wrapper i{position:absolute;top:10px;left:10px;right:10px;border-top:2px solid #c0365a}
+.C .ad{background:#f3efe6;color:#141414;border:1px solid #d9d2c3} .C .ad .mast{font:400 14px Anton,sans-serif;text-transform:uppercase;border-bottom:2px solid #141414;padding-bottom:4px}
+.C .ad .h{font:400 32px/1 Anton,sans-serif;text-transform:uppercase} .C .ad .h em{color:#c0365a;font-style:normal} .C .ad small{font:italic 11px Newsreader,serif}
+
+table{width:100%;border-collapse:collapse;font-size:14px;margin-top:10px;background:#fff;border-radius:12px;overflow:hidden}
+th,td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left} th{font-size:12px;color:var(--dim);font-weight:600}
+td.n{text-align:center;font-variant-numeric:tabular-nums}
+@media (max-width:820px){#R .grid{grid-template-columns:1fr!important}.grid{grid-template-columns:1fr 1fr}.compare,.meta{grid-template-columns:1fr}}
+</style>
+<link rel="stylesheet" href="/site-bar.css" />
+<script src="/site-bar.js" data-project="glow-squares" data-kind="piece" defer></script>
+</head>
+<body>
+<div class="wrap">
+  <h1>Packaging: three directions</h1>
+  <p class="sub">Same box structure (lift-off lid, 30-cavity tray with notes printed under each square, foil-wrapped squares). Different worlds. Design mockups, not photos.</p>
+
+  <div class="compare">
+    <a href="#R" style="border-color:#b8475f"><b>Recommended · B rebuilt</b><span>Turndown in the brand system: door hanger, joke on the side, one wrapper.</span></a>
+    <a href="#A"><b>A · Night Box</b><span>Dark cocoa, rose foil. Moody, premium, evening. What the waitlist already looks like.</span></a>
+    <a href="#B"><b>B · Turndown Service</b><span>Hotel turndown: a "Do Not Disturb" tab on the lid, typewriter notes like a hotel card. Room service for yourself.</span></a>
+    <a href="#C"><b>C · The Evening Edition</b><span>A late-edition paper: masthead lid, every note a headline. Loudest joke, most shareable.</span></a>
+  </div>
+
+
+  <div class="dir R" id="R" style="border-top:2px solid #b8475f">
+    <h2>Recommended · B rebuilt: Turndown Service in the Glow Squares system</h2><p class="idea">After blind review: a separate door hanger, the joke visible on the side panel, one wrapper design, hotel feel from layout (not typewriter fonts), rigid cocoa box with rose foil.</p>
+    <div class="grid">
+      <div><div class="tile" style="aspect-ratio:2/1;background:#2a1712;color:#f3e6dc;display:flex;flex-direction:column;justify-content:space-between;padding:14px;position:relative">
+        <div style="font:400 clamp(22px,2.8vw,32px) 'Instrument Serif',serif">Glow <span style="color:#e8a6b8">Squares</span></div>
+        <div style="font:600 9px Manrope;letter-spacing:.22em;text-transform:uppercase;color:#e8a6b8">Turndown service · 30 nights</div>
+        <div style="font:400 8px Manrope;color:#c9b2a6">Chocolate candy with collagen peptides · Net Wt 12.7 oz (360 g)</div>
+      </div><div class="cap">Lid: name in rose foil, identity + net weight in the bottom 30%</div></div>
+      <div><div class="tile" style="aspect-ratio:2/1;display:flex;gap:10px;align-items:stretch;background:#efe6df;padding:10px">
+        <div style="flex:0 0 34%;background:#f3e6dc;border:1px solid #d9c8bd;border-radius:10px 10px 4px 4px;display:flex;flex-direction:column;align-items:center;padding:8px 4px;text-align:center">
+          <div style="width:22px;height:22px;border-radius:50%;background:#efe6df;border:1px solid #d9c8bd;margin-bottom:6px"></div>
+          <div style="font:400 15px/1 'Instrument Serif',serif;color:#2a1712">Do not<br>disturb</div>
+          <div style="font:600 6px Manrope;letter-spacing:.14em;text-transform:uppercase;color:#b8475f;margin-top:6px">Glow Squares</div></div>
+        <div style="flex:1;background:#f3e6dc;border:1px solid #d9c8bd;border-radius:10px 10px 4px 4px;display:flex;flex-direction:column;justify-content:center;padding:8px;text-align:center">
+          <div style="font:600 6.5px Manrope;letter-spacing:.14em;text-transform:uppercase;color:#6b5a54">Back</div>
+          <div style="font:400 12px/1.15 'Instrument Serif',serif;color:#2a1712">Please make up the room. Someone else. Ideally not you.</div>
+          <div style="font:400 8px Manrope;color:#6b5a54;margin-top:4px">Gift version: Turndown arranged by ______</div></div>
+      </div><div class="cap">Door hanger: separate die-cut card that bands the lid</div></div>
+      <div><div class="tile tray" style="background:#3a241c;grid-template-columns:repeat(6,minmax(0,1fr))">
+        <div style="background:#f3e6dc;color:#2a1712;font:italic 7.5px 'Instrument Serif',serif">The laundry can't see you.</div><div style="background:#f3e6dc;color:#2a1712;font:italic 7.5px 'Instrument Serif',serif">"Per my last email." To no one.</div>
+        <div style="background:linear-gradient(135deg,#e8a6b8,#c98196);color:#2a1712;font:700 7px Manrope">RM 03</div><div style="background:linear-gradient(135deg,#e8a6b8,#c98196);color:#2a1712;font:700 7px Manrope">RM 04</div><div style="background:linear-gradient(135deg,#e8a6b8,#c98196);color:#2a1712;font:700 7px Manrope">RM 05</div><div style="background:linear-gradient(135deg,#e8a6b8,#c98196);color:#2a1712;font:700 7px Manrope">RM 06</div><div style="background:linear-gradient(135deg,#e8a6b8,#c98196);color:#2a1712;font:700 7px Manrope">RM 07</div><div style="background:linear-gradient(135deg,#e8a6b8,#c98196);color:#2a1712;font:700 7px Manrope">RM 08</div><div style="background:linear-gradient(135deg,#e8a6b8,#c98196);color:#2a1712;font:700 7px Manrope">RM 09</div><div style="background:linear-gradient(135deg,#e8a6b8,#c98196);color:#2a1712;font:700 7px Manrope">RM 10</div><div style="background:linear-gradient(135deg,#e8a6b8,#c98196);color:#2a1712;font:700 7px Manrope">RM 11</div><div style="background:linear-gradient(135deg,#e8a6b8,#c98196);color:#2a1712;font:700 7px Manrope">RM 12</div><div style="background:linear-gradient(135deg,#e8a6b8,#c98196);color:#2a1712;font:700 7px Manrope">RM 13</div><div style="background:linear-gradient(135deg,#e8a6b8,#c98196);color:#2a1712;font:700 7px Manrope">RM 14</div><div style="background:linear-gradient(135deg,#f4dcae,#d9b276);color:#2a1712;font:700 7px Manrope">RM 15</div><div style="background:linear-gradient(135deg,#e8a6b8,#c98196);color:#2a1712;font:700 7px Manrope">RM 16</div><div style="background:linear-gradient(135deg,#e8a6b8,#c98196);color:#2a1712;font:700 7px Manrope">RM 17</div><div style="background:linear-gradient(135deg,#e8a6b8,#c98196);color:#2a1712;font:700 7px Manrope">RM 18</div><div style="background:linear-gradient(135deg,#e8a6b8,#c98196);color:#2a1712;font:700 7px Manrope">RM 19</div><div style="background:linear-gradient(135deg,#e8a6b8,#c98196);color:#2a1712;font:700 7px Manrope">RM 20</div><div style="background:linear-gradient(135deg,#e8a6b8,#c98196);color:#2a1712;font:700 7px Manrope">RM 21</div><div style="background:linear-gradient(135deg,#e8a6b8,#c98196);color:#2a1712;font:700 7px Manrope">RM 22</div><div style="background:linear-gradient(135deg,#e8a6b8,#c98196);color:#2a1712;font:700 7px Manrope">RM 23</div><div style="background:linear-gradient(135deg,#e8a6b8,#c98196);color:#2a1712;font:700 7px Manrope">RM 24</div><div style="background:linear-gradient(135deg,#e8a6b8,#c98196);color:#2a1712;font:700 7px Manrope">RM 25</div><div style="background:linear-gradient(135deg,#e8a6b8,#c98196);color:#2a1712;font:700 7px Manrope">RM 26</div><div style="background:linear-gradient(135deg,#e8a6b8,#c98196);color:#2a1712;font:700 7px Manrope">RM 27</div><div style="background:linear-gradient(135deg,#e8a6b8,#c98196);color:#2a1712;font:700 7px Manrope">RM 28</div><div style="background:linear-gradient(135deg,#e8a6b8,#c98196);color:#2a1712;font:700 7px Manrope">RM 29</div><div style="background:linear-gradient(135deg,#f4dcae,#d9b276);color:#2a1712;font:700 7px Manrope">RM 30</div>
+      </div><div class="cap">Tray on Night 3: notes printed under each square, "room numbers" on the rim; gold on 15 and 30</div></div>
+      <div><div class="tile" style="aspect-ratio:1;background:#2a1712;color:#f3e6dc;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:8px;padding:14px;text-align:center">
+        <div style="width:64px;height:64px;border-radius:6px;background:linear-gradient(135deg,#e8a6b8,#c98196);display:grid;place-items:center"><div style="width:22px;height:22px;border-radius:50%;background:#2a1712;color:#e8a6b8;font:400 11px/22px 'Instrument Serif',serif">GS</div></div>
+        <div style="font:400 15px/1.2 'Instrument Serif',serif">Side panel: "The laundry can't see you. Stay very still."</div>
+        <div style="font:400 9px Manrope;color:#c9b2a6">One rose foil + GS seal for every square. No numbers on wrappers.</div>
+      </div><div class="cap">Wrapper + the joke on the side panel</div></div>
+    </div>
+    <div class="meta">
+      <div><b>Palette</b><div class="chips"><span class="chip"><i style="background:#2a1712"></i>#2a1712 cocoa paper</span><span class="chip"><i style="background:#f3e6dc"></i>#f3e6dc linen card</span><span class="chip"><i style="background:#e8a6b8"></i>#e8a6b8 rose foil</span><span class="chip"><i style="background:#d9b276"></i>#d9b276 gold-rose</span><span class="chip"><i style="background:#b8475f"></i>#b8475f accent</span></div></div>
+      <div><b>Type</b><br>Instrument Serif + Manrope (brand system)<br><b>Copy</b><br>Inside lid: "Your evening has been prepared." · Reorder card: "Extend your stay."</div>
+      <div><b>Watch</b><br>No claims on lid or hanger. No "Hotel" in any name. Check "Turndown Service" before using it as a name. Partner-gift innuendo handled by the gift back of the hanger.</div>
+    </div>
+  </div>
+
+  <!-- A -->
+  <div class="dir A" id="A">
+    <h2>A · Night Box</h2><p class="idea">Moody, premium, evening. The dark luxury-chocolate box, made warmer with rose foil.</p>
+    <div class="grid">
+      <div><div class="tile lid"><div class="w">Glow <em>Squares</em></div><div class="s">30 nights</div></div><div class="cap">Lid</div></div>
+      <div><div class="tile tray"><div class="o">laundry can't see you</div><div class="o">per my last email</div><div>3</div><div>4</div><div>5</div><div>6</div><div>7</div><div>8</div><div>9</div><div>10</div><div>11</div><div>12</div><div>13</div><div>14</div><div>15</div><div>16</div><div>17</div><div>18</div><div>19</div><div>20</div><div>21</div><div>22</div><div>23</div><div>24</div><div>25</div><div>26</div><div>27</div><div>28</div><div>29</div><div>30</div></div><div class="cap">Open tray, night 3</div></div>
+      <div><div class="tile wrapper"><b>3</b><span>Snap · Read</span></div><div class="cap">Wrapper</div></div>
+      <div><div class="tile ad"><p>One square a night. <em>A joke inside.</em></p><small>2.5 g collagen · 30 nights</small></div><div class="cap">Ad tile 1:1</div></div>
+    </div>
+    <div class="meta">
+      <div><b>Palette</b><div class="chips"><span class="chip"><i style="background:#1e120e"></i>#1e120e ground</span><span class="chip"><i style="background:#f3e6dc"></i>#f3e6dc text</span><span class="chip"><i style="background:#e8a6b8"></i>#e8a6b8 foil</span><span class="chip"><i style="background:#3a241c"></i>#3a241c tray</span><span class="chip"><i style="background:#c9b2a6"></i>#c9b2a6 dim</span></div><div class="cap">Text #f3e6dc on #1e120e ≈ 15:1; foil on ground ≈ 9:1. Pass.</div></div>
+      <div><b>Type</b><br>Instrument Serif + Manrope<br><b>Mood</b><br>moody · premium · calm</div>
+      <div><b>Voice</b><br>"One square a night. A joke inside." / Open tonight's<br><span class="risk"><b>Risk:</b> looks like every dark luxury chocolate box (Godiva, Vosges). The jokes don't show from the outside.</span></div>
+    </div>
+  </div>
+
+  <!-- B -->
+  <div class="dir B" id="B">
+    <h2>B · Turndown Service</h2><p class="idea">The hotel pillow chocolate, every night at home. The lid wears a "Do Not Disturb" tab you can tear off and hang on a door handle.</p>
+    <div class="grid">
+      <div><div class="tile lid"><div class="tag">DO NOT DISTURB<br><br>she's having her square</div><div class="w">Glow Squares</div><div class="s">Turndown service · 30 nights</div></div><div class="cap">Lid with tear-off door tag</div></div>
+      <div><div class="tile tray"><div class="o">The laundry can't see you.</div><div class="o">"Per my last email." Out loud.</div><div>03</div><div>04</div><div>05</div><div>06</div><div>07</div><div>08</div><div>09</div><div>10</div><div>11</div><div>12</div><div>13</div><div>14</div><div>15</div><div>16</div><div>17</div><div>18</div><div>19</div><div>20</div><div>21</div><div>22</div><div>23</div><div>24</div><div>25</div><div>26</div><div>27</div><div>28</div><div>29</div><div>30</div></div><div class="cap">Tray: notes look like hotel cards</div></div>
+      <div><div class="tile wrapper"><b>No. 03</b><span>snap · unwrap · read</span></div><div class="cap">Wrapper (cocoa, cream type)</div></div>
+      <div><div class="tile ad"><div class="h">Turndown service.</div><div class="card">Your evening has been prepared.<br>One square. One note.<br>Please do not disturb.</div><small>Glow Squares · 2.5 g collagen · 30 nights</small></div><div class="cap">Ad tile 1:1</div></div>
+    </div>
+    <div class="meta">
+      <div><b>Palette</b><div class="chips"><span class="chip"><i style="background:#f4ece3"></i>#f4ece3 linen</span><span class="chip"><i style="background:#3b1f1a"></i>#3b1f1a cocoa</span><span class="chip"><i style="background:#b8475f"></i>#b8475f tag rose</span><span class="chip"><i style="background:#fffaf4"></i>#fffaf4 card</span><span class="chip"><i style="background:#6b4a40"></i>#6b4a40 dim</span></div><div class="cap">Cocoa on linen ≈ 13:1; white on tag rose ≈ 5:1. Pass.</div></div>
+      <div><b>Type</b><br>Libre Caslon Display + Courier Prime<br><b>Mood</b><br>hotel calm · witty · cared-for</div>
+      <div><b>Voice</b><br>"Your evening has been prepared." / Book tonight<br><span class="risk"><b>Risk:</b> typewriter type can feel retro-hipster if overused; the tear-off tag adds a die-cut cost.</span></div>
+    </div>
+  </div>
+
+  <!-- C -->
+  <div class="dir C" id="C">
+    <h2>C · The Evening Edition</h2><p class="idea">A late-night newspaper. The lid is a masthead, the tray is the front page, every note is a headline ("Local woman sits down").</p>
+    <div class="grid">
+      <div><div class="tile lid"><div class="w">The Evening Edition</div><div class="s">by Glow Squares · <b>30 issues</b> · 2.5 g collagen each</div></div><div class="cap">Lid (masthead)</div></div>
+      <div><div class="tile tray"><div class="o">Laundry can't see you</div><div class="o">Woman says "per my last email" to no one</div><div>3</div><div>4</div><div>5</div><div>6</div><div>7</div><div>8</div><div>9</div><div>10</div><div>11</div><div>12</div><div>13</div><div>14</div><div>15</div><div>16</div><div>17</div><div>18</div><div>19</div><div>20</div><div>21</div><div>22</div><div>23</div><div>24</div><div>25</div><div>26</div><div>27</div><div>28</div><div>29</div><div>30</div></div><div class="cap">Tray: the front page</div></div>
+      <div><div class="tile wrapper"><i></i><b>NO. 3</b><span>Tonight's issue</span></div><div class="cap">Wrapper</div></div>
+      <div><div class="tile ad"><div class="mast">The Evening Edition</div><div class="h">Local woman <em>sits down.</em></div><small>More at eleven. One square, one headline, 30 nights.</small></div><div class="cap">Ad tile 1:1</div></div>
+    </div>
+    <div class="meta">
+      <div><b>Palette</b><div class="chips"><span class="chip"><i style="background:#f3efe6"></i>#f3efe6 newsprint</span><span class="chip"><i style="background:#141414"></i>#141414 ink</span><span class="chip"><i style="background:#c0365a"></i>#c0365a spot rose</span><span class="chip"><i style="background:#d9d2c3"></i>#d9d2c3 rule</span><span class="chip"><i style="background:#5c574d"></i>#5c574d dim</span></div><div class="cap">Ink on newsprint ≈ 17:1; rose on newsprint ≈ 4.7:1. Pass.</div></div>
+      <div><b>Type</b><br>Anton + Newsreader<br><b>Mood</b><br>funny · loud · clever</div>
+      <div><b>Voice</b><br>"Local woman sits down." / Get tonight's issue<br><span class="risk"><b>Risk:</b> newsprint reads cheaper than chocolate should; humor-first may bury the collagen story; the joke is one-note over many boxes.</span></div>
+    </div>
+  </div>
+
+  <div class="dir">
+    <h2>Scores (1–5)</h2>
+    <table>
+      <tr><th>Direction</th><th>Fits her</th><th>Stands out</th><th>Works small</th><th>Easy to make</th><th>Stretches (gifts, retail, vol. 2–3)</th><th>Total</th></tr>
+      <tr><td>A · Night Box</td><td class="n">4</td><td class="n">2</td><td class="n">4</td><td class="n">5</td><td class="n">4</td><td class="n">19</td></tr>
+      <tr><td><b>B · Turndown Service</b></td><td class="n">5</td><td class="n">5</td><td class="n">4</td><td class="n">3</td><td class="n">5</td><td class="n"><b>22</b></td></tr>
+      <tr><td><b>B rebuilt (recommended)</b></td><td class="n">5</td><td class="n">5</td><td class="n">4</td><td class="n">4</td><td class="n">5</td><td class="n"><b>23</b></td></tr>
+      <tr><td>C · The Evening Edition</td><td class="n">4</td><td class="n">5</td><td class="n">5</td><td class="n">4</td><td class="n">3</td><td class="n">21</td></tr>
+    </table>
+    <p class="cap">Recommendation: B. It owns the evening with a real-world ritual everyone knows (the hotel pillow chocolate), the tear-off "Do Not Disturb" tag is a physical joke people will hang on a door and photograph, and it reads premium on a shelf. Pick C instead if the brand should lead with humor above all; keep A if speed matters more than standing out.</p>
+  </div>
+</div>
+</body>
+</html>

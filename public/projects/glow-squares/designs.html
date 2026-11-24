@@ -1,0 +1,235 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="/site-bar.css" />
+<script src="/site-bar.js" data-project="glow-squares" data-kind="piece" defer></script>
+</head><body><title>Glow Squares Website Designs</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700&family=Anton&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&display=swap">
+<style>
+/* Chooser: three store homepages, each a working phone-size page. Compare shows all three side by side; tabs show one at full width. */
+:root{--bg:#f4efeb;--ink:#231815;--dim:#6b5a54;--line:#e0d4ce;--pick:#b8475f}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 Manrope,system-ui,sans-serif}
+.top{padding-block:22px 10px;padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right));max-width:1240px;margin:0 auto}
+.top h1{font:400 34px/1.05 "Instrument Serif",serif;margin:0 0 4px}
+.top p{margin:0;color:var(--dim);max-width:70ch}
+.tabs{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.tabs button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 14px;font:600 14px Manrope;cursor:pointer;color:var(--ink)}
+.tabs button[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.tabs button:focus-visible{outline:3px solid var(--pick);outline-offset:2px}
+.stage{max-width:1240px;margin:0 auto;padding:14px max(16px,env(safe-area-inset-right)) 50px max(16px,env(safe-area-inset-left))}
+.row{display:flex;gap:22px;overflow-x:auto;padding-bottom:12px;scroll-snap-type:x mandatory}
+.col{flex:0 0 360px;scroll-snap-align:start;min-width:0}
+.col h2{font:600 15px Manrope;margin:0 0 2px}
+.col .why{font-size:13px;color:var(--dim);margin:0 0 10px;min-height:40px}
+.phone{width:360px;height:740px;border-radius:30px;border:9px solid #1b1b1b;overflow:hidden;background:#000;box-shadow:0 18px 40px rgba(0,0,0,.18)}
+.screen{height:100%;overflow-y:auto;overflow-x:hidden;scrollbar-width:none}
+.single .row{justify-content:center}
+.single .col{flex-basis:min(430px,100%)}
+.single .phone{width:100%;max-width:430px;height:780px}
+.rec{display:inline-block;background:var(--pick);color:#fff;font:700 11px Manrope;border-radius:999px;padding:4px 10px;margin-left:6px;vertical-align:2px}
+.legend{font-size:13px;color:var(--dim);margin-top:8px}
+
+/* shared inside-site pieces */
+.site{min-height:100%}
+.site .tray{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:5px;padding:10px;border-radius:12px}
+.site .cell{aspect-ratio:1;border:0;border-radius:4px;font:700 11px Manrope;display:flex;align-items:center;justify-content:center;padding:0;cursor:default}
+.site .cell.tonight{cursor:pointer}
+.site .note{border-radius:12px;padding:14px;margin-top:10px;min-height:86px}
+.site .btn{display:inline-block;border:0;border-radius:999px;padding:13px 20px;font:700 15px Manrope;cursor:pointer;text-decoration:none}
+.site .frame{border:1.5px dashed currentColor;opacity:.8;border-radius:12px;display:grid;place-items:center;text-align:center;font-size:12px;padding:16px}
+.site .pad{padding:18px}
+@media (prefers-reduced-motion:no-preference){.site .cell.tonight{animation:bob 1.6s ease-in-out infinite}@keyframes bob{50%{transform:translateY(-3px)}}}
+.site .cell.open{animation:none!important;transform:rotate(-4deg) translateY(-3px)}
+
+/* A · Night Box */
+.A{background:#1e120e;color:#f3e6dc}
+.A .nav{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;font:400 20px "Instrument Serif",serif;border-bottom:1px solid #45302a}
+.A .nav em{color:#e8a6b8} .A .nav small{font:500 12px Manrope;color:#c9b2a6}
+.A h3{font:400 40px/1 "Instrument Serif",serif;margin:0 0 6px} .A h3 em{color:#e8a6b8}
+.A .sub{color:#c9b2a6;margin:0 0 12px;font-size:15px}
+.A .price{font:400 22px "Instrument Serif",serif;margin:0 0 12px} .A .price small{font:500 12px Manrope;color:#c9b2a6}
+.A .btn{background:#e8a6b8;color:#1e120e}
+.A .tray{background:#3a241c}
+.A .cell{background:repeating-linear-gradient(135deg,#f2bfcd 0 3px,#e7a9ba 3px 6px);color:#5a2d3a}
+.A .cell.done,.A .cell.open{background:#2b1a14;color:#c9b2a6}
+.A .cell.tonight{outline:2px solid #f3e6dc;outline-offset:1px}
+.A .note{background:#2b1a14;border:1px solid #45302a} .A .note b{font:700 11px Manrope;letter-spacing:.1em;color:#e8a6b8;text-transform:uppercase}
+.A .note p{font:italic 400 22px/1.15 "Instrument Serif",serif;margin:6px 0 0}
+.A .strip{border-top:1px solid #45302a;padding:16px 18px;color:#c9b2a6;font-size:13px}
+
+/* B · Turndown Service */
+.B{background:#f4ece3;color:#2a1712}
+.B .nav{display:flex;justify-content:space-between;align-items:center;padding:12px 18px;background:#2a1712;color:#f3e6dc}
+.B .nav b{font:400 20px "Instrument Serif",serif} .B .nav b span{color:#e8a6b8} .B .nav small{font:600 11px Manrope;letter-spacing:.18em;text-transform:uppercase;color:#e8a6b8}
+.B .hero{position:relative;padding:22px 18px 18px}
+.B .hanger{position:absolute;right:16px;top:-6px;width:92px;height:160px;background:#fffaf4;border:1px solid #e0d2c4;border-radius:0 0 10px 10px;box-shadow:0 6px 14px rgba(42,23,18,.12);display:flex;flex-direction:column;align-items:center;padding-top:12px;text-align:center;transform-origin:top center}
+@media (prefers-reduced-motion:no-preference){.B .hanger{animation:sway 3.4s ease-in-out infinite}@keyframes sway{50%{transform:rotate(3deg)}}}
+.B .hanger i{width:24px;height:24px;border-radius:50%;border:1px solid #e0d2c4;background:#f4ece3;margin-bottom:12px}
+.B .hanger span{font:400 15px/1 "Instrument Serif",serif} .B .hanger em{font:600 11px Manrope;letter-spacing:.04em;text-transform:uppercase;color:#b8475f;font-style:normal;margin-top:8px}
+.B .kick{font:600 11px Manrope;letter-spacing:.2em;text-transform:uppercase;color:#b8475f;margin:0 0 8px}
+.B h3{font:400 38px/1.02 "Instrument Serif",serif;margin:0 0 8px;max-width:8em}
+.B .sub{color:#6b4a40;margin:0 0 12px;font-size:15px;max-width:16em}
+.B .price{font:400 20px "Instrument Serif",serif;margin:0 0 12px} .B .price small{font:500 12px Manrope;color:#6b4a40}
+.B .btn{background:#2a1712;color:#f4ece3}
+.B .card{background:#fffaf4;border:1px solid #e0d2c4;border-radius:12px;margin:0 18px;padding:14px;text-align:center}
+.B .card .h{font:600 11px Manrope;letter-spacing:.2em;text-transform:uppercase;color:#6b4a40;border-bottom:1px solid #e0d2c4;padding-bottom:8px;margin-bottom:10px}
+.B .tray{background:#2a1712;margin-top:4px}
+.B .cell{background:linear-gradient(135deg,#e8a6b8,#c98196);color:#2a1712;font-size:11px;letter-spacing:-.02em}
+.B .cell.gold{background:linear-gradient(135deg,#f4dcae,#d9b276)}
+.B .cell.done,.B .cell.open{background:#fffaf4;color:#6b4a40}
+.B .cell.tonight{outline:2px solid #fffaf4;outline-offset:1px}
+.B .note{background:#fffaf4;border:1px solid #e0d2c4;text-align:center} .B .note b{font:600 11px Manrope;letter-spacing:.18em;text-transform:uppercase;color:#b8475f}
+.B .note p{font:italic 400 22px/1.15 "Instrument Serif",serif;margin:6px 0 0}
+.B .strip{padding:16px 18px;color:#6b4a40;font-size:13px;text-align:center}
+
+/* C · Evening Edition */
+.C{background:#f3efe6;color:#141414}
+.C .mast{padding:12px 16px 8px;text-align:center;border-bottom:3px double #141414}
+.C .mast b{display:block;font:400 30px/1 Anton,sans-serif;text-transform:uppercase;letter-spacing:.02em}
+.C .mast small{display:flex;justify-content:space-between;font:italic 11px Newsreader,serif;margin-top:6px;border-top:1px solid #141414;padding-top:4px}
+.C h3{font:400 46px/.95 Anton,sans-serif;text-transform:uppercase;margin:14px 0 8px} .C h3 em{color:#c0365a;font-style:normal}
+.C .sub{font:400 16px/1.4 Newsreader,serif;margin:0 0 12px;column-count:1}
+.C .price{font:600 15px Newsreader,serif;margin:0 0 12px;border-top:1px solid #141414;border-bottom:1px solid #141414;padding:6px 0}
+.C .btn{background:#141414;color:#f3efe6;border-radius:2px;text-transform:uppercase;letter-spacing:.06em;font-size:13px}
+.C .tray{background:#141414;border-radius:2px}
+.C .cell{background:#f3efe6;color:#141414;border-radius:1px;font:400 11px Anton,sans-serif}
+.C .cell.done,.C .cell.open{background:#3a3a3a;color:#d6d6d6}
+.C .cell.tonight{background:#c0365a;color:#fff}
+.C .note{background:#fff;border:1px solid #141414;border-radius:2px} .C .note b{font:400 12px Anton,sans-serif;text-transform:uppercase;color:#c0365a}
+.C .note p{font:400 26px/1 Anton,sans-serif;text-transform:uppercase;margin:6px 0 0}
+.C .strip{border-top:3px double #141414;padding:12px 16px;font:italic 13px Newsreader,serif}
+</style>
+
+<div class="top">
+  <h1>Three website designs</h1>
+  <p>Each one is a working phone-size homepage. Tap the square marked "Tonight" (or the button) in any of them: it snaps open and shows the night's note. Scroll inside each phone.</p>
+  <div class="tabs" role="group" aria-label="View">
+    <button type="button" data-view="all" aria-pressed="true">Side by side</button>
+    <button type="button" data-view="B" aria-pressed="false">Turndown</button>
+    <button type="button" data-view="A" aria-pressed="false">Night Box</button>
+    <button type="button" data-view="C" aria-pressed="false">Evening Edition</button>
+  </div>
+</div>
+
+<div class="stage" id="stage">
+  <div class="row">
+    <!-- B -->
+    <div class="col" data-d="B">
+      <h2>Turndown Service <span class="rec">Recommended</span></h2>
+      <p class="why">Hotel pillow chocolate at home. Matches the recommended box: door hanger, "your evening has been prepared".</p>
+      <div class="phone"><div class="screen"><div class="site B">
+        <div class="nav"><b>Glow <span>Squares</span></b><small>Turndown service</small></div>
+        <div class="hero">
+          <div class="hanger" aria-hidden="true"><i></i><span>Do not<br>disturb</span><em>Glow Squares</em></div>
+          <p class="kick">30 nights · 2.5 g collagen each</p>
+          <h3>Your evening has been prepared.</h3>
+          <p class="sub">One chocolate square after dinner, and a note under every one.</p>
+          <p class="price">$49 a month · $1.63 a night <small>or $59 once</small></p>
+          <button class="btn" type="button" data-open>Open tonight's square</button>
+        </div>
+        <div class="card">
+          <div class="h">Room service · Night 3</div>
+          <div class="tray" data-tray="B"></div>
+          <div class="note" data-note><b>Night 3</b><p style="font:400 14px Manrope;color:#6b4a40">Snap it. Read what it says.</p></div>
+        </div>
+        <div class="pad"><div class="frame" style="aspect-ratio:4/3">Photo: the box on a side table at 9 pm, hanger on the lid</div></div>
+        <div class="strip">Free shipping · If it melts, we replace it · Full refund on your first box within 30 days<br><br>Gift it: "Turndown arranged by ______"</div>
+      </div></div></div>
+    </div>
+
+    <!-- A -->
+    <div class="col" data-d="A">
+      <h2>Night Box</h2>
+      <p class="why">Dark cocoa and rose foil, like the waitlist today. Moody and premium, closest to luxury chocolate brands.</p>
+      <div class="phone"><div class="screen"><div class="site A">
+        <div class="nav"><span>Glow <em>Squares</em></span><small>Cart (0)</small></div>
+        <div class="pad">
+          <h3>A chocolate square a night, <em>with a joke inside.</em></h3>
+          <p class="sub">2.5 g of collagen in every square. 30 nights in a box.</p>
+          <p class="price">$49 a month · $1.63 a night <small>or $59 once</small></p>
+          <button class="btn" type="button" data-open>Open tonight's square</button>
+        </div>
+        <div class="pad" style="padding-top:0">
+          <div class="tray" data-tray="A"></div>
+          <div class="note" data-note><b>Night 3</b><p style="font:400 14px Manrope;color:#c9b2a6">Snap it. Read what it says.</p></div>
+        </div>
+        <div class="pad"><div class="frame" style="aspect-ratio:4/3">Photo: a hand holding one square, lamp light</div></div>
+        <div class="strip">Free shipping · If it melts, we replace it · Full refund on your first box within 30 days</div>
+      </div></div></div>
+    </div>
+
+    <!-- C -->
+    <div class="col" data-d="C">
+      <h2>The Evening Edition</h2>
+      <p class="why">A late-night newspaper; every note is a headline. Funniest and loudest, less premium.</p>
+      <div class="phone"><div class="screen"><div class="site C">
+        <div class="mast"><b>The Evening Edition</b><small><span>by Glow Squares</span><span>30 issues · 2.5 g collagen each</span></small></div>
+        <div class="pad">
+          <h3>Local woman <em>sits down.</em></h3>
+          <p class="sub">One chocolate square after dinner, one headline under every square. More at eleven.</p>
+          <p class="price">$49 a month · $1.63 a night · or $59 once</p>
+          <button class="btn" type="button" data-open>Read tonight's issue</button>
+        </div>
+        <div class="pad" style="padding-top:0">
+          <div class="tray" data-tray="C"></div>
+          <div class="note" data-note><b>Issue No. 3</b><p style="font:400 14px Newsreader,serif;text-transform:none">Tap tonight's square.</p></div>
+        </div>
+        <div class="pad"><div class="frame" style="aspect-ratio:4/3">Photo: the open tray on a kitchen counter</div></div>
+        <div class="strip">Free delivery · Melted? Replaced · Full refund on your first box within 30 days</div>
+      </div></div></div>
+    </div>
+  </div>
+  <p class="legend">Prototypes for choosing a look. Photos are placeholders until samples arrive. Nothing here is for sale yet.</p>
+</div>
+
+<script>
+const NOTE = { A:"The laundry can't see you. Stay very still.", B:"The laundry can't see you. Stay very still.", C:"Laundry can't see you. Woman stays very still." };
+const TONIGHT = 3;
+let ctx;
+function snap(){
+  try { ctx = ctx || new (window.AudioContext||window.webkitAudioContext)();
+    const len = Math.floor(ctx.sampleRate*.09), buf = ctx.createBuffer(1,len,ctx.sampleRate), d = buf.getChannelData(0);
+    for (let i=0;i<len;i++) d[i]=(Math.random()*2-1)*Math.pow(1-i/len,6);
+    const s=ctx.createBufferSource(); s.buffer=buf; const f=ctx.createBiquadFilter(); f.type='bandpass'; f.frequency.value=2600; f.Q.value=1.2;
+    s.connect(f).connect(ctx.destination); s.start(); } catch(_){}
+}
+document.querySelectorAll('[data-tray]').forEach(tray => {
+  const d = tray.dataset.tray, site = tray.closest('.site'), note = site.querySelector('[data-note]');
+  for (let i = 1; i <= 30; i++) {
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'cell';
+    if (i < TONIGHT) b.classList.add('done');
+    if (d === 'B' && (i === 15 || i === 30)) b.classList.add('gold');
+    b.textContent = d === 'B' ? 'RM ' + String(i).padStart(2,'0') : (d === 'C' ? 'No.' + i : i);
+    if (i === TONIGHT) { b.classList.add('tonight'); b.setAttribute('aria-label','Night ' + i + ', tonight: open it'); }
+    else { b.tabIndex = -1; b.setAttribute('aria-hidden','true'); }
+    b.addEventListener('click', () => {
+      if (i !== TONIGHT) { set(note, d, i < TONIGHT ? 'Already eaten. No regrets.' : 'Sealed till its night.', true); return; }
+      openTonight(site, d);
+    });
+    tray.appendChild(b);
+  }
+});
+function set(note, d, text, small){
+  const b = note.querySelector('b'), p = note.querySelector('p');
+  p.textContent = text; p.removeAttribute('style');
+  if (small) p.style.cssText = 'font:400 14px Manrope,sans-serif;text-transform:none;opacity:.75';
+}
+function openTonight(site, d){
+  const cell = site.querySelector('.cell.tonight'); snap();
+  cell.classList.add('open'); cell.classList.remove('tonight');
+  set(site.querySelector('[data-note]'), d, NOTE[d]);
+}
+document.querySelectorAll('[data-open]').forEach(btn => btn.addEventListener('click', () => {
+  const site = btn.closest('.site'), d = site.classList.contains('A') ? 'A' : site.classList.contains('B') ? 'B' : 'C';
+  site.querySelector('[data-tray]').scrollIntoView({behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block:'center'});
+  if (site.querySelector('.cell.tonight')) openTonight(site, d);
+}));
+const stage = document.getElementById('stage');
+document.querySelectorAll('.tabs button').forEach(t => t.addEventListener('click', () => {
+  document.querySelectorAll('.tabs button').forEach(x => x.setAttribute('aria-pressed', x === t ? 'true' : 'false'));
+  const v = t.dataset.view;
+  stage.classList.toggle('single', v !== 'all');
+  document.querySelectorAll('.col').forEach(c => c.hidden = v !== 'all' && c.dataset.d !== v);
+}));
+</script>
+</body></html>

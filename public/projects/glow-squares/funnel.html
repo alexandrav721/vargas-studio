@@ -1,0 +1,475 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Glow Squares · How someone becomes a customer</title>
+<meta name="description" content="The real path from the Glow Squares waitlist to Night 25: the signup, the emails in order, the texts, and the delay notice. Drafts, nothing sent." />
+<meta name="robots" content="noindex" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700&family=Mrs+Saint+Delafield&display=swap" />
+<style>
+:root{
+  --linen:#f4ece3; --card:#fffaf4; --cocoa:#2a1712; --rose:#e8a6b8; --accent:#b8475f; --gold:#d9b276;
+  --dim:#6b4a40; --line:#e3d5c8; --line2:#d6c4b4;
+  --display:"Instrument Serif", Georgia, serif; --body:"Manrope", system-ui, sans-serif; --sign:"Mrs Saint Delafield", cursive;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--linen);color:var(--cocoa);font:16px/1.55 var(--body)}
+a{color:var(--accent)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+.wrap{max-width:1120px;margin:0 auto;padding:24px 16px 72px}
+@media (min-width:700px){.wrap{padding:32px 28px 96px}}
+
+/* project nav */
+.pnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:baseline;font-size:14px;margin-bottom:40px}
+.pnav b{font:400 22px var(--display);margin-right:6px}
+.pnav a{color:var(--dim);text-decoration:none;padding:4px 0}
+.pnav a:hover{color:var(--accent)}
+.pnav a[aria-current]{color:var(--cocoa);border-bottom:1px solid var(--accent)}
+
+/* intro */
+.intro{display:grid;gap:20px;align-items:end;margin-bottom:56px}
+@media (min-width:860px){.intro{grid-template-columns:1.5fr 1fr}}
+h1{font:400 clamp(40px,8vw,76px)/.98 var(--display);margin:0;letter-spacing:-.01em;max-width:14ch}
+h1 em{color:var(--accent)}
+.lede{font-size:17px;max-width:40ch;margin:0}
+.stamp{display:inline-block;margin-top:16px;padding:8px 14px;border:1.5px solid var(--accent);color:var(--accent);font:700 13px var(--body);letter-spacing:.04em;transform:rotate(-1.5deg);background:var(--card)}
+
+/* path: left gutter with "when", right the thing */
+.stop{display:grid;gap:14px 32px;padding:40px 0;border-top:1px solid var(--line2)}
+@media (min-width:860px){.stop{grid-template-columns:200px 1fr}}
+.stop>*,.join>*,.texts>*,.mail>*{min-width:0}
+.when{font-size:14px;color:var(--dim)}
+.when h2{font:400 34px/1.05 var(--display);color:var(--cocoa);margin:0 0 8px}
+.when p{margin:0 0 8px;max-width:30ch}
+.when .n{display:block;font:400 italic 20px var(--display);color:var(--accent);margin-bottom:2px}
+
+/* 1. waitlist */
+.join{display:grid;gap:24px;align-items:start}
+@media (min-width:700px){.join{grid-template-columns:330px 1fr}}
+.phone{width:min(330px,100%);margin:0 auto;background:var(--cocoa);border-radius:40px;padding:12px;box-shadow:0 18px 40px -22px rgba(42,23,18,.55)}
+.phone .screen{border-radius:30px;overflow:hidden;background:#1e120e;height:620px;position:relative}
+.phone iframe{position:absolute;top:0;left:0;display:block;border:0;width:375px;height:719px;transform:scale(.816);transform-origin:0 0}
+@media (max-width:360px){.phone .screen{height:560px}}
+.join .side{max-width:36ch}
+.join .side p{margin:0 0 14px}
+.btn{display:inline-block;background:var(--accent);color:#fff;text-decoration:none;font:700 15px var(--body);padding:13px 20px;border-radius:999px}
+.btn:hover{background:#9c3a50}
+.fine{font-size:13px;color:var(--dim)}
+
+/* 2. inbox */
+.mail{display:grid;gap:22px;align-items:start}
+@media (min-width:1000px){.mail{grid-template-columns:330px 1fr}}
+.inbox{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+@media (min-width:1000px){.inbox{position:sticky;top:16px}}
+.inbox header{display:flex;justify-content:space-between;align-items:baseline;padding:12px 16px;border-bottom:1px solid var(--line);font-weight:700;font-size:15px}
+.inbox header span{font-weight:500;font-size:12px;color:var(--dim)}
+.inbox ol{list-style:none;margin:0;padding:0}
+.inbox li+li{border-top:1px solid var(--line)}
+.inbox a{display:grid;grid-template-columns:1fr auto;gap:0 10px;padding:11px 16px 12px 22px;text-decoration:none;color:var(--cocoa);position:relative}
+.inbox a::before{content:"";position:absolute;left:9px;top:18px;width:7px;height:7px;border-radius:50%;background:var(--accent)}
+.inbox a:hover{background:#f8efe6}
+.inbox .from{font-weight:700;font-size:14px}
+.inbox .t{font-size:12px;color:var(--dim);white-space:nowrap}
+.inbox .s{grid-column:1/-1;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.inbox .p{grid-column:1/-1;font-size:13px;color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+.emails{display:grid;gap:30px;min-width:0}
+.email{scroll-margin-top:16px;min-width:0}
+.trig{font-size:13px;color:var(--dim);margin:0 0 8px;display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline}
+.trig b{font:400 italic 19px var(--display);color:var(--accent)}
+.client{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 10px 26px -22px rgba(42,23,18,.5)}
+.head{padding:14px 18px 12px;border-bottom:1px solid var(--line)}
+.head .subj{font:600 19px/1.3 var(--body);margin:0 0 10px}
+.who{display:flex;gap:10px;align-items:center;font-size:13px;color:var(--dim)}
+.who i{flex:none;width:34px;height:34px;border-radius:50%;background:var(--cocoa);color:var(--rose);display:grid;place-items:center;font:400 italic 16px var(--display)}
+.who b{color:var(--cocoa);font-size:14px}
+.alt{font-size:12px;color:var(--dim);margin:8px 0 0}
+/* the email itself, in the Turndown look */
+.body{background:var(--linen);padding:22px 14px}
+@media (min-width:600px){.body{padding:30px 28px}}
+.sheet{max-width:560px;margin:0 auto;background:var(--card);border:1px solid var(--line);padding:24px 22px 22px}
+@media (min-width:600px){.sheet{padding:30px 34px 26px}}
+.mast{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:18px}
+.mast .w{font:400 24px var(--display)} .mast .w span{color:var(--accent)}
+.mast .r{font:600 10px var(--body);letter-spacing:.18em;text-transform:uppercase;color:var(--dim)}
+.sheet p{margin:0 0 14px;font-size:15.5px}
+.sheet .lead{font:400 26px/1.15 var(--display);margin-bottom:16px}
+.sheet .note{font:400 italic 19px/1.3 var(--display);padding-left:14px;border-left:2px solid var(--rose);margin-bottom:10px}
+.sheet .note b{font:600 normal 12px var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--dim);display:block}
+.sheet .small{font-size:13.5px;color:var(--dim)}
+.sheet .cta{display:inline-block;background:var(--accent);color:#fff;text-decoration:none;font:700 15px var(--body);padding:12px 22px;border-radius:999px;margin:4px 0 16px}
+.sheet .cta.ghost{background:none;color:var(--accent);border:1.5px solid var(--accent)}
+.sig{margin:6px 0 0}
+.sig span{display:block;font:400 40px/1 var(--sign);color:var(--cocoa)}
+.sig small{font-size:13px;color:var(--dim)}
+.ps{margin-top:14px!important;font-size:14.5px!important}
+.foot{max-width:560px;margin:14px auto 0;font-size:11.5px;color:var(--dim);text-align:center;line-height:1.5}
+.merge{display:inline-block;font:600 12px/1.6 var(--body);color:var(--dim);background:#efe3d6;border:1px dashed var(--line2);border-radius:4px;padding:0 6px;white-space:nowrap}
+.steps3{display:grid;grid-template-columns:repeat(3,auto);justify-content:start;gap:4px 18px;margin:4px 0 16px}
+.steps3 span{font:400 26px var(--display)} .steps3 span:nth-child(2){color:var(--accent)}
+.cond{border-top:1px dashed var(--line2);padding-top:12px}
+.cond em{font-style:normal;font-size:12px;font-weight:700;color:var(--dim);display:block;margin-bottom:2px}
+
+/* 3. texts */
+.texts{display:grid;gap:24px;align-items:start}
+@media (min-width:760px){.texts{grid-template-columns:360px 1fr}}
+.thread{width:min(360px,100%);background:var(--card);border:1px solid var(--line);border-radius:36px;padding:14px 14px 22px;margin:0 auto}
+.thread .top{text-align:center;padding:6px 0 14px;border-bottom:1px solid var(--line);margin-bottom:12px}
+.thread .top i{display:inline-grid;place-items:center;width:44px;height:44px;border-radius:50%;background:var(--cocoa);color:var(--rose);font:400 italic 20px var(--display)}
+.thread .top b{display:block;font-size:13px;margin-top:4px}
+.thread .top span{font-size:11px;color:var(--dim)}
+.ts{text-align:center;font-size:11px;color:var(--dim);margin:14px 0 6px}
+.bub{max-width:86%;background:#efe3d6;border-radius:18px 18px 18px 5px;padding:9px 13px;font-size:14.5px;line-height:1.4}
+.bub u{color:var(--accent);text-decoration-thickness:1px}
+.bub.me{margin-left:auto;background:var(--accent);color:#fff;border-radius:18px 18px 5px 18px;width:max-content}
+.rules{max-width:40ch}
+.rules ul{padding-left:18px;margin:0 0 14px}
+.rules li{margin:4px 0}
+
+/* 4. delay */
+.ifslip .client{border:1.5px dashed var(--accent);box-shadow:none}
+.flag{display:inline-block;background:var(--cocoa);color:var(--card);font:700 12px var(--body);letter-spacing:.06em;text-transform:uppercase;padding:5px 10px;margin-bottom:10px}
+.choice{display:grid;gap:10px;margin:6px 0 16px}
+@media (min-width:520px){.choice{grid-template-columns:1fr 1fr}}
+.choice div{border:1px solid var(--line);padding:12px 14px;font-size:14.5px}
+.choice b{display:block;font:400 22px var(--display);margin-bottom:2px}
+.law{font-size:13px;color:var(--dim);max-width:62ch;margin:12px 0 0}
+
+.end{border-top:1px solid var(--line2);padding-top:28px;font-size:14px;color:var(--dim);max-width:64ch}
+.end a{font-weight:600}
+</style>
+<link rel="stylesheet" href="/site-bar.css" />
+<script src="/site-bar.js" data-project="glow-squares" data-kind="piece" defer></script>
+</head>
+<body>
+<div class="wrap">
+  <nav class="pnav" aria-label="Glow Squares">
+    <b>Glow Squares</b>
+    <a href="landing.html">Landing</a>
+    <a href="store.html">Store</a>
+    <a href="packaging.html">Packaging</a>
+    <a href="funnel.html" aria-current="page">Funnel</a>
+    <a href="print.html">Print</a>
+  </nav>
+
+  <header class="intro">
+    <div>
+      <h1>How someone becomes a <em>customer</em></h1>
+    </div>
+    <div>
+      <p class="lede">The path in the order she lives it: she joins the waitlist, gets eight emails and four texts, and the box arrives. Plus one email we hope never goes out.</p>
+      <p class="stamp">Drafts. Nothing is sent yet.</p>
+    </div>
+  </header>
+
+  <!-- 1 -->
+  <section class="stop" aria-labelledby="h-join">
+    <div class="when">
+      <span class="n">Now to 10 January</span>
+      <h2 id="h-join">She joins the list</h2>
+      <p>This page is live. Her email goes into a private list; nobody else can read it.</p>
+    </div>
+    <div class="join">
+      <div class="phone">
+        <div class="screen">
+          <iframe src="https://alexandrav721.github.io/glow-squares/" title="The live Glow Squares waitlist page" loading="lazy" tabindex="-1"></iframe>
+        </div>
+      </div>
+      <div class="side">
+        <p>The first 500 boxes are $39 instead of $59, for one box or the first box of monthly. Pre-orders open January 11.</p>
+        <p>When the flows are switched on, the welcome email goes out the moment she signs up.</p>
+        <p><a class="btn" href="https://alexandrav721.github.io/glow-squares/" target="_blank" rel="noopener">Open the live waitlist</a></p>
+        <p class="fine">Scroll inside the phone to see the whole page.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="stop" aria-labelledby="h-mail">
+    <div class="when">
+      <span class="n">Day 0 to Night 25</span>
+      <h2 id="h-mail">Her inbox</h2>
+      <p>Eight emails, oldest first. Tap one to read it the way she will.</p>
+    </div>
+    <div class="mail">
+      <nav class="inbox" aria-label="Inbox">
+        <header>Inbox <span>8 from Glow Squares</span></header>
+        <ol>
+          <li><a href="#e11"><span class="from">Johanna J</span><span class="t">Day 0</span><span class="s">You're on the list.</span><span class="p">First 500 get their first box for $39.</span></a></li>
+          <li><a href="#e12"><span class="from">Johanna J</span><span class="t">Day 3</span><span class="s">Why I put collagen in candy</span><span class="p">I'm 34, and I'll be honest: I wanted the collagen…</span></a></li>
+          <li><a href="#e13"><span class="from">Johanna J</span><span class="t">Day 7</span><span class="s">Three of the thirty notes</span><span class="p">Every square sits on a note. Three of the thirty…</span></a></li>
+          <li><a href="#e22"><span class="from">Johanna J</span><span class="t">11 Jan</span><span class="s">It's open</span><span class="p">$39 for your first box of 30 (regular $59).</span></a></li>
+          <li><a href="#e31"><span class="from">Johanna J</span><span class="t">13 Jan</span><span class="s">What happens between now and February 8</span><span class="p">Four weeks, one box, no surprises.</span></a></li>
+          <li><a href="#e63"><span class="from">Glow Squares</span><span class="t">Night 1</span><span class="s">Tonight is Night 1</span><span class="p">It's here. Tonight, after dinner: snap, unwrap, read.</span></a></li>
+          <li><a href="#e65"><span class="from">Glow Squares</span><span class="t">Night 15</span><span class="s">Halfway</span><span class="p">Tonight's is one of the gold ones.</span></a></li>
+          <li><a href="#e66"><span class="from">Glow Squares</span><span class="t">Night 25</span><span class="s">Five left</span><span class="p">If you'd like the evenings to keep going…</span></a></li>
+        </ol>
+      </nav>
+
+      <div class="emails">
+
+        <!-- 1.1 -->
+        <article class="email" id="e11">
+          <p class="trig"><b>Day 0</b> Right after she joins</p>
+          <div class="client">
+            <div class="head">
+              <h3 class="subj">You're on the list.</h3>
+              <div class="who"><i>G</i><div><b>Johanna J</b> · Glow Squares<br>to you · preview: First 500 get their first box for $39.</div></div>
+              <p class="alt">Also testing: "Room booked. (It's a chocolate.)" · "Your evening has been prepared. Almost."</p>
+            </div>
+            <div class="body">
+              <div class="sheet">
+                <div class="mast"><span class="w">Glow <span>Squares</span></span><span class="r">30 nights</span></div>
+                <p>Hi there,</p>
+                <p class="lead">You're on the Glow Squares list.</p>
+                <p>One chocolate square after dinner. Thirty nights in a box. 2.5 g of collagen in each square, and a note under every one that we hope is actually funny. <span class="small">(The studies on that amount of collagen ran 8 to 12 weeks, results vary, and most were funded by ingredient makers.)</span></p>
+                <p>Pre-orders open <b>January 11</b>. You'll hear first, and the first 500 boxes are <b>$39</b> instead of $59.</p>
+                <div class="sig"><span>Johanna J</span><small>Founder, Glow Squares</small></div>
+                <p class="ps">P.S. Reply and tell me what you have after dinner most nights.</p>
+              </div>
+              <p class="foot">You joined the Glow Squares waitlist. <u>Unsubscribe</u><br>Glow Squares LLC · <span class="merge">PO box address</span></p>
+            </div>
+          </div>
+        </article>
+
+        <!-- 1.2 -->
+        <article class="email" id="e12">
+          <p class="trig"><b>Day 3</b> Her story</p>
+          <div class="client">
+            <div class="head">
+              <h3 class="subj">Why I put collagen in candy</h3>
+              <div class="who"><i>G</i><div><b>Johanna J</b> · Glow Squares<br>to you</div></div>
+              <p class="alt">Also testing: "I was so done with the powder" · "34, loves candy, hates scoops"</p>
+            </div>
+            <div class="body">
+              <div class="sheet">
+                <div class="mast"><span class="w">Glow <span>Squares</span></span><span class="r">From Johanna</span></div>
+                <p>I'm 34, and I'll be honest: I wanted the collagen, I just didn't want to keep taking it. The powder sat there. The scoop sat there. I sat there, eating candy.</p>
+                <p class="lead">So I asked the obvious question: why can't the candy be the thing?</p>
+                <p>Glow Squares is one chocolate square after dinner with 2.5 g of collagen, and a note underneath. No scoop.</p>
+                <p>The honest part: the studies ran 8 to 12 weeks, results vary, and most were funded by ingredient makers. I'd rather say that up front.</p>
+                <div class="sig"><span>Johanna J</span><small>Founder, Glow Squares</small></div>
+                <p style="margin-top:18px"><a class="cta" href="https://alexandrav721.github.io/glow-squares/" target="_blank" rel="noopener">See the box</a></p>
+              </div>
+              <p class="foot">You joined the Glow Squares waitlist. <u>Unsubscribe</u><br>Glow Squares LLC · <span class="merge">PO box address</span></p>
+            </div>
+          </div>
+        </article>
+
+        <!-- 1.3 -->
+        <article class="email" id="e13">
+          <p class="trig"><b>Day 7</b> The jokes, before anyone buys</p>
+          <div class="client">
+            <div class="head">
+              <h3 class="subj">Three of the thirty notes</h3>
+              <div class="who"><i>G</i><div><b>Johanna J</b> · Glow Squares<br>to you</div></div>
+              <p class="alt">Also testing: "Breaking news: local woman sits down" · "What's under Night 3"</p>
+            </div>
+            <div class="body">
+              <div class="sheet">
+                <div class="mast"><span class="w">Glow <span>Squares</span></span><span class="r">RM 03 · 11 · 23</span></div>
+                <p>Every square sits on a note. Three of the thirty:</p>
+                <p class="note"><b>Night 3</b>The laundry can't see you. Stay very still.</p>
+                <p class="note"><b>Night 11</b>Light the good candle. Yes, the one still in the plastic. Yes, tonight.</p>
+                <p class="note" style="margin-bottom:16px"><b>Night 23</b>Breaking news: local woman sits down. More at eleven.</p>
+                <p>The other 27 stay sealed till their night.</p>
+                <p>Pre-orders open January 11. First 500 boxes are $39.</p>
+                <a class="cta" href="https://alexandrav721.github.io/glow-squares/" target="_blank" rel="noopener">See the box</a>
+              </div>
+              <p class="foot">You joined the Glow Squares waitlist. <u>Unsubscribe</u><br>Glow Squares LLC · <span class="merge">PO box address</span></p>
+            </div>
+          </div>
+        </article>
+
+        <!-- 2.2 -->
+        <article class="email" id="e22">
+          <p class="trig"><b>Mon 11 January, 9 am ET</b> Pre-orders open</p>
+          <div class="client">
+            <div class="head">
+              <h3 class="subj">It's open</h3>
+              <div class="who"><i>G</i><div><b>Johanna J</b> · Glow Squares<br>to you</div></div>
+              <p class="alt">Also testing: "Your founder link" · "Room 01 is ready"</p>
+            </div>
+            <div class="body">
+              <div class="sheet">
+                <div class="mast"><span class="w">Glow <span>Squares</span></span><span class="r">Founder boxes</span></div>
+                <p>Your founder link: <span class="merge">founder link</span></p>
+                <p class="lead"><b style="font-weight:400;color:var(--accent)">$39</b> for your first box of 30 (regular $59).</p>
+                <p>Works for one box or for monthly; monthly is $49 from your second box.</p>
+                <p>Ships February 8 to 9. Full refund on your first box within <b>30 days of delivery</b>.</p>
+                <p>500 founder boxes, then it's $59.</p>
+                <a class="cta" href="https://alexandrav721.github.io/glow-squares/" target="_blank" rel="noopener">Get my $39 box</a>
+              </div>
+              <p class="foot">You joined the Glow Squares waitlist. <u>Unsubscribe</u><br>Glow Squares LLC · <span class="merge">PO box address</span></p>
+            </div>
+          </div>
+        </article>
+
+        <!-- 3.1 -->
+        <article class="email" id="e31">
+          <p class="trig"><b>Order + 2 days</b> The four-week wait</p>
+          <div class="client">
+            <div class="head">
+              <h3 class="subj">What happens between now and February 8</h3>
+              <div class="who"><i>G</i><div><b>Johanna J</b> · Glow Squares<br>to you · preview: Four weeks, one box, no surprises.</div></div>
+              <p class="alt">Also testing: "Four weeks, one box"</p>
+            </div>
+            <div class="body">
+              <div class="sheet">
+                <div class="mast"><span class="w">Glow <span>Squares</span></span><span class="r">Booked</span></div>
+                <p>Hi there, your 30 nights are booked. Here's the next four weeks.</p>
+                <p><b>January:</b> the squares are made and wrapped.<br><b>Around February 1:</b> I start packing the boxes myself, with a little help.<br><b>February 8 to 9:</b> your box ships, with tracking the same day.</p>
+                <p>If that date moves, you'll hear from me before the 8th, with the option to cancel for a full refund.</p>
+                <p>Nothing to do now. Moved house? Just reply.</p>
+                <p class="small cond"><em>Monthly subscribers also see</em>Your next charge, $49, is 30 days after your box arrives. Skip or cancel online anytime: <span class="merge">manage link</span>.</p>
+              </div>
+              <p class="foot">You ordered from Glow Squares. <u>Unsubscribe</u><br>Glow Squares LLC · <span class="merge">PO box address</span></p>
+            </div>
+          </div>
+        </article>
+
+        <!-- 6.3 -->
+        <article class="email" id="e63">
+          <p class="trig"><b>Night 1, about 7 pm</b> The evening the box is delivered</p>
+          <div class="client">
+            <div class="head">
+              <h3 class="subj">Tonight is Night 1</h3>
+              <div class="who"><i>G</i><div><b>Glow Squares</b><br>to you</div></div>
+              <p class="alt">Also testing: "Your evening has been prepared" · "Room 01 is ready"</p>
+            </div>
+            <div class="body">
+              <div class="sheet">
+                <div class="mast"><span class="w">Glow <span>Squares</span></span><span class="r">RM 01</span></div>
+                <p class="lead">It's here. Tonight, after dinner:</p>
+                <div class="steps3" aria-label="Snap, unwrap, read"><span>Snap.</span><span>Unwrap.</span><span>Read.</span></div>
+                <p><b>Snap</b> the square. <b>Unwrap</b> it. <b>Read</b> what's underneath. Mark a dot on the card.</p>
+                <p>Hang the door hanger if you want. We won't tell anyone it's for chocolate.</p>
+              </div>
+              <p class="foot">You ordered from Glow Squares. <u>Unsubscribe</u><br>Glow Squares LLC · <span class="merge">PO box address</span></p>
+            </div>
+          </div>
+        </article>
+
+        <!-- 6.5 -->
+        <article class="email" id="e65">
+          <p class="trig"><b>Night 15</b> Delivery + 14 days</p>
+          <div class="client">
+            <div class="head">
+              <h3 class="subj">Halfway</h3>
+              <div class="who"><i>G</i><div><b>Glow Squares</b><br>to you</div></div>
+              <p class="alt">Also testing: "Tonight's square is gold" · "Your report card is in"</p>
+            </div>
+            <div class="body">
+              <div class="sheet">
+                <div class="mast"><span class="w">Glow <span>Squares</span></span><span class="r">RM 15</span></div>
+                <p class="lead">Tonight's is one of the gold ones. There's a report card folded under it.</p>
+                <p>Missed a night or two? The squares don't keep score.</p>
+                <p class="small">(Started later? Save this for your Night 15.)</p>
+              </div>
+              <p class="foot">You ordered from Glow Squares. <u>Unsubscribe</u><br>Glow Squares LLC · <span class="merge">PO box address</span></p>
+            </div>
+          </div>
+        </article>
+
+        <!-- 6.6 -->
+        <article class="email" id="e66">
+          <p class="trig"><b>Night 25</b> One-box buyers only; subscribers never get this</p>
+          <div class="client">
+            <div class="head">
+              <h3 class="subj">Five left</h3>
+              <div class="who"><i>G</i><div><b>Glow Squares</b><br>to you</div></div>
+              <p class="alt">Also testing: "Extend your stay?" · "Volume 2 has new notes"</p>
+            </div>
+            <div class="body">
+              <div class="sheet">
+                <div class="mast"><span class="w">Glow <span>Squares</span></span><span class="r">RM 25</span></div>
+                <p class="lead">Five squares left.</p>
+                <p>If you'd like the evenings to keep going, the next box has all-new notes, and monthly is $49: skip or cancel online anytime.</p>
+                <p>If you're done, no hard feelings. Night 30 has something for you either way.</p>
+                <a class="cta" href="https://alexandrav721.github.io/glow-squares/" target="_blank" rel="noopener">Extend my stay</a>
+              </div>
+              <p class="foot">You ordered from Glow Squares. <u>Unsubscribe</u><br>Glow Squares LLC · <span class="merge">PO box address</span></p>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section class="stop" aria-labelledby="h-text">
+    <div class="when">
+      <span class="n">Only if she says yes to texts</span>
+      <h2 id="h-text">Her texts</h2>
+      <p>Four texts, a separate opt-in from email.</p>
+    </div>
+    <div class="texts">
+      <div class="thread" role="log" aria-label="Text messages from Glow Squares">
+        <div class="top"><i>G</i><b>Glow Squares</b><span>Text message</span></div>
+        <p class="ts">Day 0</p>
+        <p class="bub me">Yes, text me</p>
+        <p class="bub">Glow Squares: you're in for texts. Up to 4 msgs/mo. Msg &amp; data rates may apply. Reply HELP for help, STOP to opt out.</p>
+        <p class="ts">Mon 11 Jan, 9:00 am her time</p>
+        <p class="bub">Glow Squares: founder boxes are open. $39 for 30 nights, ships Feb 8-9. <u>glowsquares.com</u> Reply STOP to opt out</p>
+        <p class="ts">Last day to order for Valentine's</p>
+        <p class="bub">Glow Squares: last day to order for Valentine's. Gift boxes don't renew. <u>glowsquares.com</u> Reply STOP to opt out</p>
+        <p class="ts">Night 25 · one-box buyers</p>
+        <p class="bub">Glow Squares: 5 squares left. Volume 2 has all-new notes. $49/mo, skip anytime: <u>glowsquares.com</u> Reply STOP to opt out</p>
+      </div>
+      <div class="rules">
+        <ul>
+          <li>Sent in her local time, between 8 am and 8 pm.</li>
+          <li>STOP on every text. Plain hyphens and apostrophes only.</li>
+          <li>No "delivered" text: the Night 1 email already says it.</li>
+          <li>The texting number needs registering by mid-December; it takes weeks.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section class="stop ifslip" aria-labelledby="h-slip">
+    <div class="when">
+      <span class="n">Ready before launch</span>
+      <h2 id="h-slip">If the date slips</h2>
+      <p>Written now so it can go out the same day, never in a panic.</p>
+    </div>
+    <div>
+      <p class="flag">Only if the date slips</p>
+      <div class="client">
+        <div class="head">
+          <h3 class="subj">Your box is running late. Your call.</h3>
+          <div class="who"><i>G</i><div><b>Johanna J</b> · Glow Squares<br>to the buyer (for gifts, never the recipient)</div></div>
+          <p class="alt">Also testing: "A change to your ship date"</p>
+        </div>
+        <div class="body">
+          <div class="sheet">
+            <div class="mast"><span class="w">Glow <span>Squares</span></span><span class="r">Ship date</span></div>
+            <p>Hi there, we said your box would ship February 8 to 9. It won't. The new ship date is <span class="merge">new ship date</span>, because <span class="merge">one plain, true sentence</span>.</p>
+            <p>You have two choices.</p>
+            <div class="choice">
+              <div><b>Keep your order</b>Do nothing and it ships <span class="merge">new ship date</span>.</div>
+              <div><b>Or cancel</b>Full refund of <span class="merge">order total</span>.</div>
+            </div>
+            <a class="cta ghost" href="#h-slip">Cancel and refund me</a>
+            <p>If this breaks your Valentine's plan, I'm sorry, and the refund is yours.</p>
+            <div class="sig"><span>Johanna J</span><small>Founder, Glow Squares</small></div>
+          </div>
+          <p class="foot">You ordered from Glow Squares.<br>Glow Squares LLC · <span class="merge">PO box address</span></p>
+        </div>
+      </div>
+      <p class="law">The rule behind it (FTC Mail Order Rule; attorney to confirm): a delay of 30 days or less, no reply means keep the order. Longer or unknown, the order is canceled and refunded unless she says yes. Refunds go back within one billing cycle.</p>
+    </div>
+  </section>
+
+  <footer class="end">
+    <p>Not shown here, all drafted: the eve-of-launch email, reminders to people who didn't buy, the gift and Valentine's cutoff emails, order confirmations with the renewal terms, shipped and review emails, Night 30, abandoned checkout, the 7-day charge reminder for subscribers, and win-back. The printed pieces she'll find in the box are on the <a href="print.html">print page</a>.</p>
+  </footer>
+</div>
+</body>
+</html>

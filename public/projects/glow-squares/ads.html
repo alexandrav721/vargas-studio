@@ -1,0 +1,505 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Glow Squares · Ads</title>
+<meta name="description" content="Seven Glow Squares ad frames built in HTML: four 4:5 feed statics and three 9:16 Reel storyboards. None has run yet.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap">
+<style>
+:root{
+  --linen:#f4ece3; --card:#fffaf4; --cocoa:#2a1712; --rose:#e8a6b8; --accent:#b8475f; --gold:#d9b276;
+  --dim:#6b4a40; --line:#e0d2c4; --plain:#e8ddd0;
+  --serif:"Instrument Serif", Georgia, serif; --sans:"Manrope", system-ui, sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--linen);color:var(--cocoa);font:16px/1.55 var(--sans);-webkit-font-smoothing:antialiased}
+a{color:var(--accent)}
+.wrap{max-width:1120px;margin:0 auto;padding:0 16px}
+header.top{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 18px;padding:18px 0 14px;border-bottom:1px solid var(--line)}
+.brand{font:400 24px/1 var(--serif);margin-right:auto}
+.brand em{color:var(--accent)}
+header.top nav{display:flex;flex-wrap:wrap;gap:4px}
+header.top nav a{color:var(--cocoa);text-decoration:none;font-size:14px;padding:5px 10px;border-radius:999px}
+header.top nav a[aria-current="page"]{background:var(--cocoa);color:var(--linen);font-weight:700}
+h1{font:400 clamp(40px,6vw,68px)/1.02 var(--serif);margin:36px 0 12px;max-width:16ch;text-wrap:balance}
+h1 em{color:var(--accent)}
+.lede{font-size:18px;color:var(--dim);max-width:56ch;margin:0 0 22px}
+h2{font:400 clamp(30px,4vw,42px)/1.05 var(--serif);margin:0 0 6px}
+h3{font:400 clamp(26px,3vw,32px)/1.1 var(--serif);margin:0}
+.key{display:flex;flex-wrap:wrap;gap:10px 22px;font-size:14px;color:var(--dim);padding:14px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-bottom:12px}
+.key span{display:inline-flex;align-items:center;gap:8px}
+.sw{display:inline-block;width:22px;height:16px;border-radius:3px}
+.sw.plain{background:var(--plain);border:1.5px dashed #b9a593}
+.sw.cutline{border-top:2px dashed var(--accent);height:0;width:26px}
+.tag{display:inline-block;font:800 11px/1 var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--accent);border:1.5px solid var(--accent);border-radius:999px;padding:5px 9px}
+.fmt{font:600 13px var(--sans);color:var(--dim)}
+section.set{padding:44px 0 8px}
+.set > .intro{color:var(--dim);max-width:60ch;margin:0 0 8px}
+
+/* ---------- 4:5 statics ---------- */
+.ad{display:grid;grid-template-columns:minmax(0,420px) minmax(0,1fr);gap:32px;align-items:start;padding:30px 0;border-top:1px solid var(--line)}
+.ad:first-of-type{border-top:0}
+.framehead{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
+.s{position:relative;aspect-ratio:4/5;container-type:inline-size;overflow:hidden;border-radius:4px;box-shadow:0 10px 30px rgba(42,23,18,.14);background:var(--linen)}
+.spec h3{margin-bottom:12px}
+.spec dl{margin:0;display:grid;grid-template-columns:9.5em minmax(0,1fr);gap:10px 16px}
+.spec dt{font:700 12px/1.6 var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--dim)}
+.spec dd{margin:0;overflow-wrap:anywhere}
+.spec .copy{font:400 italic 21px/1.25 var(--serif)}
+.spec .foot{background:var(--card);border:1.5px dashed #b9a593;border-radius:8px;padding:8px 10px;font-size:14px}
+.spec .warn{color:var(--accent);font-weight:600;font-size:14px}
+
+/* materials: chocolate, foil */
+.sq{position:relative;aspect-ratio:1;border-radius:7%;background:#3a1f17;box-shadow:inset 0 0 0 .7cqw #4b2a1f, inset 0 -1.2cqw 0 #21100b, 0 1.5cqw 3cqw rgba(42,23,18,.35)}
+.sq::before{content:"";position:absolute;inset:16%;border:.5cqw solid #4f2d22;border-radius:5%}
+.foil{position:relative;aspect-ratio:1;border-radius:7%;background:repeating-linear-gradient(135deg,#f2bfcd 0 .9cqw,#e7a9ba .9cqw 1.8cqw);box-shadow:inset 0 0 0 .6cqw rgba(255,255,255,.3),0 1.5cqw 3cqw rgba(42,23,18,.25)}
+.foil::after{content:"";position:absolute;left:18%;right:18%;bottom:13%;height:.5cqw;background:rgba(90,45,58,.35)}
+.foil.gold{background:repeating-linear-gradient(135deg,#f4dcae 0 .9cqw,#e6c48b .9cqw 1.8cqw)}
+
+/* static 1: the note */
+.s1{background:var(--linen)}
+.s1 .card{margin:9cqw 8cqw 0;background:var(--card);border:1px solid var(--line);border-radius:2cqw;padding:8cqw 7cqw 9cqw;box-shadow:0 2cqw 5cqw rgba(42,23,18,.10);position:relative}
+.s1 .n{font:800 2.9cqw/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.s1 .line{font:400 italic 10.4cqw/1.04 var(--serif);margin:4cqw 0 0;letter-spacing:-.01em}
+.s1 .bits{position:absolute;right:8cqw;bottom:13cqw;display:flex;gap:3cqw;align-items:end}
+.s1 .bits .foil{width:19cqw;transform:rotate(-8deg)}
+.s1 .bits .sq{width:15cqw;transform:rotate(6deg)}
+.s1 .sig{position:absolute;left:8cqw;bottom:6.5cqw;font:700 3.2cqw var(--sans);letter-spacing:.02em}
+.s1 .sig span{color:var(--dim);font-weight:500}
+
+/* static 2: door hanger */
+.s2{background:var(--cocoa);color:var(--linen)}
+.s2 .head{position:absolute;left:8cqw;right:8cqw;top:8cqw;font:400 8.6cqw/1.02 var(--serif)}
+.s2 .head em{color:var(--rose)}
+.hanger{position:absolute;left:50%;top:34cqw;width:42cqw;height:76cqw;transform:translateX(-50%) rotate(-3deg);transform-origin:50% 0;background:var(--card);color:var(--cocoa);border-radius:0 0 4cqw 4cqw;display:flex;flex-direction:column;align-items:center;text-align:center;padding:5cqw 3cqw 0;box-shadow:0 3cqw 6cqw rgba(0,0,0,.35)}
+.hanger .hole{width:15cqw;aspect-ratio:1;border-radius:50%;background:var(--cocoa);position:relative}
+.hanger .hole::after{content:"";position:absolute;left:50%;top:92%;width:1.6cqw;height:7cqw;background:var(--cocoa);transform:translateX(-50%)}
+.hanger .dnd{font:400 8.6cqw/.98 var(--serif);margin-top:10cqw}
+.hanger .rule{width:12cqw;height:.5cqw;background:var(--accent);margin:4cqw 0}
+.hanger .rm{font:800 2.5cqw var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+.hanger .gs{margin-top:auto;margin-bottom:5cqw;font:400 4.4cqw var(--serif)}
+.s2 .sig{position:absolute;left:8cqw;bottom:6cqw;font:600 3.1cqw var(--sans);color:#e9d9cc}
+
+/* static 3: minibar receipt */
+.s3{background:var(--linen)}
+.s3 > *:not(.sig){margin-left:9cqw;margin-right:9cqw}
+.s3 .head{font:400 9.5cqw/1 var(--serif);margin-top:9cqw;margin-bottom:4cqw}
+.receipt{background:var(--card);padding:6cqw 6cqw 9cqw;font:500 3.8cqw/1.45 var(--sans);font-variant-numeric:tabular-nums;box-shadow:0 2cqw 5cqw rgba(42,23,18,.12);
+  clip-path:polygon(0 0,100% 0,100% 96%,95% 100%,90% 96%,85% 100%,80% 96%,75% 100%,70% 96%,65% 100%,60% 96%,55% 100%,50% 96%,45% 100%,40% 96%,35% 100%,30% 96%,25% 100%,20% 96%,15% 100%,10% 96%,5% 100%,0 96%)}
+.receipt .rh{display:flex;justify-content:space-between;font:800 2.8cqw var(--sans);letter-spacing:.14em;text-transform:uppercase;padding-bottom:2.5cqw;border-bottom:.4cqw dashed #b9a593;margin-bottom:2.5cqw}
+.receipt .sub{font-size:3.2cqw;color:var(--dim);margin-bottom:2cqw}
+.receipt .row{display:flex;align-items:baseline;gap:2cqw;padding:1.4cqw 0}
+.receipt .row .what{flex:0 1 auto}
+.receipt .row .dots{flex:1 1 auto;border-bottom:.4cqw dotted #b9a593;transform:translateY(-.8cqw)}
+.receipt .row .g{font-weight:800}
+.receipt sup{font-size:.7em;color:var(--accent)}
+.receipt .total{margin-top:2cqw;padding-top:2.5cqw;border-top:.4cqw dashed #b9a593;font:400 italic 6.6cqw/1.1 var(--serif)}
+.receipt .ours{color:var(--accent)}
+.s3 .super{margin:6cqw 9cqw 0;font:700 3.8cqw/1.35 var(--sans)}
+.s3 .sig{position:absolute;left:9cqw;bottom:5.5cqw;font:600 2.9cqw var(--sans);color:var(--dim)}
+
+/* static 4: gift */
+.s4{background:var(--rose)}
+.s4 .ribbon{position:absolute;top:0;bottom:0;left:68%;width:7cqw;background:var(--accent)}
+.s4 .hanger{left:36%;top:6cqw;transform:translateX(-50%) rotate(2deg)}
+.s4 .hanger .hand{font:400 italic 6.3cqw/1.05 var(--serif);margin-top:8cqw;color:var(--accent)}
+.s4 .hanger .dnd{margin-top:3cqw;font-size:6.6cqw}
+.s4 .txt{position:absolute;left:7cqw;right:7cqw;bottom:6cqw;background:var(--card);padding:4.5cqw 5cqw;border-radius:2cqw}
+.s4 .txt b{display:block;font:400 6.4cqw/1.05 var(--serif);font-weight:400}
+.s4 .txt span{display:block;font:500 3cqw/1.4 var(--sans);color:var(--dim);margin-top:1.6cqw}
+.s4 .txt small{display:block;font:500 2.4cqw/1.3 var(--sans);color:var(--dim);margin-top:1.2cqw}
+
+/* ---------- 9:16 storyboards ---------- */
+.board{padding:34px 0 26px;border-top:1px solid var(--line)}
+.board .bh{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 16px;margin-bottom:6px}
+.board .meta{color:var(--dim);font-size:15px;margin:0 0 16px;max-width:70ch}
+.strip{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px}
+.beat{min-width:0}
+.v{position:relative;aspect-ratio:9/16;container-type:inline-size;overflow:hidden;border-radius:6px;background:var(--plain);box-shadow:0 8px 22px rgba(42,23,18,.12)}
+.v.clip{outline:1.5px dashed #b9a593;outline-offset:-6px}
+.v.end{background:var(--cocoa);color:var(--linen)}
+.v .safe{position:absolute;left:0;right:0;top:0;height:65%;padding:7cqw 6cqw;display:flex;flex-direction:column;gap:4cqw}
+.v .cut{position:absolute;left:0;right:0;top:65%;border-top:2px dashed var(--accent);opacity:.7}
+.v .super{align-self:flex-start;background:var(--card);color:var(--cocoa);font:800 5.6cqw/1.25 var(--sans);padding:2.6cqw 3.4cqw;border-radius:2cqw}
+.v .cap{align-self:flex-start;background:var(--cocoa);color:var(--card);font:700 7cqw/1.22 var(--sans);padding:2.4cqw 3.4cqw;border-radius:2cqw;margin:0}
+.v .cap.q{font:400 italic 10cqw/1.05 var(--serif);background:none;color:var(--cocoa);padding:0}
+.v .cap.note{font:400 italic 8cqw/1.1 var(--serif);background:var(--card);color:var(--cocoa)}
+.v .stand{align-self:flex-start;font:700 5cqw/1.3 var(--sans);background:var(--rose);color:var(--cocoa);padding:2cqw 3cqw;border-radius:2cqw}
+.v .cliplabel{position:absolute;left:6cqw;right:6cqw;top:52%;font:700 5.2cqw/1.3 var(--sans);color:#7a5e50;text-align:center}
+.v.end .safe{justify-content:center;align-items:flex-start;gap:5cqw}
+.v.end .name{font:400 15cqw/.95 var(--serif)}
+.v.end .name em{color:var(--rose)}
+.v.end .l{font:700 6cqw/1.3 var(--sans);color:#ecdccf}
+.v.end .l b{color:var(--rose)}
+.v.end .price{font:600 4.8cqw/1.35 var(--sans);color:#d9c6b8}
+.v .sil{position:absolute;left:0;right:0;top:20%;text-align:center;font:400 italic 10cqw var(--serif);color:#9c8576}
+.v .mini{position:absolute;left:50%;top:14cqw;width:34cqw;height:62cqw;transform:translateX(-50%) rotate(-4deg);background:var(--card);border-radius:0 0 4cqw 4cqw;display:flex;flex-direction:column;align-items:center;padding-top:4cqw;box-shadow:0 3cqw 6cqw rgba(42,23,18,.25)}
+.v .mini i{width:12cqw;aspect-ratio:1;border-radius:50%;background:var(--plain)}
+.v .mini span{font:400 7.4cqw/.98 var(--serif);text-align:center;margin-top:9cqw}
+.t{display:flex;justify-content:space-between;gap:6px;font:800 12px var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin:10px 0 4px}
+.t span{color:var(--dim);letter-spacing:.02em}
+.beat p{margin:0 0 6px;font-size:14px;line-height:1.45}
+.beat p b{font-weight:700}
+.beat .ft{color:var(--dim);font-size:13px}
+.board .post{margin:16px 0 0;padding:12px 14px;background:var(--card);border-left:3px solid var(--accent);max-width:70ch;font-size:15px}
+
+.rules{padding:40px 0;border-top:1px solid var(--line)}
+.rules ul{margin:10px 0 0;padding-left:1.1em;max-width:70ch}
+.rules li{margin:6px 0}
+.fn{font-size:13px;color:var(--dim);max-width:80ch}
+.checks{padding:30px 0 60px;border-top:1px solid var(--line);font-size:14px;color:var(--dim)}
+.checks table{border-collapse:collapse;width:100%;max-width:860px}
+.checks td,.checks th{text-align:left;vertical-align:top;padding:8px 10px;border-bottom:1px solid var(--line)}
+.checks th{color:var(--cocoa);font-weight:700;width:9em}
+
+@media (max-width:820px){
+  .ad{grid-template-columns:minmax(0,1fr);gap:18px}
+  .spec dl{grid-template-columns:minmax(0,1fr);gap:2px}
+  .spec dd{margin-bottom:10px}
+  .strip{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:62%;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:10px;-webkit-overflow-scrolling:touch}
+  .beat{scroll-snap-align:start}
+}
+</style>
+<link rel="stylesheet" href="/site-bar.css" />
+<script src="/site-bar.js" data-project="glow-squares" data-kind="piece" defer></script>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <span class="brand">Glow <em>Squares</em></span>
+    <nav aria-label="Glow Squares pieces">
+      <a href="landing.html">Waitlist</a>
+      <a href="store.html">Store</a>
+      <a href="packaging.html">Packaging</a>
+      <a href="designs.html">Site designs</a>
+      <a href="ads.html" aria-current="page">Ads</a>
+      <a href="social.html">Social</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Seven ads, <em>none of them run.</em></h1>
+    <p class="lede">Four feed statics and three Reel storyboards for Instagram and TikTok. Every clip and photo is a plain frame until the samples arrive in December. Nothing is spent or published without Johanna's yes.</p>
+
+    <div class="key" aria-label="Key">
+      <span><span class="tag">Not run yet</span> on every frame</span>
+      <span><i class="sw plain"></i> real footage goes here, after samples</span>
+      <span><i class="sw cutline"></i> bottom 35% kept clear for the app's buttons</span>
+    </div>
+
+    <!-- ================= STATICS ================= -->
+    <section class="set" aria-labelledby="statics">
+      <h2 id="statics">Feed statics</h2>
+      <p class="intro">4:5, 1080 × 1350. Type and printed pieces only, so they can run before any photo exists.</p>
+
+      <article class="ad" aria-labelledby="a1">
+        <div>
+          <div class="framehead"><span class="fmt">4:5 feed · static</span><span class="tag">Not run yet</span></div>
+          <div class="s s1" role="img" aria-label="Night 23 note card on linen: Breaking news: local woman sits down. More at eleven. A rose foil square and a dark chocolate square beside it. Glow Squares, 30 nights.">
+            <div class="card">
+              <div class="n">Night 23 of 30</div>
+              <p class="line">Breaking news: local woman sits down. More at eleven.</p>
+            </div>
+            <div class="bits"><div class="foil"></div><div class="sq"></div></div>
+            <div class="sig">Glow Squares <span>· 30 nights</span></div>
+          </div>
+        </div>
+        <div class="spec">
+          <h3 id="a1">The note</h3>
+          <dl>
+            <dt>Primary text</dt><dd>One chocolate square after dinner, and a note under every wrapper. This is Night 23. There are 29 others, and you don't get to read ahead. Pre-orders open January 11.</dd>
+            <dt>Headline</dt><dd class="copy">30 nights, 30 notes.</dd>
+            <dt>CTA</dt><dd>Sign up · glowsquares.com waitlist</dd>
+            <dt>Photo</dt><dd><div class="foot">Version B after samples: overhead photo of the printed Night 23 note on the real tray floor. Until then this type-only card runs as is.</div></dd>
+            <dt>Why this one</dt><dd>It was the top note with all three blind judges, and it shows the joke before anyone buys.</dd>
+          </dl>
+        </div>
+      </article>
+
+      <article class="ad" aria-labelledby="a2">
+        <div>
+          <div class="framehead"><span class="fmt">4:5 feed · static</span><span class="tag">Not run yet</span></div>
+          <div class="s s2" role="img" aria-label="Cocoa background. Headline: Turndown service. At home. Every night. A cream Do Not Disturb door hanger, Rooms 01 to 30.">
+            <div class="head">Turndown service. At home. <em>Every night.</em></div>
+            <div class="hanger">
+              <div class="hole"></div>
+              <div class="dnd">Do Not<br>Disturb</div>
+              <div class="rule"></div>
+              <div class="rm">Rooms 01–30</div>
+              <div class="gs">Glow Squares</div>
+            </div>
+            <div class="sig">Comes in every box</div>
+          </div>
+        </div>
+        <div class="spec">
+          <h3 id="a2">The door hanger</h3>
+          <dl>
+            <dt>Primary text</dt><dd>It comes in the box. It goes on your door. What happens after that is your business. 30 chocolate squares, one after dinner, a note under each.</dd>
+            <dt>Headline</dt><dd class="copy">Turndown service. At home.</dd>
+            <dt>CTA</dt><dd>Sign up · glowsquares.com waitlist</dd>
+            <dt>Photo</dt><dd><div class="foot">Photo coming after samples: the printed hanger on a real bedroom door, evening lamp light, shot straight on. This frame shows the print file only.</div></dd>
+            <dt>Why this one</dt><dd>The hanger is the object people photograph and share. No other chocolate box has one.</dd>
+          </dl>
+        </div>
+      </article>
+
+      <article class="ad" aria-labelledby="a3">
+        <div>
+          <div class="framehead"><span class="fmt">4:5 feed · static · retargeting</span><span class="tag">Not run yet</span></div>
+          <div class="s s3" role="img" aria-label="Minibar receipt. Collagen per serving, from the labels: beauty gummy A, 0.1 grams. Beauty gummy B, 0.2 grams. Glow Squares, one square, 2.5 grams. Tonight: one square.">
+            <p class="head">Checked the minibar.</p>
+            <div class="receipt">
+              <div class="rh"><span>Minibar · Rm 23</span><span>9:04 pm</span></div>
+              <div class="sub">Collagen per serving, from the labels</div>
+              <div class="row"><span class="what">Beauty gummy A, 2 gummies</span><span class="dots"></span><span class="g">0.1 g<sup>1</sup></span></div>
+              <div class="row"><span class="what">Beauty gummy B, 2 gummies</span><span class="dots"></span><span class="g">0.2 g<sup>1</sup></span></div>
+              <div class="row ours"><span class="what">Glow Squares, 1 square</span><span class="dots"></span><span class="g">2.5&nbsp;g<sup>2</sup></span></div>
+              <div class="total">Tonight: one square.</div>
+            </div>
+            <p class="super">Dark chocolate. 2.5&nbsp;g collagen. One square after dinner.</p>
+            <div class="sig">Glow Squares · glowsquares.com</div>
+          </div>
+        </div>
+        <div class="spec">
+          <h3 id="a3">The minibar receipt</h3>
+          <dl>
+            <dt>Primary text</dt><dd>Collagen per serving, read straight off the labels. One of these is a chocolate square. $49/month, renews monthly, skip or cancel anytime. Or $59 for one box.</dd>
+            <dt>Headline</dt><dd class="copy">Checked the minibar.</dd>
+            <dt>CTA</dt><dd>Learn more · glowsquares.com</dd>
+            <dt>Photo</dt><dd><div class="foot">None needed. Optional after samples: the receipt printed on till paper, photographed on the tray.</div></dd>
+            <dt>Hold</dt><dd class="warn">Runs only after the attorney clears the comparison (attorney brief, question 3). Brand names stay off the ad either way.</dd>
+            <dt>Audience</dt><dd>Retargeting: site visitors and video viewers. Not cold traffic.</dd>
+          </dl>
+        </div>
+      </article>
+
+      <article class="ad" aria-labelledby="a4">
+        <div>
+          <div class="framehead"><span class="fmt">4:5 feed · static · from ~25 Jan</span><span class="tag">Not run yet</span></div>
+          <div class="s s4" role="img" aria-label="Rose background with a red ribbon. A Do Not Disturb hanger with a handwritten line: Turndown arranged by Sam. Card: 30 nights, starting the 14th. Gift one box 59 dollars or three months 147 dollars, neither renews.">
+            <div class="ribbon"></div>
+            <div class="hanger">
+              <div class="hole"></div>
+              <div class="hand">Turndown arranged by Sam.</div>
+              <div class="dnd">Do Not Disturb</div>
+              <div class="gs">Glow Squares</div>
+            </div>
+            <div class="txt">
+              <b>30 nights, starting the 14th.</b>
+              <span>Gift one box $59 or three months $147. Neither renews.</span>
+              <small>Dark chocolate. 2.5&nbsp;g collagen. One square after dinner.</small>
+            </div>
+          </div>
+        </div>
+        <div class="spec">
+          <h3 id="a4">The gift</h3>
+          <dl>
+            <dt>Primary text</dt><dd>30 chocolate squares, a joke under each, and a Do Not Disturb sign with your name on it. Gift one box $59, or three months $147 prepaid. Neither renews.</dd>
+            <dt>Headline</dt><dd class="copy">The gift is 30 quiet evenings.</dd>
+            <dt>CTA</dt><dd>Shop now · glowsquares.com gift page</dd>
+            <dt>Photo</dt><dd><div class="foot">Photo coming after samples: the real hanger with a handwritten name, on the box with a ribbon, doorstep light.</div></dd>
+            <dt>Watch</dt><dd>Collagen stays in small type: a collagen gift from a partner can read as "you need this". The order-by line goes in once the carrier confirms the date.</dd>
+          </dl>
+        </div>
+      </article>
+    </section>
+
+    <!-- ================= STORYBOARDS ================= -->
+    <section class="set" aria-labelledby="reels">
+      <h2 id="reels">Reel storyboards</h2>
+      <p class="intro">9:16, 15 to 25 seconds, sound on, captions burned into the top two-thirds. First frame, three beats, end card. Swipe sideways on a phone.</p>
+
+      <!-- Powder Graveyard -->
+      <article class="board" aria-labelledby="r1">
+        <div class="bh"><h3 id="r1">Powder Graveyard</h3><span class="fmt">Launch order 1 · 20 s</span><span class="tag">Not run yet</span></div>
+        <p class="meta">Her fear, in her words: one more thing that turns into a chore. Powders decanted into plain jars, labels off, no competitor visible.</p>
+        <div class="strip">
+          <div class="beat">
+            <div class="v clip" role="img" aria-label="First frame, footage placeholder. Caption: My collagen routine, a history.">
+              <div class="safe"><p class="cap">My collagen routine, a history.</p></div>
+              <span class="cliplabel">Clip after samples</span><i class="cut"></i>
+            </div>
+            <div class="t">First frame<span>0:00</span></div>
+            <p><b>Sound:</b> cupboard door, room tone.</p>
+            <p class="ft">Footage: pantry opens, three plain jars behind the rice.</p>
+          </div>
+          <div class="beat">
+            <div class="v clip" role="img" aria-label="Beat 1, footage placeholder. Product super: Dark chocolate. 2.5&nbsp;g collagen. One square after dinner. Caption: Only one of these I'll actually take.">
+              <div class="safe"><p class="super">Dark chocolate. 2.5&nbsp;g collagen. One square after dinner.</p><p class="cap">Only one of these I'll actually take.</p></div>
+              <span class="cliplabel">Clip after samples</span><i class="cut"></i>
+            </div>
+            <div class="t">Beat 1<span>0:01–0:04</span></div>
+            <p><b>Sound:</b> the snap at 1.2 s, nothing under it. Super on at 2.5 s.</p>
+            <p class="ft">Footage: she reaches past the jars, takes the box, snaps a square.</p>
+          </div>
+          <div class="beat">
+            <div class="v clip" role="img" aria-label="Beat 2, footage placeholder. Caption: I hate the taste. I said it.">
+              <div class="safe"><p class="cap">I hate the taste. I said it.</p></div>
+              <span class="cliplabel">Clip after samples</span><i class="cut"></i>
+            </div>
+            <div class="t">Beat 2<span>0:04–0:10</span></div>
+            <p><b>She says:</b> "I hate the taste. I said it."</p>
+            <p class="ft">Footage: a scoop clumping in a glass of water, plain counter.</p>
+          </div>
+          <div class="beat">
+            <div class="v clip" role="img" aria-label="Beat 3, footage placeholder. Caption: Night 3. The laundry can't see you. Stay very still.">
+              <div class="safe"><p class="cap note">The laundry can't see you. Stay very still.</p></div>
+              <span class="cliplabel">Clip after samples</span><i class="cut"></i>
+            </div>
+            <div class="t">Beat 3<span>0:10–0:18</span></div>
+            <p><b>She says:</b> "2.5 grams of collagen, in a square of chocolate, after dinner." Then reads Night 3.</p>
+            <p class="ft">Footage: jar goes back on the shelf, unwrap, the note on the tray.</p>
+          </div>
+          <div class="beat">
+            <div class="v end" role="img" aria-label="End card: Glow Squares. 30 nights. glowsquares.com. Pre-orders open January 11.">
+              <div class="safe"><div class="name">Glow <em>Squares</em></div><div class="l">30 nights<br><b>glowsquares.com</b></div><div class="l">Pre-orders open January 11</div></div>
+              <i class="cut"></i>
+            </div>
+            <div class="t">End card<span>0:18–0:20</span></div>
+            <p><b>Sound:</b> room tone.</p>
+            <p class="ft">Built in HTML, no footage.</p>
+          </div>
+        </div>
+        <p class="post"><b>Post caption:</b> The collagen I actually keep taking, because it's chocolate. Waitlist: link in bio.</p>
+      </article>
+
+      <!-- Do Not Disturb -->
+      <article class="board" aria-labelledby="r2">
+        <div class="bh"><h3 id="r2">Do Not Disturb</h3><span class="fmt">Launch order 2 · "Mom?" hook · 20 s</span><span class="tag">Not run yet</span></div>
+        <p class="meta">"Mom?", the sign, two seconds of nothing, the snap. The silence is the joke, so the snap lands at 2.4 s instead of by 1.5 s. Test it against the sign-only hook before deciding.</p>
+        <div class="strip">
+          <div class="beat">
+            <div class="v clip" role="img" aria-label="First frame, footage placeholder. Caption, off-screen voice: Mom?">
+              <div class="safe"><p class="cap q">"Mom?"</p></div>
+              <span class="cliplabel">Clip after samples</span><i class="cut"></i>
+            </div>
+            <div class="t">First frame<span>0:00</span></div>
+            <p><b>Sound:</b> a kid's voice off-screen, once.</p>
+            <p class="ft">Footage: hallway, closed bedroom door, lamp light under it.</p>
+          </div>
+          <div class="beat">
+            <div class="v clip" role="img" aria-label="Beat 1: a hand hangs the Do Not Disturb sign. Footage placeholder with the hanger shown.">
+              <div class="mini"><i></i><span>Do Not Disturb</span></div>
+              <span class="cliplabel">Clip after samples</span><i class="cut"></i>
+            </div>
+            <div class="t">Beat 1 · the sign<span>0:00.6</span></div>
+            <p><b>Sound:</b> the hanger tapping the door.</p>
+            <p class="ft">Footage: her hand hangs it on the handle from inside. No caption.</p>
+          </div>
+          <div class="beat">
+            <div class="v clip" role="img" aria-label="Beat 2: silence. Footage placeholder.">
+              <span class="sil">(silence)</span>
+              <span class="cliplabel">Clip after samples</span><i class="cut"></i>
+            </div>
+            <div class="t">Beat 2 · silence<span>0:01–0:02.4</span></div>
+            <p><b>Sound:</b> room tone only. Nobody knocks.</p>
+            <p class="ft">Footage: the door, still. Hold the shot.</p>
+          </div>
+          <div class="beat">
+            <div class="v clip" role="img" aria-label="Beat 3: the snap. Product super: Dark chocolate. 2.5&nbsp;g collagen. One square after dinner. Caption, Night 17: Do not disturb is on. If the house is on fire, they can text.">
+              <div class="safe"><p class="super">Dark chocolate. 2.5&nbsp;g collagen. One square after dinner.</p><p class="cap note">Do not disturb is on. If the house is on fire, they can text.</p></div>
+              <span class="cliplabel">Clip after samples</span><i class="cut"></i>
+            </div>
+            <div class="t">Beat 3 · snap<span>0:02.4–0:19</span></div>
+            <p><b>Sound:</b> the snap. Super on at 2.8 s. She reads Night 17 out loud, deadpan.</p>
+            <p class="ft">Footage: snap, the back of the hanger ("Please make up the room. Someone else. Ideally not you."), box open on the bed.</p>
+          </div>
+          <div class="beat">
+            <div class="v end" role="img" aria-label="End card: Glow Squares. Turndown service, at home. 30 nights, glowsquares.com. 49 dollars a month, renews monthly, skip or cancel anytime.">
+              <div class="safe"><div class="name">Glow <em>Squares</em></div><div class="l">Turndown service, at home.<br><b>glowsquares.com</b></div><div class="price">$49/month, renews monthly, skip or cancel anytime</div></div>
+              <i class="cut"></i>
+            </div>
+            <div class="t">End card<span>0:19–0:20</span></div>
+            <p><b>Sound:</b> room tone.</p>
+            <p class="ft">Built in HTML, no footage.</p>
+          </div>
+        </div>
+        <p class="post"><b>Post caption:</b> Turndown service, at home. 30 nights in a box.</p>
+      </article>
+
+      <!-- Founder Diary -->
+      <article class="board" aria-labelledby="r3">
+        <div class="bh"><h3 id="r3">Founder Diary</h3><span class="fmt">Launch order 4 · 25 s · filmable now</span><span class="tag">Not run yet</span></div>
+        <p class="meta">Johanna to camera, her own words. The only ad that can be shot before samples, so it uses a stand-in square and says so on screen. Only true events in the middle beat.</p>
+        <div class="strip">
+          <div class="beat">
+            <div class="v clip" role="img" aria-label="First frame, footage placeholder. Caption: I'm 34, I love candy, and I'm done with collagen powder.">
+              <div class="safe"><p class="cap">I'm 34, I love candy, and I'm done with collagen powder.</p></div>
+              <span class="cliplabel">Clip: Johanna, selfie mode</span><i class="cut"></i>
+            </div>
+            <div class="t">First frame<span>0:00</span></div>
+            <p><b>She says:</b> "I'm 34, I love candy, and I'm done with collagen powder."</p>
+            <p class="ft">Footage: selfie mode, kitchen, evening, phone at eye level.</p>
+          </div>
+          <div class="beat">
+            <div class="v clip" role="img" aria-label="Beat 1, footage placeholder. Product super. Caption: So I'm putting the collagen in the candy. Label: Stand-in chocolate. The real squares arrive in December.">
+              <div class="safe"><p class="super">Dark chocolate. 2.5&nbsp;g collagen. One square after dinner.</p><p class="cap">So I'm putting the collagen in the candy.</p><p class="stand">Stand-in chocolate. The real squares arrive in December.</p></div>
+              <span class="cliplabel">Clip: Johanna, selfie mode</span><i class="cut"></i>
+            </div>
+            <div class="t">Beat 1<span>0:01–0:05</span></div>
+            <p><b>She says:</b> "So I'm putting the collagen in the candy." Snaps a stand-in square at 1.0 s. Super on at 2.5 s.</p>
+            <p class="ft">Footage: same shot, square held close to the phone.</p>
+          </div>
+          <div class="beat">
+            <div class="v clip" role="img" aria-label="Beat 2, footage placeholder. Caption: Day [X]. These are the notes that go under the wrappers.">
+              <div class="safe"><p class="cap">Day [X]. These are the notes that go under the wrappers.</p></div>
+              <span class="cliplabel">Clip: Johanna, selfie mode</span><i class="cut"></i>
+            </div>
+            <div class="t">Beat 2<span>0:05–0:15</span></div>
+            <p><b>She says:</b> "Day [X]. These are the notes that go under the wrappers."</p>
+            <p class="ft">Footage: the printed list on the table, her finger on Night 23. Swap in whatever is true on the day.</p>
+          </div>
+          <div class="beat">
+            <div class="v clip" role="img" aria-label="Beat 3, footage placeholder. Caption: Breaking news: local woman sits down. More at eleven.">
+              <div class="safe"><p class="cap note">Breaking news: local woman sits down. More at eleven.</p></div>
+              <span class="cliplabel">Clip: Johanna, selfie mode</span><i class="cut"></i>
+            </div>
+            <div class="t">Beat 3<span>0:15–0:23</span></div>
+            <p><b>She says:</b> reads Night 23, then a beat: "[her own reaction, unscripted]"</p>
+            <p class="ft">Footage: back to her face. One take, no cuts.</p>
+          </div>
+          <div class="beat">
+            <div class="v end" role="img" aria-label="End card: Glow Squares. Pre-orders open January 11. glowsquares.com.">
+              <div class="safe"><div class="name">Glow <em>Squares</em></div><div class="l">Pre-orders open<br><b>January 11</b></div><div class="l">glowsquares.com</div></div>
+              <i class="cut"></i>
+            </div>
+            <div class="t">End card<span>0:23–0:25</span></div>
+            <p><b>Sound:</b> her room tone.</p>
+            <p class="ft">Built in HTML, no footage.</p>
+          </div>
+        </div>
+        <p class="post"><b>Post caption:</b> Building it in public. Waitlist link in bio.</p>
+      </article>
+    </section>
+
+    <section class="rules" aria-labelledby="rules">
+      <h2 id="rules">What every frame follows</h2>
+      <ul>
+        <li>The product line is always the same eight words: "Dark chocolate. 2.5&nbsp;g collagen. One square after dinner." In a Reel it is on screen by 2.5 to 3 s, top third.</li>
+        <li>No studies, no skin, no results, no faces next to the word Glow. The study wording and the honesty line live on the website.</li>
+        <li>Any price on screen reads "$49/month, renews monthly, skip or cancel anytime". Gift prices say they don't renew.</li>
+        <li>The real snap opens every Reel once it's recorded. If the samples don't snap, the sound changes before any ad runs.</li>
+        <li>Creator versions carry "Paid partnership" on every post.</li>
+      </ul>
+      <p class="fn"><sup>1</sup> Collagen per serving as printed on two beauty-gummy labels (100 mg and 200 mg per 2 gummies), listed in the competitor research, Nov 2026. Names stay off the ad until the attorney clears the comparison.<br><sup>2</sup> Our planned dose per square, 2.5&nbsp;g Verisol collagen peptides. To be confirmed on the final Nutrition Facts panel.</p>
+    </section>
+
+    <section class="checks" aria-labelledby="chk">
+      <h2 id="chk" style="font-size:28px">Checks</h2>
+      <table>
+        <tr><th>Claims</th><td>Every line read against the never list: no skin, aging, sugar, weight or study wording; no invented numbers or testimonials. The receipt waits for the attorney.</td></tr>
+        <tr><th>No slop</th><td>No stock, no AI images, no drawn people. Plain dashed frames hold the footage spots. Only gradients are the foil wrappers.</td></tr>
+        <tr><th>Phone</th><td>Reel text sits above the dashed line on every frame. Storyboards swipe sideways at 375 px.</td></tr>
+        <tr><th>Different</th><td>A competitor would run a face, a glow and a discount slash. These run a note, a door hanger and the label numbers.</td></tr>
+      </table>
+    </section>
+  </main>
+</div>
+</body>
+</html>

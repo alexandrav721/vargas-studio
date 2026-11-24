@@ -53,6 +53,11 @@
   "now": [
     {
       "date": "2026-11-23",
+      "projectId": "glow-squares",
+      "text": "New idea: Glow Squares, a 9 pm chocolate with 2.5 g of collagen and a joke under the foil. Unwrap tonight's square on the live page."
+    },
+    {
+      "date": "2026-11-23",
       "projectId": "weekline",
       "text": "Weekline v2: sign in and it remembers your goals, learns what you like, and plans your week, month and year with friends."
     },
@@ -118,6 +123,75 @@
     }
   ],
   "projects": [
+    {
+      "id": "glow-squares",
+      "name": "Glow Squares",
+      "aka": null,
+      "oneLiner": "Your 9 pm chocolate, with 2.5 g of collagen inside and a joke under the foil.",
+      "audience": "Women 30 to 55 who love candy and quit collagen powder because it was a chore or tasted bad; plus Valentine's gift buyers",
+      "pays": "$49 a month ($1.63 a night) or $59 for one box of 30; $39 founder box for the first 500; gifts $59 or $147 prepaid, never renewing.",
+      "status": "hot",
+      "updated": "2026-11-23",
+      "summary": "A box of 30 foil-wrapped chocolate squares, one after dinner, each with 2.5 g of collagen and a funny note printed under it. The look is Turndown Service, the hotel pillow chocolate at home, with a real Do Not Disturb door hanger. Sold as candy, not a supplement. Founder Johanna J, 34, loves candy and was done forcing down the powder.",
+      "latest": "Waitlist is live with a rebuilt homepage (unwrap tonight's square, a nightly website-only note, a minibar receipt comparing doses). Store prototype, packaging, all 30 notes, email flows, ad scripts and 60 creators are ready. Samples, label and packaging are not made yet; 0 signups so far. Pre-orders planned for January 11, shipping early February.",
+      "visuals": {
+        "website": {
+          "label": "Live homepage",
+          "detail": "The waitlist as it runs today: unwrap tonight's square, tonight's note, the minibar receipt, Johanna's letter, the room-service menu.",
+          "url": "https://alexandrav721.github.io/glow-squares/",
+          "state": "live"
+        },
+        "landing": {
+          "label": "Ad landing page",
+          "detail": "The same page an ad sends people to, inside the studio. Signups save to the real waitlist.",
+          "url": "/projects/glow-squares/landing.html",
+          "state": "live"
+        },
+        "funnel": {
+          "label": "Emails and texts",
+          "detail": "The path after signup: welcome, Johanna's story, the jokes, pre-order day, the four-week wait, Night 1, Night 15, Night 25. Drafts, nothing sent.",
+          "url": "/projects/glow-squares/funnel.html",
+          "state": "live"
+        },
+        "meta-ads": {
+          "label": "Ads and Reels",
+          "detail": "Statics and Reel storyboards: the note, the door hanger, the minibar receipt, Powder Graveyard, Do Not Disturb, Founder Diary. Not run yet.",
+          "url": "/projects/glow-squares/ads.html",
+          "state": "live"
+        },
+        "product-ui": {
+          "label": "Store prototype",
+          "detail": "Tap tonight's square, try the gift option (one box or three months, never renews), see the room-service buy box. No real checkout.",
+          "url": "/projects/glow-squares/store.html",
+          "state": "live"
+        },
+        "deck": {
+          "label": "Pitch deck",
+          "detail": "The story in slides with sourced numbers; zero signups said plainly; not raising yet.",
+          "url": "/projects/glow-squares/deck.html",
+          "state": "live"
+        },
+        "print": {
+          "label": "Box, door hanger and cards",
+          "detail": "The Do Not Disturb hanger, the 30-dot card, the insert and reorder cards, note cards, plus the packaging design board.",
+          "url": "/projects/glow-squares/print.html",
+          "state": "live"
+        },
+        "social": {
+          "label": "Instagram set",
+          "detail": "Nine posts, two carousels and three stories in the Turndown look, with captions. Samples, not posted.",
+          "url": "/projects/glow-squares/social.html",
+          "state": "live"
+        }
+      },
+      "code": [
+        {
+          "label": "glow-squares (waitlist site)",
+          "summary": "The live waitlist page on GitHub Pages; signups go to an insert-only table.",
+          "url": "https://github.com/alexandrav721/glow-squares"
+        }
+      ]
+    },
     {
       "id": "weekline",
       "name": "Weekline",

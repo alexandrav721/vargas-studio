@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Glow Squares · The Box (prototype v3, Turndown)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;700&display=swap">
+<style>
+/* v3 Turndown Service: linen + cocoa + rose foil, door hanger in the hero, room numbers on the tray. Built on v2's blind-review fixes. */
+:root{
+  --cocoa:#f4ece3; --cocoa-2:#fffaf4; --cocoa-3:#2a1712; --milk:#2a1712; --dim:#6b4a40; --foil:#b8475f; --gold:#d9b276; --line:#e0d2c4;
+  --display:"Instrument Serif", Georgia, serif; --body:"Manrope", system-ui, sans-serif; color-scheme:light;
+}
+*{box-sizing:border-box} html,body{margin:0}
+body{background:var(--cocoa);color:var(--milk);font:16px/1.55 var(--body);-webkit-font-smoothing:antialiased}
+.wrap{max-width:1080px;margin:0 auto;padding-left:max(18px,env(safe-area-inset-left));padding-right:max(18px,env(safe-area-inset-right))}
+a{color:var(--foil)}
+.skip{position:absolute;left:-999px;top:8px;background:var(--milk);color:var(--cocoa);padding:8px 12px;border-radius:8px;z-index:20}
+.skip:focus{left:12px}
+.proto{background:#2a1712;color:#f4ece3;font:700 11px var(--body);text-align:center;padding:4px 10px}
+header{position:sticky;top:0;z-index:5;background:rgba(244,236,227,.96);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:10px 6px}
+.brand{font:400 22px/1 var(--display)} .brand em{color:var(--foil)}
+.cart{font-size:14px;color:var(--milk);background:none;border:1px solid var(--line);border-radius:999px;padding:5px 12px;cursor:pointer}
+nav ul{list-style:none;margin:0;padding:0 0 8px;display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
+nav a{display:block;white-space:nowrap;padding:6px 12px;border-radius:999px;color:var(--milk);text-decoration:none;font-size:14px}
+nav a[aria-current="true"]{background:var(--milk);color:var(--cocoa);font-weight:700}
+section{padding-block:52px;scroll-margin-top:100px}
+h1{font:400 clamp(38px,6.4vw,70px)/1.02 var(--display);margin:0 0 6px;text-wrap:balance}
+.hook{font:400 italic clamp(26px,4vw,40px)/1.1 var(--display);color:var(--foil);margin:0 0 14px}
+h2{font:400 clamp(30px,4.6vw,46px)/1.05 var(--display);margin:0 0 18px;text-wrap:balance}
+h2 em{color:var(--foil)}
+.lede{font-size:18px;color:var(--dim);margin:0 0 14px;max-width:36ch}
+.price{font:400 28px var(--display);margin:0} .price small{font:500 14px var(--body);color:var(--dim)}
+.hero{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:center;padding-top:28px;position:relative}
+.kick{font:600 11px var(--body);letter-spacing:.2em;text-transform:uppercase;color:var(--foil);margin:0 0 10px}
+.hanger{position:absolute;right:0;top:-4px;width:96px;height:176px;background:#fffaf4;border:1px solid var(--line);border-radius:0 0 12px 12px;box-shadow:0 8px 18px rgba(42,23,18,.12);display:flex;flex-direction:column;align-items:center;padding-top:14px;text-align:center;transform-origin:top center;z-index:2}
+.hanger i{width:28px;height:28px;border-radius:50%;border:1px solid var(--line);background:var(--cocoa);margin-bottom:14px}
+.hanger span{font:400 19px/1 var(--display)}
+.hanger em{font:600 11px var(--body);letter-spacing:.04em;text-transform:uppercase;color:var(--foil);font-style:normal;margin-top:10px}
+@media (prefers-reduced-motion:no-preference){.hanger{animation:sway 3.6s ease-in-out infinite}@keyframes sway{50%{transform:rotate(3deg)}}}
+.hero h1,.hero .hook,.hero .kick{max-width:calc(100% - 20px)}
+.frame{aspect-ratio:4/5;border:1.5px dashed var(--line);border-radius:18px;display:grid;place-items:center;text-align:center;color:var(--dim);font-size:13px;padding:18px;background:var(--cocoa-2)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:#2a1712;color:#f4ece3;border:0;border-radius:999px;padding:15px 26px;font:700 16px var(--body);cursor:pointer;text-decoration:none;margin-top:16px}
+.btn.line{background:transparent;color:var(--milk);border:1px solid var(--line)}
+.btn:focus-visible,.cell:focus-visible,.cart:focus-visible{outline:3px solid var(--milk);outline-offset:2px}
+
+/* Tray */
+.trayWrap{display:grid;grid-template-columns:1.2fr .8fr;gap:28px;align-items:start}
+.tray{background:var(--cocoa-3);border-radius:16px;padding:14px;display:grid;grid-template-columns:repeat(10,1fr);gap:8px;box-shadow:inset 0 2px 10px rgba(0,0,0,.45)}
+.cell{position:relative;aspect-ratio:1;border:0;border-radius:6px;font:700 11px var(--body);letter-spacing:-.02em;color:#5a2d3a;
+  background:repeating-linear-gradient(135deg,#f2bfcd 0 4px,#e7a9ba 4px 8px);box-shadow:inset 0 0 0 2px rgba(255,255,255,.25),0 2px 3px rgba(0,0,0,.35);cursor:default}
+.cell::after{content:"";position:absolute;left:18%;right:18%;bottom:12%;height:2px;background:rgba(90,45,58,.35)} /* foil crimp */
+.cell.gold{background:repeating-linear-gradient(135deg,#f4dcae 0 4px,#e6c48b 4px 8px);color:#6b4a1d}
+.cell.done{background:#fffaf4;color:#6b4a40;box-shadow:inset 0 0 0 1px #8a5240}
+.cell.done::after{display:none}
+.cell.tonight{cursor:pointer;outline:2px solid #fffaf4;outline-offset:2px}
+.cell.tonight .tag{position:absolute;top:-22px;left:50%;transform:translateX(-50%);background:#fffaf4;color:#2a1712;font:700 10px var(--body);padding:2px 6px;border-radius:999px;white-space:nowrap}
+@media (prefers-reduced-motion:no-preference){.cell.tonight{animation:pulse 1.8s ease-in-out infinite}@keyframes pulse{50%{transform:translateY(-3px)}}}
+.cell.open{animation:none;background:#fffaf4;color:#2a1712;transform:translateY(-4px) rotate(-3deg)}
+.cell.open::after{display:none}
+.note{background:var(--cocoa-2);border:1px solid var(--line);border-radius:16px;padding:22px;min-height:170px}
+.note .n{font:700 12px var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--foil)}
+.note p{font:400 italic 30px/1.15 var(--display);margin:8px 0 0}
+.note .hint{font:400 15px var(--body);color:var(--dim);font-style:normal}
+.after{display:none;margin-top:14px}
+.after.show{display:block}
+.after small{display:block;color:var(--dim);font-size:13px;margin-top:6px}
+
+/* Buy box */
+.buy{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:start}
+.opts{display:grid;gap:10px}
+.opt{display:grid;grid-template-columns:22px 1fr auto;gap:12px;align-items:center;border:1px solid var(--line);border-radius:14px;padding:16px;cursor:pointer;background:var(--cocoa-2)}
+.opt:has(input:checked){border-color:var(--foil)}
+.opt input{accent-color:var(--foil);width:18px;height:18px}
+.opt b{display:block} .opt span{font-size:14px;color:var(--dim)}
+.opt .p{font:400 26px var(--display);text-align:right} .opt .p small{display:block;font:500 12px var(--body);color:var(--dim)}
+.save{display:inline-block;background:var(--foil);color:#fff;font:700 11px var(--body);border-radius:999px;padding:2px 8px;margin-left:6px}
+.toggle{display:flex;gap:10px;align-items:center;margin:14px 0 4px;font-weight:700}
+.toggle input{accent-color:var(--foil);width:18px;height:18px}
+.giftFields{border:1px solid var(--line);border-radius:14px;padding:16px;display:grid;gap:8px;margin-top:8px}
+label.f{font-size:14px;color:var(--dim)}
+select,textarea,input[type=text]{width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);background:var(--cocoa);color:var(--milk);font:15px var(--body)}
+.terms{font-size:13px;color:var(--dim);margin:12px 0 0;border-left:2px solid var(--line);padding-left:10px}
+.facts{list-style:none;padding:0;margin:14px 0 0;display:grid;gap:6px;font-size:14px}
+.facts li::before{content:"·";color:var(--foil);margin-right:8px;font-weight:700}
+.added{margin-top:10px;font-size:14px;color:var(--foil)}
+
+/* Gift band */
+.band{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center;background:var(--cocoa-2);border-radius:22px;padding:28px}
+.band p{font-size:18px;color:var(--dim);margin:0;max-width:36ch}
+
+/* Spec table */
+table{width:100%;border-collapse:collapse;font-size:15px}
+th,td{text-align:left;padding:11px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--dim);font-weight:500;width:38%}
+.tbd{color:var(--foil);font-size:13px}
+.honest{margin-top:22px;max-width:62ch}
+.honest h3{font:400 26px var(--display);margin:0 0 6px}
+.honest p{color:var(--dim);margin:0}
+
+/* Notes swipe */
+.swipe{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:10px}
+.wrapper{flex:0 0 min(280px,78vw);scroll-snap-align:start;aspect-ratio:1;border-radius:14px;padding:22px;display:flex;flex-direction:column;justify-content:space-between;
+  background:#fffaf4;border:1px solid var(--line);color:#2a1712}
+.wrapper b{color:var(--foil)}
+.wrapper p{font:400 italic 26px/1.15 var(--display);margin:0}
+.wrapper b{font:700 12px var(--body);letter-spacing:.08em;text-transform:uppercase}
+.wrapper.sealed{background:repeating-linear-gradient(135deg,#f4dcae 0 6px,#e6c48b 6px 12px);border:0}
+footer{padding-block:28px 48px;font-size:13px;color:var(--dim);border-top:1px solid var(--line)}
+footer nav{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:8px}
+footer a{color:var(--dim)}
+@media (max-width:780px){
+  .hero,.trayWrap,.buy,.band{grid-template-columns:1fr}
+  .hero .frame{aspect-ratio:16/10;order:-1}
+  .tray{grid-template-columns:repeat(6,1fr);gap:7px;padding-top:26px}
+  .buy .frame{display:none}
+  section{padding-block:40px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+</style>
+<link rel="stylesheet" href="/site-bar.css" />
+<script src="/site-bar.js" data-project="glow-squares" data-kind="piece" defer></script>
+</head>
+<body>
+<a class="skip" href="#buy">Skip to buying</a>
+<div class="proto">Prototype · not for sale yet · photos are placeholders</div>
+<header>
+  <div class="wrap">
+    <div class="bar"><div class="brand">Glow <em>Squares</em></div><button class="cart" id="cartBtn" type="button">Cart (0)</button></div>
+    <nav aria-label="Sections"><ul>
+      <li><a href="#box" aria-current="true">The Box</a></li>
+      <li><a href="#gift">Gift 30 Nights</a></li>
+      <li><a href="#inside">What's Inside</a></li>
+      <li><a href="#notes">The Notes</a></li>
+      <li><a href="#story">Our Story</a></li>
+    </ul></nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section id="box" style="padding-top:0">
+    <div class="hero">
+      <div>
+        <p class="kick">Turndown service · 30 nights</p>
+        <h1>A chocolate square a night, with 2.5 g of collagen.</h1>
+        <p class="hook">Your evening has been prepared.</p>
+        <p class="lede">One square after dinner, and a joke under every wrapper.</p>
+        <p class="price">$49 a month · $1.63 a night <small>or $59 for one box</small></p>
+        <button class="btn" type="button" id="openTonight">Open tonight's square</button>
+      </div>
+      <div class="frame" style="position:relative;padding-right:118px">Photo coming: the box on a side table at 9 pm, door hanger on the lid<div class="hanger" aria-hidden="true"><i></i><span>Do not<br>disturb</span><em>Glow Squares</em></div></div>
+    </div>
+  </section>
+
+  <section id="tray" aria-labelledby="trayH">
+    <h2 id="trayH">Room service, <em>Night 3</em>.</h2>
+    <div class="trayWrap">
+      <div class="tray" id="trayGrid" role="group" aria-label="The 30-night tray. Nights 1 and 2 are eaten. Night 3 is tonight."></div>
+      <div>
+        <div class="note" id="note" aria-live="polite">
+          <div class="n">Night 3</div>
+          <p class="hint">Snap it. Read what it says.</p>
+        </div>
+        <div class="after" id="after">
+          <a class="btn" href="#buy" id="getRest">Get all 30 nights</a>
+          <small>$49 a month or $59 once</small>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="buy" aria-labelledby="buyH">
+    <div class="buy">
+      <div>
+        <h2 id="buyH">Book your <em>30 nights</em>.</h2>
+        <div class="frame" style="aspect-ratio:4/3">Photo coming: the open tray, top-down, night numbers on the rim</div>
+      </div>
+      <form id="buyForm" novalidate>
+        <label class="toggle"><input type="checkbox" id="isGift" aria-controls="giftFields" aria-expanded="false"> This is a gift</label>
+        <div class="opts" id="selfOpts">
+          <label class="opt"><input type="radio" name="plan" value="sub" checked><div><b>Every month <span class="save">Save $10</span></b><span>New notes in every box.</span></div><div class="p">$49<small>$1.63 a night</small></div></label>
+          <label class="opt"><input type="radio" name="plan" value="one"><div><b>One box</b><span>Thirty nights, then it's done.</span></div><div class="p">$59<small>$1.97 a night</small></div></label>
+        </div>
+        <div class="opts" id="giftOpts" hidden>
+          <label class="opt"><input type="radio" name="gplan" value="g1" checked><div><b>Gift one box</b><span>One delivery. No subscription.</span></div><div class="p">$59</div></label>
+          <label class="opt"><input type="radio" name="gplan" value="g3"><div><b>Gift 3 months</b><span>Prepaid. Ends on its own.</span></div><div class="p">$147</div></label>
+        </div>
+        <div class="giftFields" id="giftFields" hidden>
+          <label class="f" for="week">Ship the week of</label>
+          <select id="week"><option>8 February, arrives before the 14th</option><option>15 February</option></select>
+          <label class="f" for="to">Their name</label>
+          <input type="text" id="to" autocomplete="off">
+          <label class="f" for="msg">Card inside the lid (160 characters)</label>
+          <textarea id="msg" rows="2" maxlength="160" placeholder="e.g. For the 9 pm you. Love, M."></textarea>
+          <label style="display:flex;gap:8px;align-items:center;font-size:14px"><input type="checkbox" checked style="accent-color:var(--foil)"> Hide prices on the packing slip</label>
+        </div>
+        <p class="terms" id="terms">$49 charged today and every 30 days until you cancel. Skip or cancel online in two clicks, any time before your next ship date.</p>
+        <button class="btn" type="submit" style="width:100%">Pre-order</button>
+        <div class="added" id="added" role="status"></div>
+        <ul class="facts">
+          <li>Pre-order now. First boxes ship the week of 8 February.</li>
+          <li>Free shipping on every box.</li>
+          <li>Insulated box. If it melts, we replace it.</li>
+          <li>Don't love it? Full refund on your first box within 30 days.</li>
+        </ul>
+      </form>
+    </div>
+  </section>
+
+  <section id="gift" aria-labelledby="giftH">
+    <div class="band">
+      <div class="frame" style="aspect-ratio:4/3">Photo coming: the box on a doorstep with a handwritten card</div>
+      <div>
+        <h2 id="giftH">Arrange their <em>turndown</em>.</h2>
+        <p>Pick the week, write the card, and we ship it so it lands before the 14th. The door hanger says "Turndown arranged by" and your name.</p>
+        <a class="btn" href="#buy" id="giftBtn">Send it as a gift</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="inside" aria-labelledby="inH">
+    <h2 id="inH">What's <em>inside</em>.</h2>
+    <table>
+      <tr><th>Per square</th><td>[x] g chocolate, [x]% cacao <span class="tbd">after samples</span></td></tr>
+      <tr><th>Collagen</th><td>2.5 g Verisol® bovine collagen peptides <span class="tbd">[name use needs GELITA's OK; wording pending legal review]</span></td></tr>
+      <tr><th>Sugar</th><td>[x] g per square, sweetened with [allulose] <span class="tbd">after recipe is final</span></td></tr>
+      <tr><th>Calories</th><td>[x] per square</td></tr>
+      <tr><th>Allergens</th><td>Contains milk [and soy?]. Made in a facility that also handles [ ]. Not vegetarian (bovine collagen).</td></tr>
+      <tr><th>Nutrition Facts</th><td>Label image goes here</td></tr>
+    </table>
+    <div class="honest">
+      <h3>Who paid for the studies</h3>
+      <p>The studies ran 8 to 12 weeks. Results vary, and most of the research was funded by ingredient makers. We'd rather tell you that than promise you anything.</p>
+    </div>
+  </section>
+
+  <section id="notes" aria-labelledby="notesH">
+    <h2 id="notesH">A few of the <em>notes</em>.</h2>
+    <div class="swipe" tabindex="0" aria-label="Sample notes, scroll sideways">
+      <div class="wrapper"><p>The laundry can't see you. Stay very still.</p><b>Night 3</b></div>
+      <div class="wrapper"><p>You're allowed to say "per my last email" out loud. To no one.</p><b>Night 4</b></div>
+      <div class="wrapper"><p>Light the good candle. Yes, the one still in the plastic. Yes, tonight.</p><b>Night 11</b></div>
+      <div class="wrapper"><p>Breaking news: local woman sits down. More at eleven.</p><b>Night 23</b></div>
+      <div class="wrapper"><p>Tomorrow's the last one. Act casual.</p><b>Night 29</b></div>
+      <div class="wrapper sealed"><p>Night 30 stays sealed. Even here.</p><b>Night 30</b></div>
+    </div>
+    <p style="color:var(--dim)">Subscribers get a new set of notes in every box.</p>
+  </section>
+
+  <section id="story" aria-labelledby="storyH">
+    <h2 id="storyH">Why I put collagen in <em>candy</em>.</h2>
+    <div class="hero" style="padding-top:0">
+      <div style="display:grid;gap:12px;font-size:18px;max-width:52ch">
+        <p style="margin:0">I'm 34. I wanted to take better care of myself, so I bought the collagen powder. And then I didn't take it. Every morning it was one more scoop, one more thing to remember, one more taste I didn't like.</p>
+        <p style="margin:0">What I never forgot was candy. Every night, something sweet after dinner.</p>
+        <p style="margin:0">So I stopped trying to be a different person and made the thing I'd actually eat: one chocolate square with 2.5 g of collagen in it, and a note underneath to make me laugh.</p>
+        <p style="margin:0">Turns out a lot of women were stuck in the same spot.</p>
+        <p style="margin:0;font:400 italic 22px var(--display);color:var(--foil)">Johanna J, founder</p>
+      </div>
+      <div class="frame" style="aspect-ratio:4/5">Photo coming: you at the kitchen table at night, a square in hand</div>
+    </div>
+  </section>
+</main>
+<footer class="wrap">Glow Squares is chocolate candy.
+  <nav aria-label="Footer"><a href="#">FAQ</a><a href="#">Shipping and melt policy</a><a href="#">Subscription terms</a><a href="#">Wholesale</a><a href="#">Contact</a><a href="#">Privacy</a></nav>
+</footer>
+
+<script>
+const TONIGHT = 3;
+const NOTE = "The laundry can't see you. Stay very still.";
+const grid = document.getElementById('trayGrid'), note = document.getElementById('note');
+let tonightBtn;
+for (let i = 1; i <= 30; i++) {
+  const b = document.createElement('button'); b.type = 'button';
+  b.className = 'cell' + (i < TONIGHT ? ' done' : '') + ((i === 15 || i === 30) ? ' gold' : '') + (i === TONIGHT ? ' tonight' : '');
+  const rm = 'RM ' + String(i).padStart(2,'0'); b.textContent = rm;
+  if (i === TONIGHT) { b.innerHTML = '<span class="tag">Tonight</span>' + rm; b.setAttribute('aria-label', 'Night ' + i + ', tonight. Open it.'); tonightBtn = b; }
+  else { b.tabIndex = -1; b.setAttribute('aria-disabled', 'true'); b.setAttribute('aria-label', 'Night ' + i + (i < TONIGHT ? ', eaten' : ', sealed')); }
+  b.addEventListener('click', () => open(i, b));
+  grid.appendChild(b);
+}
+let ctx;
+function snap(){
+  try { ctx = ctx || new (window.AudioContext||window.webkitAudioContext)();
+    const len = Math.floor(ctx.sampleRate*.09), buf = ctx.createBuffer(1,len,ctx.sampleRate), d = buf.getChannelData(0);
+    for (let i=0;i<len;i++) d[i]=(Math.random()*2-1)*Math.pow(1-i/len,6);
+    const s=ctx.createBufferSource(); s.buffer=buf; const f=ctx.createBiquadFilter(); f.type='bandpass'; f.frequency.value=2600; f.Q.value=1.2;
+    s.connect(f).connect(ctx.destination); s.start(); } catch(_){}
+  try { navigator.vibrate && navigator.vibrate(18); } catch(_){}
+}
+function setNote(label, text, cls){
+  note.innerHTML = '<div class="n"></div><p></p>';
+  note.querySelector('.n').textContent = label;
+  const p = note.querySelector('p'); p.textContent = text; if (cls) p.className = cls;
+}
+function open(i, el){
+  if (i === TONIGHT) {
+    snap(); el.classList.add('open'); el.querySelector('.tag')?.remove();
+    setNote('Night ' + i, NOTE); document.getElementById('after').classList.add('show');
+  } else if (i < TONIGHT) setNote('Night ' + i, 'Already eaten. No regrets.', 'hint');
+  else setNote('Night ' + i, i === 15 ? "Night 15 is gold. That's all we can say." : 'Sealed till its night. Patience is also a treat.', 'hint');
+}
+document.getElementById('openTonight').addEventListener('click', () => {
+  document.getElementById('tray').scrollIntoView({behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'});
+  open(TONIGHT, tonightBtn); tonightBtn.focus({preventScroll:true});
+});
+const isGift = document.getElementById('isGift');
+function setGift(on){
+  isGift.checked = on; isGift.setAttribute('aria-expanded', on);
+  document.getElementById('selfOpts').hidden = on; document.getElementById('giftOpts').hidden = !on; document.getElementById('giftFields').hidden = !on;
+  updateTerms();
+}
+function updateTerms(){
+  const t = document.getElementById('terms');
+  if (isGift.checked) t.textContent = 'Charged once. No subscription, nothing renews.';
+  else t.textContent = document.querySelector('input[name=plan]:checked').value === 'sub'
+    ? '$49 charged today and every 30 days until you cancel. Skip or cancel online in two clicks, any time before your next ship date.'
+    : '$59 charged once. Nothing renews.';
+}
+isGift.addEventListener('change', e => setGift(e.target.checked));
+document.querySelectorAll('input[name=plan]').forEach(r => r.addEventListener('change', updateTerms));
+document.getElementById('giftBtn').addEventListener('click', () => setGift(true));
+document.getElementById('getRest').addEventListener('click', () => setGift(false));
+let n = 0;
+document.getElementById('buyForm').addEventListener('submit', e => {
+  e.preventDefault(); n++;
+  document.getElementById('cartBtn').textContent = 'Cart (' + n + ')';
+  const label = isGift.checked
+    ? (document.querySelector('input[name=gplan]:checked').value === 'g3' ? 'Gift 3 months, $147' : 'Gift one box, $59')
+    : (document.querySelector('input[name=plan]:checked').value === 'sub' ? 'Every month, $49' : 'One box, $59');
+  document.getElementById('added').textContent = 'Added: ' + label + '. (Prototype: no real checkout.)';
+});
+const links = [...document.querySelectorAll('header nav a')];
+const io = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) links.forEach(a => a.setAttribute('aria-current', a.getAttribute('href') === '#' + en.target.id ? 'true' : 'false')); }), {rootMargin:'-40% 0px -55% 0px'});
+['box','gift','inside','notes','story'].forEach(id => io.observe(document.getElementById(id)));
+</script>
+</body>
+</html>
