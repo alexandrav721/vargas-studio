@@ -5,9 +5,9 @@
     seen: ["Jailbreak", "Temperature"], terms: ["System prompt", "Prompt engineering", "Examples", "XML tags", "Thinking", "Hallucination"],
     teaser: ["HOUSE RULES", "on the wall", "1. Answer like our shop.<br>2. Under 80 words.<br>3. If unsure, say so.", "Six words. Nine minutes."],
     lines: [
-      ["The system prompt is the house rules on the wall.", "The builder writes it once. It shapes every plate, whatever the customer orders."],
+      ["The system prompt is the house rules on the wall.", "Whoever makes the app writes it once. It shapes every plate, whatever the customer orders."],
       ["Prompt engineering is writing clear tickets.", "Say who it’s for, show an example, and ask for the shape you want back."],
-      ["Hallucination is a confident wrong plate.", "Rules like “say I don’t know” and “quote the source” make it rarer, never zero."]
+      ["Hallucination: Claude sounds sure but is wrong.", "Rules like “say I don’t know” and “quote the source” make it rarer, never zero."]
     ],
     guess: { q: "Two apps ask Claude the same thing and get very different tones. Why?", opts: [["Each app gave Claude different standing rules", true], ["One paid for a nicer Claude", false], ["Claude was in a different mood", false]], reveal: "Each app hangs its own house rules, called a system prompt." },
     startLabel: "See the rules",
@@ -18,8 +18,8 @@
         '<p class="label" style="margin-top:14px">No house rules</p><div class="reply"><p class="who">assistant</p>Many businesses deliver on Sundays! It depends on the shop. You could check their website or call…</div>' +
         '<p class="label" style="margin-top:14px">House rules: “You answer for Rosa’s Bakery. Facts are in &lt;facts&gt;. If it’s not there, say you’ll ask.”</p>' +
         '<div class="reply"><p class="who">assistant</p>Yes, Sundays 9 to 1, within 5 miles.</div>' +
-        '<p class="small"><b>XML tags</b> like &lt;facts&gt;…&lt;/facts&gt; are labeled boxes that keep your rules, data and examples apart. <b>Examples</b> show the chef a few finished plates, so it learns the style without copying one.</p>' +
-        '<p style="margin-top:14px"><b>Thinking</b>: newer Claude models can reason quietly before answering. Builders set an <b>effort</b> level: more thinking for hard jobs, less for quick ones. You pay for thinking like the words it writes.</p>',
+        '<p class="small"><b>XML tags</b> are labels in angle brackets: &lt;facts&gt; opens a box and &lt;/facts&gt; closes it. You can type them in any prompt to keep rules, data and examples apart. <b>Examples</b> show the chef a few finished plates, so it learns the style without copying one. Builders call this few-shot prompting.</p>' +
+        '<p style="margin-top:14px"><b>Thinking</b>: newer Claude models can work a problem out quietly before answering. <b>Effort</b> is a dial the app’s maker sets: high for hard jobs, low for quick ones. Thinking is billed like the words Claude writes.</p>',
       more: '<p class="small">Anthropic’s AI Fluency course calls the whole skill the <b>4Ds</b>: what to hand off, how you ask, checking the plate, owning what you serve.</p>',
       next: "Write rules"
     },
@@ -46,7 +46,7 @@
       options: [
         ["“If you don’t know, say so”", true], ["“Quote the source first”", true], ["Give it the real facts in the prompt", true],
         ["“Be 100% accurate”", false, "Asking nicely doesn’t create knowledge. Give it facts and an exit."],
-        ["Turn the old “temperature” dial to 0", false, "Old advice. It never guaranteed truth, and current Claude models reject the setting."]
+        ["Set the old “temperature” setting (how random replies are) to 0", false, "Old advice. It never guaranteed truth, and current Claude models reject the setting."]
       ],
       right: "All three. Facts in, an honest exit, and receipts.",
       wrong: "That one sounds right but doesn’t work.",
@@ -55,10 +55,10 @@
     breaks: {
       title: "Rules can be talked around.",
       lines: [
-        ["A clever customer can talk around the rules.", "That’s a jailbreak. Orders hidden in an email or page are prompt injection (Lesson 5). Real limits are built into the app."],
+        ["A clever customer can talk around the rules.", "That’s called a jailbreak. Lesson 5 covers its cousin: tricks hidden in emails or pages. Real limits are built into the app."],
         ["Old tutorials teach a “temperature” dial.", "It set how adventurous the chef was. Current Claude models reject it; clear rules, examples and effort do the job."],
               ],
-      where: "Kitchen staff follow the poster or get fired. Claude usually follows it, with no boss to answer to."
+      where: "Kitchen staff follow the poster or get fired. Claude follows it most of the time. Nothing forces it to."
     },
     quiz: [
       { term: "System prompt", q: "Who usually writes the system prompt?", a: ["The person building the app", "Anthropic, for every app", "The customer typing"], ok: 0, why: "Right. The builder hangs the rules; the customer places orders." },

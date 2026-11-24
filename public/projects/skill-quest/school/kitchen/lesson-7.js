@@ -21,7 +21,7 @@
         '<div class="reply"><p class="who">tool</p>restaurant → Thu 7:30 open</div>' +
         '<div class="reply"><p class="who">ask you</p>Book Thu 7:30 for 4? <b>Yes / No</b></div>' +
         '<p class="small">Think → use a tool → look at the result → decide again. That’s the <b>agent loop</b>. Each round costs tokens.</p>' +
-        '<p style="margin-top:14px">Big jobs can split: an <b>orchestrator</b> (head chef) hands pieces to <b>subagents</b> (sous-chefs), each with its own counter, who report back a short summary.</p>',
+        '<p style="margin-top:14px">Big jobs can split: an <b>orchestrator</b> (head chef) hands pieces to <b>subagents</b> (sous-chefs). Each has its own counter (a fresh context window) and reports back a short summary.</p>',
       next: "Agent or checklist?"
     },
     build: {
@@ -44,7 +44,7 @@
     game: {
       type: "tapall", title: "Which jobs really need an agent?", lead: "Tap the {n} that do. The rest are fine as a prep checklist.",
       options: [
-        ["Research a question across many websites", true], ["Fix a bug you haven’t found yet", true],
+        ["Research a question across many websites", true], ["Find out why online orders stopped coming in", true],
         ["Turn every receipt into the same 5 columns", false, "Same steps every time. A fixed workflow is cheaper."],
         ["Translate a menu into Spanish", false, "One request does it."]
       ],

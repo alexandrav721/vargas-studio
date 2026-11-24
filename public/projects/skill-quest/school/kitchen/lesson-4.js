@@ -18,7 +18,7 @@
         '<p class="label" style="margin-top:14px">2. Claude asks (tool call)</p><div class="reply"><p class="who">assistant</p>use get_weather · city: “Paris”</div>' +
         '<p class="label" style="margin-top:14px">3. The app runs it (tool result)</p><div class="reply"><p class="who">the app</p>Rain, 14°C, 80% chance</div>' +
         '<p class="label" style="margin-top:14px">4. Claude plates the answer</p><div class="reply"><p class="who">assistant</p>Yes, bring one. 80% chance of rain.</div>' +
-        '<p class="small">Anthropic runs a few appliances for you, like <b>web search</b> (a phone to the market for fresh news), web fetch and <b>code execution</b> (it runs code to calculate). With <b>computer use</b>, Claude looks at screenshots and asks the app to click and type.</p>',
+        '<p class="small">Anthropic runs a few appliances itself: <b>web search</b> (finds fresh news online), web fetch (reads one web page) and <b>code execution</b> (runs code to do exact math). With <b>computer use</b>, Claude looks at screenshots and asks the app to click and type.</p>',
       next: "Design an appliance"
     },
     build: {
@@ -43,7 +43,7 @@
       type: "pick", title: "Claude says “use get_weather for Paris.” Who actually checks the weather?",
       options: [
         ["The app runs the tool and sends back the result", true],
-        ["Claude goes online by itself", false, "Not for your own tools. Claude only asks; the app does it."],
+        ["Claude goes online by itself", false, "Not here. get_weather is the app’s own tool, so the app runs it. Claude only asks."],
         ["Claude remembers yesterday’s forecast", false, "It doesn’t know today’s weather. That’s why it needs the tool."]
       ],
       right: "Yes. Claude picks the appliance and the settings. The app, like a waiter, presses the button and brings back the result.",

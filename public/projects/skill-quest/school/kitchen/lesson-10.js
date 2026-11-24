@@ -7,7 +7,7 @@
     lines: [
       ["An architect picks the pieces.", "Which chef, which rules, which tools, which documents, how it’s tested. That plan is the architecture."],
       ["Every piece has a price.", "Cost is mostly tokens, plus fees for some tools. Latency is wait time. Bigger chefs and more loops cost more of both."],
-      ["Guardrails are the safety rails.", "Rules in code, approvals for risky actions, and watching for prompt injection."]
+      ["Guardrails are the safety rails.", "Hard limits built into the app, a person approving risky actions, and watching for prompt injection."]
     ],
     guess: { q: "A friend wants an AI helper for their bakery. What should they build first?", opts: [["The simplest version: one model, clear rules, a quick test", true], ["Five agents working together", false], ["Their own AI model", false]], reveal: "Start simple. Add pieces only when a real need shows up. That’s the architect’s habit." },
     startLabel: "See a plan",

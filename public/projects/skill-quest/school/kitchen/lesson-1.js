@@ -6,7 +6,7 @@
     teaser: ["THE KITCHEN", "how it works", "You place the order (prompt).<br>The chef cooks it (model).<br>The counter holds it all (context window).", "Six words. Eight minutes."],
     lines: [
       ["Claude is a model.", "A model is the chef. It learned from a huge library of text, and now it writes on request."],
-      ["It’s an LLM: a large language model.", "Large because it’s a huge program, trained on a huge library of text."],
+      ["It’s an LLM: a large language model.", "A model is any trained AI. An LLM is a model built for words: it reads and writes text."],
       ["Your order is a prompt.", "Everything the chef can see sits on one counter: the context window."]
     ],
     guess: { q: "How does Claude write an answer?", opts: [["It predicts the next piece of text, again and again", true], ["It looks the answer up in a giant database", false], ["A person types it behind the scenes", false]], reveal: "It predicts the next piece of text. That’s what a large language model does." },
@@ -22,7 +22,7 @@
         '<p class="label" style="margin-top:14px">The counter</p>' +
         '<div class="reply"><p class="who">On the counter right now</p>Your order · anything you pasted · the chef’s reply so far</div>' +
         '<p class="small">That counter is the <b>context window</b>. On current Claude models it holds about 1 million tokens, roughly 555,000 words. Huge, but the chef still only sees what’s on it.</p>' +
-        '<p style="margin-top:14px">Claude comes in a <b>model family</b>: <b>Haiku</b> (fastest, cheapest), <b>Sonnet</b> (balanced), <b>Opus</b> (Anthropic’s usual first pick) and <b>Fable</b> (the hardest, longest tasks). Same kitchen, different chefs.</p>',
+        '<p style="margin-top:14px">Claude comes in a <b>model family</b>: <b>Haiku</b> (fastest, cheapest), <b>Sonnet</b> (balanced), <b>Opus</b> (where Anthropic suggests most people start) and <b>Fable</b> (the hardest jobs, like long multi-step work). Same kitchen, different chefs.</p>',
       next: "Pick your chef"
     },
     build: {
@@ -31,7 +31,7 @@
       state: { job: "writing emails", chef: "Sonnet" },
       controls: function (s, esc) {
         var jobs = ["writing emails", "planning lessons", "running a small shop", "my small business", "social media content"];
-        var chefs = [["Haiku", "fast and cheap"], ["Sonnet", "balanced"], ["Opus", "usual first pick"], ["Fable", "hardest tasks"]];
+        var chefs = [["Haiku", "fast and cheap"], ["Sonnet", "balanced"], ["Opus", "good place to start"], ["Fable", "hardest tasks"]];
         return '<p class="label">Your job</p><div class="fridge">' + jobs.map(function (j) { return '<button type="button" class="chip" data-set="job" data-v="' + esc(j) + '" aria-pressed="' + (s.job === j) + '">' + esc(j) + "</button>"; }).join("") + "</div>" +
           '<p class="label">Your chef</p><div class="fridge">' + chefs.map(function (c) { return '<button type="button" class="chip" data-set="chef" data-v="' + c[0] + '" aria-pressed="' + (s.chef === c[0]) + '">' + c[0] + " · " + c[1] + "</button>"; }).join("") + "</div>";
       },
@@ -47,7 +47,7 @@
     },
     game: {
       type: "match", title: "Match each word to its meaning.", lead: "Tap a word, then what it means.",
-      pairs: [["Model", "The AI program itself, like Claude"], ["Prompt", "Your order: what you type plus anything you attach"], ["Token", "A small piece of text it counts and charges by"], ["Context window", "How much fits on the counter at once"], ["LLM", "AI that writes by predicting the next piece of text"], ["Model family", "Sizes of Claude: faster and cheaper, or more capable"]],
+      pairs: [["Model", "The AI program itself, like Claude"], ["Prompt", "Your order: what you type plus anything you attach"], ["Token", "A small piece of text it counts and charges by"], ["Context window", "How much fits on the counter at once"], ["LLM", "A model made for words: it predicts the next piece of text"], ["Model family", "Sizes of Claude: faster and cheaper, or more capable"]],
       right: "All six. You just used the words every AI builder uses.",
       habitTitle: "Say it in one line", habit: "A model is the chef, the prompt is your order, and the context window is the counter."
     },
@@ -56,7 +56,7 @@
       lines: [
         ["A new chat starts with an empty counter.", "The chef doesn’t remember yesterday unless you put it back on the counter."],
         ["A crowded counter blurs things.", "In very long chats the chef pays less attention to early details, and apps may summarize them. Start fresh, or let the app compact it (squeeze it into a summary), then paste back key facts."],
-        ["The cookbook stopped printing on a date.", "That’s the training cutoff. For anything newer, paste it in or let Claude search the web."],
+        ["The chef’s library stops at a date.", "That’s the training cutoff. For anything newer, paste it in or let Claude search the web."],
         ["Bigger chefs cost more per token.", "Pick the smallest chef that does the job well."]
       ],
       where: "A real chef remembers and tastes. This one predicts the next piece of text from what’s on the counter. It doesn’t know when it’s wrong, so it can sound sure and still be wrong."

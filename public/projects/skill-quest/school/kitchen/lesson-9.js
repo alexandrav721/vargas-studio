@@ -7,14 +7,14 @@
     lines: [
       ["An eval is a taste test with a scorecard.", "The same set of questions, scored the same way, every time you change a prompt or a model."],
       ["“It looked fine” is a vibe check.", "A change that fixes one dish can quietly ruin three others. Only a test set catches that."],
-      ["Graders do the tasting.", "Code checks exact things. Another model (LLM-as-judge) scores fuzzy things against a checklist. People check the judge."]
+      ["Graders do the tasting.", "A small program checks exact things, like word count. Another AI model (LLM-as-judge) scores fuzzy things, like tone. People spot-check the judge."]
     ],
     guess: { q: "You change your bot’s prompt. How do you know it got better?", opts: [["Re-run the same test questions and compare scores", true], ["Try one question and see if it looks good", false], ["Ask Claude if it’s better", false]], reveal: "Builders re-run a fixed set of test questions with a scorecard. That’s an eval." },
     startLabel: "Watch a test",
     example: {
       title: "A bakery bot, scored before and after a change.",
       html:
-        '<p class="label">Success criteria (the scorecard) <span class="sample">Sample</span></p><div class="ticket"><div class="th"><span>SCORECARD</span><span>3 checks</span></div>1. Uses only the bakery’s real facts<br>2. Under 80 words<br>3. Says “I’ll check” when unsure<div class="tf">Specific and measurable</div></div>' +
+        '<p class="label">Success criteria (the scorecard, like a rubric) <span class="sample">Sample</span></p><div class="ticket"><div class="th"><span>SCORECARD</span><span>3 checks</span></div>1. Uses only the bakery’s real facts<br>2. Under 80 words<br>3. Says “I’ll check” when unsure<div class="tf">Specific and measurable</div></div>' +
         '<p class="label" style="margin-top:14px">Test set: 20 real customer questions</p>' +
         '<div class="fridge"><span class="tag">Version A · 15 of 20 pass</span><span class="tag">Version B · 18 of 20 pass</span></div>' +
         '<p class="small">Version B won, but question 7 used to pass and now fails. That’s a <b>regression</b>. You only see it because you kept the same test set.</p>' +

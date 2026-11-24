@@ -7,9 +7,9 @@
     lines: [
       ["MCP is a standard outlet.", "Model Context Protocol: one shared plug shape, so tools work in any AI app that supports it."],
       ["An MCP server is the appliance.", "Someone wraps Google Drive, Slack or a database once, as a server. Then anyone can plug it in."],
-      ["The host is the kitchen wall.", "The host is the AI app, like the Claude desktop app. Inside it, an MCP client connects to each server."]
+      ["The app is the kitchen wall.", "The AI app you use (like the Claude desktop app) is called the host. Inside it, a small piece of software, an MCP client, links to each server."]
     ],
-    guess: { q: "Why can Claude Desktop and Claude Code both use the same Google Drive plug-in?", opts: [["They share one standard plug shape, called MCP", true], ["Google built it twice", false], ["They’re the same app", false]], reveal: "MCP is a shared plug shape. Build the plug once, use it in many apps." },
+    guess: { q: "Why can the Claude desktop app and Claude Code (Claude’s coding tool) share one Google Drive plug-in?", opts: [["They share one standard plug shape, called MCP", true], ["Google built it twice", false], ["They’re the same app", false]], reveal: "MCP is a shared plug shape. Build the plug once, use it in many apps." },
     startLabel: "See the outlets",
     example: {
       title: "Before and after the standard outlet.",
@@ -17,7 +17,7 @@
         '<p class="label">Before</p><div class="reply"><p class="who">every app</p>Builds its own Drive tool, Slack tool, calendar tool. Over and over.</div>' +
         '<p class="label" style="margin-top:14px">After MCP</p><div class="reply"><p class="who">once</p>Someone builds a Drive MCP server. The Claude desktop app and other AI apps all plug it in.</div>' +
         '<p class="label" style="margin-top:14px">What a server can offer</p>' +
-        '<div class="fridge"><span class="tag">Tools: actions</span><span class="tag">Resources: things to read</span><span class="tag">Prompts: ready-made orders</span></div>' +
+        '<div class="fridge"><span class="tag">Tools: actions Claude can ask for</span><span class="tag">Resources: files or records to read</span><span class="tag">Prompts: ready-made orders</span></div>' +
         '<p style="margin-top:14px">In the Claude app, plugged-in servers are called <b>connectors</b>. You turn them on in settings and sign in to the service.</p>',
       next: "Plan your outlets"
     },
@@ -39,7 +39,7 @@
     },
     game: {
       type: "match", title: "Match the outlet words.", lead: "Tap a word, then its meaning.",
-      pairs: [["MCP", "The standard plug shape"], ["MCP server", "The appliance: wraps one service"], ["MCP client", "The link inside the app to one server"], ["Connector", "What the Claude app calls a plugged-in server"], ["Resources", "Things a server lets Claude read"]],
+      pairs: [["MCP", "The standard plug shape"], ["MCP server", "The appliance: wraps one service"], ["MCP client", "The piece inside the app that talks to one server"], ["Connector", "What the Claude app calls a plugged-in server"], ["Resources", "Things a server lets Claude read"]],
       right: "All five matched.",
       habitTitle: "Builder habit", habit: "Servers offer tools Claude can ask for, plus things to read and ready-made prompts."
     },
@@ -47,7 +47,7 @@
       title: "Plug in only what you trust.",
       lines: [
         ["Anyone can build an MCP server.", "A bad one can read or change your data. Use ones from the service itself or people you trust."],
-        ["Prompt injection hides in content.", "An email or page can contain text like “ignore your rules.” Claude may read it as an order. Keep a person in the loop for actions."],
+        ["Prompt injection hides in content.", "An email or page can contain text like “ignore your rules.” Claude may read it as an order. Have a person approve any action (more in Lesson 7)."],
               ],
       where: "A wall outlet just passes power. An MCP server passes words, and words can carry instructions. That’s a risk kitchens don’t have."
     },

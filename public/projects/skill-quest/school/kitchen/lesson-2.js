@@ -6,7 +6,7 @@
     teaser: ["ORDER WINDOW", "the API", "The app is a waiter.<br>It passes a ticket through the window<br>and carries the plate back.", "Seven words. Eight minutes."],
     lines: [
       ["The API is the order window.", "An app works like a waiter: it passes Claude a written ticket and carries the plate back."],
-      ["The API key is your account card.", "It proves the ticket is yours and puts it on your tab. Keep it secret."],
+      ["The API key is your account card.", "It proves the ticket is yours and bills your account. Keep it secret."],
       ["The window remembers nothing.", "Every ticket must carry the whole conversation so far."]
     ],
     guess: { q: "A shopping app shows Claude’s answers on its own screen. How?", opts: [["It sends Claude a written request through the API", true], ["It copies answers from claude.ai", false], ["Claude is installed inside the app", false]], reveal: "Apps send a request through the API, a window for other software, and get a reply back." },
@@ -15,11 +15,11 @@
       title: "One ticket, one plate.",
       html:
         '<p class="label">The request (what your app sends) <span class="sample">Simplified</span></p>' +
-        '<div class="ticket"><div class="th"><span>REQUEST</span><span>to the API</span></div>model: Sonnet<br>messages:<br>&nbsp;&nbsp;user: “Name 3 soups for a cold night.”<div class="tf">Badge attached: your API key</div></div>' +
+        '<div class="ticket"><div class="th"><span>REQUEST</span><span>to the API</span></div>model: Sonnet<br>messages:<br>&nbsp;&nbsp;user: “Name 3 soups for a cold night.”<div class="tf">Account card attached: your API key</div></div>' +
         '<p class="label" style="margin-top:14px">The response (what comes back)</p>' +
         '<div class="reply"><p class="who">assistant</p>Minestrone, French onion, chicken noodle.<br><span class="small">Used: 18 tokens in · 9 tokens out</span></div>' +
         '<p class="small">A chat is a list of <b>messages</b>: “user” turns are yours, “assistant” turns are Claude’s. To ask a follow-up, your app sends the whole list again.</p>' +
-        '<p style="margin-top:14px"><b>Streaming</b> sends the plate out bite by bite, so words appear as they’re written. <b>Cost per token</b>: you pay for tokens in and tokens out, and out costs more.</p>',
+        '<p style="margin-top:14px"><b>Streaming</b> means words show up as they’re written. <b>Cost per token</b>: you pay for tokens in (what is sent) and tokens out (what Claude writes). Out costs more.</p>',
       more: '<p class="small">Real requests also name the exact model (like claude-sonnet-5-5) and a reply length limit.</p>',
       next: "Write a ticket"
     },
@@ -51,19 +51,19 @@
       ],
       right: "Exactly. The window remembers nothing. Send the whole list of messages every time.",
       wrong: "Think about what was on the ticket.", hint: "The API doesn’t remember earlier tickets.",
-      habitTitle: "Builder habit", habit: "Every request carries the full conversation. That’s also why long chats cost more: the history is sent again each turn (caching makes the repeated part much cheaper)."
+      habitTitle: "Builder habit", habit: "Every request carries the full conversation. That’s also why long chats cost more: the history is sent again each turn (apps can store that repeated part, called caching, so it costs far less)."
     },
     breaks: {
       title: "A card that pays the bill.",
       lines: [
         ["Your API key is not your Claude subscription.", "API use is billed separately, per token, to the account the key belongs to."],
-        ["Anyone holding the badge can order on your tab.", "Never paste a key into a website, a shared document or a chat. If it leaks, delete it and make a new one."],
+        ["Anyone holding the card can bill your account.", "Most people never handle a key. If you do, never paste it into a website, a shared document or a chat. If it leaks, delete it and make a new one."],
         ["Output costs more than input.", "Asking for shorter answers is the easiest way to spend less."]
       ],
       where: "A real order window has a cook who remembers regulars. A basic API call forgets you the moment the plate leaves. The app resends the chat each time."
     },
     quiz: [
-      { term: "API key", q: "What does an API key do?", a: ["Proves the request is yours and bills your account", "Unlocks a smarter model", "Stores your past chats"], ok: 0, why: "Right. It’s a badge and a tab. Keep it secret." },
+      { term: "API key", q: "What does an API key do?", a: ["Proves the request is yours and bills your account", "Unlocks a smarter model", "Stores your past chats"], ok: 0, why: "Right. It’s your account card. Keep it secret." },
       { term: "Context window", q: "Recall from Lesson 1: what’s the context window?", a: ["The counter: everything the chef can see at once", "The order window", "The list of models you can pick"], ok: 0, why: "Right. The window takes orders; the counter is what the chef can see." },
       {term: "API key", q: "A vendor asks you to email them your API key. What do you do?", a: ["Say no. Keys are secret, like a password", "Send it, it’s only a code", "Post it in the team chat instead"], ok: 0, why: "Right. Anyone with the key can order on your tab."}
     ],

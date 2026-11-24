@@ -7,7 +7,7 @@
     lines: [
       ["RAG: look it up, then cook.", "Retrieval-augmented generation. Find the right pages of your documents, put them on the counter, then Claude answers from them."],
       ["Nothing gets trained.", "Your documents are just placed in each request. Change a page, and the next answer uses the new one."],
-      ["The binder is indexed by meaning.", "Embeddings turn text into numbers, so “refund” can find a page that says “money back.”"]
+      ["The binder is indexed by meaning.", "Embeddings give each page a number code for its meaning. Close meanings get close codes, so “refund” finds “money back.”"]
     ],
     guess: { q: "A help bot answers from a shop’s policy pages. Was Claude trained on them?", opts: [["No, the right page is looked up and pasted in", true], ["Yes, the shop trained it overnight", false], ["Claude already knew the policy", false]], reveal: "No training. The right page is fetched and placed in front of Claude. That’s RAG." },
     startLabel: "Watch a lookup",
@@ -17,8 +17,8 @@
         '<p class="label">1. Chunking: the binder is cut into pages <span class="sample">Sample</span></p>' +
         '<div class="fridge"><span class="tag">Shipping</span><span class="tag">Returns: 30 days</span><span class="tag">Gift cards</span><span class="tag">Sizes</span></div>' +
         '<p class="label" style="margin-top:14px">2. Search by meaning (embeddings + a vector database)</p><div class="reply"><p class="who">search</p>Closest page: “Returns: unworn items within 30 days.”</div>' +
-        '<p class="label" style="margin-top:14px">3. Claude answers from that page</p><div class="reply"><p class="who">assistant</p>Sorry, returns are 30 days. <span class="small">[Source: Returns policy]</span></div><p class="small"><b>Citations</b> show which page was used. Small binder? Paste it all in; <b>prompt caching</b> makes repeats cheaper.</p>',
-      more: '<p class="small"><b>Citations</b> point to the page used, so people can check. Anthropic doesn’t make its own embeddings; builders use a separate provider (Anthropic’s docs suggest Voyage AI).</p><p style="margin-top:14px"><b>Small binder?</b> Skip the search. Under roughly 500 pages, Anthropic suggests putting it all on the counter and using <b>prompt caching</b>: prep it once, and reuse it cheaply while orders keep coming (it stays fresh 5 minutes after each use).</p>',
+        '<p class="label" style="margin-top:14px">3. Claude answers from that page</p><div class="reply"><p class="who">assistant</p>Sorry, returns are 30 days. <span class="small">[Source: Returns policy]</span></div><p class="small">A <b>vector database</b> stores those meaning codes and finds the closest match. <b>Citations</b> show which page was used. Small binder? Paste it all in.</p>',
+      more: '<p class="small"><b>Citations</b> point to the page used, so people can check. Claude doesn’t make embeddings. App makers get them from another company (Anthropic’s docs suggest Voyage AI).</p><p style="margin-top:14px"><b>Small binder?</b> Skip the search. Under roughly 500 pages, Anthropic suggests putting it all on the counter and using <b>prompt caching</b>: the pages are read in once and stored, so repeat questions cost less. The stored copy lasts 5 minutes after each use.</p>',
       next: "Plan your binder"
     },
     build: {
@@ -66,7 +66,7 @@
     ],
     keep: "5 questions about AI that answers from documents, and a ticket for a setup plan.",
     cardLabel: "Copy my card",
-    card: "THE RECIPE BINDER (RAG)\nRAG = find the right pages, then Claude answers from them\nChunking = cutting documents into findable pages\nEmbeddings = text turned into numbers by meaning\nVector database = finds the closest-meaning pages\nCitations = which page the answer came from\nPrompt caching = prep once, reuse cheaply (5 min after each use)\nSmall binder? Paste it all in.",
+    card: "THE RECIPE BINDER (RAG)\nRAG = find the right pages, then Claude answers from them\nChunking = cutting documents into findable pages\nEmbeddings = number codes for meaning, so similar pages can be found\nVector database = finds the closest-meaning pages\nCitations = which page the answer came from\nPrompt caching = prep once, reuse cheaply (5 min after each use)\nSmall binder? Paste it all in.",
     real: ["Building with the Claude API (RAG module)", "https://academy.claude.com/courses/building-with-the-claude-api"]
   };
   document.addEventListener("DOMContentLoaded", function () { BK.run(L); });
