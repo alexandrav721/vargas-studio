@@ -3,7 +3,7 @@
   var L = {
     n: 2, id: "b2", mins: 6, title: "The order window.", stamp: "API",
     terms: ["API", "API key", "Request", "Response", "Messages", "Streaming", "Cost per token"],
-    teaser: ["ORDER WINDOW", "the API", "The app is a waiter.<br>It passes a ticket through the window<br>and carries the plate back.", "Seven words. Eight minutes."],
+    teaser: ["ORDER WINDOW", "the API", "The app is a waiter.<br>It passes a ticket through the window<br>and carries the plate back.", "Seven words. Six minutes."],
     lines: [
       ["The API is the order window.", "An app works like a waiter: it passes Claude a written ticket and carries the plate back."],
       ["The API key is your account card.", "It proves the ticket is yours and bills your account. Keep it secret."],

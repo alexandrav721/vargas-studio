@@ -3,7 +3,7 @@
   var L = {
     n: 7, id: "b7", mins: 6, title: "The head chef.", stamp: "Agents",
     terms: ["Agent", "Agent loop", "Workflow", "Subagent", "Orchestrator", "Human in the loop"],
-    teaser: ["HEAD CHEF", "agents", "The whole dinner, start to finish.<br>It decides the next step,<br>checks the pot, and keeps going.", "Six words. Nine minutes."],
+    teaser: ["HEAD CHEF", "agents", "The whole dinner, start to finish.<br>It decides the next step,<br>checks the pot, and keeps going.", "Six words. Six minutes."],
     lines: [
       ["An agent is a chef running the whole dinner.", "Claude picks its own next step and uses tools, again and again, until the job is done."],
       ["A workflow is a prep checklist.", "Whoever built it set the steps: first this, then that, like an automation you set up once. Cheaper and more predictable."],

@@ -3,7 +3,7 @@
   var L = {
     n: 3, id: "b3", mins: 6, title: "House rules on the wall.", stamp: "Rules",
     seen: ["Jailbreak", "Temperature"], terms: ["System prompt", "Prompt engineering", "Examples", "XML tags", "Thinking", "Hallucination"],
-    teaser: ["HOUSE RULES", "on the wall", "1. Answer like our shop.<br>2. Under 80 words.<br>3. If unsure, say so.", "Six words. Nine minutes."],
+    teaser: ["HOUSE RULES", "on the wall", "1. Answer like our shop.<br>2. Under 80 words.<br>3. If unsure, say so.", "Six words. Six minutes."],
     lines: [
       ["The system prompt is the house rules on the wall.", "Whoever makes the app writes it once. It shapes every plate, whatever the customer orders."],
       ["Prompt engineering is writing clear tickets.", "Say who it’s for, show an example, and ask for the shape you want back."],
@@ -18,7 +18,7 @@
         '<p class="label" style="margin-top:14px">No house rules</p><div class="reply"><p class="who">assistant</p>Many businesses deliver on Sundays! It depends on the shop. You could check their website or call…</div>' +
         '<p class="label" style="margin-top:14px">House rules: “You answer for Rosa’s Bakery. Facts are in &lt;facts&gt;. If it’s not there, say you’ll ask.”</p>' +
         '<div class="reply"><p class="who">assistant</p>Yes, Sundays 9 to 1, within 5 miles.</div>' +
-        '<p class="small"><b>XML tags</b> are labels in angle brackets: &lt;facts&gt; opens a box and &lt;/facts&gt; closes it. You can type them in any prompt to keep rules, data and examples apart. <b>Examples</b> show the chef a few finished plates, so it learns the style without copying one. Builders call this few-shot prompting.</p>' +
+        '<p class="small"><b>XML tags</b> are labels in angle brackets: &lt;facts&gt; opens a box and &lt;/facts&gt; closes it. You can type them in any prompt to keep rules, data and examples apart. <b>Examples</b> show the chef a few varied plates, so it learns the style, not one dish. Builders call this few-shot prompting.</p>' +
         '<p style="margin-top:14px"><b>Thinking</b>: newer Claude models can work a problem out quietly before answering. <b>Effort</b> is a dial the app’s maker sets: high for hard jobs, low for quick ones. Thinking is billed like the words Claude writes.</p>',
       more: '<p class="small">Anthropic’s AI Fluency course calls the whole skill the <b>4Ds</b>: what to hand off, how you ask, checking the plate, owning what you serve.</p>',
       next: "Your turn →"
@@ -56,7 +56,7 @@
       title: "Rules can be talked around.",
       lines: [
         ["A clever customer can talk around the rules.", "That’s called a jailbreak. Lesson 5 covers its cousin: tricks hidden in emails or pages. Real limits are built into the app."],
-        ["Old tutorials teach a “temperature” dial.", "It set how adventurous the chef was. Current Claude models reject it; clear rules, examples and effort do the job."],
+        ["Old tutorials teach a “temperature” dial.", "It set how adventurous the chef was. Newer Claude models reject it; clear rules, examples and effort do the job."],
               ],
       where: "Kitchen staff follow the poster or get fired. Claude follows it most of the time. Nothing forces it to."
     },

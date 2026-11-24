@@ -3,7 +3,7 @@
   var L = {
     n: 4, id: "b4", mins: 6, title: "Appliances.", stamp: "Tools",
     seen: ["Computer use"], terms: ["Tool use", "Tool definition", "Tool call", "Tool result", "Web search", "Code execution"],
-    teaser: ["APPLIANCES", "tool use", "The chef can’t check the weather.<br>But it can ask the kitchen<br>to switch on the weather appliance.", "Six words. Eight minutes."],
+    teaser: ["APPLIANCES", "tool use", "The chef can’t check the weather.<br>But it can ask the kitchen<br>to switch on the weather appliance.", "Six words. Six minutes."],
     lines: [
       ["Tools are appliances.", "A model can only write text. Tools let it look things up, calculate or act."],
       ["The chef asks; the app runs it.", "Claude fills in a form: tool get_weather, city Paris. The app runs it and hands back the result."],

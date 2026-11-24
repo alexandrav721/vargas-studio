@@ -3,7 +3,7 @@
   var L = {
     n: 10, id: "b10", mins: 7, title: "Plan your own kitchen.", stamp: "Architect",
     terms: ["Architecture", "Cost", "Latency", "Guardrails", "Prompt injection", "Start simple"],
-    teaser: ["GRADUATION", "you’re the architect", "Pick the chef. Hang the rules.<br>Choose appliances and a binder.<br>Plan the taste test.", "Every word. Ten minutes."],
+    teaser: ["GRADUATION", "you’re the architect", "Pick the chef. Hang the rules.<br>Choose appliances and a binder.<br>Plan the taste test.", "Every word. Seven minutes."],
     lines: [
       ["An architect picks the pieces.", "Which chef, which rules, which tools, which documents, how it’s tested. That plan is the architecture."],
       ["Every piece has a price.", "Cost is mostly tokens, plus fees for some tools. Latency is wait time. Bigger chefs and more loops cost more of both."],
@@ -55,7 +55,7 @@
     },
     quiz: [
       { term: "Start simple", q: "A friend wants to start with 5 agents. Your advice?", a: ["Start with one request and a taste test, add pieces only when needed", "Go for it, more agents always means better results", "Train your own model first so it fits the business"], ok: 0, why: "Right. Start simple. Agents cost more and break in more ways." },
-      { term: "Cost per token", q: "Recall from Lesson 2: what decides cost?", a: ["Tokens in and out, and which chef", "How many people use the app at once", "How long the reply takes to read"], ok: 0, why: "Right. Mostly tokens times the chef’s price, plus fees for some tools." },
+      { term: "Cost per token", q: "Recall from Lesson 2: what decides cost?", a: ["Tokens in and out, and which chef", "Which web browser people use", "How long the reply takes to read"], ok: 0, why: "Right. Mostly tokens times the chef’s price, plus fees for some tools." },
       {q: "From Lesson 7: what’s a subagent?", a: ["A helper with its own counter that reports back a summary", "A cheaper, smaller model for simple jobs", "A person who approves the agent’s risky actions"], ok: 0, why: "Right. A sous-chef with its own counter.", term: "Subagent"}
     ],
     keep: "6 questions for any AI pitch, and a ticket that reviews your own kitchen plan.",

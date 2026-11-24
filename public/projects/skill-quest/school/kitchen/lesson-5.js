@@ -3,7 +3,7 @@
   var L = {
     n: 5, id: "b5", mins: 6, title: "Standard outlets.", stamp: "MCP",
     terms: ["MCP", "MCP server", "Host", "MCP client", "Connector", "Resources", "Prompt injection"],
-    teaser: ["OUTLETS", "MCP", "One outlet shape.<br>Any appliance plugs in.<br>Any kitchen can use it.", "Six words. Eight minutes."],
+    teaser: ["OUTLETS", "MCP", "One outlet shape.<br>Any appliance plugs in.<br>Any kitchen can use it.", "Seven words. Six minutes."],
     lines: [
       ["MCP is a standard outlet.", "Model Context Protocol: one shared plug shape, so tools work in any AI app that supports it."],
       ["An MCP server is the plug for one service.", "Someone wraps Google Drive, Slack or a database once, as a server. Then any app with the outlet can plug it in."],
@@ -39,7 +39,7 @@
     },
     game: {
       type: "match", title: "Match the outlet words.", lead: "Tap a word, then its meaning.",
-      pairs: [["MCP", "The standard plug shape"], ["MCP server", "The appliance: wraps one service"], ["MCP client", "The piece inside the app that talks to one server"], ["Connector", "What the Claude app calls a plugged-in server"], ["Resources", "Things a server lets Claude read"]],
+      pairs: [["MCP", "The standard plug shape"], ["MCP server", "The plug for one service"], ["MCP client", "The piece inside the app that talks to one server"], ["Connector", "What the Claude app calls a plugged-in server"], ["Resources", "Things a server lets Claude read"]],
       right: "All five matched.",
       habitTitle: "Builder habit", habit: "Servers offer tools Claude can ask for, plus things to read and ready-made prompts."
     },
@@ -47,7 +47,7 @@
       title: "Plug in only what you trust.",
       lines: [
         ["Anyone can build an MCP server.", "A bad one can read or change your data. Use ones from the service itself or people you trust."],
-        ["Prompt injection hides in content.", "An email or page can contain text like “ignore your rules.” Claude may read it as an order. Have a person approve any action (more in Lesson 7)."],
+        ["Prompt injection hides in content.", "An email or page can contain text like “ignore your rules.” Claude may read it as an order. Have a person approve risky actions (Lesson 7)."],
               ],
       where: "A wall outlet just passes power. An MCP server passes words, and words can carry instructions. That’s a risk kitchens don’t have."
     },
@@ -59,7 +59,7 @@
     ],
     keep: "5 questions to ask before connecting your apps, and a ticket for an IT-ready connector plan.",
     cardLabel: "Copy my card",
-    card: "OUTLETS (MCP)\nMCP = Model Context Protocol, a standard plug for tools\nMCP server = the appliance (wraps Drive, Slack, a database…)\nHost = the AI app (like the Claude desktop app)\nMCP client = the link inside it to one server\nConnector = the Claude app’s name for a plugged-in server\nServers offer tools, resources, prompts\nPrompt injection = hidden orders inside content. Plug in only what you trust",
+    card: "OUTLETS (MCP)\nMCP = Model Context Protocol, a standard plug for tools\nMCP server = the plug for one service (Drive, Slack, a database…)\nHost = the AI app (like the Claude desktop app)\nMCP client = the link inside it to one server\nConnector = the Claude app’s name for a plugged-in server\nServers offer tools, resources, prompts\nPrompt injection = hidden orders inside content. Plug in only what you trust",
     real: ["Introduction to Model Context Protocol", "https://academy.claude.com/courses/introduction-to-model-context-protocol"]
   };
   document.addEventListener("DOMContentLoaded", function () { BK.run(L); });

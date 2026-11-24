@@ -15,7 +15,7 @@ window.BK_VENDOR = {
     ["What happens if the AI service is down or slow?", "“We retry, show a message, and here’s how often it’s been down.”", "“That never happens.”"],
     ["Who else sees our data?", "“Here’s every company that touches it, including our AI provider.”", "“Just us.” (Then who runs the AI?)"]],
     school: ["Where is student data stored, and who can see it?", "A named country, a short list of who can see it, and a signed data agreement.", "“Somewhere in the cloud.”"],
-    health: ["Will you sign a business associate agreement (BAA) for patient data?", "“Yes, and here’s who else touches the data under it.”", "“We don’t need one.” (US health data usually does.)"] },
+    health: ["Will you sign a business associate agreement (BAA) for patient data?", "“Yes, and here’s who else touches the data under it.”", "“We don’t need one.” (HIPAA requires one for PHI.)"] },
   3: { q: [
     ["What instructions does the assistant follow?", "“Here’s a summary of its rules, and here’s what you can adjust.”", "“It just knows what to do.”"],
     ["What does it do when it doesn’t know?", "“It says so and points to a person or a source.”", "“It always has an answer.”"],
@@ -23,7 +23,7 @@ window.BK_VENDOR = {
     ["What if someone tries to talk it out of its rules?", "“We tested for that, and anything risky needs a person.”", "“Users can’t do that.”"],
     ["Can we test it with our own tricky questions first?", "“Yes, here’s a small trial or paid pilot with your questions.”", "No way to try it on your questions before you sign."]],
     school: ["Can students under 13, or under 18, use it?", "“Yes for ages X and up, with parent or school consent where the law requires it, and here’s our AI provider’s age rule.”", "“We don’t check ages.”"],
-    health: ["What does it say when a question is clinical?", "“It points to a clinician and never gives a diagnosis.”", "“It answers medical questions directly.”"] },
+    health: ["What does it say when a question is clinical?", "“It points to a clinician, and we test that it does.”", "“It answers medical questions directly.”"] },
   4: { q: [
     ["What actions can it take on its own?", "A short, specific list, like “look up an order.”", "“Anything you need.”"],
     ["What needs a person to approve first?", "“Anything that sends, spends, books or deletes.”", "“Nothing. It’s fully automatic.”"],

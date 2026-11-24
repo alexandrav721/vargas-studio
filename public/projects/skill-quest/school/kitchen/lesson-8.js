@@ -3,7 +3,7 @@
   var L = {
     n: 8, id: "b8", mins: 6, title: "The chef in your own kitchen.", stamp: "Code",
     seen: ["Git"], terms: ["Claude Code", "CLAUDE.md", "Skill", "Slash command", "Hook", "Plugin"],
-    teaser: ["YOUR KITCHEN", "Claude Code", "Claude chat: you order at its restaurant.<br>Claude Code: it cooks in your project,<br>with your files and your tools.", "Six words. Nine minutes."],
+    teaser: ["YOUR KITCHEN", "Claude Code", "Claude chat: you order at its restaurant.<br>Claude Code: it cooks in your project,<br>with your files and your tools.", "Six words. Six minutes."],
     lines: [
       ["Claude Code works inside your project.", "It reads your files, writes code and runs commands (typed instructions to the computer). It’s an agent, like Lesson 7’s chef."],
       ["CLAUDE.md is the note on your fridge.", "Your rules and how-tos. Claude Code reads it at the start of every session."],
@@ -17,8 +17,8 @@
         '<p class="label">The fridge note <span class="sample">Sample</span></p><div class="ticket"><div class="th"><span>CLAUDE.md</span><span>read every session</span></div>This is our bakery’s website<br>Never touch passwords or keys<br>Explain every change in plain words<div class="tf">Claude tries to follow these</div></div>' +
         '<p class="label" style="margin-top:14px">The rest of the kitchen</p>' +
         '<div class="fridge"><span class="tag">Skill: a recipe card (SKILL.md)</span><span class="tag">/command: a shortcut you type</span><span class="tag">Hook: a bell that rings at set moments</span><span class="tag">Plugin: a boxed kit of all of these</span></div>' +
-        '<p class="small">A <b>hook</b> runs automatically at set moments, like right before or after every edit. It always runs, and one set before an action can stop it. CLAUDE.md is only a request. A <b>/command</b> is a shortcut you type in the chat box, like /help. To make your own, you write a skill.</p><p class="small">Claude Code changes real files, so it uses <b>git</b>: a history of save points you can go back to.</p>',
-      more: '<p class="small">In <b>plan mode</b> it reads you the plan before touching anything. <b>Permission modes</b> set what it may do without asking.</p><p style="margin-top:14px">Claude Code runs in the Claude desktop app, on the web, and in the tools developers use. It changes real files, so it keeps <b>git</b> save points you can roll back to.</p>',
+        '<p class="small">A <b>hook</b> runs automatically at set moments, like right before or after every edit. It always runs, and one set before an action can stop it. CLAUDE.md is only a request. A <b>/command</b> is a shortcut you type in the chat box, like /help. To make your own, you write a skill.</p><p class="small">Claude Code changes real files, so use <b>git</b>: a history of save points you can go back to.</p>',
+      more: '<p class="small">In <b>plan mode</b> it reads you the plan before touching anything. <b>Permission modes</b> set what it may do without asking.</p><p style="margin-top:14px">Claude Code runs in the Claude desktop app, on the web, and in the tools developers use. It has its own undo (/rewind); <b>git</b> save points are yours to make.</p>',
       next: "Your turn →"
     },
     build: {
@@ -55,7 +55,7 @@
       where: "A cook in your home knows not to throw out your grandma’s recipe. Claude Code only knows what your notes and save points protect."
     },
     quiz: [
-      { term: "Hook", q: "Where do you put a rule that must ALWAYS hold in Claude Code?", a: ["A hook or a permission mode", "In CLAUDE.md, written in capital letters", "In a skill that Claude loads when it fits"], ok: 0, why: "Right. CLAUDE.md guides; hooks and permissions are enforced." },
+      { term: "Hook", q: "Where do you put a rule that must ALWAYS hold in Claude Code?", a: ["A hook or a permission rule", "In CLAUDE.md, written in capital letters", "In a skill that Claude loads when it fits"], ok: 0, why: "Right. CLAUDE.md guides; hooks and permissions are enforced." },
       { term: "Claude Code", q: "Recall from Lesson 7: is Claude Code an agent?", a: ["Yes, it loops: read, act, check", "No, it only chats about code you paste in", "Only when it runs on the web version"], ok: 0, why: "Right. It’s an agent with your files as its tools." },
       {q: "From Lesson 5: what’s prompt injection?", a: ["Hidden orders inside content Claude reads", "A longer system prompt written by the builder", "A user typing many messages very fast"], ok: 0, why: "Right. Treat content as information, keep a person on risky actions.", term: "Prompt injection"}
     ],

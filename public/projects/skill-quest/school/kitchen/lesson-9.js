@@ -3,7 +3,7 @@
   var L = {
     n: 9, id: "b9", mins: 6, title: "Taste tests.", stamp: "Evals",
     terms: ["Eval", "Test set", "Success criteria", "Grader", "LLM-as-judge", "Regression"],
-    teaser: ["TASTE TEST", "evals", "Tasting one spoon isn’t a test.<br>Twenty dishes, the same scorecard,<br>every time you change the prompt.", "Six words. Eight minutes."],
+    teaser: ["TASTE TEST", "evals", "Tasting one spoon isn’t a test.<br>Twenty dishes, the same scorecard,<br>every time you change the prompt.", "Six words. Six minutes."],
     lines: [
       ["An eval is a taste test with a scorecard.", "The same set of questions, scored the same way, every time you change a prompt or a model."],
       ["“It looked fine” is a vibe check.", "A change that fixes one dish can quietly ruin three others. Only a test set catches that."],

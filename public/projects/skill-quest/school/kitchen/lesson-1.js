@@ -3,7 +3,7 @@
   var L = {
     n: 1, id: "b1", mins: 6, title: "How AI kitchens work.", stamp: "Kitchen",
     seen: ["Training cutoff", "Compaction"], terms: ["Model", "LLM", "Prompt", "Token", "Context window", "Model family"],
-    teaser: ["THE KITCHEN", "how it works", "You place the order (prompt).<br>The chef cooks it (model).<br>The counter holds it all (context window).", "Six words. Eight minutes."],
+    teaser: ["THE KITCHEN", "how it works", "You place the order (prompt).<br>The chef cooks it (model).<br>The counter holds it all (context window).", "Six words. Six minutes."],
     lines: [
       ["Claude is a model.", "A model is the chef. It learned from a huge library of text, and now it writes on request."],
       ["It’s an LLM: a large language model.", "A model is any trained AI. An LLM is a model built for words: it reads and writes text."],

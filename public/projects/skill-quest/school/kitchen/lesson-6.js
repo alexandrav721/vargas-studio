@@ -3,7 +3,7 @@
   var L = {
     n: 6, id: "b6", mins: 6, title: "The recipe binder.", stamp: "RAG",
     terms: ["RAG", "Chunking", "Embeddings", "Vector database", "Citations", "Prompt caching"],
-    teaser: ["RECIPE BINDER", "RAG", "The chef never memorized your recipes.<br>Someone pulls the right pages<br>and lays them on the counter.", "Six words. Nine minutes."],
+    teaser: ["RECIPE BINDER", "RAG", "The chef never memorized your recipes.<br>Someone pulls the right pages<br>and lays them on the counter.", "Six words. Six minutes."],
     lines: [
       ["RAG: look it up, then cook.", "Retrieval-augmented generation. Find the right pages of your documents, put them on the counter, then Claude answers from them."],
       ["Nothing gets trained.", "Your documents are just placed in each request. Change a page, and the next answer uses the new one."],
@@ -18,7 +18,7 @@
         '<div class="fridge"><span class="tag">Shipping</span><span class="tag">Returns: 30 days</span><span class="tag">Gift cards</span><span class="tag">Sizes</span></div>' +
         '<p class="label" style="margin-top:14px">2. Search by meaning (embeddings + a vector database)</p><div class="reply"><p class="who">search</p>Closest page: “Returns: unworn items within 30 days.”</div>' +
         '<p class="label" style="margin-top:14px">3. Claude answers from that page</p><div class="reply"><p class="who">assistant</p>Sorry, returns are 30 days. <span class="small">[Source: Returns policy]</span></div><p class="small">A <b>vector database</b> stores those meaning codes and finds the closest match. <b>Citations</b> show which page was used. Small binder? Paste it all in.</p>',
-      more: '<p class="small"><b>Citations</b> point to the page used, so people can check. Claude doesn’t make embeddings. App makers get them from another company (Anthropic’s docs suggest Voyage AI).</p><p style="margin-top:14px"><b>Small binder?</b> Skip the search. Under roughly 500 pages, Anthropic suggests putting it all on the counter and using <b>prompt caching</b>: the pages are read in once and stored, so repeat questions cost less. The stored copy lasts 5 minutes after each use.</p>',
+      more: '<p class="small"><b>Citations</b> point to the page used, so people can check. Claude doesn’t make embeddings. App makers get them from another company (Anthropic’s docs suggest Voyage AI).</p><p style="margin-top:14px"><b>Small binder?</b> Skip the search. Under roughly 500 pages, Anthropic suggests putting it all on the counter and using <b>prompt caching</b>: the pages are read in once and stored, so repeat questions cost less. By default the stored copy lasts 5 min after each use.</p>',
       next: "Your turn →"
     },
     build: {
@@ -61,7 +61,7 @@
     },
     quiz: [
       { term: "RAG", q: "Does RAG train the model on your documents?", a: ["No, it places the right pages in each request", "Yes, a little each time it reads them", "Only the first time"], ok: 0, why: "Right. Nothing is trained. It’s looked up each time." },
-      { term: "MCP server", q: "Recall from Lesson 5: what’s an MCP server?", a: ["An appliance with a standard plug, for one service", "A newer, more powerful Claude model for big jobs", "The app you chat in, like the Claude desktop app"], ok: 0, why: "Right. A Drive or Notion server is one way to fetch pages for the binder." },
+      { term: "MCP server", q: "Recall from Lesson 5: what’s an MCP server?", a: ["The standard plug for one service", "A newer, more powerful Claude model for big jobs", "The app you chat in, like the Claude desktop app"], ok: 0, why: "Right. A Drive or Notion server is one way to fetch pages for the binder." },
       {q: "From Lesson 3: what’s a hallucination?", a: ["A confident wrong answer", "An answer that is much too long to read", "When Claude refuses to answer a request"], ok: 0, why: "Right. Give facts and an honest exit to make it rarer.", term: "Hallucination"}
     ],
     keep: "5 questions about AI that answers from documents, and a ticket for a setup plan.",
