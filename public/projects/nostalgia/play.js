@@ -5,6 +5,7 @@ import { primaryEra } from "./data.js";
 import { iconFor, personaFor, signatureFor, personaLine, makeCard, personaKey, personaFromKey, makeGroupCard } from "./moments.js";
 import { MAX_PLAYERS, cleanName, displayName, decodeGroup, encodeGroup, whoHad, inCommon, funLine } from "./group.js";
 import { dialUp, click, blip, chime, fanfare, bindMute } from "./sound.js";
+import { count } from "./count.js";
 
 const OWN_KEY = "scrollback.own.v1";
 const SITE_KEY = "scrollback.sites.v1";
@@ -104,6 +105,7 @@ function show(id) {
 
 /* ---------- 2. Dial in ---------- */
 async function start(fromTap = true) {
+  count(mode === "join" ? "join" : "start");
   const era = primaryEra(year - 2, year + 2);
   if (fromTap) dialUp();
   show("beat-dial");
@@ -243,6 +245,7 @@ function hadItems() {
 }
 
 async function reveal() {
+  count("finish");
   // keep the answers: they fill the room in the explorer
   const own = load(OWN_KEY, {});
   const sites = load(SITE_KEY, {});
@@ -426,13 +429,16 @@ async function shareGroup() {
 }
 $("#add-friends").addEventListener("click", () => {
   if (mode === "full") return void showJoin();
+  count("group_share");
   shareGroup();
 });
 $("#save-group").addEventListener("click", async () => {
+  count("save");
   const b = await groupCard();
   if (b) download(b, `our-${groupYear}.png`);
 });
 $("#save-mine").addEventListener("click", async () => {
+  count("save");
   const b = await card();
   if (b) download(b);
 });
@@ -538,10 +544,12 @@ function download(blob, file = `who-i-was-${year}.png`) {
   setTimeout(() => URL.revokeObjectURL(a.href), 2000);
 }
 $("#save").addEventListener("click", async () => {
+  count("save");
   const b = await card();
   if (b) download(b);
 });
 $("#send").addEventListener("click", async () => {
+  count("share");
   const btn = $("#send");
   btn.disabled = true;
   btn.textContent = "Making your card…";
