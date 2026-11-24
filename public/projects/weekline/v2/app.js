@@ -5,7 +5,7 @@ import {
 } from "./data.js";
 import * as W from "./store.js";
 import { S, session } from "./store.js";
-import { fontsReady, loadImage, drawStory, drawRecap, saveCanvas, shareCanvas } from "./share.js";
+import { fontsReady, loadImage, drawStory, drawLock, drawRecap, saveCanvas, shareCanvas } from "./share.js";
 
 const app = document.getElementById("app");
 const tabsEl = document.getElementById("tabs");
@@ -20,6 +20,7 @@ const ui = {
 let liveRows = null;
 let evById = new Map();
 let lastWeek = null;
+const mineState = {}; // "first_last" -> "loading" | [events] | "failed" (their own calendars)
 const busyState = {}; // "first_last" -> "loading" | [[start, end], ...] | "failed"
 
 /* ---------- helpers ---------- */
@@ -128,7 +129,8 @@ async function ensureLive() {
   const dates = W.planDates(P(), TODAY);
   session.liveStatus = "loading";
   try {
-    liveRows = await W.fetchLive(dates[0], W.addDays(dates[dates.length - 1], 1));
+    const [parks, tm] = await Promise.all([W.fetchLive(dates[0], W.addDays(dates[dates.length - 1], 1)), W.fetchTm(dates[0], W.addDays(dates[dates.length - 1], 1))]);
+    liveRows = [...parks, ...tm];
     const inZone = liveRows.length;
     session.liveStatus = inZone >= 3 ? "live" : "failed";
     session.liveCount = inZone;
@@ -141,7 +143,10 @@ function week() {
   const dates = W.planDates(p, TODAY);
   const evs = W.catalog(dates, session.liveStatus === "live" ? liveRows : null);
   evById = new Map(evs.map((e) => [e.id, e]));
-  lastWeek = W.buildWeek(p, evs, TODAY, busyFor(dates[0], dates[dates.length - 1]));
+  const g = busyFor(dates[0], dates[dates.length - 1]), mine = mineFor(dates[0], dates[dates.length - 1]);
+  const busy = g || mine ? [...(g || []), ...(mine || []).map((e) => [e.s, e.e])] : null;
+  lastWeek = W.buildWeek(p, evs, TODAY, busy);
+  if (mine) lastWeek.days.forEach((d) => { d.mine = mine.filter((e) => e.s.slice(0, 10) <= d.date && e.e > d.date + "T00:00"); });
   return lastWeek;
 }
 /** Google busy blocks for a date range, fetched once per range; re-renders when they land. */
@@ -159,6 +164,22 @@ function busyFor(first, last) {
   }
   return Array.isArray(v) ? v : null;
 }
+/** Events from their pasted calendar links (Luma, Partiful, any calendar), fetched once per range. */
+function mineFor(first, last) {
+  if (!session.user || !(session.feeds && session.feeds.list.length)) return null;
+  const key = first + "_" + last;
+  const v = mineState[key];
+  if (v === undefined) {
+    mineState[key] = "loading";
+    W.fetchMine(first, last)
+      .then((list) => { mineState[key] = list; })
+      .catch(() => { mineState[key] = "failed"; })
+      .finally(() => { if (["week", "month", "crew", "share"].includes(route().name)) render({ keepFocus: true }); });
+    return null;
+  }
+  return Array.isArray(v) ? v : null;
+}
+const SRC_NAMES = { luma: "Luma", partiful: "Partiful", calendar: "your calendar" };
 function calLine(first, last) {
   if (!session.user || !session.google.connected) return "";
   const v = busyState[first + "_" + last];
@@ -385,6 +406,7 @@ function weekView() {
       <button class="btn line" data-act="ics" ${locked.length ? "" : 'aria-disabled="true"'}>${icon("down")}Add to calendar</button>
       <button class="btn line" data-act="subscribe">${icon("feed")}Subscribe</button>
       <a class="btn sun full" href="#/share">${icon("share")}Share my week</a>
+      <p style="text-align:center;margin-top:6px"><a class="linkbtn" href="#/share?k=lock">Put it on my lock screen</a> · <a class="linkbtn" href="sms:&body=${encodeURIComponent(weekText())}">Text it to me</a></p>
     </div>
     ${!locked.length ? `<p class="fine wrap" style="margin-top:8px">Add to calendar saves your locked nights. Lock one first.</p>` : ""}
     ${feedBox()}
@@ -406,6 +428,13 @@ function friendsText(id) {
   return `${names.length} friends going`;
 }
 function dayRow(d) {
+  const html = dayRowInner(d);
+  if (!d.mine || !d.mine.length || ["cal", "lock", "plan"].includes(d.kind)) return html;
+  const line = `<p class="pl mine">${icon("cal")} You're going: ${esc(d.mine[0].title)} (${SRC_NAMES[d.mine[0].source] || "your calendar"})</p>`;
+  const i = html.lastIndexOf("</div></article>");
+  return i < 0 ? html : html.slice(0, i) + line + html.slice(i);
+}
+function dayRowInner(d) {
   if (d.kind === "lock" || d.kind === "plan") {
     const ev = d.kind === "lock" ? d.lock : d.plan.ev;
     const id = d.kind === "lock" ? d.lock.event_id : ev.id;
@@ -423,9 +452,11 @@ function dayRow(d) {
         ${d.holiday ? `<p class="hol-name">${d.holiday.name}</p>` : ""}
         ${d.clash ? `<p class="clash">${icon("cal")}Clashes with something on your calendar</p>` : ""}
         <h3 class="ti" style="font-family:inherit;letter-spacing:0">${esc(ev.title)}</h3>
+        ${d.mine && d.mine.length ? `<p class="pl">${icon("cal")} Also that day: ${esc(d.mine[0].title)} (${SRC_NAMES[d.mine[0].source] || "your calendar"})</p>` : ""}
         <p class="pl">${d.kind === "plan" ? `${esc(ev.hood)} · ${why}` : why}${missed ? " · Missed" : ""}</p>
         <div class="act"><a class="src" href="${esc(ev.url)}" target="_blank" rel="noopener">${srcLabel(ev.kind)}${fr ? ` · <em>${fr}</em>` : ""}</a>
           <span class="acts">${acts}</span></div>
+        ${d.kind === "plan" && d.plan.because && d.plan.because.length ? `<details class="why"><summary>Why this?</summary><ul>${d.plan.because.map((b) => `<li>${esc(b)}</li>`).join("")}</ul><div class="thumbs" role="group" aria-label="Tell Weekline"><button class="chip" data-act="thumb" data-v="up" data-id="${esc(id)}">More like this</button><button class="chip" data-act="thumb" data-v="down" data-id="${esc(id)}">Less like this</button></div></details>` : ""}
         ${ui.skipOpen === id ? `<div class="reasons" role="group" aria-label="Skip because">Skip because ${SKIP_REASONS.map((r) => `<button class="chip" data-act="skip" data-id="${esc(id)}" data-v="${r.id}">${r.label}</button>`).join("")}<button class="linkbtn" data-act="skipclose">Cancel</button></div>` : ""}
       </div></article>`;
   }
@@ -437,7 +468,7 @@ function dayRow(d) {
   }
   if (d.kind === "cal") {
     return `<article class="day busy cal" id="d-${d.date}">${dayCell(d)}<div class="t">${d.d < 5 ? "evening" : ""}</div><div class="calrow">
-      <p class="ti">${icon("cal")}Busy on your calendar</p><button class="linkbtn" data-act="anyway" data-date="${d.date}">Plan anyway</button></div></article>`;
+      <p class="ti">${icon("cal")}${d.mine && d.mine.length ? `You're going: ${esc(d.mine[0].title)} <span class="pl">· ${SRC_NAMES[d.mine[0].source] || "your calendar"}</span>` : "Busy on your calendar"}</p><button class="linkbtn" data-act="anyway" data-date="${d.date}">Plan anyway</button></div></article>`;
   }
   if (d.kind === "busy") {
     return `<article class="day busy ${d.past ? "past" : ""}">${dayCell(d)}<div class="t"></div><div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
@@ -710,15 +741,16 @@ async function loadPage(r) {
 
 /* ---------- Share ---------- */
 function shareView(r) {
-  const k = r.q.get("k") === "recap" ? "recap" : "story";
-  return `<div class="wrap" style="padding-top:26px"><h1 style="font-size:44px;line-height:1">Post <em>your ${k === "recap" ? "month" : "week"}</em></h1>
-    <p class="hint" style="margin-top:8px"><span>1080 × ${k === "recap" ? "1350" : "1920"} PNG. Drawn on this phone.</span></p>
+  const k = ["recap", "lock"].includes(r.q.get("k")) ? r.q.get("k") : "story";
+  return `<div class="wrap" style="padding-top:26px"><h1 style="font-size:44px;line-height:1">${k === "lock" ? "Your week, <em>on your lock screen</em>" : `Post <em>your ${k === "recap" ? "month" : "week"}</em>`}</h1>
+    <p class="hint" style="margin-top:8px"><span>${k === "lock" ? "1179 × 2556 PNG, sized for iPhone. Save it, then set it as your wallpaper." : `1080 × ${k === "recap" ? "1350" : "1920"} PNG. Drawn on this phone.`}</span></p>
     <div class="mtabs" style="padding:12px 0 0" role="group" aria-label="Poster">
       <a class="chip ${k === "story" ? "on" : ""}" href="#/share" aria-current="${k === "story"}">My week, 9:16</a>
       <a class="chip ${k === "recap" ? "on" : ""}" href="#/share?k=recap" aria-current="${k === "recap"}">Month recap, 4:5</a>
+      <a class="chip ${k === "lock" ? "on" : ""}" href="#/share?k=lock" aria-current="${k === "lock"}">Lock screen</a>
     </div></div>
     <div class="shares">
-      <figure><canvas id="poster" class="${k === "recap" ? "recap-c" : "story-c"}" role="img" aria-label="${k === "recap" ? "Month recap poster" : "My week story poster"}"></canvas>
+      <figure><canvas id="poster" class="${k === "recap" ? "recap-c" : k === "lock" ? "lock-c" : "story-c"}" role="img" aria-label="${k === "recap" ? "Month recap poster" : k === "lock" ? "Lock screen with your week" : "My week story poster"}"></canvas>
       <figcaption>${ui.own ? "Your photo. It stays on this device." : `Photo: ${esc(PHOTOS[k === "recap" ? "manhattan-gold" : "domino"].credit)}`}</figcaption></figure>
       <div>
         <div class="filepick"><input id="ownphoto" type="file" accept="image/*" aria-label="Use my own photo">
@@ -726,17 +758,58 @@ function shareView(r) {
         ${ui.own ? `<button class="linkbtn" data-act="ownclear">Back to the city photo</button>` : ""}
         <p class="fine" style="margin:8px 0 16px">Your photo never leaves this phone unless you share the poster.</p>
         <div class="row2"><button class="btn line" data-act="save" data-v="${k}">${icon("down")}Save</button><button class="btn sun" data-act="share" data-v="${k}">${icon("share")}Share</button></div>
+        ${k === "lock" ? `<details class="howto"><summary>Make it your wallpaper</summary><ol><li>Tap Save, or Share then Save Image.</li><li>Open Photos, tap the picture, then the share button, then Use as Wallpaper.</li><li>Every Sunday, make a fresh one here.</li></ol></details>` : ""}
+        <h2 class="as-text">Or as text</h2>
+        <div class="row2"><a class="btn line" href="sms:&body=${encodeURIComponent(weekText())}">${icon("msg")}Text it to me</a><button class="btn line" data-act="copyweek">${icon("link")}Copy for Notes</button></div>
+        <p class="fine" style="margin-top:8px">Text it to yourself or paste it into Notes. Plain text, works anywhere.</p>
       </div>
     </div>`;
 }
+/** The week as plain text, for Messages or Notes. */
+function weekText() {
+  const p = P(); if (!p) return "";
+  const wk = lastWeek || week();
+  const a = wk.dates[0], b = wk.dates[wk.dates.length - 1];
+  const lines = [`My week, ${W.dayNum(a)}–${W.dayNum(b)} ${MONTHS[W.monthIdx(b)]}`];
+  wk.days.filter((d) => !d.past || d.kind === "lock").forEach((d) => {
+    const day = `${DAYS[d.d]} ${W.dayNum(d.date)}`;
+    if (d.kind === "lock" || d.kind === "plan") {
+      const ev = d.kind === "lock" ? d.lock : d.plan.ev;
+      lines.push(`${day}: ${ev.time ? ev.time + " " : ""}${ev.title}${ev.hood ? ` (${ev.hood})` : ""}${d.kind === "plan" ? " - maybe" : ""}`);
+    } else if (d.mine && d.mine.length) lines.push(`${day}: ${d.mine[0].title}`);
+    else if (d.kind === "holiday") lines.push(`${day}: ${d.holiday.name}`);
+    else if (d.kind === "busy" || d.kind === "cal") lines.push(`${day}: busy`);
+    else lines.push(`${day}: free`);
+  });
+  lines.push("", "Made with Weekline");
+  return lines.join("\n");
+}
 async function drawShares() {
   const cv = document.getElementById("poster"); if (!cv) return;
-  const k = route().q.get("k") === "recap" ? "recap" : "story";
+  const k = ["recap", "lock"].includes(route().q.get("k")) ? route().q.get("k") : "story";
   await fontsReady();
   const img = ui.own || (await loadImage(photoUrl(k === "recap" ? "manhattan-gold" : "domino")));
   const credit = ui.own ? "" : photoCredit(k === "recap" ? "manhattan-gold" : "domino");
   const p = P(); const wk = lastWeek || week();
   const friendsAll = new Set();
+  if (k === "lock") {
+    const today = wk.days.find((d) => d.date === TODAY) || wk.days.find((d) => d.date > TODAY) || wk.days[0];
+    const evOf = (d) => (d.kind === "lock" ? d.lock : d.kind === "plan" ? d.plan.ev : null);
+    const tev = evOf(today);
+    const tonight = tev ? tev.title : today.mine && today.mine.length ? today.mine[0].title : today.kind === "holiday" ? today.holiday.name : "A free night, on purpose";
+    const meta = tev ? `${tev.time || ""}${tev.hood ? " · " + tev.hood : ""}` : today.mine && today.mine.length ? (SRC_NAMES[today.mine[0].source] || "") : "";
+    const rows = wk.days.filter((d) => d.date > today.date).map((d) => {
+      const ev = evOf(d);
+      if (ev) return { day: DAYS[d.d], title: ev.title };
+      if (d.mine && d.mine.length) return { day: DAYS[d.d], title: d.mine[0].title };
+      if (d.kind === "holiday") return { day: DAYS[d.d], title: d.holiday.name, free: true };
+      return { day: DAYS[d.d], title: d.kind === "busy" || d.kind === "cal" ? "Busy" : "Free", free: true };
+    });
+    const a = wk.dates[0], b = wk.dates[wk.dates.length - 1];
+    const sample = p.demo || wk.days.some((d) => (d.lock && d.lock.kind !== "live" && d.lock.kind !== "tm") || (d.plan && !["live", "tm"].includes(d.plan.ev.kind)));
+    drawLock(cv, { img, own: !!ui.own, tonightLabel: today.date === TODAY ? "Tonight" : DAYS_LONG[today.d], tonight, tonightMeta: meta, rows, sample, range: `${W.dayNum(a)}–${W.dayNum(b)} ${MONTHS[W.monthIdx(b)]}` });
+    return;
+  }
   if (k === "story") {
     const rows = wk.days.filter((d) => !(d.kind === "busy")).map((d) => {
       if (d.kind === "lock" || d.kind === "plan") {
@@ -807,6 +880,7 @@ function youView() {
       : `<p>Nothing yet.</p><p class="fine">Lock, skip with a reason, or tell it whether you went. It only learns from what you do here.</p>`}
     </section>
     ${googleSection()}
+    ${connectSection()}
     <section class="sec" aria-labelledby="data-h"><h2 id="data-h">Your data</h2>
       <div class="row2"><button class="btn line" data-act="export">${icon("down")}Export my data</button>${session.user ? `<button class="btn line" data-act="signout">Sign out</button>` : `<button class="btn line" data-act="startover">Start over</button>`}</div>
       <button class="linkbtn danger" data-act="delete">${session.user ? "Delete my account" : "Clear everything on this device"}</button>
@@ -825,6 +899,26 @@ function youView() {
     <dialog id="del-dlg" aria-labelledby="del-h"><h2 id="del-h">Delete everything?</h2>
       <p>${session.user ? "This removes your account, answers, locked nights, invites and what it learned. It can't be undone." : "This clears your answers, locked nights and what it learned from this device. It can't be undone."}</p>
       <div class="row2"><button class="btn line" data-act="delcancel">Keep it</button><button class="btn ink" data-act="delyes">Delete</button></div></dialog>`;
+}
+
+function connectSection() {
+  const f = session.feeds || { configured: false, list: [] };
+  const how = {
+    luma: "In Luma: your profile, Settings, Calendar Syncing, Add iCal Subscription. Copy the link.",
+    partiful: "In Partiful (on a computer): your events, Sync to calendar. Copy the link.",
+    calendar: "Apple, Google or Outlook: find your calendar's private iCal or \"secret address\" link.",
+  };
+  const cards = ["luma", "partiful", "calendar"].map((k) => {
+    const have = f.list.filter((x) => x.kind === k);
+    const name = k === "calendar" ? "Any calendar" : SRC_NAMES[k];
+    return `<div class="gcal ${have.length ? "on" : ""}"><p><b>${name}.</b> ${have.length ? have.map((x) => `Connected (${esc(x.host)})${x.last_error ? ` · <em>${esc(x.last_error)}</em>` : ""} <button class="linkbtn" data-act="feedrm" data-id="${esc(x.id)}">Remove</button>`).join("<br>") : how[k]}</p>
+      ${have.length ? "" : !f.configured ? `<small>Coming soon</small>` : !session.user ? `<a class="btn sm line" href="#/welcome" data-act="authgo" data-v="signin">Sign in to connect</a>`
+        : `<form class="feedadd" data-kind="${k}"><input type="url" name="url" placeholder="Paste the link" aria-label="${name} link" required><button class="btn sm ink" type="submit">Connect</button></form>`}</div>`;
+  }).join("");
+  return `<section class="sec" aria-labelledby="cx-h"><h2 id="cx-h">Connections</h2>
+    <p class="fine">Your own plans show up in your week, and those nights stay open. We read them; we never post or change anything. Links are kept encrypted.</p>
+    ${cards}
+    <p class="fine" style="margin-top:8px">Coming next: Ticketmaster shows, and forwarding your ticket emails.</p></section>`;
 }
 
 function googleSection() {
@@ -879,6 +973,16 @@ const actions = {
   ci: (b) => { const l = S.locks[b.dataset.id]; if (!l) return; W.checkin(l, b.dataset.v); toast(b.dataset.v === "didnt" ? "Noted. Next free night is your comeback night." : b.dataset.v === "loved" ? "Loved it. You'll see more like it." : "Nice. Noted."); render(); },
   lock: (b) => { const ev = evById.get(b.dataset.id); if (!ev) return; W.lock(ev); ui.justLit = ev.id; ui.skipOpen = null; render(); app.querySelector(`[data-act="droplock"][data-id="${CSS.escape(ev.id)}"]`)?.focus({ preventScroll: true }); toast("Locked. It's on your week."); },
   pick: (b) => { const ev = evById.get(b.dataset.id); if (!ev) return; delete S.kept[ev.date]; W.lock(ev); ui.justLit = ev.id; render(); app.querySelector(`[data-act="droplock"][data-id="${CSS.escape(ev.id)}"]`)?.focus({ preventScroll: true }); toast("Picked and locked."); },
+  feedrm: async (b) => {
+    try { await W.removeFeed(b.dataset.id); Object.keys(mineState).forEach((k) => delete mineState[k]); render(); toast("Removed. Weekline can't see that calendar now."); }
+    catch (e) { toast(W.isOffline(e) ? "Can't reach the server right now." : e.message); }
+  },
+  thumb: (b) => {
+    const ev = evById.get(b.dataset.id); if (!ev) return;
+    if (b.dataset.v === "up") { W.signal("up", ev); toast("Got it. More like this."); }
+    else { W.skip(ev, "notme"); toast("Got it. Less like this. We'll find something else."); }
+    render();
+  },
   droplock: (b) => { W.dropLock(b.dataset.id); render(); toast("Lock removed."); },
   skipopen: (b) => { ui.skipOpen = ui.skipOpen === b.dataset.id ? null : b.dataset.id; render({ keepFocus: true }); app.querySelector(`[data-act="skip"][data-id="${CSS.escape(b.dataset.id)}"]`)?.focus(); },
   skipclose: () => { const id = ui.skipOpen; ui.skipOpen = null; render(); app.querySelector(`[data-act="skipopen"][data-id="${CSS.escape(id)}"]`)?.focus(); },
@@ -921,10 +1025,11 @@ const actions = {
   webshare: async (b) => { try { await navigator.share({ text: b.dataset.text, url: b.dataset.url }); } catch (e) { /* dismissed */ } },
   moff: (b) => { ui.monthOff = Number(b.dataset.v); render({ keepFocus: true }); },
   ownclear: () => { if (ui.ownUrl) URL.revokeObjectURL(ui.ownUrl); ui.own = null; ui.ownUrl = null; render(); },
-  save: async (b) => { const cv = document.getElementById("poster"); await saveCanvas(cv, b.dataset.v === "recap" ? "weekline-month.png" : "weekline-my-week.png"); toast("Saved."); },
+  save: async (b) => { const cv = document.getElementById("poster"); await saveCanvas(cv, b.dataset.v === "recap" ? "weekline-month.png" : b.dataset.v === "lock" ? "weekline-lock-screen.png" : "weekline-my-week.png"); toast("Saved."); },
+  copyweek: async () => { try { await navigator.clipboard.writeText(weekText()); toast("Copied. Paste it into Notes."); } catch (e) { toast("Couldn't copy here. Try Text it to me."); } },
   share: async (b) => {
     const cv = document.getElementById("poster");
-    try { const r = await shareCanvas(cv, b.dataset.v === "recap" ? "weekline-month.png" : "weekline-my-week.png", "My week, made with Weekline"); toast(r === "shared" ? "Shared." : "This browser can't share files, so it saved instead."); }
+    try { const r = await shareCanvas(cv, b.dataset.v === "recap" ? "weekline-month.png" : b.dataset.v === "lock" ? "weekline-lock-screen.png" : "weekline-my-week.png", "My week, made with Weekline"); toast(r === "shared" ? "Shared." : "This browser can't share files, so it saved instead."); }
     catch (e) { /* dismissed */ }
   },
   "inv-ics": () => {
@@ -964,6 +1069,16 @@ app.addEventListener("click", (e) => {
 app.addEventListener("submit", async (e) => {
   const f = e.target; e.preventDefault();
   if (f.dataset.form === "auth") return submitAuth(f);
+  if (f.classList.contains("feedadd")) {
+    const url = String(new FormData(f).get("url") || "").trim();
+    const btn = f.querySelector("button"); btn.disabled = true; btn.textContent = "Checking…";
+    try {
+      const added = await W.addFeed(f.dataset.kind, url);
+      Object.keys(mineState).forEach((k) => delete mineState[k]);
+      render(); toast(added && added.count ? `Connected. ${added.count} upcoming ${added.count === 1 ? "plan" : "plans"} found.` : "Connected. Nothing coming up on it yet.");
+    } catch (err) { btn.disabled = false; btn.textContent = "Connect"; toast(W.isOffline(err) ? "Can't reach the server right now." : err.message); }
+    return;
+  }
   if (f.dataset.form === "visit") {
     const fd = new FormData(f); const from = String(fd.get("from")), to = String(fd.get("to"));
     if (!from || !to || to < from) { ui.visitErr = "Leaving has to be on or after arriving."; return render(); }
@@ -1001,8 +1116,8 @@ app.addEventListener("change", (e) => {
 /* ---------- boot ---------- */
 (async function boot() {
   if (qs.get("demo") === "1" && !(S.profile && S.profile.demo)) W.seedDemo(TODAY);
-  await W.boot();
-  if (session.mode === "server") await W.googleStatus();
+  await Promise.all([W.boot(), W.loadAlgo()]);
+  if (session.mode === "server") await Promise.all([W.googleStatus(), W.loadFeeds()]);
   if (S.invites.length) W.refreshFriendCounts().then(() => { if (["week", "share"].includes(route().name)) render({ keepFocus: true }); });
   render();
   ensureLive();

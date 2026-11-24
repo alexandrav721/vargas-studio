@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Weekline HQ · team console</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=Jost:wght@300..600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="hq.css" />
+</head>
+<body>
+<header class="bar">
+  <a class="brand" href="../">Weekline <span>HQ</span></a>
+  <span class="who" id="who"></span>
+</header>
+<nav class="tabs" id="tabs" aria-label="Console sections" hidden>
+  <button data-tab="flow" aria-current="page">The flow</button>
+  <button data-tab="skills">Skills</button>
+  <button data-tab="changes">Changes <b id="waitN"></b></button>
+  <button data-tab="versions">Versions</button>
+  <button data-tab="numbers">Numbers</button>
+  <button data-tab="connections">Connections</button>
+  <button data-tab="team">Team</button>
+</nav>
+<main id="main"><p class="muted">Loading…</p></main>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script type="module" src="hq.js"></script>
+</body>
+</html>

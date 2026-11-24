@@ -3,6 +3,16 @@ import {
   GOALS, HOODS, PLACES, DAYS, MON3, SAMPLE_EVENTS, EDITORIAL_EVENTS, LEARN_EVENTS, DATED_EVENTS,
   HOLIDAYS, TAG_WORDS, SLOT_WORDS, DAYS_LONG, photoFor, goalsForTags,
 } from "./data.js";
+import { ALGO_V1 } from "./algo.js";
+
+/* ---------- the algorithm settings (live version from the server; v1 built in) ---------- */
+export let A = ALGO_V1;
+export function setAlgo(a) { if (a && a.learn && a.fit && a.week) A = a; }
+/* The live version from the team console. Falls back to version 1 if the server can't be reached. */
+export async function loadAlgo() {
+  try { const r = await fetch("/api/wl/algo"); if (r.ok) { const j = await r.json(); setAlgo(j.algo); } } catch (e) { /* offline: keep version 1 */ }
+  return A.version;
+}
 
 /* ---------- dates (America/New_York) ---------- */
 const qs = new URLSearchParams(location.search);
@@ -41,7 +51,7 @@ function load() {
   return blank();
 }
 export const S = load();
-export const session = { mode: "unknown", user: null, liveStatus: "idle", liveCount: 0, note: "", google: { loaded: false, configured: false, connected: false } };
+export const session = { mode: "unknown", user: null, liveStatus: "idle", liveCount: 0, note: "", google: { loaded: false, configured: false, connected: false }, feeds: { loaded: false, configured: false, list: [] } };
 export function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { /* storage blocked: keeps working in memory */ } }
 export function resetLocal() { const d = S.device; Object.keys(S).forEach((k) => delete S[k]); Object.assign(S, blank(), { device: d }); save(); }
 
@@ -157,6 +167,32 @@ export async function fetchBusy(first, last) {
   busyMem.set(key, list);
   return list;
 }
+/* ---------- calendar links people paste in (Luma, Partiful, any calendar) ---------- */
+const mineMem = new Map(); // range key -> [{title, source, place, url, all_day, s, e}] in New York wall clock
+export async function loadFeeds() {
+  try { const r = await api("GET", "feeds-in"); session.feeds = { loaded: true, configured: !!r.configured, list: r.feeds || [] }; }
+  catch (e) { session.feeds = { loaded: true, configured: false, list: [] }; }
+  return session.feeds;
+}
+export async function addFeed(kind, url) {
+  const r = await api("POST", "feeds-in", { kind, url });
+  session.feeds = { loaded: true, configured: true, list: r.feeds || [] }; mineMem.clear();
+  return r.added;
+}
+export async function removeFeed(id) {
+  const r = await api("POST", `feeds-in/${encodeURIComponent(id)}/remove`, {});
+  session.feeds.list = r.feeds || []; mineMem.clear();
+}
+/** Events from their own calendars for New York dates first..last. */
+export async function fetchMine(first, last) {
+  const key = first + "_" + last;
+  if (mineMem.has(key)) return mineMem.get(key);
+  const from = addDays(first, -1) + "T00:00:00Z", to = addDays(last, 2) + "T00:00:00Z";
+  const r = await api("GET", `feeds-in/events?from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}`);
+  const list = (r.events || []).map((e) => ({ title: e.title, source: e.source, place: e.place, url: e.url, all_day: e.all_day, s: nyWall(e.start), e: nyWall(e.end) }));
+  mineMem.set(key, list);
+  return list;
+}
 export const overlaps = (busy, a, b) => !!busy && busy.some(([s, e]) => s < b && e > a);
 const hm = (h) => { const hh = Math.min(23, Math.floor(h)), mm = h >= 24 ? 59 : Math.round((h % 1) * 60); return `${String(hh).padStart(2, "0")}:${String(Math.min(59, mm)).padStart(2, "0")}`; };
 /** The evening window (5 to 11 pm) on a date. */
@@ -224,17 +260,17 @@ export function model() {
   const add = (o, k, v) => { o[k] = (o[k] || 0) + v; };
   for (const s of S.signals) {
     const at = typeof s.at === "number" ? (s.at < 1e12 ? s.at * 1000 : s.at) : Date.parse(s.at) || now;
-    const d = Math.pow(0.5, (now - at) / (56 * 86400000)); // 8-week half-life
+    const d = Math.pow(0.5, (now - at) / (A.learn.halfLifeDays * 86400000)); // older choices fade
     const tags = (s.tags || []).filter((t) => !String(t).startsWith("slot:"));
     const sl = (s.tags || []).find((t) => String(t).startsWith("slot:"));
-    const w = { went: 5, loved: 2, lock: 3, unlock: -3, ics: 3, rsvp: 2 }[s.kind];
+    const w = A.learn.weights[s.kind];
     if (w) tags.forEach((t) => add(tag, t, w * d));
     if (s.kind === "skip") {
       if (s.reason === "far") far += d;
       else if (s.reason === "pricey") pricey += d;
-      else if (s.reason === "notme") tags.forEach((t) => add(tag, t, -1 * d));
-      else if (s.reason === "busy" && sl) add(slot, sl.slice(5), -1 * d);
-      else if (s.reason === "missed" && sl) add(slot, sl.slice(5), -2 * d);
+      else if (s.reason === "notme") tags.forEach((t) => add(tag, t, A.learn.skip.notme * d));
+      else if (s.reason === "busy" && sl) add(slot, sl.slice(5), A.learn.skip.busy * d);
+      else if (s.reason === "missed" && sl) add(slot, sl.slice(5), A.learn.skip.missed * d);
     }
   }
   return { tag, slot, far, pricey };
@@ -279,7 +315,7 @@ export function homeGeo(p) {
 function placeGeo(name, borough) {
   return HOODS.brooklyn[name] || HOODS.manhattan[name] || PLACES[name] || (borough === "Manhattan" ? MANHATTAN : BROOKLYN);
 }
-export const sourceLabel = (k) => (k === "live" ? "Live NYC Parks" : k === "editorial" ? "Editorial" : "Sample");
+export const sourceLabel = (k) => (k === "live" ? "Live NYC Parks" : k === "tm" ? "Ticketmaster" : k === "editorial" ? "Editorial" : "Sample");
 
 function norm(e, date) {
   const { h, mi } = e.h !== undefined ? e : parseTime(e.time);
@@ -315,6 +351,15 @@ function parksTags(cat, title) {
   if (/photo/.test(s)) add("photography");
   if (/meditat|mindful|relax|tai chi/.test(s)) add("calm");
   return [...t];
+}
+/** Ticketmaster rows (concerts, shows, sports) through our server. [] when the key isn't set yet. */
+export async function fetchTm(from, toExclusive) {
+  const ck = `wl.tm.${from}.${toExclusive}`;
+  try { const c = JSON.parse(sessionStorage.getItem(ck) || "null"); if (c && Date.now() - c.at < 30 * 60000) return c.rows; } catch (e) { /* ignore */ }
+  const r = await fetch(`/api/wl/events/tm?from=${from}&to=${toExclusive}`).then((x) => (x.ok ? x.json() : { events: [] })).catch(() => ({ events: [] }));
+  const rows = r.events || [];
+  try { sessionStorage.setItem(ck, JSON.stringify({ at: Date.now(), rows })); } catch (e) { /* ignore */ }
+  return rows;
 }
 export async function fetchLive(from, toExclusive) {
   const ck = `wl.parks.${from}.${toExclusive}`;
@@ -377,27 +422,40 @@ export function scoreEvent(ev, p, m, opts = {}) {
   if (goals.includes("learn") && ev.tags.includes("learn")) {
     const chips = (p.learn && p.learn.chips || []).map((c) => c.toLowerCase());
     const text = (p.learn && p.learn.text || "").toLowerCase();
-    if (chips.some((c) => ev.tags.includes(c)) || (text && ev.tags.some((t) => text.includes(t)))) goalFit = 1.5;
-    else if (chips.length || text) goalFit = 0.4;
+    if (chips.some((c) => ev.tags.includes(c)) || (text && ev.tags.some((t) => text.includes(t)))) goalFit = A.fit.learnMatch;
+    else if (chips.length || text) goalFit = A.fit.learnMiss;
   }
   if (goals.includes("calm") && ev.tags.includes("calm")) goalFit = Math.max(goalFit, 1);
   let aff = 0;
-  ev.tags.forEach((t) => { aff += Math.max(-4, Math.min(6, m.tag[t] || 0)); });
+  ev.tags.forEach((t) => { aff += Math.max(A.fit.tagMin, Math.min(A.fit.tagMax, m.tag[t] || 0)); });
   aff += m.slot[slotOf(ev)] || 0;
-  aff = Math.max(-8, Math.min(8, aff));
+  aff = Math.max(-A.fit.tasteCap, Math.min(A.fit.tasteCap, aff));
   const friends = S.friendCounts[ev.id] || 0;
   const mins = travelMin(homeGeo(p), ev.geo);
-  const tol = Math.max(10, (p.minutes || 30) - 5 * m.far);
-  if (mins > tol + 25) return null;
-  const distPen = mins > tol ? (mins - tol) / 5 : 0;
+  const tol = Math.max(A.fit.minTolerance, (p.minutes || 30) - A.fit.farStep * m.far);
+  if (mins > tol + A.fit.tooFarSlack) return null;
+  const distPen = mins > tol ? (mins - tol) / A.fit.minutesPerPoint : 0;
   const budget = p.budget ?? 25;
   if (budget === 0 && ev.cost > 0) return null;
-  const ptol = budget >= 100 ? 200 : budget * Math.pow(0.8, m.pricey);
-  const pricePen = ev.cost > ptol ? 1 + (ev.cost - ptol) / 10 : 0;
+  const ptol = budget >= 100 ? 200 : budget * Math.pow(A.fit.priceDecay, m.pricey);
+  const pricePen = ev.cost > ptol ? 1 + (ev.cost - ptol) / A.fit.pricePerPoint : 0;
   const novelty = S.signals.some((s) => s.event_id === ev.id) ? 0 : 1;
-  let score = 3 * goalFit + aff + 2 * friends - distPen - pricePen + 0.5 * novelty;
+  let score = A.fit.goal * goalFit + aff + A.fit.friends * friends - distPen - pricePen + A.fit.novelty * novelty;
   if (opts.jitter) score += (hash(ev.id + opts.jitter) % 100) / 40;
-  return { score, mins, goalFit, why: why(ev, p, goalFit, mins) };
+  return { score, mins, goalFit, why: why(ev, p, goalFit, mins), because: because(ev, m, friends, goalFit, p) };
+}
+/* "Why this?": the plain reasons behind a pick, strongest first. */
+function because(ev, m, friends, goalFit, p) {
+  const out = [];
+  const g = GOALS.find((x) => ev.goals.includes(x.id) && (p.goals || []).includes(x.id));
+  if (g && goalFit >= 1) out.push(`Fits your goal: ${g.label.toLowerCase()}`);
+  const liked = ev.tags.filter((t) => (m.tag[t] || 0) >= 2 && TAG_WORDS[t]).sort((a, b) => m.tag[b] - m.tag[a])[0];
+  if (liked) out.push(`You've liked ${TAG_WORDS[liked]} before`);
+  const sl = m.slot[slotOf(ev)] || 0;
+  if (sl < -0.5) out.push(`You often skip this time, but it fit best`);
+  if (friends) out.push(`${friends} ${friends === 1 ? "friend is" : "friends are"} going`);
+  if (!S.signals.some((s) => s.event_id === ev.id)) out.push("Something new for you");
+  return out.slice(0, 3);
 }
 function hash(s) { let h = 0; for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0; return Math.abs(h); }
 function why(ev, p, goalFit, mins) {
@@ -471,13 +529,13 @@ export function buildWeek(p, events, today, busy = null) {
   const adj = (c) => {
     const gs = c.ev.goals.filter((g) => quota[g] !== undefined && g !== "calm");
     if (!gs.length) return c.score;
-    return gs.every((g) => (have[g] || 0) >= quota[g]) ? c.score - 4 : c.score;
+    return gs.every((g) => (have[g] || 0) >= quota[g]) ? c.score - A.week.goalQuotaPenalty : c.score;
   };
   const open = new Set(fillable);
   while (need > 0 && open.size) {
     let best = null;
     for (const d of open) for (const c of d.cands) {
-      if (used.has(c.ev.id) || c.score <= -2) continue;
+      if (used.has(c.ev.id) || c.score <= A.week.minScore) continue;
       const a = adj(c); if (!best || a > best.a) best = { d, c, a };
     }
     if (!best) break;
@@ -488,7 +546,7 @@ export function buildWeek(p, events, today, busy = null) {
     d.suggest = d.cands.filter((c) => !used.has(c.ev.id) && (!d.plan || c.ev.id !== d.plan.ev.id));
     if (d.holiday) d.suggest = d.suggest.filter((c) => c.ev.cost === 0 && !c.ev.tags.includes("nightlife") && c.ev.h < 18)
       .sort((a, b) => (b.ev.tags.includes("calm") || b.ev.tags.includes("walk") ? 1 : 0) - (a.ev.tags.includes("calm") || a.ev.tags.includes("walk") ? 1 : 0)).slice(0, 2);
-    else d.suggest = d.suggest.slice(0, 3);
+    else d.suggest = d.suggest.slice(0, A.week.suggestions);
     d.kind = d.lock ? "lock" : d.holiday ? "holiday" : !d.isFree ? "busy" : d.calBusy ? "cal" : d.plan ? "plan" : "free";
   }
   // goal nights: planned or locked rows that fit a goal, plus nights kept free for "Feel less busy"

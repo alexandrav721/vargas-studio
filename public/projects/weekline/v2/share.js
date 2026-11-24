@@ -179,3 +179,43 @@ export async function shareCanvas(cv, name, text) {
   if (navigator.canShare && navigator.canShare({ files: [file] })) { await navigator.share({ files: [file], text }); return "shared"; }
   await saveCanvas(cv, name); return "saved";
 }
+
+/* 1179 × 2556 lock screen (iPhone). The top stays clear for the clock; the plan sits low; nothing under the buttons. */
+export function drawLock(cv, d) {
+  const W = 1179, H = 2556;
+  cv.width = W; cv.height = H;
+  const ctx = cv.getContext("2d");
+  ctx.fillStyle = "#120D09"; ctx.fillRect(0, 0, W, H);
+  cover(ctx, d.img, 0, 0, W, H, d.own ? 0.5 : 0.58, 0.45);
+  const g = ctx.createLinearGradient(0, 0, 0, H);
+  g.addColorStop(0, "rgba(18,13,9,.35)"); g.addColorStop(0.3, "rgba(18,13,9,.05)"); g.addColorStop(0.5, "rgba(18,13,9,.55)"); g.addColorStop(0.66, "rgba(18,13,9,.9)"); g.addColorStop(1, "#120D09");
+  ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+  const L = 84, R = W - 84;
+  // Tonight
+  let y = 1330;
+  ctx.textAlign = "left"; ctx.font = `500 34px ${SANS}`; spacing(ctx, 7); ctx.fillStyle = SUN;
+  ctx.fillText(d.tonightLabel.toUpperCase(), L, y);
+  y += 92;
+  ctx.font = `italic 400 86px ${SERIF}`; spacing(ctx, -1.5); ctx.fillStyle = "#fff";
+  const words = String(d.tonight || "").split(" "); let line = "", lines = [];
+  for (const w of words) { const t = line ? line + " " + w : w; if (ctx.measureText(t).width > R - L && line) { lines.push(line); line = w; } else line = t; }
+  if (line) lines.push(line);
+  lines.slice(0, 2).forEach((l, i) => { ctx.fillText(i === 1 && lines.length > 2 ? fit(ctx, l + "…", R - L) : l, L, y); y += 98; });
+  if (d.tonightMeta) { ctx.font = `400 38px ${SANS}`; spacing(ctx, 0); ctx.fillStyle = "rgba(255,255,255,.78)"; ctx.fillText(fit(ctx, d.tonightMeta, R - L), L, y - 18); y += 40; }
+  // The rest of the week
+  y += 48;
+  ctx.fillStyle = "rgba(255,255,255,.26)"; ctx.fillRect(L, y, R - L, 2);
+  y += 18;
+  for (const r of d.rows.slice(0, 6)) {
+    y += 76;
+    ctx.font = `italic 400 46px ${SERIF}`; spacing(ctx, -0.5); ctx.fillStyle = SUN; ctx.fillText(r.day, L, y);
+    ctx.font = r.free ? `italic 400 42px ${SERIF}` : `400 40px ${SANS}`; spacing(ctx, 0); ctx.fillStyle = r.free ? "rgba(255,255,255,.66)" : "#fff";
+    ctx.fillText(fit(ctx, r.title, R - L - 150), L + 150, y);
+  }
+  // Signature, above the flashlight and camera buttons
+  const by = 2290;
+  ctx.textAlign = "left"; wordmark(ctx, L, by, 46);
+  ctx.textAlign = "right"; ctx.font = `400 28px ${SANS}`; spacing(ctx, 4); ctx.fillStyle = "rgba(255,255,255,.7)";
+  ctx.fillText(d.sample ? "SAMPLE WEEK" : d.range.toUpperCase(), R, by - 6);
+  ctx.textAlign = "left"; spacing(ctx, 0);
+}

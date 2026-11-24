@@ -13,6 +13,12 @@
 //            GOOGLE_CLIENT_SECRET, WL_TOKEN_KEY (base64, 32 bytes, AES-GCM for refresh tokens at rest).
 //            GOOGLE_MOCK=1 (localhost only) fakes Google for local tests.
 //
+// Events     GET events/tm?from&to (Ticketmaster, secret TICKETMASTER_KEY)
+// Links in   GET feeds-in · POST feeds-in {kind, url} · POST feeds-in/<id>/remove · GET feeds-in/events?from&to
+// Team HQ    GET algo · GET hq/me · GET hq/state · POST hq/proposals · POST hq/proposals/<id>/approve|decline
+//            POST hq/algo/<v>/restore · POST hq/team · POST hq/team/<id>/remove · GET hq/stats (see hqRoutes)
+//            Owners come from the OWNER_EMAILS secret (comma-separated) and the roles table.
+//
 // Passwords and tokens are never logged. Session tokens are stored only as SHA-256 hashes.
 
 const COOKIE = 'wl_session';
@@ -25,7 +31,7 @@ const MAX_SIGNALS_KEPT = 5000;
 const MAX_LOCKS = 100;
 const MAX_RSVPS = 500;
 const MAX_VOTES = 500;
-const KINDS = new Set(['went', 'loved', 'lock', 'unlock', 'skip', 'ics', 'rsvp']);
+const KINDS = new Set(['went', 'loved', 'lock', 'unlock', 'skip', 'ics', 'rsvp', 'up']);
 const ALLOWED_ORIGINS = [/^https:\/\/([a-z0-9-]+\.)?vargas-studio\.pages\.dev$/, /^http:\/\/(127\.0\.0\.1|localhost)(:\d+)?$/];
 const APP_PATH = '/projects/weekline/v2/';
 
@@ -590,6 +596,402 @@ async function googleRoutes(env, req, path, m, origin) {
 
 // ---------- routes ----------
 
+
+// ---------- Ticketmaster (Discovery API): concerts, sports, theater in Manhattan and Brooklyn ----------
+// GET events/tm?from=YYYY-MM-DD&to=YYYY-MM-DD (exclusive). Secret: TICKETMASTER_KEY (free key). Cached 1 hour.
+// TM_MOCK=1 (localhost only) returns two fake events for tests. No key = {configured:false, events:[]}.
+function tmTags(c) {
+  const seg = (c && c.segment && c.segment.name || '').toLowerCase(), genre = (c && c.genre && c.genre.name || '').toLowerCase();
+  if (seg === 'music') return ['music', 'nightlife'];
+  if (seg.startsWith('arts')) return genre.includes('comedy') ? ['comedy', 'nightlife'] : ['theater', 'culture'];
+  if (seg === 'film') return ['film'];
+  if (seg === 'sports') return ['social'];
+  return ['culture'];
+}
+function tmRow(e) {
+  const v = (e._embedded && e._embedded.venues && e._embedded.venues[0]) || {};
+  const city = (v.city && v.city.name || '').toLowerCase();
+  const borough = city === 'brooklyn' ? 'Brooklyn' : city === 'new york' || city === 'manhattan' ? 'Manhattan' : null;
+  const d = e.dates && e.dates.start || {};
+  if (!borough || !d.localDate || !d.localTime || (e.dates.status && /cancel|postpon/i.test(e.dates.status.code || ''))) return null;
+  const [h, mi] = d.localTime.split(':').map(Number);
+  const pr = (e.priceRanges || [])[0];
+  const lat = Number(v.location && v.location.latitude), lon = Number(v.location && v.location.longitude);
+  return {
+    id: 'tm:' + String(e.id).slice(0, 60), title: String(e.name || '').slice(0, 140), hood: String(v.name || 'NYC').slice(0, 80), borough,
+    date: d.localDate, h, mi, cost: pr && Number.isFinite(pr.min) ? Math.round(pr.min) : 0, costUnknown: !pr,
+    tags: tmTags((e.classifications || [])[0]), kind: 'tm', url: /^https:\/\//.test(e.url || '') ? e.url : 'https://www.ticketmaster.com',
+    geo: Number.isFinite(lat) && Number.isFinite(lon) ? [lat, lon] : null,
+  };
+}
+async function tmRoutes(env, req, path, m) {
+  if (path !== 'events/tm' || m !== 'GET') return null;
+  const q = new URL(req.url).searchParams;
+  const from = q.get('from') || '', to = q.get('to') || '';
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(from) || !/^\d{4}-\d{2}-\d{2}$/.test(to) || to <= from) throw new Bad('Send from and to as YYYY-MM-DD.');
+  const local = ['127.0.0.1', 'localhost'].includes(new URL(req.url).hostname);
+  if (env.TM_MOCK === '1' && local) {
+    const mk = (id, name, seg, date, time, city, price) => ({ id, name, url: 'https://www.ticketmaster.com/e/' + id, dates: { start: { localDate: date, localTime: time } },
+      classifications: [{ segment: { name: seg } }], priceRanges: price ? [{ min: price }] : undefined,
+      _embedded: { venues: [{ name: city === 'Brooklyn' ? 'Brooklyn Steel' : 'Beacon Theatre', city: { name: city }, location: { latitude: city === 'Brooklyn' ? '40.7193' : '40.7805', longitude: city === 'Brooklyn' ? '-73.9389' : '-73.9812' } }] } });
+    const evs = [mk('m1', 'Indie night: three bands', 'Music', from, '20:00:00', 'Brooklyn', 35), mk('m2', 'Stand-up showcase', 'Arts & Theatre', to, '19:30:00', 'New York', 25)];
+    return json({ configured: true, events: evs.map(tmRow).filter(Boolean).filter((r) => r.date >= from && r.date < to) });
+  }
+  if (!env.TICKETMASTER_KEY) return json({ configured: false, events: [] });
+  const ck = `wl-tm:${from}:${to}`;
+  if (env.BUILDS) { const hit = await env.BUILDS.get(ck); if (hit) return json(JSON.parse(hit), 200, { 'cache-control': 'public, max-age=900' }); }
+  const params = new URLSearchParams({ apikey: env.TICKETMASTER_KEY, latlong: '40.7306,-73.9866', radius: '8', unit: 'miles', size: '120', sort: 'date,asc',
+    startDateTime: from + 'T05:00:00Z', endDateTime: to + 'T05:00:00Z', locale: '*' });
+  let r;
+  try { r = await fetch('https://app.ticketmaster.com/discovery/v2/events.json?' + params); } catch { return json({ configured: true, events: [], error: 'unreachable' }); }
+  if (!r.ok) return json({ configured: true, events: [], error: 'status ' + r.status });
+  const j = await r.json().catch(() => ({}));
+  const seen = new Set();
+  const events = ((j._embedded && j._embedded.events) || []).map(tmRow).filter(Boolean).filter((e) => {
+    const k = e.title.toLowerCase().slice(0, 40) + e.date; if (seen.has(k)) return false; seen.add(k); return true;
+  });
+  const out = { configured: true, events };
+  if (env.BUILDS) await env.BUILDS.put(ck, JSON.stringify(out), { expirationTtl: 3600 });
+  return json(out, 200, { 'cache-control': 'public, max-age=900' });
+}
+
+// ---------- calendar links people paste in (Luma, Partiful, any iCal) ----------
+// GET feeds-in · POST feeds-in {kind, url} · POST feeds-in/<id>/remove · GET feeds-in/events?from&to
+// Links are secrets: encrypted at rest, never returned, never logged. We only read .ics calendars over https.
+const FEED_KINDS = new Set(['luma', 'partiful', 'calendar']);
+const MAX_FEEDS = 6;
+const MAX_ICS = 1500 * 1024;
+function feedsOn(env) {
+  if (!env.WL_TOKEN_KEY) return false;
+  try { return b64d(String(env.WL_TOKEN_KEY).trim()).length === 32; } catch { return false; }
+}
+async function sealFeed(env, userId, plain) {
+  const iv = crypto.getRandomValues(new Uint8Array(12));
+  const ct = await crypto.subtle.encrypt({ name: 'AES-GCM', iv, additionalData: enc.encode('wl-feed:' + userId) }, await aesKey(env), enc.encode(plain));
+  return { enc: b64e(ct), iv: b64e(iv) };
+}
+async function unsealFeed(env, userId, encB64, ivB64) {
+  const pt = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: b64d(ivB64), additionalData: enc.encode('wl-feed:' + userId) }, await aesKey(env), b64d(encB64));
+  return new TextDecoder().decode(pt);
+}
+/** A calendar link -> a safe https URL (webcal:// becomes https://). No IP addresses, no local names. */
+function feedUrl(v, testing = false) {
+  if (typeof v !== 'string' || !v.trim() || v.length > 2000) throw new Bad('Paste the calendar link.');
+  let u;
+  try { u = new URL(v.trim().replace(/^webcals?:\/\//i, 'https://')); } catch { throw new Bad('That doesn’t look like a link. Copy it again from the app.'); }
+  if (testing && u.protocol === 'http:' && u.hostname === '127.0.0.1') { u.hash = ''; return u; } // local tests only (FEEDS_MOCK)
+  if (u.protocol !== 'https:') throw new Bad('Use a link that starts with https:// or webcal://.');
+  const h = u.hostname.toLowerCase();
+  if (/^[\d.]+$/.test(h) || h.includes(':') || h === 'localhost' || h.endsWith('.local') || h.endsWith('.internal') || !h.includes('.'))
+    throw new Bad('That link can’t be read. Use the calendar link from the app itself.');
+  u.hash = '';
+  return u;
+}
+async function fetchIcs(u) {
+  let r;
+  try { r = await fetch(u.toString(), { headers: { accept: 'text/calendar, text/plain;q=0.8' }, redirect: 'follow', cf: { cacheTtl: 300 } }); }
+  catch { throw new Bad('We couldn’t reach that calendar. Check the link and try again.', 502); }
+  if (!r.ok) throw new Bad(r.status === 404 || r.status === 403 ? 'That calendar link didn’t work. It may have expired: copy a fresh one.' : 'That calendar didn’t answer. Try again later.', 502);
+  const len = Number(r.headers.get('content-length') || 0);
+  if (len > MAX_ICS) throw new Bad('That calendar is too big to read.', 413);
+  const body = await r.text();
+  if (body.length > MAX_ICS) throw new Bad('That calendar is too big to read.', 413);
+  if (!/BEGIN:VCALENDAR/i.test(body.slice(0, 2000))) throw new Bad('That link isn’t a calendar feed. In the app, look for "Add to calendar", "iCal" or "Subscribe".');
+  return body;
+}
+/** Minutes a time zone is ahead of UTC at an instant (works for any IANA zone the runtime knows). */
+function tzOffsetMin(ms, tz) {
+  try {
+    const p = Object.fromEntries(new Intl.DateTimeFormat('en-US', { timeZone: tz, hourCycle: 'h23', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' })
+      .formatToParts(new Date(ms)).map((x) => [x.type, x.value]));
+    return (Date.UTC(+p.year, +p.month - 1, +p.day, +p.hour % 24, +p.minute, +p.second) - ms) / 60000;
+  } catch { return nyOffsetMin(ms); }
+}
+function icsTime(value, params) {
+  const m = String(value).match(/^(\d{4})(\d{2})(\d{2})(?:T(\d{2})(\d{2})(\d{2})?(Z)?)?$/);
+  if (!m) return null;
+  const [, y, mo, d, h, mi, se, z] = m;
+  if (h === undefined) return { ms: nyToUtc(+y, +mo - 1, +d, 0), allDay: true };
+  const wall = Date.UTC(+y, +mo - 1, +d, +h, +mi, +(se || 0));
+  if (z) return { ms: wall, allDay: false };
+  const tz = (params.match(/TZID=("?)([^;:"]+)\1/i) || [])[2] || 'America/New_York';
+  const guess = wall - tzOffsetMin(wall, tz) * 60000;
+  return { ms: wall - tzOffsetMin(guess, tz) * 60000, allDay: false };
+}
+const icsRead = (v) => String(v || '').replace(/\\n/gi, ' ').replace(/\\([,;\\])/g, '$1').replace(/\s+/g, ' ').trim();
+/** Read VEVENTs from an .ics file. Skips cancelled events; repeating events count once (their first date). */
+function parseIcs(body, fromMs, toMs) {
+  const lines = body.replace(/\r\n?/g, '\n').replace(/\n[ \t]/g, '').split('\n');
+  const out = [];
+  let ev = null;
+  for (const line of lines) {
+    if (/^BEGIN:VEVENT/i.test(line)) { ev = {}; continue; }
+    if (/^END:VEVENT/i.test(line)) {
+      if (ev && ev.start && !/CANCELLED/i.test(ev.status || '')) {
+        const end = ev.end || { ms: ev.start.ms + (ev.start.allDay ? 864e5 : 2 * 3600e3), allDay: ev.start.allDay };
+        if (end.ms > fromMs && ev.start.ms < toMs)
+          out.push({ title: icsRead(ev.summary).slice(0, 160) || 'Busy', start: new Date(ev.start.ms).toISOString(), end: new Date(end.ms).toISOString(), all_day: !!ev.start.allDay, place: icsRead(ev.location).slice(0, 160) || null, url: /^https:\/\//.test(ev.url || '') ? ev.url.slice(0, 500) : null });
+      }
+      ev = null; continue;
+    }
+    if (!ev) continue;
+    const i = line.indexOf(':'); if (i < 0) continue;
+    const head = line.slice(0, i), value = line.slice(i + 1);
+    const name = head.split(';')[0].toUpperCase(), params = head.slice(name.length);
+    if (name === 'SUMMARY') ev.summary = value;
+    else if (name === 'LOCATION') ev.location = value;
+    else if (name === 'URL') ev.url = value.trim();
+    else if (name === 'STATUS') ev.status = value;
+    else if (name === 'DTSTART') ev.start = icsTime(value.trim(), params);
+    else if (name === 'DTEND') ev.end = icsTime(value.trim(), params);
+  }
+  return out.sort((a, b) => a.start.localeCompare(b.start)).slice(0, 300);
+}
+async function feedList(env, userId) {
+  const rows = await env.WL.prepare('SELECT id, kind, host, added_at, last_ok, last_error, last_count FROM feeds_in WHERE user_id = ? ORDER BY added_at').bind(userId).all();
+  return rows.results;
+}
+async function feedRoutes(env, req, path, m) {
+  if (path === 'feeds-in' && m === 'GET') {
+    const u = await needUser(env, req);
+    return json({ configured: feedsOn(env), feeds: await feedList(env, u.id) });
+  }
+  if (path === 'feeds-in' && m === 'POST') {
+    const u = await needUser(env, req);
+    if (!feedsOn(env)) throw new Bad('Calendar links aren’t switched on yet.', 503);
+    await take(env, req, 'feeds-add', 20, 3600, 'Too many links in an hour. Try again later.');
+    const b = await readJson(req);
+    const kind = FEED_KINDS.has(b.kind) ? b.kind : 'calendar';
+    const u2 = feedUrl(b.url, env.FEEDS_MOCK === '1' && ['127.0.0.1', 'localhost'].includes(new URL(req.url).hostname));
+    const n = await env.WL.prepare('SELECT COUNT(*) AS n FROM feeds_in WHERE user_id = ?').bind(u.id).first();
+    if (n && n.n >= MAX_FEEDS) throw new Bad(`You can connect up to ${MAX_FEEDS} calendars. Remove one first.`);
+    const body = await fetchIcs(u2);
+    const count = parseIcs(body, Date.now() - 864e5, Date.now() + 60 * 864e5).length;
+    const sealed = await sealFeed(env, u.id, u2.toString());
+    const id = randToken(9), now = Date.now();
+    await env.WL.prepare('INSERT INTO feeds_in (id, user_id, kind, enc_url, iv, host, added_at, last_ok, last_count) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)')
+      .bind(id, u.id, kind, sealed.enc, sealed.iv, u2.hostname.toLowerCase().slice(0, 80), now, now, count).run();
+    return json({ configured: true, feeds: await feedList(env, u.id), added: { id, count } }, 201);
+  }
+  const mm = path.match(/^feeds-in\/([\w-]{6,40})\/remove$/);
+  if (mm && m === 'POST') {
+    const u = await needUser(env, req);
+    await env.WL.prepare('DELETE FROM feeds_in WHERE id = ? AND user_id = ?').bind(mm[1], u.id).run();
+    if (env.BUILDS) await env.BUILDS.delete('wl-feed:' + mm[1]);
+    return json({ configured: feedsOn(env), feeds: await feedList(env, u.id) });
+  }
+  if (path === 'feeds-in/events' && m === 'GET') {
+    const u = await needUser(env, req);
+    if (!feedsOn(env)) return json({ events: [] });
+    const q = new URL(req.url).searchParams;
+    const fromMs = Date.parse(q.get('from') || ''), toMs = Date.parse(q.get('to') || '');
+    if (!Number.isFinite(fromMs) || !Number.isFinite(toMs) || toMs <= fromMs || toMs - fromMs > 62 * 864e5) throw new Bad('Ask for up to 62 days at a time.');
+    const rows = await env.WL.prepare('SELECT id, kind, enc_url, iv FROM feeds_in WHERE user_id = ?').bind(u.id).all();
+    const events = [];
+    await Promise.all(rows.results.map(async (f) => {
+      try {
+        let body = env.BUILDS ? await env.BUILDS.get('wl-feed:' + f.id) : null;
+        if (!body) {
+          body = await fetchIcs(feedUrl(await unsealFeed(env, u.id, f.enc_url, f.iv), env.FEEDS_MOCK === '1' && ['127.0.0.1', 'localhost'].includes(new URL(req.url).hostname)));
+          if (env.BUILDS && body.length < 900 * 1024) await env.BUILDS.put('wl-feed:' + f.id, body, { expirationTtl: 1800 });
+          await env.WL.prepare('UPDATE feeds_in SET last_ok = ?, last_error = NULL WHERE id = ?').bind(Date.now(), f.id).run();
+        }
+        parseIcs(body, fromMs, toMs).forEach((e) => events.push({ ...e, source: f.kind }));
+      } catch (e) {
+        await env.WL.prepare('UPDATE feeds_in SET last_error = ? WHERE id = ?').bind(e instanceof Bad ? e.message.slice(0, 200) : 'Couldn’t read it.', f.id).run();
+      }
+    }));
+    return json({ events: events.sort((a, b) => a.start.localeCompare(b.start)) });
+  }
+  return null;
+}
+
+// ---------- team console (HQ): roles, algorithm versions, proposals ----------
+// GET algo (public: live settings or null) · GET hq/me · GET hq/state · POST hq/proposals {kind, title, why, change}
+// POST hq/proposals/<id>/approve|decline {note?} (owner) · POST hq/algo/<version>/restore (owner)
+// POST hq/team {email, role} (owner) · POST hq/team/<userId>/remove (owner) · GET hq/stats (totals only)
+
+// Built-in version 1, the same numbers as public/projects/weekline/v2/algo.js (keep in sync).
+const ALGO_V1 = {
+  version: 1,
+  learn: { halfLifeDays: 56, weights: { went: 5, loved: 2, lock: 3, unlock: -3, ics: 3, rsvp: 2, up: 2, down: -2 }, skip: { notme: -1, busy: -1, missed: -2 } },
+  fit: { goal: 3, learnMatch: 1.5, learnMiss: 0.4, tagMin: -4, tagMax: 6, tasteCap: 8, friends: 2, novelty: 0.5, minutesPerPoint: 5, farStep: 5, minTolerance: 10, tooFarSlack: 25, priceDecay: 0.8, pricePerPoint: 10 },
+  week: { goalQuotaPenalty: 4, minScore: -2, suggestions: 3 },
+};
+// Settings that must stay positive (divisors, lengths, counts).
+const POSITIVE = new Set(['learn.halfLifeDays', 'fit.minutesPerPoint', 'fit.pricePerPoint', 'fit.priceDecay', 'week.suggestions', 'fit.tasteCap']);
+
+function settingPaths(o, pre = '') {
+  return Object.entries(o).flatMap(([k, v]) => (k === 'version' ? [] : typeof v === 'object' ? settingPaths(v, pre + k + '.') : [pre + k]));
+}
+const getPath = (o, path) => path.split('.').reduce((x, k) => (x == null ? undefined : x[k]), o);
+function setPath(o, path, val) { const ks = path.split('.'); let x = o; ks.slice(0, -1).forEach((k) => { x = x[k]; }); x[ks[ks.length - 1]] = val; }
+
+async function liveAlgo(env) {
+  const row = await env.WL.prepare('SELECT version, settings FROM algo_versions WHERE live = 1 ORDER BY version DESC LIMIT 1').first();
+  if (!row) return { ...JSON.parse(JSON.stringify(ALGO_V1)), version: 1 };
+  try { return { ...JSON.parse(row.settings), version: row.version }; } catch { return { ...JSON.parse(JSON.stringify(ALGO_V1)), version: 1 }; }
+}
+
+async function roleOf(env, u) {
+  if (!u) return null;
+  const row = await env.WL.prepare('SELECT role FROM roles WHERE user_id = ?').bind(u.id).first();
+  if (row) return row.role;
+  const owners = String(env.OWNER_EMAILS || '').toLowerCase().split(',').map((x) => x.trim()).filter(Boolean);
+  if (owners.includes(String(u.email).toLowerCase())) {
+    await env.WL.prepare('INSERT OR IGNORE INTO roles (user_id, role, added_by, added_at) VALUES (?, ?, ?, ?)').bind(u.id, 'owner', 'OWNER_EMAILS', Date.now()).run();
+    return 'owner';
+  }
+  return null;
+}
+async function needRole(env, req, want) {
+  const u = await needUser(env, req);
+  const role = await roleOf(env, u);
+  if (!role || (want === 'owner' && role !== 'owner')) throw new Bad(want === 'owner' ? 'Only an owner can do that.' : 'This is for the Weekline team.', 403);
+  return { u, role };
+}
+
+function cleanChange(list, live) {
+  if (!Array.isArray(list) || !list.length || list.length > 20) throw new Bad('Add between 1 and 20 setting changes.');
+  const paths = new Set(settingPaths(ALGO_V1));
+  return list.map((c) => {
+    const path = typeof c.path === 'string' ? c.path : '';
+    if (!paths.has(path)) throw new Bad('That setting does not exist.');
+    const to = Number(c.to);
+    if (!Number.isFinite(to) || Math.abs(to) > 1000) throw new Bad('Settings must be numbers between -1000 and 1000.');
+    if (POSITIVE.has(path) && !(to > 0)) throw new Bad(`${path} must be above 0.`);
+    if (path === 'fit.priceDecay' && to > 1) throw new Bad('fit.priceDecay must be 1 or less.');
+    return { path, from: getPath(live, path), to };
+  });
+}
+
+async function hqState(env, role) {
+  const all = (sql, ...a) => env.WL.prepare(sql).bind(...a).all().then((r) => r.results);
+  const [live, versions, proposals, team] = await Promise.all([
+    liveAlgo(env),
+    all('SELECT version, note, proposal_id, created_at, live, created_by FROM algo_versions ORDER BY version DESC LIMIT 50'),
+    all('SELECT p.*, u.name AS by_name, d.name AS decided_name FROM proposals p LEFT JOIN users u ON u.id = p.by_user LEFT JOIN users d ON d.id = p.decided_by ORDER BY p.at DESC LIMIT 100'),
+    all('SELECT r.user_id, r.role, r.added_at, u.name, u.email FROM roles r JOIN users u ON u.id = r.user_id ORDER BY r.role DESC, u.name'),
+  ]);
+  return {
+    role, live, builtin: ALGO_V1,
+    versions: versions.map((v) => ({ ...v, live: !!v.live })),
+    proposals: proposals.map((p) => ({ ...p, change: p.change ? JSON.parse(p.change) : null })),
+    team: team.map((t) => ({ user_id: t.user_id, role: t.role, name: t.name, email: role === 'owner' ? t.email : undefined, added_at: t.added_at })),
+  };
+}
+
+async function hqRoutes(env, req, path, m) {
+  if (path === 'algo' && m === 'GET') {
+    return json({ algo: await liveAlgo(env) }, 200, { 'cache-control': 'public, max-age=300' });
+  }
+  if (path === 'hq/me' && m === 'GET') {
+    const u = await currentUser(env, req);
+    return json({ signed_in: !!u, name: u ? u.name : null, role: await roleOf(env, u) });
+  }
+  if (path === 'hq/state' && m === 'GET') {
+    const { role } = await needRole(env, req, 'admin');
+    return json(await hqState(env, role));
+  }
+  if (path === 'hq/proposals' && m === 'POST') {
+    const { u, role } = await needRole(env, req, 'admin');
+    await take(env, req, 'hq-propose', 60, 3600, 'Too many suggestions in an hour. Try again later.');
+    const b = await readJson(req);
+    const kind = b.kind === 'algo' ? 'algo' : b.kind === 'note' ? 'note' : null;
+    if (!kind) throw new Bad('Pick a kind of change.');
+    const title = text(b.title, 120, 'a short title', true);
+    const why = text(b.why, 600, 'why');
+    const change = kind === 'algo' ? cleanChange(b.change, await liveAlgo(env)) : null;
+    const id = randToken(9);
+    await env.WL.prepare('INSERT INTO proposals (id, kind, title, why, change, status, by_user, at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)')
+      .bind(id, kind, title, why, change ? JSON.stringify(change) : null, 'waiting', u.id, Date.now()).run();
+    return json(await hqState(env, role), 201);
+  }
+  let mm = path.match(/^hq\/proposals\/([\w-]{6,40})\/(approve|decline)$/);
+  if (mm && m === 'POST') {
+    const { u, role } = await needRole(env, req, 'owner');
+    const b = await readJson(req).catch(() => ({}));
+    const note = text(b.note, 300, 'a note');
+    const p = await env.WL.prepare('SELECT * FROM proposals WHERE id = ?').bind(mm[1]).first();
+    if (!p) throw new Bad('That suggestion is gone.', 404);
+    if (p.status !== 'waiting') throw new Bad('That suggestion was already decided.', 409);
+    const now = Date.now();
+    if (mm[2] === 'decline') {
+      await env.WL.prepare('UPDATE proposals SET status = ?, decided_by = ?, decided_at = ?, decision_note = ? WHERE id = ?').bind('declined', u.id, now, note, p.id).run();
+      return json(await hqState(env, role));
+    }
+    let version = null;
+    if (p.kind === 'algo') {
+      const live = await liveAlgo(env);
+      const next = JSON.parse(JSON.stringify(live));
+      for (const c of JSON.parse(p.change)) setPath(next, c.path, c.to);
+      const top = await env.WL.prepare('SELECT MAX(version) AS v FROM algo_versions').first();
+      version = Math.max(1, Number(top && top.v) || 1) + 1;
+      next.version = version;
+      await env.WL.batch([
+        env.WL.prepare('UPDATE algo_versions SET live = 0 WHERE live = 1'),
+        env.WL.prepare('INSERT INTO algo_versions (version, settings, note, proposal_id, created_by, created_at, live) VALUES (?, ?, ?, ?, ?, ?, 1)')
+          .bind(version, JSON.stringify(next), p.title, p.id, u.id, now),
+        env.WL.prepare('UPDATE proposals SET status = ?, decided_by = ?, decided_at = ?, decision_note = ?, version = ? WHERE id = ?').bind('approved', u.id, now, note, version, p.id),
+      ]);
+    } else {
+      await env.WL.prepare('UPDATE proposals SET status = ?, decided_by = ?, decided_at = ?, decision_note = ? WHERE id = ?').bind('approved', u.id, now, note, p.id).run();
+    }
+    return json(await hqState(env, role));
+  }
+  mm = path.match(/^hq\/algo\/(\d{1,6})\/restore$/);
+  if (mm && m === 'POST') {
+    const { u, role } = await needRole(env, req, 'owner');
+    const v = Number(mm[1]);
+    if (v === 1 && !(await env.WL.prepare('SELECT 1 FROM algo_versions WHERE version = 1').first())) {
+      await env.WL.batch([
+        env.WL.prepare('UPDATE algo_versions SET live = 0 WHERE live = 1'),
+        env.WL.prepare('INSERT INTO algo_versions (version, settings, note, created_by, created_at, live) VALUES (1, ?, ?, ?, ?, 1)').bind(JSON.stringify(ALGO_V1), 'Version 1 (built in)', u.id, Date.now()),
+      ]);
+      return json(await hqState(env, role));
+    }
+    const row = await env.WL.prepare('SELECT version FROM algo_versions WHERE version = ?').bind(v).first();
+    if (!row) throw new Bad('That version does not exist.', 404);
+    await env.WL.batch([
+      env.WL.prepare('UPDATE algo_versions SET live = 0 WHERE live = 1'),
+      env.WL.prepare('UPDATE algo_versions SET live = 1 WHERE version = ?').bind(v),
+    ]);
+    return json(await hqState(env, role));
+  }
+  if (path === 'hq/team' && m === 'POST') {
+    const { u, role } = await needRole(env, req, 'owner');
+    const b = await readJson(req);
+    const em = email(b.email);
+    const want = b.role === 'owner' ? 'owner' : 'admin';
+    const target = await env.WL.prepare('SELECT id FROM users WHERE email = ?').bind(em).first();
+    if (!target) throw new Bad('That person needs a Weekline account first. Ask them to sign up, then add them.', 404);
+    await env.WL.prepare('INSERT INTO roles (user_id, role, added_by, added_at) VALUES (?, ?, ?, ?) ON CONFLICT(user_id) DO UPDATE SET role = excluded.role')
+      .bind(target.id, want, u.id, Date.now()).run();
+    return json(await hqState(env, role));
+  }
+  mm = path.match(/^hq\/team\/([\w-]{8,64})\/remove$/);
+  if (mm && m === 'POST') {
+    const { u, role } = await needRole(env, req, 'owner');
+    if (mm[1] === u.id) throw new Bad('You can’t remove yourself.');
+    await env.WL.prepare('DELETE FROM roles WHERE user_id = ?').bind(mm[1]).run();
+    return json(await hqState(env, role));
+  }
+  if (path === 'hq/stats' && m === 'GET') {
+    await needRole(env, req, 'admin');
+    const since = Date.now() - 28 * 86400000;
+    const one = (sql, ...a) => env.WL.prepare(sql).bind(...a).first();
+    const all = (sql, ...a) => env.WL.prepare(sql).bind(...a).all().then((r) => r.results);
+    const [kinds, reasons, weekly] = await Promise.all([
+      all('SELECT kind, COUNT(*) AS n FROM signals WHERE at > ? GROUP BY kind', since),
+      all("SELECT reason, COUNT(*) AS n FROM signals WHERE at > ? AND kind = 'skip' GROUP BY reason ORDER BY n DESC", since),
+      all('SELECT (at / 604800000) AS wk, COUNT(DISTINCT user_id) AS users FROM signals WHERE at > ? GROUP BY wk ORDER BY wk', since),
+    ]);
+    const users = await one('SELECT COUNT(*) AS n FROM users');
+    return json({ days: 28, users: users ? users.n : 0, kinds, reasons, weekly });
+  }
+  return null;
+}
+
 async function handle({ request: req, env, params }) {
   const parts = Array.isArray(params.path) ? params.path : params.path ? [params.path] : [];
   const path = parts.join('/');
@@ -601,6 +1003,19 @@ async function handle({ request: req, env, params }) {
   if (path.startsWith('google/')) {
     const g = await googleRoutes(env, req, path, m, origin);
     if (g) return g;
+  }
+
+  if (path === 'events/tm') {
+    const t = await tmRoutes(env, req, path, m);
+    if (t) return t;
+  }
+  if (path.startsWith('feeds-in')) {
+    const f = await feedRoutes(env, req, path, m);
+    if (f) return f;
+  }
+  if (path === 'algo' || path.startsWith('hq/')) {
+    const h = await hqRoutes(env, req, path, m);
+    if (h) return h;
   }
 
   // ----- accounts -----
@@ -665,6 +1080,7 @@ async function handle({ request: req, env, params }) {
       q('DELETE FROM rsvps WHERE user_id = ? OR device = ? OR invite_token IN (SELECT token FROM invites WHERE owner_id = ?)', id, 'u:' + id, id),
       q('DELETE FROM invites WHERE owner_id = ?', id),
       q('DELETE FROM feeds WHERE user_id = ?', id),
+      q('DELETE FROM feeds_in WHERE user_id = ?', id),
       q('DELETE FROM signals WHERE user_id = ?', id),
       q('DELETE FROM profiles WHERE user_id = ?', id),
       q('DELETE FROM sessions WHERE user_id = ?', id),
@@ -756,7 +1172,7 @@ async function handle({ request: req, env, params }) {
     for (const it of b.items) {
       if (!plainObject(it)) throw new Bad('Each signal needs event_id and kind.');
       const eventId = text(it.event_id, 120, 'the event id', true);
-      if (!KINDS.has(it.kind)) throw new Bad('Signal kind must be went, loved, lock, unlock, skip, ics or rsvp.');
+      if (!KINDS.has(it.kind)) throw new Bad('Signal kind must be went, loved, lock, unlock, skip, ics, rsvp or up.');
       const reason = text(it.reason, 40, 'the reason');
       let tags = null;
       if (it.tags !== undefined && it.tags !== null) {
@@ -900,7 +1316,7 @@ async function handle({ request: req, env, params }) {
     return json(await pollView(env, token, dev));
   }
 
-  const known = /^(signup|signin|signout|me|export|profile|locks|signals|feed|invites|polls)$|^(invites|polls)\/[^/]+(\/(rsvp|vote))?$|^ics\/|^google\/(status|start|callback|busy|disconnect)$/;
+  const known = /^(signup|signin|signout|me|export|profile|locks|signals|feed|invites|polls)$|^(invites|polls)\/[^/]+(\/(rsvp|vote))?$|^ics\/|^google\/(status|start|callback|busy|disconnect)$|^algo$|^hq\/|^feeds-in(\/|$)|^events\/tm$/;
   if (known.test(path)) return json({ error: 'That method is not allowed here.' }, 405);
   return json({ error: 'Not found.' }, 404);
 }

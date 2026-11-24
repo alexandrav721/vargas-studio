@@ -18,6 +18,8 @@ type HQ = {
   next?: string[];
   waiting?: string[];
   social?: { rhythm?: string; page?: string; pillars: { name: string; what: string; posts: string[] }[] };
+  learns?: { steps: { name: string; line: string }[]; team?: string };
+  connect?: { name: string; status: string; line: string }[];
 };
 const HQS = hqData as Record<string, HQ>;
 
@@ -214,6 +216,42 @@ export default function ProjectPage({ id }: { id: string }) {
             <p className="hq-empty">Ads and posts coming.</p>
           )}
         </section>
+
+        {hq.learns ? (
+          <section id="hq-learns" className="hq-part" aria-labelledby="hq-learns-h">
+            <h2 id="hq-learns-h">How it learns you</h2>
+            <ol className="hq-steps">
+              {hq.learns.steps.map((x, i) => (
+                <li key={x.name}>
+                  <b>
+                    {i + 1}. {x.name}
+                  </b>
+                  <span>{x.line}</span>
+                </li>
+              ))}
+            </ol>
+            {hq.learns.team ? (
+              <a className="lad-more" href={hq.learns.team}>
+                Team console (sign-in) →
+              </a>
+            ) : null}
+          </section>
+        ) : null}
+
+        {hq.connect ? (
+          <section id="hq-connect" className="hq-part" aria-labelledby="hq-connect-h">
+            <h2 id="hq-connect-h">Connections</h2>
+            <ul className="hq-connect">
+              {hq.connect.map((c) => (
+                <li key={c.name}>
+                  <b>{c.name}</b>
+                  <em data-s={c.status.toLowerCase().replace(/[^a-z]+/g, "-")}>{c.status}</em>
+                  <span>{c.line}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ) : null}
 
         {hq.social ? (
           <section id="hq-social" className="hq-part" aria-labelledby="hq-social-h">
