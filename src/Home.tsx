@@ -80,7 +80,7 @@ export default function Home() {
           <h1 className="brand-hero">Ideas you can play with.</h1>
           <div className="doors">
             <a href="#play" onClick={(e) => jump(e, "play")}><b>Play a game</b><span>One minute each</span></a>
-            <a href="#make" onClick={(e) => jump(e, "make")}><b>Make something</b><span>Invites, letters, calendars</span></a>
+            <a href="#make" onClick={(e) => jump(e, "make")}><b>Make something</b><span>Invites, letters, puzzles</span></a>
             <a href="#ideas" onClick={(e) => jump(e, "ideas")}><b>See the ideas</b><span>{data.projects.length} so far</span></a>
           </div>
         </header>
