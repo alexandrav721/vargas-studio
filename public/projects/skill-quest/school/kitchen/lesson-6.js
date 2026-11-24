@@ -33,8 +33,8 @@
       head: "ORDER #B06", right: "binder plan", foot: "Paste it into Claude, or open it there",
       text: function (s) {
         return "Make me a setup plan: I want Claude to " + s.job + ". My documents: " + s.docs + ".\n" +
-          "1. Do I need RAG, or can it all go in the prompt with prompt caching? Say why in 2 lines.\n" +
-          "2. If RAG: explain chunking, embeddings and a vector database for my case, one line each.\n" +
+          "1. Do I need RAG, or can it all just be pasted in or uploaded to a Claude Project? Say why in 2 lines.\n" +
+          "2. One line each: at what size would I need RAG, and what would chunking, embeddings and a vector database do for me then?\n" +
           "3. How do I make answers cite the page they used, and what should it do when no page fits?\n4. If it fits in a Claude Project: list the files to upload and write the project instructions I can paste.";
       },
       vendor: ["AI that answers from our documents (RAG)", "whether it trains on our documents, how it shows its sources, and what it says when no document fits"], claude: "Open in Claude", done: "Done →"

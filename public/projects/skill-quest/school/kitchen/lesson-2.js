@@ -37,7 +37,7 @@
       text: function (s) {
         return "I don't code. In plain words first, explain what " + s.app + " sends to Claude to " + s.ask + ", using " + s.chef + ". Then show the actual request with YOUR_KEY_HERE as the key.\n" +
           "1. Add a plain-words note next to each part (model, messages, reply length).\n" +
-          "2. Show the response that comes back, and point out the token counts.\n" +
+          "2. Show a made-up sample response (label it a sample) and point out the token counts.\n" +
           "3. Explain why the app must resend earlier messages for a follow-up.\nNo real API key, use a placeholder.";
       },
       vendor: ["the Claude API", "whose API key and account it runs on, what it costs per use, and whether our chats are stored"], claude: "Open in Claude", done: "Done →"

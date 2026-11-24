@@ -34,7 +34,7 @@
       text: function (s) {
         return "Be my AI architect. I want to build " + s.idea + ". I think it needs: " + (s.pieces.join(", ") || "not sure") + ".\n" +
           "Give me a one-screen plan with: model, system prompt (3 rules), tools, MCP connectors, documents (paste in or RAG?), workflow or agent, the eval, and guardrails.\n" +
-          "Then: which piece I picked that I don't need yet, the simplest version I could build this week, and a rough cost per 100 uses, clearly marked as an estimate.";
+          "Then: which piece I picked that I don't need yet, the simplest version I could build this week, and a rough cost per 100 uses, marked as an estimate (prices change, so tell me where to check them).";
       },
       vendor: ["AI they built for organizations like ours", "which model, tools and data it uses, what it costs per month at my volume, and its guardrails"], claude: "Open in Claude", done: "Done →"
     },

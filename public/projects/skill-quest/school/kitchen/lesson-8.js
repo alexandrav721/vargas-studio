@@ -24,9 +24,9 @@
     build: {
       title: "Your turn. Write your fridge note.",
       lead: "Pick a project and your rules. Your ticket has Claude Code write a real CLAUDE.md and a small skill.",
-      state: { proj: "a small website", rules: ["Explain changes in plain words", "Ask before deleting anything"] },
+      state: { proj: "my small business website", rules: ["Explain changes in plain words", "Ask before deleting anything"] },
       controls: function (s, esc) {
-        var proj = ["a small website", "a phone app", "a spreadsheet script", "a school project"];
+        var proj = ["my small business website", "a phone app", "a spreadsheet script", "a school project"];
         var rules = ["Explain changes in plain words", "Ask before deleting anything", "Run the tests after every change", "Keep pages under 40 words", "Never touch passwords or keys"];
         return '<p class="label">The project</p><div class="fridge">' + proj.map(function (v) { return '<button type="button" class="chip" data-set="proj" data-v="' + esc(v) + '" aria-pressed="' + (s.proj === v) + '">' + esc(v) + "</button>"; }).join("") + "</div>" +
           '<p class="label">Rules for the fridge (tap any)</p><div class="fridge">' + rules.map(function (v) { return '<button type="button" class="chip" data-set="rules" data-multi="1" data-v="' + esc(v) + '" aria-pressed="' + (s.rules.indexOf(v) >= 0) + '">' + esc(v) + "</button>"; }).join("") + "</div>";

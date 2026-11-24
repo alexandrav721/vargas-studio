@@ -23,7 +23,7 @@
     },
     build: {
       title: "Your turn. Write a scorecard.",
-      lead: "Pick an AI feature and what “good” means. Your ticket builds a mini eval and runs it.",
+      lead: "Pick an AI feature and what “good” means. Your ticket builds a mini eval you can run on the real tool.",
       state: { feat: "a help-desk bot", crit: ["Correct facts", "Short answers"] },
       controls: function (s, esc) {
         var feat = ["a help-desk bot", "an ad copy writer", "a lesson-plan helper", "a homework helper"];
@@ -35,7 +35,7 @@
       text: function (s) {
         return "Help me build a tiny eval for " + s.feat + ". What good means: " + (s.crit.join(", ") || "help me decide") + ".\n" +
           "1. Turn those into 3 specific, measurable checks.\n2. Write 8 test questions, including 2 tricky edge cases.\n" +
-          "3. For each check, say if code or an LLM judge should grade it, and write the judge's instructions.\n4. Now run it: answer each test question as the feature would, grade every answer with the checks, and show a score table.";
+          "3. For each check, say if code or an LLM judge should grade it, and write the judge's instructions.\n4. Give me a blank score table to fill in after I try these questions on the real tool.";
       },
       vendor: ["AI they say is accurate", "how they test it, on how many real examples, and how they catch a change that breaks something"], claude: "Open in Claude", done: "Done →"
     },
