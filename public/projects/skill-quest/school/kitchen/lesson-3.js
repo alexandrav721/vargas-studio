@@ -62,7 +62,8 @@
     },
     quiz: [
       { term: "System prompt", q: "Who usually writes the system prompt?", a: ["The person building the app", "Anthropic, for every app", "The customer typing"], ok: 0, why: "Right. The builder hangs the rules; the customer places orders." },
-      { term: "Messages", q: "Recall from Lesson 2: does the API remember the last chat?", a: ["No, the app resends it each time", "Yes, for 24 hours", "Only if you pay more"], ok: 0, why: "Right. The window forgets. Your app carries the history." }
+      { term: "Messages", q: "Recall from Lesson 2: does the API remember the last chat?", a: ["No, the app resends it each time", "Yes, for 24 hours", "Only if you pay more"], ok: 0, why: "Right. The window forgets. Your app carries the history." },
+      {term: "XML tags", q: "What are XML tags for in a prompt?", a: ["Labeled boxes that keep rules, data and examples apart", "Code Claude runs", "A way to make answers longer"], ok: 0, why: "Right. Just labels, like &lt;facts&gt;…&lt;/facts&gt;."}
     ],
     keep: "5 questions about a bot’s rules, and a ticket that tests house rules for a real business.",
     cardLabel: "Copy my card",

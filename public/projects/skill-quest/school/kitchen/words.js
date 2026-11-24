@@ -76,4 +76,5 @@ window.BK_WORDS = [
 ["Guardrails","Safety rails in the kitchen","Checks built into the app, approvals and limits that keep an AI product safe.","Hard rules live in the app, not only in the prompt.",10,"What guardrails stop it from refunding?"],
 ["Start simple","The smallest kitchen that works","Anthropic’s advice: try one request first, then a workflow, then an agent.","",10,"Start simple: one prompt, then see."]
 ];
-window.BK_UNTAUGHT = ["Project", "Artifact", "Structured outputs", "Rate limits", "4Ds", "Plan mode", "Permission modes"];
+/* Dictionary-only or only seen in passing: not counted or quizzed. */
+window.BK_UNTAUGHT = ["Project", "Artifact", "Structured outputs", "Rate limits", "4Ds", "Plan mode", "Permission modes", "Training cutoff", "Compaction", "Jailbreak", "Temperature", "Computer use", "Host", "Git"];

@@ -84,7 +84,7 @@ document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("cta").innerHTML = nextL
     ? '<a class="btn" href="' + nextL.href + '">' + (n ? "Next: Lesson " : "Start Lesson ") + nextL.n + ", " + nextL.name + "</a>"
     : '<a class="btn ghost" href="lesson-10.html">Redo graduation</a>';
-  var TT = BK.taught(), KN = window.BKM ? BKM.knownCount(TT) : 0, DU = window.BKM ? BKM.due(TT).length : 0;
+  var TT = BK.taught(), KN = window.BKM ? BKM.knownCount(TT) : 0, DU = window.BKM ? BKM.due(BK.pool()).length : 0;
   document.getElementById("wk").innerHTML = (KN || DU ? "<b>Words you know: " + KN + " of " + TT.length + ".</b> " : "") + (DU ? '<a class="btn ghost" href="challenge.html?review=1">Review ' + DU + (DU === 1 ? " word" : " words") + " (2 min)</a>" : (KN ? "Nothing due today." : ""));
   if (n) document.getElementById("sum").textContent = n + " of 10 stamps." + (n === 10 ? " Passport complete. You speak builder now." : " Keep cooking.");
   var stations = [

@@ -64,7 +64,8 @@
     },
     quiz: [
       { term: "API key", q: "What does an API key do?", a: ["Proves the request is yours and bills your account", "Unlocks a smarter model", "Stores your past chats"], ok: 0, why: "Right. It’s a badge and a tab. Keep it secret." },
-      { term: "Context window", q: "Recall from Lesson 1: what’s the context window?", a: ["The counter: everything the chef can see at once", "The order window", "The list of models you can pick"], ok: 0, why: "Right. The window takes orders; the counter is what the chef can see." }
+      { term: "Context window", q: "Recall from Lesson 1: what’s the context window?", a: ["The counter: everything the chef can see at once", "The order window", "The list of models you can pick"], ok: 0, why: "Right. The window takes orders; the counter is what the chef can see." },
+      {term: "API key", q: "A vendor asks you to email them your API key. What do you do?", a: ["Say no. Keys are secret, like a password", "Send it, it’s only a code", "Post it in the team chat instead"], ok: 0, why: "Right. Anyone with the key can order on your tab."}
     ],
     keep: "5 questions about how a product reaches Claude, and the habit of keeping keys secret.",
     cardLabel: "Copy my card",

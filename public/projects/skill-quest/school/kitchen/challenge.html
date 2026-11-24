@@ -40,7 +40,8 @@ document.addEventListener("DOMContentLoaded", function () {
   var U = window.BK_UNTAUGHT || [], doneL = BK.done(), REVIEW = /review=1/.test(location.search);
   var TW = W.filter(function (w) { return U.indexOf(w[0]) < 0; });
   var finished = BK.TRACK.filter(function (l) { return doneL[l.id]; }).map(function (l) { return l.n; });
-  var POOL = finished.length >= 2 ? TW.filter(function (w) { return finished.indexOf(w[4]) >= 0; }) : TW;
+  var POOL = finished.length ? TW.filter(function (w) { return finished.indexOf(w[4]) >= 0; }) : TW;
+  var COUNTS = finished.length > 0; /* answers only count toward memory for lessons you've done */
   function start() {
     var dueT = window.BKM ? BKM.due(POOL.map(function (w) { return w[0]; })) : [];
     var dueW = shuffle(POOL.filter(function (w) { return dueT.indexOf(w[0]) >= 0; }));
@@ -81,7 +82,7 @@ document.addEventListener("DOMContentLoaded", function () {
     app.querySelectorAll("[data-j]").forEach(function (b) {
       b.onclick = function () {
         if (app.querySelector(".fbdone")) return;
-        var o = q.opts[+b.dataset.j], ok = o === q.w, fb = document.getElementById("fb"); if (window.BKM) BKM.record(q.w[0], ok);
+        var o = q.opts[+b.dataset.j], ok = o === q.w, fb = document.getElementById("fb"); if (window.BKM && COUNTS) BKM.record(q.w[0], ok);
         b.classList.add(ok ? "right" : "wrong");
         if (ok) { right++; play("tick", right); } else { missed.push(q.w); play("pick"); app.querySelectorAll("[data-j]").forEach(function (x) { if (q.opts[+x.dataset.j] === q.w) x.classList.add("right"); }); }
         fb.innerHTML = '<p class="fb ' + (ok ? "good" : "try") + ' fbdone">' + (ok ? "Yes. <b>" + esc(q.w[0]) + "</b>: " : "It’s <b>" + esc(q.w[0]) + "</b>: ") + esc(q.w[2]) + '</p><div class="btns"><button class="btn" id="nx" type="button">' + (i + 1 < qs.length ? "Next" : "See my score") + "</button></div>";
@@ -105,7 +106,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
   var KT = window.BKM ? BKM.knownCount(TW.map(function (w) { return w[0]; })) : 0, DUE = window.BKM ? BKM.due(POOL.map(function (w) { return w[0]; })).length : 0;
   app.innerHTML = '<p class="label">' + (REVIEW ? "Review" : "Builder words challenge") + ' · up to 15 questions · about 4 minutes</p><h1>' + (REVIEW ? "Quick review." : "Do you speak builder?") + "</h1>" +
-    '<p class="muted">Words you know: ' + KT + " of " + TW.length + "." + (DUE ? " " + DUE + " due for review, they come first." : "") + (finished.length >= 2 ? " Only words from lessons you’ve finished." : "") + "</p>" +
+    '<p class="muted">Words you know: ' + KT + " of " + TW.length + "." + (DUE ? " " + DUE + " due for review, they come first." : "") + (finished.length ? " Only words from lessons you’ve finished." : " Practice round: finish a lesson to start counting words.") + "</p>" +
     '<div class="btns"><button class="btn" id="go" type="button">Start</button></div>';
   document.getElementById("go").onclick = start;
 });

@@ -61,7 +61,7 @@
     },
     quiz: [
       { term: "Tool result", q: "What is a tool result?", a: ["What the app sends back after running the tool", "Claude’s final answer", "The tool’s label"], ok: 0, why: "Right. Result goes back to Claude, then Claude plates the answer." },
-      { term: "Guardrails", q: "Recall from Lesson 3: where should a rule that must never break live?", a: ["Built into the app", "In the system prompt only", "In the user’s first message"], ok: 0, why: "Right. Prompts steer; the app enforces." },
+      { term: "System prompt", q: "Recall from Lesson 3: where should a rule that must never break live?", a: ["Built into the app", "In the system prompt only", "In the user’s first message"], ok: 0, why: "Right. Prompts steer; the app enforces." },
       {q: "From Lesson 1: what’s an LLM?", a: ["AI that writes by predicting the next piece of text", "A database of facts", "A kind of API key"], ok: 0, why: "Right. It predicts the next piece, very well.", term: "LLM"}
     ],
     keep: "5 questions about AI that takes actions, and a ticket that drafts a tool label.",

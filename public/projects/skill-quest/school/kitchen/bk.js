@@ -32,8 +32,10 @@
 
 function rec(t, ok) { if (t && window.BKM) window.BKM.record(t, ok); }
   function taught() { var W = window.BK_WORDS || [], U = window.BK_UNTAUGHT || []; return W.map(function (w) { return w[0]; }).filter(function (t) { return U.indexOf(t) < 0; }); }
+  /* taught words from lessons this device has finished: the only words reviewed or counted as due */
+  function pool() { var W = window.BK_WORDS || [], U = window.BK_UNTAUGHT || [], d = read(); var fin = TRACK.filter(function (l) { return d[l.id]; }).map(function (l) { return l.n; }); return W.filter(function (w) { return U.indexOf(w[0]) < 0 && fin.indexOf(w[4]) >= 0; }).map(function (w) { return w[0]; }); }
   window.BK = {
-    TRACK: TRACK, KEY: KEY, done: read, taught: taught, esc: esc, ticket: ticket, termChips: termChips,
+    TRACK: TRACK, KEY: KEY, done: read, taught: taught, pool: pool, esc: esc, ticket: ticket, termChips: termChips,
     mark: function (id) { var s = read(); var first = !s[id]; if (first) { s[id] = new Date().toISOString().slice(0, 10); write(s); } return first; },
     run: function (L) {
       document.body.classList.add("bk");
@@ -104,7 +106,7 @@ function rec(t, ok) { if (t && window.BKM) window.BKM.record(t, ok); }
               if (pickedTerm === null) { fb.innerHTML = '<p class="fb try">Tap a term on the left first.</p>'; return; }
               if (+b.dataset.m === pickedTerm) {
                 b.classList.add("right"); var t = app.querySelector('[data-t="' + pickedTerm + '"]'); t.classList.add("right"); t.setAttribute("aria-pressed", "false");
-                rec(G.pairs[pickedTerm][0], !G._w[pickedTerm]); b.setAttribute("data-pair", matched + 1); t.setAttribute("data-pair", matched + 1); matched++; pickedTerm = null; play("tick", matched);
+                if (matched < G.pairs.length - 1) rec(G.pairs[pickedTerm][0], !G._w[pickedTerm]); b.setAttribute("data-pair", matched + 1); t.setAttribute("data-pair", matched + 1); matched++; pickedTerm = null; play("tick", matched);
                 if (matched === G.pairs.length) { fb.innerHTML = '<p class="fb good">' + G.right + "</p>"; fbDone(fb); }
                 else fb.innerHTML = '<p class="fb good">Match. ' + (G.pairs.length - matched) + " to go.</p>";
               } else { G._w[pickedTerm] = 1; b.classList.add("wrong"); setTimeout(function () { b.classList.remove("wrong"); }, 600); play("pick"); fb.innerHTML = '<p class="fb try">Not that one. Try another.</p>'; }
@@ -209,7 +211,7 @@ function rec(t, ok) { if (t && window.BKM) window.BKM.record(t, ok); }
           '<h1 style="text-align:center">' + (all ? "Builder’s passport complete." : "Lesson " + L.n + ", stamped.") + "</h1>" +
           '<p class="muted" style="text-align:center">' + (all ? "All " + TRACK.length + " stamps. You can follow a builder conversation now." : (first ? count + " of " + TRACK.length + " Builder’s Kitchen stamps." : "You already had this stamp. Nice refresher.")) + "</p>" +
           '<div class="kept"><p><b>Words from this lesson:</b></p>' + termChips(L.terms) +
-          (window.BKM ? (function () { var T = taught(), k = window.BKM.knownCount(T), due = window.BKM.due(T).length; return "<p><b>Words you know: " + k + " of " + T.length + ".</b> A word counts once you get it right on 2 different days." + (due ? ' <a href="challenge.html?review=1">Review ' + due + " now</a>." : " Come back tomorrow for a 2-minute review.") + "</p>"; })() : "") +
+          (window.BKM ? (function () { var T = taught(), k = window.BKM.knownCount(T), due = window.BKM.due(pool()).length; return "<p><b>Words you know: " + k + " of " + T.length + ".</b> A word counts once you get it right on 2 different days." + (due ? ' <a href="challenge.html?review=1">Review ' + due + " now</a>." : " Come back tomorrow for a 2-minute review.") + "</p>"; })() : "") +
           "<p><b>You leave with:</b> " + L.keep + "</p></div>" +
           '<div class="btns"><button class="btn" id="save" type="button">' + esc(L.cardLabel || "Copy my card") + "</button>" +
           (nxt ? '<a class="btn ghost" href="' + nxt.href + '">Next lesson →</a>' : "") +
