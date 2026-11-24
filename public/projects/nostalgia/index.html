@@ -40,6 +40,23 @@
     <button class="go-btn" type="button" id="go">Go</button>
   </section>
 
+  <!-- 1b. Join a group (only from a group link) -->
+  <section class="beat" id="beat-join" aria-label="Join the group" aria-labelledby="join-ask">
+    <ul class="join-faces" id="join-faces" aria-hidden="true"></ul>
+    <h1 class="join-ask" id="join-ask" tabindex="-1"></h1>
+    <form class="join-form" id="join-form">
+      <label class="join-name">
+        <span>Your first name (optional)</span>
+        <input id="join-name" maxlength="12" autocomplete="given-name" enterkeyhint="go" placeholder="Jo" />
+      </label>
+      <button class="go-btn" type="submit" id="join-go">Go</button>
+    </form>
+    <div class="reveal-more">
+      <button class="quiet-link" type="button" id="join-year">Different year?</button>
+      <button class="quiet-link" type="button" id="join-see" hidden>See the group</button>
+    </div>
+  </section>
+
   <!-- 2. Dial in -->
   <section class="beat" id="beat-dial" aria-label="Connecting">
     <div class="dial-text" id="dial-text" aria-live="polite"></div>
@@ -74,7 +91,18 @@
       <button class="go-btn" type="button" id="send">Send to a friend</button>
       <button class="ghost-btn" type="button" id="save">Save card</button>
     </div>
+    <section class="group" id="group" hidden aria-labelledby="group-head">
+      <h3 class="group-head" id="group-head"></h3>
+      <p class="group-fun" id="group-fun" hidden></p>
+      <ol class="roster" id="roster"></ol>
+      <div class="reveal-actions">
+        <button class="go-btn" type="button" id="add-friends">Add your friends</button>
+        <button class="ghost-btn" type="button" id="save-group">Save group card</button>
+      </div>
+      <p class="group-note" id="group-note">No live room: the group lives in the link. Pass it on.</p>
+    </section>
     <div class="reveal-more">
+      <button class="quiet-link" type="button" id="save-mine" hidden>Save my card</button>
       <button class="quiet-link" type="button" id="again">Play another year</button>
       <a class="quiet-link" id="room-link" href="./explore.html">Walk into your room →</a>
       <a class="quiet-link" href="./credits.html">Photo credits</a>

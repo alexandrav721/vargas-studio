@@ -255,3 +255,40 @@
 @media (prefers-reduced-motion: reduce) {
   .cursor, .reveal-tag { animation: none; }
 }
+
+/* Phase 2: the group, passed along in the link */
+.join-faces { list-style: none; margin: 0; padding: 0; display: flex; justify-content: center; height: 9rem; }
+.join-faces li {
+  width: 7.2rem;
+  margin: 0 -0.9rem;
+  background: #f6f2ea;
+  padding: 0.35rem 0.35rem 1.1rem;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.45);
+  transform: rotate(var(--r));
+  animation: fly 560ms var(--ease) both;
+}
+.join-faces li:nth-child(2) { animation-delay: 120ms; z-index: 1; }
+.join-faces li:nth-child(3) { animation-delay: 240ms; }
+.join-faces img, .join-faces svg { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; background: #e4ddd0; }
+.join-ask { font: 800 clamp(1.9rem, 9vw, 2.8rem)/1.02 var(--display); letter-spacing: -0.02em; margin: 0; overflow-wrap: anywhere; }
+.join-ask:focus { outline: none; }
+.join-form { display: grid; gap: 1rem; width: 100%; max-width: 22rem; justify-items: center; }
+.join-name { display: grid; gap: 0.35rem; width: 100%; text-align: left; }
+.join-name span { font: 500 0.8rem var(--mono); color: var(--muted); }
+.join-name input { font: 500 1.1rem var(--body); color: var(--ink); background: var(--bg1); border: 1px solid var(--line); padding: 0.85rem 0.9rem; width: 100%; box-sizing: border-box; }
+.join-name input:focus-visible { outline: 3px solid var(--brand); outline-offset: 2px; }
+.friend-sticker { max-width: calc(100% - 1rem); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; box-sizing: border-box; }
+
+.group { width: 100%; max-width: 24rem; display: grid; gap: 0.75rem; justify-items: center; }
+.group-head { font: 800 clamp(1.3rem, 6vw, 1.7rem)/1.1 var(--display); letter-spacing: -0.01em; margin: 0; background: var(--brand-2); color: var(--bg0); padding: 0.5rem 0.8rem; }
+.group-fun { font: italic 500 1.1rem/1.3 var(--body); color: var(--brand); margin: 0; }
+.roster { list-style: none; margin: 0; padding: 0; width: 100%; display: grid; gap: 0.5rem; text-align: left; }
+.roster li { display: grid; gap: 0.15rem; padding: 0.6rem 0.75rem; border: 1px solid var(--line); background: var(--panel); min-width: 0; }
+.roster li.is-you { border-color: var(--brand-2); }
+.roster b { font: 600 0.8rem var(--mono); color: var(--brand); }
+.roster li.is-you b { color: var(--brand-2); }
+.roster span { font: 600 0.98rem/1.25 var(--body); color: var(--ink); overflow-wrap: anywhere; }
+.group-note { font: 500 0.78rem/1.4 var(--mono); color: var(--muted); margin: 0; overflow-wrap: anywhere; }
+@media (prefers-reduced-motion: reduce) {
+  .join-faces li { animation: none; }
+}
