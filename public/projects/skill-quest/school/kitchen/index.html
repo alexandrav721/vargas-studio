@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Builder’s Kitchen · AI Made EZ</title>
+<meta name="description" content="AI Made EZ Level 2: how AI products are built. API, prompts, tools, MCP, RAG, agents, Claude Code and evals, explained as a kitchen in 10 short lessons.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../school.css">
+<style>
+.map{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:14px}
+.station{border:1px solid var(--line2);border-radius:12px;background:var(--card);padding:12px 14px}
+.station b{display:block;font-family:"Bricolage Grotesque",sans-serif;font-size:1.05rem}
+.station span{font-size:.88rem;color:var(--muted)}
+.station .st{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.station .st a{font-size:.8rem;text-decoration:none;border:1px solid var(--line2);border-radius:999px;padding:3px 9px;color:var(--ink)}
+.station .st a.got{background:var(--ok-bg);border-color:var(--ok)}
+.next{width:100%;border-collapse:collapse;margin-top:12px;font-size:.92rem}
+.next th,.next td{text-align:left;padding:9px 6px;border-bottom:1px solid var(--line2);vertical-align:top}
+.next th{font-size:.78rem;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+@media (max-width:520px){.map{grid-template-columns:1fr}}
+</style>
+<link rel="stylesheet" href="/site-bar.css" />
+<script src="/site-bar.js" data-project="skill-quest" data-kind="piece" defer></script>
+</head>
+<body>
+<header class="top">
+  <a class="logo" href="../">AI Made EZ <small>Builder’s Kitchen</small></a>
+  <div class="tools"><button class="chip" id="big" type="button" aria-pressed="false">Bigger text</button></div>
+</header>
+<main>
+  <p class="label">AI Made EZ · Level 2 · 10 lessons, about 9 minutes each</p>
+  <h1>How AI products are built.</h1>
+  <p class="muted" id="sum">The words builders use every day, as one kitchen. Finish knowing what they mean, and ready for Anthropic’s own courses.</p>
+  <div class="btns" id="cta"></div>
+
+  <section class="sec">
+    <h2>The kitchen map</h2>
+    <p class="muted" style="margin-top:6px">Four stations. Tap a lesson to start it.</p>
+    <div class="map" id="map"></div>
+  </section>
+
+  <section class="sec">
+    <h2>Your builder’s passport</h2>
+    <div class="pass" id="pass"></div>
+  </section>
+
+  <section class="sec">
+    <h2>Every word, one page</h2>
+    <a class="btn ghost" href="glossary.html" style="margin-top:10px">Open the Kitchen dictionary</a>
+  </section>
+
+  <section class="sec">
+    <h2>Where to go next</h2>
+    <p class="muted" style="margin-top:6px">Anthropic’s free courses, in Claude Academy. Each lesson here gets you ready for one.</p>
+    <table class="next">
+      <thead><tr><th>After</th><th>Take</th></tr></thead>
+      <tbody>
+        <tr><td>Lesson 1</td><td><a href="https://anthropic.skilljar.com/ai-capabilities-and-limitations" target="_blank" rel="noopener">AI Capabilities and Limitations</a></td></tr>
+        <tr><td>Lesson 3</td><td><a href="https://anthropic.skilljar.com/ai-fluency-framework-foundations" target="_blank" rel="noopener">AI Fluency: Framework &amp; Foundations</a></td></tr>
+        <tr><td>Lessons 2, 4, 10</td><td><a href="https://anthropic.skilljar.com/claude-platform-101" target="_blank" rel="noopener">Claude Platform 101</a></td></tr>
+        <tr><td>Lesson 5</td><td><a href="https://anthropic.skilljar.com/introduction-to-model-context-protocol" target="_blank" rel="noopener">Introduction to Model Context Protocol</a></td></tr>
+        <tr><td>Lessons 6, 9</td><td><a href="https://academy.claude.com/courses/building-with-the-claude-api" target="_blank" rel="noopener">Building with the Claude API</a> (RAG and evals modules)</td></tr>
+        <tr><td>Lesson 7</td><td><a href="https://anthropic.skilljar.com/introduction-to-subagents" target="_blank" rel="noopener">Introduction to subagents</a></td></tr>
+        <tr><td>Lesson 8</td><td><a href="https://anthropic.skilljar.com/claude-code-101" target="_blank" rel="noopener">Claude Code 101</a>, then <a href="https://anthropic.skilljar.com/claude-code-in-action" target="_blank" rel="noopener">Claude Code in Action</a> and <a href="https://anthropic.skilljar.com/introduction-to-agent-skills" target="_blank" rel="noopener">Introduction to agent skills</a></td></tr>
+      </tbody>
+    </table>
+    <p class="small" style="margin-top:10px">Links checked 24 Nov 2026. Anthropic also offers a Claude Certified Architect exam, but only to companies in its partner network.</p>
+  </section>
+</main>
+<footer class="foot"><a href="../">AI Made EZ · Level 1</a><a href="glossary.html">Kitchen dictionary</a><span>Not affiliated with Anthropic</span><span>Made by Alexandra Vargas</span></footer>
+<script src="../school.js" defer></script><script src="bk.js" defer></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  var T = BK.TRACK, done = BK.done(), n = T.filter(function (l) { return done[l.id]; }).length;
+  var nextL = T.find(function (l) { return !done[l.id]; });
+  document.getElementById("cta").innerHTML = nextL
+    ? '<a class="btn" href="' + nextL.href + '">' + (n ? "Next: Lesson " : "Start Lesson ") + nextL.n + ", " + nextL.name + "</a>"
+    : '<a class="btn ghost" href="lesson-10.html">Redo graduation</a>';
+  if (n) document.getElementById("sum").textContent = n + " of 10 stamps." + (n === 10 ? " Passport complete. You speak builder now." : " Keep cooking.");
+  var stations = [
+    ["The chef", "What the model is, and how apps order from it.", [1, 2, 3]],
+    ["The equipment", "How Claude acts and reaches your stuff.", [4, 5, 6]],
+    ["The brigade", "Agents, and the chef in your own kitchen.", [7, 8]],
+    ["The pass", "Testing the food, and planning a kitchen.", [9, 10]]
+  ];
+  document.getElementById("map").innerHTML = stations.map(function (s) {
+    return '<div class="station"><b>' + s[0] + "</b><span>" + s[1] + '</span><div class="st">' + s[2].map(function (i) {
+      var l = T[i - 1]; return '<a href="' + l.href + '" class="' + (done[l.id] ? "got" : "") + '">' + l.n + ". " + l.short + (done[l.id] ? " ✓" : "") + "</a>";
+    }).join("") + "</div></div>";
+  }).join("");
+  document.getElementById("pass").innerHTML = T.map(function (l) {
+    var got = !!done[l.id];
+    return '<a href="' + l.href + '" class="' + (got ? "" : "open") + '">' + School.stampSvg(l.short, l.n, got) +
+      "<b>" + l.name + "</b><span>" + (got ? "Stamped " + new Date(done[l.id] + "T12:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" }) : "About 9 minutes") + "</span></a>";
+  }).join("");
+});
+</script>
+<script src="/projects/skill-quest/smez-index.js" defer></script>
+<script src="/projects/skill-quest/smez-nav.js" data-section="school" defer></script>
+</body>
+</html>
