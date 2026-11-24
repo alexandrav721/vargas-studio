@@ -16,18 +16,19 @@
 .station b{display:block;font-family:"Bricolage Grotesque",sans-serif;font-size:1.05rem}
 .station span{font-size:.88rem;color:var(--muted)}
 .station .st{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
-.station .st a{display:inline-flex;align-items:center;min-height:44px;font-size:.85rem;text-decoration:none;border:1px solid var(--line2);border-radius:999px;padding:3px 9px;color:var(--ink)}
+.station .st a{display:inline-flex;flex-direction:column;align-items:center;gap:2px;min-height:44px;width:82px;text-align:center;font-size:.8rem;border:0!important;background:none!important;padding:4px!important;text-decoration:none;border:1px solid var(--line2);border-radius:999px;padding:3px 9px;color:var(--ink)}
 .station .st a.got{background:var(--ok-bg);border-color:var(--ok)}
 .next{width:100%;border-collapse:collapse;margin-top:12px;font-size:.92rem}
 .next th,.next td{text-align:left;padding:9px 6px;border-bottom:1px solid var(--line2);vertical-align:top}
 .next th{font-size:.78rem;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
 @media (max-width:520px){.map{grid-template-columns:1fr}}
 .wk{margin:6px 0 0}.wk .btn{margin-top:8px}
+.station .st .ms svg{width:56px;height:56px}
 </style>
 <link rel="stylesheet" href="/site-bar.css" />
 <script src="/site-bar.js" data-project="skill-quest" data-kind="piece" defer></script>
 </head>
-<body>
+<body class="bk">
 <header class="top">
   <a class="logo" href="../">AI Made EZ <small>Builder’s Kitchen</small></a>
   <div class="tools"><button class="chip" id="big" type="button" aria-pressed="false">Bigger text</button></div>
@@ -40,15 +41,11 @@
   <p class="wk" id="wk"></p>
 
   <section class="sec">
-    <h2>The kitchen map</h2>
-    <p class="muted" style="margin-top:6px">Four stations. Tap a lesson to start it.</p>
+    <h2>Your passport</h2>
+    <p class="muted" style="margin-top:6px">Four kitchen stations, ten stamps. Tap one to start.</p>
     <div class="map" id="map"></div>
   </section>
 
-  <section class="sec">
-    <h2>Your builder’s passport</h2>
-    <div class="pass" id="pass"></div>
-  </section>
 
   <section class="sec">
     <h2>Every word</h2>
@@ -98,13 +95,8 @@ document.addEventListener("DOMContentLoaded", function () {
   ];
   document.getElementById("map").innerHTML = stations.map(function (s) {
     return '<div class="station"><b>' + s[0] + "</b><span>" + s[1] + '</span><div class="st">' + s[2].map(function (i) {
-      var l = T[i - 1]; return '<a href="' + l.href + '" class="' + (done[l.id] ? "got" : "") + '">' + l.n + ". " + l.short + (done[l.id] ? " ✓" : "") + "</a>";
+      var l = T[i - 1], got = !!done[l.id]; return '<a href="' + l.href + '" class="' + (got ? "got" : "") + '" aria-label="Lesson ' + l.n + ": " + l.name + (got ? ", stamped" : "") + '"><span class="ms">' + School.stampSvg(l.stamp, l.n, got) + "</span><span>" + l.short + "</span></a>";
     }).join("") + "</div></div>";
-  }).join("");
-  document.getElementById("pass").innerHTML = T.map(function (l) {
-    var got = !!done[l.id];
-    return '<a href="' + l.href + '" class="' + (got ? "" : "open") + '">' + School.stampSvg(l.short, l.n, got) +
-      "<b>" + l.name + "</b><span>" + (got ? "Stamped " + new Date(done[l.id] + "T12:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" }) : "Use it when " + l.use) + "</span></a>";
   }).join("");
 });
 </script>

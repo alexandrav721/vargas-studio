@@ -5,16 +5,16 @@
   "use strict";
   var KEY = "smez-builders-v1";
   var TRACK = [
-    { n: 1, id: "b1", short: "The kitchen", name: "How AI kitchens work", href: "lesson-1.html", use: "someone says “we hit the token limit”" },
-    { n: 2, id: "b2", short: "Order window", name: "The order window (API)", href: "lesson-2.html", use: "a vendor says “we just call the API”" },
-    { n: 3, id: "b3", short: "House rules", name: "House rules (prompting)", href: "lesson-3.html", use: "you set up a bot’s instructions" },
-    { n: 4, id: "b4", short: "Appliances", name: "The chef’s appliances (tools)", href: "lesson-4.html", use: "someone says “it can use tools”" },
-    { n: 5, id: "b5", short: "Outlets", name: "Standard outlets (MCP)", href: "lesson-5.html", use: "IT asks which connectors to turn on" },
-    { n: 6, id: "b6", short: "Recipe binder", name: "The recipe binder (RAG)", href: "lesson-6.html", use: "someone says “we’ll train it on our docs”" },
-    { n: 7, id: "b7", short: "Head chef", name: "The head chef (agents)", href: "lesson-7.html", use: "everyone is pitching “agents”" },
-    { n: 8, id: "b8", short: "Your kitchen", name: "A chef in your kitchen (Claude Code)", href: "lesson-8.html", use: "a developer mentions Claude Code or skills" },
-    { n: 9, id: "b9", short: "Taste tests", name: "Taste tests at scale (evals)", href: "lesson-9.html", use: "someone asks “is the new version better?”" },
-    { n: 10, id: "b10", short: "Graduation", name: "Plan your own kitchen", href: "lesson-10.html", use: "you plan your own AI project" }
+    { n: 1, id: "b1", stamp: "Kitchen", short: "The kitchen", name: "How AI kitchens work", href: "lesson-1.html", use: "someone says “we hit the token limit”" },
+    { n: 2, id: "b2", stamp: "API", short: "Order window", name: "The order window (API)", href: "lesson-2.html", use: "a vendor says “we just call the API”" },
+    { n: 3, id: "b3", stamp: "Rules", short: "House rules", name: "House rules (prompting)", href: "lesson-3.html", use: "you set up a bot’s instructions" },
+    { n: 4, id: "b4", stamp: "Tools", short: "Appliances", name: "The chef’s appliances (tools)", href: "lesson-4.html", use: "someone says “it can use tools”" },
+    { n: 5, id: "b5", stamp: "MCP", short: "Outlets", name: "Standard outlets (MCP)", href: "lesson-5.html", use: "IT asks which connectors to turn on" },
+    { n: 6, id: "b6", stamp: "RAG", short: "Recipe binder", name: "The recipe binder (RAG)", href: "lesson-6.html", use: "someone says “we’ll train it on our docs”" },
+    { n: 7, id: "b7", stamp: "Agents", short: "Head chef", name: "The head chef (agents)", href: "lesson-7.html", use: "everyone is pitching “agents”" },
+    { n: 8, id: "b8", stamp: "Code", short: "Your kitchen", name: "A chef in your kitchen (Claude Code)", href: "lesson-8.html", use: "a developer mentions Claude Code or skills" },
+    { n: 9, id: "b9", stamp: "Evals", short: "Taste tests", name: "Taste tests at scale (evals)", href: "lesson-9.html", use: "someone asks “is the new version better?”" },
+    { n: 10, id: "b10", stamp: "Architect", short: "Graduation", name: "Plan your own kitchen", href: "lesson-10.html", use: "you plan your own AI project" }
   ];
   function read() { try { return JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (e) { return {}; } }
   function write(v) { try { localStorage.setItem(KEY, JSON.stringify(v)); } catch (e) {} }
@@ -36,6 +36,7 @@ function rec(t, ok) { if (t && window.BKM) window.BKM.record(t, ok); }
     TRACK: TRACK, KEY: KEY, done: read, taught: taught, esc: esc, ticket: ticket, termChips: termChips,
     mark: function (id) { var s = read(); var first = !s[id]; if (first) { s[id] = new Date().toISOString().slice(0, 10); write(s); } return first; },
     run: function (L) {
+      document.body.classList.add("bk");
       var app = document.getElementById("app");
       var STEPS = 6, step = 0, guessed = null, _g = L.guess && (L.guess.opts = L.guess.opts.map(function (o) { return [Math.random(), o]; }).sort(function (a, b) { return a[0] - b[0]; }).map(function (x) { return x[1]; })), state = JSON.parse(JSON.stringify(L.build.state || {}));
       function prog() { return '<div class="prog"><span>Lesson ' + L.n + " · " + (step + 1) + " of " + STEPS + '</span><span class="bar"><i style="width:' + Math.round((step + 1) / STEPS * 100) + '%"></i></span></div>'; }
@@ -103,7 +104,7 @@ function rec(t, ok) { if (t && window.BKM) window.BKM.record(t, ok); }
               if (pickedTerm === null) { fb.innerHTML = '<p class="fb try">Tap a term on the left first.</p>'; return; }
               if (+b.dataset.m === pickedTerm) {
                 b.classList.add("right"); var t = app.querySelector('[data-t="' + pickedTerm + '"]'); t.classList.add("right"); t.setAttribute("aria-pressed", "false");
-                rec(G.pairs[pickedTerm][0], !G._w[pickedTerm]); matched++; pickedTerm = null; play("tick", matched);
+                rec(G.pairs[pickedTerm][0], !G._w[pickedTerm]); b.setAttribute("data-pair", matched + 1); t.setAttribute("data-pair", matched + 1); matched++; pickedTerm = null; play("tick", matched);
                 if (matched === G.pairs.length) { fb.innerHTML = '<p class="fb good">' + G.right + "</p>"; fbDone(fb); }
                 else fb.innerHTML = '<p class="fb good">Match. ' + (G.pairs.length - matched) + " to go.</p>";
               } else { G._w[pickedTerm] = 1; b.classList.add("wrong"); setTimeout(function () { b.classList.remove("wrong"); }, 600); play("pick"); fb.innerHTML = '<p class="fb try">Not that one. Try another.</p>'; }
@@ -144,20 +145,20 @@ function rec(t, ok) { if (t && window.BKM) window.BKM.record(t, ok); }
               "Write 5 short questions I should ask them, in plain words. For each: what a good answer sounds like, and a red-flag answer.\n" +
               "Make sure the questions cover: " + B.vendor[1] + "." + (s.aud === "school" ? "\nWe're a school district: include student data and privacy." : "");
           };
-          var modes = B.vendor ? '<div class="fridge" role="group" aria-label="Ticket type"><button type="button" class="chip" data-set="mode" data-v="vendor" aria-pressed="' + (state.mode === "vendor") + '">What to ask</button><button type="button" class="chip" data-set="mode" data-v="make" aria-pressed="' + (state.mode !== "vendor") + '">Try it in Claude</button></div>' : "";
+          var modes = B.vendor ? '<div class="fridge modes" role="group" aria-label="What to show"><button type="button" class="chip" data-set="mode" data-v="vendor" aria-pressed="' + (state.mode === "vendor") + '">What to ask</button><button type="button" class="chip" data-set="mode" data-v="make" aria-pressed="' + (state.mode !== "vendor") + '">Try it in Claude</button></div>' : "";
           show("<h2>" + esc(B.title) + "</h2>" + (B.lead ? '<p class="muted">' + B.lead + "</p>" : "") + modes + '<div id="ctl"' + (state.mode === "vendor" ? " hidden" : "") + ">" + B.controls(state, esc) + "</div>" +
             (VQ ? '<div id="vq"' + (state.mode === "vendor" ? "" : " hidden") + '><div class="fridge" role="group" aria-label="Who you are"><button type="button" class="chip" data-set="aud" data-v="business" aria-pressed="true">A business</button><button type="button" class="chip" data-set="aud" data-v="school" aria-pressed="false">A school</button></div><ol class="vq" id="vqol"></ol><p class="small">A starting list, not legal advice. Schools: check with your privacy lead.</p><p class="label">Want them tailored? Your ticket for Claude:</p></div>' : "") +
             '<p class="label">' + esc(B.ticketLabel || "Your ticket") + '</p><div id="ticket"></div>' +
             '<div class="btns">' + (B.claude ? '<a class="btn" id="open" target="_blank" rel="noopener">' + esc(B.claude) + "</a>" : "") + '<button class="btn ' + (B.claude ? "ghost" : "") + '" id="copy" type="button">' + esc(B.copyLabel || "Copy my ticket") + "</button></div>" +
             (B.after ? '<p class="small">' + B.after + "</p>" : "") +
-            nextBtn(B.done || "Done →", true));
+            nextBtn(B.done || "Done →", true).replace('class="btns"', 'class="btns done-row"'));
           var draw = function (added) {
             var text = T(state), vend = state.mode === "vendor"; var h2 = app.querySelector(".step h2"), ld = app.querySelector(".step > p.muted"); if (h2) h2.textContent = vend ? "Your turn. Questions to ask a vendor." : B.title; if (ld) ld.hidden = vend; var c = document.getElementById("ctl"); if (c) c.hidden = vend;
             var vq = document.getElementById("vq"); if (vq) { vq.hidden = !vend; document.getElementById("vqol").innerHTML = vqList(state).map(function (x) { return "<li><b>" + esc(x[0]) + '</b><span class="good">Good: ' + esc(x[1]) + '</span><span class="red">Red flag: ' + esc(x[2]) + "</span></li>"; }).join(""); }
             var cp = document.getElementById("copy"); if (cp) cp.textContent = vend && VQ ? "Copy the questions" : (B.copyLabel || "Copy my ticket");
             var body = esc(text).replace(/\n/g, "<br>");
             if (added) body = body.replace(esc(added), '<span class="add">' + esc(added) + "</span>");
-            document.getElementById("ticket").innerHTML = ticket(B.head, B.right, body, B.foot);
+            document.getElementById("ticket").innerHTML = state.mode === "vendor" ? ticket("VENDOR CHECK", "for Claude", body, "Paste it into Claude, or open it there") : ticket(B.head, B.right, body, B.foot);
             var o = document.getElementById("open"); if (o) o.href = (B.claudeUrl || "https://claude.ai/new?q=") + encodeURIComponent(B.claudeText && state.mode !== "vendor" ? B.claudeText(state) : text);
           };
           draw();
