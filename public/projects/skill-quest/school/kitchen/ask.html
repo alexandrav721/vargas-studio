@@ -19,6 +19,8 @@
 #aud{flex-wrap:wrap;overflow:visible}
 .askbar{position:sticky;bottom:0;z-index:5;display:flex;gap:8px;align-items:center;justify-content:space-between;padding:10px 12px;margin:16px -4px 0;background:var(--card);border:1px solid var(--line2);border-radius:12px;box-shadow:0 -4px 16px rgba(0,0,0,.06)}
 .askbar .btn{min-height:44px;padding:0 16px}
+.mark{display:flex;gap:8px;margin:8px 0 4px}.mark button{flex:1;min-height:44px;border:1px solid var(--line2);border-radius:10px;background:var(--card);font:600 .9rem inherit;color:var(--ink)}.mark button[aria-pressed=true][data-mark=good]{background:var(--ok-bg);border-color:var(--ok)}.mark button[aria-pressed=true][data-mark=red]{background:#FCE6E0;border-color:#B3321B}
+.vname{width:100%;font:inherit;padding:10px 12px;border:1px solid var(--line2);border-radius:10px;background:var(--card);color:var(--ink);margin-top:6px}
 .onlymine .vq li.off,.onlymine .topic.empty{display:none}
 @media print{.top,.foot,.btns,.filters,.fridge,.askbar,#site-bar{display:none!important}.topic{break-inside:avoid}.pick{display:none}}
 </style>
@@ -36,9 +38,11 @@
   <p class="muted">Tap a question to see a good answer and a red flag. Tick the ones you’ll ask, then copy your list.</p>
   <p class="label" style="margin-top:14px">Who you are</p>
   <div class="fridge filters" id="aud" role="group" aria-label="Who you are"></div>
+  <p class="label" style="margin-top:14px">In the meeting? Score the vendor</p>
+  <input class="vname" id="vname" type="text" placeholder="Vendor name (optional, stays on this device)" aria-label="Vendor name">
   <div id="list"></div>
-  <div class="askbar"><span id="n">0 ticked</span><button class="btn ghost" id="mine" type="button" aria-pressed="false">My list only</button><button class="btn" id="copy" type="button">Copy</button></div>
-  <div class="btns"><button class="btn ghost" type="button" onclick="window.print()">Print</button><a class="btn ghost" href="./">The course</a></div>
+  <div class="askbar"><span id="n">0 ticked</span><span id="tally" aria-live="polite"></span><button class="btn ghost" id="mine" type="button" aria-pressed="false">My list only</button><button class="btn" id="copy" type="button">Copy</button></div>
+  <div class="btns"><button class="btn ghost" id="newv" type="button">New vendor</button><button class="btn ghost" type="button" onclick="window.print()">Print</button><a class="btn ghost" href="./">The course</a></div>
   <p class="small">A starting list, not legal advice. Schools, clinics and finance teams: check with your privacy or compliance lead.</p>
 </main>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
@@ -46,7 +50,12 @@
 <script src="../school.js" defer></script><script src="bk.js" defer></script><script src="vendorq.js" defer></script>
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-  var V = window.BK_VENDOR, T = BK.TRACK, esc = BK.esc, aud = "business", picked = {}, mine = false;
+  var V = window.BK_VENDOR, T = BK.TRACK, esc = BK.esc, aud = "business", picked = {}, mine = false, marks = {};
+  try { marks = JSON.parse(localStorage.getItem("smez-builders-askmarks") || "{}") || {}; } catch (e) {}
+  try { document.getElementById("vname").value = localStorage.getItem("smez-builders-askvendor") || ""; } catch (e) {}
+  document.getElementById("vname").oninput = function () { try { localStorage.setItem("smez-builders-askvendor", this.value); } catch (e) {} };
+  function saveMarks() { try { localStorage.setItem("smez-builders-askmarks", JSON.stringify(marks)); } catch (e) {} }
+  function tally() { var g = 0, rr = 0; T.forEach(function (l) { items(l.n).forEach(function (x) { if (marks[key(x)] === "good") g++; if (marks[key(x)] === "red") rr++; }); }); document.getElementById("tally").textContent = g || rr ? "✓ " + g + " · ✗ " + rr : ""; }
   try { picked = JSON.parse(localStorage.getItem("smez-builders-asklist") || "{}") || {}; } catch (e) {}
   function save() { try { localStorage.setItem("smez-builders-asklist", JSON.stringify(picked)); } catch (e) {} }
   function key(x) { return x[0]; }
@@ -60,22 +69,32 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("list").innerHTML = T.map(function (l) {
       return '<section class="topic"><h2><span>' + TOPIC[l.n] + '</span><a href="' + l.href + '">Lesson ' + l.n + '</a></h2><ol class="vq">' + items(l.n).map(function (x, i) {
         var id = key(x);
-        return '<li class="' + (picked[id] ? "" : "off") + '"><details><summary><input class="pick" type="checkbox" data-id="' + esc(id) + '" aria-label="Ask this"' + (picked[id] ? " checked" : "") + "><b>" + esc(x[0]) + '</b></summary><span class="good">Good: ' + esc(x[1]) + '</span><span class="red">Red flag: ' + esc(x[2]) + "</span></details></li>";
+        return '<li class="' + (picked[id] ? "" : "off") + '"><details><summary><input class="pick" type="checkbox" data-id="' + esc(id) + '" aria-label="Ask this"' + (picked[id] ? " checked" : "") + "><b>" + esc(x[0]) + '</b></summary><div class="mark" role="group" aria-label="What they said"><button type="button" data-mark="good" data-id="' + esc(id) + '" aria-pressed="' + (marks[id] === "good") + '">Good answer</button><button type="button" data-mark="red" data-id="' + esc(id) + '" aria-pressed="' + (marks[id] === "red") + '">Red flag</button></div><span class="good">Good: ' + esc(x[1]) + '</span><span class="red">Red flag: ' + esc(x[2]) + "</span></details></li>";
       }).join("") + "</ol></section>";
     }).join("");
     document.querySelectorAll(".topic").forEach(function (t) { if (!t.querySelector("li:not(.off)")) t.classList.add("empty"); });
-    count();
+    count(); tally();
   }
   document.getElementById("aud").onclick = function (e) { var b = e.target.closest("[data-a]"); if (!b) return; aud = b.dataset.a; draw(); };
+  document.getElementById("list").addEventListener("click", function (e) {
+    var m = e.target.closest("[data-mark]");
+    if (m) { var id = m.dataset.id, v = m.dataset.mark; marks[id] = marks[id] === v ? null : v; m.parentNode.querySelectorAll("[data-mark]").forEach(function (b) { b.setAttribute("aria-pressed", String(marks[id] === b.dataset.mark)); }); if (marks[id] && !picked[id]) { picked[id] = true; var li = m.closest("li"); li.classList.remove("off"); li.querySelector(".pick").checked = true; save(); count(); } saveMarks(); tally(); return; }
+  });
   document.getElementById("list").addEventListener("click", function (e) { var c = e.target.closest(".pick"); if (!c) return; e.stopPropagation(); picked[c.dataset.id] = c.checked; c.closest("li").classList.toggle("off", !c.checked); save(); count(); });
   document.getElementById("mine").onclick = function () { mine = !mine; this.setAttribute("aria-pressed", String(mine)); document.getElementById("list").classList.toggle("onlymine", mine); draw(); };
   window.addEventListener("beforeprint", function () { document.querySelectorAll(".vq details").forEach(function (d) { d.open = true; }); });
   document.getElementById("copy").onclick = function () {
     var out = [], any = Object.keys(picked).some(function (k) { return picked[k]; });
     T.forEach(function (l) { items(l.n).forEach(function (x, i) { if (!any || picked[key(x)]) out.push(x[0] + "\n   Good: " + x[1] + "\n   Red flag: " + x[2]); }); });
+    var g = 0, rr = 0, sc = [];
+    T.forEach(function (l) { items(l.n).forEach(function (x) { var mk = marks[key(x)]; if (mk) { if (mk === "good") g++; else rr++; sc.push((mk === "good" ? "✓ " : "✗ ") + x[0]); } }); });
+    var vn = document.getElementById("vname").value.trim();
+    if (sc.length) { var card = "AI vendor scorecard" + (vn ? ": " + vn : "") + "\n" + g + (g === 1 ? " good answer · " : " good answers · ") + rr + (rr === 1 ? " red flag\n\n" : " red flags\n\n") + sc.join("\n") + "\n\nFrom AI Made EZ, Builder’s Kitchen";
+      (navigator.clipboard ? navigator.clipboard.writeText(card) : Promise.reject()).then(function () { School.toast("Scorecard copied"); }, function () { School.toast("Select the text and copy it"); }); return; }
     var text = "Questions for the AI vendor\n\n" + out.map(function (q, i) { return (i + 1) + ". " + q; }).join("\n") + "\n\nFrom AI Made EZ, Builder’s Kitchen";
     (navigator.clipboard ? navigator.clipboard.writeText(text) : Promise.reject()).then(function () { School.toast(out.length + (any ? " ticked" : "") + " questions copied"); }, function () { School.toast("Select the text and copy it"); });
   };
+  document.getElementById("newv").onclick = function () { marks = {}; saveMarks(); document.getElementById("vname").value = ""; try { localStorage.removeItem("smez-builders-askvendor"); } catch (e) {} draw(); School.toast("Scores cleared. Your question list stays."); };
   draw();
 });
 </script>
