@@ -50,7 +50,10 @@ document.addEventListener("DOMContentLoaded", function () {
       if (kind === 2 && !heard) kind = 0;
       var asKitchen = kind === 0;
       var lw = w[0].toLowerCase();
-      var others = shuffle(W.filter(function (o) { var lo = o[0].toLowerCase(); return o !== w && o[4] !== w[4] && lo.indexOf(lw) < 0 && lw.indexOf(lo) < 0; })).slice(0, 2);
+      var big = function (t) { return (t.toLowerCase().match(/[a-z]{5,}/g) || []); };
+      var ok = function (o) { var lo = o[0].toLowerCase(); if (o === w || lo.indexOf(lw) >= 0 || lw.indexOf(lo) >= 0) return false; var a = big(w[1]); return !big(o[1]).some(function (x) { return a.indexOf(x) >= 0; }); };
+      var same = shuffle(W.filter(function (o) { return o[4] === w[4] && ok(o); })).slice(0, 1);
+      var others = same.concat(shuffle(W.filter(function (o) { return o[4] !== w[4] && ok(o); })).slice(0, 2 - same.length));
       var meaning = w[2].indexOf(": ") > 0 && w[2].indexOf(": ") < 40 ? w[2].slice(w[2].indexOf(": ") + 2) : w[2];
       meaning = meaning.charAt(0).toUpperCase() + meaning.slice(1);
       return { w: w, prompt: kind === 2 ? heard : asKitchen ? w[1] : meaning, kind: kind === 2 ? "In a meeting you hear… which word fills the gap?" : asKitchen ? "In the kitchen, this is…" : "Which word means…", opts: shuffle([w].concat(others)) };

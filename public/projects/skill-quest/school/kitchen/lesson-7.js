@@ -6,7 +6,7 @@
     teaser: ["HEAD CHEF", "agents", "The whole dinner, start to finish.<br>It decides the next step,<br>checks the pot, and keeps going.", "Six words. Nine minutes."],
     lines: [
       ["An agent is a chef running the whole dinner.", "Claude picks its own next step and uses tools, again and again, until the job is done."],
-      ["A workflow is a prep checklist.", "Whoever built it set the steps: first this, then that, like a Zapier zap. Cheaper and more predictable."],
+      ["A workflow is a prep checklist.", "Whoever built it set the steps: first this, then that, like an automation you set up once. Cheaper and more predictable."],
       ["Anthropic’s advice: start simple.", "Try one good request first, then a workflow. Use an agent only when the steps can’t be known ahead."]
     ],
     guess: { q: "“Book me a table for Friday.” What makes this an agent job?", opts: [["Claude picks its own next steps until it’s done", true], ["It uses a bigger model", false], ["It’s a longer message", false]], reveal: "An agent decides its own steps and uses tools in a loop until the job is done." },
@@ -22,7 +22,7 @@
         '<div class="reply"><p class="who">ask you</p>Book Thu 7:30 for 4? <b>Yes / No</b></div>' +
         '<p class="small">Think → use a tool → look at the result → decide again. That’s the <b>agent loop</b>. Each round costs tokens.</p>' +
         '<p style="margin-top:14px">Big jobs can split: an <b>orchestrator</b> (head chef) hands pieces to <b>subagents</b> (sous-chefs), each with its own counter, who report back a short summary.</p>',
-      next: "Agent or recipe?"
+      next: "Agent or checklist?"
     },
     build: {
       title: "Your turn. Agent or prep checklist?",

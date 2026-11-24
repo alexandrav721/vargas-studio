@@ -30,7 +30,7 @@
       lead: "Tap a job and a chef. Your ticket makes a cheat sheet for your work.",
       state: { job: "writing emails", chef: "Sonnet" },
       controls: function (s, esc) {
-        var jobs = ["writing emails", "planning meals", "running a small shop", "my small business", "marketing campaigns"];
+        var jobs = ["writing emails", "planning lessons", "running a small shop", "my small business", "marketing campaigns"];
         var chefs = [["Haiku", "fast and cheap"], ["Sonnet", "balanced"], ["Opus", "usual first pick"], ["Fable", "hardest tasks"]];
         return '<p class="label">Your job</p><div class="fridge">' + jobs.map(function (j) { return '<button type="button" class="chip" data-set="job" data-v="' + esc(j) + '" aria-pressed="' + (s.job === j) + '">' + esc(j) + "</button>"; }).join("") + "</div>" +
           '<p class="label">Your chef</p><div class="fridge">' + chefs.map(function (c) { return '<button type="button" class="chip" data-set="chef" data-v="' + c[0] + '" aria-pressed="' + (s.chef === c[0]) + '">' + c[0] + " · " + c[1] + "</button>"; }).join("") + "</div>";

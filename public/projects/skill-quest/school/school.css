@@ -124,3 +124,8 @@ textarea{font:400 1em var(--text);padding:13px 14px;border:1px solid var(--line2
 .kd{margin:6px 0 14px;padding:10px;border:1px solid var(--line2);border-radius:12px;background:var(--card)}
 .kd svg{display:block;width:100%;height:auto;max-height:220px}
 .tag{display:inline-block;border:1px dashed var(--line2);border-radius:4px;padding:4px 9px;font:600 13px var(--mono, "JetBrains Mono", monospace);background:transparent}
+.vq{padding-left:20px;margin:12px 0}
+.vq li{margin:0 0 12px}
+.vq b{display:block}
+.vq .good,.vq .red{display:block;font-size:.9rem;margin-top:3px;padding-left:8px;border-left:3px solid var(--ok)}
+.vq .red{border-left-color:var(--accent)}

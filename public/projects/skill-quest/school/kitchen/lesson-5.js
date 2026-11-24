@@ -41,7 +41,7 @@
       type: "match", title: "Match the outlet words.", lead: "Tap a word, then its meaning.",
       pairs: [["MCP", "The standard plug shape"], ["MCP server", "The appliance: wraps one service"], ["MCP client", "The link inside the app to one server"], ["Connector", "What the Claude app calls a plugged-in server"], ["Resources", "Things a server lets Claude read"]],
       right: "All five matched.",
-      habitTitle: "Builder habit", habit: "MCP is plumbing. Servers offer tools Claude can ask for, plus things to read and ready-made prompts."
+      habitTitle: "Builder habit", habit: "Servers offer tools Claude can ask for, plus things to read and ready-made prompts."
     },
     breaks: {
       title: "Plug in only what you trust.",

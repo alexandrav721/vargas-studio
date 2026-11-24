@@ -18,7 +18,7 @@
         '<p class="label" style="margin-top:14px">Test set: 20 real customer questions</p>' +
         '<div class="fridge"><span class="tag">Version A · 15 of 20 pass</span><span class="tag">Version B · 18 of 20 pass</span></div>' +
         '<p class="small">Version B won, but question 7 used to pass and now fails. That’s a <b>regression</b>. You only see it because you kept the same test set.</p>' +
-        '<p style="margin-top:14px">Keep some questions aside that you never tune on. Otherwise the score only proves you memorized the test.</p>',
+        '<p style="margin-top:14px">Keep some questions aside that you never use while editing the prompt. Otherwise the score only proves you memorized the test.</p>',
       next: "Write your scorecard"
     },
     build: {
@@ -26,7 +26,7 @@
       lead: "Pick an AI feature and what “good” means. Your ticket asks Claude to build a mini eval.",
       state: { feat: "a help-desk bot", crit: ["Correct facts", "Short answers"] },
       controls: function (s, esc) {
-        var feat = ["a help-desk bot", "an ad copy writer", "an email writer", "a homework helper"];
+        var feat = ["a help-desk bot", "an ad copy writer", "a lesson-plan helper", "a homework helper"];
         var crit = ["Correct facts", "Short answers", "Says when unsure", "Friendly tone", "Never gives medical advice"];
         return '<p class="label">The AI feature</p><div class="fridge">' + feat.map(function (v) { return '<button type="button" class="chip" data-set="feat" data-v="' + esc(v) + '" aria-pressed="' + (s.feat === v) + '">' + esc(v) + "</button>"; }).join("") + "</div>" +
           '<p class="label">What “good” means (tap any)</p><div class="fridge">' + crit.map(function (v) { return '<button type="button" class="chip" data-set="crit" data-multi="1" data-v="' + esc(v) + '" aria-pressed="' + (s.crit.indexOf(v) >= 0) + '">' + esc(v) + "</button>"; }).join("") + "</div>";
@@ -40,7 +40,7 @@
       vendor: ["AI they say is accurate", "how they test it, on how many real examples, and how they catch a change that breaks something"], claude: "Open in Claude", done: "Done →"
     },
     game: {
-      type: "pick", title: "You changed your prompt. 3 answers look great. Ready to ship?",
+      type: "pick", title: "You changed your prompt. 3 answers look great. Ready to use it?",
       options: [
         ["Not yet: run the whole test set and compare scores", true],
         ["Yes, 3 good answers is enough", false, "That’s a vibe check. The change may have broken other cases."],

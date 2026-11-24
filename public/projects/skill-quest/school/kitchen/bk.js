@@ -43,6 +43,7 @@
 
       /* games: "pick" (one right), "tapall" (find every right one), "match" (term → kitchen meaning) */
       function game(G) {
+        if (G.options && !G._shuffled) { G.options = G.options.map(function (o) { return [Math.random(), o]; }).sort(function (a, b) { return a[0] - b[0]; }).map(function (x) { return x[1]; }); G._shuffled = 1; }
         var fbDone = function (fb) {
           play("win");
           fb.insertAdjacentHTML("beforeend", (G.habit ? '<div class="breaks"><b>' + esc(G.habitTitle || "Remember") + "</b>" + G.habit + "</div>" : "") + '<div class="btns"><button class="btn" id="gnext" type="button">Next</button></div>');
@@ -131,21 +132,27 @@
 
         if (step === 2) {
           var B = L.build;
-          if (B.vendor && !state.mode) state.mode = "make";
+          if (B.vendor && !state.mode) { state.mode = "make"; state.aud = "business"; }
+          var VQ = window.BK_VENDOR && window.BK_VENDOR[L.n];
+          var vqList = function (s) { return VQ ? VQ.q.concat(s.aud === "school" && VQ.school ? [VQ.school] : []) : []; };
+          var vqText = function (s) { return "Questions for the vendor (" + B.vendor[0] + ")\n\n" + vqList(s).map(function (x, i) { return (i + 1) + ". " + x[0] + "\n   Good answer: " + x[1] + "\n   Red flag: " + x[2]; }).join("\n") + "\n\nFrom AI Made EZ, Builder’s Kitchen"; };
           var T = function (s) {
             if (s.mode !== "vendor") return B.text(s);
             return "A vendor is pitching me a product that uses " + B.vendor[0] + ". I don't code.\n" +
               "Write 5 short questions I should ask them, in plain words. For each: what a good answer sounds like, and a red-flag answer.\n" +
-              "Make sure the questions cover: " + B.vendor[1] + ".";
+              "Make sure the questions cover: " + B.vendor[1] + "." + (s.aud === "school" ? "\nWe're a school district: include student data and privacy." : "");
           };
-          var modes = B.vendor ? '<div class="fridge" role="group" aria-label="Ticket type"><button type="button" class="chip" data-set="mode" data-v="make" aria-pressed="' + (state.mode !== "vendor") + '">Make something</button><button type="button" class="chip" data-set="mode" data-v="vendor" aria-pressed="' + (state.mode === "vendor") + '">Question a vendor</button></div>' : "";
+          var modes = B.vendor ? '<div class="fridge" role="group" aria-label="Ticket type"><button type="button" class="chip" data-set="mode" data-v="make" aria-pressed="' + (state.mode !== "vendor") + '">Try it in Claude</button><button type="button" class="chip" data-set="mode" data-v="vendor" aria-pressed="' + (state.mode === "vendor") + '">Vendor questions</button></div>' : "";
           show("<h2>" + esc(B.title) + "</h2>" + (B.lead ? '<p class="muted">' + B.lead + "</p>" : "") + modes + '<div id="ctl"' + (state.mode === "vendor" ? " hidden" : "") + ">" + B.controls(state, esc) + "</div>" +
+            (VQ ? '<div id="vq" hidden><div class="fridge" role="group" aria-label="Who you are"><button type="button" class="chip" data-set="aud" data-v="business" aria-pressed="true">A business</button><button type="button" class="chip" data-set="aud" data-v="school" aria-pressed="false">A school</button></div><ol class="vq" id="vqol"></ol><p class="label">Want them tailored? Your ticket for Claude:</p></div>' : "") +
             '<p class="label">' + esc(B.ticketLabel || "Your ticket") + '</p><div id="ticket"></div>' +
             '<div class="btns">' + (B.claude ? '<a class="btn" id="open" target="_blank" rel="noopener">' + esc(B.claude) + "</a>" : "") + '<button class="btn ' + (B.claude ? "ghost" : "") + '" id="copy" type="button">' + esc(B.copyLabel || "Copy my ticket") + "</button></div>" +
             (B.after ? '<p class="small">' + B.after + "</p>" : "") +
             nextBtn(B.done || "Done →", true));
           var draw = function (added) {
-            var text = T(state); var c = document.getElementById("ctl"); if (c) c.hidden = state.mode === "vendor";
+            var text = T(state), vend = state.mode === "vendor"; var h2 = app.querySelector(".step h2"), ld = app.querySelector(".step > p.muted"); if (h2) h2.textContent = vend ? "Your turn. Questions to ask a vendor." : B.title; if (ld) ld.hidden = vend; var c = document.getElementById("ctl"); if (c) c.hidden = vend;
+            var vq = document.getElementById("vq"); if (vq) { vq.hidden = !vend; document.getElementById("vqol").innerHTML = vqList(state).map(function (x) { return "<li><b>" + esc(x[0]) + '</b><span class="good">Good: ' + esc(x[1]) + '</span><span class="red">Red flag: ' + esc(x[2]) + "</span></li>"; }).join(""); }
+            var cp = document.getElementById("copy"); if (cp) cp.textContent = vend && VQ ? "Copy the questions" : (B.copyLabel || "Copy my ticket");
             var body = esc(text).replace(/\n/g, "<br>");
             if (added) body = body.replace(esc(added), '<span class="add">' + esc(added) + "</span>");
             document.getElementById("ticket").innerHTML = ticket(B.head, B.right, body, B.foot);
@@ -161,7 +168,7 @@
             };
           });
           app.querySelectorAll("[data-in]").forEach(function (inp) { inp.oninput = function () { state[inp.dataset.in] = inp.value; draw(); }; });
-          document.getElementById("copy").onclick = function () { copy(T(state), B.copied || "Copied"); play("share"); };
+          document.getElementById("copy").onclick = function () { if (state.mode === "vendor" && VQ) copy(vqText(state), "Questions copied"); else copy(T(state), B.copied || "Copied"); play("share"); };
           var o = document.getElementById("open"); if (o) o.addEventListener("click", function () { play("share"); });
           return;
         }
