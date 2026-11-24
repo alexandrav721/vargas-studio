@@ -13,6 +13,10 @@
 //            GOOGLE_CLIENT_SECRET, WL_TOKEN_KEY (base64, 32 bytes, AES-GCM for refresh tokens at rest).
 //            GOOGLE_MOCK=1 (localhost only) fakes Google for local tests.
 //
+// Team HQ    GET algo · GET hq/me · GET hq/state · POST hq/proposals · POST hq/proposals/<id>/approve|decline
+//            POST hq/algo/<v>/restore · POST hq/team · POST hq/team/<id>/remove · GET hq/stats (see hqRoutes)
+//            Owners come from the OWNER_EMAILS secret (comma-separated) and the roles table.
+//
 // Passwords and tokens are never logged. Session tokens are stored only as SHA-256 hashes.
 
 const COOKIE = 'wl_session';
@@ -590,6 +594,193 @@ async function googleRoutes(env, req, path, m, origin) {
 
 // ---------- routes ----------
 
+
+// ---------- team console (HQ): roles, algorithm versions, proposals ----------
+// GET algo (public: live settings or null) · GET hq/me · GET hq/state · POST hq/proposals {kind, title, why, change}
+// POST hq/proposals/<id>/approve|decline {note?} (owner) · POST hq/algo/<version>/restore (owner)
+// POST hq/team {email, role} (owner) · POST hq/team/<userId>/remove (owner) · GET hq/stats (totals only)
+
+// Built-in version 1, the same numbers as public/projects/weekline/v2/algo.js (keep in sync).
+const ALGO_V1 = {
+  version: 1,
+  learn: { halfLifeDays: 56, weights: { went: 5, loved: 2, lock: 3, unlock: -3, ics: 3, rsvp: 2, up: 2, down: -2 }, skip: { notme: -1, busy: -1, missed: -2 } },
+  fit: { goal: 3, learnMatch: 1.5, learnMiss: 0.4, tagMin: -4, tagMax: 6, tasteCap: 8, friends: 2, novelty: 0.5, minutesPerPoint: 5, farStep: 5, minTolerance: 10, tooFarSlack: 25, priceDecay: 0.8, pricePerPoint: 10 },
+  week: { goalQuotaPenalty: 4, minScore: -2, suggestions: 3 },
+};
+// Settings that must stay positive (divisors, lengths, counts).
+const POSITIVE = new Set(['learn.halfLifeDays', 'fit.minutesPerPoint', 'fit.pricePerPoint', 'fit.priceDecay', 'week.suggestions', 'fit.tasteCap']);
+
+function settingPaths(o, pre = '') {
+  return Object.entries(o).flatMap(([k, v]) => (k === 'version' ? [] : typeof v === 'object' ? settingPaths(v, pre + k + '.') : [pre + k]));
+}
+const getPath = (o, path) => path.split('.').reduce((x, k) => (x == null ? undefined : x[k]), o);
+function setPath(o, path, val) { const ks = path.split('.'); let x = o; ks.slice(0, -1).forEach((k) => { x = x[k]; }); x[ks[ks.length - 1]] = val; }
+
+async function liveAlgo(env) {
+  const row = await env.WL.prepare('SELECT version, settings FROM algo_versions WHERE live = 1 ORDER BY version DESC LIMIT 1').first();
+  if (!row) return { ...JSON.parse(JSON.stringify(ALGO_V1)), version: 1 };
+  try { return { ...JSON.parse(row.settings), version: row.version }; } catch { return { ...JSON.parse(JSON.stringify(ALGO_V1)), version: 1 }; }
+}
+
+async function roleOf(env, u) {
+  if (!u) return null;
+  const row = await env.WL.prepare('SELECT role FROM roles WHERE user_id = ?').bind(u.id).first();
+  if (row) return row.role;
+  const owners = String(env.OWNER_EMAILS || '').toLowerCase().split(',').map((x) => x.trim()).filter(Boolean);
+  if (owners.includes(String(u.email).toLowerCase())) {
+    await env.WL.prepare('INSERT OR IGNORE INTO roles (user_id, role, added_by, added_at) VALUES (?, ?, ?, ?)').bind(u.id, 'owner', 'OWNER_EMAILS', Date.now()).run();
+    return 'owner';
+  }
+  return null;
+}
+async function needRole(env, req, want) {
+  const u = await needUser(env, req);
+  const role = await roleOf(env, u);
+  if (!role || (want === 'owner' && role !== 'owner')) throw new Bad(want === 'owner' ? 'Only an owner can do that.' : 'This is for the Weekline team.', 403);
+  return { u, role };
+}
+
+function cleanChange(list, live) {
+  if (!Array.isArray(list) || !list.length || list.length > 20) throw new Bad('Add between 1 and 20 setting changes.');
+  const paths = new Set(settingPaths(ALGO_V1));
+  return list.map((c) => {
+    const path = typeof c.path === 'string' ? c.path : '';
+    if (!paths.has(path)) throw new Bad('That setting does not exist.');
+    const to = Number(c.to);
+    if (!Number.isFinite(to) || Math.abs(to) > 1000) throw new Bad('Settings must be numbers between -1000 and 1000.');
+    if (POSITIVE.has(path) && !(to > 0)) throw new Bad(`${path} must be above 0.`);
+    if (path === 'fit.priceDecay' && to > 1) throw new Bad('fit.priceDecay must be 1 or less.');
+    return { path, from: getPath(live, path), to };
+  });
+}
+
+async function hqState(env, role) {
+  const all = (sql, ...a) => env.WL.prepare(sql).bind(...a).all().then((r) => r.results);
+  const [live, versions, proposals, team] = await Promise.all([
+    liveAlgo(env),
+    all('SELECT version, note, proposal_id, created_at, live, created_by FROM algo_versions ORDER BY version DESC LIMIT 50'),
+    all('SELECT p.*, u.name AS by_name, d.name AS decided_name FROM proposals p LEFT JOIN users u ON u.id = p.by_user LEFT JOIN users d ON d.id = p.decided_by ORDER BY p.at DESC LIMIT 100'),
+    all('SELECT r.user_id, r.role, r.added_at, u.name, u.email FROM roles r JOIN users u ON u.id = r.user_id ORDER BY r.role DESC, u.name'),
+  ]);
+  return {
+    role, live, builtin: ALGO_V1,
+    versions: versions.map((v) => ({ ...v, live: !!v.live })),
+    proposals: proposals.map((p) => ({ ...p, change: p.change ? JSON.parse(p.change) : null })),
+    team: team.map((t) => ({ user_id: t.user_id, role: t.role, name: t.name, email: role === 'owner' ? t.email : undefined, added_at: t.added_at })),
+  };
+}
+
+async function hqRoutes(env, req, path, m) {
+  if (path === 'algo' && m === 'GET') {
+    return json({ algo: await liveAlgo(env) }, 200, { 'cache-control': 'public, max-age=300' });
+  }
+  if (path === 'hq/me' && m === 'GET') {
+    const u = await currentUser(env, req);
+    return json({ signed_in: !!u, name: u ? u.name : null, role: await roleOf(env, u) });
+  }
+  if (path === 'hq/state' && m === 'GET') {
+    const { role } = await needRole(env, req, 'admin');
+    return json(await hqState(env, role));
+  }
+  if (path === 'hq/proposals' && m === 'POST') {
+    const { u, role } = await needRole(env, req, 'admin');
+    await take(env, req, 'hq-propose', 60, 3600, 'Too many suggestions in an hour. Try again later.');
+    const b = await readJson(req);
+    const kind = b.kind === 'algo' ? 'algo' : b.kind === 'note' ? 'note' : null;
+    if (!kind) throw new Bad('Pick a kind of change.');
+    const title = text(b.title, 120, 'a short title', true);
+    const why = text(b.why, 600, 'why');
+    const change = kind === 'algo' ? cleanChange(b.change, await liveAlgo(env)) : null;
+    const id = randToken(9);
+    await env.WL.prepare('INSERT INTO proposals (id, kind, title, why, change, status, by_user, at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)')
+      .bind(id, kind, title, why, change ? JSON.stringify(change) : null, 'waiting', u.id, Date.now()).run();
+    return json(await hqState(env, role), 201);
+  }
+  let mm = path.match(/^hq\/proposals\/([\w-]{6,40})\/(approve|decline)$/);
+  if (mm && m === 'POST') {
+    const { u, role } = await needRole(env, req, 'owner');
+    const b = await readJson(req).catch(() => ({}));
+    const note = text(b.note, 300, 'a note');
+    const p = await env.WL.prepare('SELECT * FROM proposals WHERE id = ?').bind(mm[1]).first();
+    if (!p) throw new Bad('That suggestion is gone.', 404);
+    if (p.status !== 'waiting') throw new Bad('That suggestion was already decided.', 409);
+    const now = Date.now();
+    if (mm[2] === 'decline') {
+      await env.WL.prepare('UPDATE proposals SET status = ?, decided_by = ?, decided_at = ?, decision_note = ? WHERE id = ?').bind('declined', u.id, now, note, p.id).run();
+      return json(await hqState(env, role));
+    }
+    let version = null;
+    if (p.kind === 'algo') {
+      const live = await liveAlgo(env);
+      const next = JSON.parse(JSON.stringify(live));
+      for (const c of JSON.parse(p.change)) setPath(next, c.path, c.to);
+      const top = await env.WL.prepare('SELECT MAX(version) AS v FROM algo_versions').first();
+      version = Math.max(1, Number(top && top.v) || 1) + 1;
+      next.version = version;
+      await env.WL.batch([
+        env.WL.prepare('UPDATE algo_versions SET live = 0 WHERE live = 1'),
+        env.WL.prepare('INSERT INTO algo_versions (version, settings, note, proposal_id, created_by, created_at, live) VALUES (?, ?, ?, ?, ?, ?, 1)')
+          .bind(version, JSON.stringify(next), p.title, p.id, u.id, now),
+        env.WL.prepare('UPDATE proposals SET status = ?, decided_by = ?, decided_at = ?, decision_note = ?, version = ? WHERE id = ?').bind('approved', u.id, now, note, version, p.id),
+      ]);
+    } else {
+      await env.WL.prepare('UPDATE proposals SET status = ?, decided_by = ?, decided_at = ?, decision_note = ? WHERE id = ?').bind('approved', u.id, now, note, p.id).run();
+    }
+    return json(await hqState(env, role));
+  }
+  mm = path.match(/^hq\/algo\/(\d{1,6})\/restore$/);
+  if (mm && m === 'POST') {
+    const { u, role } = await needRole(env, req, 'owner');
+    const v = Number(mm[1]);
+    if (v === 1 && !(await env.WL.prepare('SELECT 1 FROM algo_versions WHERE version = 1').first())) {
+      await env.WL.batch([
+        env.WL.prepare('UPDATE algo_versions SET live = 0 WHERE live = 1'),
+        env.WL.prepare('INSERT INTO algo_versions (version, settings, note, created_by, created_at, live) VALUES (1, ?, ?, ?, ?, 1)').bind(JSON.stringify(ALGO_V1), 'Version 1 (built in)', u.id, Date.now()),
+      ]);
+      return json(await hqState(env, role));
+    }
+    const row = await env.WL.prepare('SELECT version FROM algo_versions WHERE version = ?').bind(v).first();
+    if (!row) throw new Bad('That version does not exist.', 404);
+    await env.WL.batch([
+      env.WL.prepare('UPDATE algo_versions SET live = 0 WHERE live = 1'),
+      env.WL.prepare('UPDATE algo_versions SET live = 1 WHERE version = ?').bind(v),
+    ]);
+    return json(await hqState(env, role));
+  }
+  if (path === 'hq/team' && m === 'POST') {
+    const { u, role } = await needRole(env, req, 'owner');
+    const b = await readJson(req);
+    const em = email(b.email);
+    const want = b.role === 'owner' ? 'owner' : 'admin';
+    const target = await env.WL.prepare('SELECT id FROM users WHERE email = ?').bind(em).first();
+    if (!target) throw new Bad('That person needs a Weekline account first. Ask them to sign up, then add them.', 404);
+    await env.WL.prepare('INSERT INTO roles (user_id, role, added_by, added_at) VALUES (?, ?, ?, ?) ON CONFLICT(user_id) DO UPDATE SET role = excluded.role')
+      .bind(target.id, want, u.id, Date.now()).run();
+    return json(await hqState(env, role));
+  }
+  mm = path.match(/^hq\/team\/([\w-]{8,64})\/remove$/);
+  if (mm && m === 'POST') {
+    const { u, role } = await needRole(env, req, 'owner');
+    if (mm[1] === u.id) throw new Bad('You can’t remove yourself.');
+    await env.WL.prepare('DELETE FROM roles WHERE user_id = ?').bind(mm[1]).run();
+    return json(await hqState(env, role));
+  }
+  if (path === 'hq/stats' && m === 'GET') {
+    await needRole(env, req, 'admin');
+    const since = Date.now() - 28 * 86400000;
+    const one = (sql, ...a) => env.WL.prepare(sql).bind(...a).first();
+    const all = (sql, ...a) => env.WL.prepare(sql).bind(...a).all().then((r) => r.results);
+    const [kinds, reasons, weekly] = await Promise.all([
+      all('SELECT kind, COUNT(*) AS n FROM signals WHERE at > ? GROUP BY kind', since),
+      all("SELECT reason, COUNT(*) AS n FROM signals WHERE at > ? AND kind = 'skip' GROUP BY reason ORDER BY n DESC", since),
+      all('SELECT (at / 604800000) AS wk, COUNT(DISTINCT user_id) AS users FROM signals WHERE at > ? GROUP BY wk ORDER BY wk', since),
+    ]);
+    const users = await one('SELECT COUNT(*) AS n FROM users');
+    return json({ days: 28, users: users ? users.n : 0, kinds, reasons, weekly });
+  }
+  return null;
+}
+
 async function handle({ request: req, env, params }) {
   const parts = Array.isArray(params.path) ? params.path : params.path ? [params.path] : [];
   const path = parts.join('/');
@@ -601,6 +792,11 @@ async function handle({ request: req, env, params }) {
   if (path.startsWith('google/')) {
     const g = await googleRoutes(env, req, path, m, origin);
     if (g) return g;
+  }
+
+  if (path === 'algo' || path.startsWith('hq/')) {
+    const h = await hqRoutes(env, req, path, m);
+    if (h) return h;
   }
 
   // ----- accounts -----
@@ -900,7 +1096,7 @@ async function handle({ request: req, env, params }) {
     return json(await pollView(env, token, dev));
   }
 
-  const known = /^(signup|signin|signout|me|export|profile|locks|signals|feed|invites|polls)$|^(invites|polls)\/[^/]+(\/(rsvp|vote))?$|^ics\/|^google\/(status|start|callback|busy|disconnect)$/;
+  const known = /^(signup|signin|signout|me|export|profile|locks|signals|feed|invites|polls)$|^(invites|polls)\/[^/]+(\/(rsvp|vote))?$|^ics\/|^google\/(status|start|callback|busy|disconnect)$|^algo$|^hq\//;
   if (known.test(path)) return json({ error: 'That method is not allowed here.' }, 405);
   return json({ error: 'Not found.' }, 404);
 }

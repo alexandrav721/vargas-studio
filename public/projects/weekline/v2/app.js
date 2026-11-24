@@ -1008,7 +1008,7 @@ app.addEventListener("change", (e) => {
 /* ---------- boot ---------- */
 (async function boot() {
   if (qs.get("demo") === "1" && !(S.profile && S.profile.demo)) W.seedDemo(TODAY);
-  await W.boot();
+  await Promise.all([W.boot(), W.loadAlgo()]);
   if (session.mode === "server") await W.googleStatus();
   if (S.invites.length) W.refreshFriendCounts().then(() => { if (["week", "share"].includes(route().name)) render({ keepFocus: true }); });
   render();

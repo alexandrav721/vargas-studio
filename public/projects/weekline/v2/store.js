@@ -8,6 +8,11 @@ import { ALGO_V1 } from "./algo.js";
 /* ---------- the algorithm settings (live version from the server; v1 built in) ---------- */
 export let A = ALGO_V1;
 export function setAlgo(a) { if (a && a.learn && a.fit && a.week) A = a; }
+/* The live version from the team console. Falls back to version 1 if the server can't be reached. */
+export async function loadAlgo() {
+  try { const r = await fetch("/api/wl/algo"); if (r.ok) { const j = await r.json(); setAlgo(j.algo); } } catch (e) { /* offline: keep version 1 */ }
+  return A.version;
+}
 
 /* ---------- dates (America/New_York) ---------- */
 const qs = new URLSearchParams(location.search);
