@@ -169,7 +169,7 @@
       '<div class="kept"><p><b>You leave with:</b> a family-trip station that already knows who’s going, the budget, the pace and the never list.</p>' +
       '<p><b>Your new habits:</b> anything you keep re-explaining goes in a station. Update it when plans change.</p></div>' +
       '<div class="btns"><button class="btn" id="save" type="button">Copy my station checklist</button><a class="btn ghost" href="./">See my Chef’s passport</a><button class="btn ghost" id="send" type="button">Send this lesson to someone</button></div>' +
-      '<p class="small">Next: Lesson 6, Take-home containers (coming soon).</p></section>';
+      '<div class="btns"><a class="btn ghost" href="lesson-6.html">Lesson 6: Take-home containers →</a></div></section>';
     window.scrollTo(0, 0);
     setTimeout(function () { play("stamp"); }, 260);
     document.getElementById("save").onclick = function () { copy("STATION CHECKLIST\nOne station per job (trip, garden, shop).\nInstructions: who, budget, pace, never list, how answers should look.\nFiles: helpful ones, with booking and ID numbers taken out.\nStart those chats inside the station.\nUpdate it when plans change.\nCheck Claude's memory setting now and then.", "Station checklist copied"); };
