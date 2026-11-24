@@ -66,6 +66,7 @@
       { term: "Context window", q: "A very long chat starts missing early details. Why?", a: ["The counter (context window) is crowded, so early details get less attention", "The model gets tired after a while and starts skimming", "Claude deletes old messages to save money for Anthropic"], ok: 0, why: "Right. A crowded counter blurs early details. Start a fresh chat with the key facts." },
       {term: "Model family", q: "You need fast, cheap answers for thousands of short tags. Which chef?", a: ["Haiku", "Fable", "Opus"], ok: 0, why: "Right. Haiku is the fast, cheap chef for high-volume work."}
     ],
+    say: "Claude is a model, an LLM. It sees only what’s in its context window, and it charges by tokens.",
     keep: "5 questions for any AI vendor, and a cheat sheet ticket for your job.",
     cardLabel: "Copy my card",
     card: "THE AI KITCHEN\nModel = the chef (Claude)\nLLM = a chef that predicts the next piece of text\nPrompt = your order\nToken = the pieces it counts and charges by\nContext window = the counter: all it can see\nModel family = Haiku (fast) · Sonnet (balanced) · Opus (usual start) · Fable (hardest jobs)",

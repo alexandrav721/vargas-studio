@@ -225,6 +225,7 @@ function rec(t, ok) { if (t && window.BKM) window.BKM.record(t, ok); }
           '<div class="kept"><p><b>Words from this lesson:</b></p>' + termChips(L.terms) +
           (window.BKM ? (function () { var T = taught(), k = window.BKM.knownCount(T), due = window.BKM.due(pool()).length; var lw = L.terms.filter(function (t) { return T.indexOf(t) >= 0; }).length;
             return "<p><b>" + lw + " new words today.</b> Lock them in tomorrow with a 2-minute review." + (k ? " You already know " + k + " for good." : "") + (due ? ' <a href="challenge.html?review=1">Practice ' + window.BKM.due(pool()).slice(0, 4).join(", ") + (due > 4 ? " and " + (due - 4) + " more" : "") + "</a>." : "") + "</p>"; })() : "") +
+          (L.say ? '<p><b>Say it in a meeting:</b> “' + esc(L.say) + '”</p>' : "") +
           "<p><b>You leave with:</b> " + L.keep + "</p></div>" +
           '<div class="btns"><button class="btn" id="save" type="button">' + esc(L.cardLabel || "Copy my card") + "</button>" +
           (nxt ? '<a class="btn ghost" href="' + nxt.href + '">Next lesson →</a>' : "") +

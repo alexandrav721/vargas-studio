@@ -64,6 +64,7 @@
       { term: "MCP server", q: "Recall from Lesson 5: what’s an MCP server?", a: ["The standard plug for one service", "A newer, more powerful Claude model for big jobs", "The app you chat in, like the Claude desktop app"], ok: 0, why: "Right. A Drive or Notion server is one way to fetch pages for the binder." },
       {q: "From Lesson 3: what’s a hallucination?", a: ["A confident wrong answer", "An answer that is much too long to read", "When Claude refuses to answer a request"], ok: 0, why: "Right. Give facts and an honest exit to make it rarer.", term: "Hallucination"}
     ],
+    say: "RAG looks up the right pages and hands them to Claude. Nothing gets trained.",
     keep: "5 questions about AI that answers from documents, and a ticket for a setup plan.",
     cardLabel: "Copy my card",
     card: "THE RECIPE BINDER (RAG)\nRAG = find the right pages, then Claude answers from them\nChunking = cutting documents into findable pages\nEmbeddings = number codes for meaning, so similar pages can be found\nVector database = finds the closest-meaning pages\nCitations = which page the answer came from\nPrompt caching = prep once, reuse cheaply (5 min after each use)\nSmall binder? Paste it all in.",

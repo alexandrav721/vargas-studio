@@ -65,6 +65,7 @@
       { term: "Messages", q: "Recall from Lesson 2: does the API remember the last chat?", a: ["No, the app resends it each time", "Yes, it keeps each chat for 24 hours on its side", "Only if you pay for a memory upgrade on the account"], ok: 0, why: "Right. The window forgets. Your app carries the history." },
       {term: "XML tags", q: "What are XML tags for in a prompt?", a: ["Labeled boxes that keep rules, data and examples apart", "Little programs Claude runs before it answers", "A setting that makes Claude’s answers longer and richer"], ok: 0, why: "Right. Just labels, like &lt;facts&gt;…&lt;/facts&gt;."}
     ],
+    say: "The system prompt sets the rules, but hard limits belong in the app, and it can still hallucinate.",
     keep: "5 questions about a bot’s rules, and a ticket that tests house rules for a real business.",
     cardLabel: "Copy my card",
     card: "HOUSE RULES\nSystem prompt = rules on the wall, written by the builder\nPrompt engineering = clear tickets: who, example, shape\nJailbreak = a user talking around the rules\nExamples = a few finished plates to learn from\nXML tags = labeled boxes: <facts>, <rules>, <example>\nThinking + effort = quiet reasoning, billed as output\nHallucination = confident wrong plate. Give facts + “say I don’t know”",

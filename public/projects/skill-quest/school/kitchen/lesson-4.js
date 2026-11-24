@@ -64,6 +64,7 @@
       { term: "System prompt", q: "Recall from Lesson 3: where should a rule that must never break live?", a: ["Built into the app", "In the system prompt only", "In the user’s first message"], ok: 0, why: "Right. Prompts steer; the app enforces." },
       {q: "From Lesson 1: what’s an LLM?", a: ["AI that writes by predicting the next piece of text", "A huge database of facts that Claude looks things up in", "A special API key that unlocks writing features"], ok: 0, why: "Right. It predicts the next piece, very well.", term: "LLM"}
     ],
+    say: "With tool use, Claude asks for an action and the app actually runs it.",
     keep: "5 questions about AI that takes actions, and a ticket that drafts a tool label.",
     cardLabel: "Copy my card",
     card: "APPLIANCES (TOOL USE)\nTool = an appliance Claude can ask for\nTool definition = the label: name, what it does, inputs\nTool call = Claude asks to use it\nTool result = what the app sends back\nThe app runs your tools; Claude only asks\nRun by Anthropic: web search · code execution\nComputer use: the app supplies the computer",

@@ -59,6 +59,7 @@
       { term: "Claude Code", q: "Recall from Lesson 7: is Claude Code an agent?", a: ["Yes, it loops: read, act, check", "No, it only chats about code you paste in", "Only when it runs on the web version"], ok: 0, why: "Right. It’s an agent with your files as its tools." },
       {q: "From Lesson 5: what’s prompt injection?", a: ["Hidden orders inside content Claude reads", "A longer system prompt written by the builder", "A user typing many messages very fast"], ok: 0, why: "Right. Treat content as information, keep a person on risky actions.", term: "Prompt injection"}
     ],
+    say: "Claude Code works inside a project. CLAUDE.md is a request; hooks and permission rules are enforced.",
     keep: "5 questions to ask whoever builds your site with AI, and a ticket that drafts a CLAUDE.md.",
     cardLabel: "Copy my card",
     card: "YOUR OWN KITCHEN (CLAUDE CODE)\nClaude Code = an agent that works in your project files\nCLAUDE.md = the fridge note, read every session (requests)\nSkill = recipe card (SKILL.md), picked by its description\n/command = a shortcut you type; your own ones are made as skills\nHook = a bell that rings at set moments (enforced, like permissions)\nPlugin = a boxed kit of skills, hooks and outlets\nGit = save points. Commit before big changes.",

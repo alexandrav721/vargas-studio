@@ -58,6 +58,7 @@
       { term: "Cost per token", q: "Recall from Lesson 2: what decides cost?", a: ["Tokens in and out, and which chef", "Which web browser people use", "How long the reply takes to read"], ok: 0, why: "Right. Mostly tokens times the chef’s price, plus fees for some tools." },
       {q: "From Lesson 7: what’s a subagent?", a: ["A helper with its own counter that reports back a summary", "A cheaper, smaller model for simple jobs", "A person who approves the agent’s risky actions"], ok: 0, why: "Right. A sous-chef with its own counter.", term: "Subagent"}
     ],
+    say: "Start with the smallest setup that works, test it, and add pieces only when a real need shows up.",
     keep: "6 questions for any AI pitch, and a ticket that reviews your own kitchen plan.",
     cardLabel: "Copy my plan",
     card: "MY AI KITCHEN PLAN\nChef (model): \nOrder window (API): \nHouse rules (system prompt): \nAppliances (tools): \nOutlets (MCP): \nRecipe binder (RAG or paste in): \nHead chef (agent) or prep checklist (workflow): \nTaste test (eval): \nGuardrails: \nStart simple. Taste every change.",
