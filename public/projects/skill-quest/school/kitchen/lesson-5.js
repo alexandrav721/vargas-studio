@@ -1,7 +1,7 @@
 /* Builder's Kitchen · Lesson 5 · Outlets (MCP). Terms: MCP, MCP server, MCP client/host, connector, resources & prompts, prompt injection. */
 (function () {
   var L = {
-    n: 5, id: "b5", mins: 8, title: "Standard outlets.", stamp: "MCP",
+    n: 5, id: "b5", mins: 6, title: "Standard outlets.", stamp: "MCP",
     terms: ["MCP", "MCP server", "MCP client", "Connector", "Resources", "Prompt injection"],
     teaser: ["OUTLETS", "MCP", "One outlet shape.<br>Any appliance plugs in.<br>Any kitchen can use it.", "Six words. Eight minutes."],
     lines: [
@@ -55,7 +55,7 @@
       { q: "Why does MCP exist?", a: ["So a tool built once works in many AI apps", "So Claude can learn from your files"], ok: 0, why: "Right. It’s a standard, like one outlet shape." },
       { q: "Recall from Lesson 4: who runs a tool when Claude asks?", a: ["The app or server, not Claude", "Claude itself"], ok: 0, why: "Right. Claude picks; the kitchen presses the button." }
     ],
-    keep: "a plan for which services to connect, with a safety note for each.",
+    keep: "5 questions to ask before connecting your apps, and a ticket for an IT-ready connector plan.",
     cardLabel: "Copy my card",
     card: "OUTLETS (MCP)\nMCP = Model Context Protocol, a standard plug for tools\nMCP server = the appliance (wraps Drive, Slack, a database…)\nHost = the AI app (like the Claude desktop app)\nMCP client = the link inside it to one server\nConnector = the Claude app’s name for a plugged-in server\nServers offer tools, resources, prompts\nPrompt injection = hidden orders inside content. Plug in only what you trust",
     real: ["Introduction to Model Context Protocol", "https://academy.claude.com/courses/introduction-to-model-context-protocol"]

@@ -33,7 +33,7 @@ window.BK_WORDS = [
 ["Tool definition","The label on the appliance","A tool’s name, what it does and what inputs it needs, so Claude knows when to use it.","",4,"Tighten the tool definition so it stops guessing."],
 ["Tool call","The chef asking for an appliance","Claude’s request to use a tool, with the settings filled in.","Not the action itself.",4,"Log every tool call so we can audit it."],
 ["Tool result","What the appliance hands back","What the app sends back to Claude after running the tool.","Not the final answer. Claude still plates it.",4,"The tool result came back empty, so it apologized."],
-["Web search","The built-in phone to the market","A built-in tool that lets Claude search the web and cite pages.","",4,"Turn on web search for anything after its training."],
+["Web search","A phone to the market for fresh news","A built-in tool that lets Claude search the web and cite pages.","",4,"Turn on web search for anything after its training."],
 ["Code execution","A built-in calculator and stove","A built-in tool where Claude writes and runs code to calculate or analyze.","",4,"Let it use code execution for the math."],
 ["Computer use","A chef pointing at your screen","Claude looks at screenshots and asks the app to click and type. The app does it.","Anthropic doesn’t host the computer. The app supplies it.",4,"We tried computer use to fill in the old form."],
 ["MCP","Standard outlets","Model Context Protocol: an open standard so a tool built once plugs into many AI apps.","Not a model or a product. A plug shape.",5,"Does your product support MCP?"],

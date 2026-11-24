@@ -1,7 +1,7 @@
 /* Builder's Kitchen · Lesson 3 · House rules (prompting). Terms: system prompt, examples, XML tags, thinking/effort, hallucination, temperature (retired). */
 (function () {
   var L = {
-    n: 3, id: "b3", mins: 9, title: "House rules on the wall.", stamp: "Rules",
+    n: 3, id: "b3", mins: 6, title: "House rules on the wall.", stamp: "Rules",
     terms: ["System prompt", "Prompt engineering", "Examples", "XML tags", "Thinking", "Hallucination"],
     teaser: ["HOUSE RULES", "on the wall", "1. Answer like our shop.<br>2. Under 80 words.<br>3. If unsure, say so.", "Six words. Nine minutes."],
     lines: [
@@ -19,7 +19,8 @@
         '<p class="label" style="margin-top:14px">House rules: “You answer for Rosa’s Bakery. Facts are in &lt;facts&gt;. If it’s not there, say you’ll ask.”</p>' +
         '<div class="reply"><p class="who">assistant</p>Yes, Sundays 9 to 1, within 5 miles.</div>' +
         '<p class="small"><b>XML tags</b> like &lt;facts&gt;…&lt;/facts&gt; are labeled boxes that keep your rules, data and examples apart. <b>Examples</b> show the chef a few finished plates, so it learns the style without copying one.</p>' +
-        '<p class="small">Anthropic’s AI Fluency course calls the whole skill the <b>4Ds</b>: what to hand off, how you ask, checking the plate, owning what you serve.</p><p style="margin-top:14px"><b>Thinking</b>: newer Claude models can reason quietly before answering. Builders set an <b>effort</b> level: more thinking for hard jobs, less for quick ones. You pay for thinking like the words it writes.</p>',
+        '<p style="margin-top:14px"><b>Thinking</b>: newer Claude models can reason quietly before answering. Builders set an <b>effort</b> level: more thinking for hard jobs, less for quick ones. You pay for thinking like the words it writes.</p>',
+      more: '<p class="small">Anthropic’s AI Fluency course calls the whole skill the <b>4Ds</b>: what to hand off, how you ask, checking the plate, owning what you serve.</p>',
       next: "Write rules"
     },
     build: {
@@ -63,7 +64,7 @@
       { q: "Who usually writes the system prompt?", a: ["The person building the app", "Anthropic, for every app"], ok: 0, why: "Right. The builder hangs the rules; the customer places orders." },
       { q: "Recall from Lesson 2: does the API remember the last chat?", a: ["No, the app resends it each time", "Yes, for 24 hours"], ok: 0, why: "Right. The window forgets. Your app carries the history." }
     ],
-    keep: "a tested set of house rules for a real business.",
+    keep: "5 questions about a bot’s rules, and a ticket that tests house rules for a real business.",
     cardLabel: "Copy my card",
     card: "HOUSE RULES\nSystem prompt = rules on the wall, written by the builder\nPrompt engineering = clear tickets: who, example, shape\nJailbreak = a user talking around the rules\nExamples = a few finished plates to learn from\nXML tags = labeled boxes: <facts>, <rules>, <example>\nThinking + effort = quiet reasoning, billed as output\nHallucination = confident wrong plate. Give facts + “say I don’t know”",
     real: ["Building with the Claude API (prompt engineering module)", "https://academy.claude.com/courses/building-with-the-claude-api"]

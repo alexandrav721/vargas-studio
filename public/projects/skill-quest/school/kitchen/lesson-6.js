@@ -1,7 +1,7 @@
 /* Builder's Kitchen · Lesson 6 · The recipe binder (RAG). Terms: RAG, chunking, embeddings, vector database, citations, prompt caching. */
 (function () {
   var L = {
-    n: 6, id: "b6", mins: 9, title: "The recipe binder.", stamp: "RAG",
+    n: 6, id: "b6", mins: 6, title: "The recipe binder.", stamp: "RAG",
     terms: ["RAG", "Chunking", "Embeddings", "Vector database", "Citations", "Prompt caching"],
     teaser: ["RECIPE BINDER", "RAG", "The chef never memorized your recipes.<br>Someone pulls the right pages<br>and lays them on the counter.", "Six words. Nine minutes."],
     lines: [
@@ -17,9 +17,8 @@
         '<p class="label">1. Chunking: the binder is cut into pages <span class="sample">Sample</span></p>' +
         '<div class="fridge"><span class="tag">Shipping</span><span class="tag">Returns: 30 days</span><span class="tag">Gift cards</span><span class="tag">Sizes</span></div>' +
         '<p class="label" style="margin-top:14px">2. Search by meaning (embeddings + a vector database)</p><div class="reply"><p class="who">search</p>Closest page: “Returns: unworn items within 30 days.”</div>' +
-        '<p class="label" style="margin-top:14px">3. Claude answers from that page</p><div class="reply"><p class="who">assistant</p>Sorry, returns are 30 days. <span class="small">[Source: Returns policy]</span></div>' +
-        '<p class="small"><b>Citations</b> point to the page used, so people can check. Anthropic doesn’t make its own embeddings; builders use a separate provider (Anthropic’s docs suggest Voyage AI).</p>' +
-        '<p style="margin-top:14px"><b>Small binder?</b> Skip the search. Under roughly 500 pages, Anthropic suggests putting it all on the counter and using <b>prompt caching</b>: prep it once, and reuse it cheaply while orders keep coming (it stays fresh 5 minutes after each use).</p>',
+        '<p class="label" style="margin-top:14px">3. Claude answers from that page</p><div class="reply"><p class="who">assistant</p>Sorry, returns are 30 days. <span class="small">[Source: Returns policy]</span></div><p class="small"><b>Citations</b> show which page was used. Small binder? Paste it all in; <b>prompt caching</b> makes repeats cheaper.</p>',
+      more: '<p class="small"><b>Citations</b> point to the page used, so people can check. Anthropic doesn’t make its own embeddings; builders use a separate provider (Anthropic’s docs suggest Voyage AI).</p><p style="margin-top:14px"><b>Small binder?</b> Skip the search. Under roughly 500 pages, Anthropic suggests putting it all on the counter and using <b>prompt caching</b>: prep it once, and reuse it cheaply while orders keep coming (it stays fresh 5 minutes after each use).</p>',
       next: "Plan your binder"
     },
     build: {
@@ -33,7 +32,7 @@
       },
       head: "ORDER #B06", right: "binder plan", foot: "Paste it into Claude, or open it there",
       text: function (s) {
-        return "Make me a setup plan: I want Claude to " + s.job + " using " + s.docs + ".\n" +
+        return "Make me a setup plan: I want Claude to " + s.job + ". My documents: " + s.docs + ".\n" +
           "1. Do I need RAG, or can it all go in the prompt with prompt caching? Say why in 2 lines.\n" +
           "2. If RAG: explain chunking, embeddings and a vector database for my case, one line each.\n" +
           "3. How do I make answers cite the page they used, and what should it do when no page fits?";
@@ -62,9 +61,9 @@
     },
     quiz: [
       { q: "Does RAG train the model on your documents?", a: ["No, it places the right pages in each request", "Yes, a little each time it reads them"], ok: 0, why: "Right. Nothing is trained. It’s looked up each time." },
-      { q: "Recall from Lesson 5: what’s an MCP server?", a: ["An appliance with a standard plug, for one service", "A faster Claude"], ok: 0, why: "Right. A Drive or Notion server is one way to fetch pages for the binder." }
+      { q: "Recall from Lesson 5: what’s an MCP server?", a: ["An appliance with a standard plug, for one service", "A newer Claude model"], ok: 0, why: "Right. A Drive or Notion server is one way to fetch pages for the binder." }
     ],
-    keep: "a plan for your own documents: paste it in, or build a binder.",
+    keep: "5 questions about AI that answers from documents, and a ticket for a setup plan.",
     cardLabel: "Copy my card",
     card: "THE RECIPE BINDER (RAG)\nRAG = find the right pages, then Claude answers from them\nChunking = cutting documents into findable pages\nEmbeddings = text turned into numbers by meaning\nVector database = finds the closest-meaning pages\nCitations = which page the answer came from\nPrompt caching = prep once, reuse cheaply (5 min after each use)\nSmall binder? Paste it all in.",
     real: ["Building with the Claude API (RAG module)", "https://academy.claude.com/courses/building-with-the-claude-api"]

@@ -128,11 +128,11 @@
           nextBtn(L.startLabel || "Show me") +
           '<p class="small">Doing this with someone? Tap "Bigger text" at the top.</p>');
 
-        if (step === 1) return show("<h2>" + esc(L.example.title) + "</h2>" + (L.lines[2] ? '<ul class="lines"><li><b>' + L.lines[2][0] + "</b>" + L.lines[2][1] + "</li></ul>" : "") + L.example.html + nextBtn(L.example.next || "Now you try"));
+        if (step === 1) return show("<h2>" + esc(L.example.title) + "</h2>" + (L.lines[2] ? '<ul class="lines"><li><b>' + L.lines[2][0] + "</b>" + L.lines[2][1] + "</li></ul>" : "") + L.example.html + (L.example.more ? '<details class="more"><summary>For builders: a bit more detail</summary>' + L.example.more + "</details>" : "") + nextBtn(L.example.next || "Now you try"));
 
         if (step === 2) {
           var B = L.build;
-          if (B.vendor && !state.mode) { state.mode = "make"; state.aud = "business"; }
+          if (B.vendor && !state.mode) { state.mode = window.BK_VENDOR && window.BK_VENDOR[L.n] ? "vendor" : "make"; state.aud = "business"; }
           var VQ = window.BK_VENDOR && window.BK_VENDOR[L.n];
           var vqList = function (s) { return VQ ? VQ.q.concat(s.aud === "school" && VQ.school ? [VQ.school] : []) : []; };
           var vqText = function (s) { return "Questions for the vendor (" + B.vendor[0] + ")\n\n" + vqList(s).map(function (x, i) { return (i + 1) + ". " + x[0] + "\n   Good answer: " + x[1] + "\n   Red flag: " + x[2]; }).join("\n") + "\n\nFrom AI Made EZ, Builder’s Kitchen"; };
@@ -142,9 +142,9 @@
               "Write 5 short questions I should ask them, in plain words. For each: what a good answer sounds like, and a red-flag answer.\n" +
               "Make sure the questions cover: " + B.vendor[1] + "." + (s.aud === "school" ? "\nWe're a school district: include student data and privacy." : "");
           };
-          var modes = B.vendor ? '<div class="fridge" role="group" aria-label="Ticket type"><button type="button" class="chip" data-set="mode" data-v="make" aria-pressed="' + (state.mode !== "vendor") + '">Try it in Claude</button><button type="button" class="chip" data-set="mode" data-v="vendor" aria-pressed="' + (state.mode === "vendor") + '">Vendor questions</button></div>' : "";
+          var modes = B.vendor ? '<div class="fridge" role="group" aria-label="Ticket type"><button type="button" class="chip" data-set="mode" data-v="vendor" aria-pressed="' + (state.mode === "vendor") + '">What to ask</button><button type="button" class="chip" data-set="mode" data-v="make" aria-pressed="' + (state.mode !== "vendor") + '">Try it in Claude</button></div>' : "";
           show("<h2>" + esc(B.title) + "</h2>" + (B.lead ? '<p class="muted">' + B.lead + "</p>" : "") + modes + '<div id="ctl"' + (state.mode === "vendor" ? " hidden" : "") + ">" + B.controls(state, esc) + "</div>" +
-            (VQ ? '<div id="vq" hidden><div class="fridge" role="group" aria-label="Who you are"><button type="button" class="chip" data-set="aud" data-v="business" aria-pressed="true">A business</button><button type="button" class="chip" data-set="aud" data-v="school" aria-pressed="false">A school</button></div><ol class="vq" id="vqol"></ol><p class="small">A starting list, not legal advice. Schools: check with your privacy lead.</p><p class="label">Want them tailored? Your ticket for Claude:</p></div>' : "") +
+            (VQ ? '<div id="vq"' + (state.mode === "vendor" ? "" : " hidden") + '><div class="fridge" role="group" aria-label="Who you are"><button type="button" class="chip" data-set="aud" data-v="business" aria-pressed="true">A business</button><button type="button" class="chip" data-set="aud" data-v="school" aria-pressed="false">A school</button></div><ol class="vq" id="vqol"></ol><p class="small">A starting list, not legal advice. Schools: check with your privacy lead.</p><p class="label">Want them tailored? Your ticket for Claude:</p></div>' : "") +
             '<p class="label">' + esc(B.ticketLabel || "Your ticket") + '</p><div id="ticket"></div>' +
             '<div class="btns">' + (B.claude ? '<a class="btn" id="open" target="_blank" rel="noopener">' + esc(B.claude) + "</a>" : "") + '<button class="btn ' + (B.claude ? "ghost" : "") + '" id="copy" type="button">' + esc(B.copyLabel || "Copy my ticket") + "</button></div>" +
             (B.after ? '<p class="small">' + B.after + "</p>" : "") +

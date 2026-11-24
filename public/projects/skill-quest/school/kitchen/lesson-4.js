@@ -1,7 +1,7 @@
 /* Builder's Kitchen · Lesson 4 · Appliances (tool use). Terms: tool use, tool definition, tool result, web search, code execution, computer use. */
 (function () {
   var L = {
-    n: 4, id: "b4", mins: 8, title: "Appliances.", stamp: "Tools",
+    n: 4, id: "b4", mins: 6, title: "Appliances.", stamp: "Tools",
     terms: ["Tool use", "Tool definition", "Tool call", "Tool result", "Web search", "Code execution"],
     teaser: ["APPLIANCES", "tool use", "The chef can’t check the weather.<br>But it can ask the kitchen<br>to switch on the weather appliance.", "Six words. Eight minutes."],
     lines: [
@@ -18,7 +18,7 @@
         '<p class="label" style="margin-top:14px">2. Claude asks (tool call)</p><div class="reply"><p class="who">assistant</p>use get_weather · city: “Paris”</div>' +
         '<p class="label" style="margin-top:14px">3. The app runs it (tool result)</p><div class="reply"><p class="who">the app</p>Rain, 14°C, 80% chance</div>' +
         '<p class="label" style="margin-top:14px">4. Claude plates the answer</p><div class="reply"><p class="who">assistant</p>Yes, bring one. 80% chance of rain.</div>' +
-        '<p class="small">Anthropic runs a few appliances for you, like <b>web search</b>, web fetch and <b>code execution</b> (it runs code to calculate). With <b>computer use</b>, Claude looks at screenshots and asks the app to click and type.</p>',
+        '<p class="small">Anthropic runs a few appliances for you, like <b>web search</b> (a phone to the market for fresh news), web fetch and <b>code execution</b> (it runs code to calculate). With <b>computer use</b>, Claude looks at screenshots and asks the app to click and type.</p>',
       next: "Design an appliance"
     },
     build: {
@@ -44,7 +44,7 @@
       options: [
         ["The app runs the tool and sends back the result", true],
         ["Claude goes online by itself", false, "Not for your own tools. Claude only asks; the app does it."],
-        ["Anthropic phones a weather station", false, "No. The tool belongs to your app."]
+        ["Claude remembers yesterday’s forecast", false, "It doesn’t know today’s weather. That’s why it needs the tool."]
       ],
       right: "Yes. Claude picks the appliance and the settings. The app, like a waiter, presses the button and brings back the result.",
       wrong: "Who owns the appliance?", hint: "Claude can only write text. Something else has to act.",
@@ -63,7 +63,7 @@
       { q: "What is a tool result?", a: ["What the app sends back after running the tool", "Claude’s final answer"], ok: 0, why: "Right. Result goes back to Claude, then Claude plates the answer." },
       { q: "Recall from Lesson 3: where should a rule that must never break live?", a: ["Built into the app", "In the system prompt only"], ok: 0, why: "Right. Prompts steer; the app enforces." }
     ],
-    keep: "a tool you designed, with its label and the 4 steps.",
+    keep: "5 questions about AI that takes actions, and a ticket that drafts a tool label.",
     cardLabel: "Copy my card",
     card: "APPLIANCES (TOOL USE)\nTool = an appliance Claude can ask for\nTool definition = the label: name, what it does, inputs\nTool call = Claude asks to use it\nTool result = what the app sends back\nThe app runs your tools; Claude only asks\nRun by Anthropic: web search · code execution\nComputer use: the app supplies the computer",
     real: ["Tool use with the Messages API", "https://academy.claude.com/courses/tool-use-with-the-messages-api"]

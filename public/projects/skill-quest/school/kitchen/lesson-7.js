@@ -1,7 +1,7 @@
 /* Builder's Kitchen · Lesson 7 · The head chef (agents). Terms: agent, agent loop, workflow, subagent, orchestrator, human in the loop. */
 (function () {
   var L = {
-    n: 7, id: "b7", mins: 9, title: "The head chef.", stamp: "Agents",
+    n: 7, id: "b7", mins: 6, title: "The head chef.", stamp: "Agents",
     terms: ["Agent", "Agent loop", "Workflow", "Subagent", "Orchestrator", "Human in the loop"],
     teaser: ["HEAD CHEF", "agents", "The whole dinner, start to finish.<br>It decides the next step,<br>checks the pot, and keeps going.", "Six words. Nine minutes."],
     lines: [
@@ -65,7 +65,7 @@
       { q: "What’s the agent loop?", a: ["Think, use a tool, check the result, repeat", "Running the same fixed steps every time"], ok: 0, why: "Right. It keeps going until the job is done or it hits a limit." },
       { q: "Recall from Lesson 4: what does an agent use to act?", a: ["Tools", "A bigger context window"], ok: 0, why: "Right. No tools, no actions. Agents are tools in a loop." }
     ],
-    keep: "a clear call on one real job: request, recipe or agent, with the approval points marked.",
+    keep: "6 questions to ask anyone selling an agent, and a ticket that sorts a real job.",
     cardLabel: "Copy my card",
     card: "THE HEAD CHEF (AGENTS)\nAgent = Claude picks its own steps and tools until done\nAgent loop = think → tool → check → repeat\nWorkflow = a prep checklist: fixed steps set by the builder\nOrchestrator = head chef splitting the job\nSubagent = sous-chef with its own counter, reports a summary\nHuman in the loop = a person approves risky actions\nStart simple: one request, then a workflow, then an agent",
     real: ["Introduction to subagents", "https://academy.claude.com/courses/introduction-to-subagents"]

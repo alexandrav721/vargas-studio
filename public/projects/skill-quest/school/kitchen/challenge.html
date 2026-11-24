@@ -36,12 +36,14 @@ document.addEventListener("DOMContentLoaded", function () {
   var W = window.BK_WORDS, esc = BK.esc, app = document.getElementById("app"), N = 15;
   function play(n, x) { if (window.SQSound) window.SQSound.play(n, x); }
   function shuffle(a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
-  var qs, i, right, missed;
+  var qs, i, right, missed, seen = [];
   function start() {
     // one or two words from every lesson, so the whole kitchen gets tested
     var byL = {}; W.forEach(function (w) { (byL[w[4]] = byL[w[4]] || []).push(w); });
-    var pick = []; Object.keys(byL).forEach(function (k) { pick.push(shuffle(byL[k])[0]); });
-    var rest = shuffle(W.filter(function (w) { return pick.indexOf(w) < 0; }));
+    var fresh = function (w) { return seen.indexOf(w[0]) < 0; };
+    if (W.filter(fresh).length < N) seen = [];
+    var pick = []; Object.keys(byL).forEach(function (k) { var c = shuffle(byL[k].filter(fresh)); if (c.length) pick.push(c[0]); });
+    var rest = shuffle(W.filter(function (w) { return pick.indexOf(w) < 0 && fresh(w); }));
     pick = shuffle(pick.concat(rest.slice(0, N - pick.length)));
     qs = pick.map(function (w, k) {
       var kind = k % 3; // 0 kitchen picture → word, 1 real meaning → word, 2 a line you might hear → word
@@ -58,6 +60,7 @@ document.addEventListener("DOMContentLoaded", function () {
       meaning = meaning.charAt(0).toUpperCase() + meaning.slice(1);
       return { w: w, prompt: kind === 2 ? heard : asKitchen ? w[1] : meaning, kind: kind === 2 ? "In a meeting you hear… which word fills the gap?" : asKitchen ? "In the kitchen, this is…" : "Which word means…", opts: shuffle([w].concat(others)) };
     });
+    pick.forEach(function (w) { seen.push(w[0]); });
     i = 0; right = 0; missed = []; draw();
   }
   function draw() {

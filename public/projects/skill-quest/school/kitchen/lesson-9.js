@@ -1,7 +1,7 @@
 /* Builder's Kitchen · Lesson 9 · Taste tests (evals). Terms: eval, test set, success criteria, grader, LLM-as-judge, regression. */
 (function () {
   var L = {
-    n: 9, id: "b9", mins: 8, title: "Taste tests.", stamp: "Evals",
+    n: 9, id: "b9", mins: 6, title: "Taste tests.", stamp: "Evals",
     terms: ["Eval", "Test set", "Success criteria", "Grader", "LLM-as-judge", "Regression"],
     teaser: ["TASTE TEST", "evals", "Tasting one spoon isn’t a test.<br>Twenty dishes, the same scorecard,<br>every time you change the prompt.", "Six words. Eight minutes."],
     lines: [
@@ -62,7 +62,7 @@
       { q: "What’s a regression?", a: ["Something that used to work breaks after a change", "A test question you skip"], ok: 0, why: "Right. Evals catch them before your users do." },
       { q: "Recall from Lesson 6: if a RAG bot gives wrong answers, what’s often the problem?", a: ["Search pulled the wrong page", "Claude needs training"], ok: 0, why: "Right. An eval on the search step finds it fast." }
     ],
-    keep: "a scorecard and 8 test questions for a real AI feature.",
+    keep: "5 questions that expose “it’s accurate” claims, and a ticket for a mini taste test.",
     cardLabel: "Copy my card",
     card: "TASTE TESTS (EVALS)\nEval = same questions, same scorecard, every change\nSuccess criteria = what good means, measurable\nTest set = the fixed questions (keep some unseen)\nGrader = code for exact checks, LLM-as-judge for fuzzy ones\nRegression = a fix that broke something else\nVibe check ≠ eval",
     real: ["Introduction to evals", "https://academy.claude.com/courses/introduction-to-evals"]

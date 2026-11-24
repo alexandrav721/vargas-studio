@@ -1,7 +1,7 @@
 /* Builder's Kitchen · Lesson 2 · The order window (API). Terms: API, API key, request, response, messages, SDK, streaming, cost per token. */
 (function () {
   var L = {
-    n: 2, id: "b2", mins: 8, title: "The order window.", stamp: "API",
+    n: 2, id: "b2", mins: 6, title: "The order window.", stamp: "API",
     terms: ["API", "API key", "Request", "Response", "Messages", "Streaming", "Cost per token"],
     teaser: ["ORDER WINDOW", "the API", "The app is a waiter.<br>It passes a ticket through the window<br>and carries the plate back.", "Seven words. Eight minutes."],
     lines: [
@@ -19,7 +19,8 @@
         '<p class="label" style="margin-top:14px">The response (what comes back)</p>' +
         '<div class="reply"><p class="who">assistant</p>Minestrone, French onion, chicken noodle.<br><span class="small">Used: 18 tokens in · 9 tokens out</span></div>' +
         '<p class="small">A chat is a list of <b>messages</b>: “user” turns are yours, “assistant” turns are Claude’s. To ask a follow-up, your app sends the whole list again.</p>' +
-        '<p style="margin-top:14px"><b>Streaming</b> sends the plate out bite by bite, so words appear as they’re written. <b>Cost per token</b>: you pay for tokens in and tokens out, and out costs more.</p><p class="small">Real requests also name the exact model (like claude-sonnet-5-5) and a reply length limit.</p>',
+        '<p style="margin-top:14px"><b>Streaming</b> sends the plate out bite by bite, so words appear as they’re written. <b>Cost per token</b>: you pay for tokens in and tokens out, and out costs more.</p>',
+      more: '<p class="small">Real requests also name the exact model (like claude-sonnet-5-5) and a reply length limit.</p>',
       next: "Write a ticket"
     },
     build: {
@@ -65,7 +66,7 @@
       { q: "What does an API key do?", a: ["Proves the request is yours and bills your account", "Unlocks a smarter model"], ok: 0, why: "Right. It’s a badge and a tab. Keep it secret." },
       { q: "Recall from Lesson 1: what’s the context window?", a: ["The counter: everything the chef can see at once", "The order window"], ok: 0, why: "Right. The window takes orders; the counter is what the chef can see." }
     ],
-    keep: "a real request and response you can read, and the habit of keeping keys secret.",
+    keep: "5 questions about how a product reaches Claude, and the habit of keeping keys secret.",
     cardLabel: "Copy my card",
     card: "THE ORDER WINDOW\nAPI = the window apps use to send Claude tickets\nAPI key = your account card: bills your tab (keep it secret)\nThe app = the waiter carrying tickets and plates\nRequest = the ticket · Response = the plate\nMessages = the list of user and assistant turns\nThe API remembers nothing: resend the conversation\nStreaming = words arrive as they’re written\nCost = tokens in + tokens out (out costs more)",
     real: ["Claude Platform 101", "https://academy.claude.com/courses/claude-platform-101"]

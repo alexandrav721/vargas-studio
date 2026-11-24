@@ -1,7 +1,7 @@
 /* Builder's Kitchen · Lesson 10 · Graduation: plan your own kitchen (architect). Pulls the whole track together. */
 (function () {
   var L = {
-    n: 10, id: "b10", mins: 10, title: "Plan your own kitchen.", stamp: "Architect",
+    n: 10, id: "b10", mins: 7, title: "Plan your own kitchen.", stamp: "Architect",
     terms: ["Architecture", "Cost", "Latency", "Guardrails", "Prompt injection", "Start simple"],
     teaser: ["GRADUATION", "you’re the architect", "Pick the chef. Hang the rules.<br>Choose appliances and a binder.<br>Plan the taste test.", "Every word. Ten minutes."],
     lines: [
@@ -57,7 +57,7 @@
       { q: "A friend wants to start with 5 agents. Your advice?", a: ["Start with one request and a taste test, add pieces only when needed", "More agents means better results"], ok: 0, why: "Right. Start simple. Agents cost more and break in more ways." },
       { q: "Recall from Lesson 2: what decides cost?", a: ["Tokens in and out, and which chef", "How many people use the app at once"], ok: 0, why: "Right. Mostly tokens times the chef’s price, plus fees for some tools." }
     ],
-    keep: "a one-screen plan for your own AI product, and every builder word in this course.",
+    keep: "6 questions for any AI pitch, and a ticket that reviews your own kitchen plan.",
     cardLabel: "Copy my plan",
     card: "MY AI KITCHEN PLAN\nChef (model): \nOrder window (API): \nHouse rules (system prompt): \nAppliances (tools): \nOutlets (MCP): \nRecipe binder (RAG or paste in): \nHead chef (agent) or prep checklist (workflow): \nTaste test (eval): \nGuardrails: \nStart simple. Taste every change.",
     real: ["Claude Platform 101", "https://academy.claude.com/courses/claude-platform-101"]

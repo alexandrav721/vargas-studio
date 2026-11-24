@@ -1,7 +1,7 @@
 /* Builder's Kitchen · Lesson 1 · How AI kitchens work. Terms: model, LLM, prompt, token, context window, model family. */
 (function () {
   var L = {
-    n: 1, id: "b1", mins: 8, title: "How AI kitchens work.", stamp: "Kitchen",
+    n: 1, id: "b1", mins: 6, title: "How AI kitchens work.", stamp: "Kitchen",
     terms: ["Model", "LLM", "Prompt", "Token", "Context window", "Model family"],
     teaser: ["THE KITCHEN", "how it works", "You place the order (prompt).<br>The chef cooks it (model).<br>The counter holds it all (context window).", "Six words. Eight minutes."],
     lines: [
@@ -30,7 +30,7 @@
       lead: "Tap a job and a chef. Your ticket makes a cheat sheet for your work.",
       state: { job: "writing emails", chef: "Sonnet" },
       controls: function (s, esc) {
-        var jobs = ["writing emails", "planning lessons", "running a small shop", "my small business", "marketing campaigns"];
+        var jobs = ["writing emails", "planning lessons", "running a small shop", "my small business", "social media content"];
         var chefs = [["Haiku", "fast and cheap"], ["Sonnet", "balanced"], ["Opus", "usual first pick"], ["Fable", "hardest tasks"]];
         return '<p class="label">Your job</p><div class="fridge">' + jobs.map(function (j) { return '<button type="button" class="chip" data-set="job" data-v="' + esc(j) + '" aria-pressed="' + (s.job === j) + '">' + esc(j) + "</button>"; }).join("") + "</div>" +
           '<p class="label">Your chef</p><div class="fridge">' + chefs.map(function (c) { return '<button type="button" class="chip" data-set="chef" data-v="' + c[0] + '" aria-pressed="' + (s.chef === c[0]) + '">' + c[0] + " · " + c[1] + "</button>"; }).join("") + "</div>";
@@ -65,7 +65,7 @@
       { q: "What’s a token?", a: ["A small piece of text the model counts and charges by", "One full word"], ok: 0, why: "Right. Tokens are the pieces. Limits and prices are counted in them." },
       { q: "A very long chat starts missing early details. Why?", a: ["The counter (context window) is crowded, so early details get less attention", "The model learned something new mid-chat"], ok: 0, why: "Right. A crowded counter blurs early details. Start a fresh chat with the key facts." }
     ],
-    keep: "a clear picture of the AI kitchen, and a chef you picked for your job.",
+    keep: "5 questions for any AI vendor, and a cheat sheet ticket for your job.",
     cardLabel: "Copy my card",
     card: "THE AI KITCHEN\nModel = the chef (Claude)\nLLM = a chef that predicts the next piece of text\nPrompt = your order\nToken = the pieces it counts and charges by\nContext window = the counter: all it can see\nModel family = Haiku (fast) · Sonnet (balanced) · Opus (usual start) · Fable (hardest jobs)",
     real: ["AI Capabilities and Limitations", "https://academy.claude.com/courses/ai-capabilities-and-limitations"]
