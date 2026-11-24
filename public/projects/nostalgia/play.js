@@ -2,7 +2,8 @@
 import { WEBSITES, ITEMS } from "./catalog-data.js";
 import { ITEM_MEDIA, SITE_MEDIA } from "./media.js";
 import { primaryEra } from "./data.js";
-import { iconFor, personaFor, signatureFor, personaLine, makeCard } from "./moments.js";
+import { iconFor, personaFor, signatureFor, personaLine, makeCard, personaKey, personaFromKey, makeGroupCard } from "./moments.js";
+import { MAX_PLAYERS, cleanName, displayName, decodeGroup, encodeGroup, whoHad, inCommon, funLine } from "./group.js";
 import { dialUp, click, blip, chime, fanfare, bindMute } from "./sound.js";
 
 const OWN_KEY = "scrollback.own.v1";
@@ -30,6 +31,7 @@ function save(k, v) {
 const ALL_ITEMS = Object.entries(ITEMS).flatMap(([era, l]) => l.map((it) => ({ ...it, era, kind: "item" })));
 const ALL_SITES = Object.entries(WEBSITES).flatMap(([era, l]) => l.map((s) => ({ ...s, era, kind: "site" })));
 const ITEM_NAMES = ALL_ITEMS.map((i) => i.name);
+const ITEM_BY_NAME = new Map(ALL_ITEMS.map((i) => [i.name, i]));
 
 function peak(years) {
   const n = String(years || "").match(/19\d\d|20\d\d/g)?.map(Number) || [];
@@ -42,13 +44,29 @@ function near(row, y) {
   return Math.min(Math.abs(y - p[0]), Math.abs(y - p[1]));
 }
 
-/* A friend's picks arrive in the link (?year=2006&had=a.b.c). */
+/* A group arrives in the link: up to 9 players' names, personas and picks (see group.js).
+ * Old links (?year=2006&had=a.b.c) read as a group of one. No link: the solo game, unchanged. */
 const params = new URLSearchParams(location.search);
-const friendHad = new Set(
-  (params.get("had") || "").split(".").filter(Boolean).map((x) => ITEM_NAMES[parseInt(x, 36)]).filter(Boolean)
-);
-let year = Number(params.get("year")) || 2004;
+const group = decodeGroup(location.search, ITEM_NAMES, { first: FIRST, last: LAST });
+// solo · join (adding yourself) · new (the link was full, so you start your own group)
+let mode = !group ? "solo" : group.players.length >= MAX_PLAYERS ? "full" : "join";
+let players = group ? group.players : []; // everyone before you
+let names = players.map((p, k) => displayName(p, k, players.length));
+let groupHad = whoHad(players); // item name → [player index]
+let myName = "";
+let year = group ? group.year : Number(params.get("year")) || 2004;
 year = Math.min(LAST, Math.max(FIRST, year));
+const groupYear = year;
+const inGroup = () => mode === "join" || mode === "new";
+
+/* "your friend had it" · "Maya had it" · "Maya, Jo had it" · "Maya, Jo +2 had it" */
+function stickerText(name) {
+  const ks = groupHad.get(name);
+  if (!ks?.length) return "";
+  if (players.length === 1 && !players[0].name) return "your friend had it";
+  const who = ks.map((k) => names[k]);
+  return `${who.slice(0, 2).join(", ")}${who.length > 2 ? ` +${who.length - 2}` : ""} had it`;
+}
 
 /* ---------- 1. Boot: the year wheel ---------- */
 function paintWheel() {
@@ -111,9 +129,9 @@ function buildDeck() {
   const items = ALL_ITEMS.filter((it) => near(it, year) <= 2)
     .sort((a, b) => near(a, year) - near(b, year) + (ITEM_MEDIA[b.name] ? 0.5 : 0) - (ITEM_MEDIA[a.name] ? 0.5 : 0));
   const sites = ALL_SITES.filter((s) => SITE_MEDIA[s.name] && near(s, year) <= 1).sort((a, b) => near(a, year) - near(b, year));
-  // friend's picks first, so the comparison means something
-  const fromFriend = items.filter((it) => friendHad.has(it.name));
-  const rest = items.filter((it) => !friendHad.has(it.name));
+  // the group's picks first (most shared first), so the comparison means something
+  const fromFriend = items.filter((it) => groupHad.has(it.name)).sort((a, b) => groupHad.get(b.name).length - groupHad.get(a.name).length);
+  const rest = items.filter((it) => !groupHad.has(it.name));
   // up to 3 old websites; when a year has fewer, more things fill the deck
   const pickItems = [...fromFriend, ...rest].slice(0, ROUNDS - Math.min(3, sites.length));
   const pickSites = sites.slice(0, ROUNDS - pickItems.length);
@@ -147,7 +165,7 @@ function cardHtml(row) {
     ? `<img src="./${esc(m.file)}" alt="${esc(row.name)}" draggable="false" />`
     : `<svg viewBox="0 0 50 50" role="img" aria-label="${esc(row.name)}">${iconFor(row)}</svg>`;
   return `<div class="card card--thing">
-    <div class="snap">${pic}${friendHad.has(row.name) ? `<b class="friend-sticker">your friend had it</b>` : ""}</div>
+    <div class="snap">${pic}${groupHad.has(row.name) ? `<b class="friend-sticker">${esc(stickerText(row.name))}</b>` : ""}</div>
     <p class="card-name">${esc(short(row.name))}</p><p class="card-sub">${esc(row.sensory || row.years || "")}</p>
     ${m?.file ? `<p class="card-credit">Photo: ${esc(m.author)} · ${esc(m.license)}</p>` : ""}
   </div>`;
@@ -250,15 +268,22 @@ async function reveal() {
   $("#away").value = load(AWAY_KEY, "");
   $("#room-link").href = `./explore.html?gen=millennial&mode=range&from=${year - 2}&to=${year + 2}&lens=room`;
 
+  $("#group").hidden = true;
+  $("#save-mine").hidden = true;
+  $("#reveal-common").hidden = true;
   if (!had.length && !sitesHad) {
     lead.textContent = `None of ${year} rang a bell.`;
     name.textContent = "Try another year";
+    name.classList.add("is-in");
     $(".reveal-away").hidden = true;
     $(".reveal-actions").hidden = true;
+    // in a group you still count: you join with nothing ticked
+    if (inGroup()) paintGroup(had);
     return;
   }
-  $(".reveal-away").hidden = false;
-  $(".reveal-actions").hidden = false;
+  $(".reveal-away").hidden = inGroup();
+  $(".reveal-actions").hidden = inGroup();
+  $("#save-mine").hidden = !inGroup();
   lead.textContent = `In ${year} you were`;
   name.classList.remove("is-in");
   await wait(700);
@@ -274,21 +299,202 @@ async function reveal() {
     tag.hidden = false;
   }
 
-  const common = had.filter((it) => friendHad.has(it.name)).length;
-  const c = $("#reveal-common");
-  c.hidden = !friendHad.size;
-  if (friendHad.size) c.textContent = `${common} in common with your friend`;
-
   await wait(400);
-  had.slice(0, 5).forEach((it, k) => {
+  if (inGroup()) return void paintGroup(had);
+  paintPile(had.slice(0, 5));
+}
+
+function paintPile(list, counts) {
+  const pile = $("#pile");
+  pile.innerHTML = "";
+  list.forEach((it, k) => {
     const m = ITEM_MEDIA[it.name];
     const pic = m?.file ? `<img src="./${esc(m.file)}" alt="" />` : `<svg viewBox="0 0 50 50">${iconFor(it)}</svg>`;
     pile.insertAdjacentHTML(
       "beforeend",
-      `<span class="pile-snap" style="--k:${k};--r:${[-8, 6, -3, 9, -5][k]}deg">${pic}<b>${esc(short(it.name))}</b></span>`
+      `<span class="pile-snap" style="--k:${k};--r:${[-8, 6, -3, 9, -5][k]}deg">${pic}<b>${esc(short(it.name))}${counts ? ` ×${counts[k]}` : ""}</b></span>`
     );
   });
 }
+
+/* ---------- 4b. The group: "Our 2004: 4 of us, 6 things in common" ---------- */
+let lastGroup = null; // { all, meIndex } as last painted, for sharing and the card
+
+function meFrom(had) {
+  return { name: myName, key: personaKey(had), year, had: [...new Set(had.map((it) => it.name))] };
+}
+function personaOf(p) {
+  const items = p.had.map((n) => ITEM_BY_NAME.get(n)).filter(Boolean);
+  const key = p.key || personaKey(items);
+  const sig = signatureFor(items, p.year - 2, p.year + 2);
+  return { persona: personaFromKey(key, p.year - 2, p.year + 2), tag: sig?.tag || "" };
+}
+function groupRows(all, meIndex, forCard) {
+  return all.map((p, k) => {
+    const nm = k === meIndex ? (forCard ? myName || "Me" : "You") : names[k];
+    const yr = p.year !== groupYear ? ` (${p.year})` : "";
+    return { name: `${nm}${yr}`, ...personaOf(p), you: k === meIndex };
+  });
+}
+
+/** Paint the group under your persona (meHad = your items), or the group alone (meHad = null, a full link). */
+function paintGroup(meHad) {
+  const all = meHad ? [...players, meFrom(meHad)] : [...players];
+  const meIndex = meHad ? all.length - 1 : -1;
+  lastGroup = { all, meIndex };
+  const common = inCommon(all);
+  const n = all.length;
+  const c = common.length;
+  $("#group").hidden = false;
+  $("#group-head").textContent =
+    n === 1 ? `Our ${groupYear}: just you so far` : `Our ${groupYear}: ${n} of us, ${c} thing${c === 1 ? "" : "s"} in common`;
+  const callNames = all.map((p, k) => (k === meIndex ? "you" : names[k]));
+  const fun = funLine(all, callNames, meIndex, (nm) => short(nm));
+  $("#group-fun").textContent = fun;
+  $("#group-fun").hidden = !fun;
+  $("#roster").innerHTML = groupRows(all, meIndex, false)
+    .map((r) => `<li${r.you ? ` class="is-you"` : ""}><b>${esc(r.name)}</b><span>${esc(r.persona)}${r.tag ? `, ${esc(r.tag)}` : ""}</span></li>`)
+    .join("");
+  // the photo pile: what most of you had; with nothing shared yet, your own things
+  const shared = common.map((x) => ITEM_BY_NAME.get(x.name)).filter(Boolean);
+  if (shared.length) paintPile(shared.slice(0, 5), common.map((x) => x.count));
+  else paintPile((meHad || []).slice(0, 5));
+  const add = $("#add-friends");
+  const note = $("#group-note");
+  if (!meHad) {
+    add.textContent = "Start a new group";
+    note.textContent = "This link is full: 9 of you. Start a new one.";
+  } else if (n >= MAX_PLAYERS) {
+    add.textContent = "Share the group";
+    note.textContent = "That's 9: this link is full. No live room, it all lives in the link.";
+  } else {
+    add.textContent = n === 1 ? "Start your group" : "Add your friends";
+    note.textContent = "No live room: the group lives in the link. Pass it on.";
+  }
+}
+
+function groupLink() {
+  const u = new URL(location.href);
+  // old one-person links carry no persona key: work it out from their picks
+  const all = lastGroup.all.map((p) => ({ ...p, key: p.key || personaKey(p.had.map((n) => ITEM_BY_NAME.get(n)).filter(Boolean)) }));
+  return `${u.origin}${u.pathname}${encodeGroup(groupYear, all, ITEM_NAMES)}`;
+}
+function groupCard() {
+  const { all, meIndex } = lastGroup;
+  const common = inCommon(all);
+  const callNames = all.map((p, k) => (k === meIndex ? "you" : names[k]));
+  // on the card, "you" is whoever posts it
+  const fun = funLine(all, callNames, meIndex, (nm) => short(nm))
+    .replace(/^Only you /, `Only ${myName || "I"} `)
+    .replace(/ of you had /, " of us had ")
+    .replace(/^You both /, "We both ");
+  return makeGroupCard({
+    year: groupYear,
+    rows: groupRows(all, meIndex, true),
+    common: common.map((x) => ({ item: ITEM_BY_NAME.get(x.name), count: x.count })).filter((x) => x.item),
+    fun,
+  });
+}
+
+async function shareGroup() {
+  const btn = $("#add-friends");
+  const label = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = "Making the card…";
+  const blob = await groupCard();
+  btn.disabled = false;
+  btn.textContent = label;
+  const link = groupLink();
+  const n = lastGroup.all.length;
+  const text = n >= MAX_PLAYERS ? `Our ${groupYear}: all 9 of us.` : `Our ${groupYear}: ${n} of us so far. Your turn?`;
+  try {
+    const file = blob && new File([blob], `our-${groupYear}.png`, { type: "image/png" });
+    if (file && navigator.canShare?.({ files: [file] })) return void (await navigator.share({ files: [file], text: `${text} ${link}` }));
+    if (navigator.share) return void (await navigator.share({ text, url: link }));
+  } catch {
+    return; /* closed the share sheet */
+  }
+  try {
+    await navigator.clipboard.writeText(`${text} ${link}`);
+    btn.textContent = "Link copied";
+    setTimeout(() => { btn.textContent = label; }, 1800);
+  } catch {
+    $("#group-note").textContent = link; /* no clipboard: show the link to copy by hand */
+  }
+}
+$("#add-friends").addEventListener("click", () => {
+  if (mode === "full") return void showJoin();
+  shareGroup();
+});
+$("#save-group").addEventListener("click", async () => {
+  const b = await groupCard();
+  if (b) download(b, `our-${groupYear}.png`);
+});
+$("#save-mine").addEventListener("click", async () => {
+  const b = await card();
+  if (b) download(b);
+});
+
+/* ---------- 1b. Join: "Maya and 2 others played 2004. Your turn?" ---------- */
+function joinLead() {
+  const named = players.findIndex((p) => p.name);
+  const first = names[named >= 0 ? named : 0];
+  const others = players.length - 1;
+  if (!others) return first;
+  if (others === 1) {
+    const other = players[named === 1 ? 0 : 1];
+    return `${first} and ${other.name || "a friend"}`;
+  }
+  return `${first} and ${others} others`;
+}
+function showJoin() {
+  const full = mode === "full";
+  $("#join-ask").textContent = `${joinLead()} played ${groupYear}. ${full ? "This link is full." : "Your turn?"}`;
+  $("#join-go").textContent = full ? "Start a new group" : "Go";
+  $("#join-see").hidden = !full;
+  $("#join-year").hidden = full;
+  // pictures first: what they had, most shared first
+  const top = [...groupHad.entries()].sort((a, b) => b[1].length - a[1].length).map(([nm]) => ITEM_BY_NAME.get(nm)).filter(Boolean).slice(0, 3);
+  $("#join-faces").innerHTML = top
+    .map((it, k) => {
+      const m = ITEM_MEDIA[it.name];
+      const pic = m?.file ? `<img src="./${esc(m.file)}" alt="" />` : `<svg viewBox="0 0 50 50">${iconFor(it)}</svg>`;
+      return `<li style="--r:${[-7, 4, -2][k]}deg">${pic}</li>`;
+    })
+    .join("");
+  show("beat-join");
+  $("#join-ask").focus({ preventScroll: true });
+}
+$("#join-form").addEventListener("submit", (e) => {
+  e.preventDefault();
+  myName = cleanName($("#join-name").value);
+  if (mode === "full") {
+    // a fresh group, seeded with you
+    mode = "new";
+    players = [];
+    names = [];
+    groupHad = new Map();
+  }
+  start();
+});
+$("#join-year").addEventListener("click", () => {
+  myName = cleanName($("#join-name").value);
+  paintWheel();
+  show("beat-boot");
+});
+$("#join-see").addEventListener("click", () => {
+  show("beat-reveal");
+  $("#reveal-lead").textContent = `${players.length} of you played`;
+  const nm = $("#reveal-name");
+  nm.textContent = `Our ${groupYear}`;
+  nm.classList.add("is-in");
+  $("#reveal-tag").hidden = true;
+  $("#reveal-common").hidden = true;
+  $(".reveal-away").hidden = true;
+  $(".reveal-actions").hidden = true;
+  $("#save-mine").hidden = true;
+  paintGroup(null);
+});
 
 /* Long names ("The Front-Camera Early Adopter") shrink until they fit the phone. */
 function fitName(el) {
@@ -317,10 +523,10 @@ function shareLink() {
 async function card() {
   return makeCard({ had: hadItems(), from: year, to: year, away: $("#away").value });
 }
-function download(blob) {
+function download(blob, file = `who-i-was-${year}.png`) {
   const a = document.createElement("a");
   a.href = URL.createObjectURL(blob);
-  a.download = `who-i-was-${year}.png`;
+  a.download = file;
   a.click();
   setTimeout(() => URL.revokeObjectURL(a.href), 2000);
 }
@@ -361,4 +567,4 @@ $("#again").addEventListener("click", () => {
 /* ---------- go ---------- */
 bindMute($("#mute"));
 paintWheel();
-if (friendHad.size && params.get("year")) start(false);
+if (group) showJoin();

@@ -400,6 +400,19 @@ export function personaFor(had, from, to) {
   return `The ${era} ${top ? TYPE_WORD[top] : "Main Character"}`;
 }
 
+/** One letter for the persona type, so a link can carry it: t tech, y toy, f fashion, m media, x a mix. */
+const KEY_TYPE = { t: "tech", y: "toy", f: "fashion", m: "media" };
+export function personaKey(had) {
+  const top = topBucket(had.length ? had : [{ category: "tech" }]);
+  return (top && Object.keys(KEY_TYPE).find((k) => KEY_TYPE[k] === top)) || "x";
+}
+/** The persona name from a link's key: the same words personaFor would give. */
+export function personaFromKey(key, from, to) {
+  const mid = Math.round((from + to) / 2);
+  const era = (ERA_WORD.find(([a, b]) => mid >= a && mid <= b) || ERA_WORD[1])[2];
+  return `The ${era} ${KEY_TYPE[key] ? TYPE_WORD[KEY_TYPE[key]] : "Main Character"}`;
+}
+
 function yearSpan(it) {
   const n = String(it.years || "").match(/19\d\d|20\d\d/g)?.map(Number) || [];
   return n.length ? [Math.min(...n), Math.max(...n)] : null;
@@ -550,6 +563,126 @@ export async function makeCard(opts = {}) {
   g.fillText("Who were you?", 72, 1772);
   // photo credits: who took each picture on the card, then where the full list lives
   const who = picks.map((it) => ITEM_MEDIA[it.name]).filter((m) => m?.file).map((m) => `${String(m.author).replace(/\s*\(.*?\)/g, "").slice(0, 30)} (${m.license})`);
+  const lines = [];
+  let line = who.length ? "Photos, Wikimedia Commons: " : "";
+  g.font = "500 20px 'IBM Plex Mono', monospace";
+  who.forEach((w, k) => {
+    const next = `${w}${k < who.length - 1 ? ", " : "."}`;
+    if (g.measureText(line + next).width > 936 && line) { lines.push(line.trimEnd()); line = ""; }
+    line += next;
+  });
+  if (line) lines.push(line);
+  lines.push("All credits: Scrollback credits page");
+  g.fillStyle = "rgba(246,242,234,0.7)";
+  lines.slice(-4).forEach((t, k, arr) => g.fillText(t, 72, 1900 - (arr.length - 1 - k) * 26));
+  return new Promise((ok) => canvas.toBlob(ok, "image/png"));
+}
+
+/** The group card, "Our 2004": how many of you, what you shared (photos), and each person's persona.
+ *  opts: { year, rows: [{ name, persona, tag, you }], common: [{ item, count }], fun } — all from the link. */
+export async function makeGroupCard(opts) {
+  const W = 1080;
+  const H = 1920;
+  const canvas = document.createElement("canvas");
+  canvas.width = W;
+  canvas.height = H;
+  const g = canvas.getContext("2d");
+  try {
+    await Promise.race([document.fonts.ready, new Promise((ok) => setTimeout(ok, 800))]);
+  } catch {
+    /* ignore */
+  }
+  const css = getComputedStyle(document.body);
+  const brand = css.getPropertyValue("--brand").trim() || "#b8ff00";
+  const brand2 = css.getPropertyValue("--brand-2").trim() || "#ff6fb5";
+  const bg0 = css.getPropertyValue("--bg0").trim() || "#0a0a0a";
+  const bg1 = css.getPropertyValue("--bg1").trim() || "#121018";
+  const grad = g.createLinearGradient(0, 0, 0, H);
+  grad.addColorStop(0, bg1);
+  grad.addColorStop(1, bg0);
+  g.fillStyle = grad;
+  g.fillRect(0, 0, W, H);
+
+  const rows = opts.rows.slice(0, 9);
+  const shared = opts.common.length;
+  g.fillStyle = brand;
+  g.font = "500 40px 'IBM Plex Mono', monospace";
+  g.fillText(`${rows.length} of us · ${shared} thing${shared === 1 ? "" : "s"} in common`, 72, 150);
+  g.fillStyle = "#f6f2ea";
+  g.font = "800 190px Syne, sans-serif";
+  g.fillText("Our", 72, 330);
+  g.fillText(String(opts.year), 72, 500);
+  if (opts.fun) {
+    g.fillStyle = brand;
+    const fs = fitText(g, opts.fun, 936, 48, "italic 500", "'IBM Plex Sans', sans-serif");
+    g.font = `italic 500 ${fs}px 'IBM Plex Sans', sans-serif`;
+    g.fillText(opts.fun, 72, 580);
+  }
+
+  // what most of you had: up to 4 snapshots
+  const picks = opts.common.slice(0, 4);
+  const spots = [[80, 640, -6], [330, 620, 4], [580, 650, -3], [800, 630, 6]];
+  for (let i = 0; i < picks.length; i += 1) {
+    const { item: it, count } = picks[i];
+    const [x, y, rot] = spots[i];
+    const media = ITEM_MEDIA[it.name];
+    let img = media?.file ? await loadImg(`./${media.file}`) : null;
+    if (!img) {
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="500" height="500" viewBox="0 0 50 50"><rect width="50" height="50" fill="#e4ddd0"/>${iconFor(it)}</svg>`;
+      const u = URL.createObjectURL(new Blob([svg], { type: "image/svg+xml" }));
+      img = await loadImg(u);
+      URL.revokeObjectURL(u);
+    }
+    g.save();
+    g.translate(x + 110, y + 130);
+    g.rotate((rot * Math.PI) / 180);
+    g.shadowColor = "rgba(0,0,0,0.45)";
+    g.shadowBlur = 24;
+    g.shadowOffsetY = 12;
+    g.fillStyle = "#f6f2ea";
+    g.fillRect(-110, -130, 220, 270);
+    g.shadowColor = "transparent";
+    if (img) {
+      const s2 = Math.max(196 / img.width, 196 / img.height);
+      const sw = 196 / s2;
+      const sh = 196 / s2;
+      g.drawImage(img, (img.width - sw) / 2, (img.height - sh) / 2, sw, sh, -98, -118, 196, 196);
+    }
+    g.fillStyle = "#1d1a16";
+    let nm = it.name.replace(/\s*\(.*?\)/g, "").split(/\s*[\/+&]\s*/)[0];
+    g.font = "700 22px Syne, sans-serif";
+    const tail = ` ×${count}`;
+    while (g.measureText(nm + tail).width > 196 && nm.length > 4) nm = `${nm.slice(0, -2).trim()}…`.replace(/……$/, "…");
+    g.fillText(nm + tail, -98, 112);
+    g.restore();
+  }
+
+  // each person and who they were
+  // fewer people, bigger type; the list sits in the middle of the space left
+  const top = picks.length ? 1010 : 690;
+  const nameSize = rows.length <= 4 ? 36 : rows.length <= 6 ? 30 : 26;
+  const lineSize = rows.length <= 4 ? 44 : rows.length <= 6 ? 36 : 30;
+  const block = nameSize + lineSize + 12;
+  const step = Math.min(block + 50, (1680 - top) / Math.max(1, rows.length));
+  const y0 = top + Math.max(0, (1680 - top - step * rows.length) / 2);
+  rows.forEach((r, k) => {
+    const y = y0 + k * step + nameSize;
+    g.fillStyle = r.you ? brand2 : brand;
+    g.font = `700 ${nameSize}px 'IBM Plex Mono', monospace`;
+    g.fillText(r.name, 72, y);
+    g.fillStyle = "#f6f2ea";
+    const line = r.tag ? `${r.persona}, ${r.tag}` : r.persona;
+    const ls = fitText(g, line, 936, lineSize, 600, "'IBM Plex Sans', sans-serif");
+    g.font = `600 ${Math.max(ls, 24)}px 'IBM Plex Sans', sans-serif`;
+    let t = line;
+    while (g.measureText(t).width > 936 && t.length > 8) t = `${t.slice(0, -2).trim()}…`.replace(/……$/, "…");
+    g.fillText(t, 72, y + lineSize + 6);
+  });
+
+  g.fillStyle = brand;
+  g.font = "800 58px Syne, sans-serif";
+  g.fillText("Who were you?", 72, 1772);
+  const who = picks.map((p) => ITEM_MEDIA[p.item.name]).filter((m) => m?.file).map((m) => `${String(m.author).replace(/\s*\(.*?\)/g, "").slice(0, 30)} (${m.license})`);
   const lines = [];
   let line = who.length ? "Photos, Wikimedia Commons: " : "";
   g.font = "500 20px 'IBM Plex Mono', monospace";
