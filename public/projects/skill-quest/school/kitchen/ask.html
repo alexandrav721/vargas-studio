@@ -18,7 +18,8 @@
 .pick{margin-right:8px;width:22px;height:22px;min-width:22px;flex-shrink:0}
 #aud{flex-wrap:wrap;overflow:visible}
 .askbar{position:sticky;bottom:0;z-index:5;display:flex;gap:8px;align-items:center;justify-content:space-between;padding:10px 12px;margin:16px -4px 0;background:var(--card);border:1px solid var(--line2);border-radius:12px;box-shadow:0 -4px 16px rgba(0,0,0,.06)}
-.askbar .btn{min-height:44px;padding:0 16px}
+.askbar .btn{min-height:44px;padding:0 14px;white-space:nowrap}
+.askbar .cnt{display:flex;flex-direction:column;font-size:.85rem;line-height:1.25;white-space:nowrap}
 .mark{display:flex;gap:8px;margin:8px 0 4px}.mark button{flex:1;min-height:44px;border:1px solid var(--line2);border-radius:10px;background:var(--card);font:600 .9rem inherit;color:var(--ink)}.mark button[aria-pressed=true][data-mark=good]{background:var(--ok-bg);border-color:var(--ok)}.mark button[aria-pressed=true][data-mark=red]{background:#FCE6E0;border-color:#B3321B}
 .vname{width:100%;font:inherit;padding:10px 12px;border:1px solid var(--line2);border-radius:10px;background:var(--card);color:var(--ink);margin-top:6px}
 .onlymine .vq li.off,.onlymine .topic.empty{display:none}
@@ -41,7 +42,7 @@
   <p class="label" style="margin-top:14px">In the meeting? Score the vendor</p>
   <input class="vname" id="vname" type="text" placeholder="Vendor name (optional, stays on this device)" aria-label="Vendor name">
   <div id="list"></div>
-  <div class="askbar"><span id="n">0 ticked</span><span id="tally" aria-live="polite"></span><button class="btn ghost" id="mine" type="button" aria-pressed="false">My list only</button><button class="btn" id="copy" type="button">Copy</button></div>
+  <div class="askbar"><span class="cnt"><span id="n">0 ticked</span><span id="tally" aria-live="polite"></span></span><button class="btn ghost" id="mine" type="button" aria-pressed="false">My list</button><button class="btn" id="copy" type="button">Copy</button></div>
   <div class="btns"><button class="btn ghost" id="newv" type="button">New vendor</button><button class="btn ghost" type="button" onclick="window.print()">Print</button><a class="btn ghost" href="./">The course</a></div>
   <p class="small">A starting list, not legal advice. Schools, clinics and finance teams: check with your privacy or compliance lead.</p>
 </main>
