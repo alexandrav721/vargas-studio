@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", function () {
   try { vn.value = localStorage.getItem("smez-builders-askvendor") || ""; } catch (e) {}
   vn.oninput = function () { try { localStorage.setItem("smez-builders-askvendor", vn.value); } catch (e) {} };
   function key(x) { return x[0]; }
-  function items(n) { var v = V[n]; return v.q.concat(v[aud] ? [v[aud]] : []); }
+  function items(n) { var v = V[n]; return v.q.concat(v[aud] ? [v[aud]] : [], v[aud + "2"] ? [v[aud + "2"]] : []); }
   function all() { var out = []; T.forEach(function (l) { items(l.n).forEach(function (x) { out.push(x); }); }); return out; }
   function counts() {
     var c = { ticked: 0, good: 0, follow: 0, red: 0 };

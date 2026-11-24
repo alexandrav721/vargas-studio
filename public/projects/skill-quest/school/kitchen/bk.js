@@ -139,7 +139,7 @@ function rec(t, ok) { if (t && window.BKM) window.BKM.record(t, ok); }
           var B = L.build;
           if (B.vendor && !state.mode) { var pref = null; try { pref = localStorage.getItem("smez-builders-mode"); } catch (e) {} state.mode = pref === "vendor" && window.BK_VENDOR && window.BK_VENDOR[L.n] ? "vendor" : "make"; state.aud = "business"; }
           var VQ = window.BK_VENDOR && window.BK_VENDOR[L.n];
-          var vqList = function (s) { return VQ ? VQ.q.concat(VQ[s.aud] ? [VQ[s.aud]] : []) : []; };
+          var vqList = function (s) { return VQ ? VQ.q.concat(VQ[s.aud] ? [VQ[s.aud]] : [], VQ[s.aud + "2"] ? [VQ[s.aud + "2"]] : []) : []; };
           var vqText = function (s) { return "Questions for the vendor (" + B.vendor[0] + ")\n\n" + vqList(s).map(function (x, i) { return (i + 1) + ". " + x[0] + "\n   Good answer: " + x[1] + "\n   Red flag: " + x[2]; }).join("\n") + "\n\nFrom AI Made EZ, Builder’s Kitchen"; };
           var T = function (s) {
             if (s.mode !== "vendor") return B.text(s);
