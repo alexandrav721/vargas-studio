@@ -10,7 +10,15 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="school.css">
-<style>.ezcard{display:flex;flex-direction:column;gap:2px;margin:18px 0 0;padding:16px 18px;border:1px solid var(--line2);border-left:5px solid var(--accent);border-radius:12px;background:var(--card);text-decoration:none}.ezcard:hover{border-color:var(--ink);border-left-color:var(--accent)}.ezcard b{font:800 20px/1.2 var(--display);letter-spacing:-.02em}.ezcard span{color:var(--muted);font-size:.9em}</style>
+<style>.ezcard{display:flex;flex-direction:column;gap:2px;margin:18px 0 0;padding:16px 18px;border:1px solid var(--line2);border-left:5px solid var(--accent);border-radius:12px;background:var(--card);text-decoration:none}.ezcard:hover{border-color:var(--ink);border-left-color:var(--accent)}.ezcard b{font:800 20px/1.2 var(--display);letter-spacing:-.02em}.ezcard span{color:var(--muted);font-size:.9em}
+.habits{list-style:none;margin:18px 0 0;padding:0;display:grid;gap:12px;counter-reset:h}
+@media (min-width:700px){.habits{grid-template-columns:1fr 1fr}}
+.habits li{counter-increment:h;position:relative;padding:18px 18px 16px 64px;border:1px solid var(--line2);border-radius:14px;background:var(--card)}
+.habits li::before{content:counter(h);position:absolute;left:18px;top:16px;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:#fff;font:700 16px var(--mono)}
+.habits b{display:block;font:800 1.1em/1.2 var(--display);letter-spacing:-.015em}
+.habits span{display:block;margin-top:4px;color:var(--muted);font-size:.95em}
+.habits a{display:inline-block;margin-top:8px;font-size:.9em;font-weight:600;color:var(--accent)}
+</style>
 <link rel="stylesheet" href="/site-bar.css" />
 <script src="/site-bar.js" data-project="skill-quest" data-kind="piece" defer></script>
 </head>
@@ -32,6 +40,11 @@
   <section class="sec">
     <h2>The course</h2>
     <div class="pass" id="pass"></div>
+  </section>
+
+  <section class="sec" id="habits" aria-labelledby="habits-h">
+    <h2 id="habits-h">8 habits that work with any AI</h2>
+    <ol class="habits" id="habit-list"></ol>
   </section>
 
   <section class="sec">
@@ -64,6 +77,20 @@ document.addEventListener("DOMContentLoaded", function () {
       "<b>" + l.name + "</b><span>" + (got ? "Stamped " + new Date(done[l.id] + "T12:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" }) : l.href ? "Leave with: " + l.leave : "Coming soon") + "</span></" + tag + ">";
   }).join("");
 });
+</script>
+<script>
+var HABITS = [
+  ["Give a full order.", "Say what you want, who it's for, and the limits. Vague order, vague dinner.", "lesson-2.html", "Lesson 2"],
+  ["Show one example.", "Paste something you wrote and say \"make it like this.\"", "lesson-3.html", "Lesson 3"],
+  ["Taste before you serve.", "Check names, dates, prices and addresses. AI can sound sure and be wrong.", "lesson-4.html", "Lesson 4"],
+  ["Keep private things out.", "No passwords, card numbers or medical records in a chat.", "lesson-4.html", "Lesson 4"],
+  ["Give it a station.", "Put your files and rules in a project once, so you stop repeating yourself.", "lesson-5.html", "Lesson 5"],
+  ["Keep the pantry door on \"always ask.\"", "When AI is connected to your email or calendar, make it ask before it acts.", "lesson-7.html", "Lesson 7"],
+  ["Save what works as a recipe card.", "A skill is a saved order AI pulls out when it fits. Lesson 8 shows you how.", "lesson-8.html", "Lesson 8"],
+  ["Content isn't orders.", "An email or web page can hide \"ignore your rules.\" Read it as information, not instructions.", "kitchen/lesson-5.html", "Level 2, Lesson 5"]
+];
+(function () { var esc = function (t) { return String(t).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); };
+  document.getElementById("habit-list").innerHTML = HABITS.map(function (h) { return "<li><b>" + esc(h[0]) + "</b><span>" + esc(h[1]) + '</span><a href="' + h[2] + '">Learn it: ' + esc(h[3]) + " →</a></li>"; }).join(""); })();
 </script>
 <script src="/projects/skill-quest/smez-index.js" defer></script>
 <script src="/projects/skill-quest/smez-nav.js" data-section="school" defer></script>

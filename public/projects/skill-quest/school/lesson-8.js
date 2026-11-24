@@ -103,7 +103,7 @@
           b.classList.add(pickedCard ? "right" : "wrong"); play(pickedCard ? "win" : "pick");
           fb.innerHTML = '<p class="fb ' + (pickedCard ? "good" : "try") + '">' + (pickedCard ? "You picked B. B used the recipe card: one specific thing, how it helped, a warm line." : "You picked A. A was plain Claude, no card. B used the recipe card. That’s why taste tests are blind: you judge the dish, not the name.") + "</p>" +
             '<div class="breaks"><b>That’s a taste test</b>Run your card and plain Claude on the same request, hide which is which, and pick. If your card doesn’t win, fix one step and try again. AI Made EZ does this for you.</div>' +
-            '<div class="btns"><button class="btn" data-next type="button">Next</button><a class="btn ghost" href="../prototype/v2.html" target="_blank" rel="noopener">Score my recipe card</a></div>';
+            '<div class="btns"><button class="btn" data-next type="button">Next</button></div>';
           fb.querySelector("[data-next]").onclick = next;
         };
       });
@@ -152,7 +152,7 @@
       '<p class="muted" style="text-align:center">' + (all ? "All 8 stamps. You don’t just use AI now. You write the recipes." : (first ? count + " of 8 stamps. Go back for the ones you skipped." : "You already had this stamp. Nice refresher.")) + "</p>" +
       '<div class="kept"><p><b>You leave with:</b> your own recipe card for a job you do often, and a way to prove it works.</p>' +
       '<p><b>What you can do now:</b> order with details, show an example, taste before you serve, keep a station and a pantry, and write recipe cards.</p></div>' +
-      '<div class="btns"><button class="btn" id="save" type="button">Copy my recipe card</button><a class="btn ghost" href="../prototype/v2.html">Score my recipe card</a><a class="btn ghost" href="./">See my Chef’s passport</a><button class="btn ghost" id="send" type="button">Send this course to someone</button></div></section>';
+      '<div class="btns"><button class="btn" id="save" type="button">Copy my recipe card</button><a class="btn ghost" href="./">See my Chef’s passport</a><button class="btn ghost" id="send" type="button">Send this course to someone</button></div></section>';
     window.scrollTo(0, 0);
     setTimeout(function () { play(all ? "win" : "stamp"); }, 260);
     document.getElementById("save").onclick = function () { copy(recipe(), "Recipe card copied"); };

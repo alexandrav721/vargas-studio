@@ -238,3 +238,53 @@ pre{white-space:pre-wrap;background:var(--card);border:2px solid var(--ink);bord
 .starter svg{width:30px;height:30px;color:var(--teal)}
 .starter b{font-size:16px;line-height:1.15}
 .starter span{font-size:13px;line-height:1.3;color:var(--muted)}
+
+/* ---------- Kit maker: search, rail, plan tools, made easy ---------- */
+.kitbar{position:sticky;top:58px;z-index:8;background:var(--paper);padding:8px 0 10px;margin:-8px 0 12px;border-bottom:2px solid var(--ink)}
+.ksearch{position:relative;display:flex;align-items:center;gap:8px;border:var(--border);border-radius:var(--r);background:var(--card);padding:0 12px}
+.ksearch svg{width:20px;height:20px;flex:none;fill:none;stroke:var(--ink);stroke-width:2.2;stroke-linecap:round}
+.ksearch input{flex:1;min-width:0;border:0;background:transparent;font:600 17px var(--display);padding:12px 0;color:var(--ink)}
+.ksearch input:focus{outline:none}
+.ksearch:focus-within{outline:3px solid var(--accent);outline-offset:2px}
+.kres{position:absolute;left:-2px;right:-2px;top:calc(100% + 6px);z-index:20;list-style:none;margin:0;padding:6px;background:var(--card);border:var(--border);border-radius:var(--r);box-shadow:0 18px 30px -18px rgba(0,0,0,.5);max-height:60vh;overflow:auto}
+.kres button{display:block;width:100%;text-align:left;border:0;background:none;padding:10px;border-radius:8px;font:600 16px/1.3 var(--display);color:var(--ink);cursor:pointer}
+.kres button:hover,.kres button:focus-visible{background:var(--paper)}
+.kres small{display:block;font:700 11px var(--mono);color:var(--accent);letter-spacing:.04em;text-transform:uppercase;margin-bottom:2px}
+.kres .none{padding:10px;color:#6b645b}
+.rail{display:flex;gap:6px;overflow-x:auto;margin-top:10px;padding-bottom:2px;scrollbar-width:none}
+.rail::-webkit-scrollbar{display:none}
+.rr{flex:none;display:flex;align-items:center;gap:8px;border:2px solid var(--ink);border-radius:999px;background:var(--card);padding:6px 12px 6px 8px;font:700 14px var(--display);color:var(--ink);cursor:pointer}
+.rr svg{width:20px;height:20px;flex:none}
+.rr i{display:block;height:4px;border-radius:9px;background:rgba(0,0,0,.1);margin-top:3px;overflow:hidden;min-width:60px}
+.rr i s{display:block;height:100%;background:var(--accent);text-decoration:none}
+.rr b{display:block;white-space:nowrap}
+.rr em{font-style:normal;color:var(--teal);font-weight:800}
+.rr.cur{background:var(--ink);color:var(--paper)}
+.rr.cur i{background:rgba(255,255,255,.25)}
+.rr.done{border-color:var(--teal)}
+.rr.hit,.room.hit{outline:4px solid var(--sun,#F2C230);outline-offset:2px}
+.plan-tools{margin:6px 0 16px}
+.plan-tools .choice{margin-bottom:6px}
+.tpl{margin-top:12px;border:var(--border);border-radius:var(--r);background:var(--card);padding:10px 14px}
+.tpl summary{cursor:pointer;font-weight:800;font-size:18px}
+.easy{margin:12px 0 16px;border:2px solid var(--ink);border-radius:var(--r);background:var(--card);padding:12px 14px}
+.easy .ez-h{margin:0 0 6px;font:800 12px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+.easy dl{margin:0;display:grid;gap:8px}
+.easy dt{font:700 12px var(--mono);color:#6b645b;letter-spacing:.03em}
+.easy dd{margin:2px 0 0;font-weight:600;line-height:1.35}
+@media (min-width:980px){
+  body.ws main{max-width:1120px;display:grid;grid-template-columns:250px minmax(0,1fr);column-gap:28px;align-items:start}
+  body.ws .kitbar{grid-row:1 / span 3;position:sticky;top:70px;margin:0;border-bottom:0;padding:0}
+  body.ws .rail{flex-direction:column;overflow:visible;margin-top:12px}
+  body.ws .rr{border-radius:10px;width:100%}
+  body.ws .rr span{flex:1;min-width:0}
+  body.ws .rr b{white-space:normal}
+}
+.plan-tools .choice{display:flex;flex-wrap:wrap;gap:8px}
+.plan-tools .choice .chip{width:auto;flex:none}
+.rr{text-align:left}
+@media (min-width:700px){.pt-idea{display:grid;grid-template-columns:1fr 1.6fr;column-gap:14px}.pt-idea .ql{grid-row:1}.pt-idea input{grid-row:2}}
+.easy summary.ez-h{cursor:pointer;margin:0;list-style:none}
+.easy summary.ez-h::before{content:"+ ";}
+.easy[open] summary.ez-h::before{content:"− ";}
+.easy[open] dl{margin-top:8px}

@@ -60,7 +60,10 @@
   function show(name) {
     screen = name;
     document.querySelectorAll(".screen").forEach((s) => s.classList.toggle("on", s.id === "s-" + name));
-    $("back").hidden = name === "intro";
+    $("back").hidden = name === "intro" || name === "plan";
+    const work = name === "plan" || name === "room";
+    $("kitbar").hidden = !work; document.body.classList.toggle("ws", work);
+    if (!work) closeSearch();
     $("meter").hidden = !(name === "plan" || name === "room");
     $("foot").hidden = !NEXT[name];
     $("next").textContent = NEXT[name] || ""; $("next").disabled = false;
@@ -137,6 +140,12 @@
 
   /* ---------- the blueprint ---------- */
   function drawPlan() {
+    const p0 = ans("prd");
+    if (document.activeElement !== $("pName")) $("pName").value = p0.name || "";
+    if (document.activeElement !== $("pOne")) $("pOne").value = p0.one || "";
+    $("pSize").innerHTML = SIZES.map((z) => `<button class="chip" data-t="${z.tier}" aria-pressed="${S.tier === z.tier}">${esc(z.name)} · ${z.rooms} rooms</button>`).join("");
+    drawRail();
+    if (!p0.name && !$("startersBox").dataset.seen) { $("startersBox").open = true; $("startersBox").dataset.seen = 1; }
     const rs = rooms(); const nm = (S.a.prd && S.a.prd.name) || "Your app";
     const sample = / \(sample\)$/.test(nm); $("planTitle").textContent = nm.replace(/ \(sample\)$/, "") + " blueprint";
     const nDone = rs.filter((r) => S.done.includes(r.id)).length;
@@ -153,6 +162,46 @@
     $("next").textContent = nDone === rs.length ? "Get my kit" : nDone ? `Get my kit (${nDone}/${rs.length} planned)` : "Get my kit";
   }
   $("blueprint").onclick = (e) => { const b = e.target.closest(".room"); if (!b) return; play("tap"); openRoom(b.dataset.r); };
+  $("pName").oninput = () => { ans("prd").name = $("pName").value; save(); $("planTitle").textContent = ($("pName").value.trim() || "Your app") + " blueprint"; meter(); };
+  $("pOne").oninput = () => { ans("prd").one = $("pOne").value; save(); meter(); };
+  $("pSize").onclick = (e) => { const b = e.target.closest(".chip"); if (!b) return; S.tier = +b.dataset.t; save(); play("tap"); drawPlan(); meter(false); };
+
+  /* ---------- the rail: every room, always in view ---------- */
+  function drawRail() {
+    const cur = screen === "room" && room ? room.id : null;
+    $("rail").innerHTML = rooms().map((r) => {
+      const pct = Math.round(roomPct(r) * 100), done = S.done.includes(r.id);
+      return `<button class="rr${r.id === cur ? " cur" : ""}${done ? " done" : ""}" data-r="${r.id}"${r.id === cur ? ' aria-current="step"' : ""}>${icon(r.icon)}<span><b>${esc(r.name)}</b><i><s style="width:${pct}%"></s></i></span>${done ? '<em aria-label="planned">✓</em>' : ""}</button>`;
+    }).join("");
+    setTimeout(() => { const c = $("rail").querySelector(".cur"); if (c && $("rail").scrollWidth > $("rail").clientWidth) $("rail").scrollLeft = c.offsetLeft - $("rail").clientWidth / 2 + c.offsetWidth / 2; }, 30);
+  }
+  $("rail").onclick = (e) => { const b = e.target.closest(".rr"); if (!b) return; play("tap"); openRoom(b.dataset.r); };
+
+  /* ---------- search the whole plan ---------- */
+  const EASY = window.KIT_EASY || {};
+  function searchItems() {
+    return rooms().flatMap((r) => [{ r, i: -1, t: r.name, hay: [r.name, r.why, r.file].concat(EASY[r.id] || []).join(" ") }]
+      .concat(r.qs.map((q, i) => ({ r, i, t: q.q, hay: [q.q, q.hint || "", (q.opts || []).join(" "), r.name].join(" ") }))));
+  }
+  function closeSearch() { $("kres").hidden = true; document.querySelectorAll(".hit").forEach((x) => x.classList.remove("hit")); }
+  $("kq").oninput = () => {
+    const words = $("kq").value.toLowerCase().split(/\s+/).filter((w) => w.length > 1).map((w) => { const st = w.replace(/(ments|ment|ings|ing|es|s)$/, ""); return st.length >= 3 ? st : w; });
+    document.querySelectorAll(".hit").forEach((x) => x.classList.remove("hit"));
+    if (!words.length) { $("kres").hidden = true; return; }
+    const hits = searchItems().filter((x) => { const h = x.hay.toLowerCase(); return words.every((w) => h.includes(w)); });
+    const roomsHit = [...new Set(hits.map((x) => x.r.id))];
+    roomsHit.forEach((id) => document.querySelectorAll(`[data-r="${id}"]`).forEach((el) => el.classList.add("hit")));
+    $("kres").innerHTML = hits.length ? hits.slice(0, 8).map((x, n) => `<li><button data-r="${x.r.id}" data-i="${x.i}"><small>${esc(x.r.name)}</small>${esc(x.i < 0 ? "Open this room" : x.t)}</button></li>`).join("")
+      : `<li class="none">Nothing yet for “${esc($("kq").value)}”. Try a shorter word.</li>`;
+    $("kres").hidden = false;
+  };
+  $("kq").onkeydown = (e) => { if (e.key === "Escape") { $("kq").value = ""; closeSearch(); } if (e.key === "Enter") { const b = $("kres").querySelector("button"); if (b) b.click(); } };
+  $("kres").onclick = (e) => {
+    const b = e.target.closest("button"); if (!b) return;
+    play("tap"); const i = +b.dataset.i; openRoom(b.dataset.r);
+    if (i >= 0) { qi = i; drawQ(); }
+    $("kq").value = ""; closeSearch();
+  };
 
   /* ---------- a room ---------- */
   function openRoom(id) {
@@ -162,10 +211,14 @@
     save();
     qi = room.qs.findIndex((q) => !answered(q, a[q.id])); if (qi < 0) qi = 0;
     $("roomIcon").innerHTML = icon(room.icon); $("roomName").textContent = room.name; $("roomFile").textContent = room.file; $("roomWhy").textContent = room.why;
+    const ez = EASY[id];
+    $("roomEasy").hidden = !ez; $("roomEasy").open = matchMedia("(min-width: 980px)").matches;
+    $("roomEasy").innerHTML = ez ? `<summary class="ez-h">Made easy: what this really means</summary><dl><div><dt>The easy way</dt><dd>${esc(ez[0])}</dd></div><div><dt>What it really means</dt><dd>${esc(ez[1])}</dd></div><div><dt>Best practice</dt><dd>${esc(ez[2])}</dd></div></dl>` : "";
     show("room"); meter(false);
   }
   function drawQ() {
     if (!room) return show("plan");
+    drawRail();
     const q = room.qs[qi], a = ans(room.id), val = a[q.id];
     $("qdots").innerHTML = room.qs.map((qq, i) => `<i class="${i === qi ? "on" : answered(qq, a[qq.id]) ? "ans" : ""}"></i>`).join("");
     let body = "";
@@ -181,7 +234,7 @@
     wireQ(q);
     if (q.type === "colors") swatch();
   }
-  function setVal(q, v) { ans(room.id)[q.id] = v; save(); meter(); const d = $("qdots").children[qi]; if (d) d.className = "on"; $("skipQ").hidden = answered(q, v); const ex = $("qex"); if (ex && answered(q, v)) ex.remove(); }
+  function setVal(q, v) { ans(room.id)[q.id] = v; save(); meter(); const rp = $("rail").querySelector(`.rr[data-r="${room.id}"] s`); if (rp) rp.style.width = Math.round(roomPct(room) * 100) + "%"; const d = $("qdots").children[qi]; if (d) d.className = "on"; $("skipQ").hidden = answered(q, v); const ex = $("qex"); if (ex && answered(q, v)) ex.remove(); }
   function wireQ(q) {
     const ex = $("qex"); if (ex) ex.onclick = () => { play("tap"); setVal(q, Array.isArray(q.sample) ? q.sample.slice() : typeof q.sample === "object" ? Object.assign({}, q.sample, { touched: true }) : q.sample); drawQ(); toast("Sample answer: change it to yours"); };
     if (q.type === "text") { const i = $("qin"); i.oninput = () => setVal(q, i.value); i.onkeydown = (e) => { if (e.key === "Enter") $("next").click(); }; }
@@ -378,5 +431,6 @@ ${RULES.map((r) => `- **${r.t}:** ${r.d}`).join("\n")}
     a.download = "index.html"; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 4000); play("sig");
   };
 
-  show("intro");
+  if (!S.tier) { S.tier = 2; save(); }
+  show("plan");
 })();
