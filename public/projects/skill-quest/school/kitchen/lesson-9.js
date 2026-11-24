@@ -9,7 +9,7 @@
       ["“It looked fine” is a vibe check.", "One fix can quietly ruin three other dishes."],
       ["Graders do the tasting.", "Code checks exact things like word count; an AI judge (LLM-as-judge) scores tone."]
     ],
-    guess: { q: "You change your bot’s prompt. How do you know it got better?", opts: [["Re-run the same test questions and compare scores", true], ["Try one question and see if it looks good", false], ["Ask Claude if it’s better", false]], reveal: "Builders re-run a fixed set of test questions with a scorecard. That’s an eval." },
+    guess: { q: "You changed a bot’s prompt. Is it better?", opts: [["Re-run the same tests and compare", true], ["Try one question and see", false], ["Ask Claude if it’s better", false]], reveal: "Builders re-run a fixed set of test questions with a scorecard. That’s an eval." },
     startLabel: "Watch a test",
     example: {
       title: "A bakery bot, scored before and after a change.",

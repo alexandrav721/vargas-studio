@@ -129,9 +129,9 @@ function rec(t, ok) { if (t && window.BKM) window.BKM.record(t, ok); }
           (L.guess ? '<p class="fb ' + (L.guess.opts[guessed][1] ? "good\">Good guess. " : "try\">Not quite. ") + L.guess.reveal + "</p>" : "") +
           ((window.BK_DIAGRAMS && window.BK_DIAGRAMS[L.n]) || '<div class="teaser" aria-hidden="true">' + ticket(L.teaser[0], L.teaser[1], L.teaser[2], L.teaser[3]) + "</div>") +
           '<ul class="lines">' + L.lines.slice(0, 1).map(function (x) { return "<li><b>" + x[0] + "</b>" + x[1] + "</li>"; }).join("") + "</ul>" +
-          '<p class="label" style="margin-top:16px">Words you’ll know by the end</p>' + termChips(L.terms) +
+          '<p class="label" style="margin-top:16px">You’ll learn</p>' + termChips(L.terms) +
           nextBtn(L.startLabel || "Show me") +
-          '<p class="small">Doing this with someone? Tap "Bigger text" at the top.</p>');
+          (L.n === 1 ? '<p class="small">Doing this with someone? Tap "Bigger text" at the top.</p>' : ""));
 
         if (step === 1) return show("<h2>" + esc(L.example.title) + "</h2>" + (L.lines.length > 1 ? '<ul class="lines">' + L.lines.slice(1).map(function (x) { return "<li><b>" + x[0] + "</b>" + x[1] + "</li>"; }).join("") + "</ul>" : "") + L.example.html + (L.example.more ? '<details class="more"><summary>For builders: a bit more detail</summary>' + L.example.more + "</details>" : "") + nextBtn(L.example.next || "Now you try"));
 

@@ -9,7 +9,7 @@
       ["An MCP server is the plug for one service.", "Built once for Drive, Slack or a database."],
       ["The app is the kitchen wall.", "Your AI app is the host. Inside, an MCP client (a small link) connects to each server."]
     ],
-    guess: { q: "Why can the Claude desktop app and Claude Code (Claude’s coding tool) share one Google Drive plug-in?", opts: [["They share one standard plug shape, called MCP", true], ["Google built a separate plug-in for each of them", false], ["They’re secretly the same app with two names", false]], reveal: "MCP is a shared plug shape. Build the plug once, use it in many apps." },
+    guess: { q: "Why can two AI apps share one Drive plug-in?", opts: [["They use the same plug: MCP", true], ["Google built it twice", false], ["They are secretly one app", false]], reveal: "MCP is a shared plug shape. Build the plug once, use it in many apps." },
     startLabel: "See the outlets",
     example: {
       title: "Before and after the standard outlet.",

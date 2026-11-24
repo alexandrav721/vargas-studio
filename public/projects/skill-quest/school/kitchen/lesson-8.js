@@ -9,7 +9,7 @@
       ["CLAUDE.md is the note on your fridge.", "Your rules and how-tos, read every session."],
       ["Skills are recipe cards.", "Claude pulls a card when its description fits the job."]
     ],
-    guess: { q: "What’s different about Claude Code compared with chatting with Claude?", opts: [["It works directly in your project files", true], ["It’s a smarter Claude model made only for coders", false], ["It answers only in code, never in words", false]], reveal: "Claude Code works inside your project: it reads files, makes changes and runs commands." },
+    guess: { q: "How is Claude Code different from chat?", opts: [["It works in your project files", true], ["It’s a smarter model", false], ["It only answers in code", false]], reveal: "Claude Code works inside your project: it reads files, makes changes and runs commands." },
     startLabel: "Look around",
     example: {
       title: "What lives in a Claude Code kitchen.",

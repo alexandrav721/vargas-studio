@@ -9,7 +9,7 @@
       ["A workflow is a prep checklist.", "The steps are set ahead. Cheaper and more predictable."],
       ["Anthropic’s advice: start simple.", "Try one request, then a workflow. Agents only when steps can’t be planned."]
     ],
-    guess: { q: "“Book me a table for Friday.” What makes this an agent job?", opts: [["Claude picks its own next steps until it’s done", true], ["It uses a bigger, more expensive Claude model", false], ["The message is longer than a normal question", false]], reveal: "An agent decides its own steps and uses tools in a loop until the job is done." },
+    guess: { q: "“Book me a table.” What makes that an agent job?", opts: [["Claude picks its own next steps", true], ["It uses a bigger model", false], ["The message is longer", false]], reveal: "An agent decides its own steps and uses tools in a loop until the job is done." },
     startLabel: "Watch the loop",
     example: {
       title: "“Find a free evening and book a table for 4.”",

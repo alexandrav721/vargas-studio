@@ -9,7 +9,7 @@
       ["The chef asks; the app runs it.", "Claude fills in a form."],
       ["Each appliance has a label.", "Claude reads the tool definition to choose."]
     ],
-    guess: {q: "With no tools at all, what can Claude do?", opts: [["Read and write text, and reason about it", true], ["Look up today’s prices on a website", false], ["Send an email from your account", false]], reveal: "On its own, Claude only reads and writes. Anything else needs a tool."},
+    guess: { q: "With no tools, what can Claude do?", opts: [["Read and write, and reason", true], ["Check today’s prices online", false], ["Send an email for you", false]], reveal: "On its own, Claude only reads and writes. Anything else needs a tool."},
     startLabel: "Watch it work",
     example: {
       title: "“Should I bring an umbrella in Paris?”",

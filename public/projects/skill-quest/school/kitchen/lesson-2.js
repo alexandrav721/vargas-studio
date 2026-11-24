@@ -9,7 +9,7 @@
       ["The API key is your account card.", "Proves it’s your ticket and bills you. Keep it secret."],
       ["The window remembers nothing.", "Each ticket carries the whole chat."]
     ],
-    guess: { q: "A shopping app shows Claude’s answers on its own screen. How?", opts: [["It sends Claude a written request through the API", true], ["It copies answers from claude.ai and pastes them in", false], ["A copy of Claude is installed inside the shopping app", false]], reveal: "Apps send a request through the API, a window for other software, and get a reply back." },
+    guess: { q: "How does a shopping app get Claude’s answers?", opts: [["It sends a request to the API", true], ["It copies them from claude.ai", false], ["Claude is installed inside it", false]], reveal: "Apps send a request through the API, a window for other software, and get a reply back." },
     startLabel: "Watch a ticket",
     example: {
       title: "One ticket, one plate.",

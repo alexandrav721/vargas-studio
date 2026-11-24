@@ -9,7 +9,7 @@
       ["Every piece has a price.", "Cost is mostly tokens. Latency is wait time."],
       ["Guardrails are the safety rails.", "Hard limits, human approval, and a watch for prompt injection."]
     ],
-    guess: { q: "A friend wants an AI helper for their bakery. What should they build first?", opts: [["The simplest version: one model, clear rules, a quick test", true], ["Five agents working together around the clock", false], ["Their own AI model, trained on the bakery’s recipes", false]], reveal: "Start simple. Add pieces only when a real need shows up. That’s the architect’s habit." },
+    guess: { q: "A friend wants an AI helper. Build what first?", opts: [["The simplest version, then test", true], ["Five agents working together", false], ["Their own AI model", false]], reveal: "Start simple. Add pieces only when a real need shows up. That’s the architect’s habit." },
     startLabel: "See a plan",
     example: {
       title: "One plan, every word you learned.",

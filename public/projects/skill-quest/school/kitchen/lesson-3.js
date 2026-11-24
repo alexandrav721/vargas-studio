@@ -9,7 +9,7 @@
       ["Prompt engineering is writing clear tickets.", "Say who it’s for, show an example, name the shape you want."],
       ["Hallucination: Claude sounds sure but is wrong.", "“Say I don’t know” and “quote the source” make it rarer, never zero."]
     ],
-    guess: { q: "Two apps ask Claude the same thing and get very different tones. Why?", opts: [["Each app gave Claude different standing rules", true], ["One app paid for a friendlier version of Claude", false], ["Claude’s mood changes during the day, like a person", false]], reveal: "Each app hangs its own house rules, called a system prompt." },
+    guess: { q: "Two apps, same question, different tone. Why?", opts: [["Each app set different rules", true], ["One paid for a nicer Claude", false], ["Claude was in a different mood", false]], reveal: "Each app hangs its own house rules, called a system prompt." },
     startLabel: "See the rules",
     example: {
       title: "Same order. With and without house rules.",
