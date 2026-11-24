@@ -6,8 +6,8 @@
     { n: 1, id: "l1", short: "Meet the chef", name: "Meet the chef", leave: "A week of dinners", href: "lesson-1.html" },
     { n: 2, id: "l2", short: "Your order", name: "Placing your order", leave: "A birthday message", href: "lesson-2.html" },
     { n: 3, id: "l3", short: "Like this", name: "“Make it like this”", leave: "An email ready to send", href: "lesson-3.html" },
-    { n: 4, id: "l4", short: "Taste test", name: "Taste before you serve", leave: "A safe-kitchen card" },
-    { n: 5, id: "l5", short: "Your station", name: "Your own station", leave: "A family-trip project" },
+    { n: 4, id: "l4", short: "Taste test", name: "Taste before you serve", leave: "A safe-kitchen card", href: "lesson-4.html" },
+    { n: 5, id: "l5", short: "Your station", name: "Your own station", leave: "A family-trip project", href: "lesson-5.html" },
     { n: 6, id: "l6", short: "Take-home", name: "Take-home containers", leave: "A checklist to share" },
     { n: 7, id: "l7", short: "Pantry", name: "Pantry and meal kits", leave: "Your “always ask” settings" },
     { n: 8, id: "l8", short: "Recipe card", name: "Write your recipe card", leave: "Your own tested skill" }

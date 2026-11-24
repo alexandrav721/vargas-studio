@@ -165,7 +165,7 @@
       '<div class="kept"><p><b>You leave with:</b> an email ready to send, in your own voice.</p>' +
       '<p><b>Your new habits:</b> paste one real example and say "Write it like this." Clean out names and numbers first.</p></div>' +
       '<div class="btns"><button class="btn" id="save" type="button">Copy my "like this" card</button><a class="btn ghost" href="./">See my Chef’s passport</a><button class="btn ghost" id="send" type="button">Send this lesson to someone</button></div>' +
-      '<p class="small">Next: Lesson 4, Taste before you serve (coming soon).</p></section>';
+      '<div class="btns"><a class="btn ghost" href="lesson-4.html">Lesson 4: Taste before you serve →</a></div></section>';
     window.scrollTo(0, 0);
     setTimeout(function () { play("stamp"); }, 260);
     document.getElementById("save").onclick = function () { copy("LIKE THIS CARD\nWhat do I need? (the job)\nWho is it to?\nPaste one short thing I really wrote.\nSay: Copy the tone and length, not the facts.\nClean out names and numbers first.\nRead it before I send it.", "Card copied"); };
