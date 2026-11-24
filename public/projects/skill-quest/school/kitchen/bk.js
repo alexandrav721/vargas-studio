@@ -137,7 +137,7 @@ function rec(t, ok) { if (t && window.BKM) window.BKM.record(t, ok); }
 
         if (step === 2) {
           var B = L.build;
-          if (B.vendor && !state.mode) { var pref = null; try { pref = localStorage.getItem("smez-builders-mode"); } catch (e) {} state.mode = pref === "vendor" && window.BK_VENDOR && window.BK_VENDOR[L.n] ? "vendor" : "make"; state.aud = "business"; }
+          if (B.vendor && !state.mode) { state.mode = "make"; state.aud = "business"; }
           var VQ = window.BK_VENDOR && window.BK_VENDOR[L.n];
           var vqList = function (s) { return VQ ? VQ.q.concat(VQ[s.aud] ? [VQ[s.aud]] : [], VQ[s.aud + "2"] ? [VQ[s.aud + "2"]] : []) : []; };
           var vqText = function (s) { return "Questions for the vendor (" + B.vendor[0] + ")\n\n" + vqList(s).map(function (x, i) { return (i + 1) + ". " + x[0] + "\n   Good answer: " + x[1] + "\n   Red flag: " + x[2]; }).join("\n") + "\n\nFrom AI Made EZ, Builder’s Kitchen"; };
@@ -169,7 +169,6 @@ function rec(t, ok) { if (t && window.BKM) window.BKM.record(t, ok); }
               var k = b.dataset.set, v = b.dataset.v;
               if (b.dataset.multi) { var arr = state[k], i = arr.indexOf(v); if (i >= 0) arr.splice(i, 1); else arr.push(v); b.setAttribute("aria-pressed", String(i < 0)); draw(i < 0 ? v : null); }
               else { state[k] = v; app.querySelectorAll('[data-set="' + k + '"]').forEach(function (x) { x.setAttribute("aria-pressed", String(x === b)); }); draw(v); }
-              if (k === "mode") { try { localStorage.setItem("smez-builders-mode", v); } catch (e) {} }
               play("tick", 1);
             };
           });
@@ -211,7 +210,7 @@ function rec(t, ok) { if (t && window.BKM) window.BKM.record(t, ok); }
                   fb.innerHTML = '<p class="fb good">' + x.why + "</p>" + (last ? '<p class="small">' + first + " of " + Q.length + " on the first try.</p>" : "") + '<div class="btns"><button class="btn" id="' + (last ? "finish" : "qnext") + '" type="button">' + (last ? "Get my stamp" : "Next question") + "</button></div>";
                   var nb = document.getElementById(last ? "finish" : "qnext"); nb.focus();
                   nb.onclick = function () { if (last) { step = 6; render(); } else { qi++; ask(); } };
-                } else { if (!tried) rec(x.term, false); tried = true; b.classList.add("wrong"); play("pick"); fb.innerHTML = '<p class="fb try">Not quite. Hint: ' + String(x.why).replace(/^Right\.\s*/, "") + "</p>"; }
+                } else { if (!tried) rec(x.term, false); tried = true; b.classList.add("wrong"); play("pick"); var hw = x.term && window.BK_WORDS && window.BK_WORDS.filter(function (w) { return w[0] === x.term; })[0]; fb.innerHTML = '<p class="fb try">Not quite.' + (hw ? " Hint: think of “" + esc(hw[1].charAt(0).toLowerCase() + hw[1].slice(1)) + "”." : " Try another.") + "</p>"; }
               };
             });
           };
@@ -228,7 +227,7 @@ function rec(t, ok) { if (t && window.BKM) window.BKM.record(t, ok); }
           '<p class="muted" style="text-align:center">' + (all ? "All " + TRACK.length + " stamps. You can follow a builder conversation now." : (first ? count + " of " + TRACK.length + " Builder’s Kitchen stamps." : "You already had this stamp. Nice refresher.")) + "</p>" +
           '<div class="kept"><p><b>Words from this lesson:</b></p>' + termChips(L.terms) +
           (window.BKM ? (function () { var T = taught(), k = window.BKM.knownCount(T), due = window.BKM.due(pool()).length; var lw = L.terms.filter(function (t) { return T.indexOf(t) >= 0; }).length;
-            return "<p><b>" + lw + " new words today.</b> Lock them in tomorrow with a 2-minute review." + (k ? " You already know " + k + " for good." : "") + (due ? ' <a href="challenge.html?review=1">Practice from earlier: ' + window.BKM.due(pool()).slice(0, 4).join(", ") + (due > 4 ? " and " + (due - 4) + " more" : "") + "</a>." : "") + "</p>"; })() : "") +
+            return "<p><b>" + lw + " new words today.</b> Lock them in tomorrow with a 2-minute review." + (k ? " You already know " + k + " for good." : "") + (due ? ' <a href="challenge.html?review=1">Practice: ' + window.BKM.due(pool()).slice(0, 4).join(", ") + (due > 4 ? " and " + (due - 4) + " more" : "") + "</a>." : "") + "</p>"; })() : "") +
           (L.say ? '<p><b>Say it in a meeting:</b> “' + esc(L.say) + '”</p>' : "") +
           "<p><b>You leave with:</b> " + L.keep + "</p></div>" +
           '<div class="btns"><button class="btn" id="save" type="button">' + esc(L.cardLabel || "Copy my card") + "</button>" +

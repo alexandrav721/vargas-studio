@@ -18,9 +18,8 @@
         '<p class="label" style="margin-top:14px">No house rules</p><div class="reply"><p class="who">assistant</p>Many shops do! It depends…</div>' +
         '<p class="label" style="margin-top:14px">House rules: “You answer for Rosa’s Bakery. Facts are in &lt;facts&gt;. If it’s not there, say you’ll ask.”</p>' +
         '<div class="reply"><p class="who">assistant</p>Yes, Sundays 9 to 1, within 5 miles.</div>' +
-        '<p class="small"><b>XML tags</b> like &lt;facts&gt;…&lt;/facts&gt; are labeled boxes that keep rules, data and examples apart. <b>Examples</b>: a few varied plates teach the style (few-shot prompting).</p>' +
-        '<p style="margin-top:14px"><b>Thinking</b>: newer models can think quietly first; it’s billed like written words. <b>Effort</b>: the app maker’s dial for how hard it thinks.</p>',
-      more: '<p class="small">Anthropic’s AI Fluency course calls the whole skill the <b>4Ds</b>: what to hand off, how you ask, checking the plate, owning what you serve.</p>',
+        '<p class="small"><b>XML tags</b> like &lt;facts&gt;…&lt;/facts&gt; are labeled boxes that keep rules, data and examples apart. <b>Examples</b>: a few varied plates teach the style.</p>',
+      more: '<p class="small"><b>Thinking</b>: newer models can think quietly first; it’s billed like written words. <b>Effort</b>: the app maker’s dial for how hard it thinks.</p><p class="small">Showing a few examples is called few-shot prompting.</p><p class="small">Anthropic’s AI Fluency course calls the whole skill the <b>4Ds</b>: what to hand off, how you ask, checking the plate, owning what you serve.</p>',
       next: "Your turn →"
     },
     build: {
