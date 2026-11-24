@@ -9,7 +9,7 @@
     { n: 2, id: "b2", stamp: "API", short: "Order window", name: "The order window (API)", href: "lesson-2.html", use: "a vendor says “we just call the API”" },
     { n: 3, id: "b3", stamp: "Rules", short: "House rules", name: "House rules (prompting)", href: "lesson-3.html", use: "you set up a bot’s instructions" },
     { n: 4, id: "b4", stamp: "Tools", short: "Appliances", name: "The chef’s appliances (tools)", href: "lesson-4.html", use: "someone says “it can use tools”" },
-    { n: 5, id: "b5", stamp: "MCP", short: "Outlets", name: "Standard outlets (MCP)", href: "lesson-5.html", use: "IT asks which connectors to turn on" },
+    { n: 5, id: "b5", stamp: "MCP", short: "Outlets", name: "Plug your apps into AI (MCP)", href: "lesson-5.html", use: "IT asks which connectors to turn on" },
     { n: 6, id: "b6", stamp: "RAG", short: "Recipe binder", name: "The recipe binder (RAG)", href: "lesson-6.html", use: "someone says “we’ll train it on our docs”" },
     { n: 7, id: "b7", stamp: "Agents", short: "Head chef", name: "The head chef (agents)", href: "lesson-7.html", use: "everyone is pitching “agents”" },
     { n: 8, id: "b8", stamp: "Code", short: "Your kitchen", name: "A chef in your kitchen (Claude Code)", href: "lesson-8.html", use: "a developer mentions Claude Code or skills" },

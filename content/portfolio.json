@@ -94,7 +94,7 @@
     {
       "date": "2026-11-22",
       "projectId": "skill-quest",
-      "text": "Build Kit is new in Skills Made EZ: plan an app room by room so AI stops guessing."
+      "text": "Build Kit is new in AI Made EZ: plan an app room by room so AI stops guessing."
     },
     {
       "date": "2026-11-22",
@@ -109,12 +109,12 @@
     {
       "date": "2026-11-21",
       "projectId": "skill-quest",
-      "text": "Skills Made EZ's scorer is real: a Claude Code plugin scored idea-innovate on hidden tasks against plain Claude (Epic 81). The deck now says Anthropic already scores skills and Skills Made EZ makes it fun for beginners."
+      "text": "AI Made EZ's scorer is real: a Claude Code plugin scored idea-innovate on hidden tasks against plain Claude (Epic 81). The deck now says Anthropic already scores skills and AI Made EZ makes it fun for beginners."
     },
     {
       "date": "2026-11-21",
       "projectId": "skill-quest",
-      "text": "Skills Made EZ added: landing + A/B variants, clickable prototype and pitch deck for a game that teaches AI skill building."
+      "text": "AI Made EZ added: landing + A/B variants, clickable prototype and pitch deck for a game that teaches AI skill building."
     },
     {
       "date": "2026-11-20",
@@ -731,18 +731,18 @@
       "id": "ai-made-ez",
       "name": "AI Made EZ",
       "aka": null,
-      "oneLiner": "Learn AI the way you learned to cook: two short courses and a Build Kit, no coding.",
+      "oneLiner": "AI in plain words, free: lessons, an AI dictionary, a skill maker, a kit maker, and best practices and news made easy.",
       "audience": "Everyday people, including people who love to print",
       "pays": "Free, all of it. Donations (Patreon) keep it going.",
       "status": "hot",
       "updated": "2026-11-24",
       "summary": "Two cooking-themed courses that teach AI words in plain language (Level 1 for everyone, Level 2 for people who buy or manage AI), plus makers built for people who print: birthday invitations, a holiday letter, a family birthday calendar, and meal, week, party and trip plans. Each one asks a few big, friendly questions, shows 3 versions, and prints right.",
-      "latest": "Kept simple on 24 Nov 2026: Level 1 (8 lessons), Level 2 (10 lessons) and the Build Kit. The print makers and planners are hidden.",
+      "latest": "24 Nov 2026: Skills Made EZ merged into AI Made EZ. New Start here, a Keep up page, and a clearer MCP lesson.",
       "visuals": {
         "website": {
-          "label": "AI Made EZ courses",
-          "detail": "Level 1: learn AI like learning to cook.",
-          "url": "/projects/skill-quest/school/",
+          "label": "Start here",
+          "detail": "Lessons, AI words, the two makers, and Keep up.",
+          "url": "/projects/skill-quest/start/",
           "state": "live"
         },
         "landing": {
@@ -866,7 +866,7 @@
     },
     {
       "id": "skill-quest",
-      "name": "Skills Made EZ",
+      "name": "AI Made EZ",
       "aka": "Skill Quest",
       "oneLiner": "A game that teaches beginners to build AI skills: quests, scored skill cards, weekly battles.",
       "audience": "Beginners building their first Claude skills",
@@ -877,7 +877,7 @@
       "latest": "New: Build Kit, a game that turns an app idea into the plan AI coding tools read, and a worker prototype. The scorer works as a Claude Code plugin (idea-innovate scored Epic 81) but isn't public yet.",
       "visuals": {
         "website": {
-          "label": "Skills Made EZ home",
+          "label": "AI Made EZ home",
           "detail": "Quest \u00b7 Score \u00b7 Battle story, pricing with a Pro fake door, FAQ.",
           "url": "/projects/skill-quest/landing/index.html",
           "state": "live"
@@ -1026,7 +1026,7 @@
         "status": "active"
       },
       {
-        "name": "Skills Made EZ scorer",
+        "name": "AI Made EZ scorer",
         "detail": "Claude Code plugin: tests a skill on hidden tasks against plain Claude with a blind judge, then makes its card. Not public yet.",
         "status": "active"
       }

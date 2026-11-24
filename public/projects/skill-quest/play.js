@@ -312,7 +312,7 @@
     x.font = "800 56px " + D; x.fillText(skillName(), 80, 1202);
     x.font = "700 28px " + M; x.fillText("unscored", 80, 1244);
     x.fillStyle = INK; x.fillRect(0, H - 80, W, 80);
-    x.fillStyle = PAPER; x.font = "700 30px " + M; x.fillText("Can you spot the skill? · Skills Made EZ", 80, H - 30);
+    x.fillStyle = PAPER; x.font = "700 30px " + M; x.fillText("Can you spot the skill? · AI Made EZ", 80, H - 30);
     return new Promise(function (res) { c.toBlob(res, "image/png"); });
   }
   function download(blob) {

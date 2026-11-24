@@ -38,7 +38,7 @@ window.BK_WORDS = [
 ["Web search","A phone to the market for fresh news","A built-in tool that lets Claude search the web and cite pages.","",4,"Turn on web search for anything after its training."],
 ["Code execution","Running code to get exact numbers","A built-in tool where Claude writes and runs code to calculate or analyze.","",4,"Let it use code execution for the math."],
 ["Computer use","A chef pointing at your screen","Claude looks at screenshots and asks the app to click and type. The app does it.","Anthropic doesn’t host the computer. The app supplies it.",4,"We tried computer use to fill in the old form."],
-["MCP","Standard outlets","Model Context Protocol: an open standard so a tool built once plugs into many AI apps.","Not a model or a product. A plug shape.",5,"Does your product support MCP?"],
+["MCP","A standard plug","Model Context Protocol: a standard plug, so your apps (calendar, files, Slack) can connect to AI apps like Claude.","Not a model or a product. A plug shape.",5,"Does your product support MCP?"],
 ["MCP server","The plug on one service, shaped for the outlet","A program that wraps one service (Drive, Slack, a database) and offers its tools.","Not always safe. Anyone can build one.",5,"Shopify’s MCP server works with Claude."],
 ["Host","The kitchen wall with outlets","The AI app, like the Claude desktop app, that plugs MCP servers in.","Not the server. The host runs one MCP client per server.",5,"Claude’s desktop app is the host."],
 ["MCP client","The wiring to one outlet","The link inside an AI app that connects to one MCP server. The app itself is the host.","Not the app. The host app runs one client per server.",5,"Each server gets its own client inside the app."],

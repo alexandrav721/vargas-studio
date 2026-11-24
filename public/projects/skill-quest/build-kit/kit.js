@@ -26,7 +26,7 @@
   const guessLeft = () => rooms().reduce((n, r) => n + r.qs.reduce((m, q) => m + (answered(q, (S.a[r.id] || {})[q.id]) ? 0 : q.w), 0), 0);
   const roomPct = (r) => { const t = r.qs.reduce((m, q) => m + q.w, 0); const d = r.qs.reduce((m, q) => m + (answered(q, (S.a[r.id] || {})[q.id]) ? q.w : 0), 0); return d / t; };
 
-  /* ---------- sound (Skills Made EZ signature: snap–ding) ---------- */
+  /* ---------- sound (AI Made EZ signature: snap–ding) ---------- */
   let ctx, master, muted = false, noiseBuf;
   try { muted = localStorage.getItem(KEY + "-mute") === "1"; } catch (e) {}
   function audio() { if (!ctx) { ctx = new (window.AudioContext || window.webkitAudioContext)(); const c = ctx.createDynamicsCompressor(); c.threshold.value = -14; c.ratio.value = 4; master = ctx.createGain(); master.gain.value = muted ? 0 : 0.5; master.connect(c).connect(ctx.destination); } if (ctx.state === "suspended") ctx.resume(); return ctx; }
@@ -264,7 +264,7 @@
     return `# Start here
 
 This is the plan for **${n.name || "your app"}**${n.one ? ": " + n.one : ""}.
-Made with Build Kit (Skills Made EZ). Anything marked "Not decided yet" means the AI should ask you, not guess.
+Made with Build Kit (AI Made EZ). Anything marked "Not decided yet" means the AI should ask you, not guess.
 
 ## Set up (once)
 1. Unzip into the top folder of your project: \`docs/\`, \`AGENTS.md\` and \`CLAUDE.md\` sit next to your code.

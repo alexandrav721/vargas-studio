@@ -1,4 +1,4 @@
-/* Skills Made EZ community library.
+/* AI Made EZ community library.
    Hash routes: #/ browse · #/c/<cat>?sub= · #/s/<id> · #/submit(?remix=|edit=) · #/me · #/review · #/signin
    Talks to /api/sl/ (same origin, JSON, errors as {error}). ?mock=1 swaps in a local mock for testing.
    Every user-supplied string goes in with textContent; SKILL.md is shown in a <pre>. */
@@ -164,7 +164,7 @@
     if (p < 55 && l < 0.4) return "People and the blind test agree: it adds little.";
     return "People and the blind test roughly agree.";
   }
-  function makerName(s) { return s.official ? "Skills Made EZ" : (s.maker_handle || "someone"); }
+  function makerName(s) { return s.official ? "AI Made EZ" : (s.maker_handle || "someone"); }
   function kindOf(id) { return D.kinds.find(function (k) { return k.id === id; }) || D.kinds[0]; }
   function word(s) { return kindOf(s.kind).name.toLowerCase(); } /* "skill" | "prompt" | "kit" */
   function licenseOf(id) { return D.licenses.find(function (l) { return l.id === id; }) || null; }
@@ -502,7 +502,7 @@
       h("section", { class: "make" },
         h("div", null, h("h2", { text: "Made something that works?" }), h("p", { class: "sub" }, "Share a skill, a prompt or a kit with an example. A person checks it before it goes live. ", h("a", { class: "link", href: "#/rules", text: "How we review" }))),
         h("a", { class: "btn", href: "#/submit", text: "Share yours" })),
-      h("p", { class: "made-by" }, "Skills Made EZ is made by ", h("b", { text: "Alexandra Vargas" }), ". ", h("a", { class: "link", href: "/", text: "See her other work" })));
+      h("p", { class: "made-by" }, "AI Made EZ is made by ", h("b", { text: "Alexandra Vargas" }), ". ", h("a", { class: "link", href: "/", text: "See her other work" })));
     rowsBox.hidden = !!active();
     allH.textContent = active() ? (st.type && !st.q ? kindOf(st.type).plural : "Results") : "Everything";
     if (!active()) rows();
@@ -726,7 +726,7 @@
       h("p", { class: "lic" }, h("span", { class: "muted", text: "License: " }), h("b", { text: lic ? lic.name : "Not picked yet. Ask the maker before sharing it." })),
       tipOk && !s.official ? h("div", { class: "tip" },
         h("a", { class: "btn ghost tip-btn", href: s.tip_url, target: "_blank", rel: "noopener nofollow ugc" }, icon("heart"), "Thank " + makerName(s)),
-        h("p", { class: "note", text: "Opens their own tip page. Skills Made EZ takes nothing." })) : null)]);
+        h("p", { class: "note", text: "Opens their own tip page. AI Made EZ takes nothing." })) : null)]);
 
     /* safety box */
     var ch = normChecks({ blocks: [], warnings: (s.safety && s.safety.warnings) || (s.checks && s.checks.warnings) || [] });
@@ -751,7 +751,7 @@
           var yes = r.helped === true || r.helped === 1 || r.helped === "1";
           bubbles.appendChild(h("figure", { class: "bub " + (yes ? "yes" : "no") },
             h("blockquote", { text: r.line }),
-            h("figcaption", null, icon(yes ? "thumbUp" : "thumbDown"), h("span", { text: (yes ? "Helped" : "Didn't help") + " · " + (r.handle || r.maker_handle || "someone") + (r.staff ? " (Skills Made EZ reviewer)" : "") }))));
+            h("figcaption", null, icon(yes ? "thumbUp" : "thumbDown"), h("span", { text: (yes ? "Helped" : "Didn't help") + " · " + (r.handle || r.maker_handle || "someone") + (r.staff ? " (AI Made EZ reviewer)" : "") }))));
         });
       }).catch(function () { clear(bubbles); add(bubbles, [h("p", { class: "note", text: "Couldn't load reviews." })]); });
     }
@@ -1479,7 +1479,7 @@
 
   /* ---------- How we test: the method and the full record, ties and losses included ---------- */
   function pageHow(tok) {
-    document.title = "How we test · Skills Made EZ";
+    document.title = "How we test · AI Made EZ";
     var table = h("div", { class: "rec-wrap" }, loading());
     mount(
       h("header", { class: "how-head" }, h("h1", { text: "How we test" }),
@@ -1537,7 +1537,7 @@
         }).concat(["Items with no license picked: ask the maker before sharing."])),
         sec("Thank-you links", [
           "A maker can add a link to their own tip page. The money goes straight to them.",
-          "Skills Made EZ takes no cut and never holds anyone's money."]),
+          "AI Made EZ takes no cut and never holds anyone's money."]),
         sec("Copied or unsafe work", [
           "Tap Report on the item and pick a reason. Two reports from different people hide it until a reviewer looks.",
           "If it's copied, it comes down. If it's unsafe, it comes down and the maker hears why."]),
@@ -1592,7 +1592,7 @@
     var qi = raw.indexOf("?");
     var path = qi >= 0 ? raw.slice(0, qi) : raw, q = new URLSearchParams(qi >= 0 ? raw.slice(qi + 1) : "");
     var parts = path.split("/").filter(Boolean).map(decodeURIComponent);
-    document.title = "Community library · Skills Made EZ";
+    document.title = "Community library · AI Made EZ";
     renderNav();
     if (SETUP) return mount(setupState());
     window.scrollTo(0, 0);

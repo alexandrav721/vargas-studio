@@ -89,7 +89,7 @@ const SOUNDS: Record<DeskSound, (c: AudioContext, t: number) => void> = {
   tear: (c, t) => {
     for (let i = 0; i < 5; i++) hiss(c, t + i * 0.035, 0.03, 3800 - i * 300, 2600, 0.2, 3);
   },
-  // a card snapped down + rising two notes (Skills Made EZ's signature)
+  // a card snapped down + rising two notes (AI Made EZ's signature)
   snap: (c, t) => {
     hiss(c, t, 0.04, 3200, 2200, 0.4, 0.8);
     tone(c, t, 140, 0.5, 0.15, "sine", 60);

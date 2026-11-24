@@ -161,3 +161,5 @@ details.more summary{cursor:pointer;font-weight:600;min-height:28px}
 .freebox{margin:16px 0 0;padding:14px 16px;border-radius:12px;background:var(--ok-bg);color:var(--ink);font-size:.95em;line-height:1.45}
 .freebox b{font-weight:700}
 @media (max-width:440px){.chip.give{padding:6px 10px}}
+.logo{white-space:nowrap}
+@media (max-width:440px){.chip.give .gt{display:none}.chip.give{min-width:38px;justify-content:center}}
