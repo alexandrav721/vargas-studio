@@ -16,13 +16,14 @@
    "Printable week sheet and fridge card"
   ],
   "next": [
+   "Turn on Ticketmaster and calendar links",
    "Seed one real NYC crew of 10 to 20 friends",
-   "Test if shared weeks bring friends in",
-   "Hand paid rows off to ticket sellers"
+   "Watch which picks people lock, skip and go to"
   ],
   "waiting": [
-   "Add Google keys for calendar busy times",
-   "Say yes to a 7-day NYC ad test"
+   "Set the Ticketmaster key and the calendar-link key",
+   "Set OWNER_EMAILS and name the admins",
+   "Say yes to the ticket-forwarding cost"
   ],
   "social": {
    "pillars": [
@@ -55,7 +56,70 @@
     }
    ],
    "rhythm": "3 posts a week: Sun carousel, Wed reel, Fri story poll"
-  }
+  },
+  "learns": {
+   "steps": [
+    {
+     "name": "You tell it",
+     "line": "Your goals, your neighborhood, your budget and your free nights."
+    },
+    {
+     "name": "It picks",
+     "line": "A week of real NYC plans that fit, with the reasons for each one."
+    },
+    {
+     "name": "You say yes or no",
+     "line": "Lock it, skip it, or tap More like this or Less like this."
+    },
+    {
+     "name": "It gets better",
+     "line": "Every answer teaches it, so next week fits you better than this one."
+    }
+   ],
+   "team": "/projects/weekline/v2/hq/"
+  },
+  "connect": [
+   {
+    "name": "NYC Parks",
+    "status": "Live",
+    "line": "Free events, read live every visit."
+   },
+   {
+    "name": "Luma, Partiful, any calendar",
+    "status": "Built",
+    "line": "Paste your calendar link. Your plans show up and those nights stay open."
+   },
+   {
+    "name": "Ticketmaster",
+    "status": "Built",
+    "line": "Concerts, shows and sports. Switches on with a free API key."
+   },
+   {
+    "name": "Your lock screen",
+    "status": "Built",
+    "line": "Your week as a phone wallpaper, plus Text it to me and Copy for Notes."
+   },
+   {
+    "name": "Google Calendar busy times",
+    "status": "Waiting",
+    "line": "Built. Needs Google's app review."
+   },
+   {
+    "name": "Forward your ticket emails",
+    "status": "Next",
+    "line": "A personal address for Eventbrite, Dice and Resy emails. Small monthly cost."
+   },
+   {
+    "name": "Reading Gmail directly",
+    "status": "Not now",
+    "line": "Google requires a yearly paid security review. Forwarding covers most of it."
+   },
+   {
+    "name": "Eventbrite, Meetup, Dice, Resy",
+    "status": "Not possible",
+    "line": "No public access. Forwarded tickets cover what you've already booked."
+   }
+  ]
  },
  "restitch": {
   "who": "Thrifters who want to flip a find, sewing machine or not",
