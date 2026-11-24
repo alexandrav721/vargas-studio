@@ -27,6 +27,13 @@
         return w.last && days(w.last, d) >= gap;
       });
     },
+    streak: function () {
+      var s = read(), set = {}; Object.keys(s).forEach(function (k) { (s[k].okDays || []).forEach(function (d) { set[d] = 1; }); if (s[k].missed) set[s[k].missed] = 1; if (s[k].last) set[s[k].last] = 1; });
+      var d = new Date(), n = 0, f = function (x) { return x.getFullYear() + "-" + ("0" + (x.getMonth() + 1)).slice(-2) + "-" + ("0" + x.getDate()).slice(-2); };
+      if (!set[f(d)]) d.setDate(d.getDate() - 1);
+      while (set[f(d)]) { n++; d.setDate(d.getDate() - 1); }
+      return n;
+    },
     all: read
   };
   window.BKM = M;

@@ -22,7 +22,7 @@
 .next th,.next td{text-align:left;padding:9px 6px;border-bottom:1px solid var(--line2);vertical-align:top}
 .next th{font-size:.78rem;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
 @media (max-width:520px){.map{grid-template-columns:1fr}}
-.wk{margin:6px 0 0}.wk .btn{margin-top:8px}
+.wk{margin:6px 0 0}.wk .streak{display:block;margin-top:8px;font-weight:600;color:var(--ok)}.wk .btn{margin-top:8px}
 .station .st .ms svg{width:56px;height:56px}
 </style>
 <link rel="stylesheet" href="/site-bar.css" />
@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", function () {
     : '<a class="btn ghost" href="lesson-10.html">Redo graduation</a>';
   var TT = BK.taught(), KN = window.BKM ? BKM.knownCount(TT) : 0, DU = window.BKM ? BKM.due(BK.pool()).length : 0;
   var ST = BK.pool().length;
-  document.getElementById("wk").innerHTML = (ST ? "<b>" + (KN ? "You know " + KN + " words for good" : ST + " words started") + ".</b> " + (KN ? "" : "Get each right on 2 different days to lock it in. ") : "") + (DU ? '<a class="btn ghost" href="challenge.html?review=1">Practice ' + DU + (DU === 1 ? " word" : " words") + " (2 min)</a>" : (ST ? "Nothing to practice today. Come back tomorrow." : ""));
+  document.getElementById("wk").innerHTML = (ST ? "<b>" + (KN ? "You know " + KN + (KN === 1 ? " word" : " words") + " for good" : ST + " words started") + ".</b> " + (KN ? "" : "Get each right on 2 different days to lock it in. ") : "") + (DU ? '<a class="btn ghost" href="challenge.html?review=1">Practice ' + DU + (DU === 1 ? " word" : " words") + " (2 min)</a>" : (ST ? "Nothing due today. " : "")) + (ST && !DU ? '<a class="btn ghost" href="challenge.html?n=5">1-minute practice</a>' : "") + (window.BKM && BKM.streak() > 1 ? '<span class="streak">' + BKM.streak() + " days in a row. Nice.</span>" : "");
   if (n) document.getElementById("sum").textContent = n + " of 10 stamps." + (n === 10 ? " Passport complete. You speak builder now." : " Keep cooking.");
   var stations = [
     ["The chef", "What the model is, and how apps order from it.", [1, 2, 3]],
