@@ -51,7 +51,7 @@ function load() {
   return blank();
 }
 export const S = load();
-export const session = { mode: "unknown", user: null, liveStatus: "idle", liveCount: 0, note: "", google: { loaded: false, configured: false, connected: false } };
+export const session = { mode: "unknown", user: null, liveStatus: "idle", liveCount: 0, note: "", google: { loaded: false, configured: false, connected: false }, feeds: { loaded: false, configured: false, list: [] } };
 export function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { /* storage blocked: keeps working in memory */ } }
 export function resetLocal() { const d = S.device; Object.keys(S).forEach((k) => delete S[k]); Object.assign(S, blank(), { device: d }); save(); }
 
@@ -165,6 +165,32 @@ export async function fetchBusy(first, last) {
   if (r.connected === false) { forgetBusy(); return null; }
   const list = (r.busy || []).map((b) => [nyWall(b.start), nyWall(b.end)]);
   busyMem.set(key, list);
+  return list;
+}
+/* ---------- calendar links people paste in (Luma, Partiful, any calendar) ---------- */
+const mineMem = new Map(); // range key -> [{title, source, place, url, all_day, s, e}] in New York wall clock
+export async function loadFeeds() {
+  try { const r = await api("GET", "feeds-in"); session.feeds = { loaded: true, configured: !!r.configured, list: r.feeds || [] }; }
+  catch (e) { session.feeds = { loaded: true, configured: false, list: [] }; }
+  return session.feeds;
+}
+export async function addFeed(kind, url) {
+  const r = await api("POST", "feeds-in", { kind, url });
+  session.feeds = { loaded: true, configured: true, list: r.feeds || [] }; mineMem.clear();
+  return r.added;
+}
+export async function removeFeed(id) {
+  const r = await api("POST", `feeds-in/${encodeURIComponent(id)}/remove`, {});
+  session.feeds.list = r.feeds || []; mineMem.clear();
+}
+/** Events from their own calendars for New York dates first..last. */
+export async function fetchMine(first, last) {
+  const key = first + "_" + last;
+  if (mineMem.has(key)) return mineMem.get(key);
+  const from = addDays(first, -1) + "T00:00:00Z", to = addDays(last, 2) + "T00:00:00Z";
+  const r = await api("GET", `feeds-in/events?from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}`);
+  const list = (r.events || []).map((e) => ({ title: e.title, source: e.source, place: e.place, url: e.url, all_day: e.all_day, s: nyWall(e.start), e: nyWall(e.end) }));
+  mineMem.set(key, list);
   return list;
 }
 export const overlaps = (busy, a, b) => !!busy && busy.some(([s, e]) => s < b && e > a);
@@ -289,7 +315,7 @@ export function homeGeo(p) {
 function placeGeo(name, borough) {
   return HOODS.brooklyn[name] || HOODS.manhattan[name] || PLACES[name] || (borough === "Manhattan" ? MANHATTAN : BROOKLYN);
 }
-export const sourceLabel = (k) => (k === "live" ? "Live NYC Parks" : k === "editorial" ? "Editorial" : "Sample");
+export const sourceLabel = (k) => (k === "live" ? "Live NYC Parks" : k === "tm" ? "Ticketmaster" : k === "editorial" ? "Editorial" : "Sample");
 
 function norm(e, date) {
   const { h, mi } = e.h !== undefined ? e : parseTime(e.time);
@@ -325,6 +351,15 @@ function parksTags(cat, title) {
   if (/photo/.test(s)) add("photography");
   if (/meditat|mindful|relax|tai chi/.test(s)) add("calm");
   return [...t];
+}
+/** Ticketmaster rows (concerts, shows, sports) through our server. [] when the key isn't set yet. */
+export async function fetchTm(from, toExclusive) {
+  const ck = `wl.tm.${from}.${toExclusive}`;
+  try { const c = JSON.parse(sessionStorage.getItem(ck) || "null"); if (c && Date.now() - c.at < 30 * 60000) return c.rows; } catch (e) { /* ignore */ }
+  const r = await fetch(`/api/wl/events/tm?from=${from}&to=${toExclusive}`).then((x) => (x.ok ? x.json() : { events: [] })).catch(() => ({ events: [] }));
+  const rows = r.events || [];
+  try { sessionStorage.setItem(ck, JSON.stringify({ at: Date.now(), rows })); } catch (e) { /* ignore */ }
+  return rows;
 }
 export async function fetchLive(from, toExclusive) {
   const ck = `wl.parks.${from}.${toExclusive}`;

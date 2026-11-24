@@ -20,6 +20,7 @@ const ui = {
 let liveRows = null;
 let evById = new Map();
 let lastWeek = null;
+const mineState = {}; // "first_last" -> "loading" | [events] | "failed" (their own calendars)
 const busyState = {}; // "first_last" -> "loading" | [[start, end], ...] | "failed"
 
 /* ---------- helpers ---------- */
@@ -128,7 +129,8 @@ async function ensureLive() {
   const dates = W.planDates(P(), TODAY);
   session.liveStatus = "loading";
   try {
-    liveRows = await W.fetchLive(dates[0], W.addDays(dates[dates.length - 1], 1));
+    const [parks, tm] = await Promise.all([W.fetchLive(dates[0], W.addDays(dates[dates.length - 1], 1)), W.fetchTm(dates[0], W.addDays(dates[dates.length - 1], 1))]);
+    liveRows = [...parks, ...tm];
     const inZone = liveRows.length;
     session.liveStatus = inZone >= 3 ? "live" : "failed";
     session.liveCount = inZone;
@@ -141,7 +143,10 @@ function week() {
   const dates = W.planDates(p, TODAY);
   const evs = W.catalog(dates, session.liveStatus === "live" ? liveRows : null);
   evById = new Map(evs.map((e) => [e.id, e]));
-  lastWeek = W.buildWeek(p, evs, TODAY, busyFor(dates[0], dates[dates.length - 1]));
+  const g = busyFor(dates[0], dates[dates.length - 1]), mine = mineFor(dates[0], dates[dates.length - 1]);
+  const busy = g || mine ? [...(g || []), ...(mine || []).map((e) => [e.s, e.e])] : null;
+  lastWeek = W.buildWeek(p, evs, TODAY, busy);
+  if (mine) lastWeek.days.forEach((d) => { d.mine = mine.filter((e) => e.s.slice(0, 10) <= d.date && e.e > d.date + "T00:00"); });
   return lastWeek;
 }
 /** Google busy blocks for a date range, fetched once per range; re-renders when they land. */
@@ -159,6 +164,22 @@ function busyFor(first, last) {
   }
   return Array.isArray(v) ? v : null;
 }
+/** Events from their pasted calendar links (Luma, Partiful, any calendar), fetched once per range. */
+function mineFor(first, last) {
+  if (!session.user || !(session.feeds && session.feeds.list.length)) return null;
+  const key = first + "_" + last;
+  const v = mineState[key];
+  if (v === undefined) {
+    mineState[key] = "loading";
+    W.fetchMine(first, last)
+      .then((list) => { mineState[key] = list; })
+      .catch(() => { mineState[key] = "failed"; })
+      .finally(() => { if (["week", "month", "crew", "share"].includes(route().name)) render({ keepFocus: true }); });
+    return null;
+  }
+  return Array.isArray(v) ? v : null;
+}
+const SRC_NAMES = { luma: "Luma", partiful: "Partiful", calendar: "your calendar" };
 function calLine(first, last) {
   if (!session.user || !session.google.connected) return "";
   const v = busyState[first + "_" + last];
@@ -406,6 +427,13 @@ function friendsText(id) {
   return `${names.length} friends going`;
 }
 function dayRow(d) {
+  const html = dayRowInner(d);
+  if (!d.mine || !d.mine.length || ["cal", "lock", "plan"].includes(d.kind)) return html;
+  const line = `<p class="pl mine">${icon("cal")} You're going: ${esc(d.mine[0].title)} (${SRC_NAMES[d.mine[0].source] || "your calendar"})</p>`;
+  const i = html.lastIndexOf("</div></article>");
+  return i < 0 ? html : html.slice(0, i) + line + html.slice(i);
+}
+function dayRowInner(d) {
   if (d.kind === "lock" || d.kind === "plan") {
     const ev = d.kind === "lock" ? d.lock : d.plan.ev;
     const id = d.kind === "lock" ? d.lock.event_id : ev.id;
@@ -423,6 +451,7 @@ function dayRow(d) {
         ${d.holiday ? `<p class="hol-name">${d.holiday.name}</p>` : ""}
         ${d.clash ? `<p class="clash">${icon("cal")}Clashes with something on your calendar</p>` : ""}
         <h3 class="ti" style="font-family:inherit;letter-spacing:0">${esc(ev.title)}</h3>
+        ${d.mine && d.mine.length ? `<p class="pl">${icon("cal")} Also that day: ${esc(d.mine[0].title)} (${SRC_NAMES[d.mine[0].source] || "your calendar"})</p>` : ""}
         <p class="pl">${d.kind === "plan" ? `${esc(ev.hood)} · ${why}` : why}${missed ? " · Missed" : ""}</p>
         <div class="act"><a class="src" href="${esc(ev.url)}" target="_blank" rel="noopener">${srcLabel(ev.kind)}${fr ? ` · <em>${fr}</em>` : ""}</a>
           <span class="acts">${acts}</span></div>
@@ -438,7 +467,7 @@ function dayRow(d) {
   }
   if (d.kind === "cal") {
     return `<article class="day busy cal" id="d-${d.date}">${dayCell(d)}<div class="t">${d.d < 5 ? "evening" : ""}</div><div class="calrow">
-      <p class="ti">${icon("cal")}Busy on your calendar</p><button class="linkbtn" data-act="anyway" data-date="${d.date}">Plan anyway</button></div></article>`;
+      <p class="ti">${icon("cal")}${d.mine && d.mine.length ? `You're going: ${esc(d.mine[0].title)} <span class="pl">· ${SRC_NAMES[d.mine[0].source] || "your calendar"}</span>` : "Busy on your calendar"}</p><button class="linkbtn" data-act="anyway" data-date="${d.date}">Plan anyway</button></div></article>`;
   }
   if (d.kind === "busy") {
     return `<article class="day busy ${d.past ? "past" : ""}">${dayCell(d)}<div class="t"></div><div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
@@ -808,6 +837,7 @@ function youView() {
       : `<p>Nothing yet.</p><p class="fine">Lock, skip with a reason, or tell it whether you went. It only learns from what you do here.</p>`}
     </section>
     ${googleSection()}
+    ${connectSection()}
     <section class="sec" aria-labelledby="data-h"><h2 id="data-h">Your data</h2>
       <div class="row2"><button class="btn line" data-act="export">${icon("down")}Export my data</button>${session.user ? `<button class="btn line" data-act="signout">Sign out</button>` : `<button class="btn line" data-act="startover">Start over</button>`}</div>
       <button class="linkbtn danger" data-act="delete">${session.user ? "Delete my account" : "Clear everything on this device"}</button>
@@ -826,6 +856,26 @@ function youView() {
     <dialog id="del-dlg" aria-labelledby="del-h"><h2 id="del-h">Delete everything?</h2>
       <p>${session.user ? "This removes your account, answers, locked nights, invites and what it learned. It can't be undone." : "This clears your answers, locked nights and what it learned from this device. It can't be undone."}</p>
       <div class="row2"><button class="btn line" data-act="delcancel">Keep it</button><button class="btn ink" data-act="delyes">Delete</button></div></dialog>`;
+}
+
+function connectSection() {
+  const f = session.feeds || { configured: false, list: [] };
+  const how = {
+    luma: "In Luma: your profile, Settings, Calendar Syncing, Add iCal Subscription. Copy the link.",
+    partiful: "In Partiful (on a computer): your events, Sync to calendar. Copy the link.",
+    calendar: "Apple, Google or Outlook: find your calendar's private iCal or \"secret address\" link.",
+  };
+  const cards = ["luma", "partiful", "calendar"].map((k) => {
+    const have = f.list.filter((x) => x.kind === k);
+    const name = k === "calendar" ? "Any calendar" : SRC_NAMES[k];
+    return `<div class="gcal ${have.length ? "on" : ""}"><p><b>${name}.</b> ${have.length ? have.map((x) => `Connected (${esc(x.host)})${x.last_error ? ` · <em>${esc(x.last_error)}</em>` : ""} <button class="linkbtn" data-act="feedrm" data-id="${esc(x.id)}">Remove</button>`).join("<br>") : how[k]}</p>
+      ${have.length ? "" : !f.configured ? `<small>Coming soon</small>` : !session.user ? `<a class="btn sm line" href="#/welcome" data-act="authgo" data-v="signin">Sign in to connect</a>`
+        : `<form class="feedadd" data-kind="${k}"><input type="url" name="url" placeholder="Paste the link" aria-label="${name} link" required><button class="btn sm ink" type="submit">Connect</button></form>`}</div>`;
+  }).join("");
+  return `<section class="sec" aria-labelledby="cx-h"><h2 id="cx-h">Connections</h2>
+    <p class="fine">Your own plans show up in your week, and those nights stay open. We read them; we never post or change anything. Links are kept encrypted.</p>
+    ${cards}
+    <p class="fine" style="margin-top:8px">Coming next: Ticketmaster shows, and forwarding your ticket emails.</p></section>`;
 }
 
 function googleSection() {
@@ -880,6 +930,10 @@ const actions = {
   ci: (b) => { const l = S.locks[b.dataset.id]; if (!l) return; W.checkin(l, b.dataset.v); toast(b.dataset.v === "didnt" ? "Noted. Next free night is your comeback night." : b.dataset.v === "loved" ? "Loved it. You'll see more like it." : "Nice. Noted."); render(); },
   lock: (b) => { const ev = evById.get(b.dataset.id); if (!ev) return; W.lock(ev); ui.justLit = ev.id; ui.skipOpen = null; render(); app.querySelector(`[data-act="droplock"][data-id="${CSS.escape(ev.id)}"]`)?.focus({ preventScroll: true }); toast("Locked. It's on your week."); },
   pick: (b) => { const ev = evById.get(b.dataset.id); if (!ev) return; delete S.kept[ev.date]; W.lock(ev); ui.justLit = ev.id; render(); app.querySelector(`[data-act="droplock"][data-id="${CSS.escape(ev.id)}"]`)?.focus({ preventScroll: true }); toast("Picked and locked."); },
+  feedrm: async (b) => {
+    try { await W.removeFeed(b.dataset.id); Object.keys(mineState).forEach((k) => delete mineState[k]); render(); toast("Removed. Weekline can't see that calendar now."); }
+    catch (e) { toast(W.isOffline(e) ? "Can't reach the server right now." : e.message); }
+  },
   thumb: (b) => {
     const ev = evById.get(b.dataset.id); if (!ev) return;
     if (b.dataset.v === "up") { W.signal("up", ev); toast("Got it. More like this."); }
@@ -971,6 +1025,16 @@ app.addEventListener("click", (e) => {
 app.addEventListener("submit", async (e) => {
   const f = e.target; e.preventDefault();
   if (f.dataset.form === "auth") return submitAuth(f);
+  if (f.classList.contains("feedadd")) {
+    const url = String(new FormData(f).get("url") || "").trim();
+    const btn = f.querySelector("button"); btn.disabled = true; btn.textContent = "Checking…";
+    try {
+      const added = await W.addFeed(f.dataset.kind, url);
+      Object.keys(mineState).forEach((k) => delete mineState[k]);
+      render(); toast(added && added.count ? `Connected. ${added.count} upcoming ${added.count === 1 ? "plan" : "plans"} found.` : "Connected. Nothing coming up on it yet.");
+    } catch (err) { btn.disabled = false; btn.textContent = "Connect"; toast(W.isOffline(err) ? "Can't reach the server right now." : err.message); }
+    return;
+  }
   if (f.dataset.form === "visit") {
     const fd = new FormData(f); const from = String(fd.get("from")), to = String(fd.get("to"));
     if (!from || !to || to < from) { ui.visitErr = "Leaving has to be on or after arriving."; return render(); }
@@ -1009,7 +1073,7 @@ app.addEventListener("change", (e) => {
 (async function boot() {
   if (qs.get("demo") === "1" && !(S.profile && S.profile.demo)) W.seedDemo(TODAY);
   await Promise.all([W.boot(), W.loadAlgo()]);
-  if (session.mode === "server") await W.googleStatus();
+  if (session.mode === "server") await Promise.all([W.googleStatus(), W.loadFeeds()]);
   if (S.invites.length) W.refreshFriendCounts().then(() => { if (["week", "share"].includes(route().name)) render({ keepFocus: true }); });
   render();
   ensureLive();

@@ -425,3 +425,7 @@ a.chip { text-decoration: none; }
 .why li { margin: 2px 0; }
 .thumbs { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
 .thumbs .chip { min-height: 40px; padding: 10px 12px; font-size: 13px; }
+
+/* Connections */
+.feedadd { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+.feedadd input { flex: 1; min-width: 180px; font: inherit; border: 1px solid var(--rule-2); border-radius: 10px; padding: 10px 12px; background: #fff; }
