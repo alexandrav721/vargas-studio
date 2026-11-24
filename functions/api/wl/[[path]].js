@@ -25,7 +25,7 @@ const MAX_SIGNALS_KEPT = 5000;
 const MAX_LOCKS = 100;
 const MAX_RSVPS = 500;
 const MAX_VOTES = 500;
-const KINDS = new Set(['went', 'loved', 'lock', 'unlock', 'skip', 'ics', 'rsvp']);
+const KINDS = new Set(['went', 'loved', 'lock', 'unlock', 'skip', 'ics', 'rsvp', 'up']);
 const ALLOWED_ORIGINS = [/^https:\/\/([a-z0-9-]+\.)?vargas-studio\.pages\.dev$/, /^http:\/\/(127\.0\.0\.1|localhost)(:\d+)?$/];
 const APP_PATH = '/projects/weekline/v2/';
 
@@ -756,7 +756,7 @@ async function handle({ request: req, env, params }) {
     for (const it of b.items) {
       if (!plainObject(it)) throw new Bad('Each signal needs event_id and kind.');
       const eventId = text(it.event_id, 120, 'the event id', true);
-      if (!KINDS.has(it.kind)) throw new Bad('Signal kind must be went, loved, lock, unlock, skip, ics or rsvp.');
+      if (!KINDS.has(it.kind)) throw new Bad('Signal kind must be went, loved, lock, unlock, skip, ics, rsvp or up.');
       const reason = text(it.reason, 40, 'the reason');
       let tags = null;
       if (it.tags !== undefined && it.tags !== null) {

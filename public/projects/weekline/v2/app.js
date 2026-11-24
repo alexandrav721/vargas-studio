@@ -426,6 +426,7 @@ function dayRow(d) {
         <p class="pl">${d.kind === "plan" ? `${esc(ev.hood)} · ${why}` : why}${missed ? " · Missed" : ""}</p>
         <div class="act"><a class="src" href="${esc(ev.url)}" target="_blank" rel="noopener">${srcLabel(ev.kind)}${fr ? ` · <em>${fr}</em>` : ""}</a>
           <span class="acts">${acts}</span></div>
+        ${d.kind === "plan" && d.plan.because && d.plan.because.length ? `<details class="why"><summary>Why this?</summary><ul>${d.plan.because.map((b) => `<li>${esc(b)}</li>`).join("")}</ul><div class="thumbs" role="group" aria-label="Tell Weekline"><button class="chip" data-act="thumb" data-v="up" data-id="${esc(id)}">More like this</button><button class="chip" data-act="thumb" data-v="down" data-id="${esc(id)}">Less like this</button></div></details>` : ""}
         ${ui.skipOpen === id ? `<div class="reasons" role="group" aria-label="Skip because">Skip because ${SKIP_REASONS.map((r) => `<button class="chip" data-act="skip" data-id="${esc(id)}" data-v="${r.id}">${r.label}</button>`).join("")}<button class="linkbtn" data-act="skipclose">Cancel</button></div>` : ""}
       </div></article>`;
   }
@@ -879,6 +880,12 @@ const actions = {
   ci: (b) => { const l = S.locks[b.dataset.id]; if (!l) return; W.checkin(l, b.dataset.v); toast(b.dataset.v === "didnt" ? "Noted. Next free night is your comeback night." : b.dataset.v === "loved" ? "Loved it. You'll see more like it." : "Nice. Noted."); render(); },
   lock: (b) => { const ev = evById.get(b.dataset.id); if (!ev) return; W.lock(ev); ui.justLit = ev.id; ui.skipOpen = null; render(); app.querySelector(`[data-act="droplock"][data-id="${CSS.escape(ev.id)}"]`)?.focus({ preventScroll: true }); toast("Locked. It's on your week."); },
   pick: (b) => { const ev = evById.get(b.dataset.id); if (!ev) return; delete S.kept[ev.date]; W.lock(ev); ui.justLit = ev.id; render(); app.querySelector(`[data-act="droplock"][data-id="${CSS.escape(ev.id)}"]`)?.focus({ preventScroll: true }); toast("Picked and locked."); },
+  thumb: (b) => {
+    const ev = evById.get(b.dataset.id); if (!ev) return;
+    if (b.dataset.v === "up") { W.signal("up", ev); toast("Got it. More like this."); }
+    else { W.skip(ev, "notme"); toast("Got it. Less like this. We'll find something else."); }
+    render();
+  },
   droplock: (b) => { W.dropLock(b.dataset.id); render(); toast("Lock removed."); },
   skipopen: (b) => { ui.skipOpen = ui.skipOpen === b.dataset.id ? null : b.dataset.id; render({ keepFocus: true }); app.querySelector(`[data-act="skip"][data-id="${CSS.escape(b.dataset.id)}"]`)?.focus(); },
   skipclose: () => { const id = ui.skipOpen; ui.skipOpen = null; render(); app.querySelector(`[data-act="skipopen"][data-id="${CSS.escape(id)}"]`)?.focus(); },
