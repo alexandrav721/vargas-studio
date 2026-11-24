@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function () {
   function save() { try { localStorage.setItem("smez-builders-asklist", JSON.stringify(picked)); } catch (e) {} }
   function key(x) { return x[0]; }
   function count() { var n = 0; T.forEach(function (l) { items(l.n).forEach(function (x) { if (picked[key(x)]) n++; }); }); document.getElementById("n").textContent = n + " ticked"; }
-  var AUD = [["business", "A business or nonprofit"], ["school", "A school"], ["health", "A hospital or clinic"], ["finance", "Finance or accounting"]];
+  var AUD = [["business", "A business or nonprofit"], ["school", "A school"], ["health", "A hospital or clinic"], ["finance", "Finance or accounting"], ["food", "A restaurant or shop"]];
   var TOPIC = { 1: "The AI model itself", 2: "How it connects (the API)", 3: "Its rules and accuracy", 4: "Actions it can take", 5: "Connections to your apps", 6: "Answers from your documents", 7: "Agents", 8: "AI-built websites and code", 9: "How they test it", 10: "The whole product" };
   var m = /aud=(\w+)/.exec(location.search); if (m && AUD.some(function (a) { return a[0] === m[1]; })) aud = m[1];
   function items(n) { var v = V[n]; return v.q.concat(v[aud] ? [v[aud]] : []); }

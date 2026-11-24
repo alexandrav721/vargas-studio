@@ -26,9 +26,9 @@
       card(96, 6, 128, 54) + t(160, 22, "HOUSE RULES", { w: 800, size: 11 }) + '<path d="M110 32h88M110 42h100M110 52h70" ' + S + ' stroke-width="1.5"/>' +
       chef(160, 100) + t(160, 146, "system prompt = rules on the wall") + t(262, 100, "every plate", { size: 11, c: "var(--accent)" }) + t(262, 114, "is shaped by them", { size: 11, c: "var(--accent)" })),
     4: svg("The chef asks for an appliance (tool call), your code runs it, and the result comes back",
-      chef(40, 66) + card(84, 22, 110, 28) + t(139, 40, "use: weather", { size: 11 }) + arrow(62, 56, 82, 44) +
+      chef(40, 66) + card(84, 22, 110, 28) + t(139, 40, "use: check_stock", { size: 11 }) + arrow(62, 56, 82, 44) +
       '<rect x="236" y="30" width="66" height="56" rx="8" ' + S + ' fill="var(--card)"/><circle cx="269" cy="58" r="12" ' + S + "/>" + t(269, 104, "the app runs it", { size: 11 }) +
-      arrow(198, 36, 230, 44) + card(84, 92, 110, 28) + t(139, 110, "result: rain", { size: 11 }) + arrow(232, 80, 198, 100) + arrow(80, 104, 62, 92) + t(160, 144, "Claude asks. The app (waiter) presses the button.")),
+      arrow(198, 36, 230, 44) + card(84, 92, 110, 28) + t(139, 110, "result: 4 left", { size: 11 }) + arrow(232, 80, 198, 100) + arrow(80, 104, 62, 92) + t(160, 144, "Claude asks. The app (waiter) presses the button.")),
     5: svg("A wall of identical outlets (MCP) with Drive, Slack and Calendar plugged in",
       '<rect x="20" y="20" width="280" height="64" rx="6" ' + S + ' fill="var(--track)"/>' +
       [70, 160, 250].map(function (x) { return '<rect x="' + (x - 18) + '" y="34" width="36" height="36" rx="6" ' + S + ' fill="var(--card)"/><path d="M' + (x - 6) + " 46v10M" + (x + 6) + ' 46v10" ' + S + "/>"; }).join("") +

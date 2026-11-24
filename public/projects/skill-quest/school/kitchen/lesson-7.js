@@ -68,7 +68,7 @@
       { term: "Human in the loop", q: "Your agent drafted 40 emails to customers. What should happen next?", a: ["A person checks and approves before they send", "Send them all, since agents check their own work", "Let a second agent read them, then send them all"], ok: 0, why: "Right. Anything that sends, spends, books or deletes gets a person first." }
     ],
     say: "An agent picks its own steps in a loop. Start with one request, and keep a person on risky actions.",
-    keep: "6 questions to ask anyone selling an agent, and a ticket that sorts a real job.",
+    keep: "Questions to ask anyone selling an agent, and a ticket that sorts a real job.",
     cardLabel: "Copy my card",
     card: "THE HEAD CHEF (AGENTS)\nAgent = Claude picks its own steps and tools until done\nAgent loop = think → tool → check → repeat\nWorkflow = a prep checklist: fixed steps set by the builder\nOrchestrator = head chef splitting the job\nSubagent = sous-chef with its own counter, reports a summary\nHuman in the loop = a person approves risky actions\nStart simple: one request, then a workflow, then an agent",
     real: ["Introduction to subagents", "https://academy.claude.com/courses/introduction-to-subagents"]

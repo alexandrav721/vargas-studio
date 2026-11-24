@@ -50,7 +50,7 @@
         ["First plans and cost guesses are often wrong.", "Taste tests and real token counts show where."],
         ["Prompt injection is a real kitchen fire.", "Content Claude reads can carry orders. A person presses risky buttons."]
       ],
-      where: "A real kitchen lasts years. AI chefs change often; keep taste tests so switching is safer."
+      where: "Kitchens swap cooks and suppliers all the time. AI models change too; keep your taste tests so every switch is checked."
     },
     quiz: [
       { term: "Start simple", q: "A friend wants to start with 5 agents. Your advice?", a: ["Start with one request and a taste test, add pieces only when needed", "Go for it, more agents always means better results", "Train your own model first so it fits the business"], ok: 0, why: "Right. Start simple. Agents cost more and break in more ways." },
@@ -58,7 +58,7 @@
       {q: "From Lesson 7: what’s a subagent?", a: ["A helper with its own counter that reports back a summary", "A cheaper, smaller model for simple jobs", "A person who approves the agent’s risky actions"], ok: 0, why: "Right. A sous-chef with its own counter.", term: "Subagent"}
     ],
     say: "Start with the smallest setup that works, test it, and add pieces only when a real need shows up.",
-    keep: "6 questions for any AI pitch, and a ticket that reviews your own kitchen plan.",
+    keep: "Questions for any AI pitch, and a ticket that reviews your own kitchen plan.",
     cardLabel: "Copy my plan",
     card: "MY AI KITCHEN PLAN\nChef (model): \nOrder window (API): \nHouse rules (system prompt): \nAppliances (tools): \nOutlets (MCP): \nRecipe binder (RAG or paste in): \nHead chef (agent) or prep checklist (workflow): \nTaste test (eval): \nGuardrails: \nStart simple. Taste every change.",
     real: ["Claude Platform 101", "https://academy.claude.com/courses/claude-platform-101"]

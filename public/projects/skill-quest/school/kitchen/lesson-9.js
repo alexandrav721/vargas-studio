@@ -64,7 +64,7 @@
       {q: "From Lesson 6: what do embeddings do?", a: ["Turn text into numbers by meaning, so similar ideas can be found", "Train the model on your files so it learns them", "Shrink long chats into short summaries to save space"], ok: 0, why: "Right. That’s how “refund” finds “money back”.", term: "Embeddings"}
     ],
     say: "Before we ship a change, we re-run the same test set and compare scores. That’s an eval.",
-    keep: "5 questions that expose “it’s accurate” claims, and a ticket for a mini taste test.",
+    keep: "Questions that expose “it’s accurate” claims, and a ticket for a mini taste test.",
     cardLabel: "Copy my card",
     card: "TASTE TESTS (EVALS)\nEval = same questions, same scorecard, every change\nSuccess criteria = what good means, measurable\nTest set = the fixed questions (keep some unseen)\nGrader = code for exact checks, LLM-as-judge for fuzzy ones\nRegression = a fix that broke something else\nVibe check ≠ eval",
     real: ["Introduction to evals", "https://academy.claude.com/courses/introduction-to-evals"]

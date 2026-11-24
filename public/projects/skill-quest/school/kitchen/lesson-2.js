@@ -68,7 +68,7 @@
       {term: "API key", q: "A vendor asks you to email them your API key. What do you do?", a: ["Say no. Keys are secret, like a password", "Send it, it’s only a code", "Post it in the team chat instead"], ok: 0, why: "Right. Anyone with the key can order on your tab."}
     ],
     say: "Apps talk to Claude through the API. Each request carries the whole chat, because the API remembers nothing.",
-    keep: "5 questions about how a product reaches Claude, and the habit of keeping keys secret.",
+    keep: "Questions about how a product reaches Claude, and the habit of keeping keys secret.",
     cardLabel: "Copy my card",
     card: "THE ORDER WINDOW\nAPI = the window apps use to send Claude tickets\nAPI key = your account card: bills your tab (keep it secret)\nThe app = the waiter carrying tickets and plates\nRequest = the ticket · Response = the plate\nMessages = the list of user and assistant turns\nThe API remembers nothing: resend the conversation\nStreaming = words arrive as they’re written\nCost = tokens in + tokens out (out costs more)",
     real: ["Claude Platform 101", "https://academy.claude.com/courses/claude-platform-101"]

@@ -36,7 +36,7 @@ window.BK_WORDS = [
 ["Tool call","The chef asking for an appliance","Claude’s request to use a tool, with the settings filled in.","Not the action itself.",4,"Log every tool call so we can audit it."],
 ["Tool result","What the appliance hands back","What the app sends back to Claude after running the tool.","Not the final answer. Claude still plates it.",4,"The tool result came back empty, so it apologized."],
 ["Web search","A phone to the market for fresh news","A built-in tool that lets Claude search the web and cite pages.","",4,"Turn on web search for anything after its training."],
-["Code execution","A built-in calculator and stove","A built-in tool where Claude writes and runs code to calculate or analyze.","",4,"Let it use code execution for the math."],
+["Code execution","Running code to get exact numbers","A built-in tool where Claude writes and runs code to calculate or analyze.","",4,"Let it use code execution for the math."],
 ["Computer use","A chef pointing at your screen","Claude looks at screenshots and asks the app to click and type. The app does it.","Anthropic doesn’t host the computer. The app supplies it.",4,"We tried computer use to fill in the old form."],
 ["MCP","Standard outlets","Model Context Protocol: an open standard so a tool built once plugs into many AI apps.","Not a model or a product. A plug shape.",5,"Does your product support MCP?"],
 ["MCP server","The plug on one service, shaped for the outlet","A program that wraps one service (Drive, Slack, a database) and offers its tools.","Not always safe. Anyone can build one.",5,"Shopify’s MCP server works with Claude."],
@@ -75,7 +75,7 @@ window.BK_WORDS = [
 ["Regression","A fix that ruined another dish","Something that used to work breaks after a change.","",9,"The update caused a regression on refunds."],
 ["Architecture","The kitchen floor plan","The plan of which pieces an AI product uses and how they connect.","",10,"Walk me through the architecture."],
 ["Cost","The bill","Mostly tokens times the model’s price across every call and loop, plus fees for some tools.","Estimates until you measure real use.",10,"What’s the cost per conversation?"],
-["Latency","Wait time at the pass","How long people wait for a reply. Bigger models and more steps take longer.","",10,"Latency is too high on mobile."],
+["Latency","Ticket time","How long people wait for a reply. Bigger models and more steps take longer.","",10,"Latency is too high on mobile."],
 ["Guardrails","Safety rails in the kitchen","Checks built into the app, approvals and limits that keep an AI product safe.","Hard rules live in the app, not only in the prompt.",10,"What guardrails stop it from refunding?"],
 ["Start simple","The smallest kitchen that works","Anthropic’s advice: try one request first, then a workflow, then an agent.","",10,"Start simple: one prompt, then see."]
 ];

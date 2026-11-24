@@ -67,7 +67,7 @@
       {term: "Model family", q: "You need fast, cheap answers for thousands of short tags. Which chef?", a: ["Haiku", "Fable", "Opus"], ok: 0, why: "Right. Haiku is the fast, cheap chef for high-volume work."}
     ],
     say: "Claude is a model, an LLM. It sees only what’s in its context window, and it charges by tokens.",
-    keep: "5 questions for any AI vendor, and a cheat sheet ticket for your job.",
+    keep: "Questions for any AI vendor, and a cheat sheet ticket for your job.",
     cardLabel: "Copy my card",
     card: "THE AI KITCHEN\nModel = the chef (Claude)\nLLM = a chef that predicts the next piece of text\nPrompt = your order\nToken = the pieces it counts and charges by\nContext window = the counter: all it can see\nModel family = Haiku (fast) · Sonnet (balanced) · Opus (usual start) · Fable (hardest jobs)",
     real: ["AI Capabilities and Limitations", "https://academy.claude.com/courses/ai-capabilities-and-limitations"]
