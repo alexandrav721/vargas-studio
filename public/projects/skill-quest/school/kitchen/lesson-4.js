@@ -56,7 +56,7 @@
         ["A tool can do real things.", "Email, delete, spend. Ask a person before anything that can’t be undone."],
         ["Claude can pick the wrong appliance.", "Or the wrong setting. Check tool calls before they act."]
       ],
-      where: "A cook knows every station by sight. Claude knows a tool only by its label. Vague label, confused chef."
+      where: "A human cook knows each station by sight. Claude knows a tool only by its label. Vague label, confused chef."
     },
     quiz: [
       { term: "Tool result", q: "What is a tool result?", a: ["What the app sends back after running the tool", "Claude’s final answer, shown to the person who asked", "The label that tells Claude what the tool can do"], ok: 0, why: "Right. Result goes back to Claude, then Claude plates the answer." },

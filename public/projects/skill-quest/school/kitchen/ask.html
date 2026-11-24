@@ -61,7 +61,7 @@
 <script>
 document.addEventListener("DOMContentLoaded", function () {
   var V = window.BK_VENDOR, T = BK.TRACK, esc = BK.esc, aud = "business", mine = false;
-  var AUD = [["business", "A business or nonprofit"], ["school", "A school"], ["health", "A hospital or clinic"], ["finance", "Finance or accounting"], ["food", "A restaurant or shop"], ["trades", "Trades or field service"]];
+  var AUD = [["business", "A business or nonprofit"], ["school", "A school"], ["health", "A hospital or clinic"], ["finance", "Finance or accounting"], ["food", "A restaurant or café"], ["trades", "Trades or field service"]];
   var TOPIC = { 1: "The AI model itself", 2: "How it connects (the API)", 3: "Its rules and accuracy", 4: "Actions it can take", 5: "Connections to your apps", 6: "Answers from your documents", 7: "Agents", 8: "AI-built websites and code", 9: "How they test it", 10: "The whole product" };
   var MK = { good: ["✓", "Good answer"], follow: ["?", "Follow up"], red: ["✗", "Red flag"] };
   function load(k, d) { try { return JSON.parse(localStorage.getItem(k) || "null") || d; } catch (e) { return d; } }

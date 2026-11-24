@@ -47,7 +47,7 @@
       title: "Plug in only what you trust.",
       lines: [
         ["Anyone can build an MCP server.", "A bad one can read or change your data. Use trusted ones."],
-        ["Prompt injection is a fake ticket on the rail.", "An email can say “ignore your rules,” and Claude may obey. A person approves risky actions."]
+        ["Prompt injection is a fake order hidden in an ingredient.", "An email can say “ignore your rules,” and Claude may obey. A person approves risky actions."]
       ],
       where: "An outlet passes power. MCP passes words, and words can carry orders."
     },
