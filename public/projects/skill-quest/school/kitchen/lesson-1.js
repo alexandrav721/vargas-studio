@@ -9,7 +9,7 @@
       ["It’s an LLM: a large language model.", "A model is any trained AI. An LLM is a model built for words: it reads and writes text."],
       ["Your order is a prompt.", "Everything the chef can see sits on one counter: the context window."]
     ],
-    guess: { q: "How does Claude write an answer?", opts: [["It predicts the next piece of text, again and again", true], ["It looks the answer up in a giant database", false], ["A person types it behind the scenes", false]], reveal: "It predicts the next piece of text. That’s what a large language model does." },
+    guess: { q: "How does Claude write an answer?", opts: [["It predicts the next piece of text, again and again", true], ["It looks the answer up in a giant database", false], ["A person types it behind the scenes", false]], reveal: "It predicts the next piece of text. That’s what a large language model does. It doesn’t look facts up, so it can sound sure and still be wrong." },
     startLabel: "Look inside",
     example: {
       title: "One order, seen from the kitchen.",

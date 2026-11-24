@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Buying AI? What to ask · Builder’s Kitchen</title>
+<meta name="description" content="Plain questions to ask anyone selling you AI, with what a good answer and a red flag sound like. For businesses, schools, clinics and finance teams.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../school.css">
+<style>
+.filters{display:flex;gap:6px;margin-top:10px}
+.topic{margin-top:22px}
+.topic h2{font-size:1.15rem;display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+.topic h2 a{font-family:"Schibsted Grotesk",sans-serif;font-size:.8rem;font-weight:600;color:var(--muted);white-space:nowrap}
+.pick{margin-right:6px;width:20px;height:20px;vertical-align:-4px}
+@media print{.top,.foot,.btns,.filters,.fridge,#site-bar{display:none!important}.bk .vq details>*{display:block}.topic{break-inside:avoid}}
+</style>
+<link rel="stylesheet" href="/site-bar.css" />
+<script src="/site-bar.js" data-project="skill-quest" data-kind="piece" defer></script>
+</head>
+<body class="bk">
+<header class="top">
+  <a class="logo" href="./">AI Made EZ <small>Builder’s Kitchen</small></a>
+  <div class="tools"><button class="chip" id="big" type="button" aria-pressed="false">Bigger text</button></div>
+</header>
+<main>
+  <p class="label">Buying AI?</p>
+  <h1>What to ask the vendor.</h1>
+  <p class="muted">Tap a question to see a good answer and a red flag. Tick the ones you’ll ask, then copy your list.</p>
+  <p class="label" style="margin-top:14px">Who you are</p>
+  <div class="fridge filters" id="aud" role="group" aria-label="Who you are"></div>
+  <div id="list"></div>
+  <div class="btns"><button class="btn" id="copy" type="button">Copy my list</button><button class="btn ghost" type="button" onclick="window.print()">Print</button><a class="btn ghost" href="./">The course</a></div>
+  <p class="small">A starting list, not legal advice. Schools, clinics and finance teams: check with your privacy or compliance lead.</p>
+</main>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<footer class="foot"><a href="./">Builder’s passport</a><a href="glossary.html">Kitchen dictionary</a><span>Not affiliated with Anthropic</span><span>Made by Alexandra Vargas</span></footer>
+<script src="../school.js" defer></script><script src="bk.js" defer></script><script src="vendorq.js" defer></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  var V = window.BK_VENDOR, T = BK.TRACK, esc = BK.esc, aud = "business", picked = {};
+  var AUD = [["business", "A business or nonprofit"], ["school", "A school"], ["health", "A hospital or clinic"], ["finance", "Finance or accounting"]];
+  var TOPIC = { 1: "The AI model itself", 2: "How it connects (the API)", 3: "Its rules and accuracy", 4: "Actions it can take", 5: "Connections to your apps", 6: "Answers from your documents", 7: "Agents", 8: "AI-built websites and code", 9: "How they test it", 10: "The whole product" };
+  var m = /aud=(\w+)/.exec(location.search); if (m && AUD.some(function (a) { return a[0] === m[1]; })) aud = m[1];
+  function items(n) { var v = V[n]; return v.q.concat(v[aud] ? [v[aud]] : []); }
+  function draw() {
+    document.getElementById("aud").innerHTML = AUD.map(function (a) { return '<button type="button" class="chip" data-a="' + a[0] + '" aria-pressed="' + (aud === a[0]) + '">' + a[1] + "</button>"; }).join("");
+    document.getElementById("list").innerHTML = T.map(function (l) {
+      return '<section class="topic"><h2><span>' + TOPIC[l.n] + '</span><a href="' + l.href + '">Lesson ' + l.n + '</a></h2><ol class="vq">' + items(l.n).map(function (x, i) {
+        var id = l.n + "-" + i;
+        return '<li><details><summary><input class="pick" type="checkbox" data-id="' + id + '" aria-label="Ask this"' + (picked[id] ? " checked" : "") + "><b>" + esc(x[0]) + '</b></summary><span class="good">Good: ' + esc(x[1]) + '</span><span class="red">Red flag: ' + esc(x[2]) + "</span></details></li>";
+      }).join("") + "</ol></section>";
+    }).join("");
+  }
+  document.getElementById("aud").onclick = function (e) { var b = e.target.closest("[data-a]"); if (!b) return; aud = b.dataset.a; picked = {}; draw(); };
+  document.getElementById("list").addEventListener("click", function (e) { var c = e.target.closest(".pick"); if (!c) return; e.stopPropagation(); picked[c.dataset.id] = c.checked; });
+  document.getElementById("copy").onclick = function () {
+    var out = [], any = Object.keys(picked).some(function (k) { return picked[k]; });
+    T.forEach(function (l) { items(l.n).forEach(function (x, i) { if (!any || picked[l.n + "-" + i]) out.push(x[0] + "\n   Good: " + x[1] + "\n   Red flag: " + x[2]); }); });
+    var text = "Questions for the AI vendor\n\n" + out.map(function (q, i) { return (i + 1) + ". " + q; }).join("\n") + "\n\nFrom AI Made EZ, Builder’s Kitchen";
+    (navigator.clipboard ? navigator.clipboard.writeText(text) : Promise.reject()).then(function () { School.toast(out.length + " questions copied"); }, function () { School.toast("Select the text and copy it"); });
+  };
+  draw();
+});
+</script>
+<script src="/projects/skill-quest/smez-index.js" defer></script>
+<script src="/projects/skill-quest/smez-nav.js" data-section="school" defer></script>
+</body>
+</html>
