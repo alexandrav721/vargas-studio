@@ -243,8 +243,8 @@ function readUrlState() {
   if (params.has("birth")) {
     state.birthYear = clamp(Number(params.get("birth")), 1981, 1996);
   }
-  if (params.has("from")) state.yearFrom = clamp(Number(params.get("from")), 1995, 2012);
-  if (params.has("to")) state.yearTo = clamp(Number(params.get("to")), 1995, 2012);
+  if (params.has("from")) state.yearFrom = clamp(Number(params.get("from")), 1995, 2016);
+  if (params.has("to")) state.yearTo = clamp(Number(params.get("to")), 1995, 2016);
   if (["websites", "items", "style", "room"].includes(params.get("lens"))) {
     state.lens = params.get("lens");
   }
@@ -349,7 +349,7 @@ function tokenDemoMarkup(eraId) {
 function catalogDepth() {
   const eras = Object.keys(catalog.WEBSITES || {});
   const web = eras.reduce((n, id) => n + (catalog.WEBSITES[id] || []).length, 0);
-  const items = eras.reduce((n, id) => n + (catalog.ITEMS[id] || []).length, 0);
+  const items = Object.values(catalog.ITEMS || {}).reduce((n, list) => n + list.length, 0);
   return { web, items, styles: Object.keys(STYLES).length };
 }
 
@@ -360,7 +360,7 @@ function paintHeroMeta() {
   meta.innerHTML = `
     <span><i class="dot" aria-hidden="true"></i> Gen locked: Millennials</span>
     <span>Researched: ${web} sites · ${items} objects · ${styles} style systems</span>
-    <span>Window: 1995–2012</span>`;
+    <span>Window: 1995–2016</span>`;
 }
 
 function renderResults() {
@@ -390,10 +390,10 @@ function renderResults() {
           ${picture(ITEM_MEDIA[peakItem?.name], peakItem)}
           <strong>${esc(shortName(peakItem?.name || ""))}</strong>
         </button>
-        <button class="digest-card digest-card--pic" type="button" data-digest-lens="websites" data-digest-q="${esc(peakSite?.name || "")}">
+        ${peakSite ? `<button class="digest-card digest-card--pic" type="button" data-digest-lens="websites" data-digest-q="${esc(peakSite.name)}">
           ${sitePicture(peakSite)}
-          <strong>${esc(shortName(peakSite?.name || ""))}</strong>
-        </button>
+          <strong>${esc(shortName(peakSite.name))}</strong>
+        </button>` : ""}
         <button class="digest-card digest-card--pic" type="button" data-digest-lens="style" data-digest-q="">
           <span class="pic pic--swatch">${(styleCue?.palette || []).slice(0, 5).map((hex) => `<i style="background:${/^#[0-9a-fA-F]{3,8}$/.test(hex) ? hex : "#000"}"></i>`).join("")}</span>
           <strong>${esc(styleCue?.name || primary.styleName)}</strong>

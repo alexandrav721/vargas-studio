@@ -318,7 +318,7 @@ function renderRoom() {
   host.innerHTML = `
     <div class="room-wrap">
       <div class="room-head">
-        <h3>${had.length >= 3 ? `You were ${esc(personaFor(had, view.from, view.to))}` : `My room, ${esc(label)}`}</h3>
+        <h3>${had.length >= 3 ? `You were ${esc(personaLine(had, view.from, view.to))}` : `My room, ${esc(label)}`}</h3>
         <span class="meta">${had.length ? `${had.length} thing${had.length === 1 ? "" : "s"} you had` : "Empty for now"}</span>
       </div>
       <div class="room-stage">${roomSvg(had)}
@@ -371,6 +371,7 @@ const ERA_WORD = [
   [2000, 2003, "Chrome"],
   [2004, 2007, "Top 8"],
   [2008, 2012, "Dashboard"],
+  [2013, 2016, "Front-Camera"],
 ];
 const TYPE_WORD = { tech: "Early Adopter", toy: "Collector", fashion: "Trendsetter", media: "Mixtape Maker" };
 
@@ -382,16 +383,49 @@ function bucket(category) {
   return "tech";
 }
 
+/** The category you ticked most, or null when it's a tie. */
+function topBucket(had) {
+  const counts = {};
+  had.forEach((it) => { const k = bucket(it.category); counts[k] = (counts[k] || 0) + 1; });
+  const sorted = Object.entries(counts).sort((x, y) => y[1] - x[1]);
+  if (sorted.length && (sorted.length === 1 || sorted[0][1] > sorted[1][1])) return sorted[0][0];
+  return null;
+}
+
 /** "The Top 8 Trendsetter": era of your years + what you ticked most. Built only from your own ticks. */
 export function personaFor(had, from, to) {
   const mid = Math.round((from + to) / 2);
   const era = (ERA_WORD.find(([a, b]) => mid >= a && mid <= b) || ERA_WORD[1])[2];
-  const counts = {};
-  had.forEach((it) => { const k = bucket(it.category); counts[k] = (counts[k] || 0) + 1; });
-  const sorted = Object.entries(counts).sort((x, y) => y[1] - x[1]);
-  let type = "Main Character";
-  if (sorted.length && (sorted.length === 1 || sorted[0][1] > sorted[1][1])) type = TYPE_WORD[sorted[0][0]];
-  return `The ${era} ${type}`;
+  const top = topBucket(had);
+  return `The ${era} ${top ? TYPE_WORD[top] : "Main Character"}`;
+}
+
+function yearSpan(it) {
+  const n = String(it.years || "").match(/19\d\d|20\d\d/g)?.map(Number) || [];
+  return n.length ? [Math.min(...n), Math.max(...n)] : null;
+}
+
+/** The one real thing that names you: of the items you tapped "Had it", the one most tied to your year
+ *  (in your top category first, then closest to the year, then the shortest craze). Never invented. */
+export function signatureFor(had, from, to) {
+  const list = had.filter((it) => it && it.tag);
+  if (!list.length) return null;
+  const mid = Math.round((from + to) / 2);
+  const top = topBucket(had);
+  const score = (it) => {
+    const p = yearSpan(it);
+    const off = !p ? 9 : mid >= p[0] && mid <= p[1] ? 0 : Math.min(Math.abs(mid - p[0]), Math.abs(mid - p[1]));
+    const span = p ? p[1] - p[0] : 9;
+    return (top && bucket(it.category) !== top ? 100 : 0) + off * 10 + span;
+  };
+  return [...list].sort((a, b) => score(a) - score(b))[0];
+}
+
+/** "The Top 8 Trendsetter, Razr in hand" */
+export function personaLine(had, from, to) {
+  const sig = signatureFor(had, from, to);
+  const name = personaFor(had, from, to);
+  return sig ? `${name}, ${sig.tag}` : name;
 }
 
 function loadImg(src) {
@@ -454,6 +488,13 @@ export async function makeCard(opts = {}) {
   g.font = `800 ${size}px Syne, sans-serif`;
   g.fillText(l1, 72, 170 + size + 20);
   g.fillText(l2, 72, 170 + size * 2 + 30);
+  const sig = signatureFor(had, from, to);
+  if (sig) {
+    g.fillStyle = brand;
+    const tsize = fitText(g, sig.tag, 936, 60, "italic 500", "'IBM Plex Sans', sans-serif");
+    g.font = `italic 500 ${tsize}px 'IBM Plex Sans', sans-serif`;
+    g.fillText(sig.tag, 72, 170 + size * 2 + 30 + tsize + 26);
+  }
 
   // a pile of up to 5 snapshots of what you had
   const picks = had.slice(0, 5);
@@ -563,7 +604,7 @@ async function sendCard() {
   const blob = await makeCard();
   if (!blob) return;
   const link = compareLink();
-  const persona = personaFor(ownedItems("had"), view.from, view.to);
+  const persona = personaLine(ownedItems("had"), view.from, view.to);
   const file = new File([blob], `who-i-was-${view.from}.png`, { type: "image/png" });
   try {
     if (navigator.canShare?.({ files: [file] })) {

@@ -53,6 +53,13 @@ export const ERAS = [
     subtitle: "Pocket internet, reblogs, and the end of the old web",
     styleName: "Indie Sleaze → Early Flat",
   },
+  {
+    id: "story",
+    label: "Story Years",
+    years: [2013, 2016],
+    subtitle: "Front cameras, disappearing stories, and everything flat",
+    styleName: "Flat Design × Millennial Pink",
+  },
 ];
 
 /**
@@ -61,7 +68,7 @@ export const ERAS = [
  */
 export function formativeRange(birthYear) {
   const start = Math.max(1995, birthYear + 14);
-  const end = Math.min(2012, birthYear + 20);
+  const end = Math.min(2016, birthYear + 20);
   return [start, Math.max(start, end)];
 }
 
@@ -238,12 +245,48 @@ export const STYLES = {
       items: ["Silly Bandz", "Early App Store iPhones (3G / 3GS / 4)"],
     },
   },
+  story: {
+    name: "Flat Design × Millennial Pink",
+    years: "2013–2016",
+    summary:
+      "iOS 7 (2013) wiped out the leather and linen: thin type, flat color, frosted blur. Phones turned to the front camera, Snapchat and Instagram Stories made posts that vanished, and Pantone named Rose Quartz and Serenity its 2016 colors.",
+    palette: ["#16110F", "#F7CAC9", "#92A8D1", "#F4EDE8", "#E8A87C"],
+    typography: [
+      "Thin Helvetica Neue / San Francisco system type",
+      "Geometric sans wordmarks with tight tracking",
+      "Hand-lettered script on brunch menus and mugs",
+    ],
+    motifs: [
+      "Flat icons on frosted-glass blur",
+      "Square photos with Valencia-style warm filters",
+      "Vertical, full-screen stories with a progress bar",
+      "Rose gold phones and watches",
+    ],
+    fashion: [
+      "Flower crowns at festivals",
+      "Skinny jeans, high-top sneakers, oversized knits",
+      "Athleisure as everyday wear",
+      "Rose gold everything (2015–16)",
+    ],
+    tokens: [
+      "Flat fills, no bevels or gloss",
+      "Rose Quartz #F7CAC9 on warm near-black",
+      "Serenity #92A8D1 as the second accent",
+      "Rounded square avatars",
+    ],
+    musicVisual:
+      "Black-and-white minimal album art, Polaroid-framed album sleeves, pastel music-video sets, SoundCloud's orange waveforms.",
+    pairings: {
+      websites: [],
+      items: ["Selfie stick", "iPhone 5c"],
+    },
+  },
 };
 
 export const RESEARCH_NOTES = [
   {
     title: "Generation window",
-    body: "Millennials commonly dated ~1981–1996 (Pew). Formative digital years cluster later than birth years—so Scrollback maps birth year → roughly ages 14–20 within 1995–2012.",
+    body: "Millennials commonly dated ~1981–1996 (Pew). Formative digital years cluster later than birth years—so Scrollback maps birth year → roughly ages 14–20 within 1995–2016.",
   },
   {
     title: "Websites as places",

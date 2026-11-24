@@ -68,6 +68,18 @@
   --panel: rgba(22, 18, 20, 0.8);
 }
 
+[data-era="story"] {
+  /* 2013–16: flat design, front cameras; Pantone 2016 Rose Quartz + Serenity on warm near-black */
+  --bg0: #16110f;
+  --bg1: #2a1f1d;
+  --ink: #fbf3ee;
+  --muted: #d6c1b8;
+  --brand: #f7cac9;
+  --brand-2: #92a8d1;
+  --glow: rgba(247, 202, 201, 0.16);
+  --panel: rgba(36, 27, 25, 0.82);
+}
+
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 
@@ -183,6 +195,14 @@ body[data-era="tumblr"]::after {
     radial-gradient(circle at 30% 25%, rgba(255, 45, 149, 0.14), transparent 20%),
     radial-gradient(circle at 78% 55%, rgba(200, 255, 0, 0.1), transparent 22%),
     radial-gradient(circle at 50% 90%, rgba(196, 164, 164, 0.12), transparent 28%);
+}
+
+body[data-era="story"]::after {
+  /* flat era: no gloss, just a quiet square photo grid */
+  background:
+    repeating-linear-gradient(0deg, transparent 0 79px, rgba(247, 202, 201, 0.05) 79px 80px),
+    repeating-linear-gradient(90deg, transparent 0 79px, rgba(146, 168, 209, 0.05) 79px 80px);
+  animation: none;
 }
 
 @keyframes drift {
