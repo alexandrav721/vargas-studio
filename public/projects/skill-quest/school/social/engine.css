@@ -1,0 +1,46 @@
+/* AI Made EZ post frame (1080 x 1350). Black, white, one red accent. */
+.ez-frame { position: relative; aspect-ratio: 4 / 5; overflow: hidden; border-radius: 10px; background: #111; }
+.ez-frame > .ez-post { position: absolute; top: 0; left: 0; transform-origin: 0 0; }
+.ez-post { width: 1080px; height: 1350px; position: relative; overflow: hidden; background: #0E0D0B; color: #fff; font-family: "Schibsted Grotesk", system-ui, sans-serif; }
+.ez-photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.ez-ground { position: absolute; inset: 0; background: radial-gradient(120% 80% at 80% 0%, #3a1a12 0%, #0E0D0B 60%); color: rgba(199, 57, 31, .22); font: 800 520px/0.8 "Bricolage Grotesque", sans-serif; letter-spacing: -.06em; padding: 70px 40px; white-space: nowrap; }
+.ez-fade { position: absolute; left: 0; right: 0; bottom: 0; height: 58%; background: linear-gradient(to bottom, rgba(14, 13, 11, 0) 0%, rgba(14, 13, 11, .55) 35%, rgba(14, 13, 11, .92) 70%, #0E0D0B 100%); }
+.ez-typeonly .ez-fade { height: 50%; }
+.ez-mark { position: absolute; top: 44px; left: 44px; display: flex; align-items: center; gap: 8px; z-index: 3; }
+.ez-mark b { font: 800 30px/1 "Bricolage Grotesque", sans-serif; letter-spacing: -.02em; color: #fff; text-shadow: 0 2px 10px rgba(0, 0, 0, .35); }
+.ez-mark span { font: 800 26px/1 "Bricolage Grotesque", sans-serif; background: #C7391F; color: #fff; border-radius: 8px; padding: 6px 9px; }
+.ez-text { position: absolute; left: 64px; right: 64px; bottom: 92px; z-index: 2; }
+.ez-label { margin: 0 0 18px; font: 700 24px/1 "Schibsted Grotesk", sans-serif; letter-spacing: .22em; text-transform: uppercase; color: #E9573B; }
+.ez-head { margin: 0; font: 700 60px/1.08 "Schibsted Grotesk", sans-serif; letter-spacing: -.015em; color: #fff; }
+.ez-swipe { position: absolute; right: 52px; bottom: 44px; z-index: 3; font: 400 44px/1 sans-serif; color: rgba(255, 255, 255, .85); }
+/* inner slides */
+.ez-inner .ez-in { position: absolute; left: 72px; right: 72px; top: 170px; bottom: 90px; display: flex; flex-direction: column; }
+.ez-inner h4 { margin: 0 0 34px; font: 700 62px/1.08 "Schibsted Grotesk", sans-serif; letter-spacing: -.015em; }
+.ez-rows { list-style: none; margin: 0; padding: 0; display: grid; gap: 18px; }
+.ez-rows li { display: grid; grid-template-columns: 260px 1fr; gap: 24px; align-items: baseline; padding: 24px 28px; border: 2px solid rgba(255, 255, 255, .16); border-radius: 18px; font: 400 36px/1.25 "Schibsted Grotesk", sans-serif; }
+.ez-rows li b { font: 800 40px/1.1 "Bricolage Grotesque", sans-serif; color: #fff; }
+.ez-rows li span { color: rgba(255, 255, 255, .82); }
+.ez-quote { margin: 0; padding: 36px 40px; border-left: 8px solid #C7391F; background: rgba(255, 255, 255, .06); border-radius: 0 18px 18px 0; font: 500 42px/1.3 "Schibsted Grotesk", sans-serif; }
+.ez-src { margin: 26px 0 0; font: 500 28px/1.3 "Schibsted Grotesk", sans-serif; color: rgba(255, 255, 255, .62); }
+.ez-plain { margin-top: auto; padding: 30px 34px; border-radius: 18px; background: #C7391F; font: 600 36px/1.3 "Schibsted Grotesk", sans-serif; }
+.ez-plain b { display: block; font: 700 22px/1 "Schibsted Grotesk", sans-serif; letter-spacing: .2em; text-transform: uppercase; margin-bottom: 12px; opacity: .85; }
+.ez-vs { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; }
+.ez-tk { padding: 30px; border-radius: 18px; background: #fff; color: #151411; font: 500 34px/1.35 ui-monospace, "JetBrains Mono", monospace; }
+.ez-tk small { display: block; font: 700 22px/1 "Schibsted Grotesk", sans-serif; letter-spacing: .18em; color: #8a857c; margin-bottom: 14px; }
+.ez-tk.bad { opacity: .55; border: 3px dashed #fff; background: transparent; color: #fff; }
+.ez-tk.bad small { color: rgba(255, 255, 255, .6); }
+/* guide steps */
+.ez-ticket { border-radius: 18px; background: #fff; color: #151411; padding: 26px 32px 30px; font: 500 36px/1.35 ui-monospace, "JetBrains Mono", monospace; }
+.ez-ticket .th { display: flex; justify-content: space-between; font: 700 22px/1 "Schibsted Grotesk", sans-serif; letter-spacing: .16em; color: #8a857c; padding-bottom: 16px; margin-bottom: 14px; border-bottom: 2px dashed #ddd; }
+.ez-ticket ol { margin: 0; padding: 0 0 0 44px; }
+.ez-ticket li { padding: 4px 0; }
+.ez-ticket li.added { background: #FBE3DC; outline: 4px solid #C7391F; border-radius: 8px; padding: 6px 10px; margin: 6px -10px; }
+.ez-line { margin: 26px 0 0; font: 400 38px/1.35 "Schibsted Grotesk", sans-serif; color: rgba(255, 255, 255, .9); }
+/* offer */
+.ez-offer .ez-in { align-items: flex-start; }
+.ez-phone { position: absolute; right: 0; top: 150px; width: 380px; height: 640px; border-radius: 48px; border: 10px solid #2a2724; overflow: hidden; background: #FBFAF7; }
+.ez-phone img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+.ez-checks { list-style: none; margin: 10px 0 0; padding: 0; max-width: 520px; display: grid; gap: 22px; }
+.ez-checks li { position: relative; padding-left: 64px; font: 500 38px/1.25 "Schibsted Grotesk", sans-serif; }
+.ez-checks li::before { content: "✓"; position: absolute; left: 0; top: -2px; width: 44px; height: 44px; border-radius: 50%; background: #C7391F; display: grid; place-items: center; font: 800 28px/44px sans-serif; text-align: center; }
+.ez-pill { margin-top: auto; align-self: flex-start; padding: 22px 40px; border-radius: 999px; background: #fff; color: #151411; font: 800 40px/1 "Bricolage Grotesque", sans-serif; }
