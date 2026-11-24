@@ -149,7 +149,7 @@ function rec(t, ok) { if (t && window.BKM) window.BKM.record(t, ok); }
           };
           var modes = B.vendor ? '<div class="fridge modes" role="group" aria-label="What to show"><button type="button" class="chip" data-set="mode" data-v="vendor" aria-pressed="' + (state.mode === "vendor") + '">What to ask</button><button type="button" class="chip" data-set="mode" data-v="make" aria-pressed="' + (state.mode !== "vendor") + '">Try it in Claude</button></div>' : "";
           show("<h2>" + esc(B.title) + "</h2>" + (B.lead ? '<p class="muted">' + B.lead + "</p>" : "") + modes + '<div id="ctl"' + (state.mode === "vendor" ? " hidden" : "") + ">" + B.controls(state, esc) + "</div>" +
-            (VQ ? '<div id="vq"' + (state.mode === "vendor" ? "" : " hidden") + '><div class="fridge" role="group" aria-label="Who you are"><button type="button" class="chip" data-set="aud" data-v="business" aria-pressed="true">A business</button><button type="button" class="chip" data-set="aud" data-v="school" aria-pressed="false">A school</button></div><ol class="vq" id="vqol"></ol><p class="small">A starting list, not legal advice. Schools: check with your privacy lead.</p><p class="label">Want them tailored? Your ticket for Claude:</p></div>' : "") +
+            (VQ ? '<div id="vq"' + (state.mode === "vendor" ? "" : " hidden") + '><div class="fridge" role="group" aria-label="Who you are"><button type="button" class="chip" data-set="aud" data-v="business" aria-pressed="true">A business or nonprofit</button><button type="button" class="chip" data-set="aud" data-v="school" aria-pressed="false">A school</button></div><ol class="vq" id="vqol"></ol><p class="small">A starting list, not legal advice. Schools: check with your privacy lead.</p><p class="label">Want them tailored? Your ticket for Claude:</p></div>' : "") +
             '<p class="label">' + esc(B.ticketLabel || "Your ticket") + '</p><div id="ticket"></div>' +
             '<div class="btns">' + (B.claude ? '<a class="btn" id="open" target="_blank" rel="noopener">' + esc(B.claude) + "</a>" : "") + '<button class="btn ' + (B.claude ? "ghost" : "") + '" id="copy" type="button">' + esc(B.copyLabel || "Copy my ticket") + "</button></div>" +
             (B.after ? '<p class="small">' + B.after + "</p>" : "") +
@@ -197,7 +197,7 @@ function rec(t, ok) { if (t && window.BKM) window.BKM.record(t, ok); }
                 if (!tried[i]) { first++; rec(x.term, true); } tried[i] = 1; answered[i] = 1; got++; b.classList.add("right"); play("tick", got);
                 document.getElementById("q" + i).innerHTML = '<p class="fb good">' + x.why + "</p>";
                 if (got === Q.length) { document.getElementById("qdone").innerHTML = '<p class="fb good">' + first + " of " + Q.length + ' on the first try.</p><div class="btns"><button class="btn" id="finish" type="button">Get my stamp</button></div>'; document.getElementById("finish").onclick = function () { step = 6; render(); }; }
-              } else { if (!tried[i]) rec(x.term, false); tried[i] = 1; b.classList.add("wrong"); play("pick"); document.getElementById("q" + i).innerHTML = '<p class="fb try">Not quite. Try another.</p>'; }
+              } else { if (!tried[i]) rec(x.term, false); tried[i] = 1; b.classList.add("wrong"); play("pick"); document.getElementById("q" + i).innerHTML = '<p class="fb try">Not quite. Hint: ' + String(x.why).replace(/^Right\.\s*/, "") + "</p>"; }
             };
           });
           return;
@@ -211,7 +211,8 @@ function rec(t, ok) { if (t && window.BKM) window.BKM.record(t, ok); }
           '<h1 style="text-align:center">' + (all ? "Builder’s passport complete." : "Lesson " + L.n + ", stamped.") + "</h1>" +
           '<p class="muted" style="text-align:center">' + (all ? "All " + TRACK.length + " stamps. You can follow a builder conversation now." : (first ? count + " of " + TRACK.length + " Builder’s Kitchen stamps." : "You already had this stamp. Nice refresher.")) + "</p>" +
           '<div class="kept"><p><b>Words from this lesson:</b></p>' + termChips(L.terms) +
-          (window.BKM ? (function () { var T = taught(), k = window.BKM.knownCount(T), due = window.BKM.due(pool()).length; return "<p><b>Words you know: " + k + " of " + T.length + ".</b> A word counts once you get it right on 2 different days." + (due ? ' <a href="challenge.html?review=1">Review ' + due + " now</a>." : " Come back tomorrow for a 2-minute review.") + "</p>"; })() : "") +
+          (window.BKM ? (function () { var T = taught(), k = window.BKM.knownCount(T), due = window.BKM.due(pool()).length; var lw = L.terms.filter(function (t) { return T.indexOf(t) >= 0; }).length;
+            return "<p><b>" + lw + " new words today.</b> Lock them in tomorrow with a 2-minute review." + (k ? " You already know " + k + " for good." : "") + (due ? ' <a href="challenge.html?review=1">Practice the ' + due + " you missed</a>." : "") + "</p>"; })() : "") +
           "<p><b>You leave with:</b> " + L.keep + "</p></div>" +
           '<div class="btns"><button class="btn" id="save" type="button">' + esc(L.cardLabel || "Copy my card") + "</button>" +
           (nxt ? '<a class="btn ghost" href="' + nxt.href + '">Next lesson →</a>' : "") +

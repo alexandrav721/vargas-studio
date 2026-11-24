@@ -35,7 +35,7 @@
       },
       head: "ORDER #B02", right: "to: the API", foot: "Paste it into Claude, or open it there",
       text: function (s) {
-        return "Write the exact Claude API request " + s.app + " would send to " + s.ask + ", using " + s.chef + ". Use YOUR_KEY_HERE as the key.\n" +
+        return "I don't code. In plain words first, explain what " + s.app + " sends to Claude to " + s.ask + ", using " + s.chef + ". Then show the actual request with YOUR_KEY_HERE as the key.\n" +
           "1. Add a plain-words note next to each part (model, messages, reply length).\n" +
           "2. Show the response that comes back, and point out the token counts.\n" +
           "3. Explain why the app must resend earlier messages for a follow-up.\nNo real API key, use a placeholder.";

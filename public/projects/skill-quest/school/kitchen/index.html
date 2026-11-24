@@ -85,7 +85,8 @@ document.addEventListener("DOMContentLoaded", function () {
     ? '<a class="btn" href="' + nextL.href + '">' + (n ? "Next: Lesson " : "Start Lesson ") + nextL.n + ", " + nextL.name + "</a>"
     : '<a class="btn ghost" href="lesson-10.html">Redo graduation</a>';
   var TT = BK.taught(), KN = window.BKM ? BKM.knownCount(TT) : 0, DU = window.BKM ? BKM.due(BK.pool()).length : 0;
-  document.getElementById("wk").innerHTML = (KN || DU ? "<b>Words you know: " + KN + " of " + TT.length + ".</b> " : "") + (DU ? '<a class="btn ghost" href="challenge.html?review=1">Review ' + DU + (DU === 1 ? " word" : " words") + " (2 min)</a>" : (KN ? "Nothing due today." : ""));
+  var ST = BK.pool().length;
+  document.getElementById("wk").innerHTML = (ST ? "<b>" + (KN ? "You know " + KN + " words for good" : ST + " words started") + ".</b> " + (KN ? "" : "Get each right on 2 different days to lock it in. ") : "") + (DU ? '<a class="btn ghost" href="challenge.html?review=1">Practice ' + DU + (DU === 1 ? " word" : " words") + " (2 min)</a>" : (ST ? "Nothing to practice today." : ""));
   if (n) document.getElementById("sum").textContent = n + " of 10 stamps." + (n === 10 ? " Passport complete. You speak builder now." : " Keep cooking.");
   var stations = [
     ["The chef", "What the model is, and how apps order from it.", [1, 2, 3]],
