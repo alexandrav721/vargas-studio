@@ -36,7 +36,7 @@
       text: function (s) {
         return "Act as the help assistant for " + s.biz + ". Your system prompt (house rules):\n" +
           (s.rules.length ? s.rules.map(function (r) { return "- " + r; }).join("\n") : "- (none yet)") +
-          "\n\nThen: 1. Answer a tricky customer question you make up. 2. Show the same answer with no rules. 3. Tell me in 2 lines which rule helped most, and one rule I should add.";
+          "\n\nThen: 1. Answer a tricky customer question you make up. 2. Show the same answer with no rules. 3. Tell me in 2 lines which rule helped most, and one rule I should add.\n4. Give me the final rules as one block I can paste into a Claude Project’s instructions.";
       },
       vendor: ["a custom AI assistant with its own instructions", "what rules it follows, how it avoids making things up, and what it does when it doesn't know"], claude: "Open in Claude", done: "Done →", after: "In a real app these rules go in the system prompt field. In a chat we fake it by pasting them."
     },

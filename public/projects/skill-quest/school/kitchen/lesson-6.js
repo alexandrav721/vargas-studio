@@ -23,7 +23,7 @@
     },
     build: {
       title: "Your turn. What goes in your binder?",
-      lead: "Pick a job and your documents. Your ticket asks Claude whether you need RAG, and how.",
+      lead: "Pick a job and your documents. Your ticket gets a setup plan, ready for a Claude Project.",
       state: { job: "answer customer questions", docs: "a 10-page FAQ" },
       controls: function (s, esc) {
         function row(k, list) { return '<div class="fridge">' + list.map(function (v) { return '<button type="button" class="chip" data-set="' + k + '" data-v="' + esc(v) + '" aria-pressed="' + (s[k] === v) + '">' + esc(v) + "</button>"; }).join("") + "</div>"; }
@@ -35,7 +35,7 @@
         return "Make me a setup plan: I want Claude to " + s.job + ". My documents: " + s.docs + ".\n" +
           "1. Do I need RAG, or can it all go in the prompt with prompt caching? Say why in 2 lines.\n" +
           "2. If RAG: explain chunking, embeddings and a vector database for my case, one line each.\n" +
-          "3. How do I make answers cite the page they used, and what should it do when no page fits?";
+          "3. How do I make answers cite the page they used, and what should it do when no page fits?\n4. If it fits in a Claude Project: list the files to upload and write the project instructions I can paste.";
       },
       vendor: ["AI that answers from our documents (RAG)", "whether it trains on our documents, how it shows its sources, and what it says when no document fits"], claude: "Open in Claude", done: "Done →"
     },
