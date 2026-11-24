@@ -2,7 +2,6 @@ import { useEffect, useMemo, useState } from "react";
 import data from "../content/portfolio.json";
 
 import ProjectPage from "./ProjectPage";
-import PlayGrid from "./PlayGrid";
 import { META, NEW } from "./meta";
 import {
   cellFor,
@@ -78,10 +77,8 @@ function Studio({ route }: { route: Route }) {
   }, [projectId]);
 
   const toc = [
-    { id: "play", label: "Play" },
     { id: "projects", label: "Ideas" },
     { id: "compare", label: "Compare" },
-    { id: "craft", label: "Tools" },
   ];
 
   const jump = (id: string) => {
@@ -257,11 +254,6 @@ function Studio({ route }: { route: Route }) {
               </li>
             ))}
           </ul>
-        </section>
-
-        <section className="section" id="play" data-section>
-          <h2>Try one in a minute</h2>
-          <PlayGrid />
         </section>
 
         <section className="section" id="projects" data-section>
@@ -530,49 +522,6 @@ function Studio({ route }: { route: Route }) {
               </tbody>
             </table>
           </div>
-        </section>
-
-        <section className="section" id="craft" data-section>
-          <h2>Tools I use</h2>
-          <p className="section-lede">
-            The skills, AI helpers and habits behind every project.
-          </p>
-
-          <h3 className="subhead">Skills</h3>
-          <ul className="plain-list">
-            {data.general.skills.map((s) => (
-              <li key={s.name}>
-                <strong>{s.name}</strong>
-                <span>{s.detail}</span>
-              </li>
-            ))}
-          </ul>
-
-          <h3 className="subhead">Agents & workflows</h3>
-          <ul className="plain-list">
-            {data.general.agents.map((a) => (
-              <li key={a.name}>
-                <strong>
-                  {a.name}{" "}
-                  <span className={`badge badge-${a.status}`}>
-                    {statusLabel[a.status as Status]}
-                  </span>
-                </strong>
-                <span>{a.detail}</span>
-              </li>
-            ))}
-          </ul>
-
-          <h3 className="subhead">Reusable craft</h3>
-          <ul className="plain-list">
-            {data.general.reusable.map((r) => (
-              <li key={r.name}>
-                <strong>{r.name}</strong>
-                <span>{r.detail}</span>
-              </li>
-            ))}
-          </ul>
-
         </section>
 
         <footer className="foot">

@@ -22,7 +22,7 @@
     bar.setAttribute("aria-label", "Vargas Studio");
     var page = "/#/p/" + pid;
     bar.innerHTML = kind === "game"
-      ? '<a href="/#play">← Vargas Studio</a><a class="site-home" href="' + page + '">How I built it →</a>'
+      ? '<a href="/#ideas">← Vargas Studio</a><a class="site-home" href="' + page + '">How I built it →</a>'
       : '<a href="' + page + '">← ' + NAMES[pid] + '</a><a class="site-home" href="/">Vargas Studio</a>';
     document.body.insertBefore(bar, document.body.firstChild);
 
