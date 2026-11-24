@@ -35,7 +35,7 @@
     mark: function (id) { var s = read(); var first = !s[id]; if (first) { s[id] = new Date().toISOString().slice(0, 10); write(s); } return first; },
     run: function (L) {
       var app = document.getElementById("app");
-      var STEPS = 6, step = 0, state = JSON.parse(JSON.stringify(L.build.state || {}));
+      var STEPS = 6, step = 0, guessed = null, _g = L.guess && (L.guess.opts = L.guess.opts.map(function (o) { return [Math.random(), o]; }).sort(function (a, b) { return a[0] - b[0]; }).map(function (x) { return x[1]; })), state = JSON.parse(JSON.stringify(L.build.state || {}));
       function prog() { return '<div class="prog"><span>Lesson ' + L.n + " · " + (step + 1) + " of " + STEPS + '</span><span class="bar"><i style="width:' + Math.round((step + 1) / STEPS * 100) + '%"></i></span></div>'; }
       function show(html) { app.innerHTML = prog() + '<section class="step">' + html + "</section>"; window.scrollTo(0, 0); try { app.focus({ preventScroll: true }); } catch (e) {} }
       function next() { step++; render(); play("pick"); }
@@ -110,10 +110,17 @@
       }
 
       var render = function () {
+        if (step === 0 && L.guess && guessed === null) {
+          show('<p class="label">Lesson ' + L.n + " · about " + L.mins + " minutes</p>" + "<h1>" + esc(L.title) + "</h1>" +
+            '<p class="label" style="margin-top:14px">First, a guess. No wrong answers yet.</p><p><b>' + L.guess.q + '</b></p><ul class="claims">' +
+            L.guess.opts.map(function (o, j) { return '<li><button type="button" data-g="' + j + '">' + o[0] + "</button></li>"; }).join("") + "</ul>");
+          app.querySelectorAll("[data-g]").forEach(function (b) { b.onclick = function () { guessed = +b.dataset.g; play(L.guess.opts[guessed][1] ? "tick" : "pick", 1); render(); }; });
+          return;
+        }
         if (step === 0) return show(
           '<p class="label">Lesson ' + L.n + " · about " + L.mins + " minutes</p>" +
           "<h1>" + esc(L.title) + "</h1>" +
-          '<div class="teaser" aria-hidden="true">' + ticket(L.teaser[0], L.teaser[1], L.teaser[2], L.teaser[3]) + "</div>" +
+          (L.guess ? '<p class="fb ' + (L.guess.opts[guessed][1] ? "good\">Good guess. " : "try\">Most people guess that. ") + L.guess.reveal + "</p>" : '<div class="teaser" aria-hidden="true">' + ticket(L.teaser[0], L.teaser[1], L.teaser[2], L.teaser[3]) + "</div>") +
           '<ul class="lines">' + L.lines.map(function (x) { return "<li><b>" + x[0] + "</b>" + x[1] + "</li>"; }).join("") + "</ul>" +
           '<p class="label" style="margin-top:16px">Words you’ll know by the end</p>' + termChips(L.terms) +
           nextBtn(L.startLabel || "Show me") +

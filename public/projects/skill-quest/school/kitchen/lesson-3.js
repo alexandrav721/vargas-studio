@@ -9,6 +9,7 @@
       ["Prompt engineering is writing clear tickets.", "Say who it’s for, show an example, and ask for the shape you want back."],
       ["Hallucination is a confident wrong plate.", "Rules like “say I don’t know” and “quote the source” make it rarer, never zero."]
     ],
+    guess: { q: "Two apps ask Claude the same thing and get very different tones. Why?", opts: [["Each app gave Claude different standing rules", true], ["One paid for a nicer Claude", false], ["Claude was in a different mood", false]], reveal: "Each app hangs its own house rules, called a system prompt." },
     startLabel: "See rules change a plate",
     example: {
       title: "Same order. With and without house rules.",

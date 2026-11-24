@@ -9,6 +9,7 @@
       ["The API key is your staff badge.", "It proves the ticket is yours, and the bill goes to your tab. Keep it secret."],
       ["The window remembers nothing.", "Every ticket must carry the whole conversation so far."]
     ],
+    guess: { q: "A shopping app shows Claude’s answers on its own screen. How?", opts: [["It sends Claude a written request through the API", true], ["It copies answers from claude.ai", false], ["Claude is installed inside the app", false]], reveal: "Apps send a request through the API, a window for other software, and get a reply back." },
     startLabel: "Watch one ticket go through",
     example: {
       title: "One ticket, one plate.",

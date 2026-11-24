@@ -9,6 +9,7 @@
       ["An MCP server is the appliance.", "Someone wraps Google Drive, Slack or a database once, as a server. Then anyone can plug it in."],
       ["The MCP client is the kitchen wall.", "Claude Desktop or Claude Code is the host app; it plugs the server in and offers its tools to Claude."]
     ],
+    guess: { q: "Why can Claude Desktop and Claude Code both use the same Google Drive plug-in?", opts: [["They share one standard plug shape, called MCP", true], ["Google built it twice", false], ["They’re the same app", false]], reveal: "MCP is a shared plug shape. Build the plug once, use it in many apps." },
     startLabel: "See why outlets matter",
     example: {
       title: "Before and after the standard outlet.",

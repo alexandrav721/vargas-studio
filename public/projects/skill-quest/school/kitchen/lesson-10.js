@@ -9,6 +9,7 @@
       ["Every piece has a price.", "Cost is tokens. Latency is wait time. Bigger chefs and more loops cost more of both."],
       ["Guardrails are the safety rails.", "Rules in code, approvals for risky actions, and watching for prompt injection."]
     ],
+    guess: { q: "A friend wants an AI helper for their bakery. What should they build first?", opts: [["The simplest version: one model, clear rules, a quick test", true], ["Five agents working together", false], ["Their own AI model", false]], reveal: "Start simple. Add pieces only when a real need shows up. That’s the architect’s habit." },
     startLabel: "See a full kitchen plan",
     example: {
       title: "One plan, every word you learned.",

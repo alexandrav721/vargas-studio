@@ -9,6 +9,7 @@
       ["A workflow is a fixed recipe.", "Your code sets the steps: first this, then that. Cheaper and more predictable."],
       ["Anthropic’s advice: start simple.", "One good request beats a workflow. A workflow beats an agent. Use an agent only when the steps can’t be known ahead."]
     ],
+    guess: { q: "“Book me a table for Friday.” What makes this an agent job?", opts: [["Claude picks its own next steps until it’s done", true], ["It uses a bigger model", false], ["It’s a longer message", false]], reveal: "An agent decides its own steps and uses tools in a loop until the job is done." },
     startLabel: "Watch the loop",
     example: {
       title: "“Find a free evening and book a table for 4.”",

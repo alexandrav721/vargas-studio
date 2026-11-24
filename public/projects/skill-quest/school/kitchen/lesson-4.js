@@ -9,6 +9,7 @@
       ["The chef asks; your kitchen runs it.", "Claude writes “use the weather tool for Paris.” Your code runs it and hands back the result."],
       ["Each appliance has a label.", "A tool definition: its name, what it does, what it needs. Claude reads the label to choose."]
     ],
+    guess: { q: "Can Claude check today’s weather by itself?", opts: [["Only if an app gives it a weather tool", true], ["Yes, it always knows", false], ["Never, under any setup", false]], reveal: "It needs a tool. Claude asks; the app runs the tool and hands back the result." },
     startLabel: "Watch an appliance switch on",
     example: {
       title: "“Should I bring an umbrella in Paris?”",

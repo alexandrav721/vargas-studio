@@ -9,6 +9,7 @@
       ["CLAUDE.md is the note on your fridge.", "Your rules and how-tos. Claude Code reads it at the start of every session."],
       ["Skills are recipe cards.", "Claude sees each card’s title, and pulls the full card only when the job needs it."]
     ],
+    guess: { q: "What’s different about Claude Code compared with chatting with Claude?", opts: [["It works directly in your project files", true], ["It’s a smarter model", false], ["It only writes in code", false]], reveal: "Claude Code works inside your project: it reads files, makes changes and runs commands." },
     startLabel: "Look around the kitchen",
     example: {
       title: "What lives in a Claude Code kitchen.",

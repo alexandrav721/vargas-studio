@@ -9,6 +9,7 @@
       ["Nothing gets trained.", "Your documents are just placed in each request. Change a page, and the next answer uses the new one."],
       ["The binder is indexed by meaning.", "Embeddings turn text into numbers, so “refund” can find a page that says “money back.”"]
     ],
+    guess: { q: "A help bot answers from a shop’s policy pages. Was Claude trained on them?", opts: [["No, the right page is looked up and pasted in", true], ["Yes, the shop trained it overnight", false], ["Claude already knew the policy", false]], reveal: "No training. The right page is fetched and placed in front of Claude. That’s RAG." },
     startLabel: "Watch a page get pulled",
     example: {
       title: "“Can I return shoes after 40 days?”",

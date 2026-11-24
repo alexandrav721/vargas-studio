@@ -9,6 +9,7 @@
       ["It’s an LLM: a large language model.", "It cooks by predicting the next piece of text, one piece at a time, very well."],
       ["Your order is a prompt.", "Everything the chef can see sits on one counter: the context window."]
     ],
+    guess: { q: "How does Claude write an answer?", opts: [["It predicts the next piece of text, again and again", true], ["It looks the answer up in a giant database", false], ["A person types it behind the scenes", false]], reveal: "It predicts the next piece of text. That’s what a large language model does." },
     startLabel: "Look inside the kitchen",
     example: {
       title: "One order, seen from the kitchen.",

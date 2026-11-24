@@ -9,6 +9,7 @@
       ["“It looked fine” is a vibe check.", "A change that fixes one dish can quietly ruin three others. Only a test set catches that."],
       ["Graders do the tasting.", "Code checks exact things. Another model (LLM-as-judge) scores fuzzy things against a checklist. People check the judge."]
     ],
+    guess: { q: "You change your bot’s prompt. How do you know it got better?", opts: [["Re-run the same test questions and compare scores", true], ["Try one question and see if it looks good", false], ["Ask Claude if it’s better", false]], reveal: "Builders re-run a fixed set of test questions with a scorecard. That’s an eval." },
     startLabel: "Watch a taste test",
     example: {
       title: "A bakery bot, scored before and after a change.",
