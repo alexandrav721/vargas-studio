@@ -14,6 +14,9 @@
       w.res = ok ? "ok" : "miss";
       w.last = d; s[term] = w; write(s); return M.known(term);
     },
+    touch: function (terms) { var s = read(), d = today(), ch = 0; terms.forEach(function (t) { if (!s[t]) { s[t] = { okDays: [], miss: 0, last: d, res: "new" }; ch = 1; } }); if (ch) write(s); },
+    lastDay: function () { var s = read(), mx = ""; Object.keys(s).forEach(function (k) { if (s[k].last && s[k].last > mx) mx = s[k].last; }); return mx; },
+    today: today,
     known: function (term) { var w = read()[term]; return !!(w && w.okDays.length >= 2 && w.res !== "miss"); },
     seen: function (term) { return !!read()[term]; },
     knownCount: function (terms) { return terms.filter(M.known).length; },

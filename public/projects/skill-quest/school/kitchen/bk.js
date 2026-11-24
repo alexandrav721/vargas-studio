@@ -193,7 +193,8 @@ function rec(t, ok) { if (t && window.BKM) window.BKM.record(t, ok); }
             todo.forEach(function (t) {
               var w = byName[t], m = /^(Large language model|Retrieval-augmented generation|Model Context Protocol): /.test(w[2]) ? w[2].slice(w[2].indexOf(": ") + 2) : w[2];
               var others = L.terms.filter(function (o) { return o !== t && byName[o]; }).sort(function () { return Math.random() - 0.5; }).slice(0, 2);
-              L.quiz.push({ term: t, q: "Which word means: " + esc(m), a: [t].concat(others).map(esc), ok: 0, why: "Right. " + esc(t) + ": " + esc(w[1].charAt(0).toLowerCase() + w[1].slice(1)) + "." });
+              var stem = t.toLowerCase().split(/[^a-z]+/).filter(function (x) { return x.length > 3; })[0] || t.toLowerCase(); var give = m.toLowerCase().indexOf(stem.slice(0, Math.max(4, stem.length - 2))) >= 0;
+              L.quiz.push({ term: t, q: give ? "In the kitchen, which word is “" + esc(w[1]) + "”?" : "Which word means: " + esc(m), a: [t].concat(others).map(esc), ok: 0, why: "Right. " + esc(t) + ": " + esc(w[1].charAt(0).toLowerCase() + w[1].slice(1)) + "." });
             });
           }
           var Q = L.quiz.slice(0, 2).concat(L.quiz.slice(2).filter(function (x) { return x.q.indexOf("Which word means") === 0; }).slice(0, 1).concat(L.quiz.slice(2)).slice(0, 1)).map(function (x) { var idx = x.a.map(function (_, j) { return [Math.random(), j]; }).sort(function (a, b) { return a[0] - b[0]; }).map(function (p) { return p[1]; }); return { q: x.q, why: x.why, term: x.term, a: idx.map(function (j) { return x.a[j]; }), ok: idx.indexOf(x.ok) }; }), qi = 0, first = 0;
@@ -219,6 +220,7 @@ function rec(t, ok) { if (t && window.BKM) window.BKM.record(t, ok); }
         }
 
         /* the stamp */
+        if (window.BKM) window.BKM.touch(L.terms.filter(function (t) { return taught().indexOf(t) >= 0; }));
         var first = BK.mark(L.id), have = read(), count = TRACK.filter(function (t) { return have[t.id]; }).length, nxt = TRACK[L.n];
         var all = count === TRACK.length;
         app.innerHTML = '<section class="step">' +

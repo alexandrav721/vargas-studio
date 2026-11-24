@@ -87,8 +87,13 @@ document.addEventListener("DOMContentLoaded", function () {
     : '<a class="btn ghost" href="lesson-10.html">Redo graduation</a>';
   var TT = BK.taught(), KN = window.BKM ? BKM.knownCount(TT) : 0, DU = window.BKM ? BKM.due(BK.pool()).length : 0;
   var ST = BK.pool().length;
-  document.getElementById("wk").innerHTML = (ST ? "<b>" + (KN ? "You know " + KN + (KN === 1 ? " word" : " words") + " for good" : ST + " words started") + ".</b> " + (KN ? "" : "Get each right on 2 different days to lock it in. ") : "") + (DU ? '<a class="btn ghost" href="challenge.html?review=1">Practice ' + DU + (DU === 1 ? " word" : " words") + " (2 min)</a>" : (ST ? "Nothing due today. " : "")) + (ST && !DU ? '<a class="btn ghost" href="challenge.html?n=5">1-minute practice</a>' : "") + (window.BKM && BKM.streak() > 1 ? '<span class="streak">' + BKM.streak() + " days in a row. Nice.</span>" : "");
-  if (n) document.getElementById("sum").textContent = n + " of 10 stamps." + (n === 10 ? " Passport complete. You speak builder now." : " Keep cooking.");
+  document.getElementById("wk").innerHTML = (ST ? "<b>" + (KN ? "You know " + KN + (KN === 1 ? " word" : " words") + " for good" : ST + " words started") + ".</b> " + (KN ? "" : "Get each right on 2 different days to lock it in. ") : "") + (DU ? '<a class="btn ghost" href="challenge.html?review=1">Practice ' + Math.min(DU, 15) + (DU === 1 ? " word" : " words") + (Math.min(DU, 15) <= 8 ? " (2 min)" : " (4 min)") + "</a>" : (ST ? "Nothing due today. " : "")) + (ST && !DU ? '<a class="btn ghost" href="challenge.html?n=5">1-minute practice</a>' : "") + (window.BKM && BKM.streak() > 1 ? '<span class="streak">' + BKM.streak() + " days in a row. Nice.</span>" : "");
+  var lastD = T.map(function (l) { return done[l.id] || ""; }).sort().pop() || "", lastL = T.filter(function (l) { return done[l.id]; }).pop();
+  var back = n && window.BKM && (window.BKM.lastDay() || lastD) < window.BKM.today(), sk = window.BKM ? BKM.streak() : 0;
+  if (n) document.getElementById("sum").textContent = n === 10 ? "Passport complete. You know the builder words now." : back ? "Welcome back." + (lastL ? " Last time you finished Lesson " + lastL.n + ", " + lastL.short.toLowerCase() + "." : "") + (sk > 1 ? " " + sk + " days in a row." : "") : n + " of 10 stamps.";
+  if (back && DU && nextL) document.getElementById("cta").innerHTML = '<a class="btn" href="challenge.html?review=1&then=' + nextL.n + '">Start: ' + Math.min(DU, 15) + "-word review, then Lesson " + nextL.n + '</a><a class="btn ghost" href="' + nextL.href + '">Skip to Lesson ' + nextL.n + "</a>";
+  if (back && DU) { var wb = document.querySelector("#wk .btn"); if (wb) wb.remove(); }
+  if (back && sk > 1) { var ss = document.querySelector("#wk .streak"); if (ss) ss.remove(); }
   var stations = [
     ["The chef", "What the model is, and how apps order from it.", [1, 2, 3]],
     ["The equipment", "How Claude acts and reaches your stuff.", [4, 5, 6]],
