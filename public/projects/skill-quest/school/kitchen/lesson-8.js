@@ -23,7 +23,7 @@
     },
     build: {
       title: "Your turn. Write your fridge note.",
-      lead: "Pick a project and your rules. Your ticket asks Claude to turn them into a real CLAUDE.md.",
+      lead: "Pick a project and your rules. Your ticket has Claude Code write a real CLAUDE.md and a small skill.",
       state: { proj: "a small website", rules: ["Explain changes in plain words", "Ask before deleting anything"] },
       controls: function (s, esc) {
         var proj = ["a small website", "a phone app", "a spreadsheet script", "a school project"];
@@ -33,9 +33,12 @@
       },
       head: "ORDER #B08", right: "CLAUDE.md", foot: "Paste it into Claude Code, or open Claude",
       text: function (s) {
-        return "Write a short CLAUDE.md for " + s.proj + ", under 20 lines, with these rules:\n" +
-          (s.rules.length ? s.rules.map(function (r) { return "- " + r; }).join("\n") : "- (add your rules)") +
-          "\nThen tell me: which of these should be a hook or a permission setting instead (because it must always hold), and one skill this project could use.";
+        return "(Paste this into Claude Code, in an empty practice folder. If you only have the Claude app, paste it there and it will show you the files instead.)\n\n" +
+          "Set up " + s.proj + " for working with you:\n" +
+          "1. Create CLAUDE.md (under 20 lines) with these rules:\n" +
+          (s.rules.length ? s.rules.map(function (r) { return "   - " + r; }).join("\n") : "   - (add your rules)") +
+          "\n2. Create one small skill at .claude/skills/plain-words/SKILL.md that rewrites any text in plain words (name and one-line description at the top).\n" +
+          "3. Show me both files, then tell me which rule should be a hook or a permission rule instead, because it must always hold.";
       },
       vendor: ["Claude Code to build our website or app", "how changes are reviewed and saved, what it's allowed to touch, and how we undo a bad change"], claude: "Open in Claude", done: "Done →"
     },

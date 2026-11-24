@@ -16,7 +16,7 @@
       html:
         '<p class="label">A bakery’s helper <span class="sample">Sample plan</span></p>' +
         '<div class="ticket"><div class="th"><span>KITCHEN PLAN</span><span>architecture</span></div>' +
-        'Chef (model): Sonnet<br>Window (API): website chat<br>House rules (system prompt): bakery voice, short<br>Appliance (tool): check_order_status<br>Outlet (MCP): Google Calendar<br>Binder: 8-page menu, pasted in (cached when busy)<br>Agent? No, a workflow<br>Taste test: 25 real questions<br>Guardrails: refunds need a person' +
+        'Chef (model): Sonnet<br>Order window (API): your site sends each chat<br>House rules (system prompt): bakery voice, short<br>Appliance (tool): check_order_status<br>Outlet (MCP): Google Calendar<br>Binder: 8-page menu, pasted in (cached when busy)<br>Agent? No, a workflow<br>Taste test: 25 real questions<br>Guardrails: refunds need a person' +
         '<div class="tf">Simplest kitchen that works</div></div>',
       next: "Your turn →"
     },

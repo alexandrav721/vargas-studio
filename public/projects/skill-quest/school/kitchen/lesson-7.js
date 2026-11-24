@@ -63,9 +63,9 @@
     },
     quiz: [
       { term: "Agent loop", q: "What’s the agent loop?", a: ["Think, use a tool, check the result, repeat", "Running the same fixed steps every time", "Asking the same question twice"], ok: 0, why: "Right. It keeps going until the job is done or it hits a limit." },
+      { term: "Human in the loop", q: "Your agent drafted 40 emails to customers. What should happen next?", a: ["A person checks and approves before they send", "Send them all, since agents check their own work", "Let a second agent read them, then send them all"], ok: 0, why: "Right. Anything that sends, spends, books or deletes gets a person first." },
       { term: "Tool use", q: "Recall from Lesson 4: what does an agent use to act?", a: ["Tools", "A bigger context window", "Its system prompt alone"], ok: 0, why: "Right. No tools, no actions. Agents are tools in a loop." },
-      {q: "From Lesson 4: what’s a tool definition?", a: ["The label: name, what it does, what it needs", "The tool’s result", "A list of every app Claude can use"], ok: 0, why: "Right. Claude reads the label to choose.", term: "Tool definition"},
-      { term: "Human in the loop", q: "Your agent drafted 40 emails to customers. What should happen next?", a: ["A person checks and approves before they send", "Send them all, since agents check their own work", "Let a second agent read them, then send them all"], ok: 0, why: "Right. Anything that sends, spends, books or deletes gets a person first." }
+      {q: "From Lesson 4: what’s a tool definition?", a: ["The label: name, what it does, what it needs", "The tool’s result", "A list of every app Claude can use"], ok: 0, why: "Right. Claude reads the label to choose.", term: "Tool definition"}
     ],
     say: "An agent picks its own steps in a loop. Start with one request, and keep a person on risky actions.",
     keep: "Questions to ask anyone selling an agent, and a ticket that sorts a real job.",

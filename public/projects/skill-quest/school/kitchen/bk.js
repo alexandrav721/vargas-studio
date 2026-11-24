@@ -170,6 +170,7 @@ function rec(t, ok) { if (t && window.BKM) window.BKM.record(t, ok); }
               if (b.dataset.multi) { var arr = state[k], i = arr.indexOf(v); if (i >= 0) arr.splice(i, 1); else arr.push(v); b.setAttribute("aria-pressed", String(i < 0)); draw(i < 0 ? v : null); }
               else { state[k] = v; app.querySelectorAll('[data-set="' + k + '"]').forEach(function (x) { x.setAttribute("aria-pressed", String(x === b)); }); draw(v); }
               play("tick", 1);
+              var tk = document.getElementById("ticket"); if (tk && k !== "mode") { var r = tk.getBoundingClientRect(); if (r.top > window.innerHeight - 80) tk.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "nearest" }); }
             };
           });
           app.querySelectorAll("[data-in]").forEach(function (inp) { inp.oninput = function () { state[inp.dataset.in] = inp.value; draw(); }; });
