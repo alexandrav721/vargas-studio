@@ -1,0 +1,48 @@
+/* AI Made EZ family puzzle book. Uses letter.css (question card) and calendar.css (word list, page flipper, print rules).
+   Puzzle letters use Atkinson Hyperlegible, a typeface made for readers with low vision. Each page is a real 8.5 x 11 sheet. */
+.ppage{position:absolute;top:0;left:0;width:816px;height:1056px;transform-origin:0 0;background:#fff;color:#1d1b18;box-shadow:0 1px 3px rgba(0,0,0,.12),0 12px 30px -12px rgba(40,30,20,.3);padding:56px 60px;display:flex;flex-direction:column;gap:18px;overflow:hidden;font-family:"Atkinson Hyperlegible",system-ui,sans-serif}
+.ppage h1{font:700 40px/1.1 var(--hf);color:var(--m);margin:0;text-wrap:balance}
+.ppage .sub{font-size:20px;color:#55514a;margin-top:-8px}
+.ppage .pn{position:absolute;bottom:26px;left:0;right:0;text-align:center;font-size:15px;color:#8a857c}
+/* word search */
+.ws{display:grid;margin:0 auto;border:3px solid var(--m);border-radius:8px;padding:8px;background:#fff}
+.ws span{display:grid;place-items:center;font:700 var(--fs,30px)/1 "Atkinson Hyperlegible",system-ui,sans-serif;width:var(--cs,44px);height:var(--cs,44px)}
+.ws span.hl{background:var(--t);color:var(--m);border-radius:50%}
+.wlist{display:grid;grid-template-columns:repeat(3,1fr);gap:6px 18px;font-size:22px}
+.wlist span::before{content:"";display:inline-block;width:16px;height:16px;border:2px solid #8a857c;border-radius:3px;margin-right:10px;vertical-align:-2px}
+/* crossword */
+.cw{display:grid;margin:0 auto;gap:0}
+.cw i{position:relative;width:var(--cs,40px);height:var(--cs,40px);font-style:normal}
+.cw i.w{border:2px solid #2a2824;margin:-1px 0 0 -1px;background:#fff}
+.cw i b{position:absolute;top:2px;left:4px;font:700 13px/1 "Atkinson Hyperlegible",sans-serif}
+.cw i em{display:grid;place-items:center;height:100%;font:700 calc(var(--cs,40px) * .55)/1 "Atkinson Hyperlegible",sans-serif;font-style:normal;color:var(--m)}
+.clues{display:grid;grid-template-columns:1fr 1fr;gap:24px;font-size:19px;line-height:1.35}
+.clues h2{font:700 22px var(--hf);color:var(--m);margin:0 0 6px}
+.clues p{margin:0 0 6px}
+/* scramble */
+.scr{display:grid;gap:16px;font-size:24px}
+.scr div{display:grid;grid-template-columns:200px 1fr;gap:16px;align-items:end}
+.scr b{font:700 30px/1 "Atkinson Hyperlegible",sans-serif;letter-spacing:.18em;color:var(--m)}
+.scr span{border-bottom:2px solid #8a857c;min-height:34px;font-size:17px;color:#6d6860;padding-bottom:2px}
+/* cover */
+.ppage.cover{justify-content:center;align-items:center;text-align:center;gap:26px}
+.ppage.cover img{width:460px;height:460px;object-fit:cover;border-radius:50%;border:10px solid var(--t)}
+.ppage.cover .big{font:700 64px/1.05 var(--hf);color:var(--m);text-wrap:balance}
+.ppage.cover .from{font:600 44px/1 "Caveat",cursive;color:#3d3a35}
+.ppage.cover .kind{font-size:20px;letter-spacing:.14em;text-transform:uppercase;color:#6d6860}
+/* answers */
+.keys{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
+.keys h2{font:700 20px var(--hf);color:var(--m);margin:0 0 6px}
+.ppage.key .ws{--cs:22px;--fs:14px;padding:4px;border-width:2px}
+.ppage.key .cw{--cs:22px}
+.ppage.key .cw i b{display:none}
+.ppage.key .scr{font-size:17px;gap:4px}
+.ppage.key .scr p{margin:0}
+.ppage.key .scr b{font:700 17px/1.3 "Atkinson Hyperlegible",sans-serif;letter-spacing:0;color:var(--m)}
+/* looks */
+.ppage.l-classic{--hf:"Fraunces",Georgia,serif;--m:#7a2e2e;--t:#f6e7e3}
+.ppage.l-garden{--hf:"Fraunces",Georgia,serif;--m:#2f6b4f;--t:#e4f1ea}
+.ppage.l-bold{--hf:"Bricolage Grotesque",system-ui,sans-serif;--m:#1e3557;--t:#e5ecf6}
+@media print{
+  #printall .ppage{position:relative;transform:none;box-shadow:none;width:8.5in;height:11in;break-after:page;page-break-after:always;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}

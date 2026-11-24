@@ -179,3 +179,9 @@ body{overflow-x:hidden}
 .mini.cal i b{grid-column:1/-1;font:800 15px var(--display);color:#2f6b4f;border-bottom:2px solid #2f6b4f;margin-bottom:3px}
 .mini.cal s{display:block;height:22px;border:1px solid #e7e1d6;text-decoration:none;font:700 7.5px/1.1 var(--text);color:#2f6b4f;padding:2px;overflow:hidden}
 .mini.cal s.y{background:rgba(47,107,79,.1)}
+
+/* hub: puzzle book card (a tiny word search) */
+.mini.pz{background:var(--track);place-items:center}
+.mini.pz i{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;background:#fff;padding:8px;border:2px solid #2f6b4f;border-radius:6px;font-style:normal;width:min(100%,230px)}
+.mini.pz s{text-decoration:none;font:700 15px/1.5 var(--text);color:#1d1b18;text-align:center}
+.mini.pz s:nth-child(-n+5){background:#e4f1ea;color:#2f6b4f;border-radius:50%}
