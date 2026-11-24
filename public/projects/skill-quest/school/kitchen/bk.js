@@ -128,16 +128,16 @@ function rec(t, ok) { if (t && window.BKM) window.BKM.record(t, ok); }
           "<h1>" + esc(L.title) + "</h1>" +
           (L.guess ? '<p class="fb ' + (L.guess.opts[guessed][1] ? "good\">Good guess. " : "try\">Not quite. ") + L.guess.reveal + "</p>" : "") +
           ((window.BK_DIAGRAMS && window.BK_DIAGRAMS[L.n]) || '<div class="teaser" aria-hidden="true">' + ticket(L.teaser[0], L.teaser[1], L.teaser[2], L.teaser[3]) + "</div>") +
-          '<ul class="lines">' + L.lines.slice(0, 2).map(function (x) { return "<li><b>" + x[0] + "</b>" + x[1] + "</li>"; }).join("") + "</ul>" +
+          '<ul class="lines">' + L.lines.slice(0, 1).map(function (x) { return "<li><b>" + x[0] + "</b>" + x[1] + "</li>"; }).join("") + "</ul>" +
           '<p class="label" style="margin-top:16px">Words you’ll know by the end</p>' + termChips(L.terms) +
           nextBtn(L.startLabel || "Show me") +
           '<p class="small">Doing this with someone? Tap "Bigger text" at the top.</p>');
 
-        if (step === 1) return show("<h2>" + esc(L.example.title) + "</h2>" + (L.lines[2] ? '<ul class="lines"><li><b>' + L.lines[2][0] + "</b>" + L.lines[2][1] + "</li></ul>" : "") + L.example.html + (L.example.more ? '<details class="more"><summary>For builders: a bit more detail</summary>' + L.example.more + "</details>" : "") + nextBtn(L.example.next || "Now you try"));
+        if (step === 1) return show("<h2>" + esc(L.example.title) + "</h2>" + (L.lines.length > 1 ? '<ul class="lines">' + L.lines.slice(1).map(function (x) { return "<li><b>" + x[0] + "</b>" + x[1] + "</li>"; }).join("") + "</ul>" : "") + L.example.html + (L.example.more ? '<details class="more"><summary>For builders: a bit more detail</summary>' + L.example.more + "</details>" : "") + nextBtn(L.example.next || "Now you try"));
 
         if (step === 2) {
           var B = L.build;
-          if (B.vendor && !state.mode) { var pref = null; try { pref = localStorage.getItem("smez-builders-mode"); } catch (e) {} state.mode = pref === "make" || !(window.BK_VENDOR && window.BK_VENDOR[L.n]) ? "make" : "vendor"; state.aud = "business"; }
+          if (B.vendor && !state.mode) { var pref = null; try { pref = localStorage.getItem("smez-builders-mode"); } catch (e) {} state.mode = pref === "vendor" && window.BK_VENDOR && window.BK_VENDOR[L.n] ? "vendor" : "make"; state.aud = "business"; }
           var VQ = window.BK_VENDOR && window.BK_VENDOR[L.n];
           var vqList = function (s) { return VQ ? VQ.q.concat(VQ[s.aud] ? [VQ[s.aud]] : []) : []; };
           var vqText = function (s) { return "Questions for the vendor (" + B.vendor[0] + ")\n\n" + vqList(s).map(function (x, i) { return (i + 1) + ". " + x[0] + "\n   Good answer: " + x[1] + "\n   Red flag: " + x[2]; }).join("\n") + "\n\nFrom AI Made EZ, Builder’s Kitchen"; };
@@ -147,16 +147,16 @@ function rec(t, ok) { if (t && window.BKM) window.BKM.record(t, ok); }
               "Write 5 short questions I should ask them, in plain words. For each: what a good answer sounds like, and a red-flag answer.\n" +
               "Make sure the questions cover: " + B.vendor[1] + "." + (s.aud === "school" ? "\nWe're a school district: include student data and privacy." : s.aud === "health" ? "\nWe're a hospital or clinic: include patient data, approvals and audit trails." : "");
           };
-          var modes = B.vendor ? '<div class="fridge modes" role="group" aria-label="What to show"><button type="button" class="chip" data-set="mode" data-v="vendor" aria-pressed="' + (state.mode === "vendor") + '">What to ask</button><button type="button" class="chip" data-set="mode" data-v="make" aria-pressed="' + (state.mode !== "vendor") + '">Try it in Claude</button></div>' : "";
+          var modes = B.vendor ? '<div class="fridge modes" role="group" aria-label="What to show"><button type="button" class="chip" data-set="mode" data-v="make" aria-pressed="' + (state.mode !== "vendor") + '">Try it in Claude</button><button type="button" class="chip" data-set="mode" data-v="vendor" aria-pressed="' + (state.mode === "vendor") + '">What to ask a vendor</button></div>' : "";
           show("<h2>" + esc(B.title) + "</h2>" + (B.lead ? '<p class="muted">' + B.lead + "</p>" : "") + modes + '<div id="ctl"' + (state.mode === "vendor" ? " hidden" : "") + ">" + B.controls(state, esc) + "</div>" +
-            (VQ ? '<div id="vq"' + (state.mode === "vendor" ? "" : " hidden") + '><div class="fridge" role="group" aria-label="Who you are"><button type="button" class="chip" data-set="aud" data-v="business" aria-pressed="true">A business or nonprofit</button><button type="button" class="chip" data-set="aud" data-v="school" aria-pressed="false">A school</button><button type="button" class="chip" data-set="aud" data-v="health" aria-pressed="false">A hospital or clinic</button></div><ol class="vq" id="vqol"></ol><p class="small">A starting list, not legal advice. Schools and clinics: check with your privacy or compliance lead.</p><p class="label">Want them tailored? Your ticket for Claude:</p></div>' : "") +
+            (VQ ? '<div id="vq"' + (state.mode === "vendor" ? "" : " hidden") + '><div class="fridge" role="group" aria-label="Who you are"><button type="button" class="chip" data-set="aud" data-v="business" aria-pressed="true">A business or nonprofit</button><button type="button" class="chip" data-set="aud" data-v="school" aria-pressed="false">A school</button><button type="button" class="chip" data-set="aud" data-v="health" aria-pressed="false">A hospital or clinic</button></div><ol class="vq" id="vqol"></ol><p class="small">Tap a question for the good answer and the red flag. A starting list, not legal advice. Schools and clinics: check with your privacy or compliance lead.</p><p class="label">Want them tailored? Your ticket for Claude:</p></div>' : "") +
             '<p class="label">' + esc(B.ticketLabel || "Your ticket") + '</p><div id="ticket"></div>' +
             '<div class="btns">' + (B.claude ? '<a class="btn" id="open" target="_blank" rel="noopener">' + esc(B.claude) + "</a>" : "") + '<button class="btn ' + (B.claude ? "ghost" : "") + '" id="copy" type="button">' + esc(B.copyLabel || "Copy my ticket") + "</button></div>" +
             (B.after ? '<p class="small">' + B.after + "</p>" : "") +
             nextBtn(B.done || "Done →", true).replace('class="btns"', 'class="btns done-row"'));
           var draw = function (added) {
             var text = T(state), vend = state.mode === "vendor"; var h2 = app.querySelector(".step h2"), ld = app.querySelector(".step > p.muted"); if (h2) h2.textContent = vend ? "Your turn. Questions to ask a vendor." : B.title; if (ld) ld.hidden = vend; var c = document.getElementById("ctl"); if (c) c.hidden = vend;
-            var vq = document.getElementById("vq"); if (vq) { vq.hidden = !vend; document.getElementById("vqol").innerHTML = vqList(state).map(function (x) { return "<li><b>" + esc(x[0]) + '</b><span class="good">Good: ' + esc(x[1]) + '</span><span class="red">Red flag: ' + esc(x[2]) + "</span></li>"; }).join(""); }
+            var vq = document.getElementById("vq"); if (vq) { vq.hidden = !vend; document.getElementById("vqol").innerHTML = vqList(state).map(function (x) { return "<li><details><summary><b>" + esc(x[0]) + '</b></summary><span class="good">Good: ' + esc(x[1]) + '</span><span class="red">Red flag: ' + esc(x[2]) + "</span></details></li>"; }).join(""); }
             var cp = document.getElementById("copy"); if (cp) cp.textContent = vend && VQ ? "Copy the questions" : (B.copyLabel || "Copy my ticket");
             var body = esc(text).replace(/\n/g, "<br>");
             if (added) body = body.replace(esc(added), '<span class="add">' + esc(added) + "</span>");
@@ -190,28 +190,32 @@ function rec(t, ok) { if (t && window.BKM) window.BKM.record(t, ok); }
             L._gen = 1;
             var have = L.quiz.map(function (x) { return x.term; }).concat(L.game.type === "match" ? L.game.pairs.map(function (p) { return p[0]; }) : []);
             var W = window.BK_WORDS, byName = {}; W.forEach(function (w) { byName[w[0]] = w; });
-            var todo = L.terms.filter(function (t) { return byName[t] && have.indexOf(t) < 0; }).sort(function () { return Math.random() - 0.5; }).slice(0, 3);
+            var todo = L.terms.filter(function (t) { return byName[t] && have.indexOf(t) < 0; }).sort(function () { return Math.random() - 0.5; }).slice(0, Math.max(1, 5 - L.quiz.length));
             todo.forEach(function (t) {
               var w = byName[t], m = /^(Large language model|Retrieval-augmented generation|Model Context Protocol): /.test(w[2]) ? w[2].slice(w[2].indexOf(": ") + 2) : w[2];
               var others = L.terms.filter(function (o) { return o !== t && byName[o]; }).sort(function () { return Math.random() - 0.5; }).slice(0, 2);
               L.quiz.push({ term: t, q: "Which word means: " + esc(m), a: [t].concat(others).map(esc), ok: 0, why: "Right. " + esc(t) + ": " + esc(w[1].charAt(0).toLowerCase() + w[1].slice(1)) + "." });
             });
           }
-          var Q = L.quiz.map(function (x) { var idx = x.a.map(function (_, j) { return [Math.random(), j]; }).sort(function (a, b) { return a[0] - b[0]; }).map(function (p) { return p[1]; }); return { q: x.q, why: x.why, term: x.term, a: idx.map(function (j) { return x.a[j]; }), ok: idx.indexOf(x.ok) }; }), got = 0, answered = {}, tried = {}, first = 0;
-          show("<h2>Quick questions.</h2><p class=\"muted\">Your first tap counts toward the words you know.</p>" + Q.map(function (x, i) {
-            return '<div style="margin:18px 0"><p><b>' + (i + 1) + ". " + x.q + '</b></p><ul class="claims">' + x.a.map(function (a, j) { return '<li><button type="button" data-q="' + i + '" data-a="' + j + '">' + a + "</button></li>"; }).join("") + '</ul><div id="q' + i + '" role="status" aria-live="polite"></div></div>';
-          }).join("") + '<div id="qdone"></div>');
-          app.querySelectorAll("[data-q]").forEach(function (b) {
-            b.onclick = function () {
-              var i = +b.dataset.q, x = Q[i];
-              if (answered[i]) return;
-              if (+b.dataset.a === x.ok) {
-                if (!tried[i]) { first++; rec(x.term, true); } tried[i] = 1; answered[i] = 1; got++; b.classList.add("right"); play("tick", got);
-                document.getElementById("q" + i).innerHTML = '<p class="fb good">' + x.why + "</p>";
-                if (got === Q.length) { document.getElementById("qdone").innerHTML = '<p class="fb good">' + first + " of " + Q.length + ' on the first try.</p><div class="btns"><button class="btn" id="finish" type="button">Get my stamp</button></div>'; document.getElementById("finish").onclick = function () { step = 6; render(); }; }
-              } else { if (!tried[i]) rec(x.term, false); tried[i] = 1; b.classList.add("wrong"); play("pick"); document.getElementById("q" + i).innerHTML = '<p class="fb try">Not quite. Hint: ' + String(x.why).replace(/^Right\.\s*/, "") + "</p>"; }
-            };
-          });
+          var Q = L.quiz.slice(0, 5).map(function (x) { var idx = x.a.map(function (_, j) { return [Math.random(), j]; }).sort(function (a, b) { return a[0] - b[0]; }).map(function (p) { return p[1]; }); return { q: x.q, why: x.why, term: x.term, a: idx.map(function (j) { return x.a[j]; }), ok: idx.indexOf(x.ok) }; }), qi = 0, first = 0;
+          var ask = function () {
+            var x = Q[qi], tried = false;
+            show('<p class="label">Question ' + (qi + 1) + " of " + Q.length + (qi === 0 ? " · your first tap counts" : "") + "</p><h2>" + x.q + '</h2><ul class="claims">' + x.a.map(function (a, j) { return '<li><button type="button" data-q="' + qi + '" data-a="' + j + '">' + a + "</button></li>"; }).join("") + '</ul><div id="qfb" role="status" aria-live="polite"></div>');
+            app.querySelectorAll("[data-q]").forEach(function (b) {
+              b.onclick = function () {
+                if (app.querySelector("#qnext,#finish")) return;
+                var fb = document.getElementById("qfb");
+                if (+b.dataset.a === x.ok) {
+                  if (!tried) { first++; rec(x.term, true); } tried = true; b.classList.add("right"); play("tick", qi + 1);
+                  var last = qi === Q.length - 1;
+                  fb.innerHTML = '<p class="fb good">' + x.why + "</p>" + (last ? '<p class="small">' + first + " of " + Q.length + " on the first try.</p>" : "") + '<div class="btns"><button class="btn" id="' + (last ? "finish" : "qnext") + '" type="button">' + (last ? "Get my stamp" : "Next question") + "</button></div>";
+                  var nb = document.getElementById(last ? "finish" : "qnext"); nb.focus();
+                  nb.onclick = function () { if (last) { step = 6; render(); } else { qi++; ask(); } };
+                } else { if (!tried) rec(x.term, false); tried = true; b.classList.add("wrong"); play("pick"); fb.innerHTML = '<p class="fb try">Not quite. Hint: ' + String(x.why).replace(/^Right\.\s*/, "") + "</p>"; }
+              };
+            });
+          };
+          ask();
           return;
         }
 

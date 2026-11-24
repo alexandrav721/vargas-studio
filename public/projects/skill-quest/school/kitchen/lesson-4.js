@@ -9,7 +9,7 @@
       ["The chef asks; the app runs it.", "Claude fills in a form: tool get_weather, city Paris. The app runs it and hands back the result."],
       ["Each appliance has a label.", "A tool definition: its name, what it does, what it needs. Claude reads the label to choose."]
     ],
-    guess: { q: "Can Claude check today’s weather by itself?", opts: [["Only if an app gives it a weather tool", true], ["Yes, Claude is always connected to live weather", false], ["Never, AI can’t use live information at all", false]], reveal: "It needs a tool. Claude asks; the app runs the tool and hands back the result." },
+    guess: {q: "With no tools at all, what can Claude do?", opts: [["Read and write text, and reason about it", true], ["Look up today’s prices on a website", false], ["Send an email from your account", false]], reveal: "On its own, Claude only reads and writes text. Anything else needs a tool."},
     startLabel: "Watch it work",
     example: {
       title: "“Should I bring an umbrella in Paris?”",
