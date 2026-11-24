@@ -233,11 +233,21 @@ function rec(t, ok) { if (t && window.BKM) window.BKM.record(t, ok); }
           "<p><b>You leave with:</b> " + L.keep + "</p></div>" +
           '<div class="btns"><button class="btn" id="save" type="button">' + esc(L.cardLabel || "Copy my card") + "</button>" +
           (nxt ? '<a class="btn ghost" href="' + nxt.href + '">Next lesson →</a>' : "") +
-          '<a class="btn ghost" href="./">My passport</a><button class="btn ghost" id="send" type="button">Send this lesson</button></div>' +
+          '<a class="btn ghost" href="./">My passport</a><button class="btn ghost" id="send" type="button">Send this lesson</button><button class="btn ghost" id="remind" type="button">Remind me tomorrow</button></div>' +
           (L.real ? '<p class="small">Go deeper: <a href="' + L.real[1] + '" target="_blank" rel="noopener">' + esc(L.real[0]) + "</a> (Anthropic’s own course).</p>" : "") + "</section>";
         window.scrollTo(0, 0);
         setTimeout(function () { play(all ? "win" : "stamp"); }, 260);
         document.getElementById("save").onclick = function () { copy(L.card, "Card copied"); };
+        document.getElementById("remind").onclick = function () {
+          /* a calendar file for tomorrow 9:00 local time; nothing leaves the device */
+          var t = new Date(); t.setDate(t.getDate() + 1); t.setHours(9, 0, 0, 0);
+          var e = new Date(t.getTime() + 5 * 60000), pad = function (n) { return ("0" + n).slice(-2); };
+          var f = function (d) { return d.getFullYear() + pad(d.getMonth() + 1) + pad(d.getDate()) + "T" + pad(d.getHours()) + pad(d.getMinutes()) + "00"; };
+          var url = location.href.replace(/[^/]*$/, "") + "challenge.html?review=1";
+          var ics = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//AI Made EZ//Builder's Kitchen//EN", "BEGIN:VEVENT", "UID:" + Date.now() + "@ai-made-ez", "DTSTAMP:" + f(new Date()), "DTSTART:" + f(t), "DTEND:" + f(e), "SUMMARY:2-minute AI words review", "DESCRIPTION:Lock in yesterday’s words: " + url, "URL:" + url, "BEGIN:VALARM", "TRIGGER:PT0M", "ACTION:DISPLAY", "DESCRIPTION:2-minute AI words review", "END:VALARM", "END:VEVENT", "END:VCALENDAR"].join("\r\n");
+          var a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([ics], { type: "text/calendar" })); a.download = "ai-words-review.ics"; document.body.appendChild(a); a.click(); a.remove();
+          School.toast("Open the file to add it to your calendar");
+        };
         document.getElementById("send").onclick = function () {
           var d = { title: "AI Made EZ · " + L.title, text: "A short lesson that made this make sense:", url: location.href };
           if (navigator.share) navigator.share(d).catch(function () {}); else copy(d.text + " " + d.url, "Link copied");
