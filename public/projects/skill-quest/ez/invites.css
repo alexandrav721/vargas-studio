@@ -1,0 +1,106 @@
+/* AI Made EZ invitations. Sits on top of ../school/school.css (fonts, colors, top bar, chips, buttons, toast).
+   Layout: card first on phones; on wide screens the conversation sits left and the card right. */
+body.inv{overflow-x:hidden;--guess:#9a5b00;--soft:#FBEFE9}
+.studio{max-width:1180px;margin:0 auto;padding:16px max(16px,env(safe-area-inset-right,0px)) 40px max(16px,env(safe-area-inset-left,0px));display:grid;gap:16px}
+@media (min-width:880px){.studio{grid-template-columns:minmax(0,390px) minmax(0,1fr);align-items:start}.studio .right{grid-column:2;grid-row:1;position:sticky;top:12px}.studio .left{grid-column:1;grid-row:1}}
+.box{background:var(--card);border:1px solid var(--line);border-radius:14px}
+.left{display:grid;gap:12px;min-width:0}
+.right{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;display:grid;gap:14px;min-width:0}
+.rhead{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;align-items:center}
+.rhead h1{font:800 22px/1.15 var(--display);letter-spacing:-.01em}
+/* chat */
+.chat{padding:14px;display:grid;gap:10px;max-height:min(440px,60vh);overflow-y:auto}
+.msg{max-width:94%;padding:9px 12px;border-radius:14px;line-height:1.4;font-size:.92em}
+.msg.ai{background:var(--track);border-top-left-radius:4px}
+.msg.me{background:var(--accent);color:#fff;justify-self:end;border-top-right-radius:4px}
+.msg .who{font:700 11px var(--text);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+.msg .chips{margin-top:8px}
+.msg .chip.skip{border-style:dashed;color:var(--muted)}
+.msg.typing{color:var(--muted);font-style:italic}
+.compose{display:flex;gap:8px;padding:10px;border-top:1px solid var(--line)}
+.compose input{flex:1;min-width:0;font:16px var(--text);padding:10px 12px;border:1px solid var(--line2);border-radius:10px;background:var(--paper);color:var(--ink)}
+.compose .btn{min-height:46px;padding:0 16px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+/* checklist */
+.plan{padding:14px}
+.plan h2{font:800 17px/1.2 var(--display)}
+.seg{display:flex;border:1px solid var(--line2);border-radius:10px;overflow:hidden;margin:10px 0}
+.seg button{flex:1;font:600 14px var(--text);background:var(--card);color:var(--ink);border:0;padding:8px 4px;cursor:pointer}
+.seg button+button{border-left:1px solid var(--line2)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:#fff}
+.seg small{display:block;font-weight:500;font-size:12px;opacity:.8}
+.qs{list-style:none;padding:0;display:grid;gap:6px}
+.qs li{display:grid;grid-template-columns:18px minmax(0,1fr) auto;gap:8px;align-items:center;font-size:15px}
+.dot{width:14px;height:14px;border-radius:50%;border:2px solid var(--line2)}
+.qs li.done .dot{background:var(--ok);border-color:var(--ok)}
+.qs li.guess .dot{border-color:var(--guess);background:linear-gradient(90deg,var(--guess) 50%,transparent 50%)}
+.qs li.now{font-weight:700}
+.qs li.now .dot{border-color:var(--accent)}
+.qs .val{font-size:13px;color:var(--muted);max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.meter{margin-top:12px;padding:10px 12px;border-radius:10px;background:var(--soft);font-size:15px}
+.meter b{font:800 20px var(--display);color:var(--accent)}
+.peek{margin-top:10px}
+.peek summary{cursor:pointer;font-weight:600;font-size:14px}
+.peek pre{white-space:pre-wrap;font:12.5px/1.5 var(--mono);background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:10px;margin-top:8px;max-height:240px;overflow:auto}
+.linkb{margin-top:10px;background:none;border:0;padding:0;color:var(--muted);font:600 14px var(--text);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+/* right side */
+.stage{display:grid;place-items:center;padding:4px 0}
+.versions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:640px){.versions{grid-template-columns:1fr}}
+.vcol{display:grid;gap:8px;justify-items:center}
+.vbar{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
+.vbar .btn{min-height:42px;padding:0 14px;font-size:15px}
+.heart[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+.locks{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:15px}
+.locks .chip[aria-pressed="true"]{background:var(--ok-bg);color:#14513f;border-color:var(--ok)}
+.actions{display:flex;flex-wrap:wrap;gap:8px}
+.actions .btn{min-height:46px;padding:0 16px;font-size:15px}
+.note{font-size:14px;color:var(--muted)}
+.sharp{padding:10px 12px;border-radius:10px;background:var(--soft);font-size:14px}
+.sharp b{font-family:var(--display)}
+.busy{opacity:.55;pointer-events:none}
+/* the card: paper, one fixed look per design */
+.card{position:relative;width:100%;max-width:340px;aspect-ratio:5/7;border-radius:6px;overflow:hidden;box-shadow:0 1px 2px rgba(0,0,0,.08),0 10px 26px rgba(30,25,20,.14);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:9% 8%;gap:3.5%;transition:background .4s;font-size:16px}
+.card.sq{aspect-ratio:1/1}.card.story{aspect-ratio:9/16;max-width:270px}
+.versions .card{max-width:250px;font-size:12px}
+.card .f.pop{animation:pop .45s ease}
+@keyframes pop{0%{transform:scale(.9);opacity:.2}100%{transform:none;opacity:1}}
+.card .g{text-decoration:underline dashed;text-underline-offset:3px;opacity:.8}
+.card .empty{opacity:.35}
+.card .ph{width:34%;aspect-ratio:1;border-radius:50%;object-fit:cover;border:3px solid currentColor;position:relative}
+.sA{background:var(--p0);color:var(--p1);font-family:"Fredoka",var(--text)}
+.sA::before{content:"";position:absolute;inset:0;background-image:radial-gradient(circle,var(--p2) 3px,transparent 3.5px),radial-gradient(circle,var(--p3) 2.5px,transparent 3px);background-size:46px 52px,38px 44px;background-position:6px 8px,22px 30px;opacity:.55;-webkit-mask:linear-gradient(#000 0 16%,transparent 28% 72%,#000 84%);mask:linear-gradient(#000 0 16%,transparent 28% 72%,#000 84%)}
+.sA>*{position:relative}
+.sA .k{font-weight:500;font-size:1.05em;letter-spacing:.03em}
+.sA .n{font-weight:700;font-size:2.6em;line-height:1}
+.sA .a{font-weight:700;font-size:1.25em;background:var(--p2);color:#fff;border-radius:999px;padding:.12em .8em}
+.sA .l{font-weight:500;font-size:1.02em}
+.sA .d{font-size:.98em;line-height:1.35}
+.sA .r{font-size:.84em;opacity:.9}
+.sB{background:var(--p0);color:var(--p1);font-family:"Fraunces",Georgia,serif;outline:2px solid var(--p2);outline-offset:-14px}
+.sB .k{font-style:italic;font-size:1.08em}
+.sB .n{font-weight:600;font-size:2.4em;line-height:1.05}
+.sB .a{font-style:italic;font-size:1.15em;color:var(--p2)}
+.sB .l{font-style:italic;font-size:1em}
+.sB .d{font-size:.96em;line-height:1.45}
+.sB .r{font-size:.82em;font-style:italic}
+.sC{background:var(--p0);color:var(--p1);font-family:"Archivo Black",var(--text);justify-content:flex-end;align-items:flex-start;text-align:left}
+.sC>*{position:relative}
+.sC .big{position:absolute;top:-5%;right:-6%;font-size:13em;line-height:1;color:var(--p2)}
+.sC .k{font-family:var(--text);font-weight:700;font-size:.85em;letter-spacing:.12em;text-transform:uppercase}
+.sC .n{font-size:2.2em;line-height:1}
+.sC .a{display:none}
+.sC .l{font-family:var(--text);font-weight:700;font-size:1em}
+.sC .d{font-family:var(--text);font-weight:600;font-size:.96em;line-height:1.4}
+.sC .r{font-family:var(--text);font-size:.82em;opacity:.9}
+.sC .ph{position:absolute;top:8%;left:8%;width:30%}
+@media (prefers-reduced-motion:reduce){.card .f.pop{animation:none}.card{transition:none}}
+/* print: just the card, 5x7 inches */
+@media print{
+  @page{size:5in 7in;margin:0}
+  body.inv>*:not(main),.left,.rhead,.sharp,.actions,.note,.locks{display:none!important}
+  .studio,.right{display:block;padding:0;margin:0;border:0;background:none}
+  .card{max-width:none;width:5in;height:7in;aspect-ratio:auto;border-radius:0;box-shadow:none;font-size:22px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+/* phone: while questions are asked, keep the card small so the chat stays in view */
+@media (max-width:879px){.stage.build .card{max-width:180px;font-size:10.5px;padding:8% 7%}.right{padding:12px;gap:8px}.rhead h1{font-size:18px}.stage.build+.note{display:none}.chat{max-height:none}}
