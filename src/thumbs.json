@@ -59,5 +59,10 @@
  "https://shelfpaid.pages.dev/landing/": "/thumbs/shelf-paid-landing.jpg",
  "/projects/lumen/deck.html": "/thumbs/lumen-deck.jpg",
  "/projects/loop/deck.html": "/thumbs/loop-deck.jpg",
- "/projects/weekline/v2/": "/thumbs/weekline-v2.jpg"
+ "/projects/weekline/v2/": "/thumbs/weekline-v2.jpg",
+ "/projects/skill-quest/ez/deck.html": "/thumbs/ai-made-ez-deck.jpg",
+ "/projects/skill-quest/school/": "/thumbs/ai-made-ez-school.jpg",
+ "/projects/skill-quest/school/kitchen/": "/thumbs/ai-made-ez-kitchen.jpg",
+ "/projects/skill-quest/ez/letter.html": "/thumbs/ai-made-ez-letter.jpg",
+ "/projects/skill-quest/school/kitchen/poster.html": "/thumbs/ai-made-ez-poster.jpg"
 }

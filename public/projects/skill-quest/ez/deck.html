@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Made EZ pitch deck</title>
+<meta name="description" content="AI Made EZ: everyday AI made easy. A 10-slide deck by Alexandra Vargas.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/site-bar.css" />
+<style>
+/* Same engine as the other studio decks: 1280x720 slides scaled to the window; phones stack the slides. Colors from AI Made EZ. */
+:root{--paper:#FBFAF7;--card:#fff;--ink:#151411;--muted:#5d5952;--line:#E4E0D7;--accent:#C7391F;--soft:#FBEFE9;--ok:#1F7A6B;
+  --display:"Bricolage Grotesque",system-ui,sans-serif;--text:"Schibsted Grotesk",system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#1d1b18;overflow:hidden}
+body{font-family:var(--text);color:var(--ink)}
+#deck{position:absolute;width:1280px;height:720px;left:50%;top:calc(50% + 24px);transform-origin:center}
+.slide{position:absolute;inset:0;background:var(--paper);padding:56px 72px 48px;display:none;flex-direction:column;overflow:hidden}
+.slide.on{display:flex}
+h1{font:800 104px/.95 var(--display);letter-spacing:-.03em}
+h2{font:800 58px/1.02 var(--display);letter-spacing:-.02em;max-width:22ch;margin-bottom:28px}
+h1 i,h2 i{font-style:normal;color:var(--accent)}
+p,li{font-size:23px;line-height:1.4}
+.muted{color:var(--muted)}
+.kick{font:600 15px var(--text);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:18px}
+.src{font:500 12.5px/1.5 var(--mono);color:var(--muted);margin-top:auto;padding-top:14px}
+.grid{display:grid;gap:22px}
+.stat b{display:block;font:800 64px/1 var(--display);color:var(--accent)}
+.stat span{font-size:19px;color:var(--muted)}
+.card{background:var(--card);border:1.5px solid var(--line);border-radius:18px;padding:22px}
+.shot{width:100%;height:100%;object-fit:cover;object-position:top;border-radius:14px;border:1.5px solid var(--line);display:block}
+.pic{display:grid;gap:8px}
+.pic img{height:300px}
+.pic b{font:700 19px var(--text)}
+.steps li{list-style:none;display:grid;grid-template-columns:48px 1fr;gap:14px;align-items:baseline;margin-bottom:16px}
+.steps li::before{content:counter(s);counter-increment:s;display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:var(--accent);color:#fff;font:800 20px var(--display)}
+.steps{counter-reset:s}
+table{border-collapse:collapse;width:100%;font-size:20px}
+th,td{border-bottom:1.5px solid var(--line);padding:12px;text-align:left}
+th{font:500 13px var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--muted);border-bottom:2px solid var(--ink)}
+td.us{font-weight:700;color:var(--ok)}
+.dark{background:var(--ink);color:var(--paper)}.dark .muted,.dark .src{color:#b9b3a8}.dark h2 i,.dark h1 i{color:#ff8a65}
+.money b{font:800 44px/1 var(--display)}
+#foot{position:fixed;left:0;right:0;bottom:8px;display:flex;justify-content:space-between;padding:0 18px;font:500 12px var(--mono);color:#b9b3a8}
+</style>
+</head>
+<body>
+<div id="deck">
+
+<section class="slide" aria-label="Title">
+  <p class="kick">AI Made EZ · by Alexandra Vargas</p>
+  <h1>Everyday AI,<br><i>made easy.</i></h1>
+  <p class="muted" style="margin-top:26px;max-width:30ch;font-size:28px">Answer a few big questions. Pick from 3 versions. Print it right the first time.</p>
+  <div class="grid" style="grid-template-columns:repeat(4,1fr);margin-top:auto;height:210px">
+    <img class="shot" src="/desk/new-invites.jpg" alt="Birthday invitations in 3 designs">
+    <img class="shot" src="/desk/new-letter.jpg" alt="A printed holiday letter">
+    <img class="shot" src="/desk/new-calendar.jpg" alt="A family birthday calendar page">
+    <img class="shot" src="/desk/new-puzzle.jpg" alt="A large-print family word search">
+  </div>
+</section>
+
+<section class="slide" aria-label="Problem">
+  <p class="kick">The problem</p>
+  <h2>People go to AI for everyday jobs, <i>then stall.</i></h2>
+  <div class="grid" style="grid-template-columns:1fr 1fr;align-items:start">
+    <div class="grid" style="grid-template-columns:1fr 1fr">
+      <div class="stat"><b>28%</b><span>of ChatGPT messages are writing help</span></div>
+      <div class="stat"><b>73%</b><span>of use is personal, not work</span></div>
+    </div>
+    <ul style="padding-left:22px;display:grid;gap:10px">
+      <li>They don't know what to ask.</li>
+      <li>Words inside AI pictures come out garbled.</li>
+      <li>Every fix redraws the whole thing.</li>
+      <li>It won't print at the right size.</li>
+    </ul>
+  </div>
+  <p class="src">OpenAI / NBER "How People Use ChatGPT" (Sept 2025): Writing 28.1% of messages; non-work use 73% (June 2025). Frustrations from forums, reviews and NN/g research, Nov 2026.</p>
+</section>
+
+<section class="slide" aria-label="Who">
+  <p class="kick">Who it's for first</p>
+  <h2>People who still love to <i>print.</i></h2>
+  <div class="grid" style="grid-template-columns:repeat(3,1fr)">
+    <div class="stat"><b>72%</b><span>of Boomers prefer printed holiday cards</span></div>
+    <div class="stat"><b>29% vs 13%</b><span>Boomers vs Gen Z who sent Christmas cards</span></div>
+    <div class="stat"><b>1 Oct 2026</b><span>Microsoft Publisher stopped working, with no replacement app named</span></div>
+  </div>
+  <p style="margin-top:30px;max-width:46ch">Grandparents, church and club volunteers, and the adult children who buy gifts for them.</p>
+  <p class="src">Vistaprint survey (late 2024) · YouGov (2025) · Microsoft support notice (2026) · AARP: 90% of people 50+ own a smartphone (2026).</p>
+</section>
+
+<section class="slide" aria-label="How it works">
+  <p class="kick">How it works</p>
+  <div class="grid" style="grid-template-columns:1.1fr 1fr;gap:44px;flex:1;min-height:0">
+    <div>
+      <h2 style="font-size:50px">We ask the questions. <i>You pick.</i></h2>
+      <ol class="steps">
+        <li><p>One big question at a time. Tap, type or speak.</p></li>
+        <li><p>"What I'll ask you": Quick, Good or Perfect.</p></li>
+        <li><p>Watch it build live. Pick 1 of 3 versions.</p></li>
+        <li><p>Change one thing. Print, save or copy.</p></li>
+      </ol>
+    </div>
+    <img class="shot" src="/desk/new-invites.jpg" alt="Three invitation designs to pick from" style="height:100%">
+  </div>
+</section>
+
+<section class="slide" aria-label="The makers">
+  <p class="kick">Live today</p>
+  <h2>Four makers, <i>ready to print.</i></h2>
+  <div class="grid" style="grid-template-columns:repeat(4,1fr)">
+    <div class="pic"><img class="shot" src="/desk/new-invites.jpg" alt=""><b>Birthday invitations</b></div>
+    <div class="pic"><img class="shot" src="/desk/new-letter.jpg" alt=""><b>Holiday letter</b></div>
+    <div class="pic"><img class="shot" src="/desk/new-calendar.jpg" alt=""><b>Family birthday calendar</b></div>
+    <div class="pic"><img class="shot" src="/desk/new-puzzle.jpg" alt=""><b>Large-print puzzle book</b></div>
+  </div>
+  <p class="muted" style="margin-top:20px">Plus meal, week, party and trip plans, and a planner with your name in it.</p>
+</section>
+
+<section class="slide" aria-label="Learn the words">
+  <p class="kick">And a way to learn</p>
+  <div class="grid" style="grid-template-columns:1fr 1fr;gap:44px;flex:1;min-height:0">
+    <div>
+      <h2 style="font-size:52px">Learn AI like <i>learning to cook.</i></h2>
+      <p>Two short courses. Level 2 teaches the words vendors use (API, MCP, agents, RAG) in 10 lessons of about 6 minutes, with a 77-word dictionary and the questions to ask before you buy AI.</p>
+    </div>
+    <img class="shot" src="/desk/new-kitchen.jpg" alt="The Level 2 course home" style="height:100%">
+  </div>
+</section>
+
+<section class="slide" aria-label="Different">
+  <p class="kick">Why not just use ChatGPT or Canva?</p>
+  <h2>Built for the job, <i>not the blank box.</i></h2>
+  <table>
+    <thead><tr><th></th><th>Chat box</th><th>Design app</th><th>AI Made EZ</th></tr></thead>
+    <tbody>
+      <tr><td>Knows what to ask</td><td>No</td><td>No</td><td class="us">Yes, one at a time</td></tr>
+      <tr><td>Names and dates spelled right</td><td>Often garbled in pictures</td><td>Yes</td><td class="us">Yes, real text</td></tr>
+      <tr><td>Prints right the first time</td><td>No</td><td>Sometimes</td><td class="us">Yes, sized to the page</td></tr>
+      <tr><td>Big text, easy taps</td><td>No</td><td>No</td><td class="us">Yes</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="slide" aria-label="Money">
+  <p class="kick">How it could make money (estimates)</p>
+  <h2>Free to print at home. <i>Pay to have it made.</i></h2>
+  <div class="grid money" style="grid-template-columns:repeat(3,1fr)">
+    <div class="card"><b>~$3</b><p>a mailed holiday letter</p><p class="muted">costs about $1.23 to print and mail</p></div>
+    <div class="card"><b>$29–39</b><p>a printed birthday calendar</p><p class="muted">costs about $12 to print</p></div>
+    <div class="card"><b>$19–29</b><p>a printed puzzle book</p><p class="muted">paperback from $8.26 to print</p></div>
+  </div>
+  <p class="src">Costs: Lob letter $1.226 (2026), Printful wall calendar ~$12.19 (2026), Lulu paperback from $8.26 (2026). Prices are estimates, not tested. Not charging yet.</p>
+</section>
+
+<section class="slide dark" aria-label="What's next">
+  <p class="kick" style="color:#ff8a65">What's next</p>
+  <h2>Prove it with <i>ten families.</i></h2>
+  <ol class="steps" style="max-width:900px">
+    <li><p>Turn on Claude's wording (one key) and watch ten grandparents use it.</p></li>
+    <li><p>Add "we'll mail it for you" for letters and calendars.</p></li>
+    <li><p>Next maker: a weekly church and club bulletin, for people Publisher left behind.</p></li>
+  </ol>
+  <p style="margin-top:auto;font:800 34px var(--display)">vargas-studio.pages.dev</p>
+</section>
+
+</div>
+<div id="foot"><span>AI Made EZ</span><span id="pg"></span></div>
+<script src="/site-bar.js" data-project="ai-made-ez" data-kind="piece" defer></script>
+<script>
+const slides=[...document.querySelectorAll('.slide')];let i=0;
+function show(n){i=Math.max(0,Math.min(slides.length-1,n));slides.forEach((s,k)=>s.classList.toggle('on',k===i));document.getElementById('pg').textContent=(i+1)+' / '+slides.length+'  ·  ← →'}
+function fit(){const s=Math.min(innerWidth/1280,(innerHeight-48)/720);document.getElementById('deck').style.transform=`translate(-50%,-50%) scale(${s})`}
+addEventListener('resize',fit);
+addEventListener('keydown',e=>{if(['ArrowRight',' ','PageDown'].includes(e.key))show(i+1);if(['ArrowLeft','PageUp'].includes(e.key))show(i-1)});
+addEventListener('click',e=>{if(innerWidth<=700||e.target.closest('iframe,a,.site-bar'))return;show(e.clientX>innerWidth/2?i+1:i-1)});
+let sx=null;addEventListener('touchstart',e=>{sx=e.touches[0].clientX},{passive:true});
+addEventListener('touchend',e=>{if(innerWidth<=700||sx===null)return;const d=e.changedTouches[0].clientX-sx;if(Math.abs(d)>50)show(d<0?i+1:i-1);sx=null});
+const p=new URLSearchParams(location.search).get('slide');show(p?p-1:0);fit();
+</script>
+<style>
+@media (max-width:700px){
+  html,body{overflow:auto;height:auto;background:var(--ink)}
+  #deck{position:static;transform:none!important;width:auto;height:auto}
+  .slide{display:flex!important;position:relative;inset:auto;padding:34px 20px 38px;border-bottom:6px solid var(--ink)}
+  h1{font-size:54px}h2,.slide h2[style]{font-size:34px!important;margin-bottom:20px;max-width:none}
+  p,li{font-size:17px}
+  .grid,.slide .grid[style]{grid-template-columns:1fr 1fr!important;gap:14px!important;height:auto!important}
+  .shot{height:200px!important}.pic img{height:180px}
+  .stat b{font-size:40px}.stat span{font-size:15px}
+  table{font-size:13px}th,td{padding:8px 5px}
+  .money b{font-size:30px}
+  #foot{display:none}
+}
+</style>
+</body>
+</html>

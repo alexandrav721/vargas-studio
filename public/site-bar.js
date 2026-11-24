@@ -8,12 +8,15 @@
   "use strict";
   var NAMES = {
     weekline: "Weekline", restitch: "Restitch", nostalgia: "Scrollback", scrolll: "Get Paid to Scroll",
-    loop: "Loop", "planner-book": "Planners", "habit-game": "Lumen", "skill-quest": "Skills Made EZ"
+    loop: "Loop", "planner-book": "Planners", "habit-game": "Lumen", "skill-quest": "Skills Made EZ",
+    "ai-made-ez": "AI Made EZ", "shelf-paid": "Shelf Paid"
   };
   var me = document.currentScript;
   var pid = me && me.getAttribute("data-project");
   var kind = (me && me.getAttribute("data-kind")) || "piece";
   if (!pid || !NAMES[pid]) return;
+  // inside an idea HQ (the deck shown in a frame), the HQ page already has the bar
+  try { if (window.self !== window.top) return; } catch (e) { return; }
 
   function build() {
     if (document.querySelector(".site-bar")) return;
