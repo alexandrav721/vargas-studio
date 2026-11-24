@@ -5,206 +5,383 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Weekline — investor deck</title>
   <meta name="description" content="Twelve-slide investor deck for Weekline, the NYC week planner. v2 app live, live NYC Parks feed, zero counted users. External numbers cited; not raising yet." />
+  <meta name="theme-color" content="#1A1511" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=Jost:wght@300..600&display=swap" rel="stylesheet" />
   <style>
+    /* Bodoni draws + ≈ < × as hairlines that vanish at slide sizes; borrow those few signs from a sturdy local sans */
+    @font-face { font-family: "Deck Signs"; src: local("Jost"), local("Futura"), local("Avenir Next"), local("Helvetica Neue"), local("Arial"), local("Roboto"), local("DejaVu Sans"); unicode-range: U+002B, U+003C, U+003E, U+00D7, U+2248, U+2264, U+2265; }
+    /* Weekline deck in "Golden Hour", the v2 app's look (v2/app.css, weekline.css):
+       limestone paper slides for data, dusk photo slides for moments, one sodium-gold accent.
+       Bodoni Moda for headlines, Jost for facts. 2px corners, hairline rules. */
     :root {
-      --wl-ink: #0a0a0b; --wl-asphalt: #141310; --wl-curb: #1f1c18; --wl-paper: #f6f1e6; --wl-concrete: #b7b0a4;
-      --wl-lime: #c8f542; --wl-cyan: #3de0ff; --wl-coral: #ff6b4a; --wl-line: rgba(246,241,230,0.16);
-      --wl-sheet-paper: #f7f2e6; --wl-sheet-ink: #171410; --wl-stamp: #1f6f58; --wl-sample: #7a4a00; --wl-editorial: #4a4740;
-      --wl-font-display: 'Bricolage Grotesque', 'Arial Narrow', sans-serif; --wl-font-body: 'Outfit', system-ui, sans-serif;
-      --wl-shadow-btn: 3px 3px 0 rgba(0,0,0,0.45); --wl-shadow-flyer: 4px 8px 0 rgba(0,0,0,0.35);
-      --wl-glow-a: rgba(200,245,66,0.14); --wl-glow-b: rgba(61,224,255,0.12); --wl-glow-c: rgba(255,107,74,0.10);
+      --paper: #F4EEE5; --paper-2: #EAE1D3; --card: #FBF8F3;
+      --ink: #16120E; --ink-2: #5E554B;
+      --rule: rgba(22,18,14,.14); --rule-2: rgba(22,18,14,.26);
+      --sun: #EFA937; --sun-deep: #B87414; --sun-text: #8A560C; --sun-wash: rgba(239,169,55,.32);
+      --dusk: #1A1511; --on-dusk: #EFE6DA; --on-dusk-2: #B3A694; --on-dusk-soft: rgba(239,230,218,.86);
+      --d-rule: rgba(239,230,218,.2); --d-rule-2: rgba(239,230,218,.36);
+      --live: #3F7D4E; --live-text: #346B42; --live-dark: #8FD3A0; --err: #8E2A14;
+      --serif: "Deck Signs", "Bodoni Moda", Didot, "Bodoni 72", serif;
+      --sans: "Jost", "Futura", "Avenir Next", sans-serif;
+      color-scheme: light;
     }
     * { box-sizing: border-box; }
-    html, body { margin: 0; height: 100%; background-color: #050506; color: var(--wl-paper); font-family: var(--wl-font-body); overflow: hidden; }
-    a { color: inherit; }
-    .studio-back { position: fixed; top: 10px; left: 10px; z-index: 9999; padding: 7px 12px; background: var(--wl-ink); color: var(--wl-paper); border: 1px solid var(--wl-line); font: 600 12px var(--wl-font-body); letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; box-shadow: var(--wl-shadow-btn); }
-    .studio-back:hover, .studio-back:focus-visible { border-color: var(--wl-lime); color: var(--wl-lime); }
-    .topnav { position: fixed; top: 10px; right: 12px; z-index: 60; display: flex; gap: 4px; align-items: center; font: 600 13px var(--wl-font-body); }
-    .topnav a { padding: 7px 10px; color: var(--wl-concrete); text-decoration: none; border: 1px solid transparent; }
-    .topnav a:hover { color: var(--wl-paper); border-color: var(--wl-line); }
-    .topnav a[aria-current] { color: var(--wl-ink); background: var(--wl-lime); }
-    .viewport { position: fixed; inset: 50px 0 56px 0; overflow: hidden; }
-    .deck { width: 1280px; height: 720px; position: absolute; left: 50%; top: 50%; transform-origin: center center; }
-    .slide { position: absolute; inset: 0; display: none; padding: 56px 72px 40px; overflow: hidden;
-      background: radial-gradient(900px 600px at 0% -10%, var(--wl-glow-a), transparent 60%), radial-gradient(700px 500px at 105% 110%, var(--wl-glow-b), transparent 55%), var(--wl-ink); }
-    .slide.on { display: flex; flex-direction: column; }
-    .kicker { font: 600 14px var(--wl-font-body); letter-spacing: 0.14em; text-transform: uppercase; color: var(--wl-lime); margin: 0 0 14px; }
-    h1, h2, h3 { font-family: var(--wl-font-display); font-weight: 800; letter-spacing: -0.03em; line-height: 0.95; margin: 0; }
-    h1 { font-size: 78px; max-width: 13ch; }
-    h2 { font-size: 54px; max-width: 22ch; }
-    h1 em, h2 em { font-style: normal; color: var(--wl-lime); }
+    html, body { margin: 0; height: 100%; background: #0E0B08; color: var(--ink); font-family: var(--sans); font-weight: 400; overflow: hidden; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-underline-offset: 3px; }
+    ::selection { background: var(--sun); color: var(--ink); }
+    :focus-visible { outline: 2px solid var(--on-dusk); outline-offset: 3px; border-radius: 2px; }
     p { margin: 0; }
+
+    /* page chrome on dusk */
+    .studio-back { position: fixed; top: 14px; left: 18px; z-index: 9999; padding: 8px 2px; color: var(--on-dusk-2); font: 500 12px/1 var(--sans); letter-spacing: .12em; text-transform: uppercase; text-decoration: none; }
+    .studio-back:hover { color: var(--on-dusk); }
+    .topnav { position: fixed; top: 8px; right: 14px; z-index: 60; display: flex; gap: 2px; align-items: center; font: 400 15px/1 var(--sans); letter-spacing: .02em; }
+    .topnav a { position: relative; padding: 12px 10px; min-height: 40px; display: inline-flex; align-items: center; color: var(--on-dusk-2); text-decoration: none; }
+    .topnav a:hover { color: var(--on-dusk); }
+    .topnav a[aria-current] { color: var(--on-dusk); font-weight: 500; }
+    .topnav a[aria-current]::after { content: ""; position: absolute; left: 50%; bottom: 3px; width: 4px; height: 4px; margin-left: -2px; border-radius: 50%; background: var(--sun); }
+    .viewport { position: fixed; inset: 60px 0 60px 0; overflow: hidden; }
+    .deck { width: 1280px; height: 720px; position: absolute; left: 50%; top: 50%; transform-origin: center center; }
+
+    /* slides: paper by default, dusk for moments */
+    .slide { position: absolute; inset: 0; display: none; padding: 54px 72px 34px; overflow: hidden; background: var(--paper); color: var(--ink); border-radius: 2px; }
+    .slide.on { display: flex; flex-direction: column; }
+    .slide.p2 { background: var(--paper-2); }
+    .slide.dark { background: var(--dusk); color: var(--on-dusk); }
+    .slide .bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .slide .shade { position: absolute; inset: 0; }
+    .slide.ph > :not(.bg):not(.shade) { position: relative; z-index: 2; }
+
+    .kicker { display: flex; align-items: center; gap: 10px; font: 500 13px/1.2 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--ink-2); margin: 0 0 16px; }
+    .kicker::before { content: ""; width: 18px; height: 1px; background: currentColor; opacity: .7; flex: none; }
+    .dark .kicker { color: var(--on-dusk-soft); }
+    h1, h2, h3 { font-family: var(--serif); font-weight: 400; letter-spacing: -.025em; margin: 0; text-wrap: balance; }
+    h1 em, h2 em, h3 em { font-style: italic; }
+    .dark h1 em, .dark h2 em { color: var(--sun); }
+    /* small serif text uses the sturdier optical size so hairlines (+, ≈, <) stay visible */
+    h3, td:first-child, .flyer, .sheet-head strong, .row b, .shots figcaption b, .big, .tier .v, .units b, .zero b, .stat-line b, ol.ms li::before, .persona .q, .closer, .wm { font-variation-settings: "opsz" 11; }
+    .big, .tier .v, .units b, .stat-line b { font-weight: 500; }
+    h1 { font-size: 74px; line-height: 1.0; max-width: 13ch; }
+    h2 { font-size: 52px; line-height: 1.04; max-width: 22ch; }
+    h2.sm { font-size: 44px; }
+    h2.wide { font-size: 44px; max-width: 30ch; }
     .body { flex: 1; display: flex; flex-direction: column; justify-content: center; min-height: 0; }
-    .lead { font-size: 22px; color: var(--wl-concrete); line-height: 1.45; max-width: 44ch; }
-    .src { margin-top: auto; padding-top: 12px; border-top: 1px solid var(--wl-line); font-size: 13px; line-height: 1.4; color: var(--wl-concrete); display: flex; justify-content: space-between; gap: 24px; }
-    .src span:last-child { white-space: nowrap; }
-    .todo, .card p.todo { display: inline-block; padding: 4px 10px; border: 2px dashed var(--wl-coral); color: var(--wl-coral); font: 600 16px var(--wl-font-body); letter-spacing: 0.02em; }
-    .tag { display: inline-block; font: 700 11.5px var(--wl-font-body); letter-spacing: 0.12em; text-transform: uppercase; padding: 3px 7px; border: 1px solid currentColor; vertical-align: 2px; }
-    .tag.assume { color: var(--wl-coral); }
+    .body.top { justify-content: flex-start; }
+    .lead { font-size: 21px; color: var(--ink-2); line-height: 1.45; max-width: 44ch; }
+    .dark .lead { color: var(--on-dusk-soft); }
+    .note { font-size: 17px; color: var(--ink-2); line-height: 1.45; }
+    .note b { color: var(--ink); font-weight: 500; }
+    .dark .note { color: var(--on-dusk-soft); }
+
+    /* source line + slide counter + photo credit */
+    .src { margin-top: auto; padding-top: 11px; border-top: 1px solid var(--rule); font-size: 12.5px; line-height: 1.45; color: var(--ink-2); display: flex; justify-content: space-between; gap: 28px; }
+    .src span:first-child { flex: 1; }
+    .src .n { white-space: nowrap; font-variant-numeric: tabular-nums; color: var(--ink); }
+    .src .credit { white-space: nowrap; }
+    .dark .src { border-top-color: var(--d-rule); color: var(--on-dusk-soft); }
+    .dark .src .n { color: var(--on-dusk); }
+
+    /* labels */
+    .label { display: inline-flex; align-items: center; gap: 8px; font: 500 12px/1.2 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--ink-2); }
+    .label::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--sun); flex: none; }
+    .dark .label { color: var(--on-dusk-soft); }
+    .tag { display: inline-block; font: 500 11px/1.2 var(--sans); letter-spacing: .12em; text-transform: uppercase; padding: 3px 6px 2px; border: 1px dashed currentColor; border-radius: 2px; vertical-align: 2px; white-space: nowrap; }
+    .tag.assume { color: var(--sun-text); }
+    .dark .tag.assume { color: var(--sun); }
+    /* provenance chips (same words as the app) */
+    .chip { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; font: 500 11.5px/1 var(--sans); letter-spacing: .1em; text-transform: uppercase; padding: 4px 0; }
+    .chip.live { color: var(--live-text); }
+    .chip.live::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--live); }
+    .chip.sample { color: var(--sun-text); border-bottom: 1px dashed currentColor; padding-bottom: 3px; }
+    .chip.ed { color: var(--ink-2); border-bottom: 1px solid currentColor; padding-bottom: 3px; }
+    .chip.open { color: var(--ink-2); }
+    .chip.open::before { content: ""; width: 6px; height: 6px; border-radius: 50%; border: 1px solid currentColor; }
+
+    /* cards */
     .cols { display: grid; gap: 18px; }
     .c2 { grid-template-columns: 1fr 1fr; } .c3 { grid-template-columns: repeat(3,1fr); } .c4 { grid-template-columns: repeat(4,1fr); }
-    .card { padding: 20px 22px; background: var(--wl-asphalt); border: 1px solid var(--wl-line); }
-    .card h3 { font-size: 28px; margin: 0 0 10px; }
-    .card p { font-size: 17px; color: var(--wl-concrete); line-height: 1.45; }
-    .card.lime { border-top: 4px solid var(--wl-lime); } .card.cyan { border-top: 4px solid var(--wl-cyan); } .card.coral { border-top: 4px solid var(--wl-coral); }
-    .big { font: 800 64px/1 var(--wl-font-display); letter-spacing: -0.03em; color: var(--wl-lime); }
-    .stat p { font-size: 17px; color: var(--wl-concrete); line-height: 1.4; margin-top: 10px; }
-    /* Sheet (always ink on wheat) */
-    .sheet { background: var(--wl-sheet-paper); color: var(--wl-sheet-ink); box-shadow: 0 24px 80px rgba(0,0,0,0.5); }
-    .sheet-head { display: flex; justify-content: space-between; align-items: baseline; padding: 14px 18px; border-bottom: 2px solid var(--wl-sheet-ink); }
-    .sheet-head strong { font: 800 22px var(--wl-font-display); letter-spacing: -0.02em; }
-    .sheet-head span { font-size: 13px; font-weight: 600; color: var(--wl-editorial); }
-    .row { display: grid; grid-template-columns: 52px 78px 1fr auto; gap: 10px; align-items: center; padding: 11px 18px; border-bottom: 1px solid rgba(23,20,16,0.14); font-size: 16px; }
-    .row b { font-weight: 700; }
-    .row .t { color: var(--wl-editorial); font-variant-numeric: tabular-nums; }
-    .row.open .w { font-style: italic; color: var(--wl-editorial); }
-    .chip { font: 700 11px var(--wl-font-body); letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 7px; border: 1.5px solid currentColor; white-space: nowrap; }
-    .chip.live { color: var(--wl-stamp); } .chip.sample { color: var(--wl-sample); } .chip.ed { color: var(--wl-editorial); } .chip.open { color: var(--wl-editorial); border-style: dashed; }
-    .flyer { position: absolute; padding: 14px 18px; font: 800 28px/0.95 var(--wl-font-display); letter-spacing: -0.02em; color: var(--wl-ink); box-shadow: var(--wl-shadow-flyer); text-transform: uppercase; }
-    .flyer small { display: block; font: 600 13px var(--wl-font-body); letter-spacing: 0.04em; text-transform: none; margin-top: 6px; }
-    .f-lime { background: var(--wl-lime); } .f-cyan { background: var(--wl-cyan); } .f-coral { background: var(--wl-coral); } .f-wheat { background: #e8e1d2; }
-    /* tables */
-    table { width: 100%; border-collapse: collapse; font-size: 16px; }
-    th { text-align: left; font: 600 12px var(--wl-font-body); letter-spacing: 0.12em; text-transform: uppercase; color: var(--wl-concrete); padding: 0 14px 10px 0; }
-    td { padding: 10px 14px 10px 0; border-top: 1px solid var(--wl-line); color: var(--wl-concrete); vertical-align: top; line-height: 1.35; }
-    td:first-child { color: var(--wl-paper); font-weight: 600; }
-    td.n { color: var(--wl-paper); font-variant-numeric: tabular-nums; }
-    tr.us td { background: var(--wl-lime); color: var(--wl-ink); font-weight: 600; }
-    tr.us td:first-child { padding-left: 10px; }
-    .math { font-size: 21px; line-height: 1.5; color: var(--wl-concrete); }
-    .math b { color: var(--wl-paper); font-weight: 600; }
-    .funnel { display: grid; gap: 12px; }
-    .tier { display: grid; grid-template-columns: 150px 1fr 230px; align-items: center; gap: 22px; padding: 16px 22px; background: var(--wl-asphalt); border: 1px solid var(--wl-line); }
-    .tier .lbl { font: 600 13px var(--wl-font-body); letter-spacing: 0.14em; text-transform: uppercase; }
-    .tier .v { font: 800 40px/1 var(--wl-font-display); letter-spacing: -0.03em; text-align: right; }
-    .tier p { font-size: 17px; color: var(--wl-concrete); line-height: 1.4; }
-    .tier p b { color: var(--wl-paper); font-weight: 600; }
-    .shots { display: grid; grid-template-columns: 1.18fr 0.82fr; gap: 26px; align-items: start; }
+    .card { padding: 20px 22px; background: var(--card); border: 1px solid var(--rule); border-radius: 2px; }
+    .card.accent { border-top: 2px solid var(--sun); }
+    .card.ink { border-top: 2px solid var(--ink); }
+    .card h3 { font-size: 27px; line-height: 1.1; margin: 0 0 10px; }
+    .card p { font-size: 17px; color: var(--ink-2); line-height: 1.45; }
+    .card p b, .card p .k { color: var(--ink); font-weight: 500; }
+    .dark .card { background: rgba(239,230,218,.04); border-color: var(--d-rule); }
+    .dark .card.accent { border-top-color: var(--sun); }
+    .dark .card p { color: var(--on-dusk-soft); }
+    .dark .card p b, .dark .card p .k { color: var(--on-dusk); }
+
+    /* 1 cover */
+    .s-cover .shade { background:
+      linear-gradient(90deg, rgba(14,10,7,.86) 0%, rgba(14,10,7,.66) 40%, rgba(14,10,7,.18) 72%, rgba(14,10,7,.3) 100%),
+      linear-gradient(180deg, rgba(14,10,7,.25) 0%, rgba(14,10,7,0) 25%, rgba(14,10,7,0) 70%, rgba(14,10,7,.8) 100%); }
+    .s-cover .bg { object-position: 50% 55%; }
+    .cover-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 56px; align-items: center; }
+    .cover-k { text-transform: none; letter-spacing: .02em; font-size: 15px; gap: 0; color: var(--on-dusk-soft); }
+    .cover-k::before { display: none; }
+    .wm { font: 400 28px/1 var(--serif); letter-spacing: -.01em; color: #fff; margin-right: 6px; }
+    .wm::after { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--sun); margin-left: 3px; vertical-align: .1em; }
+    .s-cover h1 { color: #fff; margin-top: 10px; }
+    .who { margin-top: 26px; font-size: 19px; font-weight: 500; color: #fff; }
+    .url { margin-top: 8px; font-size: 15px; color: var(--on-dusk-soft); }
+    .flyers { display: flex; gap: 12px; margin-bottom: 14px; flex-wrap: wrap; }
+    .flyer { padding: 10px 14px 11px; border: 1px solid rgba(255,255,255,.5); border-radius: 2px; background: rgba(14,10,7,.42); color: #fff; font: italic 400 22px/1.05 var(--serif); letter-spacing: -.01em; }
+    .flyer small { display: block; font: 400 13px/1.2 var(--sans); font-style: normal; letter-spacing: .02em; color: var(--on-dusk-soft); margin-top: 5px; }
+
+    /* the Week Sheet (paper card) */
+    .sheet { background: var(--paper); color: var(--ink); border-radius: 2px; box-shadow: 0 1px 0 var(--rule), 0 22px 56px rgba(10,7,4,.4); }
+    .sheet-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 16px 18px 12px; border-bottom: 1px solid var(--ink); }
+    .sheet-head strong { font: 400 23px/1.05 var(--serif); letter-spacing: -.02em; }
+    .sheet-head span { font-size: 13px; color: var(--ink-2); white-space: nowrap; }
+    .row { display: grid; grid-template-columns: 50px 72px 1fr auto; gap: 10px; align-items: center; padding: 10px 18px; border-bottom: 1px solid var(--rule); font-size: 15.5px; }
+    .row:last-child { border-bottom: 0; }
+    .row b { font: 400 18px/1 var(--serif); }
+    .row .t { color: var(--ink-2); font-variant-numeric: tabular-nums; font-size: 14px; }
+    .row .w { font-weight: 500; }
+    .row.open .w { font: italic 400 17px/1.2 var(--serif); color: var(--ink-2); }
+
+    /* 2 problem */
+    .s-problem .shade { background:
+      linear-gradient(90deg, rgba(14,10,7,.9) 0%, rgba(14,10,7,.82) 55%, rgba(14,10,7,.72) 100%),
+      linear-gradient(180deg, rgba(14,10,7,.2) 0%, rgba(14,10,7,0) 40%, rgba(14,10,7,.5) 100%); }
+    .s-problem .bg { object-position: 50% 60%; }
+    .problem-grid { grid-template-columns: 1.1fr 0.9fr; gap: 44px; align-items: stretch; }
+    .persona { border-left: 2px solid var(--sun); padding: 4px 0 4px 28px; }
+    .persona .label { color: var(--sun); }
+    .persona .label::before { display: none; }
+    .persona .q { font: 400 29px/1.28 var(--serif); letter-spacing: -.01em; color: #fff; margin-top: 14px; }
+    .persona .fine { margin-top: 16px; font-size: 15px; color: var(--on-dusk-soft); }
+    .pains { display: grid; gap: 0; align-content: center; }
+    .pain { padding: 14px 0; border-top: 1px solid var(--d-rule); }
+    .pain:last-child { border-bottom: 1px solid var(--d-rule); }
+    .pain h3 { font-size: 24px; margin: 0 0 4px; color: #fff; }
+    .pain p { font-size: 17px; color: var(--on-dusk-soft); }
+    .stat-line { margin-top: 26px; font-size: 20px; color: var(--on-dusk-soft); display: flex; align-items: baseline; gap: 12px; }
+    .stat-line b { font: 400 44px/1 var(--serif); letter-spacing: -.02em; color: var(--sun); }
+
+    /* 3 solution: ritual cards with a photo strip */
+    .ritual { padding: 0; overflow: hidden; display: flex; flex-direction: column; }
+    .strip { position: relative; height: 140px; background: var(--dusk); }
+    .strip img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .strip .shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(14,10,7,0) 30%, rgba(14,10,7,.78) 100%); }
+    .strip .credit { position: absolute; z-index: 2; left: 16px; bottom: 9px; font-size: 12px; color: rgba(255,255,255,.9); letter-spacing: .02em; }
+    .ritual .in { padding: 18px 24px 20px; }
+    .ritual h3 { margin-top: 10px; }
+    .ritual .crews { margin-top: 10px; font-size: 15px; }
+    .prov { margin-top: 22px; display: flex; gap: 18px; align-items: center; flex-wrap: wrap; font-size: 17px; color: var(--ink-2); }
+    .prov .k { color: var(--ink); font-weight: 500; }
+
+    /* 4 product shots */
+    .shots { display: grid; grid-template-columns: 1.18fr 0.82fr; gap: 28px; align-items: start; }
     .shots figure { margin: 0; }
-    .shots .frame { height: 440px; overflow: hidden; border: 1px solid var(--wl-line); background: var(--wl-asphalt); }
+    .shots .frame { height: 432px; overflow: hidden; border: 1px solid var(--rule-2); border-radius: 2px; background: var(--paper-2); }
     .shots img { width: 100%; display: block; }
-    .shots figcaption { font-size: 15px; color: var(--wl-concrete); margin-top: 10px; line-height: 1.4; }
-    .shots figcaption b { color: var(--wl-paper); font-weight: 600; }
-    .ladder { display: grid; grid-template-columns: repeat(4,1fr); gap: 0; border: 1px solid var(--wl-line); }
-    .step { padding: 18px 20px; border-right: 1px solid var(--wl-line); background: var(--wl-asphalt); }
-    .step:last-child { border-right: 0; }
-    .step .when { font: 600 12px var(--wl-font-body); letter-spacing: 0.12em; text-transform: uppercase; color: var(--wl-lime); }
-    .step h3 { font-size: 25px; margin: 8px 0 8px; }
-    .step p { font-size: 15.5px; color: var(--wl-concrete); line-height: 1.4; }
-    .rule { margin-top: 16px; display: flex; gap: 14px; flex-wrap: wrap; }
-    .rule span { padding: 8px 12px; border: 1.5px solid var(--wl-coral); color: var(--wl-paper); font-size: 15px; font-weight: 600; }
-    .zero { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
-    .zero div { padding: 16px 18px; border: 2px dashed var(--wl-line); }
-    .zero b { display: block; font: 800 56px/1 var(--wl-font-display); color: var(--wl-paper); }
-    .zero span { font-size: 16px; color: var(--wl-concrete); }
-    ul.ticks { list-style: none; padding: 0; margin: 0; display: grid; gap: 9px; }
-    ul.ticks li { font-size: 18px; color: var(--wl-paper); padding-left: 28px; position: relative; line-height: 1.35; }
-    ul.ticks li svg { position: absolute; left: 0; top: 4px; }
-    ul.ticks li span { color: var(--wl-concrete); }
-    ol.ms { margin: 0; padding: 0; list-style: none; display: grid; gap: 12px; counter-reset: m; }
-    ol.ms li { counter-increment: m; display: grid; grid-template-columns: 44px 1fr; gap: 14px; align-items: baseline; font-size: 19px; line-height: 1.35; }
-    ol.ms li::before { content: "0" counter(m); font: 800 26px var(--wl-font-display); color: var(--wl-lime); }
-    ol.ms li span { color: var(--wl-concrete); }
-    .nav { position: fixed; bottom: 12px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; align-items: center; z-index: 50; font-size: 14px; color: var(--wl-concrete); }
-    .nav button { font: 600 15px var(--wl-font-body); color: var(--wl-paper); background: var(--wl-ink); border: 1px solid var(--wl-line); padding: 7px 14px; cursor: pointer; box-shadow: var(--wl-shadow-btn); }
-    .nav button:hover, .nav button:focus-visible { border-color: var(--wl-lime); color: var(--wl-lime); }
-    .nav a { color: var(--wl-concrete); white-space: nowrap; }
-    .nav span { white-space: nowrap; font-variant-numeric: tabular-nums; }
-    @media (max-width: 640px) { .topnav a { padding: 6px 6px; font-size: 12px; } .topnav .hide-sm { display: none; } }
+    .shots figcaption { font-size: 15px; color: var(--ink-2); margin-top: 10px; line-height: 1.4; }
+    .shots figcaption b { font: 400 18px/1.2 var(--serif); color: var(--ink); letter-spacing: -.01em; }
+
+    /* 5 why now (photo) */
+    .s-now .shade { background:
+      linear-gradient(180deg, rgba(14,10,7,.82) 0%, rgba(14,10,7,.45) 30%, rgba(14,10,7,.55) 50%, rgba(14,10,7,.9) 72%, rgba(14,10,7,.94) 100%); }
+    .s-now .bg { object-position: 50% 40%; }
+    .s-now .body { justify-content: flex-end; padding-bottom: 18px; }
+    .stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 0; border-top: 1px solid var(--d-rule-2); }
+    .stats > div { padding: 20px 22px 4px 0; }
+    .stats > div + div { padding-left: 22px; border-left: 1px solid var(--d-rule); }
+    .big { font: 400 62px/1 var(--serif); letter-spacing: -.03em; color: var(--on-dusk); font-variant-numeric: lining-nums; }
+    .stats > div:first-child .big { color: var(--sun); }
+    .stats p { font-size: 16.5px; color: var(--on-dusk-soft); line-height: 1.4; margin-top: 12px; }
+
+    /* 6 market funnel */
+    .funnel { display: grid; gap: 12px; }
+    .tier { display: grid; grid-template-columns: 150px 1fr 220px; align-items: center; gap: 22px; padding: 16px 24px; background: var(--card); border: 1px solid var(--rule); border-left: 2px solid var(--ink); border-radius: 2px; }
+    .tier.t2 { margin-left: 60px; border-left-color: var(--sun-deep); }
+    .tier.t3 { margin-left: 120px; border-left-color: var(--sun); }
+    .tier .lbl { font: 500 13px var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--ink); }
+    .tier .v { font: 400 40px/1 var(--serif); letter-spacing: -.02em; text-align: right; color: var(--ink); }
+    .tier p { font-size: 17px; color: var(--ink-2); line-height: 1.4; }
+    .tier p b { color: var(--ink); font-weight: 500; }
+
+    /* 7 traction (dusk) */
+    .trac-grid { grid-template-columns: 1fr 1fr; gap: 44px; align-items: start; }
+    ul.ticks { list-style: none; padding: 0; margin: 14px 0 0; display: grid; gap: 0; }
+    ul.ticks li { font-size: 18px; color: var(--on-dusk); padding: 10px 0 10px 30px; position: relative; line-height: 1.35; border-top: 1px solid var(--d-rule); }
+    ul.ticks li:last-child { border-bottom: 1px solid var(--d-rule); }
+    ul.ticks li svg { position: absolute; left: 0; top: 13px; color: var(--live-dark); }
+    ul.ticks li span { color: var(--on-dusk-2); }
+    .zero { display: grid; grid-template-columns: repeat(3,1fr); gap: 0; border-top: 1px solid var(--d-rule-2); border-bottom: 1px solid var(--d-rule); }
+    .zero div { padding: 18px 18px 16px 0; }
+    .zero div + div { padding-left: 18px; border-left: 1px solid var(--d-rule); }
+    .zero b { display: block; font: italic 400 64px/1 var(--serif); color: var(--sun); }
+    .zero span { display: block; margin-top: 8px; font-size: 16px; color: var(--on-dusk-soft); }
+    .next-card { margin-top: 18px; }
+    .next-card .k { font-size: 18px; }
+
+    /* 8 business model ladder */
+    .ladder { display: grid; grid-template-columns: repeat(4,1fr); gap: 0; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--rule); }
+    .step { padding: 16px 20px 18px; }
+    .step:first-child { padding-left: 0; }
+    .step + .step { border-left: 1px solid var(--rule); }
+    .step .when { display: flex; align-items: center; gap: 8px; font: 500 12px var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--sun-text); }
+    .step .when::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--sun); }
+    .step h3 { font-size: 26px; margin: 10px 0 8px; }
+    .step p { font-size: 15.5px; color: var(--ink-2); line-height: 1.42; }
+    .units { margin-top: 18px; gap: 12px; }
+    .units .card { padding: 14px 18px; }
+    .units b { display: block; font: 400 31px/1.05 var(--serif); letter-spacing: -.02em; color: var(--ink); }
+    .units p { font-size: 15px; margin-top: 4px; }
+    .rules { margin-top: 16px; display: flex; gap: 12px; flex-wrap: wrap; }
+    .rules span { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border: 1px solid var(--ink); border-radius: 2px; color: var(--ink); font-size: 15px; font-weight: 500; }
+
+    /* 9 competition table */
+    table { width: 100%; border-collapse: collapse; font-size: 16px; }
+    th { text-align: left; font: 500 12px var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-2); padding: 0 14px 10px 0; border-bottom: 1px solid var(--ink); }
+    td { padding: 11px 14px 11px 0; border-top: 1px solid var(--rule); color: var(--ink-2); vertical-align: top; line-height: 1.35; }
+    tr:first-child td { border-top: 0; }
+    td:first-child { color: var(--ink); font: 400 19px/1.2 var(--serif); letter-spacing: -.01em; }
+    td.n { color: var(--ink); font-variant-numeric: tabular-nums; }
+    tr.us td { background: var(--sun-wash); color: var(--ink); font-weight: 500; border-top: 1px solid var(--sun-deep); }
+    tr.us td:first-child { padding-left: 12px; font-weight: 400; font-style: italic; }
+
+    /* 10 gtm */
+    .gtm .card p.k-line { margin-top: 10px; color: var(--ink); }
+
+    /* 11 team (dusk) */
+    .team-grid { grid-template-columns: 1.2fr 1fr; gap: 24px; align-items: start; }
+    .founder { padding: 26px 28px; }
+    .founder h3 { font-size: 30px; }
+
+    /* 12 the ask (photo) */
+    .s-ask .shade { background:
+      linear-gradient(90deg, rgba(14,10,7,.9) 0%, rgba(14,10,7,.72) 50%, rgba(14,10,7,.4) 100%),
+      linear-gradient(180deg, rgba(14,10,7,.2) 0%, rgba(14,10,7,0) 35%, rgba(14,10,7,.7) 100%); }
+    .s-ask .card { background: rgba(14,10,7,.62); border-color: var(--d-rule-2); }
+    .s-ask .bg { object-position: 50% 50%; }
+    .ask-grid { grid-template-columns: 1.3fr 0.7fr; gap: 34px; align-items: start; }
+    ol.ms { margin: 14px 0 0; padding: 0; list-style: none; display: grid; gap: 0; counter-reset: m; }
+    ol.ms li { counter-increment: m; display: grid; grid-template-columns: 48px 1fr; gap: 14px; align-items: baseline; font-size: 19px; line-height: 1.35; padding: 11px 0; border-top: 1px solid var(--d-rule); color: #fff; }
+    ol.ms li:last-child { border-bottom: 1px solid var(--d-rule); }
+    ol.ms li::before { content: "0" counter(m); font: italic 400 26px/1 var(--serif); color: var(--sun); }
+    ol.ms li span { color: var(--on-dusk-soft); }
+    .closer { margin-top: 24px; font: italic 400 28px/1.2 var(--serif); letter-spacing: -.01em; color: #fff; }
+
+    /* bottom nav */
+    .nav { position: fixed; bottom: 12px; left: 50%; transform: translateX(-50%); display: flex; gap: 12px; align-items: center; z-index: 50; font-size: 14px; color: var(--on-dusk-2); }
+    .nav button { font: 500 16px/1 var(--sans); color: var(--on-dusk); background: transparent; border: 1px solid var(--d-rule-2); border-radius: 2px; min-width: 44px; min-height: 36px; padding: 8px 14px; cursor: pointer; transition: border-color .2s, background-color .2s; }
+    .nav button:hover, .nav button:focus-visible { border-color: var(--sun); background: rgba(239,169,55,.08); }
+    .nav a { color: var(--on-dusk-2); white-space: nowrap; text-decoration-color: rgba(179,166,148,.5); }
+    .nav a:hover { color: var(--on-dusk); }
+    .nav span { white-space: nowrap; font-variant-numeric: tabular-nums; color: var(--on-dusk); min-width: 52px; text-align: center; }
+
+    @media (max-width: 640px) { .topnav a { padding: 12px 7px; font-size: 14px; } }
     /* Phone: every slide stacked and reflowed; the page scrolls, no scaling, no slide nav */
     @media (max-width: 700px) {
-      html, body { overflow: auto; height: auto; background: var(--wl-ink); }
-      .topnav { position: static; justify-content: flex-end; padding: 8px 12px; background: var(--wl-ink); border-bottom: 1px solid var(--wl-line); }
+      html, body { overflow: auto; overflow-x: hidden; height: auto; background: var(--dusk); }
+      .topnav { position: static; justify-content: flex-end; padding: 2px 8px; background: var(--dusk); border-bottom: 1px solid var(--d-rule); }
       .viewport { position: static; inset: auto; overflow: visible; }
       .deck { position: static; transform: none !important; width: auto; height: auto; }
-      .slide { display: flex !important; flex-direction: column; position: relative; inset: auto; padding: 36px 22px 32px; overflow: visible; overflow-wrap: anywhere; border-bottom: 6px solid #050506; }
+      .slide { display: flex !important; flex-direction: column; position: relative; inset: auto; padding: 40px 18px 28px; overflow: hidden; overflow-wrap: anywhere; border-radius: 0; border-bottom: 1px solid var(--rule-2); }
+      .slide.dark { border-bottom-color: var(--d-rule); }
       .body { flex: none; display: block; margin-top: 18px !important; }
       .kicker { font-size: 12px; margin-bottom: 12px; }
       h1 { font-size: 42px; max-width: none; }
-      h2, .slide h2[style] { font-size: 32px !important; max-width: none !important; line-height: 1; }
+      h2, h2.sm, h2.wide { font-size: 33px; max-width: none; line-height: 1.06; }
       p, li { font-size: 16px; }
       .lead { font-size: 17px; }
-      .slide [style*="font-size:20px"], .slide [style*="font-size:19px"], .slide [style*="font-size:18px"] { font-size: 16px !important; }
-      .slide [style*="font:700 27px"] { font-size: 21px !important; }
-      .slide [style*="font:700 24px"] { font-size: 20px !important; }
+      .note, .prov, .stat-line { font-size: 16px; }
       /* grids and rows → one column */
-      .cols, .c2, .c3, .c4, .slide .cols[style*="grid-template-columns"], .slide .body[style*="grid-template-columns"] { grid-template-columns: 1fr !important; gap: 14px !important; }
-      .slide .body[style*="grid-template-columns"] { display: grid; gap: 28px !important; }
-      .card { padding: 18px 18px !important; }
-      .card h3 { font-size: 22px; }
+      .cols, .c2, .c3, .c4, .cover-grid, .problem-grid, .trac-grid, .team-grid, .ask-grid { grid-template-columns: 1fr !important; gap: 14px !important; }
+      .cover-grid, .problem-grid, .trac-grid, .team-grid, .ask-grid { display: grid; gap: 30px !important; }
+      .card { padding: 18px 18px; }
+      .card h3 { font-size: 23px; }
       .card p { font-size: 16px; }
-      .big { font-size: 46px; }
-      .stat p { font-size: 15px; }
-      .src { flex-direction: column; gap: 6px; margin-top: 24px; font-size: 12px; }
-      .src span:last-child { align-self: flex-end; }
-      /* slide 1: flyers + sheet flow instead of floating */
-      .slide [style*="height:430px"] { height: auto !important; display: flex; flex-wrap: wrap; gap: 12px 14px; padding-top: 4px; }
-      .flyer { position: relative; top: auto !important; left: auto !important; right: auto !important; font-size: 21px; padding: 10px 14px; }
+      .src { flex-direction: column; gap: 6px; margin-top: 26px; font-size: 12px; }
+      .src .credit { white-space: normal; }
+      .src .n { align-self: flex-end; }
+      /* photo slides: the photo sits behind the whole stacked slide, shaded evenly */
+      .slide.ph .shade { background: linear-gradient(180deg, rgba(14,10,7,.88) 0%, rgba(14,10,7,.86) 40%, rgba(14,10,7,.92) 100%) !important; }
+      .card.ritual { padding: 0; }
+      /* slide 1 */
+      .cover-k { font-size: 14px; flex-wrap: wrap; }
+      .wm { font-size: 26px; }
+      .who { font-size: 17px; }
+      .url { font-size: 14px; }
+      .flyer { font-size: 19px; padding: 9px 12px; }
       .flyer small { font-size: 12px; }
-      .sheet { position: relative !important; top: auto !important; width: 100%; margin-top: 6px; }
       .sheet-head { flex-wrap: wrap; gap: 4px 12px; padding: 12px 14px; }
-      .sheet-head strong { font-size: 18px; }
+      .sheet-head strong { font-size: 19px; }
       .row { grid-template-columns: 40px 1fr auto; gap: 2px 10px; padding: 10px 14px; font-size: 15px; }
-      .row b { grid-row: 1 / span 2; align-self: start; }
+      .row b { grid-row: 1 / span 2; align-self: start; font-size: 17px; }
       .row .t { grid-column: 2; grid-row: 1; }
       .row .chip { grid-column: 3; grid-row: 1; }
       .row .w { grid-column: 2 / -1; grid-row: 2; }
-      /* slide 3 provenance tags */
-      .slide [style*="flex-wrap:wrap;font-size:18px"] { font-size: 15px !important; gap: 8px !important; }
+      /* slide 2 */
+      .persona { padding-left: 18px; }
+      .persona .q { font-size: 23px; }
+      .pain h3 { font-size: 21px; }
+      .pain p { font-size: 16px; }
+      .stat-line { flex-wrap: wrap; gap: 4px 10px; }
+      .stat-line b { font-size: 38px; }
+      /* slide 3 */
+      .prov { gap: 10px 14px; }
       /* slide 4 screenshots */
       .shots { grid-template-columns: 1fr; gap: 24px; }
       .shots .frame { height: auto; }
       .shots img { max-width: 100%; height: auto; }
-      .shots figcaption { font-size: 15px; }
+      /* slide 5 stats → 2 × 2 */
+      .stats { grid-template-columns: 1fr 1fr; }
+      .stats > div { padding: 16px 12px 12px 0 !important; border-left: 0 !important; border-bottom: 1px solid var(--d-rule); }
+      .stats > div:nth-child(even) { padding-left: 14px !important; border-left: 1px solid var(--d-rule) !important; }
+      .big { font-size: 40px; }
+      .stats p { font-size: 14.5px; }
       /* slide 6 funnel */
       .tier { grid-template-columns: 1fr; gap: 6px; padding: 16px 18px; margin-left: 0 !important; }
       .tier .v { text-align: left; font-size: 34px; }
       .tier p { font-size: 15.5px; }
       /* slide 7 zeros stay 3 small tiles */
-      .zero { gap: 8px; }
-      .zero div { padding: 12px 10px; }
-      .zero b { font-size: 38px; }
+      .zero div { padding: 14px 8px 12px 0; }
+      .zero div + div { padding-left: 10px; }
+      .zero b { font-size: 42px; }
       .zero span { font-size: 13px; }
       ul.ticks li { font-size: 16px; }
       /* slide 8 ladder */
       .ladder { grid-template-columns: 1fr; }
-      .step { border-right: 0; border-bottom: 1px solid var(--wl-line); padding: 16px 18px; }
-      .step:last-child { border-bottom: 0; }
+      .step, .step:first-child { padding: 16px 0; border-left: 0 !important; }
+      .step + .step { border-top: 1px solid var(--rule); }
       .step h3 { font-size: 22px; }
       .step p { font-size: 15.5px; }
-      .slide .cols.c4[style*="margin-top:16px"] { grid-template-columns: 1fr 1fr !important; gap: 10px !important; }
-      .slide .cols.c4[style*="margin-top:16px"] b { font-size: 26px !important; }
-      .slide .cols.c4[style*="margin-top:16px"] p { font-size: 14px; }
-      .rule span { font-size: 14px; }
+      .units { grid-template-columns: 1fr 1fr !important; gap: 10px !important; }
+      .units b { font-size: 25px; }
+      .units p { font-size: 14px; }
+      .rules span { font-size: 14px; }
       /* slide 9 table → one card per player */
       table, tbody, tr, td { display: block; width: auto !important; }
       thead { display: none; }
-      tr { padding: 12px 0; border-top: 1px solid var(--wl-line); }
-      td { border: 0; padding: 2px 0; font-size: 15px; }
-      td:first-child { font: 800 21px var(--wl-font-display); letter-spacing: -0.02em; margin-bottom: 4px; }
-      td:nth-child(2)::before { content: "What: "; color: var(--wl-paper); font-weight: 600; }
-      td:nth-child(3)::before { content: "Numbers: "; color: var(--wl-paper); font-weight: 600; }
-      td:nth-child(4)::before { content: "Weekline: "; color: var(--wl-paper); font-weight: 600; }
-      tr.us { background: var(--wl-lime); padding: 12px 14px; }
+      tr { padding: 12px 0; border-top: 1px solid var(--rule); }
+      td { border: 0 !important; padding: 2px 0; font-size: 15px; }
+      td:first-child { font-size: 21px; margin-bottom: 4px; }
+      td:nth-child(2)::before { content: "What: "; color: var(--ink); font-weight: 500; }
+      td:nth-child(3)::before { content: "Numbers: "; color: var(--ink); font-weight: 500; }
+      td:nth-child(4)::before { content: "Weekline: "; color: var(--ink); font-weight: 500; }
+      tr.us { background: var(--sun-wash); padding: 12px 14px; border-top: 1px solid var(--sun-deep); }
       tr.us td { background: none; }
-      tr.us td::before, tr.us td:first-child { color: var(--wl-ink); }
       tr.us td:first-child { padding-left: 0; }
       /* slide 12 milestones */
       ol.ms li { grid-template-columns: 34px 1fr; gap: 10px; font-size: 16px; }
-      ol.ms li::before { font-size: 22px; }
+      ol.ms li::before { font-size: 21px; }
+      .closer { font-size: 23px; }
       .nav { display: none; }
     }
     @media print {
       @page { size: 1280px 720px; margin: 0; }
-      html, body { overflow: visible; height: auto; background: var(--wl-ink); }
+      html, body { overflow: visible; height: auto; background: var(--dusk); }
       .viewport { position: static; overflow: visible; }
       .deck { position: static; transform: none !important; width: 1280px; height: auto; }
-      .slide { position: relative; display: flex !important; flex-direction: column; width: 1280px; height: 720px; break-after: page; }
-      .nav, .studio-back, .topnav { display: none; }
+      .slide { position: relative; display: flex !important; flex-direction: column; width: 1280px; height: 720px; break-after: page; border-radius: 0; }
+      .nav, .studio-back, .topnav, .site-bar { display: none; }
     }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; } }
   </style>
   <link rel="stylesheet" href="/site-bar.css" />
   <script src="/site-bar.js" data-project="weekline" data-kind="piece" defer></script>
@@ -220,90 +397,102 @@
   <div class="viewport">
     <div class="deck" id="deck">
 
-      <!-- 1 Title -->
-      <section class="slide" aria-label="Title">
-        <div class="body" style="display:grid;grid-template-columns:1.05fr 0.95fr;gap:48px;align-items:center">
+      <!-- 1 Title (dusk photo) -->
+      <section class="slide dark ph s-cover" aria-label="Title">
+        <img class="bg" src="v2/photos/bridge.jpg" alt="" />
+        <div class="shade"></div>
+        <div class="body cover-grid">
           <div>
-            <p class="kicker">Weekline · investor deck · Nov 2026</p>
+            <p class="kicker cover-k"><span class="wm">Weekline</span> <span>· investor deck · Nov 2026</span></p>
             <h1>Turn NYC's noisy calendar into a <em>week you can live.</em></h1>
             <p class="lead" style="margin-top:24px">A week planner for Manhattan + Brooklyn locals, 25–40.</p>
-            <p style="margin-top:24px;font-size:19px;font-weight:600">Alexandra Vargas · Designer</p>
-            <p style="margin-top:10px">vargas-studio.pages.dev/projects/weekline/ · New York · Nov 2026</p>
+            <p class="who">Alexandra Vargas · Designer</p>
+            <p class="url">vargas-studio.pages.dev/projects/weekline/ · New York · Nov 2026</p>
           </div>
-          <div style="position:relative;height:430px">
-            <div class="flyer f-coral" style="top:-6px;left:10px;transform:rotate(-3.5deg)">Cheap thrills<small>Brooklyn · low budget</small></div>
-            <div class="flyer f-cyan" style="top:4px;right:6px;transform:rotate(3.2deg)">Move pack<small>Seeking · get fit</small></div>
-            <div class="sheet" style="position:absolute;left:0;right:0;top:96px">
+          <div>
+            <div class="flyers">
+              <div class="flyer">Cheap thrills<small>Brooklyn · low budget</small></div>
+              <div class="flyer">Move pack<small>Seeking · get fit</small></div>
+            </div>
+            <div class="sheet">
               <div class="sheet-head"><strong>Your week · Cheap Thrills</strong><span>Brooklyn · ~40 min</span></div>
               <div class="row"><b>Mon</b><span class="t">5:30 PM</span><span class="w">Bodyweight Circuit Training</span><span class="chip live">Live Parks</span></div>
               <div class="row"><b>Tue</b><span class="t">8:00 AM</span><span class="w">Total Body Fitness</span><span class="chip live">Live Parks</span></div>
               <div class="row open"><b>Wed</b><span class="t">—</span><span class="w">Open</span><span class="chip open">Open</span></div>
               <div class="row"><b>Thu</b><span class="t">5:00 PM</span><span class="w">Chelsea gallery night crawl</span><span class="chip sample">Sample</span></div>
-              <div class="row" style="border-bottom:0"><b>Sat</b><span class="t">7:00 AM</span><span class="w">Line Dance Fitness</span><span class="chip live">Live Parks</span></div>
+              <div class="row"><b>Sat</b><span class="t">7:00 AM</span><span class="w">Line Dance Fitness</span><span class="chip live">Live Parks</span></div>
             </div>
           </div>
         </div>
-        <div class="src"><span>Rows from a week the early build made on 21 Nov 2026. Product: /projects/weekline/v2/</span><span>1 / 12</span></div>
+        <div class="src"><span>Rows from a week the early build made on 21 Nov 2026. Product: /projects/weekline/v2/</span><span class="credit">Photo: Brooklyn Bridge at sunset, SebastianBlumeArt, CC BY-SA 4.0</span><span class="n">1 / 12</span></div>
       </section>
 
-      <!-- 2 Problem -->
-      <section class="slide" aria-label="Problem">
+      <!-- 2 Problem (dusk photo) -->
+      <section class="slide dark ph s-problem" aria-label="Problem">
+        <img class="bg" src="v2/photos/bbp-sunset.jpg" alt="" />
+        <div class="shade"></div>
         <p class="kicker">Problem</p>
         <h2>So much on. <em>Still doing nothing.</em></h2>
         <div class="body">
-          <div class="cols" style="grid-template-columns:1.1fr 0.9fr;gap:28px;align-items:stretch">
-            <div class="card coral" style="padding:26px 28px">
-              <p style="font:600 12px var(--wl-font-body);letter-spacing:0.14em;text-transform:uppercase;color:var(--wl-coral)">Sunday, Bushwick · composite persona</p>
-              <p style="font:700 27px/1.25 var(--wl-font-display);color:var(--wl-paper);margin-top:12px;letter-spacing:-0.01em">27. Twelve saved posts. A $60 fun budget. Won't cross the river on a Tuesday. The group chat ends with "idk you pick."</p>
-              <p style="margin-top:16px;font-size:15px">Built from the target customer profile, not a user quote.</p>
+          <div class="cols problem-grid">
+            <div class="persona">
+              <p class="label">Sunday, Bushwick · composite persona</p>
+              <p class="q">27. Twelve saved posts. A $60 fun budget. Won't cross the river on a Tuesday. The group chat ends with "idk you pick."</p>
+              <p class="fine">Built from the target customer profile, not a user quote.</p>
             </div>
-            <div style="display:grid;gap:12px">
-              <div class="card"><h3 style="font-size:23px;margin:0 0 4px">Lists, not plans</h3><p>Feeds and newsletters, no week.</p></div>
-              <div class="card"><h3 style="font-size:23px;margin:0 0 4px">Nothing survives the chat</h3><p>Ten screenshots, zero commitments.</p></div>
-              <div class="card"><h3 style="font-size:23px;margin:0 0 4px">Goals lose to the feed</h3><p>"I'll get fit" never makes the calendar.</p></div>
+            <div class="pains">
+              <div class="pain"><h3>Lists, not plans</h3><p>Feeds and newsletters, no week.</p></div>
+              <div class="pain"><h3>Nothing survives the chat</h3><p>Ten screenshots, zero commitments.</p></div>
+              <div class="pain"><h3>Goals lose to the feed</h3><p>"I'll get fit" never makes the calendar.</p></div>
             </div>
           </div>
-          <p style="margin-top:22px;font-size:20px;color:var(--wl-concrete)"><b style="font:800 34px var(--wl-font-display);color:var(--wl-lime)">1.17M</b>&nbsp; Manhattan + Brooklyn residents aged 25–39.</p>
+          <p class="stat-line"><b>1.17M</b> Manhattan + Brooklyn residents aged 25–39.</p>
         </div>
-        <div class="src"><span>1.17M = 672,163 Brooklyn + 493,255 Manhattan, ages 25–39. U.S. Census Bureau, ACS 2024 1-year, table B01001, via censusreporter.org (2025).</span><span>2 / 12</span></div>
+        <div class="src"><span>1.17M = 672,163 Brooklyn + 493,255 Manhattan, ages 25–39. U.S. Census Bureau, ACS 2024 1-year, table B01001, via censusreporter.org (2025).</span><span class="credit">Photo: Brooklyn Bridge Park at sunset, Adjoajo, CC BY-SA 4.0</span><span class="n">2 / 12</span></div>
       </section>
 
-      <!-- 3 Solution -->
+      <!-- 3 Solution (paper) -->
       <section class="slide" aria-label="Solution">
         <p class="kicker">Solution</p>
         <h2>Two rituals. <em>One plan layer.</em></h2>
         <div class="body">
           <div class="cols c2" style="gap:22px">
-            <div class="card lime" style="padding:24px 26px">
-              <p class="tag" style="color:var(--wl-lime)">Crew week</p>
-              <h3 style="margin-top:12px">Fill the nights you want.</h3>
-              <p>Crew → zone → radius → budget → a Mon–Sun <b style="color:var(--wl-paper)">Sheet</b> or Board. Export .ics or share.</p>
-              <p style="margin-top:10px;font-size:15px">Cheap Thrills · Dateline · Move Pack · Culture Circuit · Table Hop · Wildcard</p>
+            <div class="card ritual">
+              <div class="strip"><img src="v2/photos/gazebo.jpg" alt="" style="object-position:50% 24%" /><div class="shade"></div><span class="credit">Photo: Lambertphotos, CC BY-SA 4.0</span></div>
+              <div class="in">
+                <p class="label">Crew week</p>
+                <h3>Fill the nights you want.</h3>
+                <p>Crew → zone → radius → budget → a Mon–Sun <b>Sheet</b> or Board. Export .ics or share.</p>
+                <p class="crews">Cheap Thrills · Dateline · Move Pack · Culture Circuit · Table Hop · Wildcard</p>
+              </div>
             </div>
-            <div class="card cyan" style="padding:24px 26px">
-              <p class="tag" style="color:var(--wl-cyan)">Seeking</p>
-              <h3 style="margin-top:12px">Schedule who you're becoming.</h3>
-              <p>Fitness · friends · network · job · love → a dated seeking week with a "why" per row. Lock, skip, .ics.</p>
-              <p style="margin-top:10px;font-size:15px">"You're not what you say you'll do. You're what you schedule."</p>
+            <div class="card ritual">
+              <div class="strip"><img src="v2/photos/prospect-park.jpg" alt="" style="object-position:50% 60%" /><div class="shade"></div><span class="credit">Photo: King of Hearts, CC BY-SA 4.0</span></div>
+              <div class="in">
+                <p class="label">Seeking</p>
+                <h3>Schedule who you're becoming.</h3>
+                <p>Fitness · friends · network · job · love → a dated seeking week with a "why" per row. Lock, skip, .ics.</p>
+                <p class="crews">"You're not what you say you'll do. You're what you schedule."</p>
+              </div>
             </div>
           </div>
-          <div style="margin-top:22px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;font-size:18px;color:var(--wl-concrete)">
-            <span style="color:var(--wl-paper);font-weight:600">Every row says where it came from:</span>
-            <span class="tag" style="color:var(--wl-lime)">Live Parks</span>
-            <span class="tag" style="color:var(--wl-paper)">Sample</span>
-            <span class="tag" style="color:var(--wl-paper)">Editorial</span>
-            <span class="tag" style="color:var(--wl-concrete);border-style:dashed">Open</span>
+          <div class="prov">
+            <span class="k">Every row says where it came from:</span>
+            <span class="chip live">Live Parks</span>
+            <span class="chip sample">Sample</span>
+            <span class="chip ed">Editorial</span>
+            <span class="chip open">Open</span>
             <span>Thin weeks stay thin.</span>
           </div>
         </div>
-        <div class="src"><span>All of the above is built in v2 (23 Nov 2026). Google Calendar busy nights are built and switch on once connected. Not built: partner feeds (Meetup, Luma, libraries).</span><span>3 / 12</span></div>
+        <div class="src"><span>All of the above is built in v2 (23 Nov 2026). Google Calendar busy nights are built and switch on once connected. Not built: partner feeds (Meetup, Luma, libraries).</span><span class="n">3 / 12</span></div>
       </section>
 
-      <!-- 4 Product -->
+      <!-- 4 Product (paper) -->
       <section class="slide" aria-label="Product">
         <p class="kicker">Product · v2, 23 Nov 2026</p>
-        <h2 style="font-size:44px">Real rows. <em>Honest gaps.</em></h2>
-        <div class="body" style="justify-content:flex-start;margin-top:14px">
+        <h2 class="sm">Real rows. <em>Honest gaps.</em></h2>
+        <div class="body top" style="margin-top:16px">
           <div class="shots">
             <figure>
               <div class="frame"><img src="deck/v2-week.jpg" alt="Weekline v2 week screen in the Golden Hour look: a sunset photo header, Your week Mon 23 to Sun 29 Nov in Brooklyn, 3 of 4 goal nights planned, a Last week did you go check-in, then Monday hand-building clay drop-in and Tuesday NYRR Open Run, each with Lock and Skip." /></div>
@@ -315,53 +504,55 @@
             </figure>
           </div>
         </div>
-        <div class="src"><span>Screenshots of v2 in demo mode, captured 23 Nov 2026 (rows labeled Sample are examples). Live rows come from the NYC Parks events feed on NYC Open Data.</span><span>4 / 12</span></div>
+        <div class="src"><span>Screenshots of v2 in demo mode, captured 23 Nov 2026 (rows labeled Sample are examples). Live rows come from the NYC Parks events feed on NYC Open Data.</span><span class="n">4 / 12</span></div>
       </section>
 
-      <!-- 5 Why now -->
-      <section class="slide" aria-label="Why now">
+      <!-- 5 Why now (dusk photo) -->
+      <section class="slide dark ph s-now" aria-label="Why now">
+        <img class="bg" src="v2/photos/manhattan-gold.jpg" alt="" />
+        <div class="shade"></div>
         <p class="kicker">Why now</p>
         <h2>Money flows to tickets. <em>The week is still unplanned.</em></h2>
         <div class="body">
-          <div class="cols c4">
-            <div class="card stat"><div class="big">+87K</div><p>NYC residents, mid-2023 → mid-2024. Manhattan grew fastest (+1.7%).</p></div>
-            <div class="card stat"><div class="big">553</div><p>public NYC Parks events in a free, key-free 14-day feed (21 Nov 2026).</p></div>
-            <div class="card stat"><div class="big">$250M</div><p>raised by Fever, Sept 2026. It sells experiences one ticket at a time.</p></div>
-            <div class="card stat"><div class="big">+83%</div><p>Eventbrite Ads in 2024, while paid tickets fell 10%. Organizers pay to be found.</p></div>
+          <div class="stats">
+            <div><div class="big">+87K</div><p>NYC residents, mid-2023 → mid-2024. Manhattan grew fastest (+1.7%).</p></div>
+            <div><div class="big">553</div><p>public NYC Parks events in a free, key-free 14-day feed (21 Nov 2026).</p></div>
+            <div><div class="big">$250M</div><p>raised by Fever, Sept 2026. It sells experiences one ticket at a time.</p></div>
+            <div><div class="big">+83%</div><p>Eventbrite Ads in 2024, while paid tickets fell 10%. Organizers pay to be found.</p></div>
           </div>
         </div>
-        <div class="src"><span>NYC Dept. of City Planning, Population Estimates, May 2025 · NYC Open Data, dataset w3wp-dpdi, count queried 21 Nov 2026 (citywide snapshot) · Music Business Worldwide, Sept 2026 · Eventbrite Q4 2024 shareholder letter, SEC (2025).</span><span>5 / 12</span></div>
+        <div class="src"><span>NYC Dept. of City Planning, Population Estimates, May 2025 · NYC Open Data, dataset w3wp-dpdi, count queried 21 Nov 2026 (citywide snapshot) · Music Business Worldwide, Sept 2026 · Eventbrite Q4 2024 shareholder letter, SEC (2025).</span><span class="credit">Photo: “Manhattan Gold”, Phil Dolby, CC BY 2.0</span><span class="n">5 / 12</span></div>
       </section>
 
-      <!-- 6 Market -->
+      <!-- 6 Market (paper) -->
       <section class="slide" aria-label="Market">
         <p class="kicker">Market · bottom-up</p>
         <h2>NYC is the beachhead, <em>not the ceiling.</em></h2>
         <div class="body">
           <div class="funnel">
-            <div class="tier"><span class="lbl" style="color:var(--wl-lime)">Total</span><p><b>1,165,418</b> M+BK residents aged 25–39 × <b>$16/yr</b> <span class="tag assume">assumption</span></p><span class="v">≈ $18.7M</span></div>
-            <div class="tier" style="margin-left:60px"><span class="lbl" style="color:var(--wl-cyan)">Reachable</span><p><b>30%</b> batch-plan going out weekly <span class="tag assume">assumption</span> → ≈ 350,000 × $16/yr</p><span class="v">≈ $5.6M</span></div>
-            <div class="tier" style="margin-left:120px"><span class="lbl" style="color:var(--wl-coral)">Year 3</span><p><b>10,000</b> weekly active planners × $16/yr <span class="tag assume">base-case projection</span></p><span class="v">≈ $160K</span></div>
+            <div class="tier"><span class="lbl">Total</span><p><b>1,165,418</b> M+BK residents aged 25–39 × <b>$16/yr</b> <span class="tag assume">assumption</span></p><span class="v">≈ $18.7M</span></div>
+            <div class="tier t2"><span class="lbl">Reachable</span><p><b>30%</b> batch-plan going out weekly <span class="tag assume">assumption</span> → ≈ 350,000 × $16/yr</p><span class="v">≈ $5.6M</span></div>
+            <div class="tier t3"><span class="lbl">Year 3</span><p><b>10,000</b> weekly active planners × $16/yr <span class="tag assume">base-case projection</span></p><span class="v">≈ $160K</span></div>
           </div>
-          <p style="margin-top:18px;font-size:17px;color:var(--wl-concrete)">$16/yr = $1.34 per planner per month (affiliate + Plus + promoted rows). Venture scale needs ~100K planners or a second city.</p>
+          <p class="note" style="margin-top:18px">$16/yr = $1.34 per planner per month (affiliate + Plus + promoted rows). Venture scale needs ~100K planners or a second city.</p>
         </div>
-        <div class="src"><span>Residents: U.S. Census Bureau, ACS 2024 1-year, B01001, via censusreporter.org (2025); ages 25–39 slightly undercount the 25–40 customer. Revenue per planner and shares: Weekline revenue model, assumptions.</span><span>6 / 12</span></div>
+        <div class="src"><span>Residents: U.S. Census Bureau, ACS 2024 1-year, B01001, via censusreporter.org (2025); ages 25–39 slightly undercount the 25–40 customer. Revenue per planner and shares: Weekline revenue model, assumptions.</span><span class="n">6 / 12</span></div>
       </section>
 
-      <!-- 7 Traction -->
-      <section class="slide" aria-label="Traction">
+      <!-- 7 Traction (dusk) -->
+      <section class="slide dark" aria-label="Traction">
         <p class="kicker">Traction · honest</p>
         <h2>Built and working. <em>Not yet tested with people.</em></h2>
         <div class="body">
-          <div class="cols" style="grid-template-columns:1fr 1fr;gap:34px;align-items:start">
+          <div class="cols trac-grid">
             <div>
-              <p class="tag" style="color:var(--wl-lime);margin-bottom:14px">Built</p>
+              <p class="label">Built</p>
               <ul class="ticks">
-                <li><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9.5l4 4 8-9" fill="none" stroke="#c8f542" stroke-width="2.6"/></svg>v2 live: sign in, or a surprise week with no account</li>
-                <li><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9.5l4 4 8-9" fill="none" stroke="#c8f542" stroke-width="2.6"/></svg>Goals → week, month and year views <span>· Live NYC Parks; other rows labeled</span></li>
-                <li><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9.5l4 4 8-9" fill="none" stroke="#c8f542" stroke-width="2.6"/></svg>Learns from lock, skip and “did you go?”</li>
-                <li><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9.5l4 4 8-9" fill="none" stroke="#c8f542" stroke-width="2.6"/></svg>Crews, invites, RSVPs · week poster + month recap</li>
-                <li><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9.5l4 4 8-9" fill="none" stroke="#c8f542" stroke-width="2.6"/></svg>Google Calendar busy nights <span>· built, switches on once connected</span></li>
+                <li><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9.5l4 4 8-9" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>v2 live: sign in, or a surprise week with no account</li>
+                <li><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9.5l4 4 8-9" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>Goals → week, month and year views <span>· Live NYC Parks; other rows labeled</span></li>
+                <li><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9.5l4 4 8-9" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>Learns from lock, skip and “did you go?”</li>
+                <li><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9.5l4 4 8-9" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>Crews, invites, RSVPs · week poster + month recap</li>
+                <li><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9.5l4 4 8-9" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>Google Calendar busy nights <span>· built, switches on once connected</span></li>
               </ul>
             </div>
             <div>
@@ -370,17 +561,17 @@
                 <div><b>0</b><span>waitlist</span></div>
                 <div><b>$0</b><span>revenue</span></div>
               </div>
-              <div class="card" style="margin-top:16px">
-                <p style="color:var(--wl-paper);font-weight:600;font-size:18px">Next: soft invite, 30–50 NYC locals</p>
+              <div class="card accent next-card">
+                <p class="k">Next: soft invite, 30–50 NYC locals</p>
                 <p style="margin-top:8px">Keep going if ≥30% build + lock or export a week, ≥15% share one, ≥25% return within 14 days. <span class="tag assume">targets</span></p>
               </div>
             </div>
           </div>
         </div>
-        <div class="src"><span>No users, waitlist, revenue or App Store listing exist yet. Thresholds are targets set before the test, not results.</span><span>7 / 12</span></div>
+        <div class="src"><span>No users, waitlist, revenue or App Store listing exist yet. Thresholds are targets set before the test, not results.</span><span class="n">7 / 12</span></div>
       </section>
 
-      <!-- 8 Business model -->
+      <!-- 8 Business model (paper) -->
       <section class="slide" aria-label="Business model">
         <p class="kicker">Business model</p>
         <h2>Free core. <em>Paid when trust holds.</em></h2>
@@ -388,25 +579,25 @@
           <div class="ladder">
             <div class="step"><p class="when">Now</p><h3>Free planning</h3><p>Every free event and address stays free. Fake-door tests only.</p></div>
             <div class="step"><p class="when">~200 planners</p><h3>Ticket handoff</h3><p>"Get tickets" affiliate link on paid rows. Checkout stays with the seller.</p></div>
-            <div class="step"><p class="when">Ritual sticks</p><h3>Weekline Plus</h3><p>Power + sync, web billing. $4–6/mo <span class="tag assume">to test</span></p></div>
-            <div class="step"><p class="when">~1,000 planners</p><h3>Promoted rows</h3><p>Labeled, capped at 1 per Sheet. ≈ $250 per weekly slot <span class="tag assume">to test</span></p></div>
+            <div class="step"><p class="when">Ritual sticks</p><h3>Weekline Plus</h3><p>Power + sync, web billing. <span style="white-space:nowrap">$4–6/mo</span> <span class="tag assume">to test</span></p></div>
+            <div class="step"><p class="when">~1,000 planners</p><h3>Promoted rows</h3><p>Labeled, capped at 1 per Sheet. <span style="white-space:nowrap">≈ $250</span> per weekly slot <span class="tag assume">to test</span></p></div>
           </div>
-          <div class="cols c4" style="margin-top:16px;gap:12px">
-            <div class="card" style="padding:14px 18px"><b style="font:800 30px var(--wl-font-display)">$1.34</b><p>revenue / planner / month, yr 3</p></div>
-            <div class="card" style="padding:14px 18px"><b style="font:800 30px var(--wl-font-display)">&lt; $0.05</b><p>cost to serve / planner / month</p></div>
-            <div class="card" style="padding:14px 18px"><b style="font:800 30px var(--wl-font-display)">≈ $10</b><p>to acquire an activated planner</p></div>
-            <div class="card" style="padding:14px 18px"><b style="font:800 30px var(--wl-font-display)">≈ 8 mo</b><p>payback, if planners stay</p></div>
+          <div class="cols c4 units">
+            <div class="card"><b>$1.34</b><p>revenue / planner / month, yr 3</p></div>
+            <div class="card"><b>&lt; $0.05</b><p>cost to serve / planner / month</p></div>
+            <div class="card"><b>≈ $10</b><p>to acquire an activated planner</p></div>
+            <div class="card"><b>≈ 8 mo</b><p>payback, if planners stay</p></div>
           </div>
-          <div class="rule"><span>Never paywall free events</span><span>Never sell job / love intent data</span></div>
+          <div class="rules"><span>Never paywall free events</span><span>Never sell job / love intent data</span></div>
         </div>
-        <div class="src"><span>All four unit-economics numbers are assumptions (Weekline revenue model). Promoted-row anchor: DoNYC sells a $1,000 email per 6.5K sends, donyc.com (2026). Fever affiliate: 1.6–12% by category per FlexOffers (2026), third party.</span><span>8 / 12</span></div>
+        <div class="src"><span>All four unit-economics numbers are assumptions (Weekline revenue model). Promoted-row anchor: DoNYC sells a $1,000 email per 6.5K sends, donyc.com (2026). Fever affiliate: 1.6–12% by category per FlexOffers (2026), third party.</span><span class="n">8 / 12</span></div>
       </section>
 
-      <!-- 9 Competition -->
+      <!-- 9 Competition (paper) -->
       <section class="slide" aria-label="Competition">
         <p class="kicker">Competition</p>
-        <h2 style="font-size:46px;max-width:28ch">Feeds own browse. Ticket desks own checkout. <em>We plan the week.</em></h2>
-        <div class="body" style="justify-content:flex-start;margin-top:36px">
+        <h2 class="wide">Feeds own browse. Ticket desks own checkout. <em>We plan the week.</em></h2>
+        <div class="body top" style="margin-top:32px">
           <table>
             <thead><tr><th style="width:22%">Player</th><th style="width:22%">What they are</th><th style="width:26%">Numbers</th><th>Weekline's contrast</th></tr></thead>
             <tbody>
@@ -419,30 +610,30 @@
             </tbody>
           </table>
         </div>
-        <div class="src"><span>Eventbrite Q4 2024 letter, SEC (2025) · Music Business Worldwide (2026) · luma.com/pricing (2026) · untappedcities.com/advertise (2026). Tyra, NYCPlanit, Skint, Time Out: named in our pitch, not re-verified.</span><span>9 / 12</span></div>
+        <div class="src"><span>Eventbrite Q4 2024 letter, SEC (2025) · Music Business Worldwide (2026) · luma.com/pricing (2026) · untappedcities.com/advertise (2026). Tyra, NYCPlanit, Skint, Time Out: named in our pitch, not re-verified.</span><span class="n">9 / 12</span></div>
       </section>
 
-      <!-- 10 GTM -->
-      <section class="slide" aria-label="Go-to-market">
+      <!-- 10 GTM (paper-2) -->
+      <section class="slide p2 gtm" aria-label="Go-to-market">
         <p class="kicker">Go-to-market</p>
         <h2>Show the Sheet in 3 seconds. <em>Soft invite before paid.</em></h2>
         <div class="body">
           <div class="cols c2" style="gap:22px">
-            <div class="card lime"><h3>Instagram (Meta)</h3><p>NYC 25–40, Brooklyn + Manhattan zips. 3 angles: "idk you pick", Free Week Brooklyn, Seeking fitness. 2-week test, $240.</p><p style="margin-top:10px;color:var(--wl-paper)">Keep an angle at ≥10% invite requests or ≤$3 each. <span class="tag assume">targets</span></p></div>
-            <div class="card cyan"><h3>Soft invite + communities</h3><p>1–2 Brooklyn creators or run clubs, r/nyc and r/AskNYC posts with a real, labeled week.</p><p style="margin-top:10px;color:var(--wl-paper)">The shared Sheet is the growth loop.</p></div>
+            <div class="card accent"><h3>Instagram (Meta)</h3><p>NYC 25–40, Brooklyn + Manhattan zips. 3 angles: "idk you pick", Free Week Brooklyn, Seeking fitness. 2-week test, $240.</p><p class="k-line">Keep an angle at ≥10% invite requests or ≤$3 each. <span class="tag assume">targets</span></p></div>
+            <div class="card ink"><h3>Soft invite + communities</h3><p>1–2 Brooklyn creators or run clubs, r/nyc and r/AskNYC posts with a real, labeled week.</p><p class="k-line">The shared Sheet is the growth loop.</p></div>
           </div>
-          <p style="margin-top:20px;font-size:18px;color:var(--wl-concrete)"><b style="color:var(--wl-paper)">First 1,000 planners:</b> 50 soft invites → shared Sheets → weekly "Free Week Brooklyn" post → one newcomer campus pilot. Never bid "dating app" or "AI trip planner".</p>
+          <p class="note" style="margin-top:20px;font-size:18px"><b>First 1,000 planners:</b> 50 soft invites → shared Sheets → weekly "Free Week Brooklyn" post → one newcomer campus pilot. Never bid "dating app" or "AI trip planner".</p>
         </div>
-        <div class="src"><span>Budget and thresholds are the planned test (assumptions); nothing has run yet. Nothing posts or sends without the founder pressing go.</span><span>10 / 12</span></div>
+        <div class="src"><span>Budget and thresholds are the planned test (assumptions); nothing has run yet. Nothing posts or sends without the founder pressing go.</span><span class="n">10 / 12</span></div>
       </section>
 
-      <!-- 11 Team -->
-      <section class="slide" aria-label="Team">
+      <!-- 11 Team (dusk) -->
+      <section class="slide dark" aria-label="Team">
         <p class="kicker">Team</p>
         <h2>A designer who codes <em>shipped v2.</em></h2>
         <div class="body">
-          <div class="cols" style="grid-template-columns:1.2fr 1fr;gap:24px;align-items:start">
-            <div class="card lime" style="padding:26px 28px">
+          <div class="cols team-grid">
+            <div class="card accent founder">
               <h3>Alexandra Vargas · Designer</h3>
               <p>Built both versions herself: accounts, a learning week, three visual systems, a provenance-honest data model, live NYC Parks rows.</p>
             </div>
@@ -452,17 +643,19 @@
             </div>
           </div>
         </div>
-        <div class="src"><span>Only the founder is on the team today.</span><span>11 / 12</span></div>
+        <div class="src"><span>Only the founder is on the team today.</span><span class="n">11 / 12</span></div>
       </section>
 
-      <!-- 12 Ask -->
-      <section class="slide" aria-label="The ask">
+      <!-- 12 Ask (dusk photo) -->
+      <section class="slide dark ph s-ask" aria-label="The ask">
+        <img class="bg" src="v2/photos/domino.jpg" alt="" />
+        <div class="shade"></div>
         <p class="kicker">What's next</p>
         <h2>Not raising yet. <em>First, prove the Sunday ritual.</em></h2>
         <div class="body">
-          <div class="cols" style="grid-template-columns:1.3fr 0.7fr;gap:30px;align-items:start">
+          <div class="cols ask-grid">
             <div>
-              <p class="tag" style="color:var(--wl-lime);margin-bottom:14px">18-month milestones</p>
+              <p class="label">18-month milestones</p>
               <ol class="ms">
                 <li><div>Soft invite 30–50 locals <span>· ≥30% build + lock a week</span></div></li>
                 <li><div>~200 weekly planners <span>· ticket handoff on</span></div></li>
@@ -475,9 +668,9 @@
               <div class="card"><h3>Spend</h3><p>The soft invite runs on the v2 app already built.</p></div>
             </div>
           </div>
-          <p style="margin-top:22px;font:700 24px var(--wl-font-display);letter-spacing:-0.01em">NYC doesn't need more listings. It needs a week that fits your life.</p>
+          <p class="closer">NYC doesn't need more listings. It needs a week that fits your life.</p>
         </div>
-        <div class="src"><span>Milestone thresholds come from the revenue plan and are assumptions, not commitments.</span><span>12 / 12</span></div>
+        <div class="src"><span>Milestone thresholds come from the revenue plan and are assumptions, not commitments.</span><span class="credit">Photo: Domino Park at sunset, Daniel Prostak, CC BY-SA 4.0</span><span class="n">12 / 12</span></div>
       </section>
 
     </div>
@@ -494,7 +687,14 @@
     var bare = q.has("bare");
     var i = Math.max(0, Math.min(slides.length - 1, (+q.get("slide") || 1) - 1));
     var deck = document.getElementById("deck");
-    function fit() { var s = Math.min(innerWidth / 1280, (innerHeight - (bare ? 0 : 106)) / 720); deck.style.transform = "translate(-50%, -50%) scale(" + s + ")"; }
+    var vp = document.querySelector(".viewport");
+    function fit() {
+      /* leave room for the site bar + top nav above and the slide nav below */
+      var bar = document.querySelector(".site-bar"), top = bare ? 0 : (bar ? bar.offsetHeight : 0) + 60;
+      if (!bare) vp.style.top = top + "px";
+      var s = Math.min((innerWidth - (bare ? 0 : 32)) / 1280, (innerHeight - top - (bare ? 0 : 60)) / 720);
+      deck.style.transform = "translate(-50%, -50%) scale(" + s + ")";
+    }
     function show(n) {
       i = Math.max(0, Math.min(slides.length - 1, n));
       slides.forEach(function (s, k) { s.classList.toggle("on", k === i); });
@@ -509,8 +709,9 @@
       if (e.key === "ArrowLeft" || e.key === "PageUp") { e.preventDefault(); show(i - 1); }
       if (e.key === "Home") show(0); if (e.key === "End") show(slides.length - 1);
     });
-    if (bare) { document.querySelector(".viewport").style.inset = "0"; ["nav", "studio-back", "topnav"].forEach(function (c) { document.querySelector("." + c).style.display = "none"; }); }
-    addEventListener("resize", fit); fit(); show(i);
+    if (bare) { vp.style.inset = "0"; ["nav", "studio-back", "topnav"].forEach(function (c) { document.querySelector("." + c).style.display = "none"; }); }
+    addEventListener("resize", fit); addEventListener("load", fit); fit(); show(i);
+    setTimeout(fit, 300); /* the site bar arrives after DOMContentLoaded */
   </script>
 </body>
 </html>

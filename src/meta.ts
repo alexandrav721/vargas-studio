@@ -16,6 +16,7 @@ export const META: Record<string, Meta> = {
 /* The "New" row at the top of home: the latest things built, one tap away. */
 export type Fresh = { href: string; pic: string; name: string; line: string; external?: boolean };
 export const NEW: Fresh[] = [
+  { href: "/projects/weekline/v2/", pic: "/desk/new-weekline.jpg", name: "Weekline v2", line: "Your NYC week, sorted by Sunday night" },
   { href: "https://shelfpaid.pages.dev/", pic: "/desk/new-shelf-paid.jpg", name: "Shelf Paid", line: "Storefront to a week of posts", external: true },
   { href: "/projects/skill-quest/templates/", pic: "/desk/new-templates.jpg", name: "Ready-made skills", line: "8 skills that beat plain Claude" },
   { href: "/projects/skill-quest/build-kit/", pic: "/desk/new-build-kit.jpg", name: "Build Kit", line: "Plan an app so AI stops guessing" },
