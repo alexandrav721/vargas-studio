@@ -506,10 +506,21 @@ export async function makeCard(opts = {}) {
   }
   g.fillStyle = brand;
   g.font = "800 58px Syne, sans-serif";
-  g.fillText("Who were you?", 72, 1790);
+  g.fillText("Who were you?", 72, 1772);
+  // photo credits: who took each picture on the card, then where the full list lives
+  const who = picks.map((it) => ITEM_MEDIA[it.name]).filter((m) => m?.file).map((m) => `${String(m.author).replace(/\s*\(.*?\)/g, "").slice(0, 30)} (${m.license})`);
+  const lines = [];
+  let line = who.length ? "Photos, Wikimedia Commons: " : "";
+  g.font = "500 20px 'IBM Plex Mono', monospace";
+  who.forEach((w, k) => {
+    const next = `${w}${k < who.length - 1 ? ", " : "."}`;
+    if (g.measureText(line + next).width > 936 && line) { lines.push(line.trimEnd()); line = ""; }
+    line += next;
+  });
+  if (line) lines.push(line);
+  lines.push("All credits: Scrollback credits page");
   g.fillStyle = "rgba(246,242,234,0.7)";
-  g.font = "500 28px 'IBM Plex Mono', monospace";
-  g.fillText("Scrollback · photos: Wikimedia Commons", 72, 1850);
+  lines.slice(-4).forEach((t, k, arr) => g.fillText(t, 72, 1900 - (arr.length - 1 - k) * 26));
   return new Promise((ok) => canvas.toBlob(ok, "image/png"));
 }
 
