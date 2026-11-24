@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Instagram posts · AI Made EZ</title>
+<meta name="description" content="What AI Made EZ posts on Instagram: AI made easy, AI news in plain words, and no gatekeeping.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../school.css">
+<style>
+/* ---------- the page around the posts ---------- */
+.wrap{max-width:1120px;margin:0 auto;padding:0 16px 64px}
+.pillar{margin-top:44px}
+.pillar h2{margin:0;font:800 28px/1.1 var(--display);letter-spacing:-.02em}
+.pillar > p{margin:6px 0 0;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:22px;margin-top:18px}
+.card{display:grid;gap:10px;align-content:start}
+.frame{position:relative;aspect-ratio:4/5;border-radius:12px;overflow:hidden;box-shadow:0 1px 0 var(--line2),0 16px 30px -18px rgba(0,0,0,.45)}
+.frame .post{position:absolute;top:0;left:0;transform-origin:0 0}
+.cap{font-size:15px;line-height:1.45;color:var(--ink);white-space:pre-line}
+.card .row{display:flex;gap:8px;flex-wrap:wrap}
+.card .chip{font-size:13px}
+.rhythm{margin:18px 0 0;padding:14px 16px;border-radius:12px;background:var(--track);font-size:.95em}
+
+/* ---------- the posts: 1080 x 1350 ---------- */
+.post{width:1080px;height:1350px;padding:88px 84px;display:flex;flex-direction:column;font-family:var(--text);overflow:hidden;--pa:#C7391F}
+.post .ptag{font:700 28px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase}
+.post h3{margin:34px 0 0;font:800 112px/0.98 var(--display);letter-spacing:-.035em}
+.post .sub{margin:28px 0 0;font:500 40px/1.3 var(--text)}
+.post .pfoot{margin-top:auto;display:flex;justify-content:space-between;align-items:flex-end;font:700 30px/1 var(--mono)}
+.post .pfoot b{font:800 40px/1 var(--display);letter-spacing:-.02em}
+
+.easy{background:#FBFAF7;color:#151411}
+.easy .ptag{color:var(--pa)}
+.easy em{font-style:normal;color:var(--pa)}
+.plines{margin:44px 0 0;padding:0;list-style:none;display:grid;gap:18px}
+.plines li{display:grid;grid-template-columns:1fr 1.15fr;gap:24px;align-items:baseline;padding:20px 26px;border:3px solid #151411;border-radius:22px;background:#fff;font:500 34px/1.25 var(--text)}
+.plines li b{font:800 40px/1.1 var(--display);letter-spacing:-.02em}
+.pticket{margin:40px 0 0;padding:34px 38px;border:3px solid #151411;border-radius:22px;background:#fff;box-shadow:10px 10px 0 #151411;font:500 38px/1.4 var(--mono)}
+.pticket small{display:block;margin-bottom:14px;font:700 24px/1 var(--mono);color:#8a857c;letter-spacing:.08em}
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:40px}
+.vs .pticket{margin:0;font-size:32px}
+.vs .bad{opacity:.6;box-shadow:none;border-style:dashed}
+
+.news{background:#151411;color:#fff}
+.news .ptag{color:#F4B9A9}
+.news h3{color:#fff}
+.items{margin:44px 0 0;padding:0;list-style:none;display:grid;gap:22px}
+.items li{padding:22px 0 0;border-top:2px solid #3b3934}
+.items b{display:block;font:800 44px/1.08 var(--display);letter-spacing:-.02em}
+.items span{display:block;margin-top:10px;font:500 30px/1.3 var(--text);color:#d8d4cc}
+.items i{display:block;margin-top:8px;font:700 22px/1 var(--mono);font-style:normal;color:#8f8a80}
+
+.free{background:#C7391F;color:#fff;--pa:#fff}
+.free .ptag{color:#FFE0D6}
+.free .pticket{color:#151411;box-shadow:10px 10px 0 #7d2312;border-color:#151411}
+.free s{text-decoration-thickness:6px;text-decoration-color:#151411;opacity:.75}
+.big-list{margin:46px 0 0;padding:0;list-style:none;display:grid;gap:20px;font:800 64px/1.05 var(--display);letter-spacing:-.025em}
+.big-list .yes{color:#151411;background:#fff;border-radius:18px;padding:18px 26px;margin-top:10px}
+
+/* export mode: ?post=<id> shows one post at full size */
+body.solo{margin:0;background:#fff}
+body.solo > *:not(#solo){display:none!important}
+</style>
+<link rel="stylesheet" href="/site-bar.css" />
+<script src="/site-bar.js" data-project="ai-made-ez" data-kind="piece" defer></script>
+</head>
+<body>
+<header class="top">
+  <a class="logo" href="../">AI Made EZ</a>
+  <div class="tools"><a class="chip give" href="../support.html">♥ Keep it free</a></div>
+</header>
+<main class="wrap">
+  <p class="label">Instagram</p>
+  <h1>What we post</h1>
+  <p class="muted">Three kinds of posts. All of them say the same thing: AI isn't fancy, and nothing here is secret.</p>
+  <p class="rhythm" id="rhythm"></p>
+  <div id="pillars"></div>
+</main>
+<div id="solo"></div>
+
+<script>
+var LINK = "vargas-studio.pages.dev/projects/skill-quest/school";
+var RHYTHM = "3 posts a week: Monday, AI made easy. Wednesday, no gatekeeping. Friday, AI news in plain words.";
+
+/* Friday's post: real news, plain words. Update every week. */
+var NEWS = { week: "Nov 17–21, 2026", items: [{"headline": "ChatGPT now types as you talk", "what": "OpenAI rolled out Live Dictation to every ChatGPT plan. Your words appear as you speak, with no 10-minute limit.", "you": "Tap the mic to dictate long notes or messages, even on the free plan.", "source": "OpenAI", "url": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes", "date": "2026-11-18"}, {"headline": "That panicked grandkid call could be fake", "what": "The FTC warned that scammers clone a grandchild's voice or fake a video call, then demand urgent, secret payment.", "you": "Hang up and call another relative to check before sending any money or gift cards.", "source": "Federal Trade Commission", "url": "https://consumer.ftc.gov/consumer-alerts/2026/11/grandpa-i-need-your-help-how-spot-and-avoid-grandkid-scams", "date": "2026-11-18"}, {"headline": "New York sets up an AI watchdog team", "what": "New York's attorney general created a unit to enforce a new AI safety law and police AI scams and privacy.", "you": "New Yorkers get a place to report AI harms. The law starts 1 January 2027.", "source": "New York State Attorney General", "url": "https://ag.ny.gov/press-release/2026/attorney-general-james-announces-creation-ai-safety-standards-enforcement-and", "date": "2026-11-17"}] };
+
+function foot(n) { return '<div class="pfoot"><b>AI Made EZ</b><span>' + n + '</span></div>'; }
+
+var PILLARS = [
+ { id: "easy", name: "AI, made easy", what: "One AI word a week, explained with a kitchen you already know.",
+   posts: [
+    { id: "kitchen", html: function () { return '<div class="post easy"><p class="ptag">AI, made easy</p><h3>AI isn\'t fancy.<br>It\'s a <em>kitchen.</em></h3><ul class="plines">' +
+        [["Claude","the chef"],["Your prompt","your order"],["A skill","a recipe card"],["A connector","the pantry door"],["A blind test","a taste test"]]
+        .map(function (r) { return "<li><b>" + r[0] + "</b><span>= " + r[1] + "</span></li>"; }).join("") + "</ul>" + foot("Save this") + "</div>"; },
+      cap: "Every AI word has a kitchen version. Claude cooks anything you order, but it has never tasted food, so you check the plate.\n\nFree lessons, link in bio. #AIMadeEZ #learnAI" },
+    { id: "order", html: function () { return '<div class="post easy"><p class="ptag">AI, made easy</p><h3>Your prompt is <em>your order.</em></h3><p class="sub">Vague order, vague dinner.</p><div class="vs">' +
+        '<div class="pticket bad"><small>ORDER #001</small>Plan dinners.</div>' +
+        '<div class="pticket"><small>ORDER #002</small>Plan 5 dinners for this week. Fridge: eggs, spinach, rice, cheese. Never use: mushrooms. 30 minutes or less.</div></div>' + foot("Lesson 1") + "</div>"; },
+      cap: "Same chef. Better order. Say what you have, what you never want, and how much time you've got.\n\nCopy order #002 and try it tonight. #AIMadeEZ" },
+    { id: "guess", html: function () { return '<div class="post easy"><p class="ptag">AI, made easy</p><h3>"Hallucination" = a <em>confident wrong plate.</em></h3><p class="sub">The chef has never tasted food. It can sound sure and still be wrong.</p><div class="pticket"><small>THE FIX</small>Check names, dates, prices and addresses before you use them.</div>' + foot("Lesson 4") + "</div>"; },
+      cap: "Not lying on purpose. No AI is free of it. So taste before you serve: check anything you'd be embarrassed to get wrong.\n\n#AIMadeEZ #AItips" }
+   ] },
+ { id: "free", name: "No gatekeeping", what: "The whole prompt, right in the post. No \"comment PROMPT and I'll DM you.\"",
+   posts: [
+    { id: "prompt", html: function () { return '<div class="post free"><p class="ptag">No gatekeeping</p><h3><s>Comment "PROMPT" and I\'ll DM you</s><br>Here it is.</h3><div class="pticket"><small>COPY THIS</small>Plan 5 dinners for this week. Fridge: eggs, spinach, rice, cheese. Never use: mushrooms. 30 minutes or less.</div>' + foot("Free, all of it") + "</div>"; },
+      cap: "No DMs. No email list. Here's the whole prompt. Swap in what's in your fridge.\n\nEvery prompt we teach is right on the page, free. Link in bio. #AIMadeEZ #nogatekeeping" },
+    { id: "need", html: function () { return '<div class="post free"><p class="ptag">No gatekeeping</p><h3>To use AI, you don\'t need:</h3><ul class="big-list"><li><s>to code</s></li><li><s>a pricey course</s></li><li><s>a secret prompt</s></li><li class="yes">You need a clear order.</li></ul>' + foot("You can do this") + "</div>"; },
+      cap: "If someone makes AI sound complicated, they're usually selling something. Say what you want, what you have, and what to avoid. That's it.\n\n#AIMadeEZ" },
+    { id: "words", html: function () { return '<div class="post free"><p class="ptag">No gatekeeping</p><h3>Words people use to sound fancy</h3><ul class="plines" style="--x:0">' +
+        [["API","the order window"],["MCP","a standard outlet"],["RAG","the recipe binder"],["Agent","a chef running dinner alone"]]
+        .map(function (r) { return '<li style="color:#151411"><b>' + r[0] + "</b><span>= " + r[1] + "</span></li>"; }).join("") + "</ul>" + foot("Level 2") + "</div>"; },
+      cap: "Next time a meeting goes full jargon, you'll know what they mean. All 10 Level 2 lessons are free, no coding.\n\n#AIMadeEZ #AIwords" }
+   ] },
+ { id: "news", name: "AI news, in plain words", what: "Every Friday: what changed this week, and what it means for you. Real sources only.",
+   posts: [
+    { id: "news", html: function () {
+        var items = NEWS.items.slice(0, 3);
+        var body = items.length ? items.map(function (n) { return "<li><b>" + n.headline + "</b><span>" + n.you + "</span><i>" + n.source + " · " + n.date + "</i></li>"; }).join("")
+          : '<li><b>This week\'s news goes here</b><span>Filled in from real sources every Friday.</span></li>';
+        return '<div class="post news"><p class="ptag">AI news · ' + (NEWS.week || "this week") + '</p><h3>This week in AI, in plain words</h3><ul class="items">' + body + "</ul>" + foot("Every Friday") + "</div>"; },
+      cap: function () { return "What changed in AI this week, minus the hype:\n\n" + NEWS.items.slice(0, 3).map(function (n, i) { return (i + 1) + ". " + n.headline + ": " + n.what + " " + n.you; }).join("\n") + "\n\nSources in the comments. #AIMadeEZ #AInews"; } }
+   ] }
+];
+
+/* ---------- render ---------- */
+var solo = new URLSearchParams(location.search).get("post");
+var all = [];
+PILLARS.forEach(function (p) { p.posts.forEach(function (x) { all.push(x); }); });
+
+if (solo) {
+  var one = all.filter(function (x) { return x.id === solo; })[0];
+  document.body.classList.add("solo");
+  document.getElementById("solo").innerHTML = one ? one.html() : "";
+} else {
+  document.getElementById("rhythm").textContent = RHYTHM;
+  document.getElementById("pillars").innerHTML = PILLARS.map(function (p) {
+    return '<section class="pillar" id="' + p.id + '"><h2>' + p.name + "</h2><p>" + p.what + '</p><div class="grid">' +
+      p.posts.map(function (x) {
+        var cap = typeof x.cap === "function" ? x.cap() : x.cap;
+        return '<div class="card"><div class="frame">' + x.html() + '</div><p class="cap">' + cap.replace(/</g, "&lt;") + '</p><div class="row">' +
+          '<button class="chip" type="button" data-copy="' + x.id + '">Copy caption</button>' +
+          '<a class="chip" href="?post=' + x.id + '" target="_blank" rel="noopener">Full size</a></div></div>';
+      }).join("") + "</div></section>";
+  }).join("");
+  function fit() {
+    document.querySelectorAll(".frame").forEach(function (f) { f.firstChild.style.transform = "scale(" + f.clientWidth / 1080 + ")"; });
+  }
+  fit(); addEventListener("resize", fit);
+  document.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-copy]"); if (!b) return;
+    var x = all.filter(function (p) { return p.id === b.getAttribute("data-copy"); })[0];
+    var cap = typeof x.cap === "function" ? x.cap() : x.cap;
+    try { navigator.clipboard.writeText(cap); b.textContent = "Copied"; } catch (err) {}
+    setTimeout(function () { b.textContent = "Copy caption"; }, 1500);
+  });
+}
+</script>
+</body>
+</html>

@@ -17,6 +17,7 @@ type HQ = {
   live?: string[];
   next?: string[];
   waiting?: string[];
+  social?: { rhythm?: string; page?: string; pillars: { name: string; what: string; posts: string[] }[] };
 };
 const HQS = hqData as Record<string, HQ>;
 
@@ -30,6 +31,7 @@ const PARTS = [
   { id: "try", label: "Try it" },
   { id: "plan", label: "The plan" },
   { id: "marketing", label: "Marketing" },
+  { id: "social", label: "Social" },
   { id: "status", label: "Status" },
 ];
 
@@ -212,6 +214,31 @@ export default function ProjectPage({ id }: { id: string }) {
             <p className="hq-empty">Ads and posts coming.</p>
           )}
         </section>
+
+        {hq.social ? (
+          <section id="hq-social" className="hq-part" aria-labelledby="hq-social-h">
+            <h2 id="hq-social-h">What we post</h2>
+            {hq.social.rhythm ? <p className="hq-rhythm">{hq.social.rhythm}</p> : null}
+            <div className="hq-pillars">
+              {hq.social.pillars.map((pl) => (
+                <div key={pl.name}>
+                  <h3>{pl.name}</h3>
+                  <p>{pl.what}</p>
+                  <ul>
+                    {pl.posts.map((x) => (
+                      <li key={x}>{x}</li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+            {hq.social.page ? (
+              <a className="proj-play proj-extra" href={hq.social.page}>
+                See the posts
+              </a>
+            ) : null}
+          </section>
+        ) : null}
 
         <section id="hq-status" className="hq-part" aria-labelledby="hq-status-h">
           <h2 id="hq-status-h">Status</h2>

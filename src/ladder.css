@@ -518,3 +518,41 @@
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
+.hq-rhythm {
+  margin: 0 0 14px;
+  color: var(--fog);
+  font: 500 16px/1.4 var(--sans);
+}
+.hq-pillars {
+  display: grid;
+  gap: 12px;
+}
+@media (min-width: 720px) {
+  .hq-pillars {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+.hq-pillars > div {
+  padding: 16px 18px;
+  border-radius: 14px;
+  background: rgba(215, 228, 220, 0.05);
+  border: 1px solid rgba(215, 228, 220, 0.1);
+}
+.hq-pillars h3 {
+  margin: 0;
+  font: 600 20px/1.2 var(--display);
+}
+.hq-pillars p {
+  margin: 6px 0 0;
+  color: var(--mist);
+  font: 400 15px/1.4 var(--sans);
+}
+.hq-pillars ul {
+  margin: 12px 0 0;
+  padding-left: 18px;
+  color: var(--fog);
+  font: 400 15px/1.45 var(--sans);
+}
+.hq-pillars li + li {
+  margin-top: 6px;
+}

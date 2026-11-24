@@ -23,7 +23,39 @@
   "waiting": [
    "Add Google keys for calendar busy times",
    "Say yes to a 7-day NYC ad test"
-  ]
+  ],
+  "social": {
+   "pillars": [
+    {
+     "name": "This week's Sheet",
+     "what": "Shows a real NYC week built from live, labeled events.",
+     "posts": [
+      "Carousel: this week's free Brooklyn Sheet, every row labeled",
+      "Reel: screen recording of a week filling in, start to finish",
+      "Carousel: one free thing per weeknight in Manhattan this week"
+     ]
+    },
+    {
+     "name": "End the group chat",
+     "what": "Plays out the Friday \"idk you pick\" chat and how it ends.",
+     "posts": [
+      "Reel: the \"idk you pick\" chat, then the Sheet lands",
+      "Story poll: Friday plan, park hike or free museum night?",
+      "Story: share your Sheet, ask \"who's in for one of these?\""
+     ]
+    },
+    {
+     "name": "Weeks with room",
+     "what": "Explains why some nights stay open and plans stay small.",
+     "posts": [
+      "Carousel: why some nights on your Sheet say OPEN",
+      "Reel: real NYC sunset photo, one plan, one open night",
+      "Story quiz: which borough's free events surprised you this week?"
+     ]
+    }
+   ],
+   "rhythm": "3 posts a week: Sun carousel, Wed reel, Fri story poll"
+  }
  },
  "restitch": {
   "who": "Thrifters who want to flip a find, sewing machine or not",
@@ -49,7 +81,39 @@
   "waiting": [
    "Decide who pays: Plus plan or supply links",
    "Film a flip with a real thrift find"
-  ]
+  ],
+  "social": {
+   "pillars": [
+    {
+     "name": "Which view?",
+     "what": "Shows one thrift find with three flip views and asks you to pick.",
+     "posts": [
+      "Carousel: one find, views A, B and C. Which would you make?",
+      "Story poll: View A or View B for this jacket?",
+      "Reel: photo in, three views out, in real screen time"
+     ]
+    },
+    {
+     "name": "No machine needed",
+     "what": "Proves the no-sew view works with pins, tape and real hands.",
+     "posts": [
+      "Reel: a real no-sew View A with safety pins only",
+      "Carousel: what's in a no-sew kit, laid out on a table",
+      "Story: \"No machine? Here's View A\" with the steps"
+     ]
+    },
+    {
+     "name": "From the bag",
+     "what": "Gets the finds sitting in a bag for months out and planned.",
+     "posts": [
+      "Reel: pull a find out of the thrift bag, plan it tonight",
+      "Story question: what's been in your thrift bag the longest?",
+      "Carousel: what the photo can't tell you, like your size"
+     ]
+    }
+   ],
+   "rhythm": "3 posts a week: Mon carousel, Wed reel, Sat story poll"
+  }
  },
  "nostalgia": {
   "who": "Millennials who came of age between 1995 and 2012",
@@ -74,7 +138,39 @@
   ],
   "waiting": [
    "Choose the money model: shop links, prints or ads"
-  ]
+  ],
+  "social": {
+   "pillars": [
+    {
+     "name": "What year were you 15?",
+     "what": "Opens a single year with its real sites, things and style.",
+     "posts": [
+      "Carousel: 2004, the websites you had open, real archived pages",
+      "Reel: the old computer boots and asks your year",
+      "Story poll: what year were you 15? Pick one"
+     ]
+    },
+    {
+     "name": "Did you have this?",
+     "what": "One real item photo per post, asking who owned it.",
+     "posts": [
+      "Carousel: five things from 2003, did you have this?",
+      "Story poll: had it, my sister had it, never had it",
+      "Reel: one item, one year, said and shown the same"
+     ]
+    },
+    {
+     "name": "Who were you?",
+     "what": "Shares the year card naming who you were online at 15.",
+     "posts": [
+      "Carousel: every persona card, which one were you?",
+      "Story: post your card, tag your friend from that year",
+      "Reel: tap what you had, then your persona appears"
+     ]
+    }
+   ],
+   "rhythm": "3 posts a week: Tue carousel, Thu reel, Sat story poll"
+  }
  },
  "scrolll": {
   "who": "People who scroll anyway, and brands that want real attention",
@@ -100,7 +196,39 @@
   "waiting": [
    "Set the viewer split",
    "Say yes to the brand emails"
-  ]
+  ],
+  "social": {
+   "pillars": [
+    {
+     "name": "Name your price",
+     "what": "Shows how setting a price for one look at you works.",
+     "posts": [
+      "Reel: set a price, scroll, a brand gets bounced on screen",
+      "Story poll: what's one look at you worth, 1 cent or 5?",
+      "Carousel: how the price floor works, labeled sample prices"
+     ]
+    },
+    {
+     "name": "What brands don't get",
+     "what": "Explains what an ad view gives brands, and what it doesn't.",
+     "posts": [
+      "Carousel: what a brand gets from one view, and doesn't",
+      "Reel: the receipt after a scroll, sample amounts labeled",
+      "Story question: what would you never let an ad see?"
+     ]
+    },
+    {
+     "name": "Time to stop",
+     "what": "Shows the app telling you when to stop scrolling.",
+     "posts": [
+      "Reel: the demo telling you it's time to stop",
+      "Story poll: do you want your feed to tell you when?",
+      "Carousel: why an app that wants you to leave"
+     ]
+    }
+   ],
+   "rhythm": "2 posts a week: Tue reel, Fri carousel, plus story polls"
+  }
  },
  "loop": {
   "who": "Friends and neighbors on the same block who own more than they use",
@@ -126,7 +254,39 @@
   "waiting": [
    "Finish App Store screenshots and listing details",
    "Set up Premium products with Apple"
-  ]
+  ],
+  "social": {
+   "pillars": [
+    {
+     "name": "Check your block first",
+     "what": "Asks before you buy: could a neighbor lend it?",
+     "posts": [
+      "Reel: about to buy a tile saw for one Saturday?",
+      "Story poll: how many times have you used your drill?",
+      "Carousel: five things people buy for one weekend"
+     ]
+    },
+    {
+     "name": "Real handoffs",
+     "what": "Real hands passing real things in real FiDi lobbies.",
+     "posts": [
+      "Reel: a real handoff in a building lobby, both confirm",
+      "Carousel: how a borrow works, in real app screens",
+      "Story: what's on the shelf in FiDi this week"
+     ]
+    },
+    {
+     "name": "Lend to people you'll see",
+     "what": "Why lending to neighbors feels different from strangers.",
+     "posts": [
+      "Carousel: lending to a stranger vs someone down the hall",
+      "Story question: what would you lend your neighbor? What not?",
+      "Reel: the lobby flyer going up, scan the QR code"
+     ]
+    }
+   ],
+   "rhythm": "3 posts a week: Mon reel, Wed carousel, Sat story"
+  }
  },
  "planner-book": {
   "who": "People who still plan on paper and keep quitting planners",
@@ -153,13 +313,45 @@
    "Pick the planner brand name",
    "Confirm payments work in the kit shop",
    "Say yes to a Pinterest and Instagram test"
-  ]
+  ],
+  "social": {
+   "pillars": [
+    {
+     "name": "Planners that play",
+     "what": "Shows spinners, scratch-offs and cut pages being used by hand.",
+     "posts": [
+      "Reel: spin the wheel, the planner picks today's task",
+      "Reel: real hands scratch off a printed reward square",
+      "Carousel: every page in one free planner PDF, printed"
+     ]
+    },
+    {
+     "name": "Missed a week? Fine",
+     "what": "Makes restarting easy: undated pages, start from today.",
+     "posts": [
+      "Carousel: missed a week? Don't redo it, start here",
+      "Story poll: when do you usually quit a planner?",
+      "Reel: Sunday night, open to any page, no dates"
+     ]
+    },
+    {
+     "name": "Make yours",
+     "what": "Shows building a planner with only the pages you'd use.",
+     "posts": [
+      "Reel: Make yours builder, pick pages, your name on the cover",
+      "Story: my own cover, my name on it",
+      "Carousel: the printed kit unboxed, real photos"
+     ]
+    }
+   ],
+   "rhythm": "3 posts a week: Sun carousel, Wed reel, Fri story"
+  }
  },
  "ai-made-ez": {
-  "who": "Everyday people new to AI, including people who love to print",
+  "who": "Everyday people new to AI, and people who buy or manage it at work",
   "problem": "Everyone says AI is easy. I don't get it, and I'm unsure it's safe.",
-  "money": "Free today. Ideas: a $19 starter course, mailed letters, printed calendars, puzzle books.",
-  "edge": "Every course ends with something you made, and your own taste-tested recipe card.",
+  "money": "Free, all of it. Donations through Patreon keep it going.",
+  "edge": "No gatekeeping: every prompt is on the page, in plain words.",
   "hooks": [
    "Learn AI the way you learned to cook.",
    "Lesson 1: a week of dinners from your fridge.",
@@ -168,19 +360,51 @@
   "live": [
    "Level 1: Cooking with Claude, 8 lessons",
    "Level 2: Speak AI builder, 10 lessons",
-   "Holiday letter, invitations, birthday calendar makers",
-   "Printable puzzle book maker"
+   "Build Kit: app idea to a build plan",
+   "Kitchen dictionary and poster"
   ],
   "next": [
-   "Test a $19 starter course pre-order page",
-   "Check the name before any ads",
-   "Add printed and mailed versions of the makers"
+   "Post 3 times a week: easy, no gatekeeping, news",
+   "Rewrite the pitch deck for the courses",
+   "Check the name before any ads"
   ],
   "waiting": [
-   "Set the AI key so makers write for real",
-   "Decide the brand name",
-   "Say yes to taking pre-orders"
-  ]
+   "Set up a Patreon page and send the link",
+   "Decide the brand name"
+  ],
+  "social": {
+   "rhythm": "3 posts a week: Mon AI made easy, Wed no gatekeeping, Fri AI news",
+   "page": "/projects/skill-quest/school/social/",
+   "pillars": [
+    {
+     "name": "AI, made easy",
+     "what": "One AI word a week, explained with a kitchen you already know.",
+     "posts": [
+      "Post: AI isn't fancy, it's a kitchen",
+      "Post: your prompt is your order, vague vs clear",
+      "Post: hallucination is a confident wrong plate"
+     ]
+    },
+    {
+     "name": "No gatekeeping",
+     "what": "The whole prompt in the post. Never \"comment PROMPT and I'll DM you.\"",
+     "posts": [
+      "Post: the full dinner prompt, copy it",
+      "Post: you don't need code, a course or a secret prompt",
+      "Post: words people use to sound fancy, in plain words"
+     ]
+    },
+    {
+     "name": "AI news, plain words",
+     "what": "Every Friday: what changed this week and what it means for you.",
+     "posts": [
+      "Post: this week in AI, 3 items, real sources",
+      "Story: one scam to watch for this week",
+      "Reel: one new feature, tried on screen"
+     ]
+    }
+   ]
+  }
  },
  "habit-game": {
   "who": "People who quit a goal after one bad week",
@@ -206,7 +430,39 @@
   "waiting": [
    "Decide the coach price",
    "Film a real ticket punch for the first ad"
-  ]
+  ],
+  "social": {
+   "pillars": [
+    {
+     "name": "Missed a day",
+     "what": "Opens on the missed day and shows the goal still alive.",
+     "posts": [
+      "Reel: day 23, then Tuesday happened. Punch a ticket.",
+      "Carousel: you missed one day, then it all felt over",
+      "Story poll: what usually makes you quit, one day or a week?"
+     ]
+    },
+    {
+     "name": "What's your fog?",
+     "what": "Names what's in your way and one small move for today.",
+     "posts": [
+      "Story: share your fog card with a spare ticket",
+      "Carousel: each fog type and its five-minute move",
+      "Story question: what's in your way lately?"
+     ]
+    },
+    {
+     "name": "Count comebacks",
+     "what": "Celebrates coming back, not perfect streaks or red zeros.",
+     "posts": [
+      "Carousel: why Lumen counts comebacks, not streaks",
+      "Reel: a real paper ticket tears, the stub drops into Tuesday",
+      "Story: three return tickets a season, here's how they work"
+     ]
+    }
+   ],
+   "rhythm": "3 posts a week: Mon reel, Wed carousel, Fri story"
+  }
  },
  "skill-quest": {
   "who": "Solo marketers and small business owners building their first Claude skills",
@@ -233,7 +489,39 @@
    "Pick the first paying customer",
    "Run the name search and buy the domain",
    "Set the AI key for Build Kit"
-  ]
+  ],
+  "social": {
+   "pillars": [
+    {
+     "name": "Guess which one",
+     "what": "Same request, two answers, guess which used the skill.",
+     "posts": [
+      "Carousel: two answers side by side, guess which used the skill",
+      "Story poll: A or B, which one sounds like a person?",
+      "Reel: screen recording of the blind judge picking a winner"
+     ]
+    },
+    {
+     "name": "Your first skill",
+     "what": "Walks through building a first Claude skill, no code.",
+     "posts": [
+      "Reel: build a first skill for weekly posts, real screen",
+      "Carousel: what a skill is, a recipe you teach once",
+      "Story question: what task do you redo every week?"
+     ]
+    },
+    {
+     "name": "Honest losses",
+     "what": "Shares tests where plain Claude won, and what changed after.",
+     "posts": [
+      "Carousel: plain Claude beat my skill, here's the judge's reason",
+      "Reel: the scorer card flips over, the real scores",
+      "Story: one fix that made a skill beat plain Claude"
+     ]
+    }
+   ],
+   "rhythm": "3 posts a week: Tue carousel, Thu reel, Sat story poll"
+  }
  },
  "shelf-paid": {
   "who": "Amazon storefront owners who'd rather not show their face",
@@ -260,6 +548,38 @@
    "Set the AI key for real storefront reads",
    "Pick a design direction",
    "Check the name for trademarks"
-  ]
+  ],
+  "social": {
+   "pillars": [
+    {
+     "name": "Guess which pays",
+     "what": "Puts real shelf things side by side and asks which pays most.",
+     "posts": [
+      "Story poll: A, B or C, which one pays most per sale?",
+      "Story: next day reveal, tags flip to 1, 2, 3",
+      "Reel: a paper tag swings off a real thing on a shelf"
+     ]
+    },
+    {
+     "name": "Don't post your priciest",
+     "what": "Explains why the cheaper find can pay more, with sample rates.",
+     "posts": [
+      "Carousel: a $68 serum vs $79 earbuds, sample rates labeled",
+      "Reel: rank my shelf, real app screen, sample result shown",
+      "Carousel: how pay per sale differs by category, sample table"
+     ]
+    },
+    {
+     "name": "Faceless and rule-safe",
+     "what": "Shows hands-only posts from your own photos, following Amazon's rules.",
+     "posts": [
+      "Carousel: what every post needs, #ad first and disclosure",
+      "Reel: a hands-only post made from your own photo",
+      "Story: a sample week of seven posts, no account needed"
+     ]
+    }
+   ],
+   "rhythm": "3 posts a week: Mon story poll, Tue reveal, Thu carousel"
+  }
  }
 }

@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import data from "../content/portfolio.json";
 
 import ProjectPage from "./ProjectPage";
-import { META, NEW } from "./meta";
+import { LEARN, META } from "./meta";
 import {
   cellFor,
   cellStateLabel,
@@ -234,9 +234,9 @@ function Studio({ route }: { route: Route }) {
         </header>
 
         <section className="section" id="new" data-section>
-          <h2>Just built</h2>
+          <h2>Learn AI</h2>
           <ul className="play-grid new-grid">
-            {NEW.map((n) => (
+            {LEARN.map((n) => (
               <li key={n.href}>
                 <a
                   className="play-tile new-tile"

@@ -731,13 +731,13 @@
       "id": "ai-made-ez",
       "name": "AI Made EZ",
       "aka": null,
-      "oneLiner": "Everyday AI made easy: short courses, and makers that ask a few questions and give you something to print.",
+      "oneLiner": "Learn AI the way you learned to cook: two short courses and a Build Kit, no coding.",
       "audience": "Everyday people, including people who love to print",
-      "pays": "Free today. Ideas: mailed holiday letters, printed calendars and puzzle books.",
+      "pays": "Free, all of it. Donations (Patreon) keep it going.",
       "status": "hot",
       "updated": "2026-11-24",
       "summary": "Two cooking-themed courses that teach AI words in plain language (Level 1 for everyone, Level 2 for people who buy or manage AI), plus makers built for people who print: birthday invitations, a holiday letter, a family birthday calendar, and meal, week, party and trip plans. Each one asks a few big, friendly questions, shows 3 versions, and prints right.",
-      "latest": "Holiday letter, birthday calendar and invitations launched 24 Nov 2026.",
+      "latest": "Kept simple on 24 Nov 2026: Level 1 (8 lessons), Level 2 (10 lessons) and the Build Kit. The print makers and planners are hidden.",
       "visuals": {
         "website": {
           "label": "AI Made EZ courses",
@@ -764,27 +764,27 @@
           "state": "na"
         },
         "product-ui": {
-          "label": "Makers",
-          "detail": "Invitations, holiday letter, birthday calendar, meal, week, party and trip plans.",
-          "url": "/projects/skill-quest/ez/",
+          "label": "Build Kit",
+          "detail": "Answer the questions AI would guess at, leave with a build plan.",
+          "url": "/projects/skill-quest/build-kit/",
           "state": "live"
         },
         "deck": {
           "label": "Pitch deck",
-          "detail": "9 slides: the problem, who it's for, the makers, the money. Numbers cited.",
-          "url": "/projects/skill-quest/ez/deck.html",
-          "state": "live"
+          "detail": "Being rewritten for the courses.",
+          "url": null,
+          "state": "fill-in"
         },
         "print": {
-          "label": "Holiday letter",
-          "detail": "One page, ready to print, in 3 looks.",
-          "url": "/projects/skill-quest/ez/letter.html",
-          "state": "live"
+          "label": "Printable",
+          "detail": "",
+          "url": null,
+          "state": "na"
         },
         "social": {
-          "label": "Story poster",
-          "detail": "The AI kitchen in one picture.",
-          "url": "/projects/skill-quest/school/kitchen/poster.html",
+          "label": "Instagram posts",
+          "detail": "AI made easy, no gatekeeping, AI news in plain words. Captions included.",
+          "url": "/projects/skill-quest/school/social/",
           "state": "live"
         }
       },
