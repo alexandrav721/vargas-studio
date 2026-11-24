@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Scrollback ad frames</title>
+  <meta name="description" content="Four 1080×1350 Scrollback ad frames made from credited Wikimedia Commons photos of real items." />
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:wght@500&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #f4f0e6; --muted: #c4bba8; --line: rgba(244,240,230,.24);
+      --brand: #b8ff00; --brand-2: #ff3dbb;
+      --display: "Syne", sans-serif; --body: "IBM Plex Sans", sans-serif; --mono: "IBM Plex Mono", monospace;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; background: #050507; color: var(--ink); font-family: var(--body); }
+    .deck { display: grid; gap: 40px; justify-content: center; padding: 40px 0; }
+    body.export .deck { padding: 0; gap: 0; }
+    .f {
+      width: 1080px; height: 1350px; position: relative; overflow: hidden;
+      padding: 80px 80px 56px; display: flex; flex-direction: column;
+      background:
+        radial-gradient(ellipse at 10% 0%, rgba(184,255,0,.14), transparent 45%),
+        radial-gradient(ellipse at 100% 100%, rgba(255,61,187,.16), transparent 45%),
+        linear-gradient(180deg, #0a0a0a, #121018 60%, #0a0a0a);
+    }
+    body.export .f[hidden] { display: none; }
+    .top { font: 600 28px var(--mono); letter-spacing: .2em; text-transform: uppercase; color: var(--brand); }
+    h2 { font: 800 104px/.96 var(--display); letter-spacing: -.04em; margin: 40px 0 0; max-width: 900px; }
+    h2 em { font-style: normal; color: var(--brand); }
+    .snap {
+      align-self: center; margin-top: 52px; width: 640px; padding: 26px 26px 0;
+      background: #f6f2ea; color: #1d1a16; box-shadow: 0 30px 60px rgba(0,0,0,.5);
+      transform: rotate(var(--r, -3deg));
+    }
+    .snap img { display: block; width: 100%; height: 500px; object-fit: cover; background: #e4ddd0; }
+    .snap p { margin: 0; padding: 18px 2px 22px; font: 700 34px/1.1 var(--display); display: flex; justify-content: space-between; gap: 16px; }
+    .snap p span { font: 500 28px var(--mono); color: #5c554b; white-space: nowrap; }
+    .cta { margin-top: auto; display: flex; justify-content: space-between; align-items: end; gap: 24px; }
+    .cta p { margin: 0; font: 500 34px/1.3 var(--body); color: var(--muted); }
+    .cta b { display: inline-block; padding: 22px 34px; background: var(--brand); color: #0a0a0a; font: 800 36px/1 var(--display); white-space: nowrap; }
+    .credit { margin: 28px 0 0; padding-top: 18px; border-top: 2px solid var(--line); font: 500 22px/1.35 var(--mono); color: var(--muted); }
+  </style>
+</head>
+<body>
+  <div class="deck">
+
+    <section class="f" data-frame="1">
+      <div class="top">Scrollback</div>
+      <h2>What year were you <em>15?</em></h2>
+      <div class="snap" style="--r:-3deg"><img src="../../img/items/translucent-imac-ibook-colors.jpg" alt="A translucent blue iMac G3, seen from the side" /><p>Translucent iMac <span>1998–2001</span></p></div>
+      <div class="cta"><p>Tap what you had.<br>Find out who you were.</p><b>Play free</b></div>
+      <p class="credit">Photo: Stephen Hackett, CC BY-SA 4.0, via Wikimedia Commons</p>
+    </section>
+
+    <section class="f" data-frame="2">
+      <div class="top">Scrollback</div>
+      <h2>Did you have <em>this?</em></h2>
+      <div class="snap" style="--r:3deg"><img src="../../img/items/flip-phones-pre-razr-clamshells.jpg" alt="A silver flip phone, open" style="object-position:center 60%" /><p>Flip phone <span>2000–2004</span></p></div>
+      <div class="cta"><p>Your year in about a minute.<br>No sign-up.</p><b>Play free</b></div>
+      <p class="credit">Photo: Donald Trung Quoc Don, CC BY-SA 4.0, via Wikimedia Commons</p>
+    </section>
+
+    <section class="f" data-frame="3">
+      <div class="top">Scrollback</div>
+      <h2>Had it. Wanted it. <em>Nope.</em></h2>
+      <div class="snap" style="--r:-2deg"><img src="../../img/items/silly-bandz.jpg" alt="Silly Bandz in animal shapes spread on a table" /><p>Silly Bandz <span>2008–2010</span></p></div>
+      <div class="cta"><p>10 cards from your year.<br>Get a name for who you were.</p><b>Play free</b></div>
+      <p class="credit">Photo: Scot Scoop, CC BY 2.0, via Wikimedia Commons</p>
+    </section>
+
+    <section class="f" data-frame="4">
+      <div class="top">Scrollback</div>
+      <h2>Who were you in <em>2009?</em></h2>
+      <div class="snap" style="--r:2deg"><img src="../../img/items/slap-bracelets-playground-revival-stock.jpg" alt="A neon green slap bracelet, rolled up" /><p>Slap bracelet <span>2008–2012</span></p></div>
+      <div class="cta"><p>Send it to the friend<br>who was there.</p><b>Play free</b></div>
+      <p class="credit">Photo: Ser Amantio di Nicolao, CC BY-SA 4.0, via Wikimedia Commons</p>
+    </section>
+
+  </div>
+  <script>
+    const n = new URLSearchParams(location.search).get('frame');
+    if (n) {
+      document.body.classList.add('export');
+      document.querySelectorAll('.f').forEach((f) => { f.hidden = f.dataset.frame !== n; });
+    }
+  </script>
+</body>
+</html>

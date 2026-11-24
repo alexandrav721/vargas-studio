@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Scrollback — Meta ads gallery</title>
-  <meta name="description" content="Friend pack: romantic home + fun Meta carousels for Scrollback. Clarity and Lizzie-era as earlier chapters." />
+  <title>Scrollback ads</title>
+  <meta name="description" content="Four Scrollback ad frames made from credited Wikimedia Commons photos of real items." />
   <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -141,7 +141,8 @@
     .slide img {
       display: block;
       width: 100%;
-      aspect-ratio: 1;
+      height: auto;
+      aspect-ratio: 4 / 5;
       object-fit: cover;
       background: #0a1018;
       user-select: none;
@@ -156,6 +157,7 @@
       letter-spacing: 0.12em; text-transform: uppercase; color: var(--brand-2); margin-bottom: 0.3rem;
     }
     .slide .cap { display: block; font-size: 0.95rem; color: var(--ink); }
+    .slide .credit { display: block; margin-top: 0.3rem; font-size: 0.75rem; color: var(--muted); }
     .carousel-controls {
       display: flex; align-items: center; justify-content: space-between;
       gap: 0.75rem; width: 100%; flex-wrap: wrap;
@@ -217,7 +219,7 @@
       width: min(100%, 720px); background: #0c121a; border: 1px solid var(--line);
       box-shadow: 0 24px 80px rgba(0,0,0,0.45);
     }
-    .lb-panel img { display: block; width: 100%; aspect-ratio: 1; object-fit: contain; background: #05070b; }
+    .lb-panel img { display: block; width: 100%; max-height: 78vh; aspect-ratio: 4 / 5; object-fit: contain; background: #05070b; }
     .lb-meta { padding: 0.9rem 1rem 1.1rem; display: flex; gap: 0.75rem; align-items: center; justify-content: space-between; flex-wrap: wrap; }
     .lb-meta p { margin: 0; color: var(--muted); font-size: 0.92rem; }
     .lb-nav { display: flex; gap: 0.45rem; }
@@ -235,64 +237,35 @@
   <a class="studio-back" href="/">← Vargas Studio</a>
   <div class="wrap">
     <nav class="top" aria-label="Scrollback">
-      <a href="./">Explorer</a>
-      <a href="./landing.html">Landing</a>
-      <a href="./join.html">Waitlist</a>
-      <a href="./ads.html" aria-current="page">Meta ads</a>
+      <a href="./play.html">Play</a>
+      <a href="./">Explore</a>
+      <a href="./landing.html">About</a>
+      <a href="./ads.html" aria-current="page">Ads</a>
       <a href="./story.html">Story</a>
     </nav>
 
-    <p class="kicker">Meta creative pack · friend review</p>
     <h1 class="brand">Scrollback ads</h1>
-    <p class="lede">
-      Real Meta frames for a website that feels like <strong>2001–2004</strong> again —
-      Feel the era, buy era-only finds, talk with people who get those years.
-      Honest waitlist CTA (no fake Shop Now).
-    </p>
-    <div class="pillars" aria-label="Offer pillars">
-      <span>Feel</span><span>Buy era-only</span><span>Talk</span>
-    </div>
+    <p class="lede">Four frames. Real photos of real things, credited.</p>
 
-    <div class="filters" role="tablist" aria-label="Ad chapters">
-      <button type="button" class="is-active" role="tab" aria-selected="true" data-chapter="romantic" data-tier="primary">Romantic home</button>
-      <button type="button" role="tab" aria-selected="false" data-chapter="fun" data-tier="primary">Fun</button>
-      <button type="button" role="tab" aria-selected="false" data-chapter="clarity" data-tier="secondary">Clarity · earlier</button>
-      <button type="button" role="tab" aria-selected="false" data-chapter="lizzie" data-tier="secondary">Lizzie-era · earlier</button>
-    </div>
-
-    <!-- Romantic (primary) -->
-    <section class="chapter is-active" id="ch-romantic" data-chapter="romantic" aria-label="Romantic home carousel">
-      <div class="chapter-head">
-        <span class="badge">Main set</span>
-        <h2>You always want to go home</h2>
-        <p>Soft, warm longing — that era felt like home. Photoreal thrift / living-room stills. Six 1:1 frames.</p>
-      </div>
-      <div class="carousel" data-set="romantic" data-index="0">
+    <section class="chapter is-active" data-chapter="year-15" aria-label="Ad frames" style="margin-top:2rem">
+      <div class="carousel" data-index="0">
       <div class="carousel-stage">
         <div class="carousel-track">
-        <button class="slide" type="button" data-src="./ads/romantic-home/01-home-hook.png" data-cap="You always want to go home. · Feel · Buy · Talk">
-          <img src="./ads/romantic-home/01-home-hook.png" alt="Scrollback romantic ad 01 — home hook" loading="lazy" width="1080" height="1080" />
-          <figcaption><span class="job">01 · Hook</span><span class="cap">You always want to go home.</span></figcaption>
+        <button class="slide" type="button" data-src="./ads/year-15/01-what-year.png" data-cap="What year were you 15?">
+          <img src="./ads/year-15/01-what-year.png" alt="Scrollback ad: What year were you 15?" width="1080" height="1350" />
+          <figcaption><span class="job">01</span><span class="cap">What year were you 15?</span><span class="credit">Translucent iMac, 1998–2001. Photo: Stephen Hackett, CC BY-SA 4.0, Wikimedia Commons</span></figcaption>
         </button>
-        <button class="slide" type="button" data-src="./ads/romantic-home/02-feel-home.png" data-cap="That era felt like home.">
-          <img src="./ads/romantic-home/02-feel-home.png" alt="Scrollback romantic ad 02 — feel" loading="lazy" width="1080" height="1080" />
-          <figcaption><span class="job">02 · Feel</span><span class="cap">That era felt like home.</span></figcaption>
+        <button class="slide" type="button" data-src="./ads/year-15/02-did-you-have-this.png" data-cap="Did you have this?">
+          <img src="./ads/year-15/02-did-you-have-this.png" alt="Scrollback ad: Did you have this?" loading="lazy" width="1080" height="1350" />
+          <figcaption><span class="job">02</span><span class="cap">Did you have this?</span><span class="credit">Flip phone, 2000–2004. Photo: Donald Trung Quoc Don, CC BY-SA 4.0, Wikimedia Commons</span></figcaption>
         </button>
-        <button class="slide" type="button" data-src="./ads/romantic-home/03-buy-finds.png" data-cap="Bring the objects home. Era-dated finds.">
-          <img src="./ads/romantic-home/03-buy-finds.png" alt="Scrollback romantic ad 03 — buy" loading="lazy" width="1080" height="1080" />
-          <figcaption><span class="job">03 · Buy</span><span class="cap">Bring the objects home.</span></figcaption>
+        <button class="slide" type="button" data-src="./ads/year-15/03-had-it.png" data-cap="Had it. Wanted it. Nope.">
+          <img src="./ads/year-15/03-had-it.png" alt="Scrollback ad: Had it. Wanted it. Nope." loading="lazy" width="1080" height="1350" />
+          <figcaption><span class="job">03</span><span class="cap">Had it. Wanted it. Nope.</span><span class="credit">Silly Bandz, 2008–2010. Photo: Scot Scoop, CC BY 2.0, Wikimedia Commons</span></figcaption>
         </button>
-        <button class="slide" type="button" data-src="./ads/romantic-home/04-talk-home.png" data-cap="People who miss that home too.">
-          <img src="./ads/romantic-home/04-talk-home.png" alt="Scrollback romantic ad 04 — talk" loading="lazy" width="1080" height="1080" />
-          <figcaption><span class="job">04 · Talk</span><span class="cap">People who miss that home too.</span></figcaption>
-        </button>
-        <button class="slide" type="button" data-src="./ads/romantic-home/05-who-home.png" data-cap="If 2001–2004 was home for you…">
-          <img src="./ads/romantic-home/05-who-home.png" alt="Scrollback romantic ad 05 — who" loading="lazy" width="1080" height="1080" />
-          <figcaption><span class="job">05 · Who</span><span class="cap">If 2001–2004 was home…</span></figcaption>
-        </button>
-        <button class="slide" type="button" data-src="./ads/romantic-home/06-cta-home.png" data-cap="Come home to 2001–2004 · Join the waitlist">
-          <img src="./ads/romantic-home/06-cta-home.png" alt="Scrollback romantic ad 06 — CTA" loading="lazy" width="1080" height="1080" />
-          <figcaption><span class="job">06 · CTA</span><span class="cap">Join the waitlist — Feel · Buy · Talk</span></figcaption>
+        <button class="slide" type="button" data-src="./ads/year-15/04-who-were-you.png" data-cap="Who were you in 2009?">
+          <img src="./ads/year-15/04-who-were-you.png" alt="Scrollback ad: Who were you in 2009?" loading="lazy" width="1080" height="1350" />
+          <figcaption><span class="job">04</span><span class="cap">Who were you in 2009?</span><span class="credit">Slap bracelet, 2008–2012. Photo: Ser Amantio di Nicolao, CC BY-SA 4.0, Wikimedia Commons</span></figcaption>
         </button>
         </div>
       </div>
@@ -301,204 +274,24 @@
           <button type="button" class="prev" aria-label="Previous frame">← Prev</button>
           <button type="button" class="next" aria-label="Next frame">Next →</button>
         </div>
-        <span class="carousel-counter" aria-live="polite">1 / 6</span>
+        <span class="carousel-counter" aria-live="polite">1 / 4</span>
       </div>
       <div class="carousel-dots" role="tablist" aria-label="Frames">
           <button type="button" data-i="0" aria-label="Frame 1" aria-current="true"></button>
           <button type="button" data-i="1" aria-label="Frame 2"></button>
           <button type="button" data-i="2" aria-label="Frame 3"></button>
           <button type="button" data-i="3" aria-label="Frame 4"></button>
-          <button type="button" data-i="4" aria-label="Frame 5"></button>
-          <button type="button" data-i="5" aria-label="Frame 6"></button>
       </div>
-      <p class="carousel-hint">One frame at a time · arrows / swipe · click to enlarge</p>
-    </div>
-    </section>
-
-    <!-- Fun (primary) -->
-    <section class="chapter" id="ch-fun" data-chapter="fun" aria-label="Fun carousel" hidden>
-      <div class="chapter-head">
-        <span class="badge">Main set</span>
-        <h2>Wanna hit a website that feels like 2003 again?</h2>
-        <p>Early-2000s mall / after-school joy. Bright jelly accents on real objects. Six 1:1 frames.</p>
-      </div>
-      <div class="carousel" data-set="fun" data-index="0">
-      <div class="carousel-stage">
-        <div class="carousel-track">
-        <button class="slide" type="button" data-src="./ads/fun/01-offer.png" data-cap="Wanna hit a website that feels like 2003 again?">
-          <img src="./ads/fun/01-offer.png" alt="Scrollback fun ad 01 — offer" loading="lazy" width="1080" height="1080" />
-          <figcaption><span class="job">01 · Hook</span><span class="cap">Feel like 2003 again?</span></figcaption>
-        </button>
-        <button class="slide" type="button" data-src="./ads/fun/02-feel.png" data-cap="Come play in 2003.">
-          <img src="./ads/fun/02-feel.png" alt="Scrollback fun ad 02 — feel" loading="lazy" width="1080" height="1080" />
-          <figcaption><span class="job">02 · Feel</span><span class="cap">Come play in 2003.</span></figcaption>
-        </button>
-        <button class="slide" type="button" data-src="./ads/fun/03-buy.png" data-cap="Real era stuff. Not costume.">
-          <img src="./ads/fun/03-buy.png" alt="Scrollback fun ad 03 — buy" loading="lazy" width="1080" height="1080" />
-          <figcaption><span class="job">03 · Buy</span><span class="cap">Real era stuff. Not costume.</span></figcaption>
-        </button>
-        <button class="slide" type="button" data-src="./ads/fun/04-talk.png" data-cap="Hang with people who still get it.">
-          <img src="./ads/fun/04-talk.png" alt="Scrollback fun ad 04 — talk" loading="lazy" width="1080" height="1080" />
-          <figcaption><span class="job">04 · Talk</span><span class="cap">People who still get it.</span></figcaption>
-        </button>
-        <button class="slide" type="button" data-src="./ads/fun/05-who.png" data-cap="Junior high ~2001–2004?">
-          <img src="./ads/fun/05-who.png" alt="Scrollback fun ad 05 — who" loading="lazy" width="1080" height="1080" />
-          <figcaption><span class="job">05 · Who</span><span class="cap">Junior high ~2001–2004?</span></figcaption>
-        </button>
-        <button class="slide" type="button" data-src="./ads/fun/06-cta.png" data-cap="Join the waitlist — shop 2001–2004 finds">
-          <img src="./ads/fun/06-cta.png" alt="Scrollback fun ad 06 — CTA" loading="lazy" width="1080" height="1080" />
-          <figcaption><span class="job">06 · CTA</span><span class="cap">Join — Feel · Buy · Talk</span></figcaption>
-        </button>
-        </div>
-      </div>
-      <div class="carousel-controls">
-        <div class="pager">
-          <button type="button" class="prev" aria-label="Previous frame">← Prev</button>
-          <button type="button" class="next" aria-label="Next frame">Next →</button>
-        </div>
-        <span class="carousel-counter" aria-live="polite">1 / 6</span>
-      </div>
-      <div class="carousel-dots" role="tablist" aria-label="Frames">
-          <button type="button" data-i="0" aria-label="Frame 1" aria-current="true"></button>
-          <button type="button" data-i="1" aria-label="Frame 2"></button>
-          <button type="button" data-i="2" aria-label="Frame 3"></button>
-          <button type="button" data-i="3" aria-label="Frame 4"></button>
-          <button type="button" data-i="4" aria-label="Frame 5"></button>
-          <button type="button" data-i="5" aria-label="Frame 6"></button>
-      </div>
-      <p class="carousel-hint">One frame at a time · arrows / swipe · click to enlarge</p>
-    </div>
-    </section>
-
-    <!-- Clarity (secondary) -->
-    <section class="chapter" id="ch-clarity" data-chapter="clarity" aria-label="Clarity carousel" hidden>
-      <div class="chapter-head">
-        <span class="badge archive">Earlier chapter · not current best</span>
-        <h2>Clarity rebuild</h2>
-        <p>The first pass, which settled on Feel, Buy, Talk. Kept for history; the romantic and fun sets are the main ones.</p>
-      </div>
-      <div class="carousel" data-set="clarity" data-index="0">
-      <div class="carousel-stage">
-        <div class="carousel-track">
-        <button class="slide" type="button" data-src="./ads/clarity/01-offer.png" data-cap="Want a website that feels like 2001–2004 again?">
-          <img src="./ads/clarity/01-offer.png" alt="Scrollback clarity ad 01" loading="lazy" width="1080" height="1080" />
-          <figcaption><span class="job">01 · Offer</span><span class="cap">Website that feels like 2001–2004</span></figcaption>
-        </button>
-        <button class="slide" type="button" data-src="./ads/clarity/02-feel.png" data-cap="Feel it again.">
-          <img src="./ads/clarity/02-feel.png" alt="Scrollback clarity ad 02" loading="lazy" width="1080" height="1080" />
-          <figcaption><span class="job">02 · Feel</span><span class="cap">Feel it again.</span></figcaption>
-        </button>
-        <button class="slide" type="button" data-src="./ads/clarity/03-buy.png" data-cap="Buy from that time only.">
-          <img src="./ads/clarity/03-buy.png" alt="Scrollback clarity ad 03" loading="lazy" width="1080" height="1080" />
-          <figcaption><span class="job">03 · Buy</span><span class="cap">Era-dated finds.</span></figcaption>
-        </button>
-        <button class="slide" type="button" data-src="./ads/clarity/04-talk.png" data-cap="Talk with people who get 2001–2004.">
-          <img src="./ads/clarity/04-talk.png" alt="Scrollback clarity ad 04" loading="lazy" width="1080" height="1080" />
-          <figcaption><span class="job">04 · Talk</span><span class="cap">People who get those years.</span></figcaption>
-        </button>
-        <button class="slide" type="button" data-src="./ads/clarity/05-who.png" data-cap="If junior high was ~2001–2004…">
-          <img src="./ads/clarity/05-who.png" alt="Scrollback clarity ad 05" loading="lazy" width="1080" height="1080" />
-          <figcaption><span class="job">05 · Who</span><span class="cap">Junior high ~2001–2004</span></figcaption>
-        </button>
-        <button class="slide" type="button" data-src="./ads/clarity/06-cta.png" data-cap="Join the waitlist — Feel · Buy · Talk">
-          <img src="./ads/clarity/06-cta.png" alt="Scrollback clarity ad 06" loading="lazy" width="1080" height="1080" />
-          <figcaption><span class="job">06 · CTA</span><span class="cap">Join the waitlist</span></figcaption>
-        </button>
-        </div>
-      </div>
-      <div class="carousel-controls">
-        <div class="pager">
-          <button type="button" class="prev" aria-label="Previous frame">← Prev</button>
-          <button type="button" class="next" aria-label="Next frame">Next →</button>
-        </div>
-        <span class="carousel-counter" aria-live="polite">1 / 6</span>
-      </div>
-      <div class="carousel-dots" role="tablist" aria-label="Frames">
-          <button type="button" data-i="0" aria-label="Frame 1" aria-current="true"></button>
-          <button type="button" data-i="1" aria-label="Frame 2"></button>
-          <button type="button" data-i="2" aria-label="Frame 3"></button>
-          <button type="button" data-i="3" aria-label="Frame 4"></button>
-          <button type="button" data-i="4" aria-label="Frame 5"></button>
-          <button type="button" data-i="5" aria-label="Frame 6"></button>
-      </div>
-      <p class="carousel-hint">One frame at a time · arrows / swipe · click to enlarge</p>
-    </div>
-    </section>
-
-    <!-- Lizzie-era (secondary) -->
-    <section class="chapter" id="ch-lizzie" data-chapter="lizzie" aria-label="Lizzie-era carousel" hidden>
-      <div class="chapter-head">
-        <span class="badge archive">Earlier chapter · not current best</span>
-        <h2>Lizzie-era / after-school TV</h2>
-        <p>Evokes 2001–2004 tween cable culture — no forged Disney marks or character likenesses. Eight frames; explorer-leaning offer before Feel·Buy·Talk locked.</p>
-      </div>
-      <div class="carousel" data-set="lizzie" data-index="0">
-      <div class="carousel-stage">
-        <div class="carousel-track">
-        <button class="slide" type="button" data-src="./ads/lizzie-era/01-afterschool-tv.png" data-cap="After-school TV hit different.">
-          <img src="./ads/lizzie-era/01-afterschool-tv.png" alt="Scrollback Lizzie-era ad 01" loading="lazy" width="1080" height="1080" />
-          <figcaption><span class="job">01</span><span class="cap">After-school TV hit different.</span></figcaption>
-        </button>
-        <button class="slide" type="button" data-src="./ads/lizzie-era/02-mall-accessories.png" data-cap="Butterfly clips. Plastic choker.">
-          <img src="./ads/lizzie-era/02-mall-accessories.png" alt="Scrollback Lizzie-era ad 02" loading="lazy" width="1080" height="1080" />
-          <figcaption><span class="job">02</span><span class="cap">Butterfly clips. That locker fit.</span></figcaption>
-        </button>
-        <button class="slide" type="button" data-src="./ads/lizzie-era/03-inner-narrator.png" data-cap="Your brain had a cartoon narrator.">
-          <img src="./ads/lizzie-era/03-inner-narrator.png" alt="Scrollback Lizzie-era ad 03" loading="lazy" width="1080" height="1080" />
-          <figcaption><span class="job">03</span><span class="cap">Cartoon narrator energy.</span></figcaption>
-        </button>
-        <button class="slide" type="button" data-src="./ads/lizzie-era/04-era-objects.png" data-cap="Flip phone. Click wheel.">
-          <img src="./ads/lizzie-era/04-era-objects.png" alt="Scrollback Lizzie-era ad 04" loading="lazy" width="1080" height="1080" />
-          <figcaption><span class="job">04</span><span class="cap">Era objects.</span></figcaption>
-        </button>
-        <button class="slide" type="button" data-src="./ads/lizzie-era/05-parallel-web.png" data-cap="Buddy list + virtual pets.">
-          <img src="./ads/lizzie-era/05-parallel-web.png" alt="Scrollback Lizzie-era ad 05" loading="lazy" width="1080" height="1080" />
-          <figcaption><span class="job">05</span><span class="cap">Buddy list + virtual pets.</span></figcaption>
-        </button>
-        <button class="slide" type="button" data-src="./ads/lizzie-era/06-style-look.png" data-cap="Colorblock. Rhinestones. Mixed prints.">
-          <img src="./ads/lizzie-era/06-style-look.png" alt="Scrollback Lizzie-era ad 06" loading="lazy" width="1080" height="1080" />
-          <figcaption><span class="job">06</span><span class="cap">The junior-high Y2K look.</span></figcaption>
-        </button>
-        <button class="slide" type="button" data-src="./ads/lizzie-era/07-year-hook.png" data-cap="What year was your junior high?">
-          <img src="./ads/lizzie-era/07-year-hook.png" alt="Scrollback Lizzie-era ad 07" loading="lazy" width="1080" height="1080" />
-          <figcaption><span class="job">07</span><span class="cap">What year was your junior high?</span></figcaption>
-        </button>
-        <button class="slide" type="button" data-src="./ads/lizzie-era/08-email-cta.png" data-cap="Drop your email. Get your era back.">
-          <img src="./ads/lizzie-era/08-email-cta.png" alt="Scrollback Lizzie-era ad 08" loading="lazy" width="1080" height="1080" />
-          <figcaption><span class="job">08 · CTA</span><span class="cap">Unlock your era.</span></figcaption>
-        </button>
-        </div>
-      </div>
-      <div class="carousel-controls">
-        <div class="pager">
-          <button type="button" class="prev" aria-label="Previous frame">← Prev</button>
-          <button type="button" class="next" aria-label="Next frame">Next →</button>
-        </div>
-        <span class="carousel-counter" aria-live="polite">1 / 8</span>
-      </div>
-      <div class="carousel-dots" role="tablist" aria-label="Frames">
-          <button type="button" data-i="0" aria-label="Frame 1" aria-current="true"></button>
-          <button type="button" data-i="1" aria-label="Frame 2"></button>
-          <button type="button" data-i="2" aria-label="Frame 3"></button>
-          <button type="button" data-i="3" aria-label="Frame 4"></button>
-          <button type="button" data-i="4" aria-label="Frame 5"></button>
-          <button type="button" data-i="5" aria-label="Frame 6"></button>
-          <button type="button" data-i="6" aria-label="Frame 7"></button>
-          <button type="button" data-i="7" aria-label="Frame 8"></button>
-      </div>
-      <p class="carousel-hint">One frame at a time · arrows / swipe · click to enlarge</p>
     </div>
     </section>
 
     <p class="note">
-      <strong>Destination:</strong> ads point at the in-studio waitlist —
-      <a href="./join.html" style="color:var(--brand)">/projects/nostalgia/join.html</a>.
-      Sign Up / Join only — not Shop Now while capture is email-only.
+      Photos from Wikimedia Commons, credited on each frame (<a href="./credits.html" style="color:var(--brand)">all credits</a>).
+      No logos, no screenshots. Every frame points to the free game.
     </p>
     <div class="cta-row">
-      <a class="btn" href="./join.html">Open waitlist</a>
-      <a class="btn btn-ghost" href="./landing.html">Campaign landing</a>
-      <a class="btn btn-ghost" href="./">Explorer</a>
+      <a class="btn" href="./play.html">Play</a>
+      <a class="btn btn-ghost" href="./ads/year-15/frames.html">Frame source</a>
     </div>
   </div>
 
@@ -540,7 +333,6 @@
       if (car) syncCarousel(car);
     }
 
-    tabs.forEach((btn) => btn.addEventListener('click', () => showChapter(btn.dataset.chapter)));
 
     function syncCarousel(car) {
       const track = car.querySelector('.carousel-track');
@@ -659,8 +451,6 @@
       if (e.key === 'ArrowRight') document.getElementById('lb-next').click();
     });
 
-    const hash = location.hash.replace('#', '');
-    if (['romantic', 'fun', 'clarity', 'lizzie'].includes(hash)) showChapter(hash);
   </script>
 </body>
 </html>

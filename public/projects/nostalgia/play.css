@@ -123,6 +123,8 @@
 .card-sub { font: italic 0.9rem/1.3 var(--body); color: #5c554b; margin: 0; text-align: left; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .card--site { background: #23201c; color: #f6f2ea; }
 .card--site .card-sub { color: #b7ae9a; font-style: normal; font-family: var(--mono); }
+.card-credit { font: 0.66rem/1.3 var(--mono); color: #6f685d; margin: 0.35rem 0 0; text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.card--site .card-credit { color: #8a8273; }
 .win { flex: 1; min-height: 0; display: flex; flex-direction: column; background: #fff; }
 .win-bar { display: flex; align-items: center; gap: 4px; padding: 6px 8px; font: 500 0.7rem/1 var(--mono); color: #3a3631; background: linear-gradient(#ece9e2, #d4cfc4); }
 .win-bar i { width: 8px; height: 8px; border-radius: 50%; background: #b9b2a4; }

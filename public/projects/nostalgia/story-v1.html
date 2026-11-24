@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Scrollback — Story board (old version)</title>
   <meta name="robots" content="noindex" />
-  <meta name="description" content="Feel · Buy · Talk storyboard plus romantic vs fun tone lanes for Scrollback." />
+  <meta name="description" content="An old Scrollback concept board. Buy, Talk and a waitlist were ideas and were never built." />
   <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -63,41 +63,41 @@
   <a class="studio-back" href="/">← Vargas Studio</a>
   <div class="wrap">
     <nav class="top" aria-label="Scrollback">
-      <a href="./">Explorer</a>
-      <a href="./landing.html">Landing</a>
-      <a href="./join.html">Waitlist</a>
-      <a href="./ads.html">Meta ads</a>
+      <a href="./play.html">Play</a>
+      <a href="./">Explore</a>
+      <a href="./landing.html">About</a>
+      <a href="./ads.html">Ads</a>
       <a href="./story.html" aria-current="page">Story</a>
     </nav>
 
-    <p class="kicker">Narrative board · ← → or click</p>
+    <p class="kicker">Old concept board · Buy, Talk and a waitlist were never built</p>
     <div class="deck-stage" id="deck" aria-live="polite">
       <div>
         <p class="kicker" id="deck-k">01</p>
         <h2 id="deck-h">Feel · Buy · Talk</h2>
-        <p class="lede" id="deck-p">One sentence: Feel 2001–2004 again on a site where you buy era-only products and talk with people who get that time.</p>
+        <p class="lede" id="deck-p">The first one-line idea: feel 2001–2004 again, buy era-only things, talk with people who get it. Only the feel part was built.</p>
       </div>
     </div>
     <div class="deck-nav">
       <button class="btn btn-ghost" type="button" id="prev">← Prev</button>
       <button class="btn" type="button" id="next">Next →</button>
     </div>
-    <p class="hint">Keyboard arrows work · Open Meta ads for the friend ship pack</p>
+    <p class="hint">Keyboard arrows work</p>
     <p style="text-align:center;margin-top:1.25rem">
-      <a class="btn" href="./ads.html">Meta ads gallery</a>
-      <a class="btn btn-ghost" href="./join.html" style="margin-left:.5rem">Waitlist</a>
+      <a class="btn" href="./play.html">Play</a>
+      <a class="btn btn-ghost" href="./ads.html" style="margin-left:.5rem">Ads</a>
     </p>
   </div>
   <script>
     const slides = [
-      { k: '01', h: 'Feel · Buy · Talk', p: 'Feel 2001–2004 again on a site where you buy era-only products and talk with people who get that time.' },
+      { k: '01', h: 'Feel · Buy · Talk', p: 'The first one-line idea: feel 2001–2004 again, buy era-only things, talk with people who get it. Only the feel part was built.' },
       { k: '02', h: 'Feel', p: 'Early-2000s web & after-school energy — on purpose. Memory cue first; aesthetic supports the sentence.' },
-      { k: '03', h: 'Buy era-only', p: 'Shop finds dated 2001–2004 only. Dated properly — not costume “Y2K-inspired.”' },
-      { k: '04', h: 'Talk', p: 'People who miss that home too. Same years. Same longing. No explaining required.' },
-      { k: '05', h: 'Tone · Romantic home', p: 'Soft warm longing — you always want to go home. Primary ship pack alongside Fun.' },
-      { k: '06', h: 'Tone · Fun', p: 'Mall / after-school joy. Wanna hit a website that feels like 2003 again? Primary ship pack.' },
-      { k: '07', h: 'Honest waitlist', p: 'CTA is Join / Sign Up — never Shop Now while the destination is email-only.' },
-      { k: '08', h: 'Scrollback ≠ Lumen', p: 'Era feel + era-only commerce + talk. Evoke nostalgia without trademark forgery.' }
+      { k: '03', h: 'Idea, not built: Buy', p: 'Later, maybe: things from 2001–2004, dated properly. Nothing is for sale.' },
+      { k: '04', h: 'Idea, not built: Talk', p: 'Later, maybe: a place to talk with people from the same years. Not built.' },
+      { k: '05', h: 'Tone · Romantic home', p: 'Soft warm longing — you always want to go home. That ad set was removed.' },
+      { k: '06', h: 'Tone · Fun', p: 'Mall / after-school joy. That ad set was removed.' },
+      { k: '07', h: 'No waitlist', p: 'Sign-ups are not open. Ads point to the free game.' },
+      { k: '08', h: 'Scrollback ≠ Lumen', p: 'Era feel first. Evoke nostalgia without trademark forgery.' }
     ];
     let i = 0;
     const k = document.getElementById('deck-k');

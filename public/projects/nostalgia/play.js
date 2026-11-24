@@ -136,6 +136,7 @@ function cardHtml(row) {
     return `<div class="card card--site">
       <div class="win"><div class="win-bar"><i></i><i></i><i></i><span>${esc(host)}</span></div><img src="./${esc(m.file)}" alt="${esc(row.name)} in ${m.year}" draggable="false" /></div>
       <p class="card-name">${esc(short(row.name))}</p><p class="card-sub">${m.year}</p>
+      <p class="card-credit">Wayback Machine capture</p>
     </div>`;
   }
   const m = ITEM_MEDIA[row.name];
@@ -145,6 +146,7 @@ function cardHtml(row) {
   return `<div class="card card--thing">
     <div class="snap">${pic}${friendHad.has(row.name) ? `<b class="friend-sticker">your friend had it</b>` : ""}</div>
     <p class="card-name">${esc(short(row.name))}</p><p class="card-sub">${esc(row.sensory || row.years || "")}</p>
+    ${m?.file ? `<p class="card-credit">Photo: ${esc(m.author)} · ${esc(m.license)}</p>` : ""}
   </div>`;
 }
 

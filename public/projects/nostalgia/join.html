@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Scrollback — Join the waitlist</title>
-  <meta name="description" content="Join the Scrollback waitlist — Feel 2001–2004, buy era-only finds, talk with people who get it." />
+  <title>Scrollback sign-ups</title>
+  <meta name="description" content="Scrollback sign-ups are not open yet. The game is free to play now." />
   <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -73,55 +73,16 @@
   <a class="studio-back" href="/">← Vargas Studio</a>
   <div class="wrap">
     <nav class="top" aria-label="Scrollback">
-      <a href="./">Explorer</a>
-      <a href="./landing.html">Landing</a>
-      <a href="./join.html" aria-current="page">Waitlist</a>
-      <a href="./ads.html">Meta ads</a>
+      <a href="./play.html">Play</a>
+      <a href="./">Explore</a>
+      <a href="./landing.html">About</a>
+      <a href="./ads.html">Ads</a>
       <a href="./story.html">Story</a>
     </nav>
 
-    <p class="kicker">Waitlist demo</p>
-    <h1>Come home to 2001–2004</h1>
-    <p class="lede">
-      Scrollback is a website that feels like that era again — Feel it, buy products from that time only, and talk with people who get those years.
-      Drop your email for early access. <strong>Join / Sign Up only</strong> — not Shop Now.
-    </p>
-    <div class="pillars"><span>Feel</span><span>Buy era-only</span><span>Talk</span></div>
-
-    <div class="steps" id="funnel">
-      <div class="step" data-step="1">
-        <strong>Hook</strong>
-        <p>You always want to go home — to that feeling from 2001–2004. One site. Dated properly.</p>
-        <button class="btn" type="button" id="to2">Why Scrollback →</button>
-      </div>
-      <div class="step" data-step="2" hidden>
-        <strong>Why</strong>
-        <p>Feel the era energy · buy era-only finds (not costume Y2K) · talk with people who lived those years. No explaining required.</p>
-        <button class="btn" type="button" id="to3">Join waitlist →</button>
-      </div>
-      <div class="step" data-step="3" hidden>
-        <strong>Email</strong>
-        <form class="form" id="join-form">
-          <input type="email" name="email" required placeholder="you@email.com" autocomplete="email" />
-          <button class="btn" type="submit">Join the waitlist</button>
-        </form>
-      </div>
-      <div class="step" data-step="4" hidden>
-        <strong>You’re on the list</strong>
-        <p class="msg">Thanks — we’ll write when Feel · Buy · Talk opens for early access.</p>
-        <p class="fine">This studio demo stores nothing server-side. Production waitlist (if private) may live separately.</p>
-        <a class="btn btn-ghost" href="./ads.html" style="text-decoration:none;margin-top:1rem">See Meta ads →</a>
-      </div>
-    </div>
+    <h1>Sign-ups aren’t open yet.</h1>
+    <p class="lede">There’s no list to join, so this page asks for nothing. The game is free now.</p>
+    <a class="btn" href="./play.html" style="text-decoration:none;margin-top:1.5rem">What year were you 15? →</a>
   </div>
-  <script>
-    const q = new URLSearchParams(location.search);
-    const src = q.get('src') || 'direct';
-    document.title += ' · ' + src;
-    const show = (n) => document.querySelectorAll('.step').forEach((s) => { s.hidden = s.dataset.step !== String(n); });
-    document.getElementById('to2').onclick = () => show(2);
-    document.getElementById('to3').onclick = () => show(3);
-    document.getElementById('join-form').onsubmit = (e) => { e.preventDefault(); show(4); };
-  </script>
 </body>
 </html>
