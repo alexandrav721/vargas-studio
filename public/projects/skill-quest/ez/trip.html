@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Trip plan · AI Made EZ</title>
+<meta name="description" content="Talk, tap, and watch a day-by-day trip plan appear, with packing and checks.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../school/school.css">
+<link rel="stylesheet" href="ez.css">
+</head>
+<body data-ez="trip">
+<header class="top">
+  <a class="logo" href="./">AI Made EZ<small>Planners</small></a>
+  <div class="tools">
+    <button class="chip" id="big" type="button" aria-pressed="false" title="Bigger text">Bigger text</button>
+    <button class="chip" id="sound" type="button" aria-pressed="false">Sound on</button>
+  </div>
+</header>
+<main class="ez" id="app" tabindex="-1"></main>
+<footer class="foot"><a href="./">All planners</a><a href="../school/">AI Made EZ</a><span>Voice is turned into text by your browser. Plans stay on this device.</span><span>Not affiliated with Anthropic</span></footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="../sounds.js" defer></script>
+<script src="../school/school.js" defer></script>
+<script src="ez.js" defer></script>
+<script src="/projects/skill-quest/smez-index.js" defer></script>
+<script src="/projects/skill-quest/smez-nav.js" data-section="school" defer></script>
+</body>
+</html>

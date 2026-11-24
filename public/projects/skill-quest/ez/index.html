@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>One-tap planners · AI Made EZ</title>
+<meta name="description" content="One-tap planners from AI Made EZ: talk or tap, and watch your meal plan, week, party or trip appear.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../school/school.css">
+<link rel="stylesheet" href="ez.css">
+<link rel="stylesheet" href="/site-bar.css" />
+<script src="/site-bar.js" data-project="skill-quest" data-kind="piece" defer></script>
+</head>
+<body>
+<header class="top">
+  <a class="logo" href="../school/">AI Made EZ<small>Planners</small></a>
+  <div class="tools"><button class="chip" id="big" type="button" aria-pressed="false" title="Bigger text">Bigger text</button></div>
+</header>
+<main class="ez" id="app">
+  <h1>What should we plan?</h1>
+  <div class="hub">
+    <a class="pickb" href="meals.html" data-k="meals">
+      <span class="mini m" aria-hidden="true"><i><b>MON</b>Lemon chicken</i><i><b>TUE</b>Fried rice</i><i><b>WED</b>Tomato pasta</i><i><b>THU</b>Sheet-pan</i><i><b>FRI</b>Tacos</i><i><b>SAT</b>Rice bowls</i></span>
+      <b>Meals</b>
+    </a>
+    <a class="pickb" href="week.html" data-k="week">
+      <span class="mini w" aria-hidden="true"><i class="k-work"></i><i class="k-you"></i><i class="k-work"></i><i class="k-people"></i><i class="k-life"></i><i class="k-work"></i><i class="k-you"></i><i class="k-life"></i><i class="k-people"></i><i class="k-you"></i><i class="k-work"></i><i class="k-life"></i><i class="k-you"></i><i class="k-work"></i><i class="k-people"></i><i class="k-you"></i></span>
+      <b>My week</b>
+    </a>
+    <a class="pickb" href="party.html" data-k="party">
+      <span class="mini p" aria-hidden="true"><i>2 weeks: invites</i><i>1 week: decorations</i><i>Day before: cake</i><i>3 pm: guests arrive</i><i>4:30 pm: cake</i></span>
+      <b>Party</b>
+    </a>
+    <a class="pickb" href="trip.html" data-k="trip">
+      <span class="mini t" aria-hidden="true"><i><b>Day 1</b> Old town, castle</i><i><b>Day 2</b> By the river</i><i><b>Day 3</b> Cafés, market</i><i>☐ Walking shoes</i></span>
+      <b>Trip</b>
+    </a>
+  </div>
+  <p class="small">Talk or tap. Watch it appear.</p>
+</main>
+<footer class="foot"><a href="../school/">AI Made EZ</a><span>Voice is turned into text by your browser. Plans stay on this device.</span><span>Made by Alexandra Vargas</span></footer>
+<script src="../school/school.js" defer></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  document.querySelectorAll(".pickb").forEach(function (a) {
+    var has = false; try { has = !!localStorage.getItem("smez-ez-" + a.getAttribute("data-k")); } catch (e) {}
+    if (has) a.insertAdjacentHTML("afterbegin", '<span class="saved">Saved</span>');
+  });
+});
+</script>
+<script src="/projects/skill-quest/smez-index.js" defer></script>
+<script src="/projects/skill-quest/smez-nav.js" data-section="school" defer></script>
+</body>
+</html>

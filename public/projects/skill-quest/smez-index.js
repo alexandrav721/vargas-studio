@@ -4,6 +4,7 @@ window.SMEZ_INDEX = [
   /* learn */
   { t: "AI Made EZ", y: "Course", g: "learn", u: "/projects/skill-quest/school/", d: "Learn AI the way you learned to cook. 8 short lessons and a Chef's passport.", k: "course class lessons learn beginner basics teach mom passport stamps" },
   { t: "Lesson 1: Meet the chef", y: "Lesson", g: "learn", u: "/projects/skill-quest/school/lesson-1.html", d: "What AI is and isn't, in 8 minutes. Leave with a week of dinners.", k: "lesson one start first beginner what is ai chef fridge dinners made up hallucination" },
+  { t: "One-tap planners", y: "Tool", g: "learn", u: "/projects/skill-quest/ez/", d: "Talk, and watch your plan appear: meals, your week, a party, a trip.", k: "planner plan meals meal plan grocery list week schedule organize party holiday birthday trip travel itinerary voice talk mic one tap" },
   { t: "Chef's passport", y: "Your stamps", g: "learn", u: "/projects/skill-quest/school/", d: "A stamp for every lesson, plus your Maker stamps.", k: "passport stamps progress badges collect" },
   { t: "Prompt = your order", y: "Idea", g: "learn", u: "/projects/skill-quest/school/lesson-1.html", d: "What you ask Claude for. More detail gets a better dish.", k: "prompt order ask question request" },
   { t: "Skill = a recipe card", y: "Idea", g: "learn", u: "/projects/skill-quest/templates/", d: "Instructions Claude pulls out when your request matches its title.", k: "skill recipe card skill.md instructions what is a skill" },
