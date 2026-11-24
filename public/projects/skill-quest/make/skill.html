@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Skill maker · AI Made EZ</title>
+<meta name="description" content="Make your own Claude skill in about 8 minutes: a recipe card Claude pulls out when your order matches. Free, no coding.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../school/school.css">
+<link rel="stylesheet" href="maker.css">
+<link rel="stylesheet" href="/site-bar.css" />
+<script src="/site-bar.js" data-project="ai-made-ez" data-kind="piece" defer></script>
+</head>
+<body>
+<header class="top">
+  <a class="logo" href="./skill.html">Skill maker</a>
+  <div class="tools"><a class="chip give" href="../school/support.html" aria-label="Keep it free">♥<span class="gt"> Keep it free</span></a><button class="chip" id="big" type="button" aria-pressed="false">Bigger text</button></div>
+</header>
+<main id="app" tabindex="-1"></main>
+<footer class="foot"><a href="../start/">AI Made EZ</a><span>Not affiliated with Anthropic</span><span>Saved on this device only</span></footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="../sounds.js" defer></script>
+<script src="../school/school.js" defer></script>
+<script src="maker.js" defer></script>
+<script>
+var JOBS = {
+  "Reply to an upset customer": {
+    when: "replying to an upset or angry customer email",
+    always: "Say sorry for the problem in the first line.\nSay exactly what we will do, and by when.\nSign off with my first name.",
+    never: "Blame the customer. Promise a refund I didn't mention."
+  },
+  "Weekly team update": {
+    when: "writing my weekly team update",
+    always: "Three parts: Shipped, Stuck, Next.\nOne line each, no fluff.\nName who I need something from.",
+    never: "Start with \"I hope this finds you well.\""
+  },
+  "Social post for my business": {
+    when: "writing a social media post for my business",
+    always: "Open with the most interesting detail.\nOne clear thing to do at the end.\nTwo hashtags at most.",
+    never: "Use the words \"elevate\" or \"game-changer.\" Invent prices or reviews."
+  },
+  "Meeting notes to action items": {
+    when: "turning meeting notes into action items",
+    always: "A list of actions, each with an owner and a date.\nDecisions first, then actions.\nFlag anything with no owner.",
+    never: "Add actions nobody said."
+  }
+};
+function slug(s) { return String(s || "my-skill").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 48) || "my-skill"; }
+function bullets(t) { return String(t || "").split(/\n+/).map(function (x) { return x.trim(); }).filter(Boolean).map(function (x) { return "- " + x; }).join("\n"); }
+
+window.addEventListener("DOMContentLoaded", function () {
+  Maker.run({
+    id: "skill", name: "Skill maker", mins: 8, stamp: "Skill", stampN: 1,
+    title: "Teach Claude one thing you do every week.",
+    guess: {
+      q: "You saved a recipe card called “Email helper.” You ask Claude to answer an angry customer. Does it pull the card out?",
+      opts: [["Maybe not. “Email helper” doesn't say when to use it", true], ["Yes, every time. Claude always uses every card", false], ["Only if you paste the card again", false]],
+      reveal: "Claude reads each card's description to decide. Say plainly when to use it, and it gets pulled out at the right time."
+    },
+    lines: [
+      ["A skill is a recipe card.", "Your way of doing one job, written down once."],
+      ["Claude pulls it out when your order matches.", "So the card says when to use it, in plain words."],
+      ["It works because it's specific.", "Your rules, your words, one example you're proud of."]
+    ],
+    leave: "your own skill file (SKILL.md), ready to add to Claude.",
+    example: {
+      title: "Same order. Without and with the card.",
+      html:
+        '<p class="label">Your order</p><div class="reply"><p class="who">you</p>Reply to this: “Third late delivery. I want my money back.”</div>' +
+        '<p class="label" style="margin-top:14px">Plain Claude</p><div class="reply"><p class="who">claude</p>Dear valued customer, I hope this message finds you well. We sincerely apologize for any inconvenience…</div>' +
+        '<p class="label" style="margin-top:14px">With your recipe card</p><div class="reply"><p class="who">claude</p>I’m sorry, three late deliveries is not okay. I’ve moved your next order to express, and it ships today. Refund question: I’ll answer that by Friday. Sam</div>' +
+        '<p class="label" style="margin-top:14px">The card that did it</p>' +
+        '<div class="ticket"><div class="th"><span>SKILL.md</span><span>recipe card</span></div>name: upset-customer-reply<br>description: Use when replying to an upset or angry customer email.<br><br>- Say sorry for the problem in the first line.<br>- Say exactly what we will do, and by when.<br>- Sign off with my first name.<br>Never: blame the customer.</div>' +
+        '<p class="small">Sample, made up for this example.</p>'
+    },
+    build: {
+      title: "Your turn. Write your card.",
+      lead: "Pick a job or type your own. Your card builds below as you go.",
+      start: { job: "Reply to an upset customer", own: "", when: JOBS["Reply to an upset customer"].when, always: JOBS["Reply to an upset customer"].always, never: JOBS["Reply to an upset customer"].never, tone: "Warm", example: "" },
+      redraw: ["job"],
+      onSet: function (k, s) { if (k === "job" && JOBS[s.job]) { s.when = JOBS[s.job].when; s.always = JOBS[s.job].always; s.never = JOBS[s.job].never; s.own = ""; } },
+      controls: function (s, esc) {
+        return '<p class="label">1. The job</p><div class="fridge">' + Object.keys(JOBS).map(function (j) { return '<button type="button" class="chip" data-set="job" data-v="' + esc(j) + '" aria-pressed="' + (s.job === j) + '">' + esc(j) + "</button>"; }).join("") + "</div>" +
+          '<label class="field">Or name your own job<input type="text" data-in="own" value="' + esc(s.own) + '" placeholder="e.g. Thank-you note to a client"></label>' +
+          '<label class="field">2. Claude should use it when I’m…<input type="text" data-in="when" value="' + esc(s.when) + '"></label>' +
+          '<p class="label">3. Tone</p><div class="fridge">' + ["Warm", "Plain", "Upbeat", "Formal"].map(function (t) { return '<button type="button" class="chip" data-set="tone" data-v="' + t + '" aria-pressed="' + (s.tone === t) + '">' + t + "</button>"; }).join("") + "</div>" +
+          '<label class="field">4. Always do this (one per line)<textarea data-in="always">' + esc(s.always) + "</textarea></label>" +
+          '<label class="field">5. Never do this<input type="text" data-in="never" value="' + esc(s.never) + '"></label>' +
+          '<label class="field">6. One you’re proud of (optional, paste it)<textarea data-in="example" placeholder="Paste a real one you wrote. Take out names and private details first.">' + esc(s.example) + '</textarea></label>';
+      },
+      fileLabel: "Your recipe card", head: "SKILL.md", right: "recipe card", foot: "Builds as you type",
+      fileName: function () { return "SKILL.md"; },
+      file: function (s) {
+        var job = (s.own || s.job || "My weekly job").trim();
+        return "---\nname: " + slug(job) + "\ndescription: Use when " + (s.when || "doing this job").trim() + ". " + s.tone + " tone.\n---\n\n" +
+          "# " + job + "\n\n## How to do it\n" + bullets(s.always) + "\n- Tone: " + s.tone.toLowerCase() + ".\n\n## Never\n" + bullets(s.never) +
+          (s.example && s.example.trim() ? "\n\n## One I'm proud of (match this style)\n" + s.example.trim() : "") + "\n";
+      },
+      downloadLabel: "Download SKILL.md",
+      how: "Paste it at the top of a chat and say “Follow this recipe card.” Or add it in Claude’s settings under Skills (put the file in a folder and zip it if Claude asks). Then taste-test it: ask the same thing with and without it."
+    },
+    game: {
+      title: "Which cards get pulled out at the right time?",
+      lead: "Tap the 3 descriptions Claude can match to your order.",
+      options: [
+        ["Use when replying to an upset customer email.", true, "Yes. It says exactly when."],
+        ["Email helper.", false, "Too vague. Claude can’t tell when to use it."],
+        ["Use when writing the Friday team update in Slack.", true, "Yes. A clear moment."],
+        ["Good writing.", false, "Every order wants good writing. That matches nothing in particular."],
+        ["Use when turning meeting notes into action items.", true, "Yes. Clear job, clear moment."],
+        ["My favorite skill.", false, "Says how you feel, not when to use it."]
+      ],
+      right: "All three found. The description is the title on the card."
+    },
+    breaks: {
+      title: "Where the recipe card stops.",
+      lines: [
+        ["It’s not memory.", "A card doesn’t learn on its own. When your way changes, edit the card."],
+        ["It can’t taste.", "Claude follows the card but can still get facts wrong. Check names, dates and prices."]
+      ],
+      where: "A chef reads every card in the box. Claude only pulls out the ones whose description matches your order."
+    },
+    quiz: [
+      { q: "What makes Claude pull out your skill at the right time?", a: ["A plain description of when to use it", "A long, fancy name", "Using it every day"], ok: 0, why: "Right. The description is how Claude matches it to your order." },
+      { q: "You made a skill. How do you know it helps?", a: ["Ask the same thing with and without it, and compare", "If it’s long, it’s good", "Claude will tell you it’s better"], ok: 0, why: "Right. A taste test: same order, two plates." }
+    ],
+    doneTitle: "Skill made, stamped.",
+    more: ["Open the full workshop", "../prototype/v2.html"],
+    other: ["Kit maker: plan an app so AI stops guessing", "kit.html"]
+  });
+});
+</script>
+<script src="/projects/skill-quest/smez-index.js" defer></script>
+<script src="/projects/skill-quest/smez-nav.js" data-section="make" defer></script>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kit maker · AI Made EZ</title>
+<meta name="description" content="Plan an app so AI stops guessing. In about 8 minutes, leave with a kit file Claude Code reads first. Free, no coding.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../school/school.css">
+<link rel="stylesheet" href="maker.css">
+<link rel="stylesheet" href="/site-bar.css" />
+<script src="/site-bar.js" data-project="ai-made-ez" data-kind="piece" defer></script>
+</head>
+<body>
+<header class="top">
+  <a class="logo" href="./kit.html">Kit maker</a>
+  <div class="tools"><a class="chip give" href="../school/support.html" aria-label="Keep it free">♥<span class="gt"> Keep it free</span></a><button class="chip" id="big" type="button" aria-pressed="false">Bigger text</button></div>
+</header>
+<main id="app" tabindex="-1"></main>
+<footer class="foot"><a href="../start/">AI Made EZ</a><span>Not affiliated with Anthropic</span><span>Saved on this device only</span></footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="../sounds.js" defer></script>
+<script src="../school/school.js" defer></script>
+<script src="maker.js" defer></script>
+<script>
+function bullets(t) { return String(t || "").split(/\n+/).map(function (x) { return x.trim(); }).filter(Boolean).map(function (x) { return "- " + x; }).join("\n"); }
+var KEEPS = ["Names", "Home addresses", "Photos", "Payments", "Messages", "Dates and times"];
+
+window.addEventListener("DOMContentLoaded", function () {
+  Maker.run({
+    id: "kit", name: "Kit maker", mins: 8, stamp: "Kit", stampN: 2,
+    title: "Plan an app so AI stops guessing.",
+    guess: {
+      q: "You tell an AI coding tool: “Build me an app for dog walkers.” Who decides how people sign in, and who can see a client’s address?",
+      opts: [["The AI does, by guessing", true], ["It always asks you first", false], ["Nobody. It skips those parts", false]],
+      reveal: "Every gap you leave, AI fills with a guess. A kit answers the big questions up front."
+    },
+    lines: [
+      ["A kit is a meal kit.", "One box for one dinner: the order slip and the recipe cards, so the cook doesn’t guess."],
+      ["Your kit is one file AI reads first.", "Claude Code reads a file called CLAUDE.md in your project folder before it does anything."],
+      ["Version 1 is small on purpose.", "Three things that prove the idea. Everything else waits."]
+    ],
+    leave: "a kit file (CLAUDE.md) with your app’s plan, ready for Claude Code or any AI coding tool.",
+    example: {
+      title: "Same request. Without and with a kit.",
+      html:
+        '<p class="label">Without a kit</p><div class="reply"><p class="who">you</p>Build me an app for dog walkers.</div>' +
+        '<div class="reply" style="margin-top:8px"><p class="who">ai, guessing</p>Built it: sign-up with email and password, a public map of every client’s home, a chat, payments, a points system…</div>' +
+        '<p class="label" style="margin-top:14px">With a kit</p>' +
+        '<div class="ticket"><div class="th"><span>CLAUDE.md</span><span>the kit</span></div>App: dog walks booked by owners, done by walkers.<br>Phone first. Sign in with Google.<br>Version 1: book a walk · walker sees the address on walk day only · owner gets a “done” message.<br>Not yet: chat, payments, maps.<br>Done means: an owner books, a walker finishes, the owner is told.</div>' +
+        '<p class="small">Sample, made up for this example.</p>'
+    },
+    build: {
+      title: "Your turn. Pack your kit.",
+      lead: "Answer what AI would otherwise guess. Your kit file builds below.",
+      start: { idea: "An app for dog walkers", who: "Dog owners book walks. Walkers do them.", device: "Phone", signin: "Google", keeps: ["Names", "Home addresses", "Dates and times"], v1: "Book a walk\nWalker sees the address on walk day only\nOwner gets a \"done\" message", later: "Chat\nPayments\nMaps", look: "Calm", done: "An owner books, a walker finishes, the owner is told." },
+      controls: function (s, esc) {
+        function chips(key, list, multi) {
+          return '<div class="fridge">' + list.map(function (v) { var on = multi ? s[key].indexOf(v) >= 0 : s[key] === v; return '<button type="button" class="chip" data-set="' + key + '"' + (multi ? ' data-multi="1"' : "") + ' data-v="' + esc(v) + '" aria-pressed="' + on + '">' + esc(v) + "</button>"; }).join("") + "</div>";
+        }
+        return '<label class="field">1. The idea, in one line<input type="text" data-in="idea" value="' + esc(s.idea) + '"></label>' +
+          '<label class="field">2. Who uses it, and what each person does<input type="text" data-in="who" value="' + esc(s.who) + '"></label>' +
+          '<p class="label">3. Phone or computer?</p>' + chips("device", ["Phone", "Computer", "Both"]) +
+          '<p class="label">4. How people sign in</p>' + chips("signin", ["No sign-in", "Email link", "Google", "Apple"]) +
+          '<p class="label">5. What it keeps (tap all)</p>' + chips("keeps", KEEPS, true) +
+          '<label class="field">6. Version 1: the 3 things that prove the idea<textarea data-in="v1">' + esc(s.v1) + "</textarea></label>" +
+          '<label class="field">7. Not yet (later)<textarea data-in="later">' + esc(s.later) + "</textarea></label>" +
+          '<p class="label">8. How it should feel</p>' + chips("look", ["Calm", "Bold", "Playful", "Serious"]) +
+          '<label class="field">9. Done means…<input type="text" data-in="done" value="' + esc(s.done) + '"></label>';
+      },
+      fileLabel: "Your kit", head: "CLAUDE.md", right: "the kit", foot: "Claude Code reads this first",
+      fileName: function () { return "CLAUDE.md"; },
+      file: function (s) {
+        var priv = s.keeps.filter(function (k) { return ["Home addresses", "Payments", "Messages", "Photos"].indexOf(k) >= 0; });
+        return "# " + (s.idea || "My app").trim() + "\n\n" +
+          "## Who uses it\n" + (s.who || "").trim() + "\n\n" +
+          "## Basics\n- Built for: " + s.device.toLowerCase() + (s.device === "Both" ? " (phone first)" : "") + "\n- Sign-in: " + s.signin + "\n- Look and feel: " + s.look.toLowerCase() + "\n\n" +
+          "## What it keeps\n" + (s.keeps.length ? s.keeps.map(function (k) { return "- " + k; }).join("\n") : "- Nothing yet") +
+          (priv.length ? "\n- Private: " + priv.join(", ").toLowerCase() + ". Show them only to the people who need them, and only when they need them." : "") + "\n\n" +
+          "## Version 1 (build only this)\n" + bullets(s.v1) + "\n\n" +
+          "## Not yet\n" + bullets(s.later) + "\n\n" +
+          "## Done means\n" + (s.done || "").trim() + "\n\n" +
+          "## How to work with me\n- Ask before you guess anything this file doesn't answer.\n- Build one piece at a time and show me before moving on.\n- Explain what you changed in plain words.\n";
+      },
+      downloadLabel: "Download CLAUDE.md",
+      how: "Put CLAUDE.md in a new, empty project folder, then open that folder in Claude Code (or paste the file into any AI coding tool) and say “Read the kit, then ask me anything it doesn’t answer.”"
+    },
+    game: {
+      title: "What goes in version 1?",
+      lead: "A dog-walking app. Tap the 3 things that prove the idea.",
+      options: [
+        ["Owners book a walk", true, "Yes. Without it, there’s no app."],
+        ["Walker sees the address on walk day only", true, "Yes. The address is private, so this is part of the core."],
+        ["Owner gets a “done” message", true, "Yes. That’s the moment the owner trusts it."],
+        ["A live map that replays the route", false, "Later. Big job, and you can test the idea without it."],
+        ["Loyalty points", false, "Later. Nobody needs points before the first walk."],
+        ["Video chat with the walker", false, "Later. Messages can wait too."]
+      ],
+      right: "Three found. Small version 1, real test."
+    },
+    breaks: {
+      title: "Where the meal kit stops.",
+      lines: [
+        ["A kit doesn’t cook itself.", "AI still writes the app, and it can still get pieces wrong. Try each piece before the next."],
+        ["Plans change.", "When you decide something new, add it to the kit so AI stops guessing again."]
+      ],
+      where: "A real meal kit never changes once it ships. Your kit is a living file: you keep it up to date."
+    },
+    quiz: [
+      { q: "What happens to every question your kit doesn’t answer?", a: ["AI fills it with a guess", "AI leaves that part out", "AI emails you to ask"], ok: 0, why: "Right. That’s why the kit answers the big ones first." },
+      { q: "Why keep version 1 small?", a: ["To test the idea with the fewest pieces", "Because AI can only build three things", "So the app looks simple"], ok: 0, why: "Right. Prove the idea, then add more." }
+    ],
+    doneTitle: "Kit packed, stamped.",
+    more: ["Open the full Build Kit (more questions)", "../build-kit/"],
+    other: ["Skill maker: teach Claude one weekly job", "skill.html"]
+  });
+});
+</script>
+<script src="/projects/skill-quest/smez-index.js" defer></script>
+<script src="/projects/skill-quest/smez-nav.js" data-section="kit" defer></script>
+</body>
+</html>
