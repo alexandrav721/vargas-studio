@@ -1,17 +1,14 @@
 import { useEffect, useState } from "react";
 import data from "../content/portfolio.json";
 
-import PlayGrid from "./PlayGrid";
 import { GROUPS, MAKE, META, NEW, type Fresh } from "./meta";
 import { projectHref } from "./lib";
 
-/* The short home: one line, three doors (Play · Make · Ideas), what's new, then every idea as a picture,
+/* The short home: one line, two doors (Make · Ideas), what is new, then every idea as a picture,
    grouped by who it's for. Every detail (full index, Compare, Tools) lives one tap away at #/all. */
 const TABS = [
-  { id: "play", label: "Play" },
   { id: "make", label: "Make" },
   { id: "ideas", label: "Ideas" },
-  { id: "tools", label: "Tools" },
 ];
 
 export default function Home() {
@@ -43,7 +40,6 @@ export default function Home() {
         {t.label}
       </a>
     ));
-  const tools = [...data.general.skills, ...data.general.agents, ...data.general.reusable];
 
   return (
     <div className="shell home">
@@ -77,9 +73,8 @@ export default function Home() {
       <main className="main">
         <header className="hero" id="intro" data-section>
           <p className="eyebrow">{data.site.owner} · built with Claude</p>
-          <h1 className="brand-hero">Ideas you can play with.</h1>
+          <h1 className="brand-hero">Ideas you can try.</h1>
           <div className="doors">
-            <a href="#play" onClick={(e) => jump(e, "play")}><b>Play a game</b><span>One minute each</span></a>
             <a href="#make" onClick={(e) => jump(e, "make")}><b>Make something</b><span>Invites, letters, puzzles</span></a>
             <a href="#ideas" onClick={(e) => jump(e, "ideas")}><b>See the ideas</b><span>{data.projects.length} so far</span></a>
           </div>
@@ -88,11 +83,6 @@ export default function Home() {
         <section className="section" id="new" data-section>
           <h2>Just built</h2>
           <Tiles list={NEW} />
-        </section>
-
-        <section className="section" id="play" data-section>
-          <h2>Play a game</h2>
-          <PlayGrid />
         </section>
 
         <section className="section" id="make" data-section>
@@ -121,20 +111,9 @@ export default function Home() {
           ))}
         </section>
 
-        <section className="section" id="tools" data-section>
-          <h2>Tools I use</h2>
-          <p className="section-lede">The skills and AI helpers behind every project.</p>
-          <ul className="tool-chips">
-            {tools.map((t) => (
-              <li key={t.name}>{t.name}</li>
-            ))}
-          </ul>
-          <a className="see-all" href="#/all">See every detail: full list, Compare and Tools →</a>
-        </section>
-
         <footer className="foot">
           <p>
-            {data.site.brand} · {data.site.owner} · <a href="#/tour">Take the tour</a>
+            {data.site.brand} · {data.site.owner} · <a href="#/tour">Take the tour</a> · <a href="#/all">See every detail</a>
           </p>
         </footer>
       </main>
