@@ -60,7 +60,7 @@
     },
     quiz: [
       { term: "Tool result", q: "What is a tool result?", a: ["What the app sends back after running the tool", "Claude’s final answer, shown to the person who asked", "The label that tells Claude what the tool can do"], ok: 0, why: "Right. Result goes back to Claude, then Claude plates the answer." },
-      { term: "System prompt", q: "Recall from Lesson 3: where should a rule that must never break live?", a: ["Built into the app", "In the system prompt only", "In the user’s first message"], ok: 0, why: "Right. Prompts steer; the app enforces." },
+      { q: "Recall from Lesson 3: where should a rule that must never break live?", a: ["Built into the app", "In the system prompt only", "In the user’s first message"], ok: 0, why: "Right. Prompts steer; the app enforces." },
       {q: "From Lesson 1: what’s an LLM?", a: ["AI that writes by predicting the next piece of text", "A huge database of facts that Claude looks things up in", "A special API key that unlocks writing features"], ok: 0, why: "Right. It predicts the next piece, very well.", term: "LLM"}
     ],
     say: "With tool use, Claude asks for an action and the app actually runs it.",

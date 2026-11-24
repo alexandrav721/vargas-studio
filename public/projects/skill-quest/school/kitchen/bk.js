@@ -232,6 +232,7 @@ function rec(t, ok) { if (t && window.BKM) window.BKM.record(t, ok); }
             return "<p><b>" + lw + " new words today.</b> Lock them in tomorrow with a 2-minute review." + (k ? " You already know " + k + (k === 1 ? " word" : " words") + " for good." : "") + (due ? ' <a href="challenge.html?review=1">Practice: ' + window.BKM.due(pool()).slice(0, 4).join(", ") + (due > 4 ? " and " + (due - 4) + " more" : "") + "</a>." : "") + "</p>"; })() : "") +
           (L.say ? '<p><b>Say it in a meeting:</b> “' + esc(L.say) + '”</p>' : "") +
           "<p><b>You leave with:</b> " + L.keep + "</p></div>" +
+          (nxt ? '<p class="small" style="text-align:center">Done for today? Tomorrow: a 2-minute review, then Lesson ' + nxt.n + ".</p>" : "") +
           '<div class="btns"><button class="btn" id="save" type="button">' + esc(L.cardLabel || "Copy my card") + "</button>" +
           (nxt ? '<a class="btn ghost" href="' + nxt.href + '">Next lesson →</a>' : "") +
           '<a class="btn ghost" href="./">My passport</a><button class="btn ghost" id="send" type="button">Send this lesson</button><button class="btn ghost" id="remind" type="button">Remind me tomorrow</button></div>' +
