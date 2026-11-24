@@ -19,7 +19,7 @@
       card(52, 74, 46, 22) + t(75, 89, "order", { size: 10 }) + card(222, 74, 46, 22) + t(245, 89, "reply", { size: 10 }) +
       t(160, 132, "the counter = context window") + t(205, 30, "the chef = model", { a: "start" }) + t(75, 66, "prompt", { c: "var(--accent)" })),
     2: svg("An app sends a request through the order window (API) and gets a response back",
-      card(8, 50, 74, 52) + t(45, 80, "your app") + '<rect x="146" y="34" width="60" height="86" rx="4" ' + S + '/><path d="M146 64h60" ' + S + "/>" + t(176, 54, "API", { w: 700 }) +
+      card(8, 50, 74, 52) + t(45, 74, "the app") + t(45, 90, "(waiter)", { size: 10, w: 500 }) + '<rect x="146" y="34" width="60" height="86" rx="4" ' + S + '/><path d="M146 64h60" ' + S + "/>" + t(176, 54, "API", { w: 700 }) +
       chef(276, 62) + arrow(86, 66, 140, 66) + arrow(140, 92, 86, 92) + t(113, 58, "request", { size: 10 }) + t(113, 110, "response", { size: 10 }) +
       arrow(210, 72, 246, 72) + t(160, 142, "the window remembers nothing")),
     3: svg("House rules (the system prompt) hang on the wall above the chef",
