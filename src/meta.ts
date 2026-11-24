@@ -17,10 +17,10 @@ export const META: Record<string, Meta> = {
 /* The "New" row at the top of home: the latest things built, one tap away. */
 export type Fresh = { href: string; pic: string; name: string; line: string; external?: boolean };
 export const NEW: Fresh[] = [
+  { href: "/projects/skill-quest/ez/puzzle.html", pic: "/desk/new-puzzle.jpg", name: "Family puzzle book", line: "Large-print puzzles of your family" },
   { href: "/projects/skill-quest/ez/letter.html", pic: "/desk/new-letter.jpg", name: "Holiday letter", line: "Your year, on one printed page" },
   { href: "/projects/skill-quest/ez/calendar.html", pic: "/desk/new-calendar.jpg", name: "Birthday calendar", line: "Every family birthday, printed in" },
   { href: "/projects/skill-quest/ez/invites.html", pic: "/desk/new-invites.jpg", name: "Birthday invitations", line: "3 designs, pick your favorite" },
-  { href: "/projects/skill-quest/school/kitchen/", pic: "/desk/new-kitchen.jpg", name: "Speak AI builder", line: "10 short lessons, no coding" },
 ];
 
 /* The "Make" section: AI Made EZ makers, the things people go to AI for, done for them. */
@@ -28,6 +28,7 @@ export const MAKE: Fresh[] = [
   { href: "/projects/skill-quest/ez/invites.html", pic: "/desk/new-invites.jpg", name: "Invitations", line: "Birthday party invites" },
   { href: "/projects/skill-quest/ez/letter.html", pic: "/desk/new-letter.jpg", name: "Holiday letter", line: "Your year on one page" },
   { href: "/projects/skill-quest/ez/calendar.html", pic: "/desk/new-calendar.jpg", name: "Birthday calendar", line: "12 months, every birthday" },
+  { href: "/projects/skill-quest/ez/puzzle.html", pic: "/desk/new-puzzle.jpg", name: "Family puzzle book", line: "Word searches and a crossword" },
   { href: "/projects/planner/make/", pic: "/desk/new-make-yours.jpg", name: "Your own planner", line: "With your name in it" },
   { href: "/projects/skill-quest/ez/", pic: "/desk/ai-made-ez.jpg", name: "Meals, week, party, trip", line: "Plans that write themselves" },
   { href: "/projects/skill-quest/school/kitchen/", pic: "/desk/new-kitchen.jpg", name: "Learn AI words", line: "Short courses, no coding" },
