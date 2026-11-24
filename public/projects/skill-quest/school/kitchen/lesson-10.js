@@ -1,0 +1,67 @@
+/* Builder's Kitchen · Lesson 10 · Graduation: plan your own kitchen (architect). Pulls the whole track together. */
+(function () {
+  var L = {
+    n: 10, id: "b10", mins: 7, title: "Plan your own kitchen.", stamp: "Architect",
+    terms: ["Architecture", "Cost", "Latency", "Guardrails", "Prompt injection", "Start simple"],
+    teaser: ["GRADUATION", "you’re the architect", "Pick the chef. Hang the rules.<br>Choose appliances and a binder.<br>Plan the taste test.", "Every word. Seven minutes."],
+    lines: [
+      ["An architect picks the pieces.", "Which chef, which rules, which tools, which documents, how it’s tested. That plan is the architecture."],
+      ["Every piece has a price.", "Cost is mostly tokens. Latency is wait time."],
+      ["Guardrails are the safety rails.", "Hard limits, human approval, and a watch for prompt injection."]
+    ],
+    guess: { q: "A friend wants an AI helper. Build what first?", opts: [["The simplest version, then test", true], ["Five agents working together", false], ["Their own AI model", false]], reveal: "Start simple. Add pieces only when a real need shows up. That’s the architect’s habit." },
+    startLabel: "See a plan",
+    example: {
+      title: "One plan, every word you learned.",
+      html:
+        '<p class="label">A bakery’s helper <span class="sample">Sample plan</span></p>' +
+        '<div class="ticket"><div class="th"><span>KITCHEN PLAN</span><span>architecture</span></div>' +
+        'Chef (model): Sonnet<br>Order window (API): your site sends each chat<br>House rules (system prompt): bakery voice, short<br>Appliance (tool): check_order_status<br>Outlet (MCP): Google Calendar<br>Binder: 8-page menu, pasted in (cached when busy)<br>Agent? No, a workflow<br>Taste test: 25 real questions<br>Guardrails: refunds need a person' +
+        '<div class="tf">Simplest kitchen that works</div></div>',
+      next: "Your turn →"
+    },
+    build: {
+      title: "Your turn. Draw your kitchen.",
+      lead: "Pick what you’d build and the pieces. Your ticket asks Claude to review your architecture.",
+      state: { idea: "a helper for my small business", pieces: ["Tools", "My documents", "Taste tests"] },
+      controls: function (s, esc) {
+        var ideas = ["a helper for my small business", "a study buddy", "a trip planner", "an inbox sorter", "a content idea machine"];
+        var pieces = ["Tools", "MCP connectors", "My documents", "An agent", "Taste tests", "Claude Code to build it"];
+        return '<p class="label">What you’d build</p><div class="fridge">' + ideas.map(function (v) { return '<button type="button" class="chip" data-set="idea" data-v="' + esc(v) + '" aria-pressed="' + (s.idea === v) + '">' + esc(v) + "</button>"; }).join("") + "</div>" +
+          '<p class="label">Pieces you think it needs (tap any)</p><div class="fridge">' + pieces.map(function (v) { return '<button type="button" class="chip" data-set="pieces" data-multi="1" data-v="' + esc(v) + '" aria-pressed="' + (s.pieces.indexOf(v) >= 0) + '">' + esc(v) + "</button>"; }).join("") + "</div>";
+      },
+      head: "ORDER #B10", right: "architecture review", foot: "Paste it into Claude, or open it there",
+      text: function (s) {
+        return "Be my AI architect. I want to build " + s.idea + ". I think it needs: " + (s.pieces.join(", ") || "not sure") + ".\n" +
+          "Give me a one-screen plan with: model, system prompt (3 rules), tools, MCP connectors, documents (paste in or RAG?), workflow or agent, the eval, and guardrails.\n" +
+          "Then: which piece I picked that I don't need yet, the simplest version I could build this week, and a rough cost per 100 uses, marked as an estimate (prices change, so tell me where to check them).";
+      },
+      vendor: ["AI they built for organizations like ours", "which model, tools and data it uses, what it costs per month at my volume, and its guardrails"], claude: "Open in Claude", done: "Done →"
+    },
+    game: {
+      type: "match", title: "Final round: every station.", lead: "Tap a word, then its kitchen.",
+      pairs: [["API", "The order window"], ["System prompt", "House rules on the wall"], ["Tool use", "Appliances"], ["MCP", "Standard outlets"], ["RAG", "The recipe binder"], ["Agent", "The head chef running dinner"], ["Eval", "The taste test"]],
+      right: "Every station. You can follow a builder conversation now.",
+      habitTitle: "Architect habit", habit: "Start with the smallest kitchen that works: one chef, clear rules, a taste test. Add stations only when a real need shows up."
+    },
+    breaks: {
+      title: "The plan is a guess until you taste.",
+      lines: [
+        ["First plans and cost guesses are often wrong.", "Taste tests and real token counts show where."],
+        ["Prompt injection is a real kitchen fire.", "Content Claude reads can carry orders. A person presses risky buttons."]
+      ],
+      where: "Kitchens swap cooks and suppliers all the time. AI models change too; keep your taste tests so every switch is checked."
+    },
+    quiz: [
+      { term: "Start simple", q: "A friend wants to start with 5 agents. Your advice?", a: ["Start with one request and a taste test, add pieces only when needed", "Go for it, more agents always means better results", "Train your own model first so it fits the business"], ok: 0, why: "Right. Start simple. Agents cost more and break in more ways." },
+      { term: "Cost per token", q: "Recall from Lesson 2: what decides cost?", a: ["Tokens in and out, and which chef", "Which web browser people use", "How long the reply takes to read"], ok: 0, why: "Right. Mostly tokens times the chef’s price, plus fees for some tools." },
+      {q: "From Lesson 7: what’s a subagent?", a: ["A helper with its own counter that reports back a summary", "A cheaper, smaller model for simple jobs", "A person who approves the agent’s risky actions"], ok: 0, why: "Right. A sous-chef with its own counter.", term: "Subagent"}
+    ],
+    say: "Start with the smallest setup that works, test it, and add pieces only when a real need shows up.",
+    keep: "Questions for any AI pitch, and a ticket that reviews your own kitchen plan.",
+    cardLabel: "Copy my plan",
+    card: "MY AI KITCHEN PLAN\nChef (model): \nOrder window (API): \nHouse rules (system prompt): \nAppliances (tools): \nOutlets (MCP): \nRecipe binder (RAG or paste in): \nHead chef (agent) or prep checklist (workflow): \nTaste test (eval): \nGuardrails: \nStart simple. Taste every change.",
+    real: ["Claude Platform 101", "https://academy.claude.com/courses/claude-platform-101"]
+  };
+  document.addEventListener("DOMContentLoaded", function () { BK.run(L); });
+})();

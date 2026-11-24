@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Kitchen dictionary · Builder’s Kitchen</title>
+<meta name="description" content="Every AI builder word in one page: a kitchen picture, the real meaning in plain words, and what it’s not.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../school.css">
+<style>
+.search{width:100%;font:inherit;font-size:1rem;padding:12px 14px;border:1px solid var(--line2);border-radius:12px;background:var(--card);color:var(--ink);margin-top:12px}
+.filters{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.dict{list-style:none;padding:0;margin:16px 0 0;display:grid;gap:10px}
+.dict li{border:1px solid var(--line2);border-radius:12px;background:var(--card);padding:12px 14px;scroll-margin-top:80px}
+.dict li:target{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent)}
+.dict h3{margin:0;font-family:"Bricolage Grotesque",sans-serif;font-size:1.1rem;display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.dict h3 a{font-family:"Schibsted Grotesk",sans-serif;font-size:.78rem;font-weight:600;color:var(--muted);text-decoration:none;white-space:nowrap}
+.dict .k{margin:4px 0 0;font-weight:600}
+.dict .r{margin:4px 0 0}
+.dict .heard{margin:6px 0 0;font-size:.9rem;font-style:italic}
+.dict .no{margin:6px 0 0;font-size:.88rem;color:var(--muted)}
+.dict .got{display:inline-block;margin-left:6px;font-size:.75rem;color:var(--ok)}
+.dict .due{display:inline-block;margin-left:6px;font-size:.75rem;color:var(--accent);font-weight:700}
+.dict .lrn{color:var(--muted)}
+.count{font-size:.88rem;color:var(--muted);margin-top:10px}
+@media print{.top,.search,.filters,.foot,.btns{display:none}.dict li{break-inside:avoid;border-color:#999}}
+</style>
+<link rel="stylesheet" href="/site-bar.css" />
+<script src="/site-bar.js" data-project="skill-quest" data-kind="piece" defer></script>
+</head>
+<body class="bk">
+<header class="top">
+  <a class="logo" href="./">AI Made EZ <small>Builder’s Kitchen</small></a>
+  <div class="tools"><button class="chip" id="big" type="button" aria-pressed="false">Bigger text</button></div>
+</header>
+<main>
+  <p class="label">Kitchen dictionary</p>
+  <h1>Every builder word, one page.</h1>
+  <input class="search" id="q" type="search" placeholder="Find a word: token, MCP, agent…" aria-label="Find a word">
+  <div class="filters" id="filters"></div>
+  <p class="count" id="count" aria-live="polite"></p>
+  <ul class="dict" id="dict"></ul>
+  <div class="btns"><button class="btn ghost" type="button" onclick="window.print()">Print it</button><a class="btn ghost" href="./">Back to the passport</a></div>
+  <p class="small" style="margin-top:12px">Checked against Anthropic’s docs on 24 Nov 2026. AI changes fast; model names and prices especially.</p>
+</main>
+<footer class="foot"><a href="./">Builder’s passport</a><a href="../">AI Made EZ · Level 1</a><span>Not affiliated with Anthropic</span><span>Made by Alexandra Vargas</span></footer>
+<script src="../school.js" defer></script><script src="bk.js" defer></script><script src="words.js" defer></script><script src="mem.js" defer></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  var W = window.BK_WORDS, esc = BK.esc, T = BK.TRACK, done = BK.done(), list = document.getElementById("dict"), q = document.getElementById("q"), lesson = 0;
+  function slug(t) { return t.toLowerCase().replace(/[^a-z0-9]+/g, "-"); }
+  document.getElementById("filters").innerHTML = '<button class="chip" type="button" data-l="0" aria-pressed="true">All</button>' +
+    T.map(function (l) { return '<button class="chip" type="button" data-l="' + l.n + '" aria-pressed="false">' + l.n + ". " + esc(l.short) + "</button>"; }).join("");
+  function draw() {
+    var s = q.value.trim().toLowerCase();
+    var rows = W.filter(function (w) { return (!lesson || w[4] === lesson) && (!s || (w[0] + " " + w[1] + " " + w[2] + " " + (w[5] || "")).toLowerCase().indexOf(s) >= 0); });
+    list.innerHTML = rows.map(function (w) {
+      var l = T[w[4] - 1], got = done[l.id], M = window.BKM;
+      var mark = M && M.known(w[0]) ? '<span class="got">✓ known</span>' : M && got && M.due([w[0]]).length ? '<span class="due">practice</span>' : got ? '<span class="got lrn">learning</span>' : "";
+      return '<li id="' + slug(w[0]) + '"><h3><span>' + esc(w[0]) + mark + '</span><a href="' + l.href + '">Lesson ' + l.n + "</a></h3>" +
+        '<p class="k">' + esc(w[1]) + '</p><p class="r">' + esc(w[2]) + "</p>" + (w[5] ? '<p class="heard">You might hear: “' + esc(w[5]) + '”</p>' : "") + (w[3] ? '<p class="no">' + esc(w[3]) + "</p>" : "") + "</li>";
+    }).join("") || '<li>No word matches. Try “token” or “agent”.</li>';
+    document.getElementById("count").textContent = rows.length + " of " + W.length + " words";
+  }
+  q.oninput = draw;
+  document.getElementById("filters").onclick = function (e) {
+    var b = e.target.closest("[data-l]"); if (!b) return; lesson = +b.dataset.l;
+    this.querySelectorAll("[data-l]").forEach(function (x) { x.setAttribute("aria-pressed", String(x === b)); }); draw();
+  };
+  draw();
+  if (location.hash) { var el = document.getElementById(location.hash.slice(1)); if (el) el.scrollIntoView(); }
+});
+</script>
+<script src="/projects/skill-quest/smez-index.js" defer></script>
+<script src="/projects/skill-quest/smez-nav.js" data-section="school" defer></script>
+</body>
+</html>

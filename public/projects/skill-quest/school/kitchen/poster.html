@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>The AI kitchen · Builder’s Kitchen</title>
+<meta name="description" content="Every AI builder idea on one page, drawn as a kitchen. Print it or keep it on your phone.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../school.css">
+<style>
+.poster{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:16px}
+.poster a{display:block;text-decoration:none;color:var(--ink);border:1px solid var(--line2);border-radius:12px;background:var(--card);padding:10px 12px}
+.poster a:hover{border-color:var(--ink)}
+.poster .kd{margin:0;padding:0;border:0}
+.poster b{display:block;font-family:"Bricolage Grotesque",sans-serif;font-size:1.05rem;margin-top:6px}
+.poster span{display:block;font-size:.9rem;color:var(--muted)}
+
+body.story{width:1080px;height:1920px;overflow:hidden;background:var(--bg,#faf7f0)}
+body.story > *:not(main){display:none!important}body.story .btns{display:none}
+body.story main{max-width:none;width:1080px;margin:0;padding:60px 64px 0;box-sizing:border-box}
+body.story h1{font-size:96px;margin:6px 0 0}
+body.story .label{font-size:30px}
+body.story .poster{grid-template-columns:repeat(2,1fr);gap:22px;margin-top:34px}
+body.story .poster a{padding:14px 18px}
+body.story .poster .kd svg{max-height:190px}
+body.story .poster b{font-size:28px}
+body.story .poster span{display:none}
+body.story .sig{display:block;font:700 30px "Schibsted Grotesk",sans-serif;margin-top:30px;text-align:center}
+.sig{display:none}
+@media (max-width:560px){.poster{grid-template-columns:1fr}}
+@media print{.top,.foot,.btns,#site-bar{display:none}.poster{grid-template-columns:repeat(2,1fr);gap:8px}.poster a{break-inside:avoid}body{background:#fff}}
+</style>
+<link rel="stylesheet" href="/site-bar.css" />
+<script src="/site-bar.js" data-project="skill-quest" data-kind="piece" defer></script>
+</head>
+<body class="bk">
+<header class="top">
+  <a class="logo" href="./">AI Made EZ <small>Builder’s Kitchen</small></a>
+  <div class="tools"><button class="chip" id="big" type="button" aria-pressed="false">Bigger text</button></div>
+</header>
+<main>
+  <p class="label">The whole course on one page</p>
+  <h1>The AI kitchen.</h1>
+  <div class="poster" id="poster"></div>
+  <p class="sig">AI Made EZ · Builder’s Kitchen · vargas-studio.pages.dev</p>
+  <div class="btns"><button class="btn" type="button" onclick="window.print()">Print it</button><button class="btn ghost" id="share" type="button">Share it</button><a class="btn ghost" href="./">My passport</a></div>
+</main>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<footer class="foot"><a href="./">Builder’s passport</a><a href="glossary.html">Kitchen dictionary</a><span>Not affiliated with Anthropic</span><span>Made by Alexandra Vargas</span></footer>
+<script src="../school.js" defer></script><script src="bk.js" defer></script><script src="diagrams.js" defer></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  if (/size=story/.test(location.search)) document.body.classList.add("story");
+  document.getElementById("share").onclick = function () {
+    var d = { title: "The AI kitchen", text: "Every AI builder word on one page, as a kitchen:", url: location.href.split("?")[0] };
+    if (navigator.share) navigator.share(d).catch(function () {}); else (navigator.clipboard ? navigator.clipboard.writeText(d.text + " " + d.url) : Promise.reject()).then(function () { School.toast("Link copied"); }, function () { School.toast("Copy the address bar to share"); });
+  };
+  var lines = {
+    1: "Claude is the chef. Your prompt is the order. The counter is all it can see.",
+    2: "The API: apps reach Claude through the order window. It remembers nothing between tickets.",
+    3: "The builder’s house rules shape every plate.",
+    4: "Claude asks for an appliance. The app runs it and brings back the result.",
+    5: "MCP (Model Context Protocol): one plug shape, so one plug works in many AI apps.",
+    6: "RAG (retrieval-augmented generation): find the right page, then cook from it. Nothing is trained.",
+    7: "An agent picks its own steps in a loop. Start with one request.",
+    8: "Claude Code works in your project, with notes, recipe cards and bells.",
+    9: "Same dishes, same scorecard, every time you change something.",
+    10: "Pick the smallest kitchen that works, then taste."
+  };
+  document.getElementById("poster").innerHTML = BK.TRACK.map(function (l) {
+    return '<a href="' + l.href + '">' + (window.BK_DIAGRAMS[l.n] || "") + "<b>" + l.n + ". " + BK.esc(l.name) + "</b><span>" + lines[l.n] + "</span></a>";
+  }).join("");
+});
+</script>
+<script src="/projects/skill-quest/smez-index.js" defer></script>
+<script src="/projects/skill-quest/smez-nav.js" data-section="school" defer></script>
+</body>
+</html>
