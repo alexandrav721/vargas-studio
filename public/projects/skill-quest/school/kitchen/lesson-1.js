@@ -6,7 +6,7 @@
     teaser: ["THE KITCHEN", "how it works", "You place the order (prompt).<br>The chef cooks it (model).<br>The counter holds it all (context window).", "Six words. Eight minutes."],
     lines: [
       ["Claude is a model.", "A model is the chef. It learned from a huge library of text, and now it writes on request."],
-      ["It’s an LLM: a large language model.", "Large because it learned from a huge amount of text."],
+      ["It’s an LLM: a large language model.", "Large because it’s a huge program, trained on a huge library of text."],
       ["Your order is a prompt.", "Everything the chef can see sits on one counter: the context window."]
     ],
     guess: { q: "How does Claude write an answer?", opts: [["It predicts the next piece of text, again and again", true], ["It looks the answer up in a giant database", false], ["A person types it behind the scenes", false]], reveal: "It predicts the next piece of text. That’s what a large language model does." },
@@ -15,7 +15,7 @@
       title: "One order, seen from the kitchen.",
       html:
         '<p class="label">Your order <span class="sample">Sample</span></p>' +
-        '<div class="ticket"><div class="th"><span>PROMPT</span><span>your order</span></div>Summarize this recipe in 3 steps.<div class="tf">What you type is the prompt</div></div>' +
+        '<div class="ticket"><div class="th"><span>PROMPT</span><span>your order</span></div>Summarize this recipe in 3 steps.<div class="tf">What you send is the prompt</div></div>' +
         '<p class="label" style="margin-top:14px">The chef counts in pieces <span class="sample">Example split</span></p>' +
         '<div class="fridge" aria-label="A word split into tokens"><span class="tag">un</span><span class="tag">believ</span><span class="tag">able</span></div>' +
         '<p class="small">Those pieces are <b>tokens</b>. A token is often a short word or part of one. Prices and limits are counted in tokens.</p>' +
@@ -27,10 +27,10 @@
     },
     build: {
       title: "Your turn. Pick a chef for your job.",
-      lead: "Tap a job and a chef. Your ticket asks Claude to explain today’s words using your job.",
+      lead: "Tap a job and a chef. Your ticket makes a cheat sheet for your work.",
       state: { job: "writing emails", chef: "Sonnet" },
       controls: function (s, esc) {
-        var jobs = ["writing emails", "planning meals", "running a small shop", "school homework", "marketing campaigns"];
+        var jobs = ["writing emails", "planning meals", "running a small shop", "my small business", "marketing campaigns"];
         var chefs = [["Haiku", "fast and cheap"], ["Sonnet", "balanced"], ["Opus", "usual first pick"], ["Fable", "hardest tasks"]];
         return '<p class="label">Your job</p><div class="fridge">' + jobs.map(function (j) { return '<button type="button" class="chip" data-set="job" data-v="' + esc(j) + '" aria-pressed="' + (s.job === j) + '">' + esc(j) + "</button>"; }).join("") + "</div>" +
           '<p class="label">Your chef</p><div class="fridge">' + chefs.map(function (c) { return '<button type="button" class="chip" data-set="chef" data-v="' + c[0] + '" aria-pressed="' + (s.chef === c[0]) + '">' + c[0] + " · " + c[1] + "</button>"; }).join("") + "</div>";
@@ -43,11 +43,11 @@
           "2. When my chat gets long enough to start a fresh one, in one line.\n" +
           "3. Is " + s.chef + " the right Claude model for this? One line each comparing it to " + others + ".";
       },
-      claude: "Open in Claude", done: "I asked the chef →"
+      vendor: ["Claude or another AI model", "which model it uses and why, what happens in very long chats, and who pays when usage grows"], claude: "Open in Claude", done: "Done →"
     },
     game: {
-      type: "match", title: "Match each word to the kitchen.", lead: "Tap a word, then its kitchen meaning.",
-      pairs: [["Model", "The AI program itself, like Claude"], ["Prompt", "Everything you send it"], ["Token", "A small piece of text it counts and charges by"], ["Context window", "Everything it can see at once"], ["LLM", "AI that writes by predicting the next piece of text"], ["Model family", "Sizes of Claude: faster and cheaper, or more capable"]],
+      type: "match", title: "Match each word to its meaning.", lead: "Tap a word, then what it means.",
+      pairs: [["Model", "The AI program itself, like Claude"], ["Prompt", "Your order: what you type plus anything you attach"], ["Token", "A small piece of text it counts and charges by"], ["Context window", "How much fits on the counter at once"], ["LLM", "AI that writes by predicting the next piece of text"], ["Model family", "Sizes of Claude: faster and cheaper, or more capable"]],
       right: "All six. You just used the words every AI builder uses.",
       habitTitle: "Say it in one line", habit: "A model is the chef, the prompt is your order, and the context window is the counter."
     },
@@ -65,7 +65,7 @@
       { q: "A very long chat starts missing early details. Why?", a: ["The counter (context window) is crowded, so early details get less attention", "The model learned something new mid-chat"], ok: 0, why: "Right. A crowded counter blurs early details. Start a fresh chat with the key facts." }
     ],
     keep: "a clear picture of the AI kitchen, and a chef you picked for your job.",
-    cardLabel: "Copy my kitchen card",
+    cardLabel: "Copy my card",
     card: "THE AI KITCHEN\nModel = the chef (Claude)\nLLM = a chef that predicts the next piece of text\nPrompt = your order\nToken = the pieces it counts and charges by\nContext window = the counter: all it can see\nModel family = Haiku (fast) · Sonnet (balanced) · Opus (usual start) · Fable (hardest jobs)",
     real: ["AI Capabilities and Limitations", "https://anthropic.skilljar.com/ai-capabilities-and-limitations"]
   };

@@ -25,7 +25,7 @@
       next: "Agent or recipe?"
     },
     build: {
-      title: "Your turn. Agent or fixed recipe?",
+      title: "Your turn. Agent or prep checklist?",
       lead: "Pick a job. Your ticket asks Claude which setup fits, and where a person must say yes.",
       state: { job: "reply to every customer email" },
       controls: function (s, esc) {
@@ -39,7 +39,7 @@
           "2. Draw the steps as a short list (think / tool / check).\n" +
           "3. Where must a human approve before it acts? 4. Would subagents help? One line.";
       },
-      claude: "Open in Claude", done: "I checked my job →"
+      vendor: ["an AI agent", "which steps it takes on its own, where a person approves, what it costs per task, and how we stop it"], claude: "Open in Claude", done: "Done →"
     },
     game: {
       type: "tapall", title: "Which jobs really need an agent?", lead: "Tap the {n} that do. The rest are fine as a prep checklist.",
@@ -66,7 +66,7 @@
       { q: "Recall from Lesson 4: what does an agent use to act?", a: ["Tools", "A bigger context window"], ok: 0, why: "Right. No tools, no actions. Agents are tools in a loop." }
     ],
     keep: "a clear call on one real job: request, recipe or agent, with the approval points marked.",
-    cardLabel: "Copy my head-chef card",
+    cardLabel: "Copy my card",
     card: "THE HEAD CHEF (AGENTS)\nAgent = Claude picks its own steps and tools until done\nAgent loop = think → tool → check → repeat\nWorkflow = a prep checklist: fixed steps set by the builder\nOrchestrator = head chef splitting the job\nSubagent = sous-chef with its own counter, reports a summary\nHuman in the loop = a person approves risky actions\nStart simple: one request, then a workflow, then an agent",
     real: ["Introduction to subagents", "https://anthropic.skilljar.com/introduction-to-subagents"]
   };

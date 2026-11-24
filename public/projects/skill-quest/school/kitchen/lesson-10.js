@@ -16,7 +16,7 @@
       html:
         '<p class="label">A bakery’s order helper <span class="sample">Sample plan</span></p>' +
         '<div class="ticket"><div class="th"><span>KITCHEN PLAN</span><span>architecture</span></div>' +
-        'Chef (model): Sonnet. Fast and good enough<br>Window (API): the website sends each chat<br>House rules (system prompt): bakery voice, under 80 words<br>Appliance (tool): check_order_status<br>Outlet (MCP): Google Calendar for pickups<br>Binder: 8-page menu, pasted in (cached when busy)<br>Head chef? No. A fixed workflow is enough<br>Taste test: 25 real questions, run every change<br>Guardrails: refunds need a person' +
+        'Chef (model): Sonnet. Fast and good enough<br>Window (API): the website sends each chat<br>House rules (system prompt): bakery voice, under 80 words<br>Appliance (tool): check_order_status<br>Outlet (MCP): Google Calendar for pickups<br>Binder: 8-page menu, pasted in (cached when busy)<br>Head chef? No. A prep checklist (workflow) is enough<br>Taste test: 25 real questions, run every change<br>Guardrails: refunds need a person' +
         '<div class="tf">Simplest kitchen that does the job</div></div>',
       next: "Plan yours"
     },
@@ -36,7 +36,7 @@
           "Give me a one-screen plan with: model, system prompt (3 rules), tools, MCP connectors, documents (paste in or RAG?), workflow or agent, the eval, and guardrails.\n" +
           "Then: which piece I picked that I don't need yet, the simplest version I could build this week, and a rough cost per 100 uses, clearly marked as an estimate.";
       },
-      claude: "Open in Claude", done: "I planned my kitchen →"
+      vendor: ["AI they built for businesses like mine", "which model, tools and data it uses, what it costs per month at my volume, and its guardrails"], claude: "Open in Claude", done: "Done →"
     },
     game: {
       type: "match", title: "Final round: every station.", lead: "Tap a word, then its kitchen.",
@@ -49,17 +49,17 @@
       lines: [
         ["Your first plan will be wrong somewhere.", "That’s normal. The taste test tells you where."],
         ["Costs are estimates until you measure.", "Check real token counts on real traffic."],
-        ["Prompt injection is the newest kitchen fire.", "Any content Claude reads can carry orders. Keep a person on risky buttons."]
+        ["Prompt injection is a real kitchen fire.", "Any content Claude reads can carry orders. Keep a person on risky buttons."]
       ],
       where: "A real kitchen is built once. An AI kitchen gets rebuilt every time a better chef arrives. Keep your taste tests, so switching chefs is safe."
     },
     quiz: [
       { q: "A friend wants to start with 5 agents. Your advice?", a: ["Start with one request and a taste test, add pieces only when needed", "More agents means better results"], ok: 0, why: "Right. Start simple. Agents cost more and break in more ways." },
-      { q: "Recall from Lesson 1: what decides cost?", a: ["Tokens in and out, and which chef", "How many people use the app at once"], ok: 0, why: "Right. Mostly tokens times the chef’s price, plus fees for some tools." }
+      { q: "Recall from Lesson 2: what decides cost?", a: ["Tokens in and out, and which chef", "How many people use the app at once"], ok: 0, why: "Right. Mostly tokens times the chef’s price, plus fees for some tools." }
     ],
     keep: "a one-screen plan for your own AI product, and every builder word in this course.",
-    cardLabel: "Copy my kitchen plan card",
-    card: "MY AI KITCHEN PLAN\nChef (model): \nOrder window (API): \nHouse rules (system prompt): \nAppliances (tools): \nOutlets (MCP): \nRecipe binder (RAG or paste in): \nHead chef (agent) or fixed recipe (workflow): \nTaste test (eval): \nGuardrails: \nStart simple. Taste every change.",
+    cardLabel: "Copy my plan",
+    card: "MY AI KITCHEN PLAN\nChef (model): \nOrder window (API): \nHouse rules (system prompt): \nAppliances (tools): \nOutlets (MCP): \nRecipe binder (RAG or paste in): \nHead chef (agent) or prep checklist (workflow): \nTaste test (eval): \nGuardrails: \nStart simple. Taste every change.",
     real: ["Claude Platform 101", "https://anthropic.skilljar.com/claude-platform-101"]
   };
   document.addEventListener("DOMContentLoaded", function () { BK.run(L); });

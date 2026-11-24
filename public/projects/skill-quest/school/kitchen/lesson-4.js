@@ -16,9 +16,9 @@
       html:
         '<p class="label">1. The label on the appliance <span class="sample">Simplified</span></p><div class="ticket"><div class="th"><span>TOOL</span><span>definition</span></div>name: get_weather<br>does: today’s forecast for a city<br>needs: city<div class="tf">Your app hands Claude this label</div></div>' +
         '<p class="label" style="margin-top:14px">2. Claude asks (tool call)</p><div class="reply"><p class="who">assistant</p>use get_weather · city: “Paris”</div>' +
-        '<p class="label" style="margin-top:14px">3. Your kitchen runs it (tool result)</p><div class="reply"><p class="who">your code</p>Rain, 14°C, 80% chance</div>' +
+        '<p class="label" style="margin-top:14px">3. The app runs it (tool result)</p><div class="reply"><p class="who">the app</p>Rain, 14°C, 80% chance</div>' +
         '<p class="label" style="margin-top:14px">4. Claude plates the answer</p><div class="reply"><p class="who">assistant</p>Yes, bring one. 80% chance of rain.</div>' +
-        '<p class="small">Anthropic runs two appliances for you: <b>web search</b> and <b>code execution</b> (it runs code to calculate). <b>Computer use</b> has a ready-made label, but the app supplies the computer Claude clicks on.</p>',
+        '<p class="small">Anthropic runs a few appliances for you, like <b>web search</b>, web fetch and <b>code execution</b> (it runs code to calculate). With <b>computer use</b>, Claude looks at screenshots and asks the app to click and type.</p>',
       next: "Design an appliance"
     },
     build: {
@@ -33,20 +33,20 @@
       head: "ORDER #B04", right: "new appliance", foot: "Paste it into Claude, or open it there",
       text: function (s) {
         return "For " + s.app + ", write the tool definition for \"" + s.tool + "\" that I could hand to a developer.\n" +
-          "1. Name, what it does, what inputs it needs: in plain words, then as JSON.\n" +
+          "1. Name, what it does, what inputs it needs: in plain words, then as JSON (the format apps read).\n" +
           "2. Walk through one example: user question → tool call → tool result → final answer.\n" +
           "3. Say who actually runs the tool (Claude or my code) and one way it could go wrong.";
       },
-      claude: "Open in Claude", done: "I designed a tool →"
+      vendor: ["AI that can take actions with tools", "which actions it can take, what needs my approval first, and what happens when it picks the wrong action"], claude: "Open in Claude", done: "Done →"
     },
     game: {
       type: "pick", title: "Claude says “use get_weather for Paris.” Who actually checks the weather?",
       options: [
         ["The app runs the tool and sends back the result", true],
-        ["Claude goes online by itself", false, "Not for your own tools. Claude only asks; your kitchen does it."],
+        ["Claude goes online by itself", false, "Not for your own tools. Claude only asks; the app does it."],
         ["Anthropic phones a weather station", false, "No. The tool belongs to your app."]
       ],
-      right: "Yes. Claude picks the appliance and the settings. Your kitchen presses the button.",
+      right: "Yes. Claude picks the appliance and the settings. The app, like a waiter, presses the button and brings back the result.",
       wrong: "Who owns the appliance?", hint: "Claude can only write text. Something else has to act.",
       habitTitle: "Builder habit", habit: "Good tool labels matter more than clever prompts. A clear name and description is how Claude knows when to use it."
     },
@@ -64,7 +64,7 @@
       { q: "Recall from Lesson 3: where should a rule that must never break live?", a: ["Built into the app", "In the system prompt only"], ok: 0, why: "Right. Prompts steer; the app enforces." }
     ],
     keep: "a tool you designed, with its label and the 4 steps.",
-    cardLabel: "Copy my appliance card",
+    cardLabel: "Copy my card",
     card: "APPLIANCES (TOOL USE)\nTool = an appliance Claude can ask for\nTool definition = the label: name, what it does, inputs\nTool call = Claude asks to use it\nTool result = what the app sends back\nThe app runs your tools; Claude only asks\nRun by Anthropic: web search · code execution\nComputer use: the app supplies the computer",
     real: ["Claude Platform 101", "https://anthropic.skilljar.com/claude-platform-101"]
   };

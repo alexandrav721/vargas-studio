@@ -45,8 +45,11 @@ document.addEventListener("DOMContentLoaded", function () {
     pick = shuffle(pick.concat(rest.slice(0, N - pick.length)));
     qs = pick.map(function (w, k) {
       var asKitchen = k % 2 === 0; // alternate: kitchen picture → word, real meaning → word
-      var others = shuffle(W.filter(function (o) { return o !== w && o[0] !== w[0]; })).slice(0, 2);
-      return { w: w, prompt: asKitchen ? w[1] : w[2], kind: asKitchen ? "In the kitchen, this is…" : "Which word means…", opts: shuffle([w].concat(others)) };
+      var lw = w[0].toLowerCase();
+      var others = shuffle(W.filter(function (o) { var lo = o[0].toLowerCase(); return o !== w && o[4] !== w[4] && lo.indexOf(lw) < 0 && lw.indexOf(lo) < 0; })).slice(0, 2);
+      var meaning = w[2].indexOf(": ") > 0 && w[2].indexOf(": ") < 40 ? w[2].slice(w[2].indexOf(": ") + 2) : w[2];
+      meaning = meaning.charAt(0).toUpperCase() + meaning.slice(1);
+      return { w: w, prompt: asKitchen ? w[1] : meaning, kind: asKitchen ? "In the kitchen, this is…" : "Which word means…", opts: shuffle([w].concat(others)) };
     });
     i = 0; right = 0; missed = []; draw();
   }

@@ -24,7 +24,7 @@
       arrow(210, 72, 246, 72) + t(160, 142, "the window remembers nothing")),
     3: svg("House rules (the system prompt) hang on the wall above the chef",
       card(96, 6, 128, 54) + t(160, 22, "HOUSE RULES", { w: 800, size: 11 }) + '<path d="M110 32h88M110 42h100M110 52h70" ' + S + ' stroke-width="1.5"/>' +
-      chef(160, 100) + t(160, 146, "system prompt = rules on the wall") + t(262, 100, "every plate", { size: 11, c: "var(--accent)" }) + t(262, 114, "follows them", { size: 11, c: "var(--accent)" })),
+      chef(160, 100) + t(160, 146, "system prompt = rules on the wall") + t(262, 100, "every plate", { size: 11, c: "var(--accent)" }) + t(262, 114, "is shaped by them", { size: 11, c: "var(--accent)" })),
     4: svg("The chef asks for an appliance (tool call), your code runs it, and the result comes back",
       chef(40, 66) + card(84, 22, 110, 28) + t(139, 40, "use: weather", { size: 11 }) + arrow(62, 56, 82, 44) +
       '<rect x="236" y="30" width="66" height="56" rx="8" ' + S + ' fill="var(--card)"/><circle cx="269" cy="58" r="12" ' + S + "/>" + t(269, 104, "your app runs it", { size: 11 }) +

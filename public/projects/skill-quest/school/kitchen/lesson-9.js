@@ -3,7 +3,7 @@
   var L = {
     n: 9, id: "b9", mins: 8, title: "Taste tests.", stamp: "Evals",
     terms: ["Eval", "Test set", "Success criteria", "Grader", "LLM-as-judge", "Regression"],
-    teaser: ["TASTE TEST", "evals", "Tasting one spoon isn’t a test.<br>Twenty dishes, the same scorecard,<br>every time you change the recipe.", "Six words. Eight minutes."],
+    teaser: ["TASTE TEST", "evals", "Tasting one spoon isn’t a test.<br>Twenty dishes, the same scorecard,<br>every time you change the prompt.", "Six words. Eight minutes."],
     lines: [
       ["An eval is a taste test with a scorecard.", "The same set of questions, scored the same way, every time you change a prompt or a model."],
       ["“It looked fine” is a vibe check.", "A change that fixes one dish can quietly ruin three others. Only a test set catches that."],
@@ -37,7 +37,7 @@
           "1. Turn those into 3 specific, measurable checks.\n2. Write 8 test questions, including 2 tricky edge cases.\n" +
           "3. For each check, say if code or an LLM judge should grade it, and write the judge's instructions.";
       },
-      claude: "Open in Claude", done: "I built a scorecard →"
+      vendor: ["AI they say is accurate", "how they test it, on how many real examples, and how they catch a change that breaks something"], claude: "Open in Claude", done: "Done →"
     },
     game: {
       type: "pick", title: "You changed your prompt. 3 answers look great. Ready to ship?",
@@ -48,7 +48,7 @@
       ],
       right: "Yes. Same test, same scorecard, before you ship.",
       wrong: "What might you not have seen?", hint: "One fix can break another dish.",
-      habitTitle: "Builder habit", habit: "Write the scorecard before you change the recipe. Then every change gets a score."
+      habitTitle: "Builder habit", habit: "Write the scorecard before you change the prompt. Then every change gets a score."
     },
     breaks: {
       title: "The judge can be wrong too.",
@@ -63,7 +63,7 @@
       { q: "Recall from Lesson 6: if a RAG bot gives wrong answers, what’s often the problem?", a: ["Search pulled the wrong page", "Claude needs training"], ok: 0, why: "Right. An eval on the search step finds it fast." }
     ],
     keep: "a scorecard and 8 test questions for a real AI feature.",
-    cardLabel: "Copy my taste-test card",
+    cardLabel: "Copy my card",
     card: "TASTE TESTS (EVALS)\nEval = same questions, same scorecard, every change\nSuccess criteria = what good means, measurable\nTest set = the fixed questions (keep some unseen)\nGrader = code for exact checks, LLM-as-judge for fuzzy ones\nRegression = a fix that broke something else\nVibe check ≠ eval",
     real: ["Building with the Claude API (prompt evaluation module)", "https://academy.claude.com/courses/building-with-the-claude-api"]
   };

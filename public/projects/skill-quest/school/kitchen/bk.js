@@ -112,7 +112,7 @@
       var render = function () {
         if (step === 0 && L.guess && guessed === null) {
           show('<p class="label">Lesson ' + L.n + " · about " + L.mins + " minutes</p>" + "<h1>" + esc(L.title) + "</h1>" +
-            '<p class="label" style="margin-top:14px">First, a guess. No wrong answers yet.</p><p><b>' + L.guess.q + '</b></p><ul class="claims">' +
+            '<p class="label" style="margin-top:14px">Quick guess.</p><p><b>' + L.guess.q + '</b></p><ul class="claims">' +
             L.guess.opts.map(function (o, j) { return '<li><button type="button" data-g="' + j + '">' + o[0] + "</button></li>"; }).join("") + "</ul>");
           app.querySelectorAll("[data-g]").forEach(function (b) { b.onclick = function () { guessed = +b.dataset.g; play(L.guess.opts[guessed][1] ? "tick" : "pick", 1); render(); }; });
           return;
@@ -120,7 +120,7 @@
         if (step === 0) return show(
           '<p class="label">Lesson ' + L.n + " · about " + L.mins + " minutes</p>" +
           "<h1>" + esc(L.title) + "</h1>" +
-          (L.guess ? '<p class="fb ' + (L.guess.opts[guessed][1] ? "good\">Good guess. " : "try\">Most people guess that. ") + L.guess.reveal + "</p>" : "") +
+          (L.guess ? '<p class="fb ' + (L.guess.opts[guessed][1] ? "good\">Good guess. " : "try\">Not quite. ") + L.guess.reveal + "</p>" : "") +
           ((window.BK_DIAGRAMS && window.BK_DIAGRAMS[L.n]) || '<div class="teaser" aria-hidden="true">' + ticket(L.teaser[0], L.teaser[1], L.teaser[2], L.teaser[3]) + "</div>") +
           '<ul class="lines">' + L.lines.slice(0, 2).map(function (x) { return "<li><b>" + x[0] + "</b>" + x[1] + "</li>"; }).join("") + "</ul>" +
           '<p class="label" style="margin-top:16px">Words you’ll know by the end</p>' + termChips(L.terms) +
@@ -131,17 +131,25 @@
 
         if (step === 2) {
           var B = L.build;
-          show("<h2>" + esc(B.title) + "</h2>" + (B.lead ? '<p class="muted">' + B.lead + "</p>" : "") + B.controls(state, esc) +
+          if (B.vendor && !state.mode) state.mode = "make";
+          var T = function (s) {
+            if (s.mode !== "vendor") return B.text(s);
+            return "A vendor is pitching me a product that uses " + B.vendor[0] + ". I don't code.\n" +
+              "Write 5 short questions I should ask them, in plain words. For each: what a good answer sounds like, and a red-flag answer.\n" +
+              "Make sure the questions cover: " + B.vendor[1] + ".";
+          };
+          var modes = B.vendor ? '<div class="fridge" role="group" aria-label="Ticket type"><button type="button" class="chip" data-set="mode" data-v="make" aria-pressed="' + (state.mode !== "vendor") + '">Make something</button><button type="button" class="chip" data-set="mode" data-v="vendor" aria-pressed="' + (state.mode === "vendor") + '">Question a vendor</button></div>' : "";
+          show("<h2>" + esc(B.title) + "</h2>" + (B.lead ? '<p class="muted">' + B.lead + "</p>" : "") + modes + '<div id="ctl"' + (state.mode === "vendor" ? " hidden" : "") + ">" + B.controls(state, esc) + "</div>" +
             '<p class="label">' + esc(B.ticketLabel || "Your ticket") + '</p><div id="ticket"></div>' +
             '<div class="btns">' + (B.claude ? '<a class="btn" id="open" target="_blank" rel="noopener">' + esc(B.claude) + "</a>" : "") + '<button class="btn ' + (B.claude ? "ghost" : "") + '" id="copy" type="button">' + esc(B.copyLabel || "Copy my ticket") + "</button></div>" +
             (B.after ? '<p class="small">' + B.after + "</p>" : "") +
             nextBtn(B.done || "Done →", true));
           var draw = function (added) {
-            var text = B.text(state);
+            var text = T(state); var c = document.getElementById("ctl"); if (c) c.hidden = state.mode === "vendor";
             var body = esc(text).replace(/\n/g, "<br>");
             if (added) body = body.replace(esc(added), '<span class="add">' + esc(added) + "</span>");
             document.getElementById("ticket").innerHTML = ticket(B.head, B.right, body, B.foot);
-            var o = document.getElementById("open"); if (o) o.href = (B.claudeUrl || "https://claude.ai/new?q=") + encodeURIComponent(B.claudeText ? B.claudeText(state) : text);
+            var o = document.getElementById("open"); if (o) o.href = (B.claudeUrl || "https://claude.ai/new?q=") + encodeURIComponent(B.claudeText && state.mode !== "vendor" ? B.claudeText(state) : text);
           };
           draw();
           app.querySelectorAll("[data-set]").forEach(function (b) {
@@ -153,7 +161,7 @@
             };
           });
           app.querySelectorAll("[data-in]").forEach(function (inp) { inp.oninput = function () { state[inp.dataset.in] = inp.value; draw(); }; });
-          document.getElementById("copy").onclick = function () { copy(B.text(state), B.copied || "Copied"); play("share"); };
+          document.getElementById("copy").onclick = function () { copy(T(state), B.copied || "Copied"); play("share"); };
           var o = document.getElementById("open"); if (o) o.addEventListener("click", function () { play("share"); });
           return;
         }
@@ -200,7 +208,7 @@
         setTimeout(function () { play(all ? "win" : "stamp"); }, 260);
         document.getElementById("save").onclick = function () { copy(L.card, "Card copied"); };
         document.getElementById("send").onclick = function () {
-          var d = { title: "AI Made EZ · " + L.title, text: "A 9-minute lesson that made this make sense:", url: location.href };
+          var d = { title: "AI Made EZ · " + L.title, text: "A short lesson that made this make sense:", url: location.href };
           if (navigator.share) navigator.share(d).catch(function () {}); else copy(d.text + " " + d.url, "Link copied");
         };
       };

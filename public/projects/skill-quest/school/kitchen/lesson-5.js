@@ -35,12 +35,12 @@
           "A table with one row per service: one useful thing Claude could do if connected · read-only or can change things · one safety rule.\n" +
           "Then explain in 3 lines: MCP server vs MCP client vs host vs connector, using a kitchen-outlet comparison.";
       },
-      claude: "Open in Claude", done: "I planned my outlets →"
+      vendor: ["MCP connectors to our apps", "which of our apps it connects to, whether it can change things or only read, and who built each connector"], claude: "Open in Claude", done: "Done →"
     },
     game: {
       type: "match", title: "Match the outlet words.", lead: "Tap a word, then its meaning.",
       pairs: [["MCP", "The standard plug shape"], ["MCP server", "The appliance: wraps one service"], ["MCP client", "The link inside the app to one server"], ["Connector", "What the Claude app calls a plugged-in server"], ["Resources", "Things a server lets Claude read"]],
-      right: "All five. You can follow any MCP conversation now.",
+      right: "All five matched.",
       habitTitle: "Builder habit", habit: "MCP is plumbing. Servers offer tools Claude can ask for, plus things to read and ready-made prompts."
     },
     breaks: {
@@ -56,7 +56,7 @@
       { q: "Recall from Lesson 4: who runs a tool when Claude asks?", a: ["The app or server, not Claude", "Claude itself"], ok: 0, why: "Right. Claude picks; the kitchen presses the button." }
     ],
     keep: "a plan for which services to connect, with a safety note for each.",
-    cardLabel: "Copy my outlet card",
+    cardLabel: "Copy my card",
     card: "OUTLETS (MCP)\nMCP = Model Context Protocol, a standard plug for tools\nMCP server = the appliance (wraps Drive, Slack, a database…)\nHost = the AI app (like the Claude desktop app)\nMCP client = the link inside it to one server\nConnector = the Claude app’s name for a plugged-in server\nServers offer tools, resources, prompts\nPrompt injection = hidden orders inside content. Plug in only what you trust",
     real: ["Introduction to Model Context Protocol", "https://anthropic.skilljar.com/introduction-to-model-context-protocol"]
   };

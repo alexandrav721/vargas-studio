@@ -38,7 +38,7 @@
           "2. If RAG: explain chunking, embeddings and a vector database for my case, one line each.\n" +
           "3. How do I make answers cite the page they used, and what should it do when no page fits?";
       },
-      claude: "Open in Claude", done: "I planned my binder →"
+      vendor: ["AI that answers from our documents (RAG)", "whether it trains on our documents, how it shows its sources, and what it says when no document fits"], claude: "Open in Claude", done: "Done →"
     },
     game: {
       type: "pick", title: "A shop has a 6-page policy doc. What’s the simplest good setup?",
@@ -62,10 +62,10 @@
     },
     quiz: [
       { q: "Does RAG train the model on your documents?", a: ["No, it places the right pages in each request", "Yes, a little each time it reads them"], ok: 0, why: "Right. Nothing is trained. It’s looked up each time." },
-      { q: "Recall from Lesson 5: what’s an MCP server?", a: ["The appliance that wraps one service", "A faster Claude"], ok: 0, why: "Right. A Drive or Notion server is one way to fetch pages for the binder." }
+      { q: "Recall from Lesson 5: what’s an MCP server?", a: ["An appliance with a standard plug, for one service", "A faster Claude"], ok: 0, why: "Right. A Drive or Notion server is one way to fetch pages for the binder." }
     ],
     keep: "a plan for your own documents: paste it in, or build a binder.",
-    cardLabel: "Copy my binder card",
+    cardLabel: "Copy my card",
     card: "THE RECIPE BINDER (RAG)\nRAG = find the right pages, then Claude answers from them\nChunking = cutting documents into findable pages\nEmbeddings = text turned into numbers by meaning\nVector database = finds the closest-meaning pages\nCitations = which page the answer came from\nPrompt caching = prep once, reuse cheaply (5 min after each use)\nSmall binder? Paste it all in.",
     real: ["Building with the Claude API (RAG module)", "https://academy.claude.com/courses/building-with-the-claude-api"]
   };
