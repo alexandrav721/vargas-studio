@@ -4,6 +4,8 @@
  *   gift   ?year=2002&for=gift           (no picks yet: tick what they had)
  *   group  ?y=2004&p=Maya.t.1a.2b&p=...  (the group link, see group.js)
  * The away message comes from this browser only (never the link). */
+import { count } from "./count.js";
+count("print_open");
 import { ITEMS } from "./catalog-data.js";
 import { primaryEra } from "./data.js";
 import { personaFor, personaFromKey, personaKey, signatureFor } from "./moments.js";

@@ -2,6 +2,8 @@
 //
 //   POST /api/sb/notify {email, year?, source?}  -> 201 {ok:true}
 //        "Tell me when prints open". Stores only the email (lowercased), the year and the page.
+//   POST /api/sb/event {step}  -> 202 {ok:true}
+//        Anonymous game counts: +1 to today's number for that step. Nothing about the person.
 //
 // No SB binding -> every route answers 503 {"open":false}, and the page says sign-ups aren't on yet.
 // Same-origin only. Rate limit: per hashed IP, in the BUILDS KV when bound, else per isolate.
@@ -43,6 +45,22 @@ async function take(env, req) {
   if (env.BUILDS) n = Number((await env.BUILDS.get(key)) || 0);
   else n = memory.get(key) || 0;
   if (n >= LIMIT) throw new Bad('Too many tries. Try again in an hour.', 429);
+  if (env.BUILDS) await env.BUILDS.put(key, String(n + 1), { expirationTtl: WINDOW + 60 });
+  else {
+    if (memory.size > 5000) memory.clear();
+    memory.set(key, n + 1);
+  }
+}
+
+// Anonymous game counts: POST /api/sb/event {step}. Adds 1 to today's count for that step.
+const STEPS = new Set(['start', 'join', 'finish', 'share', 'save', 'group_share', 'print_open']);
+const EVENT_LIMIT = 120; // per hashed IP per hour, so one script can't fake the numbers
+async function takeEvent(env, req) {
+  const key = `sb:event:${await ipKey(req)}:${Math.floor(Date.now() / 1000 / WINDOW)}`;
+  let n;
+  if (env.BUILDS) n = Number((await env.BUILDS.get(key)) || 0);
+  else n = memory.get(key) || 0;
+  if (n >= EVENT_LIMIT) throw new Bad('Too many.', 429);
   if (env.BUILDS) await env.BUILDS.put(key, String(n + 1), { expirationTtl: WINDOW + 60 });
   else {
     if (memory.size > 5000) memory.clear();
@@ -92,6 +110,18 @@ async function handle({ request: req, env, params }) {
       .bind(email, year, source, Date.now())
       .run();
     return json({ ok: true }, 201);
+  }
+  if (path === 'event') {
+    if (req.method !== 'POST') return json({ error: 'That method is not allowed here.' }, 405);
+    const b = await readJson(req);
+    const step = typeof b.step === 'string' ? b.step : '';
+    if (!STEPS.has(step)) throw new Bad('Unknown step.');
+    await takeEvent(env, req);
+    const day = new Date().toISOString().slice(0, 10); // UTC day; counts only, nothing about the person
+    await env.SB.prepare('INSERT INTO events (day, step, n) VALUES (?, ?, 1) ON CONFLICT(day, step) DO UPDATE SET n = n + 1')
+      .bind(day, step)
+      .run();
+    return json({ ok: true }, 202);
   }
   return json({ error: 'Not found.' }, 404);
 }
