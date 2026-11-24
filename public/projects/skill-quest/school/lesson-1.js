@@ -155,7 +155,7 @@
       '<div class="kept"><p><b>You leave with:</b> a week of dinners from your own fridge, and the four-part order: who, what you have, what you hate, how fast.</p>' +
       '<p><b>Your new habit:</b> ask "Which facts should I double-check?"</p></div>' +
       '<div class="btns"><button class="btn" id="save" type="button">Copy my order card</button><a class="btn ghost" href="./">See my Chef\'s passport</a><button class="btn ghost" id="send" type="button">Send this lesson to someone</button></div>' +
-      '<p class="small">Next: Lesson 2, Placing your order (coming soon).</p></section>';
+      '<div class="btns"><a class="btn ghost" href="lesson-2.html">Lesson 2: Placing your order →</a></div></section>';
     window.scrollTo(0, 0);
     setTimeout(function () { play("stamp"); }, 260);
     document.getElementById("save").onclick = function () { copy("ORDER CARD\nWho is it for?\nWhat do I have?\nWhat do I never want?\nHow fast / how big?\nThen ask: Which facts should I double-check?", "Order card copied"); };

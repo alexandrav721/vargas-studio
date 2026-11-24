@@ -105,3 +105,7 @@ input[type=text]{font:400 1em var(--text);padding:13px 14px;border:1px solid var
 .teaser .ticket{font-size:13.5px;padding:14px 14px 10px}
 body,ol li::marker{font-variant-numeric:proportional-nums}
 .sec .lines{border-top:0;margin-top:0}
+/* Lessons 2+: a text box for longer answers, and two tickets side by side */
+textarea{font:400 1em var(--text);padding:13px 14px;border:1px solid var(--line2);border-radius:10px;background:#fff;width:100%;max-width:520px;min-height:96px;resize:vertical}
+.pair{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin:12px 0}
+.pair .reply{margin-top:8px}

@@ -35,7 +35,7 @@
   }).then(function (j) {
     function n(page, ev) { var x = j.counts.find(function (c) { return c.page === page && c.event === ev; }); return x ? x.n : 0; }
     function pct(a, b) { return b ? (100 * a / b).toFixed(1) + "%" : "–"; }
-    var P = { marketers: "Marketing kit · $39", smallbiz: "Shop owner kit · $19", everyday: "Cooking school · $19" };
+    var P = { marketers: "Marketing kit · $39", smallbiz: "Shop owner kit · $19", everyday: "AI Made EZ · $19" };
     var cols = Object.keys(P).map(function (p) {
       var v = n(p, "view"), c = n(p, "cta"), r = n(p, "reserve");
       return '<div class="col"><h2>' + P[p] + '</h2>' +
