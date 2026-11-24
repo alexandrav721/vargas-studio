@@ -66,7 +66,7 @@
     keep: "a tool you designed, with its label and the 4 steps.",
     cardLabel: "Copy my card",
     card: "APPLIANCES (TOOL USE)\nTool = an appliance Claude can ask for\nTool definition = the label: name, what it does, inputs\nTool call = Claude asks to use it\nTool result = what the app sends back\nThe app runs your tools; Claude only asks\nRun by Anthropic: web search · code execution\nComputer use: the app supplies the computer",
-    real: ["Claude Platform 101", "https://anthropic.skilljar.com/claude-platform-101"]
+    real: ["Tool use with the Messages API", "https://academy.claude.com/courses/tool-use-with-the-messages-api"]
   };
   document.addEventListener("DOMContentLoaded", function () { BK.run(L); });
 })();

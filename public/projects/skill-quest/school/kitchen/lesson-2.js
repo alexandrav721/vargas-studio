@@ -68,7 +68,7 @@
     keep: "a real request and response you can read, and the habit of keeping keys secret.",
     cardLabel: "Copy my card",
     card: "THE ORDER WINDOW\nAPI = the window apps use to send Claude tickets\nAPI key = your account card: bills your tab (keep it secret)\nThe app = the waiter carrying tickets and plates\nRequest = the ticket · Response = the plate\nMessages = the list of user and assistant turns\nThe API remembers nothing: resend the conversation\nStreaming = words arrive as they’re written\nCost = tokens in + tokens out (out costs more)",
-    real: ["Building with the Claude API", "https://academy.claude.com/courses/building-with-the-claude-api"]
+    real: ["Claude Platform 101", "https://academy.claude.com/courses/claude-platform-101"]
   };
   document.addEventListener("DOMContentLoaded", function () { BK.run(L); });
 })();

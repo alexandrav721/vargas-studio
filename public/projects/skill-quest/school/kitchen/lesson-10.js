@@ -60,7 +60,7 @@
     keep: "a one-screen plan for your own AI product, and every builder word in this course.",
     cardLabel: "Copy my plan",
     card: "MY AI KITCHEN PLAN\nChef (model): \nOrder window (API): \nHouse rules (system prompt): \nAppliances (tools): \nOutlets (MCP): \nRecipe binder (RAG or paste in): \nHead chef (agent) or prep checklist (workflow): \nTaste test (eval): \nGuardrails: \nStart simple. Taste every change.",
-    real: ["Claude Platform 101", "https://anthropic.skilljar.com/claude-platform-101"]
+    real: ["Claude Platform 101", "https://academy.claude.com/courses/claude-platform-101"]
   };
   document.addEventListener("DOMContentLoaded", function () { BK.run(L); });
 })();

@@ -68,7 +68,7 @@
     keep: "a clear call on one real job: request, recipe or agent, with the approval points marked.",
     cardLabel: "Copy my card",
     card: "THE HEAD CHEF (AGENTS)\nAgent = Claude picks its own steps and tools until done\nAgent loop = think → tool → check → repeat\nWorkflow = a prep checklist: fixed steps set by the builder\nOrchestrator = head chef splitting the job\nSubagent = sous-chef with its own counter, reports a summary\nHuman in the loop = a person approves risky actions\nStart simple: one request, then a workflow, then an agent",
-    real: ["Introduction to subagents", "https://anthropic.skilljar.com/introduction-to-subagents"]
+    real: ["Introduction to subagents", "https://academy.claude.com/courses/introduction-to-subagents"]
   };
   document.addEventListener("DOMContentLoaded", function () { BK.run(L); });
 })();

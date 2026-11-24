@@ -58,7 +58,7 @@
     keep: "a plan for which services to connect, with a safety note for each.",
     cardLabel: "Copy my card",
     card: "OUTLETS (MCP)\nMCP = Model Context Protocol, a standard plug for tools\nMCP server = the appliance (wraps Drive, Slack, a database…)\nHost = the AI app (like the Claude desktop app)\nMCP client = the link inside it to one server\nConnector = the Claude app’s name for a plugged-in server\nServers offer tools, resources, prompts\nPrompt injection = hidden orders inside content. Plug in only what you trust",
-    real: ["Introduction to Model Context Protocol", "https://anthropic.skilljar.com/introduction-to-model-context-protocol"]
+    real: ["Introduction to Model Context Protocol", "https://academy.claude.com/courses/introduction-to-model-context-protocol"]
   };
   document.addEventListener("DOMContentLoaded", function () { BK.run(L); });
 })();

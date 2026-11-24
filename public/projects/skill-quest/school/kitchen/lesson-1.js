@@ -55,7 +55,8 @@
       title: "The counter gets wiped every shift.",
       lines: [
         ["A new chat starts with an empty counter.", "The chef doesn’t remember yesterday unless you put it back on the counter."],
-        ["A crowded counter blurs things.", "In very long chats the chef pays less attention to early details, and apps may summarize them. Start fresh and paste the key facts."],
+        ["A crowded counter blurs things.", "In very long chats the chef pays less attention to early details, and apps may summarize them. Start fresh, or let the app compact it (squeeze it into a summary), then paste back key facts."],
+        ["The cookbook stopped printing on a date.", "That’s the training cutoff. For anything newer, paste it in or let Claude search the web."],
         ["Bigger chefs cost more per token.", "Pick the smallest chef that does the job well."]
       ],
       where: "A real chef remembers and tastes. This one predicts the next piece of text from what’s on the counter. It doesn’t know when it’s wrong, so it can sound sure and still be wrong."
@@ -67,7 +68,7 @@
     keep: "a clear picture of the AI kitchen, and a chef you picked for your job.",
     cardLabel: "Copy my card",
     card: "THE AI KITCHEN\nModel = the chef (Claude)\nLLM = a chef that predicts the next piece of text\nPrompt = your order\nToken = the pieces it counts and charges by\nContext window = the counter: all it can see\nModel family = Haiku (fast) · Sonnet (balanced) · Opus (usual start) · Fable (hardest jobs)",
-    real: ["AI Capabilities and Limitations", "https://anthropic.skilljar.com/ai-capabilities-and-limitations"]
+    real: ["AI Capabilities and Limitations", "https://academy.claude.com/courses/ai-capabilities-and-limitations"]
   };
   document.addEventListener("DOMContentLoaded", function () { BK.run(L); });
 })();

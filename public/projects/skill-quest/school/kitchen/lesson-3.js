@@ -19,7 +19,7 @@
         '<p class="label" style="margin-top:14px">House rules: “You answer for Rosa’s Bakery. Facts are in &lt;facts&gt;. If it’s not there, say you’ll ask.”</p>' +
         '<div class="reply"><p class="who">assistant</p>Yes, Sundays 9 to 1, within 5 miles.</div>' +
         '<p class="small"><b>XML tags</b> like &lt;facts&gt;…&lt;/facts&gt; are labeled boxes that keep your rules, data and examples apart. <b>Examples</b> show the chef a few finished plates, so it learns the style without copying one.</p>' +
-        '<p style="margin-top:14px"><b>Thinking</b>: newer Claude models can reason quietly before answering. Builders set an <b>effort</b> level: more thinking for hard jobs, less for quick ones. You pay for thinking like the words it writes.</p>',
+        '<p class="small">Anthropic’s AI Fluency course calls the whole skill the <b>4Ds</b>: what to hand off, how you ask, checking the plate, owning what you serve.</p><p style="margin-top:14px"><b>Thinking</b>: newer Claude models can reason quietly before answering. Builders set an <b>effort</b> level: more thinking for hard jobs, less for quick ones. You pay for thinking like the words it writes.</p>',
       next: "Write rules"
     },
     build: {

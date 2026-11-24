@@ -65,7 +65,7 @@
     keep: "a scorecard and 8 test questions for a real AI feature.",
     cardLabel: "Copy my card",
     card: "TASTE TESTS (EVALS)\nEval = same questions, same scorecard, every change\nSuccess criteria = what good means, measurable\nTest set = the fixed questions (keep some unseen)\nGrader = code for exact checks, LLM-as-judge for fuzzy ones\nRegression = a fix that broke something else\nVibe check ≠ eval",
-    real: ["Building with the Claude API (prompt evaluation module)", "https://academy.claude.com/courses/building-with-the-claude-api"]
+    real: ["Introduction to evals", "https://academy.claude.com/courses/introduction-to-evals"]
   };
   document.addEventListener("DOMContentLoaded", function () { BK.run(L); });
 })();
