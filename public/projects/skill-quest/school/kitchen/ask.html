@@ -24,6 +24,15 @@
 .vname{width:100%;font:inherit;padding:10px 12px;border:1px solid var(--line2);border-radius:10px;background:var(--card);color:var(--ink);margin-top:6px}
 .onlymine .vq li.off,.onlymine .topic.empty{display:none}
 @media print{.top,.foot,.btns,.filters,.fridge,.askbar,#site-bar{display:none!important}.topic{break-inside:avoid}.pick{display:none}}
+.qrow{display:flex;align-items:flex-start;gap:6px}
+.qt{flex:1;text-align:left;background:none;border:0;padding:2px 0;font:inherit;color:var(--ink);cursor:pointer;min-height:44px}
+.mk{display:flex;gap:4px;flex-shrink:0}
+.mk button{width:36px;height:36px;border:1px solid var(--line2);border-radius:8px;background:var(--card);font:700 1rem inherit;color:var(--ink)}
+.mk button[aria-pressed=true][data-mark=good]{background:var(--ok-bg);border-color:var(--ok);color:var(--ok)}
+.mk button[aria-pressed=true][data-mark=follow]{background:#FFF4D6;border-color:#B07A00;color:#6b4700}
+.mk button[aria-pressed=true][data-mark=red]{background:#FCE6E0;border-color:#B3321B;color:#B3321B}
+.more{padding:4px 0 6px 30px}
+.note{width:100%;margin-top:6px;font:inherit;font-size:.9rem;padding:8px 10px;border:1px solid var(--line2);border-radius:8px;background:var(--card);color:var(--ink)}
 </style>
 <link rel="stylesheet" href="/site-bar.css" />
 <script src="/site-bar.js" data-project="skill-quest" data-kind="piece" defer></script>
@@ -36,7 +45,7 @@
 <main>
   <p class="label">Buying AI?</p>
   <h1>What to ask the vendor.</h1>
-  <p class="muted">Tap a question to see a good answer and a red flag. Tick the ones you’ll ask, then copy your list.</p>
+  <p class="muted">Tick the questions you’ll ask. In the call, mark each answer ✓ good, ? follow up or ✗ red flag. Tap a question for what good sounds like.</p>
   <p class="label" style="margin-top:14px">Who you are</p>
   <div class="fridge filters" id="aud" role="group" aria-label="Who you are"></div>
   <p class="label" style="margin-top:14px">In the meeting? Score the vendor</p>
@@ -51,51 +60,73 @@
 <script src="../school.js" defer></script><script src="bk.js" defer></script><script src="vendorq.js" defer></script>
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-  var V = window.BK_VENDOR, T = BK.TRACK, esc = BK.esc, aud = "business", picked = {}, mine = false, marks = {};
-  try { marks = JSON.parse(localStorage.getItem("smez-builders-askmarks") || "{}") || {}; } catch (e) {}
-  try { document.getElementById("vname").value = localStorage.getItem("smez-builders-askvendor") || ""; } catch (e) {}
-  document.getElementById("vname").oninput = function () { try { localStorage.setItem("smez-builders-askvendor", this.value); } catch (e) {} };
-  function saveMarks() { try { localStorage.setItem("smez-builders-askmarks", JSON.stringify(marks)); } catch (e) {} }
-  function tally() { var g = 0, rr = 0; T.forEach(function (l) { items(l.n).forEach(function (x) { if (marks[key(x)] === "good") g++; if (marks[key(x)] === "red") rr++; }); }); document.getElementById("tally").textContent = g || rr ? "✓ " + g + " · ✗ " + rr : ""; }
-  try { picked = JSON.parse(localStorage.getItem("smez-builders-asklist") || "{}") || {}; } catch (e) {}
-  function save() { try { localStorage.setItem("smez-builders-asklist", JSON.stringify(picked)); } catch (e) {} }
-  function key(x) { return x[0]; }
-  function count() { var n = 0; T.forEach(function (l) { items(l.n).forEach(function (x) { if (picked[key(x)]) n++; }); }); document.getElementById("n").textContent = n + " ticked"; }
-  var AUD = [["business", "A business or nonprofit"], ["school", "A school"], ["health", "A hospital or clinic"], ["finance", "Finance or accounting"], ["food", "A restaurant or shop"]];
+  var V = window.BK_VENDOR, T = BK.TRACK, esc = BK.esc, aud = "business", mine = false;
+  var AUD = [["business", "A business or nonprofit"], ["school", "A school"], ["health", "A hospital or clinic"], ["finance", "Finance or accounting"], ["food", "A restaurant or shop"], ["trades", "Trades or field service"]];
   var TOPIC = { 1: "The AI model itself", 2: "How it connects (the API)", 3: "Its rules and accuracy", 4: "Actions it can take", 5: "Connections to your apps", 6: "Answers from your documents", 7: "Agents", 8: "AI-built websites and code", 9: "How they test it", 10: "The whole product" };
+  var MK = { good: ["✓", "Good answer"], follow: ["?", "Follow up"], red: ["✗", "Red flag"] };
+  function load(k, d) { try { return JSON.parse(localStorage.getItem(k) || "null") || d; } catch (e) { return d; } }
+  function store(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+  var picked = load("smez-builders-asklist", {}), marks = load("smez-builders-askmarks", {}), notes = load("smez-builders-asknotes", {});
   var m = /aud=(\w+)/.exec(location.search); if (m && AUD.some(function (a) { return a[0] === m[1]; })) aud = m[1];
+  var vn = document.getElementById("vname");
+  try { vn.value = localStorage.getItem("smez-builders-askvendor") || ""; } catch (e) {}
+  vn.oninput = function () { try { localStorage.setItem("smez-builders-askvendor", vn.value); } catch (e) {} };
+  function key(x) { return x[0]; }
   function items(n) { var v = V[n]; return v.q.concat(v[aud] ? [v[aud]] : []); }
+  function all() { var out = []; T.forEach(function (l) { items(l.n).forEach(function (x) { out.push(x); }); }); return out; }
+  function counts() {
+    var c = { ticked: 0, good: 0, follow: 0, red: 0 };
+    all().forEach(function (x) { var k = key(x); if (picked[k]) c.ticked++; if (marks[k]) c[marks[k]]++; });
+    document.getElementById("n").textContent = c.ticked + " ticked";
+    document.getElementById("tally").textContent = c.good + c.follow + c.red ? "✓ " + c.good + " · ? " + c.follow + " · ✗ " + c.red : "";
+    return c;
+  }
+  function row(x) {
+    var id = esc(key(x)), k = key(x);
+    return '<li class="' + (picked[k] ? "" : "off") + '" data-row="' + id + '"><div class="qrow"><input class="pick" type="checkbox" data-id="' + id + '" aria-label="Ask this"' + (picked[k] ? " checked" : "") + '><button type="button" class="qt" data-open="' + id + '" aria-expanded="false"><b>' + esc(x[0]) + "</b></button>" +
+      '<span class="mk" role="group" aria-label="Their answer">' + Object.keys(MK).map(function (t) { return '<button type="button" data-mark="' + t + '" data-id="' + id + '" aria-label="' + MK[t][1] + '" aria-pressed="' + (marks[k] === t) + '">' + MK[t][0] + "</button>"; }).join("") + "</span></div>" +
+      '<div class="more" hidden><span class="good">Good: ' + esc(x[1]) + '</span><span class="red">Red flag: ' + esc(x[2]) + '</span><input class="note" data-note="' + id + '" type="text" placeholder="Note: what they said" value="' + esc(notes[k] || "") + '" aria-label="Note"></div></li>';
+  }
   function draw() {
     document.getElementById("aud").innerHTML = AUD.map(function (a) { return '<button type="button" class="chip" data-a="' + a[0] + '" aria-pressed="' + (aud === a[0]) + '">' + a[1] + "</button>"; }).join("");
     document.getElementById("list").innerHTML = T.map(function (l) {
-      return '<section class="topic"><h2><span>' + TOPIC[l.n] + '</span><a href="' + l.href + '">Lesson ' + l.n + '</a></h2><ol class="vq">' + items(l.n).map(function (x, i) {
-        var id = key(x);
-        return '<li class="' + (picked[id] ? "" : "off") + '"><details><summary><input class="pick" type="checkbox" data-id="' + esc(id) + '" aria-label="Ask this"' + (picked[id] ? " checked" : "") + "><b>" + esc(x[0]) + '</b></summary><div class="mark" role="group" aria-label="What they said"><button type="button" data-mark="good" data-id="' + esc(id) + '" aria-pressed="' + (marks[id] === "good") + '">Good answer</button><button type="button" data-mark="red" data-id="' + esc(id) + '" aria-pressed="' + (marks[id] === "red") + '">Red flag</button></div><span class="good">Good: ' + esc(x[1]) + '</span><span class="red">Red flag: ' + esc(x[2]) + "</span></details></li>";
-      }).join("") + "</ol></section>";
+      return '<section class="topic"><h2><span>' + TOPIC[l.n] + '</span><a href="' + l.href + '">Lesson ' + l.n + '</a></h2><ol class="vq">' + items(l.n).map(row).join("") + "</ol></section>";
     }).join("");
     document.querySelectorAll(".topic").forEach(function (t) { if (!t.querySelector("li:not(.off)")) t.classList.add("empty"); });
-    count(); tally();
+    counts();
   }
   document.getElementById("aud").onclick = function (e) { var b = e.target.closest("[data-a]"); if (!b) return; aud = b.dataset.a; draw(); };
-  document.getElementById("list").addEventListener("click", function (e) {
-    var m = e.target.closest("[data-mark]");
-    if (m) { var id = m.dataset.id, v = m.dataset.mark; marks[id] = marks[id] === v ? null : v; m.parentNode.querySelectorAll("[data-mark]").forEach(function (b) { b.setAttribute("aria-pressed", String(marks[id] === b.dataset.mark)); }); if (marks[id] && !picked[id]) { picked[id] = true; var li = m.closest("li"); li.classList.remove("off"); li.querySelector(".pick").checked = true; save(); count(); } saveMarks(); tally(); return; }
+  var list = document.getElementById("list");
+  list.addEventListener("click", function (e) {
+    var c = e.target.closest(".pick"), mb = e.target.closest("[data-mark]"), ob = e.target.closest("[data-open]");
+    if (c) { picked[c.dataset.id] = c.checked; c.closest("li").classList.toggle("off", !c.checked); store("smez-builders-asklist", picked); counts(); return; }
+    if (mb) {
+      var id = mb.dataset.id, v = mb.dataset.mark, li = mb.closest("li");
+      marks[id] = marks[id] === v ? null : v;
+      li.querySelectorAll("[data-mark]").forEach(function (b) { b.setAttribute("aria-pressed", String(marks[id] === b.dataset.mark)); });
+      if (marks[id] && !picked[id]) { picked[id] = true; li.classList.remove("off"); li.querySelector(".pick").checked = true; store("smez-builders-asklist", picked); }
+      store("smez-builders-askmarks", marks); counts(); return;
+    }
+    if (ob) { var mo = ob.closest("li").querySelector(".more"); mo.hidden = !mo.hidden; ob.setAttribute("aria-expanded", String(!mo.hidden)); }
   });
-  document.getElementById("list").addEventListener("click", function (e) { var c = e.target.closest(".pick"); if (!c) return; e.stopPropagation(); picked[c.dataset.id] = c.checked; c.closest("li").classList.toggle("off", !c.checked); save(); count(); });
-  document.getElementById("mine").onclick = function () { mine = !mine; this.setAttribute("aria-pressed", String(mine)); document.getElementById("list").classList.toggle("onlymine", mine); draw(); };
-  window.addEventListener("beforeprint", function () { document.querySelectorAll(".vq details").forEach(function (d) { d.open = true; }); });
+  list.addEventListener("input", function (e) { var n = e.target.closest("[data-note]"); if (!n) return; notes[n.dataset.note] = n.value; store("smez-builders-asknotes", notes); });
+  document.getElementById("mine").onclick = function () { mine = !mine; this.setAttribute("aria-pressed", String(mine)); list.classList.toggle("onlymine", mine); draw(); if (mine) document.getElementById("list").scrollIntoView({ behavior: "smooth" }); };
+  window.addEventListener("beforeprint", function () { document.querySelectorAll(".vq .more").forEach(function (d) { d.hidden = false; }); });
+  document.getElementById("newv").onclick = function () { marks = {}; notes = {}; store("smez-builders-askmarks", marks); store("smez-builders-asknotes", notes); vn.value = ""; try { localStorage.removeItem("smez-builders-askvendor"); } catch (e) {} draw(); School.toast("Scores cleared. Your question list stays."); };
   document.getElementById("copy").onclick = function () {
-    var out = [], any = Object.keys(picked).some(function (k) { return picked[k]; });
-    T.forEach(function (l) { items(l.n).forEach(function (x, i) { if (!any || picked[key(x)]) out.push(x[0] + "\n   Good: " + x[1] + "\n   Red flag: " + x[2]); }); });
-    var g = 0, rr = 0, sc = [];
-    T.forEach(function (l) { items(l.n).forEach(function (x) { var mk = marks[key(x)]; if (mk) { if (mk === "good") g++; else rr++; sc.push((mk === "good" ? "✓ " : "✗ ") + x[0]); } }); });
-    var vn = document.getElementById("vname").value.trim();
-    if (sc.length) { var card = "AI vendor scorecard" + (vn ? ": " + vn : "") + "\n" + g + (g === 1 ? " good answer · " : " good answers · ") + rr + (rr === 1 ? " red flag\n\n" : " red flags\n\n") + sc.join("\n") + "\n\nFrom AI Made EZ, Builder’s Kitchen";
-      (navigator.clipboard ? navigator.clipboard.writeText(card) : Promise.reject()).then(function () { School.toast("Scorecard copied"); }, function () { School.toast("Select the text and copy it"); }); return; }
-    var text = "Questions for the AI vendor\n\n" + out.map(function (q, i) { return (i + 1) + ". " + q; }).join("\n") + "\n\nFrom AI Made EZ, Builder’s Kitchen";
-    (navigator.clipboard ? navigator.clipboard.writeText(text) : Promise.reject()).then(function () { School.toast(out.length + (any ? " ticked" : "") + " questions copied"); }, function () { School.toast("Select the text and copy it"); });
+    var c = counts(), text, line = function (x) { var k = key(x); return MK[marks[k]][0] + " " + x[0] + (notes[k] ? "\n   Note: " + notes[k] : ""); };
+    if (c.good + c.follow + c.red) {
+      var by = function (t) { return all().filter(function (x) { return marks[key(x)] === t; }); };
+      var sec = function (t, title) { var a = by(t); return a.length ? title + "\n" + a.map(line).join("\n") + "\n\n" : ""; };
+      var d = new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+      text = "AI vendor scorecard" + (vn.value.trim() ? ": " + vn.value.trim() : "") + " · " + d + "\n" + c.good + " good · " + c.follow + " to follow up · " + c.red + (c.red === 1 ? " red flag" : " red flags") + "\n\n" +
+        sec("red", "RED FLAGS") + sec("follow", "FOLLOW UP") + sec("good", "GOOD ANSWERS") + "Next steps: get the follow-ups and red flags answered in writing before signing.\n\nFrom AI Made EZ, Builder’s Kitchen";
+    } else {
+      var any = c.ticked > 0, out = all().filter(function (x) { return !any || picked[key(x)]; });
+      text = "Questions for the AI vendor\n\n" + out.map(function (x, i) { return (i + 1) + ". " + x[0] + "\n   Good: " + x[1] + "\n   Red flag: " + x[2]; }).join("\n") + "\n\nFrom AI Made EZ, Builder’s Kitchen";
+    }
+    (navigator.clipboard ? navigator.clipboard.writeText(text) : Promise.reject()).then(function () { School.toast(c.good + c.follow + c.red ? "Scorecard copied" : "Questions copied"); }, function () { School.toast("Select the text and copy it"); });
   };
-  document.getElementById("newv").onclick = function () { marks = {}; saveMarks(); document.getElementById("vname").value = ""; try { localStorage.removeItem("smez-builders-askvendor"); } catch (e) {} draw(); School.toast("Scores cleared. Your question list stays."); };
   draw();
 });
 </script>

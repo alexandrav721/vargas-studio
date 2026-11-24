@@ -10,7 +10,8 @@ window.BK_VENDOR = {
     school: ["Is student data used for anything but our school?", "“No: no ads, no profiles, no selling, and it’s in the contract.”", "“We use anonymized data for research.” Ask how."],
     health: ["Who at your company can see patient data?", "A short named list, with every access logged.", "“Our whole team, so we can help you faster.”"],
     finance: ["Who at your company can see client financial data?", "A short named list, with every access logged.", "“Our whole team, so we can help you faster.”"],
-    food: ["What happens when it isn’t sure about an allergy question?", "“It says so and hands the guest to a person.”", "“It always gives an answer.”"] },
+    food: ["What happens when it isn’t sure about an allergy question?", "“It says so and hands the guest to a person.”", "“It always gives an answer.”"],
+    trades: ["What happens when a customer reports an emergency, like a gas smell?", "“It tells them what to do now and hands off to a person right away.”", "“It books the next open slot.”"] },
   2: { q: [
     ["Whose API account (the paid AI connection) does it run on?", "“Ours, billed to us,” or “yours, and here’s how we protect your key (the password for it).”", "They ask you to email them your key."],
     ["Are our chats stored? For how long?", "A clear answer in days, where, and how to delete them.", "“We keep everything to improve the product.”"],
@@ -20,7 +21,8 @@ window.BK_VENDOR = {
     school: ["Where is student data stored, and who can see it?", "A named country, a short list of who can see it, and a signed data agreement.", "“Somewhere in the cloud.”"],
     health: ["Will you sign a business associate agreement (BAA) for patient data?", "“Yes, and our AI provider signs one with us too.”", "“We don’t need one.” (If they handle patient data for you, HIPAA requires one.)"],
     finance: ["Where is client financial data stored, and for how long?", "A named country, a set number of days, and how to delete it.", "“We keep everything, just in case.”"],
-    food: ["What happens to orders if the AI service goes down mid-rush?", "“Orders fall back to your normal system, and nothing is lost.”", "“That never happens.”"] },
+    food: ["What happens to orders if the AI service goes down mid-rush?", "“Orders fall back to your normal system, and nothing is lost.”", "“That never happens.”"],
+    trades: ["What happens to bookings if the AI goes down?", "“Calls and texts fall back to your office, and nothing is lost.”", "“That never happens.”"] },
   3: { q: [
     ["What instructions does the assistant follow?", "“Here’s a summary of its rules, and here’s what you can adjust.”", "“It just knows what to do.”"],
     ["What does it do when it doesn’t know?", "“It says so and points to a person or a source.”", "“It always has an answer.”"],
@@ -30,7 +32,8 @@ window.BK_VENDOR = {
     school: ["Can students under 13, or under 18, use it?", "“Yes for ages X and up, with parent or school consent where the law requires it, and here’s our AI provider’s age rule.”", "No clear answer on under-13s, or “kids just tick ‘I’m 13’.”"],
     health: ["What does it say when a question is clinical?", "“It points to a clinician, and we test that it does.”", "“It answers medical questions directly.”"],
     finance: ["What does it do with a question it can’t answer from the books?", "“It says it doesn’t know and flags it for a person.”", "“It always gives a number.”"],
-    food: ["Can we set rules, like never promising a dish we’re out of?", "“Yes, and here’s where you change them.”", "“It figures that out itself.”"] },
+    food: ["Can we set rules, like never promising a dish we’re out of?", "“Yes, and here’s where you change them.”", "“It figures that out itself.”"],
+    trades: ["Can it promise prices or arrival times?", "“Only ranges you set, and it says a person will confirm.”", "“It quotes whatever closes the job.”"] },
   4: { q: [
     ["What actions can it take on its own?", "A short, specific list, like “look up an order.”", "“Anything you need.”"],
     ["What needs a person to approve first?", "“Anything that sends, spends, books or deletes.”", "“Nothing. It’s fully automatic.”"],
@@ -40,7 +43,8 @@ window.BK_VENDOR = {
     school: ["Can it contact students or families on its own?", "“No. Every message to families needs staff approval.”", "“Yes, that’s the time saver.”"],
     health: ["Can it change records or orders on its own?", "“No. Staff approve anything in a record; a clinician approves anything clinical.”", "“Yes, that’s the time saver.”"],
     finance: ["Can it post entries to the books on its own?", "“No. A person approves before anything posts.”", "“Yes, that’s the time saver.”"],
-    food: ["Does it sync with our POS and 86 list in real time?", "“Yes, live, and here’s how fast it updates.”", "“We sync once a day.”"] },
+    food: ["Does it sync with our POS and 86 list in real time?", "“Yes, live, and here’s how fast it updates.”", "“We sync once a day.”"],
+    trades: ["Can it double-book, or send a tech licensed for the wrong trade?", "“No. It checks the schedule and each tech’s licenses first.”", "“The techs sort that out.”"] },
   5: { q: [
     ["Which of our apps does it connect to?", "A named list, like Google Drive and Calendar.", "“All of them.”"],
     ["Can it change things, or only read?", "Clear per app: “reads Drive, can’t delete.”", "“It needs full access to work.”"],
@@ -50,7 +54,8 @@ window.BK_VENDOR = {
     school: ["Can it reach student records or grades?", "“Only if you connect them, read-only, with district approval.”", "“It connects to your student system automatically.”"],
     health: ["Can it reach patient records?", "“Only if you connect them, with the least access needed, logged.”", "“It connects to your records system automatically.”"],
     finance: ["Can it reach our bank or accounting software?", "“Only what you connect, read-only by default, logged.”", "“It needs full admin access to work.”"],
-    food: ["Which systems does it connect to: POS, reservations, delivery apps?", "A named list, and which ones it can change.", "“All of them, full access.”"] },
+    food: ["Which systems does it connect to: POS, reservations, delivery apps?", "A named list, and which ones it can change.", "“All of them, full access.”"],
+    trades: ["Does it connect to our field-service software?", "“Yes, named systems, and here’s what it can change.”", "“We’ll build that later.”"] },
   6: { q: [
     ["Do you train the AI on our documents?", "“No. We look up the right pages each time.”", "“Yes, it learns your business.” (Check what they mean.)"],
     ["Does it show which document each answer came from?", "“Yes, every answer links its source.”", "“Just trust it.”"],
@@ -60,7 +65,8 @@ window.BK_VENDOR = {
     school: ["Can a student see documents meant only for staff?", "“No. It follows your access rules for every answer.”", "“We don’t separate them.”"],
     health: ["Can staff see documents meant for other teams?", "“No. It follows your existing access rules for every answer.”", "“Everyone sees everything.”"],
     finance: ["Does it show which document a figure came from?", "“Yes, every number links to its source.”", "“Just trust the totals.”"],
-    food: ["Does it answer from our real menu and allergen sheet?", "“Yes, and it shows which page it used.”", "“It knows typical menus.”"] },
+    food: ["Does it answer from our real menu and allergen sheet?", "“Yes, and it shows which page it used.”", "“It knows typical menus.”"],
+    trades: ["Does it answer from our real price list and service area?", "“Yes, and it shows which page it used.”", "“It uses typical prices.”"] },
   7: { q: [
     ["Which steps does it take on its own?", "A clear list, and where it stops to ask.", "“It figures everything out.”"],
     ["Where does a person approve?", "Before sending, spending, booking or deleting.", "“No approvals needed.”"],
@@ -71,7 +77,8 @@ window.BK_VENDOR = {
     school: ["Who is responsible if it gets something wrong for a student?", "A named staff role reviews it, and the contract says who’s accountable.", "“The AI is responsible.”"],
     health: ["Who checks its work before it affects patients or staff schedules?", "“A named person reviews it, and the log shows every step.”", "“It runs on its own overnight.”"],
     finance: ["Who is responsible for a wrong entry it makes?", "It’s in the contract, and every action is logged for review.", "“The AI made it, not us.”"],
-    food: ["Who pays for a wrong order it takes?", "It’s in the contract, and every order is logged.", "“The AI made it, not us.”"] },
+    food: ["Who pays for a wrong order it takes?", "It’s in the contract, and every order is logged.", "“The AI made it, not us.”"],
+    trades: ["Does it follow texting rules: consent, STOP to opt out?", "“Yes. Consent is recorded, STOP works, and our US texting is registered.”", "“Customers can just ignore texts.”"] },
   8: { q: [
     ["How are AI changes reviewed before going live?", "“A person reviews every change before it’s published.”", "“It ships straight to the live site.”"],
     ["How do we undo a bad change?", "“Every change is saved. We can go back to the old version in minutes.”", "“We’d have to rebuild it.”"],
@@ -81,7 +88,8 @@ window.BK_VENDOR = {
     school: ["Does the finished site meet accessibility rules?", "“Here’s our WCAG 2.1 AA test report for your site, gaps listed.”", "“AI handles that.”"],
     health: ["Does anything it builds touch patient data?", "“No, unless your security team reviews and approves it.”", "“It can use whatever it finds.”"],
     finance: ["Who reviews code that touches money or client data?", "“A person reviews it before it goes live.”", "“It ships straight to the live system.”"],
-    food: ["If it builds our ordering page, who can change prices?", "“Only your staff, and every change is saved.”", "“It updates prices on its own.”"] },
+    food: ["If it builds our ordering page, who can change prices?", "“Only your staff, and every change is saved.”", "“It updates prices on its own.”"],
+    trades: ["If it changes our booking page, who approves?", "“Your office approves, and every change is saved.”", "“It updates the site on its own.”"] },
   9: { q: [
     ["How do you test that it works well?", "“A fixed set of real questions, scored every update.”", "“We tried it and it looked good.”"],
     ["How many real examples is that test?", "A real number, like 200, from real use.", "“A few.”"],
@@ -91,7 +99,8 @@ window.BK_VENDOR = {
     school: ["Was it tested with students and teachers?", "“Yes, with real classroom questions, and here’s what we changed.”", "No testing with students or teachers at all."],
     health: ["Was it tested on cases like ours?", "“Yes, with real (de-identified) examples from settings like yours.”", "No testing in healthcare at all."],
     finance: ["How do you test its accuracy on numbers?", "“We check it against known answers, and here are the results.”", "“It’s usually right.”"],
-    food: ["How do you test it on real orders like ours?", "“On real tickets from places like yours, with results.”", "“It works for any restaurant.”"] },
+    food: ["How do you test it on real orders like ours?", "“On real tickets from places like yours, with results.”", "“It works for any restaurant.”"],
+    trades: ["How do you test it on calls like ours?", "“On real calls from home-service companies, with results.”", "“It works for any business.”"] },
   10: { q: [
     ["What’s inside: which model, tools and data?", "A one-page diagram in plain words.", "Won’t say which AI company or where your data goes."],
     ["What does it cost per month at our size?", "A number for your volume, with a cap.", "“Let’s talk after you sign.”"],
@@ -106,5 +115,6 @@ window.BK_VENDOR = {
     school: ["Does it follow student privacy laws (US: FERPA, COPPA for under-13s, and our state’s law)?", "“Yes. We’ll sign your district’s data agreement and use student data only for school.”", "“We’re FERPA certified.” (No such certificate exists.)"],
     health: ["Does it keep an audit trail?", "“Yes. Who asked what, what it did, and when, kept as your rules require.”", "“We don’t log that.”"],
     finance: ["Does it keep an audit trail an auditor can read?", "“Yes. Who asked, what it did, and when, kept as long as you need.”", "“We don’t log that.”"],
-    food: ["What does it cost per order at our volume, including fees?", "A number per order, plus every fee, in writing.", "“Let’s talk after you sign.”"] }
+    food: ["What does it cost per order at our volume, including fees?", "A number per order, plus every fee, in writing.", "“Let’s talk after you sign.”"],
+    trades: ["What does it cost per booked job, including texting fees?", "A number per job, plus every fee, in writing.", "“It pays for itself.” No number."] }
 };
