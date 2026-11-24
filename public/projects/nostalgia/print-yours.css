@@ -1,0 +1,108 @@
+/* Print designer: the poster first, the few controls beside it. Tokens come from brand.css,
+   recoloured per era by print-yours.js. */
+* { box-sizing: border-box; }
+html, body { margin: 0; overflow-x: hidden; }
+html { background: var(--bg0); }
+body { min-height: 100vh; line-height: 1.45; }
+.studio-back {
+  position: fixed; top: .65rem; left: .65rem; z-index: 40; padding: .45rem .8rem;
+  border: 1px solid var(--line); background: var(--bg0); color: var(--ink);
+  font: 500 .75rem/1 var(--mono); text-decoration: none;
+}
+
+.py {
+  width: min(100% - 32px, 1080px);
+  margin: 0 auto;
+  padding: 1.25rem 0 3rem;
+  display: grid;
+  gap: 1.5rem;
+}
+@media (min-width: 900px) {
+  .py { grid-template-columns: minmax(0, 1fr) minmax(0, 26rem); gap: 3rem; align-items: start; padding-top: 2.5rem; }
+  .py-poster { position: sticky; top: 1.5rem; }
+}
+
+.py-poster { margin: 0; text-align: center; }
+.py-poster canvas {
+  display: block;
+  width: 100%;
+  max-width: 30rem;
+  height: auto;
+  aspect-ratio: 2 / 3;
+  margin: 0 auto;
+  background: var(--bg1);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, .3), 0 24px 48px rgba(0, 0, 0, .5);
+}
+.py-size { margin: .6rem 0 0; font: 500 .8rem var(--mono); color: var(--muted); }
+
+.py-side { display: grid; gap: 1.1rem; min-width: 0; }
+.py-back { font: 500 .85rem var(--mono); color: var(--muted); text-underline-offset: 4px; justify-self: start; }
+.py-back:hover { color: var(--ink); }
+.py-side h1 { margin: 0; font: 800 clamp(2rem, 8vw, 2.8rem)/1 var(--display); letter-spacing: -.03em; }
+
+.py-things { border: 0; margin: 0; padding: 0; min-width: 0; }
+.py-things legend, .py-field span, .py-notify label {
+  display: block; padding: 0; margin-bottom: .5rem; font: 500 .85rem var(--mono); color: var(--muted);
+}
+#things-count { color: var(--brand); margin-left: .35rem; }
+.chips { display: flex; flex-wrap: wrap; gap: .45rem; }
+.chip {
+  font: 500 .85rem/1.2 var(--mono);
+  color: var(--ink);
+  background: transparent;
+  border: 1px solid var(--line);
+  padding: .55rem .7rem;
+  min-height: 44px;
+  cursor: pointer;
+  text-align: left;
+  max-width: 100%;
+}
+.chip[aria-pressed="true"] { background: var(--brand); border-color: var(--brand); color: var(--bg0); }
+.chip:disabled { opacity: .4; cursor: not-allowed; }
+
+.py-field { display: grid; }
+.py-field input, .py-notify input[type="email"] {
+  width: 100%;
+  min-width: 0;
+  font: 1rem var(--body);
+  color: var(--ink);
+  background: var(--bg1);
+  border: 1px solid var(--line);
+  border-radius: 0;
+  padding: .8rem .9rem;
+  min-height: 48px;
+}
+.py-field input { font-style: italic; }
+
+.py-btn {
+  font: 700 1.1rem/1 var(--display);
+  padding: 1rem 1.6rem;
+  min-height: 52px;
+  border: 1px solid var(--brand);
+  background: var(--brand);
+  color: var(--bg0);
+  cursor: pointer;
+  justify-self: start;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, .4);
+}
+.py-btn:disabled { opacity: .6; cursor: progress; }
+.py-btn--ghost { background: transparent; color: var(--ink); border-color: var(--ink); box-shadow: none; flex: none; }
+.py-small { margin: -.4rem 0 0; font: .8rem/1.45 var(--mono); color: var(--muted); }
+
+.py-buy { border-top: 1px solid var(--line); padding-top: 1.25rem; display: grid; gap: .5rem; }
+.py-price { margin: 0; font: 800 1.6rem/1.1 var(--display); color: var(--brand); }
+.py-soon { margin: 0 0 .5rem; color: var(--ink); }
+.py-notify { display: grid; gap: .9rem; }
+.py-notify label { margin-bottom: -.4rem; }
+.py-row { display: flex; gap: .5rem; }
+.py-row input { flex: 1; }
+.py-hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.py-status { margin: 0; min-height: 1.4em; font: 500 .95rem var(--body); color: var(--ink); }
+.py-status[data-tone="good"] { color: var(--brand); }
+.py-status[data-tone="bad"] { color: var(--brand-2); }
+
+@media (max-width: 380px) {
+  .py-row { flex-direction: column; }
+  .py-btn--ghost { justify-self: stretch; }
+}
+[hidden] { display: none !important; }

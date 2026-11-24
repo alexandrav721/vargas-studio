@@ -1,0 +1,39 @@
+/* Gift pages: one real photo, one line, two buttons. Tokens from brand.css. */
+* { box-sizing: border-box; }
+html, body { margin: 0; overflow-x: hidden; }
+html { background: var(--bg0); }
+body { min-height: 100vh; line-height: 1.45; }
+.studio-back {
+  position: fixed; top: .65rem; left: .65rem; z-index: 40; padding: .45rem .8rem;
+  border: 1px solid var(--line); background: var(--bg0); color: var(--ink);
+  font: 500 .75rem/1 var(--mono); text-decoration: none;
+}
+.gift {
+  width: min(100% - 32px, 1040px);
+  margin: 0 auto;
+  padding: 1.25rem 0 3rem;
+  display: grid;
+  gap: 1.4rem;
+}
+@media (min-width: 860px) {
+  .gift { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 3.5rem; align-items: center; min-height: calc(100vh - 48px); }
+  .gift--index { grid-template-columns: minmax(0, 40rem); justify-content: center; }
+}
+.gift-pic { margin: 0; justify-self: center; max-width: 26rem; width: 100%; background: #f6f2ea; padding: .7rem .7rem .6rem; transform: rotate(-2deg); box-shadow: 0 18px 40px rgba(0, 0, 0, .5); }
+.gift-pic img { display: block; width: 100%; height: auto; max-height: 46vh; object-fit: contain; background: #e4ddd0; }
+.gift-pic figcaption { margin-top: .5rem; font: .72rem/1.35 var(--mono); color: #4a4438; }
+.gift-pic figcaption a { color: inherit; }
+.gift-kicker { margin: 0 0 .5rem; font: 500 .85rem var(--mono); color: var(--brand); }
+.gift h1 { margin: 0; font: 800 clamp(2.3rem, 10vw, 4.2rem)/.95 var(--display); letter-spacing: -.035em; }
+.gift h1 span { color: var(--brand); }
+.gift-lead { margin: .9rem 0 1.3rem; font-size: 1.1rem; color: var(--ink); max-width: 28rem; }
+.gift-actions { display: flex; flex-wrap: wrap; gap: .6rem; }
+.gift-actions .btn { min-height: 52px; }
+.gift-note { margin: 1.4rem 0 0; font: .85rem/1.45 var(--mono); color: var(--muted); max-width: 30rem; }
+.gift-more { margin: 1rem 0 0; font: .85rem var(--mono); color: var(--muted); }
+.gift-more a { color: var(--ink); text-underline-offset: 4px; }
+.gift-list { list-style: none; margin: 1.6rem 0 0; padding: 0; display: grid; gap: .6rem; }
+.gift-list a { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; flex-wrap: wrap; padding: 1rem 1.1rem; border: 1px solid var(--line); color: var(--ink); text-decoration: none; }
+.gift-list a:hover { border-color: var(--brand); }
+.gift-list b { font: 800 1.5rem var(--display); }
+.gift-list span { font: .85rem var(--mono); color: var(--muted); }

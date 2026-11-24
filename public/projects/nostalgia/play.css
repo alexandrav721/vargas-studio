@@ -32,6 +32,7 @@
 .go-btn:hover { transform: translateY(-2px); }
 .go-btn:disabled { opacity: 0.6; cursor: progress; }
 .ghost-btn { background: transparent; color: var(--ink); border: 1px solid var(--line); box-shadow: none; }
+a.ghost-btn { display: inline-flex; align-items: center; text-decoration: none; }
 .go-btn:focus-visible, .ghost-btn:focus-visible, .quiet-link:focus-visible, .ans:focus-visible, .wheel-step:focus-visible, .wheel-strip:focus-visible {
   outline: 3px solid var(--brand);
   outline-offset: 3px;

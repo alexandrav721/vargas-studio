@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Your year at 15, as a print · Scrollback</title>
+  <meta name="description" content="Your year at 15 as a 12 × 18 in poster: the year, who you were, and the things you had. Prints aren't on sale yet." />
+  <meta name="theme-color" content="#0a0a0a" />
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,500&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./brand.css" />
+  <link rel="stylesheet" href="./print-yours.css" />
+  <link rel="stylesheet" href="/site-bar.css" />
+  <script src="/site-bar.js" data-project="nostalgia" data-kind="piece" defer></script>
+</head>
+<body>
+  <a class="studio-back" href="/">← Vargas Studio</a>
+  <main class="py">
+    <div class="py-poster">
+      <canvas id="poster" width="1000" height="1500" role="img" aria-label="Poster preview"></canvas>
+      <p class="py-size">12 × 18 in poster</p>
+    </div>
+
+    <div class="py-side">
+      <a class="py-back" href="./" id="back">← Back to the game</a>
+      <h1 id="py-title">Make it a print</h1>
+
+      <fieldset class="py-things" id="things">
+        <legend id="things-legend">What you had <span id="things-count"></span></legend>
+        <div class="chips" id="chips"></div>
+      </fieldset>
+
+      <label class="py-field" id="away-field">
+        <span>Away message (optional)</span>
+        <input id="away" maxlength="60" placeholder="brb, growing up" autocomplete="off" />
+      </label>
+
+      <button class="py-btn" type="button" id="download">Download preview</button>
+      <p class="py-small" id="download-note">PNG, 3600 × 5400 px: print size at 300 dpi.</p>
+
+      <section class="py-buy" aria-labelledby="price">
+        <p class="py-price" id="price">$29 when prints open</p>
+        <p class="py-soon">Prints aren't on sale yet.</p>
+        <form class="py-notify" id="notify" novalidate>
+          <label for="email">Tell me when prints open</label>
+          <div class="py-row">
+            <input id="email" name="email" type="email" inputmode="email" autocomplete="email" required maxlength="254" placeholder="you@example.com" />
+            <button class="py-btn py-btn--ghost" type="submit" id="notify-go">Tell me</button>
+          </div>
+          <input class="py-hp" name="website" id="website" tabindex="-1" autocomplete="off" aria-hidden="true" />
+          <p class="py-small">Only used to tell you when prints open. One email, then we delete it unless you ask for more.</p>
+          <p class="py-status" id="notify-status" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+    </div>
+  </main>
+  <script type="module" src="./print-yours.js"></script>
+</body>
+</html>
