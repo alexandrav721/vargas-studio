@@ -44,8 +44,8 @@ window.SMEZ_INDEX = [
   /* make */
   { t: "Best practices", y: "Keep up", g: "learn", u: "/projects/skill-quest/keep-up/#habits", d: "8 habits that work with any AI, in plain words.", k: "best practices tips habits rules how to use ai well good prompts safety" },
   { t: "This week in AI", y: "Keep up", g: "learn", u: "/projects/skill-quest/keep-up/#news", d: "The week's AI news in plain words, every Friday.", k: "news trends latest updates this week new features scams" },
-  { t: "Skill maker", y: "Tool", g: "make", u: "/projects/skill-quest/prototype/v2.html", d: "Answer a few questions. Get a skill for something you do every week.", k: "make create build write my own skill diy recipe" },
-  { t: "Kit maker (Build Kit)", y: "Tool", g: "make", u: "/projects/skill-quest/build-kit/", d: "Plan an app room by room, so AI stops guessing. 8 starter plans.", k: "build kit app planner plan website app idea starter" },
+  { t: "Skill maker", y: "Tool", g: "make", u: "/projects/skill-quest/make/skill.html", d: "Answer a few questions. Get a skill for something you do every week.", k: "make create build write my own skill diy recipe" },
+  { t: "Kit maker", y: "Tool", g: "make", u: "/projects/skill-quest/make/kit.html", d: "Plan an app room by room, so AI stops guessing. 8 starter plans.", k: "build kit app planner plan website app idea starter" },
 
   /* play */
   { t: "Spot the skill", y: "Game", g: "play", u: "/projects/skill-quest/play.html", d: "Three real answers. Guess which one used a skill.", k: "game play spot guess quiz fun" },

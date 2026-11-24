@@ -6,7 +6,7 @@
   "use strict";
   var me = document.currentScript, section = me && me.dataset.section || "";
   var BASE = "/projects/skill-quest/";
-  var LINKS = [["start", "Start here", BASE + "start/"], ["school", "Lessons", BASE + "school/"], ["words", "AI words", BASE + "school/kitchen/glossary.html"], ["make", "Skill maker", BASE + "prototype/v2.html"], ["kit", "Kit maker", BASE + "build-kit/"], ["keepup", "Keep up", BASE + "keep-up/"]];
+  var LINKS = [["start", "Start here", BASE + "start/"], ["school", "Lessons", BASE + "school/"], ["words", "AI words", BASE + "school/kitchen/glossary.html"], ["make", "Skill maker", BASE + "make/skill.html"], ["kit", "Kit maker", BASE + "make/kit.html"], ["keepup", "Keep up", BASE + "keep-up/"]];
   function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
   function css() { if (document.getElementById("smez-nav-css")) return; var l = document.createElement("link"); l.id = "smez-nav-css"; l.rel = "stylesheet"; l.href = BASE + "smez-nav.css"; document.head.appendChild(l); }
 

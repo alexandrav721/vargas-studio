@@ -1,0 +1,9 @@
+/* Makers in the lesson style. Most styles come from ../school/school.css. */
+#app{max-width:720px;margin:0 auto;padding:18px 18px 60px;outline:none}
+.field{display:block;margin:16px 0 0;font:600 13px var(--text);color:var(--muted)}
+.field input,.field textarea{color:var(--ink);font-size:17px}
+.field input,.field textarea{display:block;margin-top:6px;font-weight:400}
+.step .ticket{max-width:none;margin-top:6px;word-break:break-word}
+.done-row{margin-top:26px;border-top:1px solid var(--line);padding-top:16px}
+.prog .bar{flex:1;height:6px;border-radius:9px;background:var(--track);overflow:hidden}
+.prog .bar i{display:block;height:100%;background:var(--accent)}
