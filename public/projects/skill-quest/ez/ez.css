@@ -153,3 +153,14 @@ body{overflow-x:hidden}
   .checks input{accent-color:#000}
   .tl{border-color:#000}.tl > li::before{border-color:#000;background:#fff}
 }
+
+/* hub: invitations card (wide, three tiny cards) */
+.pickb.wide{grid-column:1/-1;min-height:0}
+.mini.i{grid-template-columns:repeat(3,1fr);gap:8px;background:var(--track)}
+.mini.i i{aspect-ratio:5/7;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;font-size:11px;padding:4px;border:0;box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.mini.i i b{font-size:20px;line-height:1.1}
+.mini.i .ia{background:#fff3f9;color:#4a1e5c;font-family:"Fredoka",var(--text)}
+.mini.i .ib{background:#fdf6fb;color:#3d2350;font-family:"Fraunces",Georgia,serif;outline:1.5px solid #b9789f;outline-offset:-5px}
+.mini.i .ic{background:#3a1f63;color:#fff;align-items:flex-start;justify-content:flex-end;text-align:left;font-family:"Archivo Black",var(--text)}
+.mini.i .ic b{color:#ff9fd0;font-size:34px}
+@media (min-width:520px){.mini.i{max-width:420px}}
