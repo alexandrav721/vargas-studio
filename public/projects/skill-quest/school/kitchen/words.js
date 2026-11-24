@@ -7,6 +7,7 @@ window.BK_WORDS = [
 ["Token","The pieces it counts and charges by","A small chunk of text, often part of a word. Limits and prices are counted in tokens.","Not one word. Words often split into several tokens.",1,"That report is about 40,000 tokens."],
 ["Context window","The counter: all the chef can see","How much fits on the counter at once: your prompt, the chat so far, the reply and thinking. About 1M tokens on current Claude models.","Not long-term memory. A new chat starts with an empty counter.",1,"Paste the whole doc. It fits in the context window."],
 ["Model family","Chefs of different sizes","Claude comes in sizes: Haiku (fast), Sonnet (balanced), Opus (usual start), Fable (hardest jobs).","Price per token differs a lot too.",1,"Use Haiku for tagging and Opus for the strategy doc."],
+["Vision", "The chef can read a photo of the menu", "Claude can read images, screenshots and PDFs you give it, not just typed text.", "Not image making. Claude reads pictures; it doesn’t draw them.", 1, "Send it a photo of the receipt and let it read the totals."],
 ["Training cutoff", "The date the cookbook stopped printing", "The date a model’s training data ends. It doesn’t know later events unless you tell it or it searches.", "Not a bug. Use web search or paste in what’s new.", 1, "It doesn’t know last month’s launch. That’s after its training cutoff."],
 ["Compaction", "Wiping the counter, keeping one summary card", "Squeezing a long chat into a short summary to free up space on the counter.", "Details can be lost in the summary. Paste back what matters.", 1, "Run /compact before we start the next task."],
 ["Project", "Your own station with a stocked shelf", "A workspace in the Claude app with its own files and instructions that every chat inside it uses.", "Chats in a project share files and instructions, not each other’s conversations.", 1, "Put the brand guide in the project so every chat uses it."],
@@ -18,6 +19,7 @@ window.BK_WORDS = [
 ["Messages","The order history stapled to it","A chat as a list: user turns (yours) and assistant turns (Claude’s).","A basic API call doesn’t remember them. The app resends the whole list.",2,"The bot forgot because we didn’t resend the messages."],
 ["Streaming","The plate served bite by bite","The reply arrives bit by bit, so words appear as they’re written.","Same speed. You just read sooner.",2,"Turn on streaming so people see words right away."],
 ["Cost per token","The menu price","You pay per token in and per token out. Output costs more; bigger models cost more.","Not a flat fee.",2,"Output tokens cost more, so ask for shorter answers."],
+["SDK", "A ready-made toolkit for the order window", "Official code libraries (Python, TypeScript and more) that make calling the Claude API easier.", "Not the Agent SDK. That’s a separate product for building agents.", 2, "Use the Python SDK; it handles retries for us."],
 ["Structured outputs", "Every plate in the same container", "Forcing a reply into an exact format, like a form, that an app can read every time.", "The shape is guaranteed. The facts aren’t.", 2, "Use structured outputs so the CRM can read every reply."],
 ["Rate limits", "A cap on orders per minute", "Limits on how many requests and tokens an account can send per minute. Going over means “slow down”.", "Not a broken app. Wait a moment and retry.", 2, "We hit rate limits during the launch email blast."],
 ["System prompt","House rules on the wall","Standing instructions from the builder that shape every reply.","Not a lock. Hard rules are built into the app.",3,"Add “no discounts” to the system prompt."],
@@ -54,6 +56,7 @@ window.BK_WORDS = [
 ["Workflow","A prep checklist","Steps set ahead of time by whoever built it, like an automation you set up once. Cheaper and more predictable than an agent.","",7,"This doesn’t need an agent. A workflow is fine."],
 ["Subagent","A sous-chef with their own counter","A helper with its own context window that does a side task and reports a summary.","Not sharing the main chat. It starts fresh.",7,"A subagent researches each competitor."],
 ["Orchestrator","The head chef handing out stations","The lead AI that splits a big job and combines the results.","More agents isn’t always better. It costs far more.",7,"The orchestrator merges the research."],
+["Agent SDK", "Claude Code’s kitchen, boxed for your own restaurant", "A library that packages Claude Code’s agent loop and tools so developers can build their own agents.", "Not the plain SDK, which only sends requests.", 7, "We built the support agent on the Agent SDK."],
 ["Human in the loop","The chef asks before serving","A person approves risky steps: sending, spending, booking, deleting.","",7,"Keep a human in the loop before anything sends."],
 ["Claude Code","A chef cooking in your own kitchen","Anthropic’s coding agent: reads your files, writes code, runs commands.","Not just chat about code. It changes real files.",8,"I built the landing page with Claude Code."],
 ["CLAUDE.md","The note on the fridge","A file of project rules and how-tos Claude Code reads every session.","Not enforced. The docs call them requests.",8,"Put our style rules in CLAUDE.md."],
@@ -77,4 +80,4 @@ window.BK_WORDS = [
 ["Start simple","The smallest kitchen that works","Anthropic’s advice: try one request first, then a workflow, then an agent.","",10,"Start simple: one prompt, then see."]
 ];
 /* Dictionary-only or only seen in passing: not counted or quizzed. */
-window.BK_UNTAUGHT = ["Project", "Artifact", "Structured outputs", "Rate limits", "4Ds", "Plan mode", "Permission modes", "Training cutoff", "Compaction", "Jailbreak", "Temperature", "Computer use", "Git"];
+window.BK_UNTAUGHT = ["Project", "Artifact", "Structured outputs", "Rate limits", "4Ds", "Plan mode", "Permission modes", "Training cutoff", "Compaction", "Jailbreak", "Temperature", "Computer use", "Git", "SDK", "Agent SDK", "Vision"];

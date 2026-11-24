@@ -7,7 +7,7 @@
     lines: [
       ["Claude Code works inside your project.", "It reads your files, writes code and runs commands (typed instructions to the computer). It’s an agent, like Lesson 7’s chef."],
       ["CLAUDE.md is the note on your fridge.", "Your rules and how-tos, read every session."],
-      ["Skills are recipe cards.", "Claude sees each card’s name and description, and pulls the full card when it fits."]
+      ["Skills are recipe cards.", "Claude pulls a card when its description fits the job."]
     ],
     guess: { q: "What’s different about Claude Code compared with chatting with Claude?", opts: [["It works directly in your project files", true], ["It’s a smarter Claude model made only for coders", false], ["It answers only in code, never in words", false]], reveal: "Claude Code works inside your project: it reads files, makes changes and runs commands." },
     startLabel: "Look around",
@@ -17,8 +17,8 @@
         '<p class="label">The fridge note <span class="sample">Sample</span></p><div class="ticket"><div class="th"><span>CLAUDE.md</span><span>read every session</span></div>This is our bakery’s website<br>Never touch passwords or keys<br>Explain every change in plain words<div class="tf">Claude tries to follow these</div></div>' +
         '<p class="label" style="margin-top:14px">More pieces</p>' +
         '<div class="fridge"><span class="tag">Skill: a recipe card (SKILL.md)</span><span class="tag">/command: a shortcut you type</span><span class="tag">Hook: a bell at set moments</span><span class="tag">Plugin: a kit of all these</span></div>' +
-        '<p class="small">A <b>hook</b> always runs, like before every edit, and one set before an action can stop it. CLAUDE.md is only a request. A <b>/command</b> is a shortcut like /help; to make your own, write a skill.</p>',
-      more: '<p class="small">In <b>plan mode</b> it reads you the plan before touching anything. <b>Permission modes</b> set what it may do without asking.</p><p style="margin-top:14px">Claude Code runs in the Claude desktop app, on the web, and in the tools developers use. It has its own undo (/rewind); <b>git</b> save points are yours to make.</p>',
+        '<p class="small">A <b>hook</b> always fires; one set before an action can stop it. CLAUDE.md is only a request.</p>',
+      more: '<p class="small">A <b>/command</b> is a shortcut like /help; to make your own, write a skill.</p><p class="small">In <b>plan mode</b> it reads you the plan before touching anything. <b>Permission modes</b> set what it may do without asking.</p><p style="margin-top:14px">Claude Code runs in the Claude desktop app, on the web, and in the tools developers use. It has its own undo (/rewind); <b>git</b> save points are yours to make.</p>',
       next: "Your turn →"
     },
     build: {

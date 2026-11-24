@@ -51,7 +51,7 @@
       ],
       right: "Exactly. The window remembers nothing. Send the whole list of messages every time.",
       wrong: "Think about what was on the ticket.", hint: "The API doesn’t remember earlier tickets.",
-      habitTitle: "Builder habit", habit: "Every request carries the full conversation. That’s also why long chats cost more: the history is sent again each turn (apps can store that repeated part, called caching, so it costs far less)."
+      habitTitle: "Builder habit", habit: "Every request carries the full conversation. That’s also why long chats cost more: the history is sent again each turn (the API can cache that repeated opening, called prompt caching, so it costs far less)."
     },
     breaks: {
       title: "A card that pays the bill.",

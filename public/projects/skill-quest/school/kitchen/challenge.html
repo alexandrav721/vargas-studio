@@ -106,7 +106,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
   var KT = window.BKM ? BKM.knownCount(TW.map(function (w) { return w[0]; })) : 0, DUE = window.BKM ? BKM.due(POOL.map(function (w) { return w[0]; })).length : 0;
   app.innerHTML = '<p class="label">' + (REVIEW ? "Review" : "Builder words challenge") + ' · up to 15 questions · about 4 minutes</p><h1>' + (REVIEW ? "Quick review." : "Do you speak builder?") + "</h1>" +
-    '<p class="muted">' + (KT ? "You know " + KT + " words for good." : "") + (DUE ? " " + DUE + " to practice, they come first." : "") + (finished.length ? " Only words from lessons you’ve finished." : " Practice round: finish a lesson to start counting words.") + "</p>" +
+    '<p class="muted">' + (KT ? "You know " + KT + " words for good." : "") + (DUE ? " " + DUE + (DUE === 1 ? " word to practice. It comes first." : " words to practice. They come first.") : "") + (finished.length ? " Only words from lessons you’ve finished." : " Practice round: finish a lesson to start counting words.") + "</p>" +
     '<div class="btns"><button class="btn" id="go" type="button">Start</button></div>';
   document.getElementById("go").onclick = start;
 });
