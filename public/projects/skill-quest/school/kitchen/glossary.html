@@ -23,6 +23,8 @@
 .dict .heard{margin:6px 0 0;font-size:.9rem;font-style:italic}
 .dict .no{margin:6px 0 0;font-size:.88rem;color:var(--muted)}
 .dict .got{display:inline-block;margin-left:6px;font-size:.75rem;color:var(--ok)}
+.dict .due{display:inline-block;margin-left:6px;font-size:.75rem;color:var(--accent);font-weight:700}
+.dict .lrn{color:var(--muted)}
 .count{font-size:.88rem;color:var(--muted);margin-top:10px}
 @media print{.top,.search,.filters,.foot,.btns{display:none}.dict li{break-inside:avoid;border-color:#999}}
 </style>
@@ -56,8 +58,9 @@ document.addEventListener("DOMContentLoaded", function () {
     var s = q.value.trim().toLowerCase();
     var rows = W.filter(function (w) { return (!lesson || w[4] === lesson) && (!s || (w[0] + " " + w[1] + " " + w[2] + " " + (w[5] || "")).toLowerCase().indexOf(s) >= 0); });
     list.innerHTML = rows.map(function (w) {
-      var l = T[w[4] - 1], got = done[l.id];
-      return '<li id="' + slug(w[0]) + '"><h3><span>' + esc(w[0]) + (got ? '<span class="got">✓ learned</span>' : "") + '</span><a href="' + l.href + '">Lesson ' + l.n + "</a></h3>" +
+      var l = T[w[4] - 1], got = done[l.id], M = window.BKM;
+      var mark = M && M.known(w[0]) ? '<span class="got">✓ known</span>' : M && got && M.due([w[0]]).length ? '<span class="due">practice</span>' : got ? '<span class="got lrn">learning</span>' : "";
+      return '<li id="' + slug(w[0]) + '"><h3><span>' + esc(w[0]) + mark + '</span><a href="' + l.href + '">Lesson ' + l.n + "</a></h3>" +
         '<p class="k">' + esc(w[1]) + '</p><p class="r">' + esc(w[2]) + "</p>" + (w[5] ? '<p class="heard">You might hear: “' + esc(w[5]) + '”</p>' : "") + (w[3] ? '<p class="no">' + esc(w[3]) + "</p>" : "") + "</li>";
     }).join("") || '<li>No word matches. Try “token” or “agent”.</li>';
     document.getElementById("count").textContent = rows.length + " of " + W.length + " words";
