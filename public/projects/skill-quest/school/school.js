@@ -8,9 +8,9 @@
     { n: 3, id: "l3", short: "Like this", name: "“Make it like this”", leave: "An email ready to send", href: "lesson-3.html" },
     { n: 4, id: "l4", short: "Taste test", name: "Taste before you serve", leave: "A safe-kitchen card", href: "lesson-4.html" },
     { n: 5, id: "l5", short: "Your station", name: "Your own station", leave: "A family-trip project", href: "lesson-5.html" },
-    { n: 6, id: "l6", short: "Take-home", name: "Take-home containers", leave: "A checklist to share" },
-    { n: 7, id: "l7", short: "Pantry", name: "Pantry and meal kits", leave: "Your “always ask” settings" },
-    { n: 8, id: "l8", short: "Recipe card", name: "Write your recipe card", leave: "Your own tested skill" }
+    { n: 6, id: "l6", short: "Take-home", name: "Take-home containers", leave: "A checklist to share", href: "lesson-6.html" },
+    { n: 7, id: "l7", short: "Pantry", name: "Pantry and meal kits", leave: "Your “always ask” settings", href: "lesson-7.html" },
+    { n: 8, id: "l8", short: "Recipe card", name: "Write your recipe card", leave: "Your own tested skill", href: "lesson-8.html" }
   ];
   var EXTRAS = [
     { id: "spot", name: "Spotted a skill", href: "../play.html" },
