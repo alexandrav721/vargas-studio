@@ -52,6 +52,11 @@
   ],
   "now": [
     {
+      "date": "2026-11-24",
+      "projectId": "ai-made-ez",
+      "text": "AI Made EZ makers for people who print: birthday invitations, a holiday letter and a family birthday calendar."
+    },
+    {
       "date": "2026-11-23",
       "projectId": "weekline",
       "text": "Weekline v2: sign in and it remembers your goals, learns what you like, and plans your week, month and year with friends."
@@ -721,6 +726,69 @@
           "url": "https://origin.cursor.com/git/alexandra-vargas/lumen-d678"
         }
       ]
+    },
+    {
+      "id": "ai-made-ez",
+      "name": "AI Made EZ",
+      "aka": null,
+      "oneLiner": "Everyday AI made easy: short courses, and makers that ask a few questions and give you something to print.",
+      "audience": "Everyday people, including people who love to print",
+      "pays": "Free today. Ideas: mailed holiday letters, printed calendars and puzzle books.",
+      "status": "hot",
+      "updated": "2026-11-24",
+      "summary": "Two cooking-themed courses that teach AI words in plain language (Level 1 for everyone, Level 2 for people who buy or manage AI), plus makers built for people who print: birthday invitations, a holiday letter, a family birthday calendar, and meal, week, party and trip plans. Each one asks a few big, friendly questions, shows 3 versions, and prints right.",
+      "latest": "Holiday letter, birthday calendar and invitations launched 24 Nov 2026.",
+      "visuals": {
+        "website": {
+          "label": "AI Made EZ courses",
+          "detail": "Level 1: learn AI like learning to cook.",
+          "url": "/projects/skill-quest/school/",
+          "state": "live"
+        },
+        "landing": {
+          "label": "Level 2: Speak AI builder",
+          "detail": "10 short lessons on API, MCP, agents and RAG, no coding.",
+          "url": "/projects/skill-quest/school/kitchen/",
+          "state": "live"
+        },
+        "funnel": {
+          "label": "Sign-up",
+          "detail": "",
+          "url": null,
+          "state": "na"
+        },
+        "meta-ads": {
+          "label": "Ads",
+          "detail": "",
+          "url": null,
+          "state": "na"
+        },
+        "product-ui": {
+          "label": "Makers",
+          "detail": "Invitations, holiday letter, birthday calendar, meal, week, party and trip plans.",
+          "url": "/projects/skill-quest/ez/",
+          "state": "live"
+        },
+        "deck": {
+          "label": "Pitch deck",
+          "detail": "",
+          "url": null,
+          "state": "na"
+        },
+        "print": {
+          "label": "Holiday letter",
+          "detail": "One page, ready to print, in 3 looks.",
+          "url": "/projects/skill-quest/ez/letter.html",
+          "state": "live"
+        },
+        "social": {
+          "label": "Story poster",
+          "detail": "The AI kitchen in one picture.",
+          "url": "/projects/skill-quest/school/kitchen/poster.html",
+          "state": "live"
+        }
+      },
+      "code": []
     },
     {
       "id": "habit-game",

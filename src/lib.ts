@@ -106,6 +106,8 @@ export type Route =
 export function parseRoute(hash: string): Route {
   if (hash === "" || hash === "#" || hash === "#/") return { view: "desk" };
   if (hash === "#/all") return { view: "all" };
+  // sections of the short home
+  if (/^#(play|make|ideas|new|tools)$/.test(hash)) return { view: "desk" };
   // old in-page bookmarks of the detailed view (#compare, #projects, #weekline …)
   if (/^#[a-z][\w-]*$/i.test(hash)) return { view: "all" };
   const deck = hash.match(/^#\/tour(?:\/(\d+))?$/);

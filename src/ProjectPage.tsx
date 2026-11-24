@@ -38,7 +38,7 @@ export default function ProjectPage({ id }: { id: string }) {
 
   return (
     <div className="lad">
-      <SiteBar backHref="#projects" backLabel="All ideas" />
+      <SiteBar backHref="#ideas" backLabel="All ideas" />
       <main className="lad-main">
         <article className="proj" aria-labelledby="proj-title">
           <a className="proj-pic" href={m.play} target={m.external ? "_blank" : undefined} rel={m.external ? "noopener" : undefined} tabIndex={-1} aria-hidden="true">
