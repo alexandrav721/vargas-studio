@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,68 +7,47 @@
 <title>Weekline Meta Ads</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=Jost:wght@300..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="weekline.css">
 <style>
-:root{
-  --wl-ink:#0a0a0b;--wl-asphalt:#141310;--wl-curb:#1f1c18;--wl-paper:#f6f1e6;--wl-concrete:#b7b0a4;
-  --wl-lime:#c8f542;--wl-cyan:#3de0ff;--wl-coral:#ff6b4a;--wl-line:rgba(246,241,230,.16);--wl-fog:rgba(246,241,230,.08);
-  --wl-sheet-paper:#f7f2e6;--wl-sheet-ink:#171410;--wl-stamp:#1f6f58;--wl-sample:#7a4a00;--wl-editorial:#4a4740;
-  --wl-font-display:'Bricolage Grotesque','Arial Narrow',sans-serif;--wl-font-body:'Outfit',system-ui,sans-serif;
-  --wl-shadow-btn:3px 3px 0 rgba(0,0,0,.45);--wl-shadow-sheet:0 24px 80px rgba(0,0,0,.5);
-  --wl-glow-a:rgba(200,245,66,.14);--wl-glow-b:rgba(61,224,255,.12);--wl-glow-c:rgba(255,107,74,.10);
-  color-scheme:dark;
-}
-*,*::before,*::after{box-sizing:border-box}
-body{margin:0;background:var(--wl-ink);color:var(--wl-paper);font:400 1rem/1.55 var(--wl-font-body);overflow-x:hidden;
-  background-image:radial-gradient(60rem 30rem at 85% -10%,var(--wl-glow-a),transparent 60%),radial-gradient(40rem 26rem at -10% 30%,var(--wl-glow-b),transparent 60%),radial-gradient(50rem 30rem at 60% 110%,var(--wl-glow-c),transparent 60%)}
-a{color:inherit}
-:focus-visible{outline:3px solid var(--wl-lime);outline-offset:3px}
-.studio-back{position:fixed;top:12px;left:12px;z-index:100;font:600 12px/1 var(--wl-font-body);letter-spacing:.08em;text-transform:uppercase;text-decoration:none;color:var(--wl-paper);background:var(--wl-ink);border:1px solid rgba(246,241,230,.35);padding:9px 11px;box-shadow:var(--wl-shadow-btn)}
-.studio-back:hover{background:var(--wl-curb)}
-.topbar{max-width:1120px;margin:0 auto;padding:12px 24px 0 132px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;min-height:56px}
-.brand{display:inline-flex;align-items:center;gap:10px;text-decoration:none}
-.brand-mark{width:30px;height:30px;background:var(--wl-lime);color:var(--wl-ink);display:grid;place-items:center;font:800 19px/1 var(--wl-font-display);box-shadow:var(--wl-shadow-btn)}
-.brand-word{font:800 1.3rem/1 var(--wl-font-display);letter-spacing:-.03em}
-.topnav{display:flex;gap:2px;flex-wrap:wrap}
-.topnav a{font-size:.88rem;font-weight:600;text-decoration:none;color:var(--wl-concrete);padding:8px 9px;border-bottom:2px solid transparent}
-.topnav a:hover{color:var(--wl-paper)}
-.topnav a[aria-current=page]{color:var(--wl-paper);border-bottom-color:var(--wl-lime)}
-.wrap{max-width:1120px;margin:0 auto;padding:40px 24px 72px}
-.eyebrow{font-size:.75rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--wl-lime);margin:0 0 12px}
-h1{font:800 clamp(2.2rem,6vw,3.6rem)/.95 var(--wl-font-display);letter-spacing:-.03em;margin:0}
-h1 em{font-style:normal;color:var(--wl-lime)}
-.lede{color:var(--wl-concrete);font-size:1.1rem;max-width:40rem;margin:16px 0 36px}
-.viewer{display:grid;grid-template-columns:minmax(0,440px) minmax(0,1fr);gap:40px;align-items:start}
-.frame{box-shadow:var(--wl-shadow-sheet),6px 6px 0 rgba(0,0,0,.5);border:1px solid var(--wl-line);background:var(--wl-asphalt)}
+.wrap{padding-top:40px;padding-bottom:72px}
+h1{font-size:clamp(2.6rem,6vw,4.2rem);line-height:1;margin:0}
+h1 em{color:var(--sun-deep)}
+h2{font-size:clamp(1.9rem,4vw,2.6rem);line-height:1.05;margin:0 0 10px}
+.lede{margin:16px 0 36px;max-width:42rem}
+.dl{display:inline-flex;align-items:center;gap:8px;min-height:48px;padding:12px 20px;background:var(--sun);color:var(--ink);font-weight:500;text-decoration:none;border-radius:2px}
+.dl:hover{background:#F4B850}
+.small{font-size:.88rem;color:var(--ink-2)}
+.viewer{display:grid;grid-template-columns:minmax(0,440px) minmax(0,1fr);gap:48px;align-items:start}
+.frame{border:1px solid var(--rule);border-radius:2px;background:var(--dusk);box-shadow:0 18px 48px rgba(10,7,4,.18)}
 .frame img{display:block;width:100%;height:auto;aspect-ratio:4/5}
 .nav{display:flex;align-items:center;gap:12px;margin-top:18px}
-.nav button{font:600 1rem var(--wl-font-body);min-height:48px;padding:10px 18px;background:transparent;color:var(--wl-paper);border:1px solid rgba(246,241,230,.4);cursor:pointer}
-.nav button:hover{background:var(--wl-fog)}
-.count{font-weight:600;color:var(--wl-concrete);min-width:4.5ch;text-align:center}
-.hint{font-size:.85rem;color:var(--wl-concrete);margin:10px 0 0}
-dl{margin:0;display:grid;gap:18px}
-dt{font-size:.75rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--wl-concrete)}
-dd{margin:4px 0 0;font-size:1.08rem;overflow-wrap:anywhere}
-.angle{display:inline-block;font:700 .85rem/1 var(--wl-font-body);letter-spacing:.08em;text-transform:uppercase;background:var(--wl-cyan);color:var(--wl-ink);padding:7px 10px;transform:rotate(-1.5deg)}
-.headline{font:800 1.5rem/1.1 var(--wl-font-display);letter-spacing:-.02em}
-.metabtn{display:inline-block;font:600 .95rem/1 var(--wl-font-body);background:#e4e6eb;color:#050505;padding:10px 16px;border-radius:6px}
-.dest a{color:var(--wl-lime);font-weight:600}
-.dl{display:inline-flex;align-items:center;gap:8px;min-height:48px;padding:12px 20px;background:var(--wl-lime);color:var(--wl-ink);font-weight:600;text-decoration:none;box-shadow:var(--wl-shadow-btn)}
-.small{font-size:.88rem;color:var(--wl-concrete)}
-.plan{margin-top:64px;border-top:1px solid var(--wl-line);padding-top:32px}
-.plan h2{font:800 clamp(1.8rem,4vw,2.4rem)/1 var(--wl-font-display);letter-spacing:-.03em;margin:0 0 20px}
-.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
-.card{background:var(--wl-asphalt);border:1px solid var(--wl-line);padding:18px 20px}
-.card h3{font:800 1.15rem/1.1 var(--wl-font-display);margin:0 0 8px}
-.card p,.card li{margin:0;color:var(--wl-concrete)}
-.card ul{margin:0;padding-left:18px}
-.card b{color:var(--wl-paper)}
-.keep{border-top:4px solid var(--wl-lime)}.rework{border-top:4px solid var(--wl-cyan)}.kill{border-top:4px solid var(--wl-coral)}
-.notes{margin-top:28px;display:grid;gap:8px;max-width:72ch;color:var(--wl-concrete)}
+.nav button{font:500 1rem var(--sans);min-height:48px;padding:10px 18px;background:transparent;color:var(--ink);border:1px solid var(--rule-2);border-radius:2px;cursor:pointer}
+.nav button:hover{border-color:var(--ink)}
+.count{font:italic 400 1.2rem var(--serif);color:var(--ink);min-width:4.5ch;text-align:center}
+.hint{font-size:.85rem;color:var(--ink-2);margin:10px 0 0}
+dl{margin:0;display:grid;gap:0;border-top:1px solid var(--ink)}
+dl>div{padding:16px 0;border-bottom:1px solid var(--rule)}
+dt{font-size:.75rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+dd{margin:6px 0 0;font-size:1.08rem;overflow-wrap:anywhere}
+.angle{display:inline-flex;align-items:center;gap:8px;font:500 .85rem/1 var(--sans);letter-spacing:.1em;text-transform:uppercase}
+.angle::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--sun)}
+.headline{font:400 1.7rem/1.15 var(--serif);letter-spacing:-.015em}
+.metabtn{display:inline-block;font:500 .95rem/1 var(--sans);background:#e4e6eb;color:#050505;padding:10px 16px;border-radius:6px}
+.dest a{font-weight:500}
+.plan{margin-top:80px;border-top:1px solid var(--ink);padding-top:32px}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:20px}
+.card{background:#FBF8F3;border:1px solid var(--rule);border-radius:2px;padding:18px 20px}
+.card h3{font:400 1.35rem/1.1 var(--serif);margin:0 0 8px}
+.card p,.card li{margin:0;color:var(--ink-2)}
+.card b{color:var(--ink);font-weight:500}
+.keep{border-top:2px solid var(--live)}.rework{border-top:2px solid var(--sun)}.kill{border-top:2px solid var(--err)}
+.notes{margin-top:28px;display:grid;gap:8px;max-width:72ch;color:var(--ink-2)}
 .notes li{margin-left:18px}
-code{font-size:.85em;background:var(--wl-fog);padding:1px 5px;overflow-wrap:anywhere}
+.notes b{color:var(--ink);font-weight:500}
+code{font-size:.85em;background:var(--paper-2);padding:1px 5px;overflow-wrap:anywhere}
 @media (max-width:820px){.viewer{grid-template-columns:1fr}.cards{grid-template-columns:1fr}}
-@media (max-width:560px){.topbar{padding:56px 16px 0}.wrap{padding:28px 16px 56px}}
+@media (max-width:560px){.wrap{padding-top:28px;padding-bottom:56px}}
 </style>
   <link rel="stylesheet" href="/site-bar.css" />
   <script src="/site-bar.js" data-project="weekline" data-kind="piece" defer></script>
@@ -76,7 +55,7 @@ code{font-size:.85em;background:var(--wl-fog);padding:1px 5px;overflow-wrap:anyw
 <body>
 <a class="studio-back" href="/">← Studio</a>
 <header class="topbar">
-  <a class="brand" href="pitch/"><span class="brand-mark" aria-hidden="true">W</span><span class="brand-word">Weekline</span></a>
+  <a class="brand" href="landing.html"><span class="brand-word">Weekline</span></a>
   <nav class="topnav" aria-label="Weekline">
     <a href="/projects/weekline/pitch/">Pitch</a>
     <a href="/projects/weekline/v2/">App</a>
@@ -124,6 +103,7 @@ code{font-size:.85em;background:var(--wl-fog);padding:1px 5px;overflow-wrap:anyw
       <li>Thresholds and budget are the plan’s own assumptions, not industry facts. Weekline has no ad history, users or waitlist yet.</li>
       <li><b>LIVE PARKS</b> rows are real NYC Parks listings for 23–29 Nov 2026, from the public NYC Open Data feed (pulled 21 Nov 2026). Re-pull the week the ads run. <b>SAMPLE</b> rows are the app’s demo rows. “Free” appears only where the listing says free.</li>
       <li>Owner presses go. Nothing here posts or spends on its own.</li>
+      <li>Photos: real NYC sunsets from Wikimedia Commons (CC BY-SA 4.0 and CC BY 2.0); each frame prints its photographer and licence.</li>
     </ul>
   </section>
 </main>
@@ -139,7 +119,7 @@ var F=[
 ];
 var i=0,$=function(x){return document.getElementById(x)};
 function show(n){i=(n+F.length)%F.length;var f=F[i],src='ads/frame-'+(i+1)+'.png';
- $('img').src=src;$('img').alt='Ad frame '+(i+1)+': '+f.h+'. A Weekline week Sheet with labeled rows.';
+ $('img').src=src;$('img').alt='Ad frame '+(i+1)+': '+f.h+'. A dusk NYC photo and a Weekline week Sheet with labeled rows.';
  $('angle').textContent=f.a;$('primary').textContent=f.p;$('headline').textContent=f.h;$('cta').textContent=f.c;
  var d='landing.html?a='+f.q;$('dest').href=d;$('dest').textContent='/projects/weekline/'+d;
  $('utm').textContent='Live URL adds '+U.slice(1)+f.id;
