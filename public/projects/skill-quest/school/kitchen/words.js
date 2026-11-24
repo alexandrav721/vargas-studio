@@ -77,7 +77,9 @@ window.BK_WORDS = [
 ["Cost","The bill","Mostly tokens times the model’s price across every call and loop, plus fees for some tools.","Estimates until you measure real use.",10,"What’s the cost per conversation?"],
 ["Latency","Ticket time","How long people wait for a reply. Bigger models and more steps take longer.","",10,"Latency is too high on mobile."],
 ["Guardrails","Safety rails in the kitchen","Checks built into the app, approvals and limits that keep an AI product safe.","Hard rules live in the app, not only in the prompt.",10,"What guardrails stop it from refunding?"],
-["Start simple","The smallest kitchen that works","Anthropic’s advice: try one request first, then a workflow, then an agent.","",10,"Start simple: one prompt, then see."]
+["Start simple","The smallest kitchen that works","Anthropic’s advice: try one request first, then a workflow, then an agent.","",10,"Start simple: one prompt, then see."],
+["Wrapper","A shop that sells another kitchen’s dishes, plated its own way","An app built on top of someone else’s AI model, adding its own screens, steps or data.","Not a bad word. Most AI apps are wrappers. What matters is what they add.",11,"Is this app a wrapper around Claude or GPT?"],
+["Thin wrapper","A shop that only adds a new menu","An AI app that adds little beyond one prompt and a screen, so it’s easy to copy.","Not the same as simple. A simple app can still add something real.",11,"That's a thin wrapper; the model maker could ship it tomorrow."]
 ];
 /* Dictionary-only or only seen in passing: not counted or quizzed. */
 window.BK_UNTAUGHT = ["Project", "Artifact", "Structured outputs", "Rate limits", "4Ds", "Plan mode", "Permission modes", "Training cutoff", "Compaction", "Jailbreak", "Temperature", "Computer use", "Git", "SDK", "Agent SDK", "Vision"];
