@@ -1,0 +1,65 @@
+/* AI Made EZ family birthday calendar. Uses letter.css for the big-text question card, the plan list and the tips;
+   this file adds the date list and the calendar pages (each a real 8.5 x 11 sheet at 96 px per inch). */
+.dlist{list-style:none;padding:0;margin:10px 0;display:grid;gap:6px}
+.dlist li{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:10px;align-items:center;padding:8px 12px;border:2px solid var(--line);border-radius:12px;font-size:18px}
+.dlist .when{color:var(--muted);font-size:16px;white-space:nowrap}
+.dlist button{all:unset;cursor:pointer;color:var(--muted);font:600 15px var(--text);text-decoration:underline;padding:8px 4px}
+.dlist .k{font:700 12px var(--text);letter-spacing:.05em;text-transform:uppercase;color:var(--accent);margin-left:6px}
+.addrow{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr) 80px auto;gap:8px;margin-top:8px}
+.addrow input,.addrow select{font:18px var(--text);min-height:54px;padding:8px 10px;border:2px solid var(--line2);border-radius:12px;background:var(--paper);color:var(--ink);min-width:0}
+@media (max-width:520px){.addrow{grid-template-columns:1fr 1fr}.addrow input:first-child{grid-column:1/-1}}
+.addrow .btn{min-height:54px;font-size:17px;padding:0 14px}
+.readb{margin-top:10px}
+.found{font-size:17px;color:var(--ok);font-weight:700;margin-top:8px}
+.phs{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.phs img{width:72px;height:72px;object-fit:cover;border-radius:8px;border:2px solid var(--line)}
+.flip{display:flex;gap:10px;align-items:center;justify-content:space-between}
+.flip .btn{min-height:54px;font-size:18px;padding:0 18px}
+.flip b{font:800 20px var(--display)}
+/* calendar sheet */
+.cpage{position:absolute;top:0;left:0;width:816px;height:1056px;transform-origin:0 0;background:#fff;color:#1f1d1a;box-shadow:0 1px 3px rgba(0,0,0,.12),0 12px 30px -12px rgba(40,30,20,.3);padding:44px 44px 40px;display:flex;flex-direction:column;gap:12px;overflow:hidden;font-family:"Schibsted Grotesk",system-ui,sans-serif}
+.cpage .pic{height:430px;flex:none;border-radius:6px;overflow:hidden;background:var(--m);display:grid;place-items:center;position:relative}
+.cpage .pic img{width:100%;height:100%;object-fit:cover}
+.cpage .pic .mbig{font:800 120px/1 var(--hf);color:rgba(255,255,255,.92);letter-spacing:-.03em}
+.cpage .mh{display:flex;align-items:baseline;justify-content:space-between;border-bottom:3px solid var(--m);padding-bottom:6px}
+.cpage .mh b{font:800 52px/1 var(--hf);color:var(--m);letter-spacing:-.02em}
+.cpage .mh span{font:700 26px var(--hf);color:#5d5952}
+.cpage .grid{flex:1;min-height:0;display:grid;grid-template-columns:repeat(7,1fr);grid-template-rows:auto;grid-auto-rows:minmax(0,1fr);border-top:1px solid #d8d2c6;border-left:1px solid #d8d2c6}
+.cpage .grid .wd{font:700 13px var(--text);text-transform:uppercase;letter-spacing:.08em;color:#5d5952;padding:6px 8px;border-right:1px solid #d8d2c6;border-bottom:1px solid #d8d2c6;background:#f6f3ee}
+.cpage .grid .c{border-right:1px solid #d8d2c6;border-bottom:1px solid #d8d2c6;padding:5px 7px;display:flex;flex-direction:column;gap:2px;overflow:hidden;min-height:0}
+.cpage .grid .c.o{background:#faf8f4}
+.cpage .grid .n{font:700 17px/1 var(--text)}
+.cpage .grid .e{font:700 13px/1.2 var(--text);color:var(--m)}
+.cpage .grid .e svg{width:12px;height:12px;vertical-align:-1px;margin-right:3px;fill:currentColor}
+.cpage .grid .h{font:italic 400 12px/1.2 var(--text);color:#6d6860}
+.cpage .grid .c.has{background:var(--t)}
+.cpage.big .grid .n{font-size:21px}.cpage.big .grid .e{font-size:15.5px}.cpage.big .grid .h{font-size:14px}
+/* cover and list */
+.cpage.cover{justify-content:center;align-items:center;text-align:center;gap:24px}
+.cpage.cover .coll{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:560px;height:560px}
+.cpage.cover .coll.n1{grid-template-columns:1fr}
+.cpage.cover .coll img{width:100%;height:100%;object-fit:cover;border-radius:6px}
+.cpage.cover .coll.n3 img:first-child{grid-row:span 2}
+.cpage.cover .yr{font:800 150px/0.9 var(--hf);color:var(--m);letter-spacing:-.04em}
+.cpage.cover h1{font:800 46px/1.1 var(--hf);margin:0;text-wrap:balance}
+.cpage.cover p{font-size:20px;color:#5d5952;margin:0}
+.cpage.list h1{font:800 44px/1.1 var(--hf);color:var(--m);margin:0 0 8px}
+.cpage.list .cols{columns:2;column-gap:40px;font-size:16px}
+.cpage.list .mo{break-inside:avoid;margin-bottom:14px}
+.cpage.list .mo b{display:block;font:800 18px var(--hf);color:var(--m);border-bottom:2px solid var(--t);margin-bottom:4px}
+.cpage.list .mo div{display:flex;gap:10px;padding:2px 0}
+.cpage.list .mo div span:first-child{width:28px;font-weight:700;font-variant-numeric:tabular-nums}
+/* looks */
+.cpage.l-classic{--hf:"Fraunces",Georgia,serif}
+.cpage.l-bright{--hf:"Bricolage Grotesque",system-ui,sans-serif}
+.cpage.l-modern{--hf:"Bricolage Grotesque",system-ui,sans-serif;--m:#1f1d1a!important;--t:#f3efe8!important}
+.cpage.l-modern .mh b{text-transform:uppercase;letter-spacing:.02em}
+.cpage.l-modern .grid .e{color:#c7391f}
+/* print: every sheet, one per page */
+#printall{display:none}
+@media print{
+  @page{size:letter;margin:0}
+  .fit,.flip{display:none!important}
+  #printall{display:block}
+  #printall .cpage{position:relative;transform:none;box-shadow:none;width:8.5in;height:11in;break-after:page;page-break-after:always;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
