@@ -7,96 +7,101 @@
   <meta name="description" content="Printable US Letter Week sheet for the Weekline Sunday ritual: Mon–Sun rows, sources, budget, crew pick and a Seeking line, plus a fridge card." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=Jost:wght@300..600&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --wl-ink: #0a0a0b; --wl-paper: #f6f1e6; --wl-lime: #c8f542; --wl-cyan: #3de0ff; --wl-coral: #ff6b4a;
-      --wl-sheet-ink: #171410; --wl-stamp: #1f6f58; --wl-sample: #7a4a00; --wl-editorial: #4a4740;
-      --wl-font-display: 'Bricolage Grotesque', 'Arial Narrow', sans-serif; --wl-font-body: 'Outfit', system-ui, sans-serif;
-      --rule: #171410; --soft: rgba(23,20,16,0.28); --faint: rgba(23,20,16,0.12);
+      /* Golden Hour (../v2/app.css), for paper: ink on white, gold as marks only.
+         Export: headless Chrome --print-to-pdf (US Letter); PNGs via ?shot=1|2 at 816x1056, device scale 1.5625 (1275x1650). */
+      --paper: #F4EEE5; --paper-2: #EAE1D3; --ink: #16120E; --ink-2: #5E554B; --sun: #EFA937; --sun-text: #8A560C; --live-text: #346B42;
+      --wl-ink: var(--ink); --wl-paper: var(--paper); --wl-sheet-ink: var(--ink); --wl-stamp: var(--live-text); --wl-sample: var(--sun-text); --wl-editorial: var(--ink-2);
+      --wl-font-display: "Bodoni Moda", Didot, "Bodoni 72", serif; --wl-font-body: "Jost", "Futura", "Avenir Next", sans-serif;
+      --rule: #16120E; --soft: rgba(22,18,14,0.26); --faint: rgba(22,18,14,0.12);
     }
     @page { size: letter; margin: 0.45in 0.5in; }
     * { box-sizing: border-box; }
-    html, body { margin: 0; background: #d9d3c6; color: var(--wl-sheet-ink); font-family: var(--wl-font-body); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-    .studio-back { position: fixed; top: 10px; left: 10px; z-index: 9999; padding: 7px 12px; background: var(--wl-ink); color: var(--wl-paper); border: 1px solid rgba(246,241,230,0.16); font: 600 12px var(--wl-font-body); letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; }
-    .topnav { position: fixed; top: 10px; right: 12px; z-index: 60; display: flex; gap: 4px; font: 600 13px var(--wl-font-body); }
-    .topnav a { padding: 7px 10px; color: var(--wl-sheet-ink); text-decoration: none; background: rgba(255,255,255,0.7); }
-    .topnav a[aria-current] { background: var(--wl-lime); }
-    .page { width: 8.5in; height: 11in; margin: 56px auto 24px; padding: 0.45in 0.5in; background: #fff; box-shadow: 0 10px 40px rgba(0,0,0,0.25); display: flex; flex-direction: column; overflow: hidden; }
+    html, body { margin: 0; background: var(--paper-2); color: var(--wl-sheet-ink); font-family: var(--wl-font-body); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .studio-back { position: fixed; top: 10px; left: 10px; z-index: 9999; padding: 7px 12px; background: var(--paper); color: var(--ink); border: 1px solid var(--soft); border-radius: 2px; font: 500 12px var(--wl-font-body); letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; }
+    .topnav { position: fixed; top: 10px; right: 12px; z-index: 60; display: flex; gap: 4px; font: 400 13px var(--wl-font-body); }
+    .topnav a { padding: 10px 10px; color: var(--ink); text-decoration: none; background: rgba(255,255,255,0.75); border-radius: 2px; }
+    .topnav a[aria-current] { background: var(--sun); }
+    .topnav a:focus-visible, .studio-back:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+    .page { width: 8.5in; height: 11in; margin: 56px auto 24px; padding: 0.45in 0.5in; background: #fff; box-shadow: 0 10px 40px rgba(22,18,14,0.16); display: flex; flex-direction: column; overflow: hidden; }
     @media print {
       html, body { background: #fff; }
       .studio-back, .topnav { display: none; }
       .page { width: auto; height: 10.1in; margin: 0; padding: 0; box-shadow: none; break-after: page; }
       .page:last-child { break-after: auto; }
     }
-    h1, h2, h3 { font-family: var(--wl-font-display); font-weight: 800; letter-spacing: -0.03em; margin: 0; line-height: 0.95; }
+    h1, h2, h3 { font-family: var(--wl-font-display); font-weight: 400; letter-spacing: -0.025em; margin: 0; line-height: 1; }
+    h1 em, h2 em, h3 em { font-style: italic; }
     p { margin: 0; }
-    .head { display: flex; justify-content: space-between; align-items: flex-end; padding-bottom: 8px; border-bottom: 3px solid var(--rule); }
+    .head { display: flex; justify-content: space-between; align-items: flex-end; padding-bottom: 8px; border-bottom: 1.5px solid var(--rule); }
     .brand { display: flex; align-items: center; gap: 10px; }
-    .brand h1 { font-size: 34pt; }
-    .brand .sub { font: 600 9pt var(--wl-font-body); letter-spacing: 0.14em; text-transform: uppercase; margin-top: 5px; }
-    .weekof { font-size: 11pt; font-weight: 600; text-align: right; }
+    .brand h1 { font-size: 36pt; }
+    .dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: var(--sun); margin-left: 4px; vertical-align: 0.12em; }
+    .brand .sub { font: 500 8.5pt var(--wl-font-body); color: var(--ink-2); letter-spacing: 0.14em; text-transform: uppercase; margin-top: 5px; }
+    .weekof { font-size: 11pt; font-weight: 500; text-align: right; }
     .weekof .blank { display: inline-block; width: 1.9in; border-bottom: 1.5px solid var(--rule); margin-left: 6px; }
-    .eyebrow { font: 700 8.5pt var(--wl-font-body); letter-spacing: 0.14em; text-transform: uppercase; }
-    .box { display: inline-block; width: 11px; height: 11px; border: 1.5px solid var(--rule); vertical-align: -1px; margin-right: 5px; background: #fff; }
+    .eyebrow { font: 500 8.5pt var(--wl-font-body); letter-spacing: 0.14em; text-transform: uppercase; }
+    .box { display: inline-block; width: 11px; height: 11px; border: 1px solid var(--rule); border-radius: 1px; vertical-align: -1px; margin-right: 5px; background: #fff; }
     .setup { display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; align-items: center; margin-top: 10px; font-size: 10pt; }
     .setup .opts { display: flex; flex-wrap: wrap; gap: 4px 16px; }
     .crews { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; margin-top: 6px; }
-    .crew { border: 1.5px solid var(--rule); padding: 6px 7px; font: 800 10pt/1 var(--wl-font-display); letter-spacing: -0.01em; display: flex; gap: 4px; align-items: flex-start; min-height: 0.42in; }
+    .crew { border: 1px solid var(--soft); border-radius: 2px; padding: 6px 7px; font: 400 11pt/1.05 var(--wl-font-display); letter-spacing: -0.01em; display: flex; gap: 4px; align-items: flex-start; min-height: 0.42in; }
     .crew .box { flex: none; margin-top: 0; }
-    .crew.lime { background: var(--wl-lime); } .crew.cyan { background: #bff3ff; } .crew.coral { background: #ffd0c5; }
+    
     table { width: 100%; border-collapse: collapse; margin-top: 12px; table-layout: fixed; }
-    th { font: 700 8pt var(--wl-font-body); letter-spacing: 0.12em; text-transform: uppercase; text-align: left; padding: 0 6px 5px; border-bottom: 2px solid var(--rule); }
+    th { font: 500 8pt var(--wl-font-body); letter-spacing: 0.12em; text-transform: uppercase; text-align: left; padding: 0 6px 5px; border-bottom: 1.5px solid var(--rule); }
     td { border-bottom: 1px solid var(--soft); border-right: 1px solid var(--faint); height: 0.74in; padding: 4px 6px; vertical-align: top; font-size: 9pt; }
     td:last-child { border-right: 0; }
-    td.day { font: 800 15pt var(--wl-font-display); letter-spacing: -0.02em; vertical-align: middle; }
+    td.day { font: 400 17pt var(--wl-font-display); letter-spacing: -0.02em; vertical-align: middle; }
     td.day small { display: block; font: 500 8pt var(--wl-font-body); letter-spacing: 0; margin-top: 3px; color: var(--wl-editorial); }
     td.cost { position: relative; }
-    td.cost::before { content: "$"; font-weight: 700; font-size: 10pt; }
+    td.cost::before { content: "$"; font-weight: 500; font-size: 10pt; }
     td.src { padding: 4px 4px; }
-    .ticks { display: grid; grid-template-columns: 1fr 1fr; gap: 3px 4px; font: 700 6.8pt var(--wl-font-body); letter-spacing: 0.06em; text-transform: uppercase; }
+    .ticks { display: grid; grid-template-columns: 1fr 1fr; gap: 3px 4px; font: 500 6.8pt var(--wl-font-body); letter-spacing: 0.06em; text-transform: uppercase; }
     .ticks span { white-space: nowrap; }
     .ticks .box { width: 9px; height: 9px; margin-right: 3px; }
     .t-live { color: var(--wl-stamp); } .t-sample { color: var(--wl-sample); } .t-ed { color: var(--wl-editorial); } .t-open { color: var(--wl-editorial); }
     .bottom { display: grid; grid-template-columns: 1fr 1.55fr; gap: 12px; margin-top: 12px; }
-    .panel { border: 2px solid var(--rule); padding: 9px 11px; }
-    .money { display: grid; grid-template-columns: 1fr auto; row-gap: 7px; font-size: 10pt; font-weight: 600; align-items: end; margin-top: 6px; }
-    .money .line { display: inline-block; width: 0.95in; border-bottom: 1.5px solid var(--rule); text-align: left; }
+    .panel { border: 1px solid var(--rule); border-radius: 2px; padding: 9px 11px; }
+    .money { display: grid; grid-template-columns: 1fr auto; row-gap: 7px; font-size: 10pt; font-weight: 400; align-items: end; margin-top: 6px; }
+    .money .line { display: inline-block; width: 0.95in; border-bottom: 1px solid var(--rule); text-align: left; }
     .money .line::before { content: "$"; }
-    .seek { background: #eafbfe; border-color: var(--rule); }
-    .seek h3 { font-size: 13pt; margin-top: 3px; }
+    .seek { background: #FAF6F0; border-color: var(--rule); border-top: 3px solid var(--sun); }
+    .seek h3 { font-size: 15pt; margin-top: 3px; }
     .goals { display: flex; flex-wrap: wrap; gap: 3px 12px; font-size: 9.5pt; margin-top: 6px; }
-    .write { border-bottom: 1.5px solid var(--rule); height: 0.3in; margin-top: 2px; font-size: 8.5pt; color: var(--wl-editorial); display: flex; align-items: flex-end; padding-bottom: 2px; }
+    .write { border-bottom: 1px solid var(--rule); height: 0.3in; margin-top: 2px; font-size: 8.5pt; color: var(--wl-editorial); display: flex; align-items: flex-end; padding-bottom: 2px; }
     .legend { margin-top: auto; padding-top: 8px; border-top: 1px solid var(--soft); font-size: 8.5pt; line-height: 1.4; display: flex; flex-wrap: wrap; gap: 2px 14px; color: var(--wl-sheet-ink); }
-    .legend b { letter-spacing: 0.06em; }
+    .legend b { letter-spacing: 0.06em; font-weight: 500; }
     /* page 2 */
-    .card { border: 3px solid var(--rule); padding: 0.22in 0.26in; height: 4.65in; display: flex; flex-direction: column; position: relative; }
+    .card { border: 1.5px solid var(--rule); border-radius: 2px; padding: 0.22in 0.26in; height: 4.65in; display: flex; flex-direction: column; position: relative; }
     .card-top { display: flex; justify-content: space-between; align-items: flex-start; }
-    .card h2 { font-size: 40pt; }
-    .card h2 em { font-style: normal; background: var(--wl-lime); padding: 0 6px; }
+    .card h2 { font-size: 44pt; }
+    .card h2 em { font-style: italic; }
     .days { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; margin-top: 12px; flex: 1; }
-    .dcol { border: 1.5px solid var(--rule); display: flex; flex-direction: column; }
-    .dcol b { font: 800 13pt var(--wl-font-display); padding: 5px 6px; border-bottom: 1.5px solid var(--rule); }
+    .dcol { border: 1px solid var(--rule); border-radius: 2px; display: flex; flex-direction: column; }
+    .dcol b { font: 400 14pt var(--wl-font-display); padding: 5px 6px; border-bottom: 1px solid var(--rule); }
     .dcol .ln { flex: 1; background-image: repeating-linear-gradient(to bottom, transparent 0, transparent 0.27in, var(--faint) 0.27in, var(--faint) calc(0.27in + 1px)); }
-    .dcol.wknd b { background: var(--wl-lime); }
-    .stamp { border: 2px solid var(--wl-stamp); color: var(--wl-stamp); padding: 4px 9px; font: 800 13pt var(--wl-font-display); transform: rotate(-4deg); display: inline-block; }
-    .seekline { display: flex; gap: 10px; align-items: flex-end; margin-top: 10px; font-size: 10pt; font-weight: 600; }
+    .dcol.wknd b { background: var(--sun); }
+    .stamp { background: var(--sun); color: var(--ink); padding: 5px 11px; border-radius: 2px; font: italic 400 15pt var(--wl-font-display); display: inline-block; }
+    .seekline { display: flex; gap: 10px; align-items: flex-end; margin-top: 10px; font-size: 10pt; font-weight: 500; }
     .seekline .write { flex: 1; margin: 0; }
-    .cut { display: flex; align-items: center; gap: 8px; margin: 0.16in 0; font: 600 8pt var(--wl-font-body); letter-spacing: 0.12em; text-transform: uppercase; color: var(--wl-editorial); }
-    .cut::after { content: ""; flex: 1; border-top: 1.5px dashed var(--wl-editorial); }
+    .cut { display: flex; align-items: center; gap: 8px; margin: 0.16in 0; font: 500 8pt var(--wl-font-body); letter-spacing: 0.12em; text-transform: uppercase; color: var(--wl-editorial); }
+    .cut::after { content: ""; flex: 1; border-top: 1px dashed var(--wl-editorial); }
     .ritual { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 14px; align-items: start; }
     .notes { margin-top: 14px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-    .notes .write { height: 0.34in; font-size: 9.5pt; font-weight: 600; color: var(--wl-sheet-ink); }
+    .notes .write { height: 0.34in; font-size: 9.5pt; font-weight: 500; color: var(--wl-sheet-ink); }
     .steps { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 8px; counter-reset: s; }
     .steps li { counter-increment: s; display: grid; grid-template-columns: 0.36in 1fr; gap: 6px; font-size: 10.5pt; line-height: 1.3; }
-    .steps li::before { content: counter(s); font: 800 16pt/1 var(--wl-font-display); background: var(--wl-lime); text-align: center; padding: 3px 0; height: fit-content; }
-    .steps li b { font-weight: 700; }
-    .look { border: 2px solid var(--rule); padding: 9px 11px; }
+    .steps li::before { content: counter(s); font: italic 400 17pt/1 var(--wl-font-display); background: var(--sun); color: var(--ink); border-radius: 2px; text-align: center; padding: 3px 0 4px; height: fit-content; }
+    .steps li b { font-weight: 500; }
+    .look { border: 1px solid var(--rule); border-radius: 2px; padding: 9px 11px; }
     .look table { margin-top: 6px; }
     .look th { font-size: 7.5pt; padding: 0 3px 4px; text-align: center; }
     .look th:first-child { text-align: left; }
     .look td { height: 0.3in; text-align: center; vertical-align: middle; padding: 2px; border-right: 0; }
-    .look td:first-child { text-align: left; font-weight: 600; font-size: 9pt; }
+    .look td:first-child { text-align: left; font: 400 11pt var(--wl-font-display); }
     .foot2 { margin-top: 10px; font-size: 8.5pt; color: var(--wl-editorial); line-height: 1.4; }
   </style>
 </head>
@@ -110,8 +115,7 @@
   <section class="page" aria-label="Week sheet">
     <div class="head">
       <div class="brand">
-        <svg width="46" height="46" viewBox="0 0 46 46" aria-hidden="true"><rect width="46" height="46" fill="#c8f542"/><path d="M8 12l6 22 9-17 9 17 6-22" fill="none" stroke="#0a0a0b" stroke-width="4.6" stroke-linejoin="miter"/></svg>
-        <div><h1>Week sheet</h1><p class="sub">Weekline · your NYC week, on one sheet</p></div>
+        <div><h1>Week <em>sheet</em><i class="dot" aria-hidden="true"></i></h1><p class="sub">Weekline · your NYC week, on one sheet</p></div>
       </div>
       <p class="weekof">Week of<span class="blank"></span></p>
     </div>
@@ -127,10 +131,10 @@
 
     <p class="eyebrow" style="margin-top:10px">Crew pick · tick one</p>
     <div class="crews">
-      <div class="crew coral"><i class="box"></i>Cheap Thrills</div>
+      <div class="crew"><i class="box"></i>Cheap Thrills</div>
       <div class="crew"><i class="box"></i>Dateline</div>
-      <div class="crew lime"><i class="box"></i>Move Pack</div>
-      <div class="crew cyan"><i class="box"></i>Culture Circuit</div>
+      <div class="crew"><i class="box"></i>Move Pack</div>
+      <div class="crew"><i class="box"></i>Culture Circuit</div>
       <div class="crew"><i class="box"></i>Table Hop</div>
       <div class="crew"><i class="box"></i>Wildcard</div>
     </div>
@@ -197,7 +201,7 @@
       <div class="seekline"><span>Seeking:</span><div class="write"></div><span>Crew:</span><div class="write" style="flex:0 0 1.6in"></div></div>
     </div>
 
-    <div class="cut"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><circle cx="3.5" cy="3.5" r="2.4" fill="none" stroke="#4a4740" stroke-width="1.4"/><circle cx="3.5" cy="10.5" r="2.4" fill="none" stroke="#4a4740" stroke-width="1.4"/><path d="M5.5 5L13 11M5.5 9L13 3" stroke="#4a4740" stroke-width="1.4"/></svg>Cut here · the card goes on the fridge</div>
+    <div class="cut"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><circle cx="3.5" cy="3.5" r="2.4" fill="none" stroke="#5E554B" stroke-width="1.4"/><circle cx="3.5" cy="10.5" r="2.4" fill="none" stroke="#5E554B" stroke-width="1.4"/><path d="M5.5 5L13 11M5.5 9L13 3" stroke="#5E554B" stroke-width="1.4"/></svg>Cut here · the card goes on the fridge</div>
 
     <div class="ritual">
       <div>
@@ -226,7 +230,7 @@
             <tr><td>Sun</td><td><i class="box"></i></td><td><i class="box"></i></td><td><i class="box"></i></td></tr>
           </tbody>
         </table>
-        <p style="margin-top:8px;font-size:10pt;font-weight:600"><i class="box"></i>Seeking proof happened</p>
+        <p style="margin-top:8px;font-size:10pt;font-weight:500"><i class="box"></i>Seeking proof happened</p>
       </div>
     </div>
     <div class="notes">
@@ -237,6 +241,13 @@
   </section>
   <script>
     (function () {
+      var shot = new URLSearchParams(location.search).get('shot');
+      if (shot) {
+        document.querySelectorAll('.studio-back, .topnav').forEach(function (e) { e.remove(); });
+        document.querySelectorAll('.page').forEach(function (p, i) { if (String(i + 1) !== shot) p.remove(); else { p.style.margin = '0'; p.style.boxShadow = 'none'; } });
+        document.documentElement.style.background = '#fff'; document.body.style.background = '#fff';
+        return;
+      }
       function fit() { var z = Math.min(1, (innerWidth - 24) / 816); document.querySelectorAll('.page').forEach(function (p) { p.style.zoom = z < 1 ? z : ''; }); }
       addEventListener('resize', fit); addEventListener('beforeprint', function () { document.querySelectorAll('.page').forEach(function (p) { p.style.zoom = ''; }); }); addEventListener('afterprint', fit); fit();
     })();

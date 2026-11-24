@@ -7,10 +7,11 @@
 <title>Weekline Ad Frames</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=Jost:wght@300..600&display=swap" rel="stylesheet">
 <!--
   Weekline Meta ad frames, 1080x1350 (4:5). ?f=1..6
-  Tokens: ~/Claude/ideas/weekline/concept/tokens.css (Wheatpaste Crew).
+  Look: "Golden Hour", the v2 app (../v2/app.css). Photos: ../v2/photos, credits from ../v2/data.js PHOTOS,
+  printed on every frame. Export: headless Chrome --window-size=1080,1350 --virtual-time-budget=6000 --screenshot=frame-N.png frames.html?f=N
   Copy: ~/Claude/ideas/weekline/marketing.md section 5.
   LIVE PARKS rows = real NYC Parks listings for Mon 23 - Fri 27 Nov 2026, pulled 21 Nov 2026 from
   NYC Open Data "NYC Parks Public Events - Upcoming 14 Days": https://data.cityofnewyork.us/resource/w3wp-dpdi.json
@@ -20,70 +21,69 @@
 -->
 <style>
 :root{
-  --wl-ink:#0a0a0b;--wl-asphalt:#141310;--wl-curb:#1f1c18;--wl-paper:#f6f1e6;--wl-concrete:#b7b0a4;
-  --wl-lime:#c8f542;--wl-cyan:#3de0ff;--wl-coral:#ff6b4a;--wl-line:rgba(246,241,230,.16);
-  --wl-sheet-paper:#f7f2e6;--wl-sheet-ink:#171410;--wl-stamp:#1f6f58;--wl-sample:#7a4a00;--wl-editorial:#4a4740;
-  --wl-font-display:'Bricolage Grotesque','Arial Narrow',sans-serif;--wl-font-body:'Outfit',system-ui,sans-serif;
-  --wl-shadow-btn:3px 3px 0 rgba(0,0,0,.45);--wl-shadow-flyer:4px 8px 0 rgba(0,0,0,.35);--wl-shadow-sheet:0 24px 80px rgba(0,0,0,.5);
-  --wl-glow-a:rgba(200,245,66,.14);--wl-glow-b:rgba(61,224,255,.12);--wl-glow-c:rgba(255,107,74,.10);
+  --paper:#F4EEE5;--paper-2:#EAE1D3;--ink:#16120E;--ink-2:#5E554B;--rule:rgba(22,18,14,.14);
+  --sun:#EFA937;--sun-text:#8A560C;--dusk:#1A1511;--on-dusk:#EFE6DA;--on-dusk-2:#B3A694;--live:#3F7D4E;--live-text:#346B42;
+  --serif:"Bodoni Moda",Didot,"Bodoni 72",serif;--sans:"Jost","Futura","Avenir Next",sans-serif;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{width:1080px;height:1350px;overflow:hidden;background:var(--wl-ink)}
-body{font-family:var(--wl-font-body);color:var(--wl-paper)}
-.frame{position:relative;width:1080px;height:1350px;padding:56px 64px 48px;display:flex;flex-direction:column;overflow:hidden;
-  background:
-    radial-gradient(700px 420px at 92% -6%,var(--wl-glow-a),transparent 62%),
-    radial-gradient(560px 380px at -8% 42%,var(--wl-glow-b),transparent 62%),
-    radial-gradient(640px 420px at 70% 108%,var(--wl-glow-c),transparent 62%),
-    var(--wl-ink)}
-.frame::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.10;mix-blend-mode:overlay;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
-.top{display:flex;align-items:center;justify-content:space-between;gap:24px}
-.brand{display:flex;align-items:center;gap:16px}
-.mark{width:60px;height:60px;background:var(--wl-lime);color:var(--wl-ink);display:grid;place-items:center;font:800 40px/1 var(--wl-font-display);box-shadow:var(--wl-shadow-btn)}
-.word{font:800 46px/1 var(--wl-font-display);letter-spacing:-.03em;position:relative;padding-bottom:8px}
-.word::after{content:"";position:absolute;left:0;bottom:0;width:72px;height:6px;background:var(--wl-lime)}
-.eyebrow{font:600 28px/1.1 var(--wl-font-body);letter-spacing:.12em;text-transform:uppercase;color:var(--wl-lime);text-align:right}
-h1{font:800 92px/.95 var(--wl-font-display);letter-spacing:-.035em;margin-top:44px}
-h1 em{font-style:normal;color:var(--wl-lime)}
-.sub{font:400 34px/1.3 var(--wl-font-body);color:var(--wl-concrete);margin-top:20px;max-width:900px}
+html,body{width:1080px;height:1350px;overflow:hidden;background:var(--dusk)}
+body{font-family:var(--sans);color:#fff;-webkit-font-smoothing:antialiased}
+.frame{position:relative;width:1080px;height:1350px;padding:56px 64px 40px;display:flex;flex-direction:column;overflow:hidden;background:var(--dusk)}
+.bg{position:absolute;left:0;top:0;width:100%;height:860px;object-fit:cover;z-index:0}
+.scrim{position:absolute;left:0;top:0;width:100%;height:862px;z-index:0;
+  background:linear-gradient(180deg,rgba(26,21,17,.66) 0%,rgba(26,21,17,.42) 22%,rgba(26,21,17,.5) 42%,rgba(26,21,17,.9) 78%,#1A1511 100%)}
+.frame>*:not(.bg):not(.scrim):not(.crewcard){position:relative;z-index:1}
+.frame>.crewcard{z-index:2}
+.top{display:flex;align-items:baseline;justify-content:space-between;gap:24px}
+.word{font:400 52px/1 var(--serif);letter-spacing:-.01em}
+.word::after{content:"";display:inline-block;width:12px;height:12px;border-radius:50%;background:var(--sun);margin-left:5px;vertical-align:.1em}
+.eyebrow{font:500 26px/1.1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.9);text-align:right}
+h1{font:400 88px/.98 var(--serif);letter-spacing:-.03em;margin-top:44px;text-shadow:0 2px 24px rgba(0,0,0,.3)}
+h1 em{font-style:italic;color:var(--sun)}
+.sub{font:400 34px/1.3 var(--sans);color:rgba(255,255,255,.9);margin-top:20px;max-width:900px}
 .grow{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center}
 
-/* Sheet: always ink on wheat */
-.sheet{background:var(--wl-sheet-paper);color:var(--wl-sheet-ink);box-shadow:var(--wl-shadow-sheet),8px 8px 0 rgba(0,0,0,.35);position:relative}
-.sh-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;padding:22px 30px 16px;border-bottom:3px solid var(--wl-sheet-ink)}
-.sh-title{font:800 38px/1 var(--wl-font-display);letter-spacing:-.02em;white-space:nowrap}
-.sh-meta{font:600 28px/1.1 var(--wl-font-body);letter-spacing:.04em;text-transform:uppercase;color:var(--wl-editorial);text-align:right}
-.row{display:grid;grid-template-columns:128px 1fr auto;align-items:center;gap:20px;padding:6px 30px;min-height:88px;border-bottom:1.5px solid rgba(23,20,16,.18)}
+/* Sheet: ink on limestone, like the app */
+.sheet{background:var(--paper);color:var(--ink);border-radius:2px;box-shadow:0 30px 80px rgba(0,0,0,.45);position:relative}
+.sh-head{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:24px 32px 16px;border-bottom:1.5px solid var(--ink)}
+.sh-title{font:400 42px/1 var(--serif);letter-spacing:-.02em;white-space:nowrap}
+.sh-meta{font:500 26px/1.1 var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);text-align:right}
+.row{display:grid;grid-template-columns:124px 1fr auto;align-items:center;gap:20px;padding:6px 32px;min-height:88px;border-bottom:1px solid var(--rule)}
 .row:last-of-type{border-bottom:0}
-.d{font:700 30px/1.05 var(--wl-font-body)}
-.d small{display:block;font:500 28px/1.1 var(--wl-font-body);color:var(--wl-editorial)}
-.t{font:600 32px/1.15 var(--wl-font-body);min-width:0}
-.t small{display:block;font:400 28px/1.2 var(--wl-font-body);color:var(--wl-editorial);margin-top:4px}
-.t.open{font-style:italic;color:var(--wl-editorial)}
-.badge{font:700 28px/1 var(--wl-font-body);letter-spacing:.06em;text-transform:uppercase;border:2.5px solid currentColor;padding:7px 12px;white-space:nowrap}
-.badge.live{color:var(--wl-stamp)}
-.badge.sample{color:var(--wl-sample)}
-.badge.open{color:var(--wl-editorial);border-style:dashed}
-.compact .row{min-height:72px;height:72px;padding:0 30px}
-.roomy .row{height:118px}
-.sh-foot{display:flex;justify-content:space-between;padding:16px 30px;border-top:3px solid var(--wl-sheet-ink);font:700 28px/1 var(--wl-font-body);letter-spacing:.1em;text-transform:uppercase;color:var(--wl-stamp)}
+.d{font:400 38px/1 var(--serif)}
+.d small{display:block;font:400 26px/1.1 var(--sans);color:var(--ink-2);margin-top:4px}
+.t{font:500 32px/1.15 var(--sans);min-width:0}
+.t small{display:block;font:400 27px/1.2 var(--sans);color:var(--ink-2);margin-top:4px}
+.t.open{font:italic 400 38px/1.1 var(--serif);color:var(--ink-2)}
+.t.open small{font-style:normal}
+.badge{display:inline-flex;align-items:center;gap:10px;font:500 26px/1 var(--sans);letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;padding:4px 0}
+.badge.live{color:var(--live-text)}
+.badge.live::before{content:"";width:13px;height:13px;border-radius:50%;background:var(--live)}
+.badge.sample{color:var(--sun-text);border-bottom:2px dashed currentColor;padding-bottom:6px}
+.badge.open{color:var(--ink-2)}
+.badge.open::before{content:"";width:11px;height:11px;border-radius:50%;border:2px solid currentColor}
+.compact .row{min-height:72px;height:72px;padding:0 32px}
+.compact .d{font-size:34px}
+.roomy .row{height:104px}
+.sh-foot{display:flex;justify-content:space-between;padding:16px 32px;border-top:1.5px solid var(--ink);background:var(--paper-2);font:500 26px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--ink)}
 
 .cta{display:flex;align-items:center;justify-content:space-between;gap:24px;margin-top:34px}
-.btn{background:var(--wl-lime);color:var(--wl-ink);font:700 38px/1 var(--wl-font-body);padding:24px 34px;box-shadow:6px 6px 0 rgba(0,0,0,.5);white-space:nowrap}
-.cta-note{font:500 30px/1.25 var(--wl-font-body);color:var(--wl-paper);text-align:right}
-.foot{margin-top:24px;font:400 28px/1.3 var(--wl-font-body);color:var(--wl-concrete)}
-.foot b{font-weight:700;color:var(--wl-paper)}
+.btn{background:var(--sun);color:var(--ink);font:500 38px/1 var(--sans);padding:26px 36px;border-radius:3px;white-space:nowrap}
+.cta-note{font:italic 400 34px/1.25 var(--serif);color:var(--on-dusk);text-align:right}
+.foot{margin-top:22px;font:400 26px/1.3 var(--sans);color:var(--on-dusk-2)}
+.foot b{font-weight:500;color:var(--on-dusk)}
+.credit{margin-top:8px;font:400 22px/1.2 var(--sans);color:var(--on-dusk-2);letter-spacing:.02em}
 
-/* flyers */
-.flyers{display:flex;gap:22px;margin-top:40px}
-.flyer{font:800 36px/1 var(--wl-font-display);letter-spacing:-.02em;color:var(--wl-ink);padding:18px 22px;box-shadow:var(--wl-shadow-flyer)}
-.flyer small{display:block;font:500 28px/1.1 var(--wl-font-body);margin-top:6px;letter-spacing:0}
-.f-coral{background:var(--wl-coral)}.f-cyan{background:var(--wl-cyan)}.f-paper{background:var(--wl-sheet-paper)}.f-lime{background:var(--wl-lime)}
-.stamp{position:absolute;font:800 64px/1 var(--wl-font-display);letter-spacing:-.02em;color:var(--wl-stamp);border:6px solid var(--wl-stamp);padding:10px 22px;transform:rotate(-7deg);background:rgba(247,242,230,.85)}
-.quote{font:800 52px/1.05 var(--wl-font-display);letter-spacing:-.03em;margin-top:40px}
-.quote em{font-style:normal;color:var(--wl-lime)}
-.crewcard{position:absolute;right:64px;top:150px;width:330px;transform:rotate(3deg)}
+/* chat lines and crew card */
+.flyers{display:flex;gap:18px;margin-top:32px}
+.flyer{font:italic 400 34px/1 var(--serif);color:var(--ink);background:rgba(244,238,229,.94);padding:16px 22px;border-radius:3px}
+.flyer:nth-child(2){margin-top:22px}.flyer:nth-child(3){margin-top:44px}
+.stamp{position:absolute;font:italic 400 50px/1 var(--serif);color:var(--ink);background:var(--sun);padding:14px 24px;border-radius:3px}
+.quote{font:italic 400 50px/1.12 var(--serif);letter-spacing:-.02em;margin-top:44px;color:var(--on-dusk)}
+.quote em{color:var(--sun)}
+.crewcard{position:absolute;right:64px;top:170px;width:340px;background:var(--paper);color:var(--ink);border-radius:2px;border-top:6px solid var(--sun);padding:26px 28px;box-shadow:0 24px 60px rgba(0,0,0,.4)}
+.crewcard b{display:block;font:400 48px/1 var(--serif);letter-spacing:-.02em}
+.crewcard span{display:block;font:400 28px/1.25 var(--sans);color:var(--ink-2);margin-top:14px}
 </style>
 </head>
 <body>
@@ -103,21 +103,31 @@ var SAMPLE={
 };
 var WEEK=[LIVE.mon,LIVE.tue,OPEN.wed,OPEN.thu,LIVE.fri,SAMPLE.sat,SAMPLE.sun];
 var BL={live:'Live Parks',sample:'Sample',open:'Open'};
+// Real NYC sunset photos (credits from ../v2/data.js PHOTOS)
+var PH={
+  domino:['Sun setting behind the Williamsburg Bridge, Domino Park','Daniel Prostak, CC BY-SA 4.0','50% 60%'],
+  'manhattan-gold':['Midtown Manhattan lit gold at sunset','Phil Dolby, CC BY 2.0','50% 50%'],
+  bridge:['Brooklyn Bridge at sunset','SebastianBlumeArt, CC BY-SA 4.0','30% 40%'],
+  gazebo:['Gazebo on Prospect Park Lake','Lambertphotos, CC BY-SA 4.0','50% 50%'],
+  'prospect-park':['Prospect Park in autumn','King of Hearts, CC BY-SA 4.0','50% 55%'],
+  'bbp-sunset':['Brooklyn Bridge Park at sunset','Adjoajo, CC BY-SA 4.0','50% 70%']
+};
+var PICK={1:'domino',2:'manhattan-gold',3:'bridge',4:'gazebo',5:'prospect-park',6:'bbp-sunset'};
 
 function row(r,opt){opt=opt||{};
   return '<div class="row"><div class="d">'+r.d+'<small>'+r.n+'</small></div><div class="t'+(r.b==='open'?' open':'')+'">'+r.t+(opt.place===false?'':'<small>'+r.p+'</small>')+'</div><span class="badge '+r.b+'">'+BL[r.b]+'</span></div>';}
 function sheet(rows,meta,cls,foot,extra){
   return '<div class="sheet '+cls+'"><div class="sh-head"><span class="sh-title">'+(meta.title||'Weekline Sheet')+'</span><span class="sh-meta">'+meta.m+'</span></div>'+rows.map(function(r){return row(r,meta)}).join('')+(foot?'<div class="sh-foot">'+foot+'</div>':'')+(extra||'')+'</div>';}
-var TOP=function(eb){return '<div class="top"><div class="brand"><span class="mark">W</span><span class="word">Weekline</span></div><span class="eyebrow">'+eb+'</span></div>';};
+var TOP=function(eb){return '<div class="top"><span class="word">Weekline</span><span class="eyebrow">'+eb+'</span></div>';};
 var FOOT_MIX='<p class="foot"><b>LIVE PARKS</b> = NYC Parks listings, 23–29 Nov 2026. <b>SAMPLE</b> = demo row.</p>';
 var FOOT_LIVE='<p class="foot"><b>LIVE PARKS</b> = NYC Parks listings, 23–29 Nov 2026 (NYC Open Data).</p>';
 var CTA=function(b,n){return '<div class="cta"><span class="btn">'+b+' →</span><span class="cta-note">'+n+'</span></div>';};
 
 var F={
  1:function(){return TOP('Brooklyn · this week')+
-   '<div class="flyers"><span class="flyer f-paper" style="transform:rotate(-3deg)">idk you pick</span><span class="flyer f-cyan" style="transform:rotate(2.4deg)">idk you pick</span><span class="flyer f-coral" style="transform:rotate(-1.6deg)">idk you pick</span></div>'+
+   '<div class="flyers"><span class="flyer">idk you pick</span><span class="flyer">idk you pick</span><span class="flyer">idk you pick</span></div>'+
    '<h1>End the “idk you pick” chat.</h1>'+
-   '<div class="grow">'+sheet([LIVE.mon,LIVE.tue,OPEN.wed,SAMPLE.sat],{m:'Cheap Thrills · Brooklyn'},'roomy','<span>Send to chat</span><span>.ics ready</span>')+'</div>'+
+   '<div class="grow">'+sheet([LIVE.mon,LIVE.tue,OPEN.wed,SAMPLE.sat],{m:'Cheap Thrills · Brooklyn'},'','<span>Send to chat</span><span>.ics ready</span>')+'</div>'+
    CTA('See a sample week','Early invites · NYC')+FOOT_MIX;},
  2:function(){return TOP('Pick a crew · get the week')+
    '<h1>Your NYC week, on <em>one Sheet.</em></h1>'+
@@ -129,14 +139,14 @@ var F={
    '<div class="grow">'+sheet(WEEK,{m:'Week of 23 Nov'},'',null)+'</div>'+
    CTA('Get my week','Empty nights stay empty.')+FOOT_MIX;},
  4:function(){return TOP('Cheap Thrills crew')+
-   '<div class="crewcard"><div class="flyer f-cyan" style="font-size:46px;padding:26px 28px">Cheap Thrills<small style="font-size:30px;margin-top:12px">Maximum city, minimum spend.</small></div></div>'+
+   '<div class="crewcard"><b>Cheap Thrills</b><span>Maximum city, minimum spend.</span></div>'+
    '<h1 style="max-width:600px">Cheap week. <em>Real plan.</em></h1>'+
    '<p class="sub" style="max-width:600px">Thin days stay honest. Nothing padded.</p>'+
-   '<div class="grow">'+sheet([LIVE.tue,OPEN.wed,OPEN.thu,SAMPLE.sat],{m:'Brooklyn · Under $25'},'roomy','<span>Add to calendar</span><span>.ics</span>')+'</div>'+
+   '<div class="grow">'+sheet([LIVE.tue,OPEN.wed,OPEN.thu,SAMPLE.sat],{m:'Brooklyn · Under $25'},'','<span>Add to calendar</span><span>.ics</span>')+'</div>'+
    CTA('Get my week','Early invites · NYC')+FOOT_MIX;},
  5:function(){return TOP('Seeking · get fit')+
    '<h1>Say you’re getting fit. <em>Schedule Tuesday.</em></h1>'+
-   '<div class="grow">'+sheet([LIVE.tue],{title:'Seeking',m:'Get fit · Brooklyn'},'roomy','<span>Locked</span><span>.ics ready</span>','<span class="stamp" style="right:30px;top:-120px">Scheduled.</span>')+
+   '<div class="grow">'+sheet([LIVE.tue],{title:'Seeking',m:'Get fit · Brooklyn'},'roomy','<span>Locked</span><span>.ics ready</span>','<span class="stamp" style="right:28px;top:-86px">Scheduled.</span>')+
    '<p class="quote">You’re not what you say you’ll do. <em>You’re what you schedule.</em></p></div>'+
    CTA('Schedule it','Early invites · NYC')+FOOT_LIVE;},
  6:function(){
@@ -150,7 +160,8 @@ var F={
    CTA('Schedule it','No streaks. No coach.')+FOOT_LIVE;}
 };
 var n=parseInt(new URLSearchParams(location.search).get('f'),10);if(!F[n])n=1;
-document.getElementById('frame').innerHTML=F[n]();
+var ph=PH[PICK[n]];
+document.getElementById('frame').innerHTML='<img class="bg" src="../v2/photos/'+PICK[n]+'.jpg" alt="" style="object-position:'+ph[2]+'"><div class="scrim"></div>'+F[n]()+'<p class="credit">Photo: '+ph[0]+', '+ph[1]+'</p>';
 document.title='Weekline ad frame '+n;
 </script>
 </body>
