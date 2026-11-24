@@ -17,6 +17,19 @@
 .poster .kd{margin:0;padding:0;border:0}
 .poster b{display:block;font-family:"Bricolage Grotesque",sans-serif;font-size:1.05rem;margin-top:6px}
 .poster span{display:block;font-size:.9rem;color:var(--muted)}
+
+body.story{width:1080px;height:1920px;overflow:hidden;background:var(--bg,#faf7f0)}
+body.story > *:not(main){display:none!important}body.story .btns{display:none}
+body.story main{max-width:none;width:1080px;margin:0;padding:60px 64px 0;box-sizing:border-box}
+body.story h1{font-size:96px;margin:6px 0 0}
+body.story .label{font-size:30px}
+body.story .poster{grid-template-columns:repeat(2,1fr);gap:22px;margin-top:34px}
+body.story .poster a{padding:14px 18px}
+body.story .poster .kd svg{max-height:190px}
+body.story .poster b{font-size:28px}
+body.story .poster span{display:none}
+body.story .sig{display:block;font:700 30px "Schibsted Grotesk",sans-serif;margin-top:30px;text-align:center}
+.sig{display:none}
 @media (max-width:560px){.poster{grid-template-columns:1fr}}
 @media print{.top,.foot,.btns,#site-bar{display:none}.poster{grid-template-columns:repeat(2,1fr);gap:8px}.poster a{break-inside:avoid}body{background:#fff}}
 </style>
@@ -32,12 +45,14 @@
   <p class="label">The whole course on one page</p>
   <h1>The AI kitchen.</h1>
   <div class="poster" id="poster"></div>
+  <p class="sig">AI Made EZ · Builder’s Kitchen · vargas-studio.pages.dev</p>
   <div class="btns"><button class="btn" type="button" onclick="window.print()">Print it</button><a class="btn ghost" href="./">My passport</a></div>
 </main>
 <footer class="foot"><a href="./">Builder’s passport</a><a href="glossary.html">Kitchen dictionary</a><span>Not affiliated with Anthropic</span><span>Made by Alexandra Vargas</span></footer>
 <script src="../school.js" defer></script><script src="bk.js" defer></script><script src="diagrams.js" defer></script>
 <script>
 document.addEventListener("DOMContentLoaded", function () {
+  if (/size=story/.test(location.search)) document.body.classList.add("story");
   var lines = {
     1: "Claude is the chef. Your prompt is the order. The counter is all it can see.",
     2: "Apps reach Claude through the order window. It remembers nothing between tickets.",

@@ -27,8 +27,8 @@
       chef(160, 100) + t(160, 146, "system prompt = rules on the wall") + t(262, 100, "every plate", { size: 11, c: "var(--accent)" }) + t(262, 114, "is shaped by them", { size: 11, c: "var(--accent)" })),
     4: svg("The chef asks for an appliance (tool call), your code runs it, and the result comes back",
       chef(40, 66) + card(84, 22, 110, 28) + t(139, 40, "use: weather", { size: 11 }) + arrow(62, 56, 82, 44) +
-      '<rect x="236" y="30" width="66" height="56" rx="8" ' + S + ' fill="var(--card)"/><circle cx="269" cy="58" r="12" ' + S + "/>" + t(269, 104, "your app runs it", { size: 11 }) +
-      arrow(198, 36, 230, 44) + card(84, 92, 110, 28) + t(139, 110, "result: rain", { size: 11 }) + arrow(232, 80, 198, 100) + arrow(80, 104, 62, 92) + t(160, 144, "Claude asks. The kitchen presses the button.")),
+      '<rect x="236" y="30" width="66" height="56" rx="8" ' + S + ' fill="var(--card)"/><circle cx="269" cy="58" r="12" ' + S + "/>" + t(269, 104, "the app runs it", { size: 11 }) +
+      arrow(198, 36, 230, 44) + card(84, 92, 110, 28) + t(139, 110, "result: rain", { size: 11 }) + arrow(232, 80, 198, 100) + arrow(80, 104, 62, 92) + t(160, 144, "Claude asks. The app (waiter) presses the button.")),
     5: svg("A wall of identical outlets (MCP) with Drive, Slack and Calendar plugged in",
       '<rect x="20" y="20" width="280" height="64" rx="6" ' + S + ' fill="var(--track)"/>' +
       [70, 160, 250].map(function (x) { return '<rect x="' + (x - 18) + '" y="34" width="36" height="36" rx="6" ' + S + ' fill="var(--card)"/><path d="M' + (x - 6) + " 46v10M" + (x + 6) + ' 46v10" ' + S + "/>"; }).join("") +
@@ -37,14 +37,14 @@
     6: svg("Pages are pulled from the recipe binder and laid on the counter for the chef",
       '<rect x="16" y="30" width="70" height="86" rx="6" ' + S + ' fill="var(--card)"/><path d="M28 30v86" ' + S + "/>" + t(56, 132, "your binder", { size: 11 }) +
       card(118, 44, 40, 50) + '<path d="M126 58h24M126 68h24M126 78h16" ' + S + ' stroke-width="1.5"/>' + t(138, 108, "right page", { size: 10, c: "var(--accent)" }) +
-      arrow(90, 70, 114, 70) + arrow(162, 70, 196, 70) + chef(250, 54) + '<rect x="200" y="100" width="104" height="10" rx="3" ' + S + ' fill="var(--track)"/>' + t(160, 144, "RAG: look it up, then cook")),
+      arrow(90, 70, 114, 70) + arrow(162, 70, 196, 70) + chef(250, 54) + '<rect x="200" y="100" width="104" height="10" rx="3" ' + S + ' fill="var(--track)"/>' + t(230, 146, "RAG: look it up, then cook")),
     7: svg("The agent loop: think, use a tool, check, repeat, with sous-chefs (subagents) helping",
       chef(62, 52) + '<circle cx="206" cy="68" r="36" ' + A + ' stroke-dasharray="6 6"/>' + t(206, 22, "think", { size: 11 }) + t(262, 72, "tool", { size: 11, a: "start" }) + t(206, 124, "check", { size: 11 }) + t(150, 72, "repeat", { size: 11, a: "end" }) +
       arrow(234, 46, 240, 56) + '<circle cx="34" cy="118" r="7" ' + S + '/><circle cx="90" cy="118" r="7" ' + S + "/>" + t(62, 146, "sous-chefs = subagents", { size: 11 }) + t(306, 146, "agent loop", { size: 11, a: "end", c: "var(--accent)" })),
     8: svg("Your own kitchen: the CLAUDE.md note on the fridge, recipe cards (skills) and a bell (hook)",
       '<rect x="22" y="14" width="70" height="116" rx="8" ' + S + ' fill="var(--card)"/><path d="M22 54h70M80 30v14M80 66v20" ' + S + "/>" + card(32, 62, 40, 30, "var(--accent-bg, var(--track))") + t(52, 81, "note", { size: 10 }) + t(57, 146, "CLAUDE.md", { size: 11 }) +
       card(120, 40, 60, 40) + card(128, 48, 60, 40) + t(158, 72, "recipe", { size: 10 }) + t(158, 108, "skills", { size: 11 }) +
-      '<path d="M234 82q0-40 22-40t22 40z" ' + S + ' fill="var(--card)"/><path d="M228 82h56" ' + S + '/><circle cx="256" cy="90" r="5" ' + A + '/><path d="M256 42v-8" ' + S + "/>" + t(256, 112, "hook: rings at set moments", { size: 11 })),
+      '<path d="M234 82q0-40 22-40t22 40z" ' + S + ' fill="var(--card)"/><path d="M228 82h56" ' + S + '/><circle cx="256" cy="90" r="5" ' + A + '/><path d="M256 42v-8" ' + S + "/>" + t(256, 112, "hook = a bell", { size: 11 }) + t(256, 126, "at set moments", { size: 10, w: 500 })),
     9: svg("A taste test: the same dishes scored each time, two pass and one fails",
       [60, 160, 260].map(function (x, i) { return '<path d="M' + (x - 34) + " 60q34 44 68 0z\" " + S + ' fill="var(--card)"/><path d="M' + (x - 38) + " 60h76\" " + S + "/>" + t(x, 94, i < 2 ? "✓ pass" : "✗ fail", { size: 12, w: 700, c: i < 2 ? "var(--ok)" : "var(--accent)" }); }).join("") +
       t(160, 30, "same 20 dishes, same scorecard", { size: 12 }) + t(160, 132, "eval = a taste test you can repeat")),
