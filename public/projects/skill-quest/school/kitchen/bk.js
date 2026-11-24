@@ -157,7 +157,7 @@
           '<div class="breaks"><b>Where the kitchen idea breaks</b>' + L.breaks.where + "</div>" + nextBtn("Two quick questions"));
 
         if (step === 5) {
-          var Q = L.quiz, got = 0, answered = {};
+          var Q = L.quiz.map(function (x) { var idx = x.a.map(function (_, j) { return j; }); if (Math.random() < 0.5) idx.reverse(); return { q: x.q, why: x.why, a: idx.map(function (j) { return x.a[j]; }), ok: idx.indexOf(x.ok) }; }), got = 0, answered = {};
           show("<h2>Two quick questions.</h2>" + Q.map(function (x, i) {
             return '<div style="margin:18px 0"><p><b>' + (i + 1) + ". " + x.q + '</b></p><ul class="claims">' + x.a.map(function (a, j) { return '<li><button type="button" data-q="' + i + '" data-a="' + j + '">' + a + "</button></li>"; }).join("") + '</ul><div id="q' + i + '"></div></div>';
           }).join("") + '<div id="qdone"></div>');

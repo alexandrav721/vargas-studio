@@ -44,75 +44,10 @@
   <p class="small" style="margin-top:12px">Checked against Anthropic’s docs on 24 Nov 2026. AI changes fast; model names and prices especially.</p>
 </main>
 <footer class="foot"><a href="./">Builder’s passport</a><a href="../">AI Made EZ · Level 1</a><span>Not affiliated with Anthropic</span><span>Made by Alexandra Vargas</span></footer>
-<script src="../school.js" defer></script><script src="bk.js" defer></script>
+<script src="../school.js" defer></script><script src="bk.js" defer></script><script src="words.js" defer></script>
 <script>
-/* [term, kitchen picture, real meaning, not the same as, lesson] */
-var W = [
-["Model","The chef","A trained AI program. Claude is a family of models made by Anthropic.","Not a database. It writes from patterns unless you give it a way to look things up.",1],
-["LLM","A chef that cooks by predicting the next bite","Large language model: an AI trained on huge amounts of text that writes by predicting the next piece.","Not a search engine.",1],
-["Prompt","Your order ticket","Everything the model reads in a request: instructions, examples, documents, the chat so far.","Not magic words. Clear context beats tricks.",1],
-["Token","The pieces it counts and charges by","A small chunk of text, often part of a word. Limits and prices are counted in tokens.","Not one word. Words often split into several tokens.",1],
-["Context window","The counter: all the chef can see","How much text the model can see at once: input, output and thinking. About 1M tokens on current Claude models.","Not long-term memory. A new chat starts with an empty counter.",1],
-["Model family","Different chefs in one kitchen","Claude comes in sizes: Haiku (fast), Sonnet (balanced), Opus (usual start), Fable (hardest jobs).","Not just speed. Price per token differs a lot too.",1],
-["API","The order window","The way other apps send Claude requests and get replies, with no chat screen.","Not the Claude app. Same chef, different door.",2],
-["API key","A staff badge that bills your tab","A secret code that proves a request is yours and bills your account.","Not your Claude subscription. API use is billed separately.",2],
-["Request","The ticket","What an app sends to the API: the model, the rules, the messages.","Not saved by the API between calls.",2],
-["Response","The plate","What comes back: Claude’s reply plus how many tokens were used.","",2],
-["Messages","The list of turns on the ticket","A chat as a list: user turns (yours) and assistant turns (Claude’s).","The API doesn’t remember them. Your app resends the whole list.",2],
-["Streaming","Dishes out as they’re ready","The reply arrives bit by bit, so words appear as they’re written.","Not faster thinking, just sooner reading.",2],
-["Cost per token","The menu price","You pay per token in and per token out. Output costs more; bigger models cost more.","Not a flat fee.",2],
-["System prompt","House rules on the wall","Standing instructions from the builder that shape every reply.","Not a lock. Hard rules belong in code.",3],
-["Prompt engineering","Writing clear tickets","Shaping prompts so the model does what you want: context, examples, the format you want back.","Not tricks or secret phrases.",3],
-["Examples","One finished plate to copy","Sample inputs and good outputs placed in the prompt. Also called few-shot prompting.","",3],
-["XML tags","Labeled boxes on the counter","Tags like <facts>…</facts> that keep rules, data and examples apart in a prompt.","Not code Claude runs. Just labels.",3],
-["Thinking","The chef planning before cooking","Newer Claude models can reason before answering. Builders set an effort level. Billed as output.","Not free, and you only see a summary of it.",3],
-["Hallucination","A confident wrong plate","When AI states something false as if it were true.","Not lying on purpose. And no model is free of it.",3],
-["Temperature","How adventurous the chef is (old dial)","A setting that made answers more random or more predictable. Being retired on newer Claude models.","Never a truth switch, even at 0.",3],
-["Tool use","Appliances","Letting Claude ask your app to run something: look up, calculate, act.","Claude doesn’t run your tools. Your code does.",4],
-["Tool definition","The label on the appliance","A tool’s name, what it does and what inputs it needs, so Claude knows when to use it.","",4],
-["Tool call","The chef asking for an appliance","Claude’s request to use a tool, with the settings filled in.","Not the action itself.",4],
-["Tool result","What the appliance hands back","What your code sends back to Claude after running the tool.","Not the final answer. Claude still plates it.",4],
-["Web search","The built-in phone to the market","A built-in tool that lets Claude search the web and cite pages.","",4],
-["Code execution","A built-in calculator and stove","A built-in tool where Claude writes and runs code to calculate or analyze.","",4],
-["Computer use","A chef using your screen","Claude sees screenshots and clicks and types on a computer.","",4],
-["MCP","Standard outlets","Model Context Protocol: an open standard so a tool built once plugs into many AI apps.","Not a model or a product. A plug shape.",5],
-["MCP server","An appliance with a standard plug","A program that wraps one service (Drive, Slack, a database) and offers its tools.","Not always safe. Anyone can build one.",5],
-["MCP client","The kitchen wall with outlets","The AI app (like Claude Desktop or Claude Code) that plugs servers in. Also called the host.","",5],
-["Connector","The Claude app’s name for a plugged-in outlet","A ready-made link from Claude to a service like Calendar or Gmail, often built on MCP.","",5],
-["Resources","Pages an outlet lets you read","Things an MCP server lets Claude read, like files or records.","Not actions. Tools act; resources are read.",5],
-["Prompt injection","A forged note slipped into the order","Hidden instructions inside content Claude reads (an email, a page) that try to take over.","Not the user’s request. Treat content as data.",5],
-["RAG","The recipe binder","Retrieval-augmented generation: find the right pieces of your documents, then answer from them.","Not training. Nothing is learned; pages are pasted in.",6],
-["Chunking","Cutting the binder into pages","Splitting long documents into small pieces so the right one can be found.","Smaller isn’t always better. Pieces lose context.",6],
-["Embeddings","The binder indexed by taste","Text turned into numbers by meaning, so similar ideas can be found.","Not made by Claude. Builders use a separate provider.",6],
-["Vector database","The index card box","Stores embeddings and quickly finds the closest-meaning pieces.","Not needed for small document sets.",6],
-["Citations","“Recipe from page 12”","Pointers to the source a reply used, so people can check.","",6],
-["Prompt caching","Mise en place","Prepping a long, repeated opening once so reusing it is cheaper and faster for a few minutes.","Not saved answers. Each reply is still cooked fresh.",6],
-["Agent","A head chef running the whole dinner","An AI that picks its own steps and uses tools in a loop until the job is done.","Not always the best choice. Most jobs need less.",7],
-["Agent loop","Taste, adjust, taste again","Think, use a tool, check the result, decide again, until done or a limit.","Not one step. Every round costs tokens.",7],
-["Workflow","A fixed recipe","Steps set ahead of time by your code. Cheaper and more predictable than an agent.","",7],
-["Subagent","A sous-chef with their own counter","A helper with its own context window that does a side task and reports a summary.","Not sharing the main chat. It starts fresh.",7],
-["Orchestrator","The head chef handing out stations","The lead AI that splits a big job and combines the results.","More agents isn’t always better. It costs far more.",7],
-["Human in the loop","The chef asks before serving","A person approves risky steps: sending, spending, booking, deleting.","",7],
-["Claude Code","A chef cooking in your own kitchen","Anthropic’s coding agent: reads your files, writes code, runs commands.","Not just chat about code. It changes real files.",8],
-["CLAUDE.md","The note on the fridge","A file of project rules and how-tos Claude Code reads every session.","Not enforced. The docs call them requests.",8],
-["Skill","A recipe card pulled by title","A folder with a SKILL.md file of instructions Claude loads only when a job needs it.","Not always loaded. Only its name and description are.",8],
-["Slash command","A shortcut shouted to the kitchen","A /name you type to run a built-in action or a skill.","Custom commands are skills now.",8],
-["Hook","A timer that always fires","An action Claude Code runs automatically at set moments, like after every edit.","The only way to guarantee a rule happens.",8],
-["Plugin","A boxed kit","An installable bundle of skills, hooks, subagents and MCP servers.","Not automatically safe. It can run code.",8],
-["Eval","A taste test with a scorecard","A fixed set of test questions scored the same way every time you change something.","Not “I tried it and it looked fine.”",9],
-["Test set","The 20 dishes you always taste","The fixed list of example questions you score every version against.","Don’t tune on all of it. Keep some unseen.",9],
-["Success criteria","The scorecard","What “good” means, written so it can be measured.","",9],
-["Grader","The taster","What scores each answer: code for exact checks, a model or a person for fuzzy ones.","",9],
-["LLM-as-judge","A second chef tasting the first chef’s food","Using an AI with a checklist to score another AI’s answers.","Not always right. Check it against people first.",9],
-["Regression","A fix that ruined another dish","Something that used to work breaks after a change.","",9],
-["Architecture","The kitchen floor plan","The plan of which pieces an AI product uses and how they connect.","",10],
-["Cost","The bill","Mostly tokens times the model’s price, across every call and loop.","Estimates until you measure real use.",10],
-["Latency","Wait time at the pass","How long people wait for a reply. Bigger models and more steps take longer.","",10],
-["Guardrails","Safety rails in the kitchen","Checks in code, approvals and limits that keep an AI product safe.","Not just a polite rule in the prompt.",10],
-["Start simple","The smallest kitchen that works","Anthropic’s advice: one request before a workflow, a workflow before an agent.","",10]
-];
 document.addEventListener("DOMContentLoaded", function () {
-  var esc = BK.esc, T = BK.TRACK, done = BK.done(), list = document.getElementById("dict"), q = document.getElementById("q"), lesson = 0;
+  var W = window.BK_WORDS, esc = BK.esc, T = BK.TRACK, done = BK.done(), list = document.getElementById("dict"), q = document.getElementById("q"), lesson = 0;
   function slug(t) { return t.toLowerCase().replace(/[^a-z0-9]+/g, "-"); }
   document.getElementById("filters").innerHTML = '<button class="chip" type="button" data-l="0" aria-pressed="true">All</button>' +
     T.map(function (l) { return '<button class="chip" type="button" data-l="' + l.n + '" aria-pressed="false">' + l.n + ". " + esc(l.short) + "</button>"; }).join("");
