@@ -1,0 +1,265 @@
+{
+ "weekline": {
+  "who": "Working New Yorkers, 25 to 40, in Manhattan and Brooklyn",
+  "problem": "My week runs me. Sunday night I feel like I got nothing done.",
+  "money": "Free now. Ticket affiliate links, then a Plus plan; price untested. Free events stay free.",
+  "edge": "Ticket apps sell one event. Weekline plans the whole week with your crew.",
+  "hooks": [
+   "Your NYC week, sorted by Sunday night.",
+   "End the \"idk you pick\" group chat.",
+   "A free week in Brooklyn, planned."
+  ],
+  "live": [
+   "Weekline app with sign-in and saved weeks",
+   "Live NYC Parks events in your week",
+   "Ad landing page and invite demo",
+   "Printable week sheet and fridge card"
+  ],
+  "next": [
+   "Seed one real NYC crew of 10 to 20 friends",
+   "Test if shared weeks bring friends in",
+   "Hand paid rows off to ticket sellers"
+  ],
+  "waiting": [
+   "Add Google keys for calendar busy times",
+   "Say yes to a 7-day NYC ad test"
+  ]
+ },
+ "restitch": {
+  "who": "Thrifters who want to flip a find, sewing machine or not",
+  "problem": "It's been in the bag for months, and I can't really sew.",
+  "money": "Free now. A $19/yr Plus plan is an untested idea.",
+  "edge": "Plans start from your own photo and your own kit, with a no-sew view.",
+  "hooks": [
+   "No machine? View A needs safety pins.",
+   "Got a thrift find in a bag? Plan it tonight.",
+   "No machine? Every find gets a no-sew view."
+  ],
+  "live": [
+   "Plan this make: upload a photo, get views",
+   "Two-page flip plan worksheet to print",
+   "Campaign landing page and ad frames",
+   "Pitch deck with resale data"
+  ],
+  "next": [
+   "Let a friend vote which view you make",
+   "Post six flip demos over two weeks",
+   "Collect 10 real lines from thrifters"
+  ],
+  "waiting": [
+   "Decide who pays: Plus plan or supply links",
+   "Film a flip with a real thrift find"
+  ]
+ },
+ "nostalgia": {
+  "who": "Millennials who came of age between 1995 and 2012",
+  "problem": "I miss who I was online at 15, and nothing shows my year.",
+  "money": "Not decided yet.",
+  "edge": "Real archived pages from your year, plus a card naming who you were.",
+  "hooks": [
+   "What year were you 15?",
+   "Tap what you had. Find out who you were.",
+   "Who were you in 2004?"
+  ],
+  "live": [
+   "Scrollback explorer: websites, things and style",
+   "The year-you-were-15 game",
+   "Printable 2001 to 2004 year cards",
+   "Ad frames and campaign landing page"
+  ],
+  "next": [
+   "Pick one way to make money",
+   "Build a group card for friends from the same year",
+   "Collect real replies to \"Did you have this?\""
+  ],
+  "waiting": [
+   "Choose the money model: shop links, prints or ads"
+  ]
+ },
+ "scrolll": {
+  "who": "People who scroll anyway, and brands that want real attention",
+  "problem": "Ads take my attention for free, and I see none of the money.",
+  "money": "Advertisers pay per counted view and viewers get a cut. The split isn't set.",
+  "edge": "You name your price. Brands below it get bounced, on screen.",
+  "hooks": [
+   "Name your price. Brands below it get bounced.",
+   "I just bounced a coffee brand.",
+   "This app tells me when to stop scrolling."
+  ],
+  "live": [
+   "Marketing site for scrollers, creators, brands",
+   "Clickable feed demo with sample money",
+   "Join page and ad frames",
+   "Printable one-pager for marketers"
+  ],
+  "next": [
+   "Pitch 10 small brands on a test campaign",
+   "Get a legal review before paying anyone",
+   "Collect 10 real lines from scrollers"
+  ],
+  "waiting": [
+   "Set the viewer split",
+   "Say yes to the brand emails"
+  ]
+ },
+ "loop": {
+  "who": "Friends and neighbors on the same block who own more than they use",
+  "problem": "I don't want to hand my stuff to a stranger and never see it again.",
+  "money": "Free to borrow and sell. Premium at $2.99/mo or $16/yr is planned.",
+  "edge": "A dense local network: you lend to people you'll see again.",
+  "hooks": [
+   "Need a drill this weekend? Someone in this building might have one.",
+   "Lend to someone you'll see again.",
+   "About to buy a tile saw for one Saturday?"
+  ],
+  "live": [
+   "celebrateloop.com, opening in the Financial District",
+   "Sample household demo, no account needed",
+   "Lobby flyer and card with QR code",
+   "Five Instagram ad frames"
+  ],
+  "next": [
+   "Fill one building until searches find things",
+   "Launch the iPhone app on the App Store",
+   "Turn on Premium after launch"
+  ],
+  "waiting": [
+   "Finish App Store screenshots and listing details",
+   "Set up Premium products with Apple"
+  ]
+ },
+ "planner-book": {
+  "who": "People who still plan on paper and keep quitting planners",
+  "problem": "I fill in two weeks, and then it just makes me feel guilty.",
+  "money": "Five planner PDFs are free. A personalized printed kit is $39 plus shipping.",
+  "edge": "Planners that play with you: spinners, scratch-offs, pages with no dates to miss.",
+  "hooks": [
+   "This planner picks my task for me.",
+   "Missed a week? Don't redo it.",
+   "A planner with your name on the cover."
+  ],
+  "live": [
+   "Five free printable planner PDFs",
+   "Make-yours builder for your own pages",
+   "$39 personalized kit orders",
+   "Six planner ad frames, not run yet"
+  ],
+  "next": [
+   "Make \"Make yours\" the front door",
+   "One search page per planner type",
+   "Check the kit's real margin and shipping"
+  ],
+  "waiting": [
+   "Pick the planner brand name",
+   "Confirm payments work in the kit shop",
+   "Say yes to a Pinterest and Instagram test"
+  ]
+ },
+ "ai-made-ez": {
+  "who": "Everyday people new to AI, including people who love to print",
+  "problem": "Everyone says AI is easy. I don't get it, and I'm unsure it's safe.",
+  "money": "Free today. Ideas: a $19 starter course, mailed letters, printed calendars, puzzle books.",
+  "edge": "Every course ends with something you made, and your own taste-tested recipe card.",
+  "hooks": [
+   "Learn AI the way you learned to cook.",
+   "Lesson 1: a week of dinners from your fridge.",
+   "Do it with your mom."
+  ],
+  "live": [
+   "Level 1: Cooking with Claude, 8 lessons",
+   "Level 2: Speak AI builder, 10 lessons",
+   "Holiday letter, invitations, birthday calendar makers",
+   "Printable puzzle book maker"
+  ],
+  "next": [
+   "Test a $19 starter course pre-order page",
+   "Check the name before any ads",
+   "Add printed and mailed versions of the makers"
+  ],
+  "waiting": [
+   "Set the AI key so makers write for real",
+   "Decide the brand name",
+   "Say yes to taking pre-orders"
+  ]
+ },
+ "habit-game": {
+  "who": "People who quit a goal after one bad week",
+  "problem": "I missed one day, and then the whole goal felt over.",
+  "money": "Core game free. A premium AI coach is on a waitlist; price not set.",
+  "edge": "Missing a day never ends your goal. Three return tickets a season, no red zeros.",
+  "hooks": [
+   "Miss a day. You're still in.",
+   "Day 23. Then Tuesday happened.",
+   "Missed a day? Punch a ticket."
+  ],
+  "live": [
+   "Lumen marketing site and landing page",
+   "Today, Stuck and Dream app demo",
+   "Free season streak card to print",
+   "Premium coach waitlist"
+  ],
+  "next": [
+   "Price the AI coach",
+   "Let you send a friend a spare ticket",
+   "Collect 10 real lines from goal quitters"
+  ],
+  "waiting": [
+   "Decide the coach price",
+   "Film a real ticket punch for the first ad"
+  ]
+ },
+ "skill-quest": {
+  "who": "Solo marketers and small business owners building their first Claude skills",
+  "problem": "My AI posts sound like everyone's, and I feel behind.",
+  "money": "Tested kits at $19 to $39 (pre-order test). Pro at $8/mo and Teams later.",
+  "edge": "Every skill is blind-tested against plain Claude, and results are published, losses included.",
+  "hooks": [
+   "Same request. Two answers. Guess which one used the skill.",
+   "AI posts that sound like you.",
+   "Your AI posts sound like everyone's."
+  ],
+  "live": [
+   "Home page with three headline versions",
+   "Working scorer with a real scored card",
+   "Build Kit: app idea to a build plan",
+   "Four feed ads and a sponsor kit"
+  ],
+  "next": [
+   "Publish a public scorecard, losses included",
+   "Run twin pre-order pages for two kits",
+   "Release the scorer plugin"
+  ],
+  "waiting": [
+   "Pick the first paying customer",
+   "Run the name search and buy the domain",
+   "Set the AI key for Build Kit"
+  ]
+ },
+ "shelf-paid": {
+  "who": "Amazon storefront owners who'd rather not show their face",
+  "problem": "Post too much and I get flagged. Too little and I earn nothing.",
+  "money": "Free now. A paid plan is being price-tested at $7, $12 or $19 a month.",
+  "edge": "Ranks your products by pay per sale, then hands you a rule-safe week of posts.",
+  "hooks": [
+   "Don't post your priciest find first.",
+   "Guess which one pays most.",
+   "Which thing on your shelf pays most?"
+  ],
+  "live": [
+   "Paste a storefront, get a week of posts",
+   "Sample week with no account",
+   "Free sign-up saves your week",
+   "Price-test landing page"
+  ],
+  "next": [
+   "Weekly \"what sold\" email for storefront owners",
+   "Blind-test our posts with 5 owners",
+   "Rename the main button \"Rank my shelf\""
+  ],
+  "waiting": [
+   "Set the AI key for real storefront reads",
+   "Pick a design direction",
+   "Check the name for trademarks"
+  ]
+ }
+}

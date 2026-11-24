@@ -771,9 +771,9 @@
         },
         "deck": {
           "label": "Pitch deck",
-          "detail": "",
-          "url": null,
-          "state": "na"
+          "detail": "9 slides: the problem, who it's for, the makers, the money. Numbers cited.",
+          "url": "/projects/skill-quest/ez/deck.html",
+          "state": "live"
         },
         "print": {
           "label": "Holiday letter",
