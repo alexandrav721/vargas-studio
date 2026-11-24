@@ -6,8 +6,8 @@
     teaser: ["THE KITCHEN", "how it works", "You place the order (prompt).<br>The chef cooks it (model).<br>The counter holds it all (context window).", "Six words. Six minutes."],
     lines: [
       ["Claude is a model.", "A model is the chef. It learned from a huge library of text, and now it writes on request."],
-      ["It’s an LLM: a large language model.", "A model is any trained AI. An LLM is a model built for words: it reads and writes text."],
-      ["Your order is a prompt.", "Everything the chef can see sits on one counter: the context window."]
+      ["It’s an LLM: a large language model.", "Built for words: it reads and writes text."],
+      ["Your order is a prompt.", "The chef sees only the counter: the context window."]
     ],
     guess: { q: "How does Claude write an answer?", opts: [["It predicts the next piece of text, again and again", true], ["It looks the answer up in a giant database", false], ["A person types it behind the scenes", false]], reveal: "It predicts the next piece of text. That’s what a large language model does. It doesn’t look facts up, so it can sound sure and still be wrong." },
     startLabel: "Look inside",
@@ -15,14 +15,14 @@
       title: "One order, seen from the kitchen.",
       html:
         '<p class="label">Your order <span class="sample">Sample</span></p>' +
-        '<div class="ticket"><div class="th"><span>PROMPT</span><span>your order</span></div>Summarize this recipe in 3 steps.<div class="tf">What you send is the prompt</div></div>' +
-        '<p class="label" style="margin-top:14px">The chef counts in pieces <span class="sample">Example split</span></p>' +
+        '<div class="ticket"><div class="th"><span>PROMPT</span><span>your order</span></div>Summarize this recipe in 3 steps.<div class="tf">Your prompt</div></div>' +
+        '<p class="label" style="margin-top:14px">The chef counts in tokens <span class="sample">Example split</span></p>' +
         '<div class="fridge" aria-label="A word split into tokens"><span class="tag">un</span><span class="tag">believ</span><span class="tag">able</span></div>' +
-        '<p class="small">Those pieces are <b>tokens</b>. A token is often a short word or part of one. Prices and limits are counted in tokens.</p>' +
+        '<p class="small">Prices and limits count <b>tokens</b>: short words or bits of words.</p>' +
         '<p class="label" style="margin-top:14px">The counter</p>' +
-        '<div class="reply"><p class="who">On the counter right now</p>Your order · anything you pasted · the chef’s reply so far</div>' +
-        '<p class="small">That counter is the <b>context window</b>. On current Claude models it holds about 1 million tokens, roughly 555,000 words. Huge, but the chef still only sees what’s on it.</p>' +
-        '<p style="margin-top:14px">Claude comes in a <b>model family</b>: <b>Haiku</b> (fastest, cheapest), <b>Sonnet</b> (balanced), <b>Opus</b> (where Anthropic suggests most people start) and <b>Fable</b> (the hardest jobs, like long multi-step work). Same kitchen, different chefs.</p>',
+        '<div class="reply"><p class="who">On the counter</p>Your order · what you pasted · the reply so far</div>' +
+        '<p class="small">On current Claude models the <b>context window</b> holds about 1 million tokens, roughly 555,000 words.</p>' +
+        '<p style="margin-top:14px">Claude is a <b>model family</b>: <b>Haiku</b> (fastest, cheapest), <b>Sonnet</b> (balanced), <b>Opus</b> (Anthropic’s suggested start), <b>Fable</b> (hardest jobs).</p>',
       next: "Your turn →"
     },
     build: {
@@ -54,12 +54,12 @@
     breaks: {
       title: "The counter gets wiped every shift.",
       lines: [
-        ["A new chat starts with an empty counter.", "The chef doesn’t remember yesterday unless you put it back on the counter."],
-        ["A crowded counter blurs things.", "In very long chats the chef pays less attention to early details, and apps may summarize them. Start fresh, or let the app compact it (squeeze it into a summary), then paste back key facts."],
-        ["The chef’s library stops at a date.", "That’s the training cutoff. For anything newer, paste it in or let Claude search the web."],
-        ["Bigger chefs cost more per token.", "Pick the smallest chef that does the job well."]
+        ["A new chat starts with an empty counter.", "Put back what the chef needs to know."],
+        ["A crowded counter blurs things.", "Early details fade. Start fresh, or compact it (squeeze it into a summary) and paste back key facts."],
+        ["The chef’s library stops at a date.", "That’s the training cutoff. Paste in newer facts, or let Claude search the web."],
+        ["Bigger chefs cost more per token.", "Pick the smallest one that does the job."]
       ],
-      where: "A real chef remembers and tastes. This one predicts the next piece of text from what’s on the counter. It doesn’t know when it’s wrong, so it can sound sure and still be wrong."
+      where: "A real chef remembers and tastes. This one predicts text, and can sound sure while wrong."
     },
     quiz: [
       { term: "Token", q: "What’s a token?", a: ["A small piece of text the model counts and charges by", "Exactly one word, so 100 words cost 100 tokens", "A credit you buy to send one message to Claude"], ok: 0, why: "Right. Tokens are the pieces. Limits and prices are counted in them." },

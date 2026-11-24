@@ -6,18 +6,18 @@
     teaser: ["GRADUATION", "you’re the architect", "Pick the chef. Hang the rules.<br>Choose appliances and a binder.<br>Plan the taste test.", "Every word. Seven minutes."],
     lines: [
       ["An architect picks the pieces.", "Which chef, which rules, which tools, which documents, how it’s tested. That plan is the architecture."],
-      ["Every piece has a price.", "Cost is mostly tokens, plus fees for some tools. Latency is wait time. Bigger chefs and more loops cost more of both."],
-      ["Guardrails are the safety rails.", "Hard limits built into the app, a person approving risky actions, and watching for prompt injection."]
+      ["Every piece has a price.", "Cost is mostly tokens. Latency is wait time."],
+      ["Guardrails are the safety rails.", "Hard limits, human approval, and a watch for prompt injection."]
     ],
     guess: { q: "A friend wants an AI helper for their bakery. What should they build first?", opts: [["The simplest version: one model, clear rules, a quick test", true], ["Five agents working together around the clock", false], ["Their own AI model, trained on the bakery’s recipes", false]], reveal: "Start simple. Add pieces only when a real need shows up. That’s the architect’s habit." },
     startLabel: "See a plan",
     example: {
       title: "One plan, every word you learned.",
       html:
-        '<p class="label">A bakery’s order helper <span class="sample">Sample plan</span></p>' +
+        '<p class="label">A bakery’s helper <span class="sample">Sample plan</span></p>' +
         '<div class="ticket"><div class="th"><span>KITCHEN PLAN</span><span>architecture</span></div>' +
-        'Chef (model): Sonnet. Fast and good enough<br>Window (API): the website sends each chat<br>House rules (system prompt): bakery voice, under 80 words<br>Appliance (tool): check_order_status<br>Outlet (MCP): Google Calendar for pickups<br>Binder: 8-page menu, pasted in (cached when busy)<br>Head chef? No. A prep checklist (workflow) is enough<br>Taste test: 25 real questions, run every change<br>Guardrails: refunds need a person' +
-        '<div class="tf">Simplest kitchen that does the job</div></div>',
+        'Chef (model): Sonnet<br>Window (API): website chat<br>House rules (system prompt): bakery voice, short<br>Appliance (tool): check_order_status<br>Outlet (MCP): Google Calendar<br>Binder: 8-page menu, pasted in (cached when busy)<br>Agent? No, a workflow<br>Taste test: 25 real questions<br>Guardrails: refunds need a person' +
+        '<div class="tf">Simplest kitchen that works</div></div>',
       next: "Your turn →"
     },
     build: {
@@ -47,11 +47,10 @@
     breaks: {
       title: "The plan is a guess until you taste.",
       lines: [
-        ["Your first plan will be wrong somewhere.", "That’s normal. The taste test tells you where."],
-        ["Costs are estimates until you measure.", "Check real token counts on real traffic."],
-        ["Prompt injection is a real kitchen fire.", "Any content Claude reads can carry orders. Keep a person on risky buttons."]
+        ["First plans and cost guesses are often wrong.", "Taste tests and real token counts show where."],
+        ["Prompt injection is a real kitchen fire.", "Content Claude reads can carry orders. A person presses risky buttons."]
       ],
-      where: "A real kitchen is built once. An AI kitchen gets rebuilt every time a better chef arrives. Keep your taste tests, so switching chefs is safe."
+      where: "A real kitchen lasts years. AI chefs change often; keep your taste tests so switching is safe."
     },
     quiz: [
       { term: "Start simple", q: "A friend wants to start with 5 agents. Your advice?", a: ["Start with one request and a taste test, add pieces only when needed", "Go for it, more agents always means better results", "Train your own model first so it fits the business"], ok: 0, why: "Right. Start simple. Agents cost more and break in more ways." },

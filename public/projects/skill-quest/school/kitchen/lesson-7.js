@@ -6,8 +6,8 @@
     teaser: ["HEAD CHEF", "agents", "The whole dinner, start to finish.<br>It decides the next step,<br>checks the pot, and keeps going.", "Six words. Six minutes."],
     lines: [
       ["An agent is a chef running the whole dinner.", "Claude picks its own next step and uses tools, again and again, until the job is done."],
-      ["A workflow is a prep checklist.", "Whoever built it set the steps: first this, then that, like an automation you set up once. Cheaper and more predictable."],
-      ["Anthropic’s advice: start simple.", "Try one good request first, then a workflow. Use an agent only when the steps can’t be known ahead."]
+      ["A workflow is a prep checklist.", "The steps are set ahead. Cheaper and more predictable."],
+      ["Anthropic’s advice: start simple.", "Try one request, then a workflow. Agents only when steps can’t be planned."]
     ],
     guess: { q: "“Book me a table for Friday.” What makes this an agent job?", opts: [["Claude picks its own next steps until it’s done", true], ["It uses a bigger, more expensive Claude model", false], ["The message is longer than a normal question", false]], reveal: "An agent decides its own steps and uses tools in a loop until the job is done." },
     startLabel: "Watch the loop",
@@ -15,13 +15,13 @@
       title: "“Find a free evening and book a table for 4.”",
       html:
         '<p class="label">The agent loop <span class="sample">Sample</span></p>' +
-        '<div class="reply"><p class="who">think</p>I need everyone’s free nights.</div>' +
-        '<div class="reply"><p class="who">tool</p>calendar → Thu and Sat are free</div>' +
-        '<div class="reply"><p class="who">think</p>Check tables for Thursday.</div>' +
+        '<div class="reply"><p class="who">think</p>I need free nights.</div>' +
+        '<div class="reply"><p class="who">tool</p>calendar → Thu, Sat free</div>' +
+        '<div class="reply"><p class="who">think</p>Check Thursday tables.</div>' +
         '<div class="reply"><p class="who">tool</p>restaurant → Thu 7:30 open</div>' +
         '<div class="reply"><p class="who">ask you</p>Book Thu 7:30 for 4? <b>Yes / No</b></div>' +
-        '<p class="small">Think → use a tool → look at the result → decide again. That’s the <b>agent loop</b>. Each round costs tokens.</p>' +
-        '<p style="margin-top:14px">Big jobs can split: an <b>orchestrator</b> (head chef) hands pieces to <b>subagents</b> (sous-chefs). Each has its own counter (a fresh context window) and reports back a short summary.</p>',
+        '<p class="small">Think → tool → look → decide again: the <b>agent loop</b>. Each round costs tokens.</p>' +
+        '<p style="margin-top:14px">Big jobs split: an <b>orchestrator</b> (head chef) hands pieces to <b>subagents</b> (sous-chefs), each with a fresh counter.</p>',
       next: "Your turn →"
     },
     build: {
@@ -55,11 +55,11 @@
     breaks: {
       title: "A chef alone can wreck a kitchen.",
       lines: [
-        ["Agents make mistakes that stack.", "One wrong step early leads to ten wrong steps later. Give it limits and checkpoints."],
-        ["Agents cost more.", "Many loops, many tokens. Multi-agent research at Anthropic used about 15x the tokens of a chat."],
+        ["Agents make mistakes that stack.", "One wrong step early leads to ten more. Add checkpoints."],
+        ["Agents cost more.", "Anthropic’s multi-agent research used about 15x a chat’s tokens."],
         ["Human in the loop.", "A person approves anything that sends, spends, books or deletes."]
       ],
-      where: "A head chef feels when a dish is off. An agent only knows what its tools report. If the tool says “done,” it believes it."
+      where: "A head chef tastes. An agent trusts its tools, even a wrong “done.”"
     },
     quiz: [
       { term: "Agent loop", q: "What’s the agent loop?", a: ["Think, use a tool, check the result, repeat", "Running the same fixed steps every time", "Asking the same question twice"], ok: 0, why: "Right. It keeps going until the job is done or it hits a limit." },

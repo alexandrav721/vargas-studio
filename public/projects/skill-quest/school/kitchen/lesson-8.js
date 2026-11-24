@@ -6,8 +6,8 @@
     teaser: ["YOUR KITCHEN", "Claude Code", "Claude chat: you order at its restaurant.<br>Claude Code: it cooks in your project,<br>with your files and your tools.", "Six words. Six minutes."],
     lines: [
       ["Claude Code works inside your project.", "It reads your files, writes code and runs commands (typed instructions to the computer). It’s an agent, like Lesson 7’s chef."],
-      ["CLAUDE.md is the note on your fridge.", "Your rules and how-tos. Claude Code reads it at the start of every session."],
-      ["Skills are recipe cards.", "Claude always sees each card’s name and one-line description, and pulls the full card when the description fits the job."]
+      ["CLAUDE.md is the note on your fridge.", "Your rules and how-tos, read every session."],
+      ["Skills are recipe cards.", "Claude sees each card’s name and description, and pulls the full card when it fits."]
     ],
     guess: { q: "What’s different about Claude Code compared with chatting with Claude?", opts: [["It works directly in your project files", true], ["It’s a smarter Claude model made only for coders", false], ["It answers only in code, never in words", false]], reveal: "Claude Code works inside your project: it reads files, makes changes and runs commands." },
     startLabel: "Look around",
@@ -15,9 +15,9 @@
       title: "What lives in a Claude Code kitchen.",
       html:
         '<p class="label">The fridge note <span class="sample">Sample</span></p><div class="ticket"><div class="th"><span>CLAUDE.md</span><span>read every session</span></div>This is our bakery’s website<br>Never touch passwords or keys<br>Explain every change in plain words<div class="tf">Claude tries to follow these</div></div>' +
-        '<p class="label" style="margin-top:14px">The rest of the kitchen</p>' +
-        '<div class="fridge"><span class="tag">Skill: a recipe card (SKILL.md)</span><span class="tag">/command: a shortcut you type</span><span class="tag">Hook: a bell that rings at set moments</span><span class="tag">Plugin: a boxed kit of all of these</span></div>' +
-        '<p class="small">A <b>hook</b> runs automatically at set moments, like right before or after every edit. It always runs, and one set before an action can stop it. CLAUDE.md is only a request. A <b>/command</b> is a shortcut you type in the chat box, like /help. To make your own, you write a skill.</p><p class="small">Claude Code changes real files, so use <b>git</b>: a history of save points you can go back to.</p>',
+        '<p class="label" style="margin-top:14px">More pieces</p>' +
+        '<div class="fridge"><span class="tag">Skill: a recipe card (SKILL.md)</span><span class="tag">/command: a shortcut you type</span><span class="tag">Hook: a bell at set moments</span><span class="tag">Plugin: a kit of all these</span></div>' +
+        '<p class="small">A <b>hook</b> always runs, like before every edit, and one set before an action can stop it. CLAUDE.md is only a request. A <b>/command</b> is a shortcut like /help; to make your own, write a skill.</p>',
       more: '<p class="small">In <b>plan mode</b> it reads you the plan before touching anything. <b>Permission modes</b> set what it may do without asking.</p><p style="margin-top:14px">Claude Code runs in the Claude desktop app, on the web, and in the tools developers use. It has its own undo (/rewind); <b>git</b> save points are yours to make.</p>',
       next: "Your turn →"
     },
@@ -48,11 +48,11 @@
     breaks: {
       title: "It cooks with real knives.",
       lines: [
-        ["It changes real files and runs real commands.", "Read what it plans before you say yes, and make a save point (git) first."],
-        ["Fridge notes are requests.", "Claude Code tries hard to follow CLAUDE.md. Hooks and permission settings are what it enforces."],
-        ["Skills and plugins can run code.", "Install them like apps: only from people you trust."]
+        ["It changes real files and runs commands.", "Read its plan first, and make a git save point."],
+        ["Fridge notes are requests.", "Hooks and permission settings are enforced."],
+        ["Skills and plugins can run code.", "Install only from people you trust."]
       ],
-      where: "A cook in your home knows not to throw out your grandma’s recipe. Claude Code only knows what your notes and save points protect."
+      where: "A home cook knows to keep grandma’s recipe. Claude Code only knows what your notes and save points protect."
     },
     quiz: [
       { term: "Hook", q: "Where do you put a rule that must ALWAYS hold in Claude Code?", a: ["A hook or a permission rule", "In CLAUDE.md, written in capital letters", "In a skill that Claude loads when it fits"], ok: 0, why: "Right. CLAUDE.md guides; hooks and permissions are enforced." },

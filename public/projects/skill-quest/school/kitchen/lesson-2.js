@@ -6,8 +6,8 @@
     teaser: ["ORDER WINDOW", "the API", "The app is a waiter.<br>It passes a ticket through the window<br>and carries the plate back.", "Seven words. Six minutes."],
     lines: [
       ["The API is the order window.", "An app works like a waiter: it passes Claude a written ticket and carries the plate back."],
-      ["The API key is your account card.", "It proves the ticket is yours and bills your account. Keep it secret."],
-      ["The window remembers nothing.", "Every ticket must carry the whole conversation so far."]
+      ["The API key is your account card.", "Proves it’s your ticket and bills you. Keep it secret."],
+      ["The window remembers nothing.", "Each ticket carries the whole chat."]
     ],
     guess: { q: "A shopping app shows Claude’s answers on its own screen. How?", opts: [["It sends Claude a written request through the API", true], ["It copies answers from claude.ai and pastes them in", false], ["A copy of Claude is installed inside the shopping app", false]], reveal: "Apps send a request through the API, a window for other software, and get a reply back." },
     startLabel: "Watch a ticket",
@@ -15,11 +15,11 @@
       title: "One ticket, one plate.",
       html:
         '<p class="label">The request (what your app sends) <span class="sample">Simplified</span></p>' +
-        '<div class="ticket"><div class="th"><span>REQUEST</span><span>to the API</span></div>model: Sonnet<br>messages:<br>&nbsp;&nbsp;user: “Name 3 soups for a cold night.”<div class="tf">Account card attached: your API key</div></div>' +
+        '<div class="ticket"><div class="th"><span>REQUEST</span><span>to the API</span></div>model: Sonnet<br>messages:<br>&nbsp;&nbsp;user: “Name 3 soups for a cold night.”<div class="tf">Plus your API key</div></div>' +
         '<p class="label" style="margin-top:14px">The response (what comes back)</p>' +
-        '<div class="reply"><p class="who">assistant</p>Minestrone, French onion, chicken noodle.<br><span class="small">Used: 18 tokens in · 9 tokens out</span></div>' +
-        '<p class="small">A chat is a list of <b>messages</b>: “user” turns are yours, “assistant” turns are Claude’s. To ask a follow-up, your app sends the whole list again.</p>' +
-        '<p style="margin-top:14px"><b>Streaming</b> means words show up as they’re written. <b>Cost per token</b>: you pay for tokens in (what is sent) and tokens out (what Claude writes). Out costs more.</p>',
+        '<div class="reply"><p class="who">assistant</p>Minestrone, French onion, chicken noodle.<br><span class="small">Used: 18 tokens in · 9 out</span></div>' +
+        '<p class="small"><b>Messages</b>: “user” turns are yours, “assistant” turns are Claude’s.</p>' +
+        '<p style="margin-top:14px"><b>Streaming</b>: words appear as written. <b>Cost per token</b>: you pay for tokens in and out. Out costs more.</p>',
       more: '<p class="small">Real requests also name the exact model (like claude-sonnet-5-5) and a reply length limit.</p>',
       next: "Your turn →"
     },
@@ -56,11 +56,11 @@
     breaks: {
       title: "A card that pays the bill.",
       lines: [
-        ["Your API key is not your Claude subscription.", "API use is billed separately, per token, to the account the key belongs to."],
-        ["Anyone holding the card can bill your account.", "Most people never handle a key. If you do, never paste it into a website, a shared document or a chat. If it leaks, delete it and make a new one."],
-        ["Output costs more than input.", "Asking for shorter answers is the easiest way to spend less."]
+        ["Your API key is not your Claude subscription.", "API use is billed per token to the key’s account."],
+        ["Anyone holding the card can bill you.", "Never paste it into a site, doc or chat. Leaked? Delete it and make a new one."],
+        ["Output costs more than input.", "Ask for shorter answers."]
       ],
-      where: "A real order window has a cook who remembers regulars. A basic API call forgets you the moment the plate leaves. The app resends the chat each time."
+      where: "A real cook remembers regulars. A basic API call forgets you, so the app resends the chat."
     },
     quiz: [
       { term: "API key", q: "What does an API key do?", a: ["Proves the request is yours and bills your account", "Gives your app a faster, more private version of Claude", "Saves every chat so Claude remembers you next time"], ok: 0, why: "Right. It’s your account card. Keep it secret." },

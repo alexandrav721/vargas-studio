@@ -6,20 +6,20 @@
     teaser: ["HOUSE RULES", "on the wall", "1. Answer like our shop.<br>2. Under 80 words.<br>3. If unsure, say so.", "Six words. Six minutes."],
     lines: [
       ["The system prompt is the house rules on the wall.", "Whoever makes the app writes it once. It shapes every plate, whatever the customer orders."],
-      ["Prompt engineering is writing clear tickets.", "Say who it’s for, show an example, and ask for the shape you want back."],
-      ["Hallucination: Claude sounds sure but is wrong.", "Rules like “say I don’t know” and “quote the source” make it rarer, never zero."]
+      ["Prompt engineering is writing clear tickets.", "Say who it’s for, show an example, name the shape you want."],
+      ["Hallucination: Claude sounds sure but is wrong.", "“Say I don’t know” and “quote the source” make it rarer, never zero."]
     ],
     guess: { q: "Two apps ask Claude the same thing and get very different tones. Why?", opts: [["Each app gave Claude different standing rules", true], ["One app paid for a friendlier version of Claude", false], ["Claude’s mood changes during the day, like a person", false]], reveal: "Each app hangs its own house rules, called a system prompt." },
     startLabel: "See the rules",
     example: {
       title: "Same order. With and without house rules.",
       html:
-        '<p class="label">Order <span class="sample">Sample</span></p><div class="ticket"><div class="th"><span>USER</span><span>message</span></div>Do you deliver on Sundays?<div class="tf">Same question both times</div></div>' +
-        '<p class="label" style="margin-top:14px">No house rules</p><div class="reply"><p class="who">assistant</p>Many businesses deliver on Sundays! It depends on the shop. You could check their website or call…</div>' +
+        '<p class="label">Order <span class="sample">Sample</span></p><div class="ticket"><div class="th"><span>USER</span><span>message</span></div>Do you deliver on Sundays?<div class="tf">Same question twice</div></div>' +
+        '<p class="label" style="margin-top:14px">No house rules</p><div class="reply"><p class="who">assistant</p>Many shops do! It depends…</div>' +
         '<p class="label" style="margin-top:14px">House rules: “You answer for Rosa’s Bakery. Facts are in &lt;facts&gt;. If it’s not there, say you’ll ask.”</p>' +
         '<div class="reply"><p class="who">assistant</p>Yes, Sundays 9 to 1, within 5 miles.</div>' +
-        '<p class="small"><b>XML tags</b> are labels in angle brackets: &lt;facts&gt; opens a box and &lt;/facts&gt; closes it. You can type them in any prompt to keep rules, data and examples apart. <b>Examples</b> show the chef a few varied plates, so it learns the style, not one dish. Builders call this few-shot prompting.</p>' +
-        '<p style="margin-top:14px"><b>Thinking</b>: newer Claude models can work a problem out quietly before answering. <b>Effort</b> is a dial the app’s maker sets: high for hard jobs, low for quick ones. Thinking is billed like the words Claude writes.</p>',
+        '<p class="small"><b>XML tags</b> like &lt;facts&gt;…&lt;/facts&gt; are labeled boxes that keep rules, data and examples apart. <b>Examples</b>: a few varied plates teach the style (few-shot prompting).</p>' +
+        '<p style="margin-top:14px"><b>Thinking</b>: newer models think quietly first, billed like the words Claude writes. <b>Effort</b>: the app maker’s dial for how hard it thinks.</p>',
       more: '<p class="small">Anthropic’s AI Fluency course calls the whole skill the <b>4Ds</b>: what to hand off, how you ask, checking the plate, owning what you serve.</p>',
       next: "Your turn →"
     },
@@ -55,10 +55,10 @@
     breaks: {
       title: "Rules can be talked around.",
       lines: [
-        ["A clever customer can talk around the rules.", "That’s called a jailbreak. Lesson 5 covers its cousin: tricks hidden in emails or pages. Real limits are built into the app."],
-        ["Old tutorials teach a “temperature” dial.", "It set how adventurous the chef was. Newer Claude models reject it; clear rules, examples and effort do the job."],
-              ],
-      where: "Kitchen staff follow the poster or get fired. Claude follows it most of the time. Nothing forces it to."
+        ["A clever customer can talk around the rules.", "That’s a jailbreak. Real limits are built into the app."],
+        ["Old tutorials teach a “temperature” dial.", "It set how adventurous the chef was. Newer Claude models reject it."]
+      ],
+      where: "Staff follow the poster or get fired. Claude usually follows it. Nothing forces it."
     },
     quiz: [
       { term: "System prompt", q: "Who usually writes the system prompt?", a: ["The person building the app", "Anthropic, for every app", "The customer typing"], ok: 0, why: "Right. The builder hangs the rules; the customer places orders." },

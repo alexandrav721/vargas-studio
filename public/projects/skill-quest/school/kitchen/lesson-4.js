@@ -6,19 +6,19 @@
     teaser: ["APPLIANCES", "tool use", "The chef can’t check the weather.<br>But it can ask the kitchen<br>to switch on the weather appliance.", "Six words. Six minutes."],
     lines: [
       ["Tools are appliances.", "A model can only write text. Tools let it look things up, calculate or act."],
-      ["The chef asks; the app runs it.", "Claude fills in a form: tool get_weather, city Paris. The app runs it and hands back the result."],
-      ["Each appliance has a label.", "A tool definition: its name, what it does, what it needs. Claude reads the label to choose."]
+      ["The chef asks; the app runs it.", "Claude fills in a form."],
+      ["Each appliance has a label.", "Claude reads the tool definition to choose."]
     ],
     guess: {q: "With no tools at all, what can Claude do?", opts: [["Read and write text, and reason about it", true], ["Look up today’s prices on a website", false], ["Send an email from your account", false]], reveal: "On its own, Claude only reads and writes text. Anything else needs a tool."},
     startLabel: "Watch it work",
     example: {
       title: "“Should I bring an umbrella in Paris?”",
       html:
-        '<p class="label">1. The label on the appliance <span class="sample">Simplified</span></p><div class="ticket"><div class="th"><span>TOOL</span><span>definition</span></div>name: get_weather<br>does: today’s forecast for a city<br>needs: city<div class="tf">Your app hands Claude this label</div></div>' +
+        '<p class="label">1. The label <span class="sample">Simplified</span></p><div class="ticket"><div class="th"><span>TOOL</span><span>definition</span></div>name: get_weather<br>does: today’s forecast for a city<br>needs: city<div class="tf">From your app</div></div>' +
         '<p class="label" style="margin-top:14px">2. Claude asks (tool call)</p><div class="reply"><p class="who">assistant</p>use get_weather · city: “Paris”</div>' +
         '<p class="label" style="margin-top:14px">3. The app runs it (tool result)</p><div class="reply"><p class="who">the app</p>Rain, 14°C, 80% chance</div>' +
-        '<p class="label" style="margin-top:14px">4. Claude plates the answer</p><div class="reply"><p class="who">assistant</p>Yes, bring one. 80% chance of rain.</div>' +
-        '<p class="small">Anthropic runs a few appliances itself: <b>web search</b> (finds fresh news online), web fetch (reads one web page) and <b>code execution</b> (runs code to do exact math). With <b>computer use</b>, Claude looks at screenshots and asks the app to click and type.</p>',
+        '<p class="label" style="margin-top:14px">4. Claude answers</p><div class="reply"><p class="who">assistant</p>Yes, bring one. 80% rain.</div>' +
+        '<p class="small">Anthropic runs <b>web search</b> (fresh news), web fetch (one page) and <b>code execution</b> (exact math). <b>Computer use</b>: Claude reads screenshots and asks the app to click and type.</p>',
       next: "Your turn →"
     },
     build: {
@@ -53,11 +53,10 @@
     breaks: {
       title: "Appliances can burn the kitchen.",
       lines: [
-        ["A tool can do real things.", "Send an email, delete a file, spend money. Ask a person before anything that can’t be undone."],
-        ["Claude can pick the wrong appliance.", "Or fill in the wrong setting. Check tool calls before they act."],
-        ["Only some appliances run at Anthropic.", "Web search and code execution run there. Your own tools, and computer use, run in the app."]
+        ["A tool can do real things.", "Email, delete, spend. Ask a person before anything that can’t be undone."],
+        ["Claude can pick the wrong appliance.", "Or the wrong setting. Check tool calls before they act."]
       ],
-      where: "A real chef knows a toaster by sight. Claude only knows your tool from its label, so a vague label means a confused chef."
+      where: "A chef knows a toaster by sight. Claude knows a tool only by its label. Vague label, confused chef."
     },
     quiz: [
       { term: "Tool result", q: "What is a tool result?", a: ["What the app sends back after running the tool", "Claude’s final answer, shown to the person who asked", "The label that tells Claude what the tool can do"], ok: 0, why: "Right. Result goes back to Claude, then Claude plates the answer." },

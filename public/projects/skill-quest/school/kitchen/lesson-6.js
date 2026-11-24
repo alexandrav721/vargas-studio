@@ -6,18 +6,18 @@
     teaser: ["RECIPE BINDER", "RAG", "The chef never memorized your recipes.<br>Someone pulls the right pages<br>and lays them on the counter.", "Six words. Six minutes."],
     lines: [
       ["RAG: look it up, then cook.", "Retrieval-augmented generation. Find the right pages of your documents, put them on the counter, then Claude answers from them."],
-      ["Nothing gets trained.", "Your documents are just placed in each request. Change a page, and the next answer uses the new one."],
-      ["The binder is indexed by meaning.", "Embeddings give each page a number code for its meaning. Close meanings get close codes, so “refund” finds “money back.”"]
+      ["Nothing gets trained.", "Your pages are pasted in, fresh each time."],
+      ["The binder is indexed by meaning.", "Embeddings: number codes for meaning, so “refund” finds “money back.”"]
     ],
     guess: { q: "A help bot answers from a shop’s policy pages. Was Claude trained on them?", opts: [["No, the right page is looked up and pasted in", true], ["Yes, the shop trained it on the pages overnight", false], ["Claude already knew this shop’s policy from the web", false]], reveal: "No training. The right page is fetched and placed in front of Claude. That’s RAG." },
     startLabel: "Watch a lookup",
     example: {
       title: "“Can I return shoes after 40 days?”",
       html:
-        '<p class="label">1. Chunking: the binder is cut into pages <span class="sample">Sample</span></p>' +
+        '<p class="label">1. Chunking: cut into pages <span class="sample">Sample</span></p>' +
         '<div class="fridge"><span class="tag">Shipping</span><span class="tag">Returns: 30 days</span><span class="tag">Gift cards</span><span class="tag">Sizes</span></div>' +
-        '<p class="label" style="margin-top:14px">2. Search by meaning (embeddings + a vector database)</p><div class="reply"><p class="who">search</p>Closest page: “Returns: unworn items within 30 days.”</div>' +
-        '<p class="label" style="margin-top:14px">3. Claude answers from that page</p><div class="reply"><p class="who">assistant</p>Sorry, returns are 30 days. <span class="small">[Source: Returns policy]</span></div><p class="small">A <b>vector database</b> stores those meaning codes and finds the closest match. <b>Citations</b> show which page was used. Small binder? Paste it all in; <b>prompt caching</b> keeps it ready, so repeat questions cost less.</p>',
+        '<p class="label" style="margin-top:14px">2. Search by meaning</p><div class="reply"><p class="who">search</p>Closest page: “Returns: unworn items within 30 days.”</div>' +
+        '<p class="label" style="margin-top:14px">3. Claude answers</p><div class="reply"><p class="who">assistant</p>Sorry, returns are 30 days. <span class="small">[Source: Returns policy]</span></div><p class="small">A <b>vector database</b> finds the closest code. <b>Citations</b> show the page used. Small binder? Paste it all in; <b>prompt caching</b> makes repeats cheaper.</p>',
       more: '<p class="small"><b>Citations</b> point to the page used, so people can check. Claude doesn’t make embeddings. App makers get them from another company (Anthropic’s docs suggest Voyage AI).</p><p style="margin-top:14px"><b>Small binder?</b> Skip the search. Under roughly 500 pages, Anthropic suggests putting it all on the counter and using <b>prompt caching</b>: the pages are read in once and stored, so repeat questions cost less. By default the stored copy lasts 5 min after each use.</p>',
       next: "Your turn →"
     },
@@ -53,11 +53,11 @@
     breaks: {
       title: "The wrong page gives a wrong plate.",
       lines: [
-        ["If search pulls the wrong page, Claude answers from it.", "When a RAG bot is wrong, check the search first."],
-        ["Pages cut too small lose their meaning.", "“Grew 3%”: which company, which year? Good chunks keep their context."],
-        ["Caching stores the prep, not the answer.", "Each answer is still cooked fresh."]
+        ["Wrong page in, wrong answer out.", "When a RAG bot is wrong, check the search first."],
+        ["Pages cut too small lose meaning.", "“Grew 3%”: which company, which year?"],
+        ["Caching stores the prep.", "Each answer is still cooked fresh."]
       ],
-      where: "A real binder sits on a shelf and the chef flips through it. Claude never sees the binder, only the pages someone hands it."
+      where: "A real chef flips through the binder. Claude sees only the pages it’s handed."
     },
     quiz: [
       { term: "RAG", q: "Does RAG train the model on your documents?", a: ["No, it places the right pages in each request", "Yes, a little each time it reads them", "Only the first time"], ok: 0, why: "Right. Nothing is trained. It’s looked up each time." },

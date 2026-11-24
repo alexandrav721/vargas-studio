@@ -6,19 +6,19 @@
     teaser: ["TASTE TEST", "evals", "Tasting one spoon isn’t a test.<br>Twenty dishes, the same scorecard,<br>every time you change the prompt.", "Six words. Six minutes."],
     lines: [
       ["An eval is a taste test with a scorecard.", "The same set of questions, scored the same way, every time you change a prompt or a model."],
-      ["“It looked fine” is a vibe check.", "A change that fixes one dish can quietly ruin three others. Only a test set catches that."],
-      ["Graders do the tasting.", "A small program checks exact things, like word count. Another AI model (LLM-as-judge) scores fuzzy things, like tone. People spot-check the judge."]
+      ["“It looked fine” is a vibe check.", "One fix can quietly ruin three other dishes."],
+      ["Graders do the tasting.", "Code checks exact things like word count; an AI judge (LLM-as-judge) scores tone."]
     ],
     guess: { q: "You change your bot’s prompt. How do you know it got better?", opts: [["Re-run the same test questions and compare scores", true], ["Try one question and see if it looks good", false], ["Ask Claude if it’s better", false]], reveal: "Builders re-run a fixed set of test questions with a scorecard. That’s an eval." },
     startLabel: "Watch a test",
     example: {
       title: "A bakery bot, scored before and after a change.",
       html:
-        '<p class="label">Success criteria (the scorecard, like a rubric) <span class="sample">Sample</span></p><div class="ticket"><div class="th"><span>SCORECARD</span><span>3 checks</span></div>1. Uses only the bakery’s real facts<br>2. Under 80 words<br>3. Says “I’ll check” when unsure<div class="tf">Specific and measurable</div></div>' +
+        '<p class="label">Success criteria (the scorecard) <span class="sample">Sample</span></p><div class="ticket"><div class="th"><span>SCORECARD</span><span>3 checks</span></div>1. Uses only the bakery’s real facts<br>2. Under 80 words<br>3. Says “I’ll check” when unsure<div class="tf">Specific and measurable</div></div>' +
         '<p class="label" style="margin-top:14px">Test set: 20 real customer questions</p>' +
-        '<div class="fridge"><span class="tag">Version A · 15 of 20 pass</span><span class="tag">Version B · 18 of 20 pass</span></div>' +
-        '<p class="small">Version B won, but question 7 used to pass and now fails. That’s a <b>regression</b>. You only see it because you kept the same test set.</p>' +
-        '<p style="margin-top:14px">Keep some questions aside that you never use while editing the prompt. Otherwise the score only proves you memorized the test.</p>',
+        '<div class="fridge"><span class="tag">Version A: 15 of 20</span><span class="tag">Version B: 18 of 20</span></div>' +
+        '<p class="small">B won, but question 7 used to pass and now fails: a <b>regression</b>.</p>' +
+        '<p style="margin-top:14px">Hide a few questions while editing, so the score can’t be memorized.</p>',
       next: "Your turn →"
     },
     build: {
@@ -53,10 +53,10 @@
     breaks: {
       title: "The judge can be wrong too.",
       lines: [
-        ["An LLM judge has its own blind spots.", "Check its scores against a person’s on a sample first. Anthropic’s docs suggest a different model as judge."],
-        ["A test set is only as good as its questions.", "Use real questions from real people, and add every new failure you find."],
-              ],
-      where: "A food critic can taste anything. An eval only measures what your scorecard asks. If you forgot to check for allergies, it won’t either."
+        ["An LLM judge has blind spots.", "Check it against a person on a sample. Anthropic suggests a different model as judge."],
+        ["A test set needs real questions.", "Use real ones, and add every new failure."]
+      ],
+      where: "An eval checks only what your scorecard asks. Forget allergies, and so will it."
     },
     quiz: [
       { term: "Regression", q: "What’s a regression?", a: ["Something that used to work breaks after a change", "A test question you skip because it’s too hard", "When a model gets older and slower over time"], ok: 0, why: "Right. Evals catch them before your users do." },
