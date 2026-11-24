@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", function () {
   var nextL = School.LESSONS.find(function (l) { return !done[l.id] && l.href; });
   document.getElementById("cta").innerHTML = nextL
     ? '<a class="btn" href="' + nextL.href + '">' + (n ? "Next: Lesson " : "Start Lesson ") + nextL.n + ", " + nextL.name + "</a>"
-    : '<a class="btn ghost" href="lesson-1.html">Redo Lesson 1</a><p class="muted" style="align-self:center;margin:0">Lesson 2 is coming soon.</p>';
+    : '<a class="btn" href="kitchen/">Next: Level 2, the Builder\u2019s Kitchen</a><a class="btn ghost" href="lesson-1.html">Redo Lesson 1</a>';
   if (n) document.getElementById("sum").textContent = n + " of 8 stamps. Every lesson ends with something real.";
   document.getElementById("pass").innerHTML = School.LESSONS.map(function (l) {
     var got = !!done[l.id], tag = l.href ? "a" : "div";
