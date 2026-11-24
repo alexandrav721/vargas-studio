@@ -9,7 +9,7 @@
       ["The API key is your account card.", "It proves the ticket is yours and bills your account. Keep it secret."],
       ["The window remembers nothing.", "Every ticket must carry the whole conversation so far."]
     ],
-    guess: { q: "A shopping app shows Claude’s answers on its own screen. How?", opts: [["It sends Claude a written request through the API", true], ["It copies answers from claude.ai", false], ["Claude is installed inside the app", false]], reveal: "Apps send a request through the API, a window for other software, and get a reply back." },
+    guess: { q: "A shopping app shows Claude’s answers on its own screen. How?", opts: [["It sends Claude a written request through the API", true], ["It copies answers from claude.ai and pastes them in", false], ["A copy of Claude is installed inside the shopping app", false]], reveal: "Apps send a request through the API, a window for other software, and get a reply back." },
     startLabel: "Watch a ticket",
     example: {
       title: "One ticket, one plate.",
@@ -46,8 +46,8 @@
       type: "pick", title: "The window got a follow-up: “Make it vegetarian.” Claude answers “Make what vegetarian?” Why?",
       options: [
         ["The app sent only the new message, not the earlier ones", true],
-        ["The API key ran out", false, "A bad key gets an error, not a confused answer."],
-        ["The question was too short for Claude", false, "Short is fine. It just can’t see what came before."]
+        ["The API key ran out of credit halfway through the chat", false, "A bad key gets an error, not a confused answer."],
+        ["Claude needs full sentences to understand follow-ups", false, "Short is fine. It just can’t see what came before."]
       ],
       right: "Exactly. The window remembers nothing. Send the whole list of messages every time.",
       wrong: "Think about what was on the ticket.", hint: "The API doesn’t remember earlier tickets.",
@@ -63,8 +63,8 @@
       where: "A real order window has a cook who remembers regulars. A basic API call forgets you the moment the plate leaves. The app resends the chat each time."
     },
     quiz: [
-      { term: "API key", q: "What does an API key do?", a: ["Proves the request is yours and bills your account", "Unlocks a smarter model", "Stores your past chats"], ok: 0, why: "Right. It’s your account card. Keep it secret." },
-      { term: "Context window", q: "Recall from Lesson 1: what’s the context window?", a: ["The counter: everything the chef can see at once", "The order window", "The list of models you can pick"], ok: 0, why: "Right. The window takes orders; the counter is what the chef can see." },
+      { term: "API key", q: "What does an API key do?", a: ["Proves the request is yours and bills your account", "Gives your app a faster, more private version of Claude", "Saves every chat so Claude remembers you next time"], ok: 0, why: "Right. It’s your account card. Keep it secret." },
+      { term: "Context window", q: "Recall from Lesson 1: what’s the context window?", a: ["The counter: everything the chef can see at once", "The window where you type your message in the app", "The list of Claude models your account is allowed to use"], ok: 0, why: "Right. The window takes orders; the counter is what the chef can see." },
       {term: "API key", q: "A vendor asks you to email them your API key. What do you do?", a: ["Say no. Keys are secret, like a password", "Send it, it’s only a code", "Post it in the team chat instead"], ok: 0, why: "Right. Anyone with the key can order on your tab."}
     ],
     keep: "5 questions about how a product reaches Claude, and the habit of keeping keys secret.",

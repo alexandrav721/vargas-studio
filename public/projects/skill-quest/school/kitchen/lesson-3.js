@@ -9,7 +9,7 @@
       ["Prompt engineering is writing clear tickets.", "Say who it’s for, show an example, and ask for the shape you want back."],
       ["Hallucination: Claude sounds sure but is wrong.", "Rules like “say I don’t know” and “quote the source” make it rarer, never zero."]
     ],
-    guess: { q: "Two apps ask Claude the same thing and get very different tones. Why?", opts: [["Each app gave Claude different standing rules", true], ["One paid for a nicer Claude", false], ["Claude was in a different mood", false]], reveal: "Each app hangs its own house rules, called a system prompt." },
+    guess: { q: "Two apps ask Claude the same thing and get very different tones. Why?", opts: [["Each app gave Claude different standing rules", true], ["One app paid for a friendlier version of Claude", false], ["Claude’s mood changes during the day, like a person", false]], reveal: "Each app hangs its own house rules, called a system prompt." },
     startLabel: "See the rules",
     example: {
       title: "Same order. With and without house rules.",
@@ -62,8 +62,8 @@
     },
     quiz: [
       { term: "System prompt", q: "Who usually writes the system prompt?", a: ["The person building the app", "Anthropic, for every app", "The customer typing"], ok: 0, why: "Right. The builder hangs the rules; the customer places orders." },
-      { term: "Messages", q: "Recall from Lesson 2: does the API remember the last chat?", a: ["No, the app resends it each time", "Yes, for 24 hours", "Only if you pay more"], ok: 0, why: "Right. The window forgets. Your app carries the history." },
-      {term: "XML tags", q: "What are XML tags for in a prompt?", a: ["Labeled boxes that keep rules, data and examples apart", "Code Claude runs", "A way to make answers longer"], ok: 0, why: "Right. Just labels, like &lt;facts&gt;…&lt;/facts&gt;."}
+      { term: "Messages", q: "Recall from Lesson 2: does the API remember the last chat?", a: ["No, the app resends it each time", "Yes, it keeps each chat for 24 hours on its side", "Only if you pay for a memory upgrade on the account"], ok: 0, why: "Right. The window forgets. Your app carries the history." },
+      {term: "XML tags", q: "What are XML tags for in a prompt?", a: ["Labeled boxes that keep rules, data and examples apart", "Little programs Claude runs before it answers", "A setting that makes Claude’s answers longer and richer"], ok: 0, why: "Right. Just labels, like &lt;facts&gt;…&lt;/facts&gt;."}
     ],
     keep: "5 questions about a bot’s rules, and a ticket that tests house rules for a real business.",
     cardLabel: "Copy my card",

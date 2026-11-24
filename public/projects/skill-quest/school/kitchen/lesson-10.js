@@ -9,7 +9,7 @@
       ["Every piece has a price.", "Cost is mostly tokens, plus fees for some tools. Latency is wait time. Bigger chefs and more loops cost more of both."],
       ["Guardrails are the safety rails.", "Hard limits built into the app, a person approving risky actions, and watching for prompt injection."]
     ],
-    guess: { q: "A friend wants an AI helper for their bakery. What should they build first?", opts: [["The simplest version: one model, clear rules, a quick test", true], ["Five agents working together", false], ["Their own AI model", false]], reveal: "Start simple. Add pieces only when a real need shows up. That’s the architect’s habit." },
+    guess: { q: "A friend wants an AI helper for their bakery. What should they build first?", opts: [["The simplest version: one model, clear rules, a quick test", true], ["Five agents working together around the clock", false], ["Their own AI model, trained on the bakery’s recipes", false]], reveal: "Start simple. Add pieces only when a real need shows up. That’s the architect’s habit." },
     startLabel: "See a plan",
     example: {
       title: "One plan, every word you learned.",
@@ -54,9 +54,9 @@
       where: "A real kitchen is built once. An AI kitchen gets rebuilt every time a better chef arrives. Keep your taste tests, so switching chefs is safe."
     },
     quiz: [
-      { term: "Start simple", q: "A friend wants to start with 5 agents. Your advice?", a: ["Start with one request and a taste test, add pieces only when needed", "More agents means better results", "Train your own model first"], ok: 0, why: "Right. Start simple. Agents cost more and break in more ways." },
+      { term: "Start simple", q: "A friend wants to start with 5 agents. Your advice?", a: ["Start with one request and a taste test, add pieces only when needed", "Go for it, more agents always means better results", "Train your own model first so it fits the business"], ok: 0, why: "Right. Start simple. Agents cost more and break in more ways." },
       { term: "Cost per token", q: "Recall from Lesson 2: what decides cost?", a: ["Tokens in and out, and which chef", "How many people use the app at once", "How long the reply takes to read"], ok: 0, why: "Right. Mostly tokens times the chef’s price, plus fees for some tools." },
-      {q: "From Lesson 7: what’s a subagent?", a: ["A helper with its own counter that reports back a summary", "A cheaper model", "A person approving actions"], ok: 0, why: "Right. A sous-chef with its own counter.", term: "Subagent"}
+      {q: "From Lesson 7: what’s a subagent?", a: ["A helper with its own counter that reports back a summary", "A cheaper, smaller model for simple jobs", "A person who approves the agent’s risky actions"], ok: 0, why: "Right. A sous-chef with its own counter.", term: "Subagent"}
     ],
     keep: "6 questions for any AI pitch, and a ticket that reviews your own kitchen plan.",
     cardLabel: "Copy my plan",

@@ -9,7 +9,7 @@
       ["CLAUDE.md is the note on your fridge.", "Your rules and how-tos. Claude Code reads it at the start of every session."],
       ["Skills are recipe cards.", "Claude always sees each card’s name and one-line description, and pulls the full card when the description fits the job."]
     ],
-    guess: { q: "What’s different about Claude Code compared with chatting with Claude?", opts: [["It works directly in your project files", true], ["It’s a smarter model", false], ["It only writes in code", false]], reveal: "Claude Code works inside your project: it reads files, makes changes and runs commands." },
+    guess: { q: "What’s different about Claude Code compared with chatting with Claude?", opts: [["It works directly in your project files", true], ["It’s a smarter Claude model made only for coders", false], ["It answers only in code, never in words", false]], reveal: "Claude Code works inside your project: it reads files, makes changes and runs commands." },
     startLabel: "Look around",
     example: {
       title: "What lives in a Claude Code kitchen.",
@@ -55,9 +55,9 @@
       where: "A cook in your home knows not to throw out your grandma’s recipe. Claude Code only knows what your notes and save points protect."
     },
     quiz: [
-      { term: "Hook", q: "Where do you put a rule that must ALWAYS hold in Claude Code?", a: ["A hook or a permission mode", "CLAUDE.md", "A skill"], ok: 0, why: "Right. CLAUDE.md guides; hooks and permissions are enforced." },
-      { term: "Claude Code", q: "Recall from Lesson 7: is Claude Code an agent?", a: ["Yes, it loops: read, act, check", "No, it just chats", "Only on the web"], ok: 0, why: "Right. It’s an agent with your files as its tools." },
-      {q: "From Lesson 5: what’s prompt injection?", a: ["Hidden orders inside content Claude reads", "A longer system prompt", "A user typing fast"], ok: 0, why: "Right. Treat content as information, keep a person on risky actions.", term: "Prompt injection"}
+      { term: "Hook", q: "Where do you put a rule that must ALWAYS hold in Claude Code?", a: ["A hook or a permission mode", "In CLAUDE.md, written in capital letters", "In a skill that Claude loads when it fits"], ok: 0, why: "Right. CLAUDE.md guides; hooks and permissions are enforced." },
+      { term: "Claude Code", q: "Recall from Lesson 7: is Claude Code an agent?", a: ["Yes, it loops: read, act, check", "No, it only chats about code you paste in", "Only when it runs on the web version"], ok: 0, why: "Right. It’s an agent with your files as its tools." },
+      {q: "From Lesson 5: what’s prompt injection?", a: ["Hidden orders inside content Claude reads", "A longer system prompt written by the builder", "A user typing many messages very fast"], ok: 0, why: "Right. Treat content as information, keep a person on risky actions.", term: "Prompt injection"}
     ],
     keep: "5 questions to ask whoever builds your site with AI, and a ticket that drafts a CLAUDE.md.",
     cardLabel: "Copy my card",

@@ -43,8 +43,8 @@
       type: "pick", title: "You changed your prompt. 3 answers look great. Ready to use it?",
       options: [
         ["Not yet: run the whole test set and compare scores", true],
-        ["Yes, 3 good answers is enough", false, "That’s a vibe check. The change may have broken other cases."],
-        ["Ask Claude if it’s ready", false, "Claude can help grade, but it needs your scorecard and test set."]
+        ["Yes, three great answers in a row is enough proof", false, "That’s a vibe check. The change may have broken other cases."],
+        ["Ask Claude whether the new prompt is ready to use", false, "Claude can help grade, but it needs your scorecard and test set."]
       ],
       right: "Yes. Same test, same scorecard, before you ship.",
       wrong: "What might you not have seen?", hint: "One fix can break another dish.",
@@ -59,9 +59,9 @@
       where: "A food critic can taste anything. An eval only measures what your scorecard asks. If you forgot to check for allergies, it won’t either."
     },
     quiz: [
-      { term: "Regression", q: "What’s a regression?", a: ["Something that used to work breaks after a change", "A test question you skip", "A model getting older"], ok: 0, why: "Right. Evals catch them before your users do." },
+      { term: "Regression", q: "What’s a regression?", a: ["Something that used to work breaks after a change", "A test question you skip because it’s too hard", "When a model gets older and slower over time"], ok: 0, why: "Right. Evals catch them before your users do." },
       { term: "RAG", q: "Recall from Lesson 6: if a RAG bot gives wrong answers, what’s often the problem?", a: ["Search pulled the wrong page", "Claude needs training", "The context window is too big"], ok: 0, why: "Right. An eval on the search step finds it fast." },
-      {q: "From Lesson 6: what do embeddings do?", a: ["Turn text into numbers by meaning, so similar ideas can be found", "Train the model on your files", "Shrink long chats"], ok: 0, why: "Right. That’s how “refund” finds “money back”.", term: "Embeddings"}
+      {q: "From Lesson 6: what do embeddings do?", a: ["Turn text into numbers by meaning, so similar ideas can be found", "Train the model on your files so it learns them", "Shrink long chats into short summaries to save space"], ok: 0, why: "Right. That’s how “refund” finds “money back”.", term: "Embeddings"}
     ],
     keep: "5 questions that expose “it’s accurate” claims, and a ticket for a mini taste test.",
     cardLabel: "Copy my card",

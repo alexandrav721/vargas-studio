@@ -9,7 +9,7 @@
       ["Nothing gets trained.", "Your documents are just placed in each request. Change a page, and the next answer uses the new one."],
       ["The binder is indexed by meaning.", "Embeddings give each page a number code for its meaning. Close meanings get close codes, so “refund” finds “money back.”"]
     ],
-    guess: { q: "A help bot answers from a shop’s policy pages. Was Claude trained on them?", opts: [["No, the right page is looked up and pasted in", true], ["Yes, the shop trained it overnight", false], ["Claude already knew the policy", false]], reveal: "No training. The right page is fetched and placed in front of Claude. That’s RAG." },
+    guess: { q: "A help bot answers from a shop’s policy pages. Was Claude trained on them?", opts: [["No, the right page is looked up and pasted in", true], ["Yes, the shop trained it on the pages overnight", false], ["Claude already knew this shop’s policy from the web", false]], reveal: "No training. The right page is fetched and placed in front of Claude. That’s RAG." },
     startLabel: "Watch a lookup",
     example: {
       title: "“Can I return shoes after 40 days?”",
@@ -61,8 +61,8 @@
     },
     quiz: [
       { term: "RAG", q: "Does RAG train the model on your documents?", a: ["No, it places the right pages in each request", "Yes, a little each time it reads them", "Only the first time"], ok: 0, why: "Right. Nothing is trained. It’s looked up each time." },
-      { term: "MCP server", q: "Recall from Lesson 5: what’s an MCP server?", a: ["An appliance with a standard plug, for one service", "A newer Claude model", "The app you chat in"], ok: 0, why: "Right. A Drive or Notion server is one way to fetch pages for the binder." },
-      {q: "From Lesson 3: what’s a hallucination?", a: ["A confident wrong answer", "A very long answer", "A refused request"], ok: 0, why: "Right. Give facts and an honest exit to make it rarer.", term: "Hallucination"}
+      { term: "MCP server", q: "Recall from Lesson 5: what’s an MCP server?", a: ["An appliance with a standard plug, for one service", "A newer, more powerful Claude model for big jobs", "The app you chat in, like the Claude desktop app"], ok: 0, why: "Right. A Drive or Notion server is one way to fetch pages for the binder." },
+      {q: "From Lesson 3: what’s a hallucination?", a: ["A confident wrong answer", "An answer that is much too long to read", "When Claude refuses to answer a request"], ok: 0, why: "Right. Give facts and an honest exit to make it rarer.", term: "Hallucination"}
     ],
     keep: "5 questions about AI that answers from documents, and a ticket for a setup plan.",
     cardLabel: "Copy my card",

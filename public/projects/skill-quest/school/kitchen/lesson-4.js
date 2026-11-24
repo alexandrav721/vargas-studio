@@ -9,7 +9,7 @@
       ["The chef asks; the app runs it.", "Claude fills in a form: tool get_weather, city Paris. The app runs it and hands back the result."],
       ["Each appliance has a label.", "A tool definition: its name, what it does, what it needs. Claude reads the label to choose."]
     ],
-    guess: { q: "Can Claude check today’s weather by itself?", opts: [["Only if an app gives it a weather tool", true], ["Yes, it always knows", false], ["Never, under any setup", false]], reveal: "It needs a tool. Claude asks; the app runs the tool and hands back the result." },
+    guess: { q: "Can Claude check today’s weather by itself?", opts: [["Only if an app gives it a weather tool", true], ["Yes, Claude is always connected to live weather", false], ["Never, AI can’t use live information at all", false]], reveal: "It needs a tool. Claude asks; the app runs the tool and hands back the result." },
     startLabel: "Watch it work",
     example: {
       title: "“Should I bring an umbrella in Paris?”",
@@ -60,9 +60,9 @@
       where: "A real chef knows a toaster by sight. Claude only knows your tool from its label, so a vague label means a confused chef."
     },
     quiz: [
-      { term: "Tool result", q: "What is a tool result?", a: ["What the app sends back after running the tool", "Claude’s final answer", "The tool’s label"], ok: 0, why: "Right. Result goes back to Claude, then Claude plates the answer." },
+      { term: "Tool result", q: "What is a tool result?", a: ["What the app sends back after running the tool", "Claude’s final answer, shown to the person who asked", "The label that tells Claude what the tool can do"], ok: 0, why: "Right. Result goes back to Claude, then Claude plates the answer." },
       { term: "System prompt", q: "Recall from Lesson 3: where should a rule that must never break live?", a: ["Built into the app", "In the system prompt only", "In the user’s first message"], ok: 0, why: "Right. Prompts steer; the app enforces." },
-      {q: "From Lesson 1: what’s an LLM?", a: ["AI that writes by predicting the next piece of text", "A database of facts", "A kind of API key"], ok: 0, why: "Right. It predicts the next piece, very well.", term: "LLM"}
+      {q: "From Lesson 1: what’s an LLM?", a: ["AI that writes by predicting the next piece of text", "A huge database of facts that Claude looks things up in", "A special API key that unlocks writing features"], ok: 0, why: "Right. It predicts the next piece, very well.", term: "LLM"}
     ],
     keep: "5 questions about AI that takes actions, and a ticket that drafts a tool label.",
     cardLabel: "Copy my card",
