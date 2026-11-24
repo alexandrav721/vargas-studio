@@ -6,7 +6,7 @@
     teaser: ["RECIPE BINDER", "RAG", "The chef never memorized your recipes.<br>Someone pulls the right pages<br>and lays them on the counter.", "Six words. Six minutes."],
     lines: [
       ["RAG: look it up, then cook.", "Retrieval-augmented generation. Find the right pages of your documents, put them on the counter, then Claude answers from them."],
-      ["Nothing gets trained.", "Your pages are pasted in, fresh each time."],
+      ["Nothing gets trained.", "The right pages are pasted in each time."],
       ["The binder is indexed by meaning.", "Embeddings: number codes for meaning, so “refund” finds “money back.”"]
     ],
     guess: { q: "A help bot answers from a shop’s policy pages. Was Claude trained on them?", opts: [["No, the right page is looked up and pasted in", true], ["Yes, the shop trained it on the pages overnight", false], ["Claude already knew this shop’s policy from the web", false]], reveal: "No training. The right page is fetched and placed in front of Claude. That’s RAG." },

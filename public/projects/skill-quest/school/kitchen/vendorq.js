@@ -7,7 +7,7 @@ window.BK_VENDOR = {
     ["How do you price it as we use more?", "A clear per-seat or per-use price, with a cap you can set.", "“It depends.” No cap, no estimate."],
     ["How often is it wrong, and how do we spot it?", "A real number from their tests (for example, 1 in 20), and sources you can check.", "“It doesn’t make mistakes.”"],
     ["Is our data used to train the AI?", "“No, not by us or our AI provider, and it’s in the contract.”", "“We may use it to improve our service.” Ask what that means."]],
-    school: ["Is student work used for anything but our school?", "“No: no ads, no profiles, no selling, and it’s in the contract.”", "“We use anonymized data for research.” Ask how."],
+    school: ["Is student data used for anything but our school?", "“No: no ads, no profiles, no selling, and it’s in the contract.”", "“We use anonymized data for research.” Ask how."],
     health: ["Who at your company can see patient data?", "A short named list, with every access logged.", "“Our whole team, so we can help you faster.”"],
     finance: ["Who at your company can see client financial data?", "A short named list, with every access logged.", "“Our whole team, so we can help you faster.”"] },
   2: { q: [
@@ -61,7 +61,7 @@ window.BK_VENDOR = {
     ["What does one task cost?", "An average per task, and a limit you can set.", "No estimate."],
     ["How do we stop it mid-task?", "A stop button, and a list of what it already did.", "“You can’t, but it’s fast.”"],
     ["Is this really an agent, or a fixed set of steps?", "An honest answer. Fixed steps are fine and cheaper.", "“Everything we make is an agent.”"],
-    ["Does it make decisions about people, like grades, hiring or refunds?", "“No. It suggests; a person decides.”", "“It scores them automatically,” with no bias test to show you."]],
+    ["Does it make decisions about people, like grades, hiring or refunds?", "“No. It suggests; a person decides.”", "“It scores them automatically.”"]],
     school: ["Who is responsible if it gets something wrong for a student?", "A named staff role reviews it, and the contract says who’s accountable.", "“The AI is responsible.”"],
     health: ["Who checks its work before it affects patients or staff schedules?", "“A named person reviews it, and the log shows every step.”", "“It runs on its own overnight.”"],
     finance: ["Who is responsible for a wrong entry it makes?", "It’s in the contract, and every action is logged for review.", "“The AI made it, not us.”"] },
@@ -71,7 +71,7 @@ window.BK_VENDOR = {
     ["What is it allowed to touch?", "“Only the website files, never passwords or payments.”", "“Everything, so it can move fast.”"],
     ["Who owns the code it writes?", "“You do, and it’s in your account.”", "“You can’t take it with you if you leave.”"],
     ["What rules does it follow for our project?", "“A written rules file you can read and edit.”", "“It just knows.”"]],
-    school: ["Does the finished site meet accessibility rules?", "“Here’s our accessibility report (VPAT) for WCAG 2.1 AA, gaps listed.”", "“AI handles that.”"],
+    school: ["Does the finished site meet accessibility rules?", "“Here’s our WCAG 2.1 AA test report for your site, gaps listed.”", "“AI handles that.”"],
     health: ["Does anything it builds touch patient data?", "“No, unless your security team reviews and approves it.”", "“It can use whatever it finds.”"],
     finance: ["Who reviews code that touches money or client data?", "“A person reviews it before it goes live.”", "“It ships straight to the live system.”"] },
   9: { q: [
@@ -93,7 +93,7 @@ window.BK_VENDOR = {
     ["How fast do you tell us about a data breach?", "A set number of hours or days, in the contract.", "“We’d let you know eventually.”"],
     ["Can the price jump at renewal?", "A cap on renewal increases, in writing.", "“Prices are reviewed every year.” No cap."],
     ["Can we talk to two customers like us?", "Names you can call, in your industry.", "“Our customers prefer privacy.” No one."]],
-    business: ["Who pays if its output copies someone’s work or causes harm?", "“We do, up to a stated cap: it’s in our indemnity.”", "“You use it at your own risk.”"],
+    business: ["Who pays if its output gets us sued for copying?", "“We cover IP claims, up to a cap, in our indemnity.”", "“You use it at your own risk.”"],
     school: ["Does it follow student privacy laws (US: FERPA, COPPA for under-13s, and our state’s law)?", "“Yes. We’ll sign your district’s data agreement and use student data only for school.”", "“We’re FERPA certified.” (No such certificate exists.)"],
     health: ["Does it keep an audit trail?", "“Yes. Who asked what, what it did, and when, kept as your rules require.”", "“We don’t log that.”"],
     finance: ["Does it keep an audit trail an auditor can read?", "“Yes. Who asked, what it did, and when, kept as long as you need.”", "“We don’t log that.”"] }

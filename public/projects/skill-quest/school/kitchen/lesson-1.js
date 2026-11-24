@@ -59,7 +59,7 @@
         ["The chef’s library stops at a date.", "That’s the training cutoff. Paste in newer facts, or let Claude search the web."],
         ["Bigger chefs cost more per token.", "Pick the smallest one that does the job."]
       ],
-      where: "A real chef remembers and tastes. This one predicts text, and can sound sure while wrong."
+      where: "A real chef remembers and tastes. This one predicts text, and can sound sure and be wrong."
     },
     quiz: [
       { term: "Token", q: "What’s a token?", a: ["A small piece of text the model counts and charges by", "Exactly one word, so 100 words cost 100 tokens", "A credit you buy to send one message to Claude"], ok: 0, why: "Right. Tokens are the pieces. Limits and prices are counted in them." },

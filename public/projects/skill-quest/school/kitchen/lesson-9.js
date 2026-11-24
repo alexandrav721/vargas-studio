@@ -18,7 +18,7 @@
         '<p class="label" style="margin-top:14px">Test set: 20 real customer questions</p>' +
         '<div class="fridge"><span class="tag">Version A: 15 of 20</span><span class="tag">Version B: 18 of 20</span></div>' +
         '<p class="small">B won, but question 7 used to pass and now fails: a <b>regression</b>.</p>' +
-        '<p style="margin-top:14px">Hide a few questions while editing, so the score can’t be memorized.</p>',
+        '<p style="margin-top:14px">Keep a few questions unseen while editing, then score on them.</p>',
       next: "Your turn →"
     },
     build: {

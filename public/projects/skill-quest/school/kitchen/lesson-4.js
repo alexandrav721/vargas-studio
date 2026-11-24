@@ -9,7 +9,7 @@
       ["The chef asks; the app runs it.", "Claude fills in a form."],
       ["Each appliance has a label.", "Claude reads the tool definition to choose."]
     ],
-    guess: {q: "With no tools at all, what can Claude do?", opts: [["Read and write text, and reason about it", true], ["Look up today’s prices on a website", false], ["Send an email from your account", false]], reveal: "On its own, Claude only reads and writes text. Anything else needs a tool."},
+    guess: {q: "With no tools at all, what can Claude do?", opts: [["Read and write text, and reason about it", true], ["Look up today’s prices on a website", false], ["Send an email from your account", false]], reveal: "On its own, Claude only reads and writes. Anything else needs a tool."},
     startLabel: "Watch it work",
     example: {
       title: "“Should I bring an umbrella in Paris?”",
@@ -17,7 +17,7 @@
         '<p class="label">1. The label <span class="sample">Simplified</span></p><div class="ticket"><div class="th"><span>TOOL</span><span>definition</span></div>name: get_weather<br>does: today’s forecast for a city<br>needs: city<div class="tf">From your app</div></div>' +
         '<p class="label" style="margin-top:14px">2. Claude asks (tool call)</p><div class="reply"><p class="who">assistant</p>use get_weather · city: “Paris”</div>' +
         '<p class="label" style="margin-top:14px">3. The app runs it (tool result)</p><div class="reply"><p class="who">the app</p>Rain, 14°C, 80% chance</div>' +
-        '<p class="label" style="margin-top:14px">4. Claude answers</p><div class="reply"><p class="who">assistant</p>Yes, bring one. 80% rain.</div>' +
+        '<p class="label" style="margin-top:14px">4. Claude answers</p><div class="reply"><p class="who">assistant</p>Yes: 80% chance of rain.</div>' +
         '<p class="small">Anthropic runs <b>web search</b> (fresh news), web fetch (one page) and <b>code execution</b> (exact math). <b>Computer use</b>: Claude reads screenshots and asks the app to click and type.</p>',
       next: "Your turn →"
     },

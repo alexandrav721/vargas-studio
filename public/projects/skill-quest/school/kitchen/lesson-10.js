@@ -50,7 +50,7 @@
         ["First plans and cost guesses are often wrong.", "Taste tests and real token counts show where."],
         ["Prompt injection is a real kitchen fire.", "Content Claude reads can carry orders. A person presses risky buttons."]
       ],
-      where: "A real kitchen lasts years. AI chefs change often; keep your taste tests so switching is safe."
+      where: "A real kitchen lasts years. AI chefs change often; keep taste tests so switching is safer."
     },
     quiz: [
       { term: "Start simple", q: "A friend wants to start with 5 agents. Your advice?", a: ["Start with one request and a taste test, add pieces only when needed", "Go for it, more agents always means better results", "Train your own model first so it fits the business"], ok: 0, why: "Right. Start simple. Agents cost more and break in more ways." },

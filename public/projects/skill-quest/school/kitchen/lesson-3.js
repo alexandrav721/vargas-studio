@@ -19,7 +19,7 @@
         '<p class="label" style="margin-top:14px">House rules: “You answer for Rosa’s Bakery. Facts are in &lt;facts&gt;. If it’s not there, say you’ll ask.”</p>' +
         '<div class="reply"><p class="who">assistant</p>Yes, Sundays 9 to 1, within 5 miles.</div>' +
         '<p class="small"><b>XML tags</b> like &lt;facts&gt;…&lt;/facts&gt; are labeled boxes that keep rules, data and examples apart. <b>Examples</b>: a few varied plates teach the style (few-shot prompting).</p>' +
-        '<p style="margin-top:14px"><b>Thinking</b>: newer models think quietly first, billed like the words Claude writes. <b>Effort</b>: the app maker’s dial for how hard it thinks.</p>',
+        '<p style="margin-top:14px"><b>Thinking</b>: newer models can think quietly first; it’s billed like written words. <b>Effort</b>: the app maker’s dial for how hard it thinks.</p>',
       more: '<p class="small">Anthropic’s AI Fluency course calls the whole skill the <b>4Ds</b>: what to hand off, how you ask, checking the plate, owning what you serve.</p>',
       next: "Your turn →"
     },
@@ -65,7 +65,7 @@
       { term: "Messages", q: "Recall from Lesson 2: does the API remember the last chat?", a: ["No, the app resends it each time", "Yes, it keeps each chat for 24 hours on its side", "Only if you pay for a memory upgrade on the account"], ok: 0, why: "Right. The window forgets. Your app carries the history." },
       {term: "XML tags", q: "What are XML tags for in a prompt?", a: ["Labeled boxes that keep rules, data and examples apart", "Little programs Claude runs before it answers", "A setting that makes Claude’s answers longer and richer"], ok: 0, why: "Right. Just labels, like &lt;facts&gt;…&lt;/facts&gt;."}
     ],
-    say: "The system prompt sets the rules, but hard limits belong in the app, and it can still hallucinate.",
+    say: "The system prompt sets rules, hard limits belong in the app, and Claude can still hallucinate.",
     keep: "5 questions about a bot’s rules, and a ticket that tests house rules for a real business.",
     cardLabel: "Copy my card",
     card: "HOUSE RULES\nSystem prompt = rules on the wall, written by the builder\nPrompt engineering = clear tickets: who, example, shape\nJailbreak = a user talking around the rules\nExamples = a few finished plates to learn from\nXML tags = labeled boxes: <facts>, <rules>, <example>\nThinking + effort = quiet reasoning, billed as output\nHallucination = confident wrong plate. Give facts + “say I don’t know”",

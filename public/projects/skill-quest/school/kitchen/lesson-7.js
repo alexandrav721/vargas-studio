@@ -21,7 +21,7 @@
         '<div class="reply"><p class="who">tool</p>restaurant → Thu 7:30 open</div>' +
         '<div class="reply"><p class="who">ask you</p>Book Thu 7:30 for 4? <b>Yes / No</b></div>' +
         '<p class="small">Think → tool → look → decide again: the <b>agent loop</b>. Each round costs tokens.</p>' +
-        '<p style="margin-top:14px">Big jobs split: an <b>orchestrator</b> (head chef) hands pieces to <b>subagents</b> (sous-chefs), each with a fresh counter.</p>',
+        '<p style="margin-top:14px">Big jobs can split: a head chef (<b>orchestrator</b>) hands pieces to <b>subagents</b>: fresh counter, summary back.</p>',
       next: "Your turn →"
     },
     build: {
