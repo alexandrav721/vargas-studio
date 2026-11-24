@@ -172,7 +172,7 @@ function welcomeView() {
   const z = ui.guestZone;
   const body = ui.auth ? authSheet() : `
     <p class="cap">Brooklyn Bridge Park, sunset 4:31 pm</p>
-    <h1>Your NYC week, built around <em>what you want.</em></h1>
+    <h1>Your NYC week, sorted <em>by Sunday night.</em></h1>
     <button class="btn sun" data-act="guest">Show me a week<small>No account. A surprise week for ${z === "manhattan" ? "Manhattan" : "Brooklyn"}.</small></button>
     <div class="zonepick" role="group" aria-label="Surprise week for">
       ${ZONES.map((x) => `<button data-act="gzone" data-v="${x.id}" aria-pressed="${z === x.id}">${x.label}</button>`).join("")}
@@ -595,7 +595,7 @@ function crewView() {
         <p class="names">${nIn ? esc(names.join(", ")) : "Be the first. Send it to someone."}${nMaybe ? ` <span class="muted">· ${nMaybe} maybe</span>` : ""}</p>
         <p class="cnt">${nIn}<small>going</small></p>
       </div>
-      <div class="send"><span>Send to the group</span>${sendLinks(inviteUrl(active), `Come with me: ${e.title}, ${e.when || ""}.`)}</div>
+      <div class="send"><span>Send to the group</span>${sendLinks(inviteUrl(active), `I'm going to ${e.title}${e.when ? ", " + e.when : ""}. Are you in?`)}</div>
       ${inv.local ? `<p class="fine wrap" style="margin-top:8px">Made without the server, so replies only count on the phone they're tapped on.</p>` : ""}`;
   } else if (active && !inv) {
     top = `<p class="wrap empty">Loading your invite…</p>`;

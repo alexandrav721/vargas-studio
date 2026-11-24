@@ -142,7 +142,7 @@
     <div class="wrap hero-grid">
       <div>
         <p class="eyebrow" id="hero-eyebrow">Manhattan + Brooklyn · early build</p>
-        <h1 id="hero-h">A free week in Brooklyn, <em>planned.</em></h1>
+        <h1 id="hero-h">Your NYC week, sorted <em>by Sunday night.</em></h1>
         <p class="lede" id="hero-sub">Free and cheap rows matched to your radius. Live NYC Parks events labeled live. Thin days stay honest.</p>
         <div class="btn-row">
           <a class="btn btn-primary" href="/projects/weekline/v2/">Try the live demo
@@ -334,10 +334,26 @@
   var p = new URLSearchParams(location.search).get('a') || '';
   var alias = { free: 'gain', seek: 'identity' };
   var a = alias[p] || p;
-  if (!/^(pain|gain|identity)$/.test(a)) a = 'gain';
+  if (!/^(pain|gain|identity|sunday)$/.test(a)) a = 'sunday';
 
   // h: headline; em: the words set in italic (styling only, same copy)
   var V = {
+    sunday: {
+      eyebrow: 'Manhattan + Brooklyn · early build',
+      h: 'Your NYC week, sorted by Sunday night.', em: 'by Sunday night.',
+      sub: 'Free and cheap things that are actually on, matched to your goals and your side of the river.',
+      title: 'Your week · Cheap Thrills', meta: 'Brooklyn · stay close (~20 min) · free only',
+      rows: [
+        ['Mon', '6:30 pm', 'Shape Up NYC fitness class', 'Brooklyn rec center', 'Free', 'live'],
+        ['Tue', '', 'Open night', '', '', 'open'],
+        ['Wed', '6:00 pm', 'Free museum evening', 'Brooklyn', 'Free', 'sample'],
+        ['Thu', '', 'Open night', '', '', 'open'],
+        ['Fri', '7:00 pm', 'Gallery openings walk', 'Bushwick', 'Free', 'editorial'],
+        ['Sat', '10:00 am', 'Urban Park Rangers nature walk', 'Prospect Park', 'Free', 'live'],
+        ['Sun', '11:00 am', 'It’s My Park volunteer day', 'McCarren Park', 'Free', 'live']
+      ],
+      total: '<strong>$0</strong> · 5 plans · 2 open'
+    },
     pain: {
       eyebrow: 'Manhattan + Brooklyn · early build',
       h: 'End the “idk you pick” group chat.', em: 'group chat.',
@@ -372,8 +388,8 @@
     },
     identity: {
       eyebrow: 'Seeking · fitness · early build',
-      h: 'Getting fit? Prove it Tuesday.', em: 'Tuesday.',
-      sub: 'You’re not what you say you’ll do. You’re what you schedule. Parks classes, on your calendar.',
+      h: 'Want to start running? It’s Tuesday, free.', em: 'It’s Tuesday, free.',
+      sub: 'Free NYC Parks classes and group runs near you, on your calendar. No streaks, no coach.',
       title: 'Seeking · Fitness', meta: 'Brooklyn · stay close (~20 min) · free only',
       rows: [
         ['Mon', '', 'Open', '', '', 'open'],
