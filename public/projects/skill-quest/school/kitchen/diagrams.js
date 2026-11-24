@@ -28,12 +28,12 @@
     4: svg("The chef asks for an appliance (tool call), your code runs it, and the result comes back",
       chef(40, 66) + card(84, 22, 110, 28) + t(139, 40, "use: check_stock", { size: 11 }) + arrow(62, 56, 82, 44) +
       '<rect x="236" y="30" width="66" height="56" rx="8" ' + S + ' fill="var(--card)"/><circle cx="269" cy="58" r="12" ' + S + "/>" + t(269, 104, "the app runs it", { size: 11 }) +
-      arrow(198, 36, 230, 44) + card(84, 92, 110, 28) + t(139, 110, "result: 4 left", { size: 11 }) + arrow(232, 80, 198, 100) + arrow(80, 104, 62, 92) + t(160, 144, "Claude asks. The app (waiter) presses the button.")),
+      arrow(198, 36, 230, 44) + card(84, 92, 110, 28) + t(139, 110, "result: 4 left", { size: 11 }) + arrow(232, 80, 198, 100) + arrow(80, 104, 62, 92) + t(160, 144, "Claude asks. The app runs it and brings back the result.")),
     5: svg("A wall of identical outlets (MCP) with Drive, Slack and Calendar plugged in",
       '<rect x="20" y="20" width="280" height="64" rx="6" ' + S + ' fill="var(--track)"/>' +
       [70, 160, 250].map(function (x) { return '<rect x="' + (x - 18) + '" y="34" width="36" height="36" rx="6" ' + S + ' fill="var(--card)"/><path d="M' + (x - 6) + " 46v10M" + (x + 6) + ' 46v10" ' + S + "/>"; }).join("") +
       [["Drive", 70], ["Slack", 160], ["Calendar", 250]].map(function (p) { return '<path d="M' + p[1] + " 72v26\" " + A + "/>" + card(p[1] - 34, 98, 68, 24) + t(p[1], 114, p[0], { size: 11 }); }).join("") +
-      t(160, 144, "MCP = one plug shape, any appliance")),
+      t(160, 144, "MCP = one plug shape, many AI apps")),
     6: svg("Pages are pulled from the recipe binder and laid on the counter for the chef",
       '<rect x="16" y="30" width="70" height="86" rx="6" ' + S + ' fill="var(--card)"/><path d="M28 30v86" ' + S + "/>" + t(56, 132, "your binder", { size: 11 }) +
       card(118, 44, 40, 50) + '<path d="M126 58h24M126 68h24M126 78h16" ' + S + ' stroke-width="1.5"/>' + t(138, 108, "right page", { size: 10, c: "var(--accent)" }) +
