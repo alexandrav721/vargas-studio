@@ -19,7 +19,7 @@
         '<div class="fridge"><span class="tag">Skill: a recipe card (SKILL.md)</span><span class="tag">/command: a shortcut you type</span><span class="tag">Hook: a bell that rings at set moments</span><span class="tag">Plugin: a boxed kit of all of these</span></div>' +
         '<p class="small">A <b>hook</b> runs automatically at set moments, like right before or after every edit. It always runs, and one set before an action can stop it. CLAUDE.md is only a request. A <b>/command</b> is a shortcut you type in the chat box, like /help. To make your own, you write a skill.</p><p class="small">Claude Code changes real files, so it uses <b>git</b>: a history of save points you can go back to.</p>',
       more: '<p class="small">In <b>plan mode</b> it reads you the plan before touching anything. <b>Permission modes</b> set what it may do without asking.</p><p style="margin-top:14px">Claude Code runs in the Claude desktop app, on the web, and in the tools developers use. It changes real files, so it keeps <b>git</b> save points you can roll back to.</p>',
-      next: "Write your fridge note"
+      next: "Your turn →"
     },
     build: {
       title: "Your turn. Write your fridge note.",

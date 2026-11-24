@@ -18,7 +18,7 @@
         '<div class="ticket"><div class="th"><span>KITCHEN PLAN</span><span>architecture</span></div>' +
         'Chef (model): Sonnet. Fast and good enough<br>Window (API): the website sends each chat<br>House rules (system prompt): bakery voice, under 80 words<br>Appliance (tool): check_order_status<br>Outlet (MCP): Google Calendar for pickups<br>Binder: 8-page menu, pasted in (cached when busy)<br>Head chef? No. A prep checklist (workflow) is enough<br>Taste test: 25 real questions, run every change<br>Guardrails: refunds need a person' +
         '<div class="tf">Simplest kitchen that does the job</div></div>',
-      next: "Plan yours"
+      next: "Your turn →"
     },
     build: {
       title: "Your turn. Draw your kitchen.",
@@ -36,7 +36,7 @@
           "Give me a one-screen plan with: model, system prompt (3 rules), tools, MCP connectors, documents (paste in or RAG?), workflow or agent, the eval, and guardrails.\n" +
           "Then: which piece I picked that I don't need yet, the simplest version I could build this week, and a rough cost per 100 uses, clearly marked as an estimate.";
       },
-      vendor: ["AI they built for businesses like mine", "which model, tools and data it uses, what it costs per month at my volume, and its guardrails"], claude: "Open in Claude", done: "Done →"
+      vendor: ["AI they built for organizations like ours", "which model, tools and data it uses, what it costs per month at my volume, and its guardrails"], claude: "Open in Claude", done: "Done →"
     },
     game: {
       type: "match", title: "Final round: every station.", lead: "Tap a word, then its kitchen.",

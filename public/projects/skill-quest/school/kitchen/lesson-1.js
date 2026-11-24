@@ -23,7 +23,7 @@
         '<div class="reply"><p class="who">On the counter right now</p>Your order · anything you pasted · the chef’s reply so far</div>' +
         '<p class="small">That counter is the <b>context window</b>. On current Claude models it holds about 1 million tokens, roughly 555,000 words. Huge, but the chef still only sees what’s on it.</p>' +
         '<p style="margin-top:14px">Claude comes in a <b>model family</b>: <b>Haiku</b> (fastest, cheapest), <b>Sonnet</b> (balanced), <b>Opus</b> (where Anthropic suggests most people start) and <b>Fable</b> (the hardest jobs, like long multi-step work). Same kitchen, different chefs.</p>',
-      next: "Pick your chef"
+      next: "Your turn →"
     },
     build: {
       title: "Your turn. Pick a chef for your job.",

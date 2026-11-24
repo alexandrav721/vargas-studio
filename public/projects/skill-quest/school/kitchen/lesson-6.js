@@ -19,7 +19,7 @@
         '<p class="label" style="margin-top:14px">2. Search by meaning (embeddings + a vector database)</p><div class="reply"><p class="who">search</p>Closest page: “Returns: unworn items within 30 days.”</div>' +
         '<p class="label" style="margin-top:14px">3. Claude answers from that page</p><div class="reply"><p class="who">assistant</p>Sorry, returns are 30 days. <span class="small">[Source: Returns policy]</span></div><p class="small">A <b>vector database</b> stores those meaning codes and finds the closest match. <b>Citations</b> show which page was used. Small binder? Paste it all in.</p>',
       more: '<p class="small"><b>Citations</b> point to the page used, so people can check. Claude doesn’t make embeddings. App makers get them from another company (Anthropic’s docs suggest Voyage AI).</p><p style="margin-top:14px"><b>Small binder?</b> Skip the search. Under roughly 500 pages, Anthropic suggests putting it all on the counter and using <b>prompt caching</b>: the pages are read in once and stored, so repeat questions cost less. The stored copy lasts 5 minutes after each use.</p>',
-      next: "Plan your binder"
+      next: "Your turn →"
     },
     build: {
       title: "Your turn. What goes in your binder?",

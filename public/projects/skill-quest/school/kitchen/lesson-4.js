@@ -19,7 +19,7 @@
         '<p class="label" style="margin-top:14px">3. The app runs it (tool result)</p><div class="reply"><p class="who">the app</p>Rain, 14°C, 80% chance</div>' +
         '<p class="label" style="margin-top:14px">4. Claude plates the answer</p><div class="reply"><p class="who">assistant</p>Yes, bring one. 80% chance of rain.</div>' +
         '<p class="small">Anthropic runs a few appliances itself: <b>web search</b> (finds fresh news online), web fetch (reads one web page) and <b>code execution</b> (runs code to do exact math). With <b>computer use</b>, Claude looks at screenshots and asks the app to click and type.</p>',
-      next: "Design an appliance"
+      next: "Your turn →"
     },
     build: {
       title: "Your turn. Design an appliance.",

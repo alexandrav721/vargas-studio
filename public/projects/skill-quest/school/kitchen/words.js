@@ -6,7 +6,7 @@ window.BK_WORDS = [
 ["Prompt","Your order","What you send: your words plus anything you attach, like examples or documents.","Not magic words. Clear context beats tricks.",1,"Can you share the prompt you used?"],
 ["Token","The pieces it counts and charges by","A small chunk of text, often part of a word. Limits and prices are counted in tokens.","Not one word. Words often split into several tokens.",1,"That report is about 40,000 tokens."],
 ["Context window","The counter: all the chef can see","How much fits on the counter at once: your prompt, the chat so far, the reply and thinking. About 1M tokens on current Claude models.","Not long-term memory. A new chat starts with an empty counter.",1,"Paste the whole doc. It fits in the context window."],
-["Model family","Different chefs in one kitchen","Claude comes in sizes: Haiku (fast), Sonnet (balanced), Opus (usual start), Fable (hardest jobs).","Price per token differs a lot too.",1,"Use Haiku for tagging and Opus for the strategy doc."],
+["Model family","Chefs of different sizes","Claude comes in sizes: Haiku (fast), Sonnet (balanced), Opus (usual start), Fable (hardest jobs).","Price per token differs a lot too.",1,"Use Haiku for tagging and Opus for the strategy doc."],
 ["Training cutoff", "The date the cookbook stopped printing", "The date a model’s training data ends. It doesn’t know later events unless you tell it or it searches.", "Not a bug. Use web search or paste in what’s new.", 1, "It doesn’t know last month’s launch. That’s after its training cutoff."],
 ["Compaction", "Wiping the counter, keeping one summary card", "Squeezing a long chat into a short summary to free up space on the counter.", "Details can be lost in the summary. Paste back what matters.", 1, "Run /compact before we start the next task."],
 ["Project", "Your own station with a stocked shelf", "A workspace in the Claude app with its own files and instructions that every chat inside it uses.", "Chats in a project share files and instructions, not each other’s conversations.", 1, "Put the brand guide in the project so every chat uses it."],
@@ -77,4 +77,4 @@ window.BK_WORDS = [
 ["Start simple","The smallest kitchen that works","Anthropic’s advice: try one request first, then a workflow, then an agent.","",10,"Start simple: one prompt, then see."]
 ];
 /* Dictionary-only or only seen in passing: not counted or quizzed. */
-window.BK_UNTAUGHT = ["Project", "Artifact", "Structured outputs", "Rate limits", "4Ds", "Plan mode", "Permission modes", "Training cutoff", "Compaction", "Jailbreak", "Temperature", "Computer use", "Host", "Git"];
+window.BK_UNTAUGHT = ["Project", "Artifact", "Structured outputs", "Rate limits", "4Ds", "Plan mode", "Permission modes", "Training cutoff", "Compaction", "Jailbreak", "Temperature", "Computer use", "Git"];

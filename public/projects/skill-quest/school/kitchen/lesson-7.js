@@ -22,14 +22,14 @@
         '<div class="reply"><p class="who">ask you</p>Book Thu 7:30 for 4? <b>Yes / No</b></div>' +
         '<p class="small">Think → use a tool → look at the result → decide again. That’s the <b>agent loop</b>. Each round costs tokens.</p>' +
         '<p style="margin-top:14px">Big jobs can split: an <b>orchestrator</b> (head chef) hands pieces to <b>subagents</b> (sous-chefs). Each has its own counter (a fresh context window) and reports back a short summary.</p>',
-      next: "Agent or checklist?"
+      next: "Your turn →"
     },
     build: {
       title: "Your turn. Agent or prep checklist?",
       lead: "Pick a job. Your ticket asks Claude which setup fits, and where a person must say yes.",
       state: { job: "reply to every customer email" },
       controls: function (s, esc) {
-        var jobs = ["reply to every customer email", "a weekly roundup of competitor ads", "turn receipts into a spreadsheet", "turn a brief into 10 ad ideas", "plan a 5-day trip"];
+        var jobs = ["reply to every customer email", "a weekly roundup of competitor ads", "turn receipts into a spreadsheet", "turn a brief into 10 ad ideas", "schedule staff shifts"];
         return '<p class="label">The job</p><div class="fridge">' + jobs.map(function (v) { return '<button type="button" class="chip" data-set="job" data-v="' + esc(v) + '" aria-pressed="' + (s.job === v) + '">' + esc(v) + "</button>"; }).join("") + "</div>";
       },
       head: "ORDER #B07", right: "agent check", foot: "Paste it into Claude, or open it there",
@@ -64,7 +64,8 @@
     quiz: [
       { term: "Agent loop", q: "What’s the agent loop?", a: ["Think, use a tool, check the result, repeat", "Running the same fixed steps every time", "Asking the same question twice"], ok: 0, why: "Right. It keeps going until the job is done or it hits a limit." },
       { term: "Tool use", q: "Recall from Lesson 4: what does an agent use to act?", a: ["Tools", "A bigger context window", "Its system prompt alone"], ok: 0, why: "Right. No tools, no actions. Agents are tools in a loop." },
-      {q: "From Lesson 4: what’s a tool definition?", a: ["The label: name, what it does, what it needs", "The tool’s result", "A list of every app Claude can use"], ok: 0, why: "Right. Claude reads the label to choose.", term: "Tool definition"}
+      {q: "From Lesson 4: what’s a tool definition?", a: ["The label: name, what it does, what it needs", "The tool’s result", "A list of every app Claude can use"], ok: 0, why: "Right. Claude reads the label to choose.", term: "Tool definition"},
+      { term: "Human in the loop", q: "Your agent drafted 40 emails to customers. What should happen next?", a: ["A person checks and approves before they send", "Send them, agents are reliable", "Let a second agent send them"], ok: 0, why: "Right. Anything that sends, spends, books or deletes gets a person first." }
     ],
     keep: "6 questions to ask anyone selling an agent, and a ticket that sorts a real job.",
     cardLabel: "Copy my card",

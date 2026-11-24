@@ -21,7 +21,7 @@
         '<p class="small">A chat is a list of <b>messages</b>: “user” turns are yours, “assistant” turns are Claude’s. To ask a follow-up, your app sends the whole list again.</p>' +
         '<p style="margin-top:14px"><b>Streaming</b> means words show up as they’re written. <b>Cost per token</b>: you pay for tokens in (what is sent) and tokens out (what Claude writes). Out costs more.</p>',
       more: '<p class="small">Real requests also name the exact model (like claude-sonnet-5-5) and a reply length limit.</p>',
-      next: "Write a ticket"
+      next: "Your turn →"
     },
     build: {
       title: "Your turn. Fill in an order ticket.",

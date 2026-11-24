@@ -21,7 +21,7 @@
         '<p class="small"><b>XML tags</b> are labels in angle brackets: &lt;facts&gt; opens a box and &lt;/facts&gt; closes it. You can type them in any prompt to keep rules, data and examples apart. <b>Examples</b> show the chef a few finished plates, so it learns the style without copying one. Builders call this few-shot prompting.</p>' +
         '<p style="margin-top:14px"><b>Thinking</b>: newer Claude models can work a problem out quietly before answering. <b>Effort</b> is a dial the app’s maker sets: high for hard jobs, low for quick ones. Thinking is billed like the words Claude writes.</p>',
       more: '<p class="small">Anthropic’s AI Fluency course calls the whole skill the <b>4Ds</b>: what to hand off, how you ask, checking the plate, owning what you serve.</p>',
-      next: "Write rules"
+      next: "Your turn →"
     },
     build: {
       title: "Your turn. Write the rules on the wall.",

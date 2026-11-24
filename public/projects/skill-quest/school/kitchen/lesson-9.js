@@ -19,7 +19,7 @@
         '<div class="fridge"><span class="tag">Version A · 15 of 20 pass</span><span class="tag">Version B · 18 of 20 pass</span></div>' +
         '<p class="small">Version B won, but question 7 used to pass and now fails. That’s a <b>regression</b>. You only see it because you kept the same test set.</p>' +
         '<p style="margin-top:14px">Keep some questions aside that you never use while editing the prompt. Otherwise the score only proves you memorized the test.</p>',
-      next: "Write your scorecard"
+      next: "Your turn →"
     },
     build: {
       title: "Your turn. Write a scorecard.",
