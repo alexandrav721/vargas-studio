@@ -3,11 +3,11 @@
   var L = {
     n: 7, id: "b7", mins: 9, title: "The head chef.", stamp: "Agents",
     terms: ["Agent", "Agent loop", "Workflow", "Subagent", "Orchestrator", "Human in the loop"],
-    teaser: ["HEAD CHEF", "agents", "Not one plate. A whole dinner.<br>It decides the next step,<br>checks the pot, and keeps going.", "Six words. Nine minutes."],
+    teaser: ["HEAD CHEF", "agents", "The whole dinner, start to finish.<br>It decides the next step,<br>checks the pot, and keeps going.", "Six words. Nine minutes."],
     lines: [
       ["An agent is a chef running the whole dinner.", "Claude picks its own next step and uses tools, again and again, until the job is done."],
-      ["A workflow is a fixed recipe.", "Your code sets the steps: first this, then that. Cheaper and more predictable."],
-      ["Anthropic’s advice: start simple.", "One good request beats a workflow. A workflow beats an agent. Use an agent only when the steps can’t be known ahead."]
+      ["A workflow is a prep checklist.", "Whoever built it set the steps: first this, then that, like a Zapier zap. Cheaper and more predictable."],
+      ["Anthropic’s advice: start simple.", "Try one good request first, then a workflow. Use an agent only when the steps can’t be known ahead."]
     ],
     guess: { q: "“Book me a table for Friday.” What makes this an agent job?", opts: [["Claude picks its own next steps until it’s done", true], ["It uses a bigger model", false], ["It’s a longer message", false]], reveal: "An agent decides its own steps and uses tools in a loop until the job is done." },
     startLabel: "Watch the loop",
@@ -29,28 +29,28 @@
       lead: "Pick a job. Your ticket asks Claude which setup fits, and where a person must say yes.",
       state: { job: "reply to every customer email" },
       controls: function (s, esc) {
-        var jobs = ["reply to every customer email", "plan a 5-day trip", "turn receipts into a spreadsheet", "research 10 competitors", "fix a bug in my app"];
+        var jobs = ["reply to every customer email", "a weekly roundup of competitor ads", "turn receipts into a spreadsheet", "turn a brief into 10 ad ideas", "plan a 5-day trip"];
         return '<p class="label">The job</p><div class="fridge">' + jobs.map(function (v) { return '<button type="button" class="chip" data-set="job" data-v="' + esc(v) + '" aria-pressed="' + (s.job === v) + '">' + esc(v) + "</button>"; }).join("") + "</div>";
       },
       head: "ORDER #B07", right: "agent check", foot: "Paste it into Claude, or open it there",
       text: function (s) {
-        return "I'm learning about AI agents. The job: " + s.job + ".\n" +
+        return "Make me a one-screen plan for this job: " + s.job + ".\n" +
           "1. Would you build this as one request, a fixed workflow, or an agent? Why, in 2 lines.\n" +
           "2. Draw the steps as a short list (think / tool / check).\n" +
           "3. Where must a human approve before it acts? 4. Would subagents help? One line.";
       },
-      claude: "Open Claude with my ticket", done: "I checked my job →"
+      claude: "Open in Claude", done: "I checked my job →"
     },
     game: {
-      type: "tapall", title: "Which jobs really need an agent?", lead: "Tap all {n}. The rest are fine as a fixed recipe.",
+      type: "tapall", title: "Which jobs really need an agent?", lead: "Tap the {n} that do. The rest are fine as a prep checklist.",
       options: [
         ["Research a question across many websites", true], ["Fix a bug you haven’t found yet", true],
         ["Turn every receipt into the same 5 columns", false, "Same steps every time. A fixed workflow is cheaper."],
         ["Translate a menu into Spanish", false, "One request does it."]
       ],
       right: "Yes. Agents earn their cost when the next step depends on what they find.",
-      wrong: "Could you write the steps down in advance? Then it’s a recipe.",
-      habitTitle: "Builder habit", habit: "Before you build an agent, ask: could I write these steps down? If yes, write a workflow."
+      wrong: "Could you write the steps down in advance? Then it’s a checklist.",
+      habitTitle: "Builder habit", habit: "Before you build an agent, ask: could I write these steps down? If yes, make it a workflow."
     },
     breaks: {
       title: "A chef alone can wreck a kitchen.",
@@ -62,12 +62,12 @@
       where: "A head chef feels when a dish is off. An agent only knows what its tools report. If the tool says “done,” it believes it."
     },
     quiz: [
-      { q: "What’s the agent loop?", a: ["Think, use a tool, check the result, repeat", "Asking the same question twice"], ok: 0, why: "Right. It keeps going until the job is done or it hits a limit." },
+      { q: "What’s the agent loop?", a: ["Think, use a tool, check the result, repeat", "Running the same fixed steps every time"], ok: 0, why: "Right. It keeps going until the job is done or it hits a limit." },
       { q: "Recall from Lesson 4: what does an agent use to act?", a: ["Tools", "A bigger context window"], ok: 0, why: "Right. No tools, no actions. Agents are tools in a loop." }
     ],
     keep: "a clear call on one real job: request, recipe or agent, with the approval points marked.",
     cardLabel: "Copy my head-chef card",
-    card: "THE HEAD CHEF (AGENTS)\nAgent = Claude picks its own steps and tools until done\nAgent loop = think → tool → check → repeat\nWorkflow = fixed steps set by your code\nOrchestrator = head chef splitting the job\nSubagent = sous-chef with its own counter, reports a summary\nHuman in the loop = a person approves risky actions\nStart simple: request → workflow → agent",
+    card: "THE HEAD CHEF (AGENTS)\nAgent = Claude picks its own steps and tools until done\nAgent loop = think → tool → check → repeat\nWorkflow = a prep checklist: fixed steps set by the builder\nOrchestrator = head chef splitting the job\nSubagent = sous-chef with its own counter, reports a summary\nHuman in the loop = a person approves risky actions\nStart simple: one request, then a workflow, then an agent",
     real: ["Introduction to subagents", "https://anthropic.skilljar.com/introduction-to-subagents"]
   };
   document.addEventListener("DOMContentLoaded", function () { BK.run(L); });

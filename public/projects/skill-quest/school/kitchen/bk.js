@@ -5,16 +5,16 @@
   "use strict";
   var KEY = "smez-builders-v1";
   var TRACK = [
-    { n: 1, id: "b1", short: "The kitchen", name: "How AI kitchens work", href: "lesson-1.html" },
-    { n: 2, id: "b2", short: "Order window", name: "The order window (API)", href: "lesson-2.html" },
-    { n: 3, id: "b3", short: "House rules", name: "House rules (prompting)", href: "lesson-3.html" },
-    { n: 4, id: "b4", short: "Appliances", name: "The chef’s appliances (tools)", href: "lesson-4.html" },
-    { n: 5, id: "b5", short: "Outlets", name: "Standard outlets (MCP)", href: "lesson-5.html" },
-    { n: 6, id: "b6", short: "Recipe binder", name: "The recipe binder (RAG)", href: "lesson-6.html" },
-    { n: 7, id: "b7", short: "Head chef", name: "The head chef (agents)", href: "lesson-7.html" },
-    { n: 8, id: "b8", short: "Your kitchen", name: "A chef in your kitchen (Claude Code)", href: "lesson-8.html" },
-    { n: 9, id: "b9", short: "Taste tests", name: "Taste tests at scale (evals)", href: "lesson-9.html" },
-    { n: 10, id: "b10", short: "Graduation", name: "Plan your own kitchen", href: "lesson-10.html" }
+    { n: 1, id: "b1", short: "The kitchen", name: "How AI kitchens work", href: "lesson-1.html", use: "someone says “we hit the token limit”" },
+    { n: 2, id: "b2", short: "Order window", name: "The order window (API)", href: "lesson-2.html", use: "a vendor says “we just call the API”" },
+    { n: 3, id: "b3", short: "House rules", name: "House rules (prompting)", href: "lesson-3.html", use: "you set up a bot’s instructions" },
+    { n: 4, id: "b4", short: "Appliances", name: "The chef’s appliances (tools)", href: "lesson-4.html", use: "someone says “it can use tools”" },
+    { n: 5, id: "b5", short: "Outlets", name: "Standard outlets (MCP)", href: "lesson-5.html", use: "IT asks which connectors to turn on" },
+    { n: 6, id: "b6", short: "Recipe binder", name: "The recipe binder (RAG)", href: "lesson-6.html", use: "someone says “we’ll train it on our docs”" },
+    { n: 7, id: "b7", short: "Head chef", name: "The head chef (agents)", href: "lesson-7.html", use: "everyone is pitching “agents”" },
+    { n: 8, id: "b8", short: "Your kitchen", name: "A chef in your kitchen (Claude Code)", href: "lesson-8.html", use: "a developer mentions Claude Code or skills" },
+    { n: 9, id: "b9", short: "Taste tests", name: "Taste tests at scale (evals)", href: "lesson-9.html", use: "someone asks “is the new version better?”" },
+    { n: 10, id: "b10", short: "Graduation", name: "Plan your own kitchen", href: "lesson-10.html", use: "you plan your own AI project" }
   ];
   function read() { try { return JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (e) { return {}; } }
   function write(v) { try { localStorage.setItem(KEY, JSON.stringify(v)); } catch (e) {} }
@@ -39,7 +39,7 @@
       function prog() { return '<div class="prog"><span>Lesson ' + L.n + " · " + (step + 1) + " of " + STEPS + '</span><span class="bar"><i style="width:' + Math.round((step + 1) / STEPS * 100) + '%"></i></span></div>'; }
       function show(html) { app.innerHTML = prog() + '<section class="step">' + html + "</section>"; window.scrollTo(0, 0); try { app.focus({ preventScroll: true }); } catch (e) {} }
       function next() { step++; render(); play("pick"); }
-      function nextBtn(label) { return '<div class="btns"><button class="btn" data-next type="button">' + esc(label) + "</button></div>"; }
+      function nextBtn(label, ghost) { return '<div class="btns"><button class="btn' + (ghost ? " ghost" : "") + '" data-next type="button">' + esc(label) + "</button></div>"; }
 
       /* games: "pick" (one right), "tapall" (find every right one), "match" (term → kitchen meaning) */
       function game(G) {
@@ -50,7 +50,7 @@
         };
         if (G.type === "pick") {
           show("<h2>" + esc(G.title) + "</h2>" + (G.lead ? '<p class="muted">' + G.lead + "</p>" : "") +
-            '<ul class="claims">' + G.options.map(function (o, i) { return '<li><button type="button" data-o="' + i + '">' + o[0] + "</button></li>"; }).join("") + '</ul><div id="fb"></div>');
+            '<ul class="claims">' + G.options.map(function (o, i) { return '<li><button type="button" data-o="' + i + '">' + o[0] + "</button></li>"; }).join("") + '</ul><div id="fb" role="status" aria-live="polite"></div>');
           var tries = 0;
           app.querySelectorAll("[data-o]").forEach(function (b) {
             b.onclick = function () {
@@ -65,7 +65,7 @@
         if (G.type === "tapall") {
           var need = G.options.filter(function (o) { return o[1]; }).length, found = 0;
           show("<h2>" + esc(G.title) + "</h2>" + '<p class="muted">' + G.lead.replace("{n}", need) + "</p>" +
-            '<ul class="claims">' + G.options.map(function (o, i) { return '<li><button type="button" data-o="' + i + '">' + o[0] + "</button></li>"; }).join("") + '</ul><div id="fb"></div>');
+            '<ul class="claims">' + G.options.map(function (o, i) { return '<li><button type="button" data-o="' + i + '">' + o[0] + "</button></li>"; }).join("") + '</ul><div id="fb" role="status" aria-live="polite"></div>');
           app.querySelectorAll("[data-o]").forEach(function (b) {
             b.onclick = function () {
               var o = G.options[+b.dataset.o], fb = document.getElementById("fb");
@@ -85,7 +85,7 @@
           show("<h2>" + esc(G.title) + "</h2>" + '<p class="muted">' + G.lead + "</p>" +
             '<div class="match"><div class="col" aria-label="Terms">' + G.pairs.map(function (p, i) { return '<button type="button" class="mt" data-t="' + i + '">' + esc(p[0]) + "</button>"; }).join("") + "</div>" +
             '<div class="col" aria-label="Kitchen meanings">' + order.map(function (i) { return '<button type="button" class="mm" data-m="' + i + '">' + esc(G.pairs[i][1]) + "</button>"; }).join("") + "</div></div>" +
-            '<div id="fb"><p class="fb try" style="visibility:hidden">.</p></div>');
+            '<div id="fb" role="status" aria-live="polite"><p class="fb try" style="visibility:hidden">.</p></div>');
           app.querySelectorAll("[data-t]").forEach(function (b) {
             b.onclick = function () {
               if (b.classList.contains("right")) return;
@@ -120,13 +120,14 @@
         if (step === 0) return show(
           '<p class="label">Lesson ' + L.n + " · about " + L.mins + " minutes</p>" +
           "<h1>" + esc(L.title) + "</h1>" +
-          (L.guess ? '<p class="fb ' + (L.guess.opts[guessed][1] ? "good\">Good guess. " : "try\">Most people guess that. ") + L.guess.reveal + "</p>" : '<div class="teaser" aria-hidden="true">' + ticket(L.teaser[0], L.teaser[1], L.teaser[2], L.teaser[3]) + "</div>") +
-          '<ul class="lines">' + L.lines.map(function (x) { return "<li><b>" + x[0] + "</b>" + x[1] + "</li>"; }).join("") + "</ul>" +
+          (L.guess ? '<p class="fb ' + (L.guess.opts[guessed][1] ? "good\">Good guess. " : "try\">Most people guess that. ") + L.guess.reveal + "</p>" : "") +
+          ((window.BK_DIAGRAMS && window.BK_DIAGRAMS[L.n]) || '<div class="teaser" aria-hidden="true">' + ticket(L.teaser[0], L.teaser[1], L.teaser[2], L.teaser[3]) + "</div>") +
+          '<ul class="lines">' + L.lines.slice(0, 2).map(function (x) { return "<li><b>" + x[0] + "</b>" + x[1] + "</li>"; }).join("") + "</ul>" +
           '<p class="label" style="margin-top:16px">Words you’ll know by the end</p>' + termChips(L.terms) +
           nextBtn(L.startLabel || "Show me") +
           '<p class="small">Doing this with someone? Tap "Bigger text" at the top.</p>');
 
-        if (step === 1) return show("<h2>" + esc(L.example.title) + "</h2>" + L.example.html + nextBtn(L.example.next || "Now you try"));
+        if (step === 1) return show("<h2>" + esc(L.example.title) + "</h2>" + (L.lines[2] ? '<ul class="lines"><li><b>' + L.lines[2][0] + "</b>" + L.lines[2][1] + "</li></ul>" : "") + L.example.html + nextBtn(L.example.next || "Now you try"));
 
         if (step === 2) {
           var B = L.build;
@@ -134,7 +135,7 @@
             '<p class="label">' + esc(B.ticketLabel || "Your ticket") + '</p><div id="ticket"></div>' +
             '<div class="btns">' + (B.claude ? '<a class="btn" id="open" target="_blank" rel="noopener">' + esc(B.claude) + "</a>" : "") + '<button class="btn ' + (B.claude ? "ghost" : "") + '" id="copy" type="button">' + esc(B.copyLabel || "Copy my ticket") + "</button></div>" +
             (B.after ? '<p class="small">' + B.after + "</p>" : "") +
-            nextBtn(B.done || "Done →"));
+            nextBtn(B.done || "Done →", true));
           var draw = function (added) {
             var text = B.text(state);
             var body = esc(text).replace(/\n/g, "<br>");
@@ -161,12 +162,12 @@
 
         if (step === 4) return show("<h2>" + esc(L.breaks.title) + "</h2>" +
           '<ul class="lines">' + L.breaks.lines.map(function (x) { return "<li><b>" + x[0] + "</b>" + x[1] + "</li>"; }).join("") + "</ul>" +
-          '<div class="breaks"><b>Where the kitchen idea breaks</b>' + L.breaks.where + "</div>" + nextBtn("Two quick questions"));
+          '<div class="breaks"><b>Where the kitchen idea breaks</b>' + L.breaks.where + "</div>" + nextBtn("Take the quiz"));
 
         if (step === 5) {
           var Q = L.quiz.map(function (x) { var idx = x.a.map(function (_, j) { return j; }); if (Math.random() < 0.5) idx.reverse(); return { q: x.q, why: x.why, a: idx.map(function (j) { return x.a[j]; }), ok: idx.indexOf(x.ok) }; }), got = 0, answered = {};
           show("<h2>Two quick questions.</h2>" + Q.map(function (x, i) {
-            return '<div style="margin:18px 0"><p><b>' + (i + 1) + ". " + x.q + '</b></p><ul class="claims">' + x.a.map(function (a, j) { return '<li><button type="button" data-q="' + i + '" data-a="' + j + '">' + a + "</button></li>"; }).join("") + '</ul><div id="q' + i + '"></div></div>';
+            return '<div style="margin:18px 0"><p><b>' + (i + 1) + ". " + x.q + '</b></p><ul class="claims">' + x.a.map(function (a, j) { return '<li><button type="button" data-q="' + i + '" data-a="' + j + '">' + a + "</button></li>"; }).join("") + '</ul><div id="q' + i + '" role="status" aria-live="polite"></div></div>';
           }).join("") + '<div id="qdone"></div>');
           app.querySelectorAll("[data-q]").forEach(function (b) {
             b.onclick = function () {
@@ -192,12 +193,16 @@
           '<div class="kept"><p><b>Words you now know:</b></p>' + termChips(L.terms) +
           "<p><b>You leave with:</b> " + L.keep + "</p></div>" +
           '<div class="btns"><button class="btn" id="save" type="button">' + esc(L.cardLabel || "Copy my card") + "</button>" +
-          (nxt ? '<a class="btn ghost" href="' + nxt.href + '">Lesson ' + nxt.n + ": " + esc(nxt.name) + " →</a>" : "") +
-          '<a class="btn ghost" href="./">See my Builder’s passport</a></div>' +
+          (nxt ? '<a class="btn ghost" href="' + nxt.href + '">Next lesson →</a>' : "") +
+          '<a class="btn ghost" href="./">My passport</a><button class="btn ghost" id="send" type="button">Send this lesson</button></div>' +
           (L.real ? '<p class="small">Go deeper: <a href="' + L.real[1] + '" target="_blank" rel="noopener">' + esc(L.real[0]) + "</a> (Anthropic’s own course).</p>" : "") + "</section>";
         window.scrollTo(0, 0);
         setTimeout(function () { play(all ? "win" : "stamp"); }, 260);
         document.getElementById("save").onclick = function () { copy(L.card, "Card copied"); };
+        document.getElementById("send").onclick = function () {
+          var d = { title: "AI Made EZ · " + L.title, text: "A 9-minute lesson that made this make sense:", url: location.href };
+          if (navigator.share) navigator.share(d).catch(function () {}); else copy(d.text + " " + d.url, "Link copied");
+        };
       };
       app.addEventListener("click", function (e) { if (e.target.closest("[data-next]") && e.target.closest(".step")) next(); });
       render();

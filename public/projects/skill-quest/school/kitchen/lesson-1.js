@@ -6,23 +6,23 @@
     teaser: ["THE KITCHEN", "how it works", "You place the order (prompt).<br>The chef cooks it (model).<br>The counter holds it all (context window).", "Six words. Eight minutes."],
     lines: [
       ["Claude is a model.", "A model is the chef. It learned from a huge library of text, and now it writes on request."],
-      ["It’s an LLM: a large language model.", "It cooks by predicting the next piece of text, one piece at a time, very well."],
+      ["It’s an LLM: a large language model.", "Large because it learned from a huge amount of text."],
       ["Your order is a prompt.", "Everything the chef can see sits on one counter: the context window."]
     ],
     guess: { q: "How does Claude write an answer?", opts: [["It predicts the next piece of text, again and again", true], ["It looks the answer up in a giant database", false], ["A person types it behind the scenes", false]], reveal: "It predicts the next piece of text. That’s what a large language model does." },
-    startLabel: "Look inside the kitchen",
+    startLabel: "Look inside",
     example: {
       title: "One order, seen from the kitchen.",
       html:
         '<p class="label">Your order <span class="sample">Sample</span></p>' +
         '<div class="ticket"><div class="th"><span>PROMPT</span><span>your order</span></div>Summarize this recipe in 3 steps.<div class="tf">What you type is the prompt</div></div>' +
-        '<p class="label" style="margin-top:14px">The chef counts in pieces, not words <span class="sample">Example split</span></p>' +
-        '<div class="fridge" aria-label="A word split into tokens"><span class="chip">un</span><span class="chip">believ</span><span class="chip">able</span></div>' +
+        '<p class="label" style="margin-top:14px">The chef counts in pieces <span class="sample">Example split</span></p>' +
+        '<div class="fridge" aria-label="A word split into tokens"><span class="tag">un</span><span class="tag">believ</span><span class="tag">able</span></div>' +
         '<p class="small">Those pieces are <b>tokens</b>. A token is often a short word or part of one. Prices and limits are counted in tokens.</p>' +
         '<p class="label" style="margin-top:14px">The counter</p>' +
-        '<div class="reply"><p class="who">On the counter right now</p>Your order · the recipe you pasted · the chef’s reply so far</div>' +
+        '<div class="reply"><p class="who">On the counter right now</p>Your order · anything you pasted · the chef’s reply so far</div>' +
         '<p class="small">That counter is the <b>context window</b>. On current Claude models it holds about 1 million tokens, roughly 555,000 words. Huge, but the chef still only sees what’s on it.</p>' +
-        '<p style="margin-top:14px">Claude comes in a <b>model family</b>: <b>Haiku</b> (fastest, cheapest), <b>Sonnet</b> (balanced), <b>Opus</b> (Anthropic’s suggested start) and <b>Fable</b> (the hardest jobs). Same kitchen, different chefs.</p>',
+        '<p style="margin-top:14px">Claude comes in a <b>model family</b>: <b>Haiku</b> (fastest, cheapest), <b>Sonnet</b> (balanced), <b>Opus</b> (Anthropic’s usual first pick) and <b>Fable</b> (the hardest, longest tasks). Same kitchen, different chefs.</p>',
       next: "Pick your chef"
     },
     build: {
@@ -30,37 +30,39 @@
       lead: "Tap a job and a chef. Your ticket asks Claude to explain today’s words using your job.",
       state: { job: "writing emails", chef: "Sonnet" },
       controls: function (s, esc) {
-        var jobs = ["writing emails", "planning meals", "running a small shop", "school homework", "making social posts"];
-        var chefs = [["Haiku", "fast and cheap"], ["Sonnet", "balanced"], ["Opus", "the usual start"], ["Fable", "hardest jobs"]];
+        var jobs = ["writing emails", "planning meals", "running a small shop", "school homework", "marketing campaigns"];
+        var chefs = [["Haiku", "fast and cheap"], ["Sonnet", "balanced"], ["Opus", "usual first pick"], ["Fable", "hardest tasks"]];
         return '<p class="label">Your job</p><div class="fridge">' + jobs.map(function (j) { return '<button type="button" class="chip" data-set="job" data-v="' + esc(j) + '" aria-pressed="' + (s.job === j) + '">' + esc(j) + "</button>"; }).join("") + "</div>" +
           '<p class="label">Your chef</p><div class="fridge">' + chefs.map(function (c) { return '<button type="button" class="chip" data-set="chef" data-v="' + c[0] + '" aria-pressed="' + (s.chef === c[0]) + '">' + c[0] + " · " + c[1] + "</button>"; }).join("") + "</div>";
       },
       head: "ORDER #B01", right: "to: the chef", foot: "Paste it into Claude, or open it there",
       text: function (s) {
-        return "I'm new to AI. Using my job (" + s.job + ") as the example, explain in plain words:\n" +
-          "1. What a token is.\n2. What a context window is, and why long chats start forgetting.\n" +
-          "3. Would " + s.chef + " be a good Claude model for " + s.job + "? Compare it to Haiku, Sonnet, Opus and Fable in 4 short lines.";
+        var others = ["Haiku", "Sonnet", "Opus", "Fable"].filter(function (c) { return c !== s.chef; }).join(", ");
+        return "I work on " + s.job + ". Give me a one-page cheat sheet I can keep:\n" +
+          "1. One real task from my work, and roughly how many tokens it would use (mark it as an estimate).\n" +
+          "2. When my chat gets long enough to start a fresh one, in one line.\n" +
+          "3. Is " + s.chef + " the right Claude model for this? One line each comparing it to " + others + ".";
       },
-      claude: "Open Claude with my ticket", done: "I asked the chef →"
+      claude: "Open in Claude", done: "I asked the chef →"
     },
     game: {
       type: "match", title: "Match each word to the kitchen.", lead: "Tap a word, then its kitchen meaning.",
-      pairs: [["Model", "The chef"], ["Prompt", "Your order ticket"], ["Token", "The pieces it counts and charges by"], ["Context window", "The counter: all the chef can see"], ["LLM", "A chef that cooks by predicting the next piece"]],
-      right: "All five. You just used the words every AI builder uses.",
+      pairs: [["Model", "The AI program itself, like Claude"], ["Prompt", "Everything you send it"], ["Token", "A small piece of text it counts and charges by"], ["Context window", "Everything it can see at once"], ["LLM", "AI that writes by predicting the next piece of text"], ["Model family", "Sizes of Claude: faster and cheaper, or more capable"]],
+      right: "All six. You just used the words every AI builder uses.",
       habitTitle: "Say it in one line", habit: "A model is the chef, the prompt is your order, and the context window is the counter."
     },
     breaks: {
       title: "The counter gets wiped every shift.",
       lines: [
         ["A new chat starts with an empty counter.", "The chef doesn’t remember yesterday unless you put it back on the counter."],
-        ["A full counter drops things.", "In very long chats, early details fall off or get summarized. Start fresh and paste the key facts."],
+        ["A crowded counter blurs things.", "In very long chats the chef pays less attention to early details, and apps may summarize them. Start fresh and paste the key facts."],
         ["Bigger chefs cost more per token.", "Pick the smallest chef that does the job well."]
       ],
       where: "A real chef remembers and tastes. This one predicts the next piece of text from what’s on the counter. It doesn’t know when it’s wrong, so it can sound sure and still be wrong."
     },
     quiz: [
-      { q: "What’s a token?", a: ["A small piece of text the model counts and charges by", "A password for Claude"], ok: 0, why: "Right. Tokens are the pieces. Limits and prices are counted in them." },
-      { q: "A very long chat starts missing early details. Why?", a: ["The context window (the counter) is full", "The chef got tired"], ok: 0, why: "Right. The counter has a limit. Start a fresh chat with the key facts." }
+      { q: "What’s a token?", a: ["A small piece of text the model counts and charges by", "One full word"], ok: 0, why: "Right. Tokens are the pieces. Limits and prices are counted in them." },
+      { q: "A very long chat starts missing early details. Why?", a: ["The counter (context window) is crowded, so early details get less attention", "The model learned something new mid-chat"], ok: 0, why: "Right. A crowded counter blurs early details. Start a fresh chat with the key facts." }
     ],
     keep: "a clear picture of the AI kitchen, and a chef you picked for your job.",
     cardLabel: "Copy my kitchen card",

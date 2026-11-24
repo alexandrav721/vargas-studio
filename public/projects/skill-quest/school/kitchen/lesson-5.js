@@ -7,17 +7,17 @@
     lines: [
       ["MCP is a standard outlet.", "Model Context Protocol: one shared plug shape, so tools work in any AI app that supports it."],
       ["An MCP server is the appliance.", "Someone wraps Google Drive, Slack or a database once, as a server. Then anyone can plug it in."],
-      ["The MCP client is the kitchen wall.", "Claude Desktop or Claude Code is the host app; it plugs the server in and offers its tools to Claude."]
+      ["The host is the kitchen wall.", "The host is the AI app, like the Claude desktop app. Inside it, an MCP client connects to each server."]
     ],
     guess: { q: "Why can Claude Desktop and Claude Code both use the same Google Drive plug-in?", opts: [["They share one standard plug shape, called MCP", true], ["Google built it twice", false], ["They’re the same app", false]], reveal: "MCP is a shared plug shape. Build the plug once, use it in many apps." },
-    startLabel: "See why outlets matter",
+    startLabel: "See the outlets",
     example: {
       title: "Before and after the standard outlet.",
       html:
         '<p class="label">Before</p><div class="reply"><p class="who">every app</p>Builds its own Drive tool, Slack tool, calendar tool. Over and over.</div>' +
-        '<p class="label" style="margin-top:14px">After MCP</p><div class="reply"><p class="who">once</p>Someone builds a Drive MCP server. Claude Desktop, Claude Code and other apps all plug it in.</div>' +
+        '<p class="label" style="margin-top:14px">After MCP</p><div class="reply"><p class="who">once</p>Someone builds a Drive MCP server. The Claude desktop app and other AI apps all plug it in.</div>' +
         '<p class="label" style="margin-top:14px">What a server can offer</p>' +
-        '<div class="fridge"><span class="chip">Tools: actions</span><span class="chip">Resources: things to read</span><span class="chip">Prompts: ready-made orders</span></div>' +
+        '<div class="fridge"><span class="tag">Tools: actions</span><span class="tag">Resources: things to read</span><span class="tag">Prompts: ready-made orders</span></div>' +
         '<p style="margin-top:14px">In the Claude app, plugged-in servers are called <b>connectors</b>. You turn them on in settings and sign in to the service.</p>',
       next: "Plan your outlets"
     },
@@ -31,34 +31,33 @@
       },
       head: "ORDER #B05", right: "outlet plan", foot: "Paste it into Claude, or open it there",
       text: function (s) {
-        return "I'm learning MCP (Model Context Protocol). I use: " + (s.svc.join(", ") || "nothing yet") + ".\n" +
-          "For each one: 1. What could Claude do if I connected it (one useful example). 2. Is it read-only or can it change things? 3. One safety tip.\n" +
-          "Then explain in 3 lines: MCP server vs MCP client vs connector, using a kitchen-outlet comparison.";
+        return "Make me a one-page connector plan I can show IT. I use: " + (s.svc.join(", ") || "nothing yet") + ".\n" +
+          "A table with one row per service: one useful thing Claude could do if connected · read-only or can change things · one safety rule.\n" +
+          "Then explain in 3 lines: MCP server vs MCP client vs host vs connector, using a kitchen-outlet comparison.";
       },
-      claude: "Open Claude with my ticket", done: "I planned my outlets →"
+      claude: "Open in Claude", done: "I planned my outlets →"
     },
     game: {
       type: "match", title: "Match the outlet words.", lead: "Tap a word, then its meaning.",
-      pairs: [["MCP", "The standard plug shape"], ["MCP server", "The appliance: wraps one service"], ["MCP client", "The app that plugs it in (like Claude Desktop)"], ["Connector", "What the Claude app calls a plugged-in server"], ["Resources", "Things a server lets Claude read"]],
+      pairs: [["MCP", "The standard plug shape"], ["MCP server", "The appliance: wraps one service"], ["MCP client", "The link inside the app to one server"], ["Connector", "What the Claude app calls a plugged-in server"], ["Resources", "Things a server lets Claude read"]],
       right: "All five. You can follow any MCP conversation now.",
-      habitTitle: "Builder habit", habit: "MCP is plumbing, not magic. It’s still tools underneath: Claude asks, the server acts."
+      habitTitle: "Builder habit", habit: "MCP is plumbing. Servers offer tools Claude can ask for, plus things to read and ready-made prompts."
     },
     breaks: {
       title: "Plug in only what you trust.",
       lines: [
         ["Anyone can build an MCP server.", "A bad one can read or change your data. Use ones from the service itself or people you trust."],
         ["Prompt injection hides in content.", "An email or page can contain text like “ignore your rules.” Claude may read it as an order. Keep a person in the loop for actions."],
-        ["More outlets, more risk.", "Turn on only what this job needs."]
-      ],
+              ],
       where: "A wall outlet just passes power. An MCP server passes words, and words can carry instructions. That’s a risk kitchens don’t have."
     },
     quiz: [
-      { q: "Why does MCP exist?", a: ["So a tool built once works in many AI apps", "To make Claude smarter"], ok: 0, why: "Right. It’s a standard, like one outlet shape." },
+      { q: "Why does MCP exist?", a: ["So a tool built once works in many AI apps", "So Claude can learn from your files"], ok: 0, why: "Right. It’s a standard, like one outlet shape." },
       { q: "Recall from Lesson 4: who runs a tool when Claude asks?", a: ["The app or server, not Claude", "Claude itself"], ok: 0, why: "Right. Claude picks; the kitchen presses the button." }
     ],
     keep: "a plan for which services to connect, with a safety note for each.",
     cardLabel: "Copy my outlet card",
-    card: "OUTLETS (MCP)\nMCP = Model Context Protocol, a standard plug for tools\nMCP server = the appliance (wraps Drive, Slack, a database…)\nMCP client / host = the app that plugs it in (Claude Desktop, Claude Code)\nConnector = the Claude app’s name for a plugged-in server\nServers offer tools, resources, prompts\nPrompt injection = hidden orders inside content. Plug in only what you trust",
+    card: "OUTLETS (MCP)\nMCP = Model Context Protocol, a standard plug for tools\nMCP server = the appliance (wraps Drive, Slack, a database…)\nHost = the AI app (like the Claude desktop app)\nMCP client = the link inside it to one server\nConnector = the Claude app’s name for a plugged-in server\nServers offer tools, resources, prompts\nPrompt injection = hidden orders inside content. Plug in only what you trust",
     real: ["Introduction to Model Context Protocol", "https://anthropic.skilljar.com/introduction-to-model-context-protocol"]
   };
   document.addEventListener("DOMContentLoaded", function () { BK.run(L); });

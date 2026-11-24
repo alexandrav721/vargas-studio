@@ -10,7 +10,7 @@
       ["Hallucination is a confident wrong plate.", "Rules like “say I don’t know” and “quote the source” make it rarer, never zero."]
     ],
     guess: { q: "Two apps ask Claude the same thing and get very different tones. Why?", opts: [["Each app gave Claude different standing rules", true], ["One paid for a nicer Claude", false], ["Claude was in a different mood", false]], reveal: "Each app hangs its own house rules, called a system prompt." },
-    startLabel: "See rules change a plate",
+    startLabel: "See the rules",
     example: {
       title: "Same order. With and without house rules.",
       html:
@@ -27,7 +27,7 @@
       lead: "Pick a business and rules. Your ticket asks Claude to test them on a tricky customer.",
       state: { biz: "a bakery", rules: ["Under 80 words", "If unsure, say so"] },
       controls: function (s, esc) {
-        var biz = ["a bakery", "a hair salon", "a dog walker", "a tutor"];
+        var biz = ["a bakery", "a hair salon", "a marketing agency", "a tutor"];
         var rules = ["Under 80 words", "If unsure, say so", "Friendly, no jargon", "Only use the facts I give", "End with one question"];
         return '<p class="label">The business</p><div class="fridge">' + biz.map(function (v) { return '<button type="button" class="chip" data-set="biz" data-v="' + esc(v) + '" aria-pressed="' + (s.biz === v) + '">' + esc(v) + "</button>"; }).join("") + "</div>" +
           '<p class="label">House rules (tap any)</p><div class="fridge">' + rules.map(function (v) { return '<button type="button" class="chip" data-set="rules" data-multi="1" data-v="' + esc(v) + '" aria-pressed="' + (s.rules.indexOf(v) >= 0) + '">' + esc(v) + "</button>"; }).join("") + "</div>";
@@ -38,36 +38,35 @@
           (s.rules.length ? s.rules.map(function (r) { return "- " + r; }).join("\n") : "- (none yet)") +
           "\n\nThen: 1. Answer a tricky customer question you make up. 2. Show the same answer with no rules. 3. Tell me in 2 lines which rule helped most, and one rule I should add.";
       },
-      claude: "Open Claude with my ticket", done: "I tested my rules →"
+      claude: "Open in Claude", done: "I tested my rules →", after: "In a real app these rules go in the system prompt field. In a chat we fake it by pasting them."
     },
     game: {
       type: "tapall", title: "Which of these lower hallucination?", lead: "Tap all {n}.",
       options: [
         ["“If you don’t know, say so”", true], ["“Quote the source first”", true], ["Give it the real facts in the prompt", true],
         ["“Be 100% accurate”", false, "Asking nicely doesn’t create knowledge. Give it facts and an exit."],
-        ["Set temperature to 0", false, "Old advice. It never guaranteed truth, and new models are retiring it."]
+        ["Set temperature to 0", false, "Old advice. It never guaranteed truth, and current Claude models reject the setting."]
       ],
       right: "All three. Facts in, an honest exit, and receipts.",
       wrong: "That one sounds right but doesn’t work.",
-      habitTitle: "Builder habit", habit: "Rules on the wall guide the chef strongly, but they aren’t a lock. Anything that must never happen belongs in code."
+      habitTitle: "Builder habit", habit: "Rules on the wall guide the chef strongly, but they aren’t a lock. Anything that must never happen belongs in the app itself, not the prompt."
     },
     breaks: {
-      title: "Rules guide. They don’t guarantee.",
+      title: "A clever customer can talk around the rules.",
       lines: [
-        ["A clever customer can talk around the rules.", "That’s called a jailbreak or prompt injection. Real limits go in your code."],
-        ["Old tutorials teach a “temperature” dial.", "It set how adventurous the chef was. Newer Claude models are retiring it; clear rules and examples do the job."],
-        ["More rules isn’t better.", "A few clear ones beat a wall of them."]
-      ],
-      where: "Kitchen staff follow the poster or get fired. Claude follows it very well, but it’s steering, not a law of physics."
+        ["A clever customer can talk around the rules.", "That’s a jailbreak. Orders hidden in an email or page are prompt injection (Lesson 5). Real limits are built into the app."],
+        ["Old tutorials teach a “temperature” dial.", "It set how adventurous the chef was. Current Claude models reject it; clear rules, examples and effort do the job."],
+              ],
+      where: "Kitchen staff follow the poster or get fired. Claude follows it very well, and a clever customer can still talk around it."
     },
     quiz: [
-      { q: "Who usually writes the system prompt?", a: ["The person building the app", "The customer typing"], ok: 0, why: "Right. The builder hangs the rules; the customer places orders." },
+      { q: "Who usually writes the system prompt?", a: ["The person building the app", "Anthropic, for every app"], ok: 0, why: "Right. The builder hangs the rules; the customer places orders." },
       { q: "Recall from Lesson 2: does the API remember the last chat?", a: ["No, the app resends it each time", "Yes, for 24 hours"], ok: 0, why: "Right. The window forgets. Your app carries the history." }
     ],
     keep: "a tested set of house rules for a real business.",
     cardLabel: "Copy my rules card",
-    card: "HOUSE RULES\nSystem prompt = rules on the wall, written by the builder\nPrompt engineering = clear tickets: who, example, shape\nExamples = one finished plate to copy\nXML tags = labeled boxes: <facts>, <rules>, <example>\nThinking + effort = quiet reasoning, billed as output\nHallucination = confident wrong plate. Give facts + “say I don’t know”",
-    real: ["AI Fluency: Framework & Foundations", "https://anthropic.skilljar.com/ai-fluency-framework-foundations"]
+    card: "HOUSE RULES\nSystem prompt = rules on the wall, written by the builder\nPrompt engineering = clear tickets: who, example, shape\nJailbreak = a user talking around the rules\nExamples = one finished plate to copy\nXML tags = labeled boxes: <facts>, <rules>, <example>\nThinking + effort = quiet reasoning, billed as output\nHallucination = confident wrong plate. Give facts + “say I don’t know”",
+    real: ["Building with the Claude API (prompt engineering module)", "https://academy.claude.com/courses/building-with-the-claude-api"]
   };
   document.addEventListener("DOMContentLoaded", function () { BK.run(L); });
 })();

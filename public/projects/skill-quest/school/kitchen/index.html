@@ -16,7 +16,7 @@
 .station b{display:block;font-family:"Bricolage Grotesque",sans-serif;font-size:1.05rem}
 .station span{font-size:.88rem;color:var(--muted)}
 .station .st{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
-.station .st a{font-size:.8rem;text-decoration:none;border:1px solid var(--line2);border-radius:999px;padding:3px 9px;color:var(--ink)}
+.station .st a{display:inline-flex;align-items:center;min-height:44px;font-size:.85rem;text-decoration:none;border:1px solid var(--line2);border-radius:999px;padding:3px 9px;color:var(--ink)}
 .station .st a.got{background:var(--ok-bg);border-color:var(--ok)}
 .next{width:100%;border-collapse:collapse;margin-top:12px;font-size:.92rem}
 .next th,.next td{text-align:left;padding:9px 6px;border-bottom:1px solid var(--line2);vertical-align:top}
@@ -33,8 +33,8 @@
 </header>
 <main>
   <p class="label">AI Made EZ · Level 2 · 10 lessons, about 9 minutes each</p>
-  <h1>How AI products are built.</h1>
-  <p class="muted" id="sum">The words builders use every day, as one kitchen. Finish knowing what they mean, and ready for Anthropic’s own courses.</p>
+  <h1>Speak AI builder.</h1>
+  <p class="muted" id="sum">Follow what your team, IT and vendors mean by API, MCP, agents and RAG. One kitchen, 10 short lessons. No coding.</p>
   <div class="btns" id="cta"></div>
 
   <section class="sec">
@@ -95,7 +95,7 @@ document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("pass").innerHTML = T.map(function (l) {
     var got = !!done[l.id];
     return '<a href="' + l.href + '" class="' + (got ? "" : "open") + '">' + School.stampSvg(l.short, l.n, got) +
-      "<b>" + l.name + "</b><span>" + (got ? "Stamped " + new Date(done[l.id] + "T12:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" }) : "About 9 minutes") + "</span></a>";
+      "<b>" + l.name + "</b><span>" + (got ? "Stamped " + new Date(done[l.id] + "T12:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" }) : "Use it when " + l.use) + "</span></a>";
   }).join("");
 });
 </script>

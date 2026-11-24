@@ -6,17 +6,17 @@
     teaser: ["GRADUATION", "you’re the architect", "Pick the chef. Hang the rules.<br>Choose appliances and a binder.<br>Plan the taste test.", "Every word. Ten minutes."],
     lines: [
       ["An architect picks the pieces.", "Which chef, which rules, which tools, which documents, how it’s tested. That plan is the architecture."],
-      ["Every piece has a price.", "Cost is tokens. Latency is wait time. Bigger chefs and more loops cost more of both."],
+      ["Every piece has a price.", "Cost is mostly tokens, plus fees for some tools. Latency is wait time. Bigger chefs and more loops cost more of both."],
       ["Guardrails are the safety rails.", "Rules in code, approvals for risky actions, and watching for prompt injection."]
     ],
     guess: { q: "A friend wants an AI helper for their bakery. What should they build first?", opts: [["The simplest version: one model, clear rules, a quick test", true], ["Five agents working together", false], ["Their own AI model", false]], reveal: "Start simple. Add pieces only when a real need shows up. That’s the architect’s habit." },
-    startLabel: "See a full kitchen plan",
+    startLabel: "See a plan",
     example: {
       title: "One plan, every word you learned.",
       html:
         '<p class="label">A bakery’s order helper <span class="sample">Sample plan</span></p>' +
         '<div class="ticket"><div class="th"><span>KITCHEN PLAN</span><span>architecture</span></div>' +
-        'Chef (model): Sonnet. Fast and good enough<br>Window (API): the website sends each chat<br>House rules (system prompt): bakery voice, under 80 words<br>Appliance (tool): check_order_status<br>Outlet (MCP): Google Calendar for pickups<br>Binder: 8-page menu, pasted in + cached<br>Head chef? No. A fixed workflow is enough<br>Taste test: 25 real questions, run every change<br>Guardrails: refunds need a person' +
+        'Chef (model): Sonnet. Fast and good enough<br>Window (API): the website sends each chat<br>House rules (system prompt): bakery voice, under 80 words<br>Appliance (tool): check_order_status<br>Outlet (MCP): Google Calendar for pickups<br>Binder: 8-page menu, pasted in (cached when busy)<br>Head chef? No. A fixed workflow is enough<br>Taste test: 25 real questions, run every change<br>Guardrails: refunds need a person' +
         '<div class="tf">Simplest kitchen that does the job</div></div>',
       next: "Plan yours"
     },
@@ -36,7 +36,7 @@
           "Give me a one-screen plan with: model, system prompt (3 rules), tools, MCP connectors, documents (paste in or RAG?), workflow or agent, the eval, and guardrails.\n" +
           "Then: which piece I picked that I don't need yet, the simplest version I could build this week, and a rough cost per 100 uses, clearly marked as an estimate.";
       },
-      claude: "Open Claude with my ticket", done: "I planned my kitchen →"
+      claude: "Open in Claude", done: "I planned my kitchen →"
     },
     game: {
       type: "match", title: "Final round: every station.", lead: "Tap a word, then its kitchen.",
@@ -55,7 +55,7 @@
     },
     quiz: [
       { q: "A friend wants to start with 5 agents. Your advice?", a: ["Start with one request and a taste test, add pieces only when needed", "More agents means better results"], ok: 0, why: "Right. Start simple. Agents cost more and break in more ways." },
-      { q: "Recall from Lesson 1: what decides cost?", a: ["Tokens in and out, and which chef", "How long the chat window is open"], ok: 0, why: "Right. Tokens times the chef’s price." }
+      { q: "Recall from Lesson 1: what decides cost?", a: ["Tokens in and out, and which chef", "How many people use the app at once"], ok: 0, why: "Right. Mostly tokens times the chef’s price, plus fees for some tools." }
     ],
     keep: "a one-screen plan for your own AI product, and every builder word in this course.",
     cardLabel: "Copy my kitchen plan card",

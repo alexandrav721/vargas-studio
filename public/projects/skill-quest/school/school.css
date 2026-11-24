@@ -120,3 +120,7 @@ textarea{font:400 1em var(--text);padding:13px 14px;border:1px solid var(--line2
 .match button[aria-pressed="true"]{outline:3px solid var(--accent);outline-offset:1px}
 .match .right{background:var(--ok-bg);border-color:var(--ok);cursor:default}
 .match .wrong{background:#FBE3DD}
+/* Builder's Kitchen diagrams */
+.kd{margin:6px 0 14px;padding:10px;border:1px solid var(--line2);border-radius:12px;background:var(--card)}
+.kd svg{display:block;width:100%;height:auto;max-height:220px}
+.tag{display:inline-block;border:1px dashed var(--line2);border-radius:4px;padding:4px 9px;font:600 13px var(--mono, "JetBrains Mono", monospace);background:transparent}
