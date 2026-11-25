@@ -3,7 +3,7 @@
   var L = {
     n: 7, id: "e7", mins: 7, title: "Head-office checks.", stamp: "Inspect",
     seen: ["Eval", "Human in the loop"], terms: ["Observability", "Trace", "Audit log", "Responsible Scaling Policy", "AI Safety Level", "Constitutional AI"],
-    teaser: ["HEAD OFFICE", "governance and safety", "Level 2 taste-tested before opening.<br>Head office checks every location<br>after opening, too.", "Six words. Seven minutes."],
+    teaser: ["HEAD OFFICE", "governance and safety", "Level 4 taste-tested in code.<br>Head office checks every location<br>after opening, too.", "Six words. Seven minutes."],
     lines: [
       ["You can’t inspect what you didn’t record.", "Observability: a trace of every call, tool and cost, kept searchable."],
       ["Audit logs answer “who changed that?”", "Claude Enterprise logs user actions, system events and data access."],
@@ -15,12 +15,12 @@
       title: "What head office checks.",
       html:
         '<p class="label">Every location <span class="sample">Simplified</span></p><div class="ticket"><div class="th"><span>CLIPBOARD</span><span>3 checks</span></div>' +
-        '<b>Traces</b>: each run, step by step. Developers can send them to tools IT may already use, like Datadog (beta).<br>' +
-        '<b>Audit logs</b>: who did what, and when. Ask how long they’re kept.<br>' +
+        '<b>Traces</b>: each run, step by step. Developers can export them (trace export in beta) to tools like Datadog.<br>' +
+        '<b>Audit logs</b>: who did what, when. Ask how long they’re kept.<br>' +
         '<b>Human oversight</b>: who reviews samples and can switch it off.' +
         '<div class="tf">Decide all three before launch</div></div>' +
-        '<p class="small">Anthropic’s own rulebook, the <b>Responsible Scaling Policy</b> (RSP), adds stronger safeguards as its models grow more capable. It names those safeguard sets by <b>AI Safety Level</b>, like ASL-3. Read the current version.</p>',
-      more: '<p class="small">Anthropic’s Enterprise course names five admin decisions: Structure and Identity, Access, Governance, Spend, Visibility.</p><p class="small">RSP version 3.0 (February 2026) separated Anthropic’s own plans from what it recommends for the whole industry, and added a public Frontier Safety Roadmap and Risk Reports every 3 to 6 months. Version 3.4 took effect in July 2026.</p><p class="small">ASL-3 safeguards switched on for some models in May 2025. Since version 3.0, the RSP no longer lists fixed controls for future levels.</p><p class="small"><b>Constitutional AI</b> (2022): Claude is trained against a written set of principles. It critiques and revises its own answers, then learns from AI feedback. Claude’s January 2026 constitution ranks its priorities: broadly safe, broadly ethical, following Anthropic’s guidelines, genuinely helpful.</p>',
+        '<p class="small">Anthropic’s own rulebook, the <b>Responsible Scaling Policy</b> (RSP), adds safeguards as its models grow more capable. It names those safeguard sets by <b>AI Safety Level</b>, like ASL-3 (on since May 2025).</p>',
+      more: '<p class="small">Anthropic’s Enterprise course names five admin decisions: Structure and Identity, Access, Governance, Spend, Visibility.</p><p class="small">The RSP changes often (version 3.4 took effect in July 2026). ASL-3 safeguards switched on for some models in May 2025. Check the date on whatever you quote.</p><p class="small"><b>Constitutional AI</b> (2022): Claude is trained against a written set of principles. It critiques and revises its own answers, then learns from AI feedback. Claude’s January 2026 constitution ranks its priorities: broadly safe, broadly ethical, following Anthropic’s guidelines, genuinely helpful.</p>',
       next: "Your turn →"
     },
     build: {
@@ -35,14 +35,15 @@
       head: "ORDER #E07", right: "inspection plan", foot: "Paste it into Claude, or open it there",
       text: function (s) {
         return "Write a governance plan for " + s.proj + ". Final sign-off: " + s.who + ". I don’t code.\n" +
-          "1. Traces: what we record per run, and who sees it.\n" +
-          "2. Audit logs: which user and admin actions we keep.\n" +
-          "3. Human oversight: who reviews samples, how often, and who can switch it off.\n" +
-          "4. Evals: which real cases we re-test after each change.\n" +
+          "1. Traces: what we record per run; who sees it.\n" +
+          "2. Audit logs: user and admin actions to keep.\n" +
+          "3. Oversight: who reviews samples, how often, who can switch it off.\n" +
+          "4. Evals: real cases re-tested after each change, as in Level 4.\n" +
           "5. An 8-item monthly checklist.\n" +
-          "Flag anything that needs legal advice.";
+          "Flag legal questions. Unsure a feature exists? Say so.";
       },
-      claude: "Open in Claude", done: "Done →"
+      claude: "Open in Claude", done: "Done →",
+      after: "Put the monthly checklist in your calendar today, with the sign-off person invited."
     },
     game: {
       type: "match", title: "Match each word to the check.", lead: "Tap a word, then its kitchen.",
@@ -66,7 +67,7 @@
     say: "We trace every run, log who did what, and someone can switch it off.",
     keep: "A governance plan with owners, and plain answers about Anthropic’s own safety rules.",
     cardLabel: "Copy my card",
-    card: "HEAD-OFFICE CHECKS (GOVERNANCE)\nObservability = you can see what happened\nTrace = the step-by-step record of one run\nAudit log = who did what, when\nHuman oversight = someone reviews, and can switch it off\nRSP = Anthropic’s voluntary safety rulebook\nAI Safety Levels = names for Anthropic’s safeguard sets (ASL-3 now)\nConstitutional AI = trained against written principles",
+    card: "HEAD-OFFICE CHECKS (GOVERNANCE)\nObservability = you can see what happened\nTrace = the step-by-step record of one run\nAudit log = who did what, when\nHuman oversight = someone reviews, and can switch it off\nRSP = Anthropic’s voluntary safety rulebook\nAI Safety Levels = Anthropic’s safeguard sets (ASL-3 safeguards since May 2025)\nConstitutional AI = trained against written principles",
     real: ["Deploying Claude Enterprise with confidence", "https://academy.claude.com/courses/deploying-claude-enterprise-with-confidence"]
   };
   document.addEventListener("DOMContentLoaded", function () { BK.run(L); });

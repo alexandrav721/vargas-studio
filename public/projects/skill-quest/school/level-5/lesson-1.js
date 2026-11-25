@@ -15,10 +15,10 @@
       title: "Five set menus from Anthropic’s guide.",
       html:
         '<p class="label">Workflow patterns <span class="sample">Simplified</span></p><div class="ticket"><div class="th"><span>SET MENUS</span><span>5 patterns</span></div>' +
-        '<b>Prompt chaining</b>: draft, check, polish. Each step uses the last plate.<br>' +
+        '<b>Prompt chaining</b>: draft, check, polish. Each uses the last plate.<br>' +
         '<b>Routing</b>: the host sends each guest to the right station.<br>' +
         '<b>Parallelization</b>: cooks work at once, then combine or vote.<br>' +
-        '<b>Orchestrator-workers</b>: a head chef splits a job it couldn’t plan ahead.<br>' +
+        '<b>Orchestrator-workers</b>: a head chef splits a job it couldn’t plan.<br>' +
         '<b>Evaluator-optimizer</b>: one cooks, one tastes and sends it back.' +
         '<div class="tf">From “Building effective agents”</div></div>' +
         '<p class="small">An <b>agent</b> is the free chef: no fixed menu. Anthropic says agents cost more and run slower, for better results on open-ended jobs.</p>',
@@ -42,7 +42,8 @@
           "3. The simpler option you rejected, and what would make us switch to an agent.\n" +
           "4. One way it could fail, and how we’d notice.";
       },
-      claude: "Open in Claude", done: "Done →"
+      claude: "Open in Claude", done: "Done →",
+      after: "Try the simplest option first: paste one real example into Claude and see if one call already does the job."
     },
     game: {
       type: "match", title: "Match each set menu to its kitchen.", lead: "Tap a pattern, then what it looks like.",

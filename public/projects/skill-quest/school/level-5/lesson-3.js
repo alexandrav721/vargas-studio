@@ -3,7 +3,7 @@
   var L = {
     n: 3, id: "e3", mins: 7, title: "The kitchen system.", stamp: "Harness",
     seen: ["Agent SDK", "Agent loop", "Hook"], terms: ["Agent harness", "Managed Agents", "Session", "Sandbox", "Permission policy", "Session budget"],
-    teaser: ["KITCHEN SYSTEM", "the agent harness", "Level 2 met the agent loop.<br>The harness is the kitchen it runs in,<br>the same at every location.", "Six words. Seven minutes."],
+    teaser: ["KITCHEN SYSTEM", "the agent harness", "Level 4 wired the tool loop by hand.<br>The harness is that loop, built for you,<br>the same at every location.", "Six words. Seven minutes."],
     lines: [
       ["The harness is everything around the model.", "The loop, the tools, the permissions, the logs. The model only decides."],
       ["Build it, or rent it.", "Agent SDK: a code kit with Claude Code’s harness. Managed Agents: Anthropic hosts it."],
@@ -25,22 +25,25 @@
     build: {
       title: "Your turn. Spec the kitchen system.",
       lead: "Pick a job and who hosts it. You get a harness plan to hand a developer.",
-      state: { job: "a weekly competitor report", run: "Anthropic hosts it (Managed Agents)" },
+      state: { job: "a weekly competitor report", run: "Anthropic hosts it (Managed Agents)", out: "Plan only" },
       controls: function (s, esc) {
         function row(k, list) { return '<div class="fridge">' + list.map(function (v) { return '<button type="button" class="chip" data-set="' + k + '" data-v="' + esc(v) + '" aria-pressed="' + (s[k] === v) + '">' + esc(v) + "</button>"; }).join("") + "</div>"; }
         return '<p class="label">The job</p>' + row("job", ["a weekly competitor report", "sort support tickets", "clean up messy spreadsheets", "review code changes"]) +
-          '<p class="label">Who hosts it</p>' + row("run", ["Anthropic hosts it (Managed Agents)", "we host it (Agent SDK)", "not sure, help me pick"]);
+          '<p class="label">Who hosts it</p>' + row("run", ["Anthropic hosts it (Managed Agents)", "we host it (Agent SDK)", "not sure, help me pick"]) +
+          '<p class="label">What you get</p>' + row("out", ["Plan only", "Plan + starter file"]);
       },
       head: "ORDER #E03", right: "harness plan", foot: "Paste it into Claude, or open it there",
       text: function (s) {
+        var starter = s.out === "Plan + starter file" ? "5. A starter permission policy as JSON for my developer: each tool on or off, runs alone or asks first, plus a session budget. Mark it a draft.\n" : "";
         return "Plan the agent harness for: " + s.job + ". Hosting: " + s.run + ". I don’t code.\n" +
-          "1. Agent SDK, Managed Agents, or a simple workflow? Why?\n" +
-          "2. Tools it needs, which run alone, which wait for a person, which built-ins go off.\n" +
+          "1. Is that hosting right for this job, or would a scheduled workflow do? Why?\n" +
+          "2. Tools it needs, which run alone, which wait for a yes, which built-ins go off.\n" +
           "3. What the sandbox can and can’t reach.\n" +
-          "4. A spend cap and a quick stop.\n" +
-          "Unsure a feature exists? Say so and name the docs page (platform.claude.com/docs).";
+          "4. A spend cap and a quick stop.\n" + starter +
+          "Unsure a feature exists? Say so; name the page (platform.claude.com/docs).";
       },
-      claude: "Open in Claude", done: "Done →"
+      claude: "Open in Claude", done: "Done →",
+      after: "Save the plan next to the job’s notes. Before anything runs, check the spend cap and the stop with your developer."
     },
     game: {
       type: "tapall", title: "Which jobs belong to the harness, not the model?", lead: "Tap the {n} the harness does.",

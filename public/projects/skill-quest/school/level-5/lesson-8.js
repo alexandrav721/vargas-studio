@@ -3,7 +3,7 @@
   var L = {
     n: 8, id: "e8", mins: 7, title: "Draw the floor plan.", stamp: "Plan",
     seen: ["Architecture", "Start simple"], terms: ["Design doc", "Trade-off", "Cost model", "Failure mode", "Blast radius", "Approval matrix"],
-    teaser: ["FLOOR PLAN", "the capstone", "A new location opens Monday.<br>Level 2 picked the stations.<br>Now show the cost, the risks, the keys.", "Six words. Seven minutes."],
+    teaser: ["FLOOR PLAN", "the capstone", "A new location opens Monday.<br>Level 4 priced every chef.<br>Now show the cost, the risks, the keys.", "Six words. Seven minutes."],
     lines: [
       ["Sketching is done. Now defend it.", "Level 2 listed the pieces. A design doc adds trade-offs, cost, failures and approvals."],
       ["Every choice is a trade-off.", "Write down what you gave up: speed, cost, control or simplicity."],
@@ -15,8 +15,8 @@
       title: "A floor plan: the invoice checker.",
       html:
         '<p class="label">Design doc <span class="sample">Sample</span></p><div class="ticket"><div class="th"><span>FLOOR PLAN</span><span>invoices</span></div>' +
-        '<b>Trade-off</b>: routing, not an agent. We gave up flexibility for the same steps every time.<br>' +
-        '<b>Cost model</b>: 1,000 invoices a month. Haiku sorts them all: about $0.40. Opus checks the hard 100: about $4.<br>' +
+        '<b>Trade-off</b>: routing, not an agent. Less flexible, same steps every time.<br>' +
+        '<b>Cost model</b>: 1,000 invoices a month. Haiku sorts them all: about $0.40. Opus checks the hard 100: about $4. An overnight batch (Level 4) roughly halves it.<br>' +
         '<b>Failure mode</b>: a wrong match. Blast radius: one bad flag, never a payment.<br>' +
         '<b>Approval matrix</b>: flag = AI alone · email supplier = clerk · pay = finance lead only.' +
         '<div class="tf">Token counts are guesses until the pilot</div></div>',
@@ -35,15 +35,15 @@
       head: "ORDER #E08", right: "floor plan", foot: "Paste it into Claude, or open it there",
       text: function (s) {
         return "Use case: " + s.use + ". Hardest limit: " + s.limit + ". I don’t code.\n" +
-          "Ask up to 3 questions (if I skip, label your guesses), then write a design doc:\n" +
+          "Ask up to 3 questions (if I skip, label guesses). Then a design doc:\n" +
           "1. The job and its test.\n" +
-          "2. Pattern, and the simpler one we rejected.\n" +
-          "3. Cost model: cost per task × volume, math shown; flag prices to confirm.\n" +
+          "2. Pattern, the simpler one we rejected, and trade-offs.\n" +
+          "3. Cost model: cost per task × volume, with and without a batch, math shown; flag unsure prices.\n" +
           "4. Top 3 failure modes, blast radius, how we’d notice.\n" +
-          "5. Approval matrix: who approves what.\n" +
-          "6. Trade-offs we accepted.";
+          "5. Approval matrix: who approves what.";
       },
-      claude: "Open in Claude", done: "Done →"
+      claude: "Open in Claude", done: "Done →",
+      after: "Share the doc with your team today. Ask each person which line worries them most."
     },
     game: {
       type: "tapall", title: "Which belong on the floor plan?", lead: "Tap the {n} that do.",

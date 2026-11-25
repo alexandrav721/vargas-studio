@@ -3,7 +3,7 @@
   var L = {
     n: 2, id: "e2", mins: 7, title: "Build a standard outlet.", stamp: "Outlet",
     seen: ["MCP", "MCP server", "Resources"], terms: ["Transport", "stdio", "Streamable HTTP", "OAuth", "Scopes", "Namespacing"],
-    teaser: ["STANDARD OUTLET", "for every location", "Level 2 plugged apps into outlets.<br>Now you design the outlet<br>every location plugs into.", "Six words. Seven minutes."],
+    teaser: ["STANDARD OUTLET", "for every location", "Level 3 plugged in connectors.<br>Now you design the outlet<br>every location plugs into.", "Six words. Seven minutes."],
     lines: [
       ["An MCP server offers three things.", "Tools Claude uses, resources it reads (files, records), prompts people pick from a menu."],
       ["The wiring is called the transport.", "stdio for one computer. Streamable HTTP for a server many people reach."],
@@ -26,21 +26,25 @@
     build: {
       title: "Your turn. Spec an outlet.",
       lead: "Pick a system and who plugs in. Claude drafts the MCP spec your developer builds from.",
-      state: { sys: "our booking system", who: "just my team" },
+      state: { sys: "our booking system", who: "just my team", out: "Plan only" },
       controls: function (s, esc) {
         function row(k, list) { return '<div class="fridge">' + list.map(function (v) { return '<button type="button" class="chip" data-set="' + k + '" data-v="' + esc(v) + '" aria-pressed="' + (s[k] === v) + '">' + esc(v) + "</button>"; }).join("") + "</div>"; }
         return '<p class="label">The system</p>' + row("sys", ["our booking system", "the company wiki", "our customer list (CRM)", "the inventory spreadsheet"]) +
-          '<p class="label">Who plugs in</p>' + row("who", ["just me, on my laptop", "just my team", "every location", "outside partners"]);
+          '<p class="label">Who plugs in</p>' + row("who", ["just me, on my laptop", "just my team", "every location", "outside partners"]) +
+          '<p class="label">What you get</p>' + row("out", ["Plan only", "Plan + starter file"]);
       },
       head: "ORDER #E02", right: "outlet spec", foot: "Paste it into Claude, or open it there",
       text: function (s) {
-        return "Design an MCP server for " + s.sys + ". Who plugs in: " + s.who + ". I don’t code; a developer will build it.\n" +
+        var starter = s.out === "Plan + starter file" ? "5. A starter file for my developer: the tool list as JSON (name, description, input fields, read or write), marked as a draft.\n" : "";
+        return "Design an MCP server for " + s.sys + ". Who plugs in: " + s.who + ". I don’t code; a developer builds it.\n" +
           "1. MCP server, or a plain tool in one app? Why?\n" +
-          "2. A few tools (namespaced name, what it does, read or write), plus resources and prompts.\n" +
-          "3. Transport (stdio or Streamable HTTP) and sign-in (OAuth scopes), with reasons.\n" +
-          "Unsure a feature exists? Say so and name the docs page (modelcontextprotocol.io).";
+          "2. A few tools (namespaced name, job, read or write), plus resources and prompts.\n" +
+          "3. Transport (stdio or Streamable HTTP) and sign-in (OAuth scopes), and why.\n" +
+          "4. Two tests before anyone uses it.\n" + starter +
+          "Unsure a feature exists? Say so; name the page (modelcontextprotocol.io).";
       },
-      claude: "Open in Claude", done: "Done →"
+      claude: "Open in Claude", done: "Done →",
+      after: "Send the spec to whoever would build it. Ask them to circle anything they’d change before they start."
     },
     game: {
       type: "pick", title: "Claude keeps calling the wrong “search” tool. What do you fix first?",

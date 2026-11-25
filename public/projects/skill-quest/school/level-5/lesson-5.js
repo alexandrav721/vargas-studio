@@ -17,10 +17,10 @@
         '<p class="label">Long-shift kit <span class="sample">Simplified</span></p><div class="ticket"><div class="th"><span>CLEAN COUNTER</span><span>4 moves</span></div>' +
         '<b>Compaction</b>: near the limit, squeeze the old shift into one summary.<br>' +
         '<b>Context editing</b>: clear old tool results, leave a placeholder. (API beta)<br>' +
-        '<b>Memory tool</b>: Claude keeps files in /memories, stored by your app. They outlast the chat.<br>' +
-        '<b>Tool search</b>: 200 tools? Load only the few it needs.' +
+        '<b>Memory tool</b>: Claude keeps files in /memories, stored by your app, that outlast the chat.<br>' +
+        '<b>Tool search</b>: 200 tools? Load just the few needed.' +
         '<div class="tf">Claude API features</div></div>' +
-        '<p class="small"><b>Structured notes</b>: Anthropic’s long-running coding setup kept a progress file, a feature list and a log of every saved change (git). Each new session read them first.</p>',
+        '<p class="small"><b>Structured notes</b>: Anthropic’s long-running coding setup kept a progress file, a feature list and a log of saved changes (git). Each new session read them first.</p>',
       more: '<p class="small">Tool search docs: Claude picks tools less accurately past 30 to 50 tools. Search typically loads just the 3 to 5 it needs.</p><p class="small">Skills work the same way: only a short description sits on the counter until the task needs the full recipe.</p>',
       next: "Your turn →"
     },
@@ -30,19 +30,20 @@
       state: { job: "move 500 help articles to a new site", len: "a few hours" },
       controls: function (s, esc) {
         function row(k, list) { return '<div class="fridge">' + list.map(function (v) { return '<button type="button" class="chip" data-set="' + k + '" data-v="' + esc(v) + '" aria-pressed="' + (s[k] === v) + '">' + esc(v) + "</button>"; }).join("") + "</div>"; }
-        return '<p class="label">The long job</p>' + row("job", ["move 500 help articles to a new site", "a week-long research project", "clean up a big codebase", "answer support chats all day"]) +
+        return '<p class="label">The long job</p>' + row("job", ["move 500 help articles to a new site", "a week-long research project", "clean up a big codebase", "sort a year of support tickets"]) +
           '<p class="label">How long it runs</p>' + row("len", ["a few hours", "all day", "several days"]);
       },
       head: "ORDER #E05", right: "shift plan", foot: "Paste it into Claude, or open it there",
       text: function (s) {
         return "An AI agent for a long job: " + s.job + ", running " + s.len + ". I don’t code. Write a context plan:\n" +
-          "1. What it loads first, and what it fetches later.\n" +
-          "2. When to compact or clear old tool results, and what must never be lost.\n" +
-          "3. The note files it keeps, with a short template each.\n" +
+          "1. What it loads first, what it fetches later.\n" +
+          "2. When to compact or clear old tool results; what must never be lost.\n" +
+          "3. Its note files, with a short template each.\n" +
           "4. How a fresh session picks up.\n" +
-          "Mark API features vs. good habits.";
+          "Mark API features vs. good habits. Unsure? Say so.";
       },
-      claude: "Open in Claude", done: "Done →"
+      claude: "Open in Claude", done: "Done →",
+      after: "Save the note templates where the job runs. Ask your developer to start the first session by reading them."
     },
     game: {
       type: "tapall", title: "Which moves keep the counter clean?", lead: "Tap the {n} that help.",

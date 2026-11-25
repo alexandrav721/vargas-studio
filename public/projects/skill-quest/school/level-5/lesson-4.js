@@ -19,7 +19,7 @@
         '<div class="reply"><p class="who">3 helpers, at once</p>Each reads dozens of pages at its own counter. Each sends back a short summary.</div>' +
         '<div class="reply"><p class="who">lead agent</p>Checks the 3 summaries, removes repeats, writes the report.</div>' +
         '<p class="small"><b>Delegation</b> is the handoff; <b>synthesis</b> is the combining. In Anthropic’s 2025 research system, an Opus 4 lead with Sonnet 4 helpers beat a single Opus 4 agent by 90.2% on its internal research test.</p>',
-      more: '<p class="small">Put the reading on a cheaper model. Haiku 5.5 costs $0.10 per million input tokens (prompts up to 100K); Opus 5.5 costs $4.</p><p class="small">In Claude Code, a subagent starts fresh: it sees its brief, not your chat. (A fork is the one exception.)</p>',
+      more: '<p class="small">Put the helpers’ reading on Haiku, the cheap chef from Level 4: about a fortieth of Opus’s input price.</p><p class="small">In Claude Code, a subagent starts fresh: it sees its brief, not your chat. (A fork is the one exception.)</p>',
       next: "Your turn →"
     },
     build: {
@@ -34,13 +34,14 @@
       head: "ORDER #E04", right: "brigade check", foot: "Paste it into Claude, or open it there",
       text: function (s) {
         return "Job: " + s.job + ". Proposed team: " + s.size + ". I don’t code.\n" +
-          "1. Does the work split into independent pieces? Yes or no, and why.\n" +
+          "1. Does it split into independent pieces? Why or why not?\n" +
           "2. If yes: each helper’s brief, tools, model and output.\n" +
           "3. Rough cost, 1 agent vs this team (Anthropic: agents use about 4x a chat’s tokens, multi-agent about 15x).\n" +
-          "4. How the lead checks results and catches a wrong helper.\n" +
-          "Recommend the smallest team that works.";
+          "4. How the lead catches a wrong helper.\n" +
+          "Recommend the smallest team that works. Unsure of a number? Say so.";
       },
-      claude: "Open in Claude", done: "Done →"
+      claude: "Open in Claude", done: "Done →",
+      after: "Try the smallest team first, on two or three items. Grow it only if the lead’s checks pass."
     },
     game: {
       type: "pick", title: "Two helpers report opposite facts. Who settles it?",

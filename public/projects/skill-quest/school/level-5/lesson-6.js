@@ -3,7 +3,7 @@
   var L = {
     n: 6, id: "e6", mins: 7, title: "Locks and keys.", stamp: "Locks",
     seen: ["Prompt injection", "Human in the loop"], terms: ["Least privilege", "Untrusted content", "Lethal trifecta", "Network allowlist", "Vault", "Approval gate"],
-    teaser: ["LOCKS & KEYS", "agent security", "Level 2 flagged prompt injection.<br>Now fit the locks: each cook gets<br>one key. Nobody gets the safe.", "Six words. Seven minutes."],
+    teaser: ["LOCKS & KEYS", "agent security", "Level 3 spotted hidden instructions.<br>Now fit the locks: each cook gets<br>one key. Nobody gets the safe.", "Six words. Seven minutes."],
     lines: [
       ["Least privilege: only the keys the job needs.", "Fewer tools, fewer websites, read-only wherever you can."],
       ["Anything Claude reads can carry orders.", "Emails, web pages, files. That’s how prompt injection gets in."],
@@ -17,7 +17,7 @@
         '<p class="label">Three legs <span class="sample">Simplified</span></p><div class="fridge"><span class="tag">Private data</span><span class="tag">Untrusted content</span><span class="tag">A way to send out</span></div>' +
         '<p class="small">Developer Simon Willison named it in June 2025. With all three, one poisoned page can leak your data. Remove any leg.</p>' +
         '<p class="label" style="margin-top:14px">Locks Anthropic recommends for Managed Agents</p><div class="ticket"><div class="th"><span>LOCKS</span><span>5 settings</span></div>' +
-        'Network: limited, only the hosts it needs<br>Secrets: in a vault, sandbox sees a placeholder<br>Tools: start with all off, switch on what’s needed<br>Can’t undo it? Ask first (always_ask)<br>A spend cap on every session' +
+        'Network: limited, only the hosts it needs<br>Secrets: in a vault, sandbox sees a placeholder<br>Tools: built-ins on, web search and fetch off till needed<br>Can’t undo it? Ask first (always_ask)<br>A spend cap on every session' +
         '<div class="tf">From “Secure your Managed Agents deployment”</div></div>',
       more: '<p class="small">Claude Code can sandbox its Bash commands at the operating-system level, so the walls hold whatever command the model chose to run.</p><p class="small">A prompt that says “ignore bad instructions” steers. It isn’t a lock.</p>',
       next: "Your turn →"
@@ -25,24 +25,27 @@
     build: {
       title: "Your turn. Lock the doors.",
       lead: "Pick an agent and what it touches. Get a lock list with an owner on each.",
-      state: { agent: "an inbox assistant", touch: ["Reads email", "Can send email"] },
+      state: { agent: "an inbox assistant", touch: ["Reads email", "Can send email"], out: "Plan only" },
       controls: function (s, esc) {
         var agents = ["an inbox assistant", "a web research agent", "a coding agent", "a finance helper"];
         var touch = ["Reads email", "Can send email", "Browses the web", "Sees customer data", "Can spend money", "Can delete files"];
         return '<p class="label">The agent</p><div class="fridge">' + agents.map(function (v) { return '<button type="button" class="chip" data-set="agent" data-v="' + esc(v) + '" aria-pressed="' + (s.agent === v) + '">' + esc(v) + "</button>"; }).join("") + "</div>" +
-          '<p class="label">What it touches (tap any)</p><div class="fridge">' + touch.map(function (v) { return '<button type="button" class="chip" data-set="touch" data-multi="1" data-v="' + esc(v) + '" aria-pressed="' + (s.touch.indexOf(v) >= 0) + '">' + esc(v) + "</button>"; }).join("") + "</div>";
+          '<p class="label">What it touches (tap any)</p><div class="fridge">' + touch.map(function (v) { return '<button type="button" class="chip" data-set="touch" data-multi="1" data-v="' + esc(v) + '" aria-pressed="' + (s.touch.indexOf(v) >= 0) + '">' + esc(v) + "</button>"; }).join("") + "</div>" +
+          '<p class="label">What you get</p><div class="fridge">' + ["Plan only", "Plan + starter file"].map(function (v) { return '<button type="button" class="chip" data-set="out" data-v="' + esc(v) + '" aria-pressed="' + (s.out === v) + '">' + esc(v) + "</button>"; }).join("") + "</div>";
       },
       head: "ORDER #E06", right: "lock check", foot: "Paste it into Claude, or open it there",
       text: function (s) {
+        var starter = s.out === "Plan + starter file" ? "\nThen a starter permission policy as JSON for my developer: each tool on or off, runs alone or asks first. Mark it a draft." : "";
         return "Security review for " + s.agent + ". It touches: " + (s.touch.join(", ") || "help me list it") + ". I don’t code.\n" +
-          "1. Lethal trifecta: private data, untrusted content, a way to send out. Which leg can we cut?\n" +
+          "1. Lethal trifecta (private data, untrusted content, a way out): which leg can we cut?\n" +
           "2. Least privilege: only tools and sites it needs.\n" +
-          "3. Where secrets live, out of the agent’s sight.\n" +
-          "4. Which actions wait for a person.\n" +
-          "5. What we log, and how we stop it fast.\n" +
-          "For each: the lock, why, owner.";
+          "3. Where secrets live, out of its sight.\n" +
+          "4. What waits for a person.\n" +
+          "5. What we log; how we stop it fast.\n" +
+          "For each: the lock, why, owner. Unsure a setting exists? Say so." + starter;
       },
-      claude: "Open in Claude", done: "Done →"
+      claude: "Open in Claude", done: "Done →",
+      after: "Give each owner their line today. A lock nobody owns stays open."
     },
     game: {
       type: "pick", title: "Your research agent reads the web and can email anyone. Best first fix?",
