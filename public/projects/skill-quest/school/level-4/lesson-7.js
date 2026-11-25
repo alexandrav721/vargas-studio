@@ -7,7 +7,7 @@
     teaser: ["TASTE TESTS", "in code", "Level 2 wrote the scorecard.<br>Now a script tastes every dish,<br>keeps the bill and times the plate.", "Five words. Seven minutes."],
     lines: [
       ["An eval has three parts.", "Test inputs, a way to run your app, a way to grade."],
-      ["Use the cheapest grader that truly measures.", "Code first. A Claude judge only where it takes judgment."],
+      ["Use the cheapest grader that measures the real thing.", "Code first. A Claude judge only where it takes judgment."],
       ["Score cost and speed too.", "A better answer at triple the price may still lose."]
     ],
     guess: { q: "Your app labels emails “urgent” or “not urgent”. How do you grade it?", opts: [["Code compares each label to the right answer", true], ["Ask Claude to rate each label from 1 to 10", false], ["Read a few and decide", false]], reveal: "Code. When the answer comes from a fixed list, an exact match is free, fast and never moody." },
@@ -19,12 +19,12 @@
         '<p class="label" style="margin-top:14px">The report: baseline vs. new prompt <span class="sample">Sample</span></p><div class="fridge"><span class="tag">Baseline: 41 of 50</span><span class="tag">New: 46 of 50</span></div>' +
         '<div class="reply"><p class="who">per case</p>pass · $0.004 · 1.8 s · stop_reason end_turn</div>' +
         '<p class="small">Fuzzy outputs, like customer replies? A <b>pairwise comparison</b>: a judge picks the better of two answers. Or a judge scores one answer against a <b>rubric</b>. Check the judge against your own grades.</p>',
-      more: '<p class="small">Anthropic’s eval guide: report absolute numbers first (seconds, dollars), then percentages. On a 429, back off, retry and record the retry. Count a case that passed only on a retry as a fail, unless you decide otherwise.</p>',
+      more: '<p class="small">Anthropic’s eval advice: report absolute numbers first (seconds, dollars), then percentages. On a rate-limit error (429, next lesson), wait a random, growing time, retry, and record the retry. That is not a fail. If your script re-runs a case that failed its grade, score the first try: a case that passed only on a re-run counts as a fail.</p>',
       next: "Your turn →"
     },
     build: {
       title: "Your turn. Write the taste test.",
-      lead: "Pick a feature and what it outputs. Your ticket plans the eval, or writes the script.",
+      lead: "Pick a feature and its output. You get an eval plan, or the script that runs it.",
       state: { mode: "Explain it to me", lang: "Python", feat: "an email sorter", out: "a label from a list" },
       controls: function (s, esc) {
         function row(k, list) { return '<div class="fridge">' + list.map(function (v) { return '<button type="button" class="chip" data-set="' + k + '" data-v="' + esc(v) + '" aria-pressed="' + (s[k] === v) + '">' + esc(v) + "</button>"; }).join("") + "</div>"; }
@@ -36,13 +36,13 @@
       head: "ORDER #D07", right: "taste test", foot: "Paste it into Claude, or open it there",
       text: function (s) {
         if (s.mode === "Explain it to me") {
-          return "I want to test " + s.feat + " built on the Claude API. Its output is " + s.out + ". I don't code yet.\n" +
-            "1. Recommend a grader (a code check, a pairwise comparison, a rubric judge, or a person) for this output, and say why.\n" +
-            "2. Draft 10 test cases with expected answers, including 3 tricky ones and 1 the app should refuse or flag.\n" +
-            "3. List what to record for each case besides the grade: cost, seconds, stop_reason, retries.\n" +
-            "4. Explain how I'd rerun this as a regression check before every prompt or model change.";
+          return "Plan a test for " + s.feat + " on the Claude API. Its output: " + s.out + ". I don’t code yet.\n" +
+            "1. Recommend a grader (a code check, a pairwise comparison, a rubric judge or a person), and why.\n" +
+            "2. Draft 10 test cases with expected answers: 3 tricky, 1 it should refuse or flag.\n" +
+            "3. What should I record per case besides the grade?\n" +
+            "4. How do I rerun it before every change?";
         }
-        var grade = s.out === "free text for people" ? "a pairwise judge call (claude-opus-5-5) that compares each answer to a saved baseline answer and saves the judge's reasons" : "code: an exact match for labels, a schema check for JSON";
+        var grade = s.out === "free text for people" ? "a pairwise judge call (claude-opus-5-5) that compares each answer to a saved baseline answer, shows the two in random order, and saves the judge’s pick and reasons. On the first run, save the answers as the baseline instead of grading" : "code: an exact match for labels, a schema check for JSON";
         return "Write a small " + s.lang + " eval script with the official Claude SDK for " + s.feat + " (output: " + s.out + ").\n" +
           "- A cases file with 10 inputs and expected answers (make them up and label them samples).\n" +
           "- Run each case on claude-opus-5-5, with my prompt in one place I can edit. Key from ANTHROPIC_API_KEY.\n" +
@@ -77,10 +77,10 @@
       { term: "Baseline", q: "What’s a baseline?", a: ["The current version’s results, saved to compare against", "The cheapest model you could switch to", "The first test case in your set"], ok: 0, why: "Right. Every change gets measured against it." },
       { term: "Regression", q: "From Level 2: a fix broke a case that used to pass. What’s that?", a: ["A regression", "A refusal", "A cache miss"], ok: 0, why: "Right. The eval catches it before customers do." }
     ],
-    say: "Every change runs the same cases, graded the cheapest honest way, with cost and time logged against the baseline.",
-    keep: "A ticket that plans or writes an eval script for your feature.",
+    say: "Every change reruns the same cases against the baseline, logging cost and time.",
+    keep: "An eval plan with 10 cases, a grader and a baseline.",
     cardLabel: "Copy my card",
-    card: "TASTE TESTS IN CODE\nEval = cases + a way to run + a way to grade\nCode grader = exact match, schema check: free\nPairwise comparison = judge picks the better of two\nRubric = what a judge scores one answer on\nBaseline = today’s results, saved\nPass rate = passes out of all cases\nLog cost, seconds, stop_reason on every case\nCheck the judge against your own grades",
+    card: "TASTE TESTS IN CODE\nEval = cases + a way to run + a way to grade\nCode grader = exact match, schema check: free\nPairwise comparison = judge picks the better of two\nRubric = what a judge scores one answer on\nBaseline = today’s results, saved · Pass rate = share that pass\nLog cost, seconds, stop_reason on every case\nCheck the judge against your own grades",
     real: ["Introduction to evals", "https://academy.claude.com/courses/introduction-to-evals"]
   };
   document.addEventListener("DOMContentLoaded", function () { BK.run(L); });

@@ -19,12 +19,12 @@
         '<p class="label" style="margin-top:14px">2. Point to it in a document block <span class="sample">Simplified</span></p><div class="ticket"><div class="th"><span>DOCUMENT</span><span>block</span></div>source: { type: "file", file_id }<br>citations: { enabled: true }<div class="tf">Each PDF page is read as text and as an image</div></div>' +
         '<p class="label" style="margin-top:14px">3. The answer, with receipts <span class="sample">Sample</span></p><div class="reply"><p class="who">assistant</p>The pesto has pine nuts. <span class="small">[cited: “Pesto: basil, pine nuts…”]</span></div>' +
         '<p class="small">Too big for the counter? Chunk it, embed the chunks with <b>Voyage AI</b> (Anthropic has no embedding model), and add <b>BM25</b> keyword search. A <b>reranker</b> sorts the finalists.</p>',
-      more: '<p class="small"><b>Contextual retrieval</b>: before indexing, Claude writes a 50 to 100 token note placing each chunk in its document. In Anthropic’s tests that cut failed retrievals by 49%, and by 67% with reranking. Files API: up to 500 MB per file, kept until you delete it or it expires. The 600-page limit drops to 100 when the request’s context window is under 1M tokens.</p>',
+      more: '<p class="small"><b>Contextual retrieval</b>: before indexing, Claude writes a 50 to 100 token note placing each chunk in its document. In Anthropic’s tests that cut failed retrievals by 35%, by 49% with BM25 added, and by 67% with reranking too. Files API: up to 500 MB per file, kept until you delete it or it expires. The 600-page limit drops to 100 when the request’s context window is under 1M tokens.</p>',
       next: "Your turn →"
     },
     build: {
       title: "Your turn. Build the library.",
-      lead: "Pick your documents and how big they are. Your ticket explains the build, or writes it.",
+      lead: "Pick your documents and their size. Get a build plan in plain words, or the script.",
       state: { mode: "Explain it to me", lang: "Python", docs: "a staff handbook", size: "under 100 pages" },
       controls: function (s, esc) {
         function row(k, list) { return '<div class="fridge">' + list.map(function (v) { return '<button type="button" class="chip" data-set="' + k + '" data-v="' + esc(v) + '" aria-pressed="' + (s[k] === v) + '">' + esc(v) + "</button>"; }).join("") + "</div>"; }
@@ -37,16 +37,16 @@
       text: function (s) {
         var small = s.size === "under 100 pages";
         if (s.mode === "Explain it to me") {
-          return "I want the Claude API to answer questions from " + s.docs + " (" + s.size + "). I don't code yet.\n" +
-            "1. Tell me whether to send the documents whole (Files API, document blocks, citations) or build retrieval, and why, for my size.\n" +
-            "2. If retrieval: explain each step in plain words: chunk, embed (Voyage AI), store, retrieve with embeddings plus BM25 keyword search, rerank, then answer with citations.\n" +
+          return "I want the Claude API to answer questions from " + s.docs + " (" + s.size + "). I don’t code yet.\n" +
+            "1. Should I send the documents whole, or build retrieval? Why, for my size?\n" +
+            "2. If retrieval, explain each step in plain words: chunk, embed, store, search, rerank, answer with citations.\n" +
             "3. Explain contextual retrieval in two sentences.\n" +
-            "4. Give me 5 test questions that check it finds the right page, including one whose answer isn't in the documents.";
+            "4. Give me 5 test questions, including one the documents can’t answer.";
         }
         return "Write a small " + s.lang + " script with the official Claude SDK that answers a question from " + s.docs + ".\n" +
           "- Model claude-opus-5-5. Key from ANTHROPIC_API_KEY.\n" +
           (small
-            ? "- Upload a PDF once with the Files API, then send it as a document block with citations enabled.\n- Print the answer, then each citation's cited text.\n"
+            ? "- Upload a PDF once with the Files API, then send it as a document block with citations enabled.\n- Print the answer, then each citation’s cited text.\n"
             : "- Split my text files into chunks of a few hundred tokens.\n- Embed the chunks with Voyage AI (model voyage-4, input_type \"document\" for chunks and \"query\" for the question), key from VOYAGE_API_KEY.\n- Retrieve the top 5 chunks by similarity, send them to Claude as plain-text document blocks with citations enabled, and print the answer with its sources.\n") +
           "Then tell me what to do with it: the install commands, where my files go, how to run it, and how to tell a good answer from a lucky one.";
       },
@@ -73,13 +73,13 @@
     },
     quiz: [
       { term: "Contextual retrieval", q: "What does contextual retrieval add?", a: ["A short note on each chunk saying where it fits in its document", "A second model that writes the final answer", "A bigger context window for long documents"], ok: 0, why: "Right. Chunks stop being orphans." },
-      { term: "Voyage AI", q: "Anthropic has no embedding model. Which provider do its docs point to?", a: ["Voyage AI", "BM25", "The Files API"], ok: 0, why: "Right. Voyage AI, by MongoDB. You can compare others too." },
+      { term: "Document block", q: "Your guide is 20 pages. What do you build first?", a: ["Nothing extra: send the whole PDF as a document block", "A vector database", "A reranker"], ok: 0, why: "Right. Build retrieval only when the library outgrows the counter." },
       { term: "Citations", q: "From Level 2: what do citations give you?", a: ["The exact passage behind a claim", "A cheaper reply", "A longer answer"], ok: 0, why: "Right. Receipts you can check." }
     ],
     say: "Small libraries go in whole with citations. Big ones get retrieval: embeddings plus BM25, reranked, cited.",
-    keep: "A ticket that plans or codes a document Q&A for your files.",
+    keep: "A document Q&A for your own files, planned or coded.",
     cardLabel: "Copy my card",
-    card: "THE RECIPE LIBRARY, BUILT\nFiles API = upload once, reuse by file_id\nDocument block = hand Claude a PDF or text\nCitations = turn on per document\nSmall library: send it whole\nBig library: chunk, embed, retrieve, cite\nVoyage AI = embeddings (Anthropic has none)\nBM25 = keyword search; reranker sorts finalists\nContextual retrieval = a note on every chunk",
+    card: "THE RECIPE LIBRARY, BUILT\nFiles API = upload once, reuse by file_id\nDocument block = hand Claude a PDF or text\nSmall library: send it whole\nBig library: chunk, embed, retrieve, cite\nVoyage AI = embeddings (Anthropic has none)\nBM25 = keyword search; reranker sorts finalists\nContextual retrieval = a note on every chunk",
     real: ["Building with the Claude API", "https://academy.claude.com/courses/building-with-the-claude-api"]
   };
   document.addEventListener("DOMContentLoaded", function () { BK.run(L); });

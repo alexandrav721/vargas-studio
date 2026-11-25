@@ -2,29 +2,29 @@
 (function () {
   var L = {
     n: 5, id: "d5", mins: 6, title: "Prep once, serve many.", stamp: "Prep",
-    seen: ["Prompt caching", "Batch processing", "Token"],
+    seen: ["Prompt caching", "Token"],
     terms: ["cache_control", "Cache TTL", "Cache hit", "Token counting", "custom_id"],
-    teaser: ["PREP AHEAD", "caching · batches", "Chop the onions once.<br>Serve them all night.<br>Cook big orders overnight at half price.", "Five words. Six minutes."],
+    teaser: ["PREP AHEAD", "caching · batches", "Level 2 named prompt caching.<br>Now you chop the onions once<br>and cook big orders overnight, half price.", "Five words. Six minutes."],
     lines: [
       ["Caching reuses the same start of your prompt.", "Mark it with cache_control. Repeat calls read it cheaply."],
-      ["One changed byte spoils the prep.", "A timestamp at the top means nothing after it caches."],
+      ["One changed letter spoils the prep.", "A timestamp at the top means nothing after it caches."],
       ["Batches trade speed for half price.", "Send many requests at once. Most finish within an hour."]
     ],
-    guess: { q: "Your app sends the same 30-page manual with every question. Cheapest fix?", opts: [["Cache the manual with cache_control", true], ["Shorten every customer question", false], ["Switch to a bigger model", false]], reveal: "Cache it. Reading cached tokens costs a small fraction of normal input: 5% on Opus 5.5." },
+    guess: { q: "Your app sends the same 30-page manual with every question. Cheapest fix?", opts: [["Cache the manual with cache_control", true], ["Shorten every customer question", false], ["Switch to a bigger model", false]], reveal: "Cache it. Reading the cached manual costs a small fraction of normal input, so every repeat question gets cheaper." },
     startLabel: "See the prep",
     example: {
       title: "The prep list, with prices.",
       html:
-        '<p class="label">Mark the shared part <span class="sample">Simplified</span></p><div class="ticket"><div class="th"><span>REQUEST</span><span>cached</span></div>system: [ the 30-page manual,<br>&nbsp;&nbsp;cache_control: { type: "ephemeral" } ]<br>messages: user “Can I return opened boxes?”<div class="tf">Stable parts first. Changing parts after the mark.</div></div>' +
-        '<p class="label" style="margin-top:14px">The receipt on the second call <span class="sample">Sample</span></p><div class="reply"><p class="who">usage</p>cache_read_input_tokens: 18,000<br>input_tokens: 12</div>' +
-        '<p class="small">Writing the cache costs 1.25x for 5 minutes (the default <b>TTL</b>, its time to live) or 2x for 1 hour. Reads cost 0.1x on most models, 0.05x on Opus 5.5.</p>' +
-        '<p class="small"><b>Message Batches</b>: up to 100,000 requests, 50% off, done within 24 hours. Tag each request with a <b>custom_id</b>.</p>',
-      more: '<p class="small">The prompt is read in order: tools, then system, then messages. Current models won’t cache a part under 512 tokens, and no error tells you. Check sizes first with token counting (count_tokens, using the same model ID).</p>',
+        '<p class="label">Mark the shared part</p><div class="ticket"><div class="th"><span>REQUEST</span><span>cached</span></div>system: [ the 30-page manual,<br>&nbsp;&nbsp;cache_control: { type: "ephemeral" } ]<br>messages: user “Can I return opened boxes?”<div class="tf">Stable parts first, changing parts after.</div></div>' +
+        '<p class="label" style="margin-top:14px">Second call’s receipt <span class="sample">Sample</span></p><div class="reply"><p class="who">usage</p>cache_read_input_tokens: 18,000 <span class="small">(from the prep)</span><br>input_tokens: 12</div>' +
+        '<p class="small">Cached reads cost a small fraction of normal input, between a tenth and a fortieth depending on the model. It keeps 5 minutes (its <b>TTL</b>, time to live); an hour costs more.</p>' +
+        '<p class="small"><b>Message Batches</b>: half price, done within 24 hours. Label each request with a <b>custom_id</b>.</p>',
+      more: '<p class="small">The prompt is read in order: tools, then system, then messages. Current models won’t cache a prompt shorter than 512 tokens up to the mark, and no error tells you: cache_creation_input_tokens just reads 0. Check sizes first with token counting (count_tokens, using the same model ID). A batch holds up to 100,000 requests.</p>',
       next: "Your turn →"
     },
     build: {
       title: "Your turn. Plan the prep.",
-      lead: "Pick what repeats and when the answers are needed. Your ticket explains the savings, or writes the code.",
+      lead: "Pick what repeats and when answers are due. Get the savings in plain words, or the code.",
       state: { mode: "Explain it to me", lang: "Python", rep: "a long product manual", job: "answer questions live" },
       controls: function (s, esc) {
         function row(k, list) { return '<div class="fridge">' + list.map(function (v) { return '<button type="button" class="chip" data-set="' + k + '" data-v="' + esc(v) + '" aria-pressed="' + (s[k] === v) + '">' + esc(v) + "</button>"; }).join("") + "</div>"; }
@@ -37,15 +37,15 @@
       text: function (s) {
         var batch = s.job !== "answer questions live";
         if (s.mode === "Explain it to me") {
-          return "My app sends " + s.rep + " with every Claude API request and needs to " + s.job + ". I don't code yet.\n" +
-            "1. Explain prompt caching in plain words: what cache_control marks, why order matters (tools, then system, then messages), and 3 things that silently break a cache.\n" +
-            "2. Compare the 5-minute and 1-hour cache lifetimes and when each pays off.\n" +
-            "3. Say whether Message Batches (50% off, results within 24 hours) fit my job.\n" +
-            "4. Show a rough cost example for 1,000 requests with and without caching. Look up current prices first and label the numbers estimates.";
+          return "My app sends " + s.rep + " with every Claude API request and needs to " + s.job + ". I don’t code yet.\n" +
+            "1. Explain prompt caching in plain words, and 3 things that quietly break it.\n" +
+            "2. When does a 1-hour cache beat 5 minutes?\n" +
+            "3. Do Message Batches (half price, results within 24 hours) fit my job?\n" +
+            "4. A rough cost for 1,000 requests, with and without caching. Look up current prices; mark estimates.";
         }
         return "Write a small " + s.lang + " script with the official Claude SDK. My app sends " + s.rep + " (use a placeholder text file) and needs to " + s.job + ".\n" +
           "- Model claude-opus-5-5. Key from ANTHROPIC_API_KEY.\n" +
-          "- First count the shared part's tokens with the token counting endpoint.\n" +
+          "- First count the shared part’s tokens with the token counting endpoint, and warn me if it’s under 512 tokens (too short to cache).\n" +
           "- Put the shared part first with cache_control {type: \"ephemeral\"}, and the changing question after it.\n" +
           "- Make two calls and print cache_creation_input_tokens and cache_read_input_tokens, to prove the second call hit the cache.\n" +
           (batch ? "- Then send the job as a Message Batch with a custom_id per item, poll until it ends, and print each result by custom_id.\n" : "") +
@@ -77,10 +77,10 @@
       { term: "custom_id", q: "What is custom_id for in a batch?", a: ["Matching each result to the request it answers", "Choosing which model runs each request", "Setting the price of the batch"], ok: 0, why: "Right. Results can come back in any order." },
       { term: "tool_result block", q: "Recall from Lesson 4: what must every tool_result carry?", a: ["The matching tool_use_id", "A copy of the system prompt", "The model ID"], ok: 0, why: "Right. That’s how Claude knows which order it answers." }
     ],
-    say: "We cache the shared start of the prompt and send overnight jobs as a batch at half price.",
-    keep: "A ticket that prices or codes caching and batches for your app.",
+    say: "We cache the shared start of each prompt and batch overnight jobs at half price.",
+    keep: "A cost sheet for caching and batches on your own app.",
     cardLabel: "Copy my card",
-    card: "PREP ONCE, SERVE MANY\ncache_control = mark the end of the shared part\nOrder: tools, system, messages; stable first\nCache TTL = 5 min default, 1 hour costs more\nWrites 1.25x (5 min) or 2x (1 h); reads 0.1x\nOpus 5.5 reads: 0.05x\nCache hit = cache_read_input_tokens above 0\nBatches = 50% off, within 24 h, tag with custom_id\nToken counting = size it before you send",
+    card: "PREP ONCE, SERVE MANY\ncache_control = mark the end of the shared part\nOrder: tools, system, messages; stable first\nCache TTL = 5 min default, 1 hour costs more\nCached reads = a small fraction of normal input\nCache hit = cache_read_input_tokens above 0\nBatches = half price, within 24 h, tag with custom_id\nToken counting = size it before you send",
     real: ["Building with the Claude API", "https://academy.claude.com/courses/building-with-the-claude-api"]
   };
   document.addEventListener("DOMContentLoaded", function () { BK.run(L); });

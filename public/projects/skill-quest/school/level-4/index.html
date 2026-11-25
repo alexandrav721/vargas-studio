@@ -18,6 +18,9 @@
 .station .st a{display:inline-flex;flex-direction:column;align-items:center;gap:2px;min-height:44px;width:82px;text-align:center;font-size:.8rem;text-decoration:none;color:var(--ink)}
 .station .st .ms svg{width:56px;height:56px}
 @media (max-width:520px){.map{grid-template-columns:1fr}}
+.next{width:100%;border-collapse:collapse;margin-top:12px;font-size:.92rem}
+.next th,.next td{text-align:left;padding:9px 6px;border-bottom:1px solid var(--line2);vertical-align:top}
+.next th{font-size:.78rem;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
 </style>
 <link rel="stylesheet" href="/site-bar.css" />
 <script src="/site-bar.js" data-project="skill-quest" data-kind="piece" defer></script>
@@ -32,16 +35,23 @@
   <figure class="ez-photo"><img src="../../img/guess.jpg" alt="A chef serves a plate to a judge at a cooking competition" width="1200" height="600" fetchpriority="high"><figcaption>Photo: U.S. Marine Corps, <a href="https://commons.wikimedia.org/wiki/File:Cherry_Point_Marines_compete_for_the_Chef_of_the_Quarter_competition_140529-M-GY210-052.jpg">public domain</a></figcaption></figure>
   <p class="label">Level 4 · Open your own restaurant · 8 lessons, about 6 minutes each</p>
   <h1>Build with Claude.</h1>
-  <p class="muted" id="sum">Build a small app on the Claude API, step by step: your first call, the right model, tools, caching, your own documents, tests and a safe launch.</p>
+  <p class="muted" id="sum">Build a small app on the Claude API, one step at a time. Code optional.</p>
   <div class="btns" id="cta"></div>
 
   <section class="sec">
     <h2>Your passport</h2>
     <div class="map" id="map"></div>
   </section>
+  <section class="sec">
+    <h2>Where to go next</h2>
+    <details class="more-courses"><summary>Anthropic’s free courses, one for each lesson +</summary>
+    <table class="next"><thead><tr><th>After</th><th>Take</th></tr></thead><tbody><tr><td>Lesson 1</td><td><a href="https://academy.claude.com/courses/claude-platform-101" target="_blank" rel="noopener">Claude Platform 101</a></td></tr><tr><td>Lesson 2</td><td><a href="https://academy.claude.com/courses/claude-platform-101" target="_blank" rel="noopener">Claude Platform 101</a></td></tr><tr><td>Lesson 3</td><td><a href="https://academy.claude.com/courses/building-with-the-claude-api" target="_blank" rel="noopener">Building with the Claude API</a></td></tr><tr><td>Lesson 4</td><td><a href="https://academy.claude.com/courses/tool-use-with-the-messages-api" target="_blank" rel="noopener">Tool use with the Messages API</a></td></tr><tr><td>Lesson 5</td><td><a href="https://academy.claude.com/courses/building-with-the-claude-api" target="_blank" rel="noopener">Building with the Claude API</a></td></tr><tr><td>Lesson 6</td><td><a href="https://academy.claude.com/courses/building-with-the-claude-api" target="_blank" rel="noopener">Building with the Claude API</a></td></tr><tr><td>Lesson 7</td><td><a href="https://academy.claude.com/courses/introduction-to-evals" target="_blank" rel="noopener">Introduction to evals</a></td></tr><tr><td>Lesson 8</td><td><a href="https://academy.claude.com/courses/building-with-the-claude-api" target="_blank" rel="noopener">Building with the Claude API</a></td></tr></tbody></table>
+    <p class="small" style="margin-top:10px">All links go to Claude Academy, checked 25 Nov 2026.</p>
+    </details>
+  </section>
   <p class="small" style="margin-top:24px">Inspired by Anthropic’s free Claude Academy courses. Each lesson links to the matching one. Not affiliated with Anthropic; no certificate.</p>
 </main>
-<footer class="foot"><a href="../">AI Made EZ · Level 1</a><a href="../kitchen/glossary.html">Plain words</a><span>Not affiliated with Anthropic</span><span>Made by Alexandra Vargas</span></footer>
+<footer class="foot"><a href="../">All lessons</a><a href="../kitchen/glossary.html">Plain words</a><span>Not affiliated with Anthropic</span><span>Made by Alexandra Vargas</span></footer>
 <script src="../school.js" defer></script><script src="track.js" defer></script><script src="../kitchen/bk.js" defer></script><script src="../kitchen/words.js" defer></script><script src="../kitchen/mem.js" defer></script>
 <script>
 document.addEventListener("DOMContentLoaded", function () {
@@ -51,9 +61,9 @@ document.addEventListener("DOMContentLoaded", function () {
     ? '<a class="btn" href="' + nextL.href + '">' + (n ? "Next: Lesson " : "Start Lesson ") + nextL.n + ", " + nextL.name + "</a>"
     : '<a class="btn ghost" href="lesson-1.html">Start again</a>';
   if (n) document.getElementById("sum").textContent = n >= T.length ? (window.BK_CONFIG.doneLine || "Passport complete.") : n + " of " + T.length + " stamps. Keep going.";
-  var stations = [[1, 2], [3, 4], [5, 6], [7, 8]];
+  var stations = [[1, 2], [3, 4], [5, 6], [7, 8]], NAMES = ["First orders", "Reliable plates", "Cheaper and smarter", "Quality and launch"];
   document.getElementById("map").innerHTML = stations.map(function (s, k) {
-    return '<div class="station"><b>Station ' + (k + 1) + '</b><div class="st">' + s.map(function (i) {
+    return '<div class="station"><b>' + NAMES[k] + '</b><div class="st">' + s.map(function (i) {
       var l = T[i - 1], got = !!done[l.id]; return '<a href="' + l.href + '" aria-label="Lesson ' + l.n + ": " + l.name + (got ? ", stamped" : "") + '"><span class="ms">' + School.stampSvg(l.stamp, l.n, got) + "</span><span>" + l.short + "</span></a>";
     }).join("") + "</div></div>";
   }).join("");

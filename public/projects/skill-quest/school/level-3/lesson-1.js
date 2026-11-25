@@ -5,11 +5,11 @@
     terms: ["Chat", "Cowork", "Claude in Chrome", "Model selector", "Desktop app"],
     teaser: ["YOUR STATION", "where the work happens", "Same chef, five stations.<br>Talk it through, look it up,<br>or hand over the whole job.", "Five words. Six minutes."],
     lines: [
-      ["Claude has stations, like a line.", "Chat to talk and make things. Research to look things up. Cowork to do the job."],
+      ["Level 2 showed how the kitchen is built. Now you work in it.", "Chat to talk. Research to look things up. Cowork to do the job."],
       ["Cowork works with your files and apps.", "You describe the task, Claude plans it, you steer. Paid plans."],
       ["Claude in Chrome works in your browser.", "It reads, clicks and types on websites, in a side panel."]
     ],
-    guess: { q: "You need 40 receipts in a folder turned into a spreadsheet. Where?", opts: [["Cowork, which works with your files", true], ["A normal chat, one receipt at a time", false], ["Research, since it reads things", false]], reveal: "Cowork works with folders you connect in the desktop app. Chat only sees what you upload." },
+    guess: { q: "You need 40 receipts in a folder turned into a spreadsheet. Where?", opts: [["Cowork, which works with your files", true], ["A normal chat, one receipt at a time", false], ["Research, since it reads things", false]], reveal: "Cowork, or any chat in the newer Claude, works with folders you connect in the desktop app. Without one, Claude sees only what you upload." },
     startLabel: "Walk the line",
     example: {
       title: "Monday at work. Five jobs, five stations.",
@@ -19,9 +19,8 @@
         '<div class="reply"><p class="who">research</p>“Compare 3 payroll tools, with sources.”</div>' +
         '<div class="reply"><p class="who">cowork</p>“Rename and sort the files in my Invoices folder.”</div>' +
         '<div class="reply"><p class="who">claude in chrome</p>“Fill in this supplier form from my order list.”</div>' +
-        '<div class="reply"><p class="who">claude code</p>“Fix the broken link on our website.” (Level 2)</div>' +
-        '<p class="small">The <b>model selector</b> sits next to the send button. Click the model name to switch. Haiku is fastest, Sonnet is a good daily pick, Opus and Fable take the hardest jobs.</p>' +
-        '<p class="small">Cowork with local folders needs the <b>desktop app</b> (Mac, Windows, Linux beta).</p>',
+        '<p class="small">The <b>model selector</b> sits next to the send button. Haiku is fastest; Opus and Fable take the hardest jobs.</p>' +
+        '<p class="small">Cowork on folders on your computer needs the <b>desktop app</b>. No Chat or Cowork switch? Type any of these in the one box.</p>',
       next: "Your turn →"
     },
     build: {
@@ -37,9 +36,9 @@
       head: "ORDER #C01", right: "station map", foot: "Paste it into Claude, or open it there",
       text: function (s) {
         return "I work as " + s.job + ". My week is mostly: " + (s.tasks.length ? s.tasks.join(", ") : "a mix of things") + ".\n" +
-          "Make me a one-screen cheat sheet: a table of 6 real tasks from a week like mine.\n" +
-          "For each: the best Claude station (Chat, Research, Cowork, Claude in Chrome or Claude Code), why in one line, and which model size (Haiku, Sonnet or Opus).\n" +
-          "Mark which ones need a paid plan or the desktop app. Plain words, no jargon. Ask me one question first if you need to.";
+          "Make a one-screen cheat sheet: a table of 6 real tasks from a week like mine.\n" +
+          "For each: the best Claude station (Chat, Research, Cowork, Claude in Chrome or Claude Code), why, and a model (Haiku, Sonnet or Opus).\n" +
+          "Mark what needs a paid plan or the desktop app. If you’re unsure a feature exists on my plan, say so. Plain words.";
       },
       claude: "Open in Claude", done: "Done →"
     },
@@ -47,7 +46,7 @@
       type: "pick", title: "You need 200 files in a folder on your laptop renamed by date. Which station?",
       options: [
         ["Cowork, with that folder connected", true],
-        ["Chat", false, "Chat sees only what you upload. It can’t rename files on your laptop."],
+        ["A plain chat with no folder connected", false, "Without a connected folder, Claude sees only what you upload. It can’t rename files on your laptop."],
         ["Research", false, "Research reads the web and your connected apps. It doesn’t change your files."]
       ],
       right: "Yes. Cowork reads and writes files in folders you connect, in the desktop app.",
@@ -57,7 +56,7 @@
     breaks: {
       title: "The stations keep moving.",
       lines: [
-        ["Some accounts have no Chat or Cowork switch.", "In the newer Claude, any chat can take on a Cowork task."],
+        ["Your app may have just one box.", "No Chat or Cowork switch? Type any job there. The stations still apply."],
         ["Menus change often.", "If a button isn’t where a lesson says, search Claude’s help center."]
       ],
       where: "A real kitchen’s stations stay put for years. Claude’s app rearranges itself every few months."
@@ -70,7 +69,7 @@
     say: "This one needs my files, so it’s a Cowork job.",
     keep: "A cheat sheet that maps your real week to the right Claude station.",
     cardLabel: "Copy my card",
-    card: "PICK YOUR STATION\nChat = talk it through, draft, make things\nResearch = look it up across many sources\nCowork = hand off a task on your files and apps\nClaude in Chrome = work on websites in a side panel\nClaude Code = work on code (Level 2)\nModel selector = click the model name by the send button\nCowork, Research, Chrome: paid plans",
+    card: "PICK YOUR STATION\nChat = talk it through, draft, make things\nResearch = look it up across many sources\nCowork = hand off a task on your files and apps\nClaude in Chrome = work on websites in a side panel\nModel selector = click the model name by the send button\nCowork, Research, Chrome: paid plans",
     real: ["Claude 101", "https://academy.claude.com/courses/claude-101"]
   };
   document.addEventListener("DOMContentLoaded", function () { BK.run(L); });

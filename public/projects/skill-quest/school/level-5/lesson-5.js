@@ -3,11 +3,11 @@
   var L = {
     n: 5, id: "e5", mins: 7, title: "Double shifts.", stamp: "Shifts",
     seen: ["Compaction", "Context window", "Skill"], terms: ["Context engineering", "Context rot", "Context editing", "Memory tool", "Structured notes", "Tool search"],
-    teaser: ["DOUBLE SHIFT", "long tasks", "Hour nine. The counter’s full.<br>Clear the old tickets.<br>Leave notes for the next shift.", "Six words. Seven minutes."],
+    teaser: ["DOUBLE SHIFT", "long tasks", "Level 2 named the context window.<br>Hour nine, and the counter’s full.<br>Leave notes for the next shift.", "Six words. Seven minutes."],
     lines: [
       ["Context engineering is keeping the counter clean.", "Give the model the smallest set of useful tokens, not everything you have."],
-      ["A crowded counter blurs.", "Anthropic calls it context rot: recall slips as the context grows."],
-      ["Long jobs need notes.", "Write progress to files. The next shift reads them first."]
+      ["A crowded counter blurs.", "It’s called context rot: recall slips as the context grows."],
+      ["Long jobs need notes.", "Write progress to files. The next shift, at any location, reads them first."]
     ],
     guess: { q: "An agent has worked for 6 hours and its answers get sloppy. Likely cause?", opts: [["Its counter is cluttered with old results", true], ["The model got tired", false], ["It ran out of tools", false]], reveal: "Models don’t tire. Old tool results crowd the counter, and recall slips. Clear it or summarize it." },
     startLabel: "Clean the counter",
@@ -17,16 +17,16 @@
         '<p class="label">Long-shift kit <span class="sample">Simplified</span></p><div class="ticket"><div class="th"><span>CLEAN COUNTER</span><span>4 moves</span></div>' +
         '<b>Compaction</b>: near the limit, squeeze the old shift into one summary.<br>' +
         '<b>Context editing</b>: clear old tool results, leave a placeholder. (API beta)<br>' +
-        '<b>Memory tool</b>: Claude keeps files in /memories that your app stores. They outlast the chat.<br>' +
-        '<b>Tool search</b>: 200 tools? Load the few it needs, when it needs them.' +
+        '<b>Memory tool</b>: Claude keeps files in /memories, stored by your app. They outlast the chat.<br>' +
+        '<b>Tool search</b>: 200 tools? Load only the few it needs.' +
         '<div class="tf">Claude API features</div></div>' +
-        '<p class="small"><b>Structured notes</b>: Anthropic’s long-running coding setup kept a progress file, a feature list and git history. Each new session read them first.</p>',
+        '<p class="small"><b>Structured notes</b>: Anthropic’s long-running coding setup kept a progress file, a feature list and a log of every saved change (git). Each new session read them first.</p>',
       more: '<p class="small">Tool search docs: Claude picks tools less accurately past 30 to 50 tools. Search typically loads just the 3 to 5 it needs.</p><p class="small">Skills work the same way: only a short description sits on the counter until the task needs the full recipe.</p>',
       next: "Your turn →"
     },
     build: {
       title: "Your turn. Plan the long shift.",
-      lead: "Pick a long job. Your ticket asks Claude for a context plan and the note files to keep.",
+      lead: "Pick a long job. Get a context plan and the note files to keep.",
       state: { job: "move 500 help articles to a new site", len: "a few hours" },
       controls: function (s, esc) {
         function row(k, list) { return '<div class="fridge">' + list.map(function (v) { return '<button type="button" class="chip" data-set="' + k + '" data-v="' + esc(v) + '" aria-pressed="' + (s[k] === v) + '">' + esc(v) + "</button>"; }).join("") + "</div>"; }
@@ -35,13 +35,12 @@
       },
       head: "ORDER #E05", right: "shift plan", foot: "Paste it into Claude, or open it there",
       text: function (s) {
-        return "I'm planning an AI agent for a long job: " + s.job + ", running " + s.len + ". I don't code.\n" +
-          "Write a context plan:\n" +
-          "1. What it loads at the start, and what it fetches only when needed.\n" +
-          "2. When to compact, when to clear old tool results, and what must never be lost.\n" +
-          "3. The note files it keeps (for example a progress log and a checklist), with a short template for each.\n" +
-          "4. How a fresh session picks up where the last one stopped.\n" +
-          "Mark which parts are Claude API features and which are just good habits.";
+        return "An AI agent for a long job: " + s.job + ", running " + s.len + ". I don’t code. Write a context plan:\n" +
+          "1. What it loads first, and what it fetches later.\n" +
+          "2. When to compact or clear old tool results, and what must never be lost.\n" +
+          "3. The note files it keeps, with a short template each.\n" +
+          "4. How a fresh session picks up.\n" +
+          "Mark API features vs. good habits.";
       },
       claude: "Open in Claude", done: "Done →"
     },
@@ -69,11 +68,11 @@
       { term: "Tool search", q: "You have 200 tools. What does tool search do?", a: ["Loads only the few Claude needs, when it needs them", "Runs all 200 at once to save time", "Deletes the tools nobody uses"], ok: 0, why: "Right. Less clutter, better picks." },
       { term: "Context isolation", q: "Recall from Lesson 4: how do helpers keep the lead’s counter clean?", a: ["They read a lot and send back only a summary", "They share one big counter", "They skip the reading"], ok: 0, why: "Right. Sub-agents are a context move too." }
     ],
-    say: "On long jobs we keep the counter clean: clear old results, compact near the limit, and leave notes for the next session.",
+    say: "We clear old results, compact near the limit, and leave notes for the next shift.",
     keep: "Four moves for long-running agents, and note templates any fresh session can pick up.",
     cardLabel: "Copy my card",
-    card: "DOUBLE SHIFTS (CONTEXT ENGINEERING)\nContext engineering = smallest set of useful tokens\nContext rot = recall slips as context grows\nCompaction = summarize the old shift\nContext editing = clear old tool results\nMemory tool = files in /memories your app stores\nStructured notes = progress log + checklist + git\nTool search = load tools only when needed\nNever store secrets in memory",
-    real: ["Introduction to agent skills", "https://academy.claude.com/courses/introduction-to-agent-skills"]
+    card: "DOUBLE SHIFTS (CONTEXT ENGINEERING)\nContext engineering = smallest set of useful tokens\nContext rot = recall slips as context grows\nCompaction = summarize the old shift\nContext editing = clear old tool results\nMemory tool = files in /memories your app stores\nStructured notes = progress log + checklist + git\nTool search = load tools only when needed",
+    real: ["Claude Platform 101 (context management lesson)", "https://academy.claude.com/courses/claude-platform-101"]
   };
   document.addEventListener("DOMContentLoaded", function () { BK.run(L); });
 })();

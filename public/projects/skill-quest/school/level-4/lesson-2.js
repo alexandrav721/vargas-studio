@@ -4,7 +4,7 @@
     n: 2, id: "d2", mins: 6, title: "Pick the chef by job.", stamp: "Chef",
     seen: ["Model family", "Effort", "Latency", "Cost"],
     terms: ["MTok", "Adaptive thinking", "Time to first token", "Model routing", "Fast mode"],
-    teaser: ["PICK THE CHEF", "by job", "Four chefs, four prices.<br>The best chef for a salad<br>is rarely the priciest one.", "Five words. Six minutes."],
+    teaser: ["PICK THE CHEF", "by job", "Level 2 met the chefs by name.<br>Now you hire one per job, by price.<br>The best salad chef is rarely the priciest.", "Five words. Six minutes."],
     lines: [
       ["Start on Opus. Switch when tests say so.", "Opus 5.5 is the usual default. Try cheaper chefs on real tasks."],
       ["Prices are per million tokens.", "Input: Haiku $0.10, Sonnet $2, Opus $4, Fable $8."],
@@ -24,7 +24,7 @@
     },
     build: {
       title: "Your turn. Hire a chef for one job.",
-      lead: "Pick the job and what matters most. Your ticket plans a cheap test, or writes it.",
+      lead: "Pick the job and what matters most. Get a cheap test plan, or the script that runs it.",
       state: { mode: "Explain it to me", lang: "Python", job: "sort support emails into 5 labels", care: "lowest cost" },
       controls: function (s, esc) {
         function row(k, list) { return '<div class="fridge">' + list.map(function (v) { return '<button type="button" class="chip" data-set="' + k + '" data-v="' + esc(v) + '" aria-pressed="' + (s[k] === v) + '">' + esc(v) + "</button>"; }).join("") + "</div>"; }
@@ -36,10 +36,10 @@
       head: "ORDER #D02", right: "hire a chef", foot: "Paste it into Claude, or open it there",
       text: function (s) {
         if (s.mode === "Explain it to me") {
-          return "I'm choosing a Claude model for this job: " + s.job + ". What matters most: " + s.care + ". I don't code yet.\n" +
-            "1. Compare Claude Haiku 5.5, Sonnet 5.5, Opus 5.5 and Fable 5.2 for this job in plain words, with current prices per million tokens (look them up, don't guess).\n" +
-            "2. Recommend one model and an effort level (low, medium, high, xhigh or max), and say why.\n" +
-            "3. Plan a cheap test: 10 real examples, what to measure (quality, cost, time to first token), and what result would make me switch.\nKeep it short.";
+          return "I’m choosing a Claude model for this job: " + s.job + ". What matters most: " + s.care + ". I don’t code yet.\n" +
+            "1. Compare Haiku 5.5, Sonnet 5.5, Opus 5.5 and Fable 5.2 for it in plain words, with current prices (look them up).\n" +
+            "2. Recommend one model and an effort level, and say why.\n" +
+            "3. Plan a cheap test: 10 real examples, what to measure, and what result means I switch.";
         }
         return "Write a small " + s.lang + " script with the official Claude SDK that runs the same 3 sample inputs for this job (" + s.job + ") on claude-haiku-5-5, claude-sonnet-5-5 and claude-opus-5-5.\n" +
           "- Set output_config effort to \"low\" for the first run, in one place I can change.\n" +
@@ -74,10 +74,10 @@
       { term: "MTok", q: "Opus 5.5 output costs $20 per MTok. What’s an MTok?", a: ["A million tokens", "A thousand tokens", "One message"], ok: 0, why: "Right. So 1,000 output tokens on Opus 5.5 cost 2 cents." },
       { term: "Usage", q: "Recall from Lesson 1: where do you read the token counts for a reply?", a: ["usage", "stop_reason", "system"], ok: 0, why: "Right. usage is the receipt you price with." }
     ],
-    say: "We start on Opus 5.5, then test Haiku or Sonnet and lower effort on our real tasks.",
-    keep: "A ticket that plans or writes a side-by-side model test.",
+    say: "We start on Opus 5.5, then test Haiku, Sonnet and lower effort on real tasks.",
+    keep: "A side-by-side model test you can run on 10 real tasks.",
     cardLabel: "Copy my card",
-    card: "PICK THE CHEF\nHaiku 5.5: fast, cheap, simple high-volume jobs\nSonnet 5.5: balanced\nOpus 5.5: the usual default\nFable 5.2: the hardest, longest work\nMTok = a million tokens; output costs 5x input\nEffort = low · medium · high · xhigh · max\nTime to first token = how soon words appear\nTest on your own tasks before you switch",
+    card: "PICK THE CHEF\nHaiku 5.5: fast, cheap, simple high-volume jobs\nSonnet 5.5: balanced · Opus 5.5: the usual default\nFable 5.2: the hardest, longest work\nMTok = a million tokens; output costs 5x input\nEffort = low · medium · high · xhigh · max\nTime to first token = how soon words appear\nTest on your own tasks before you switch",
     real: ["Claude Platform 101", "https://academy.claude.com/courses/claude-platform-101"]
   };
   document.addEventListener("DOMContentLoaded", function () { BK.run(L); });

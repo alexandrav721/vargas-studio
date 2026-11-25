@@ -7,23 +7,23 @@
     teaser: ["FIRST ORDER", "by code", "You watched the order window.<br>Now you run it yourself:<br>four fields and a secret key.", "Six words. Six minutes."],
     lines: [
       ["You run the restaurant now.", "No app in between. Your code writes the order slip."],
-      ["Four fields do most of the work.", "model, max_tokens, messages, and an optional system prompt."],
+      ["Four fields do most of the work.", "model (which chef), max_tokens (the reply’s length cap), messages (the chat), system (optional)."],
       ["Every plate comes with a receipt.", "usage counts the tokens in and out."]
     ],
-    guess: { q: "Where should your API key live?", opts: [["In an environment variable on your computer or server", true], ["Pasted at the top of your code file", false], ["In the web page your customers load", false]], reveal: "An environment variable. The SDK reads ANTHROPIC_API_KEY by itself, so the key never sits in your code." },
+    guess: { q: "Where should your API key live?", opts: [["In an environment variable on your computer or server", true], ["Pasted at the top of your code file", false], ["In the web page your customers load", false]], reveal: "An environment variable: a setting on your computer, outside your code. The SDK (Anthropic’s ready-made code kit) reads it, so it’s never in your files." },
     startLabel: "See the slip",
     example: {
       title: "One slip, one plate, one receipt.",
       html:
-        '<p class="label">1. The slip you send <span class="sample">Real fields</span></p><div class="ticket"><div class="th"><span>REQUEST</span><span>messages.create</span></div>model: "claude-opus-5-5"<br>max_tokens: 1000<br>system: "You write short menu blurbs."<br>messages: user “Describe our tomato soup.”<div class="tf">Key read from ANTHROPIC_API_KEY</div></div>' +
-        '<p class="label" style="margin-top:14px">2. The plate that comes back <span class="sample">Sample</span></p><div class="reply"><p class="who">assistant</p>content: [ text block “Slow-roasted tomatoes, basil…” ]<br>stop_reason: end_turn<br><span class="small">usage: 21 input tokens · 305 output tokens</span></div>' +
-        '<p class="small">Practice first in the <b>Console</b> (platform.claude.com). Its <b>playground</b> runs a request, and the code toggle copies it. Older guides call it Workbench; it’s retired.</p>',
-      more: '<p class="small">Install the SDK: <code>pip install anthropic</code> or <code>npm install @anthropic-ai/sdk</code>. The reply is a list of content blocks, so check each block’s type before reading its text. The model ID is the exact name, like claude-opus-5-5.</p>',
+        '<p class="label">1. The slip you send <span class="sample">Real fields</span></p><div class="ticket"><div class="th"><span>REQUEST</span><span>messages.create</span></div>model: "claude-opus-5-5"<br>max_tokens: 4096<br>system: "You write short menu blurbs."<br>messages: user “Describe our tomato soup.”<div class="tf">Key read from ANTHROPIC_API_KEY</div></div>' +
+        '<p class="label" style="margin-top:14px">2. The plate that comes back <span class="sample">Sample</span></p><div class="reply"><p class="who">assistant</p>content: [ text block “Slow-roasted tomatoes, basil…” ]<br>stop_reason: end_turn <span class="small">(why it stopped: end_turn means finished)</span><br><span class="small">usage: 21 input tokens · 305 output tokens</span></div>' +
+        '<p class="small">It arrives as <b>JSON</b>: plain text with labels, so code can read each part. Try requests first in the <b>Console</b>’s <b>playground</b> (platform.claude.com), then copy the code.</p>',
+      more: '<p class="small">Install the SDK: <code>pip install anthropic</code> or <code>npm install @anthropic-ai/sdk</code>. On Opus 5.5 thinking can’t be turned off, and thinking counts toward max_tokens, so leave room. If stop_reason says max_tokens, the reply was cut off. The reply is a list of content blocks: check each block’s type before reading its text. Older guides say Workbench; the playground replaced it.</p>',
       next: "Your turn →"
     },
     build: {
       title: "Your turn. Send your first order.",
-      lead: "Pick a job and how you want help. Your ticket gets a plain explanation or working code.",
+      lead: "Pick a first job. Ask for a plain walk-through, or for working code.",
       state: { mode: "Explain it to me", lang: "Python", job: "write a menu blurb" },
       controls: function (s, esc) {
         function row(k, list) { return '<div class="fridge">' + list.map(function (v) { return '<button type="button" class="chip" data-set="' + k + '" data-v="' + esc(v) + '" aria-pressed="' + (s[k] === v) + '">' + esc(v) + "</button>"; }).join("") + "</div>"; }
@@ -34,15 +34,15 @@
       head: "ORDER #D01", right: "first call", foot: "Paste it into Claude, or open it there",
       text: function (s) {
         if (s.mode === "Explain it to me") {
-          return "I'm learning the Claude API and don't code yet. Walk me through a first API call that asks Claude to " + s.job + ".\n" +
-            "1. In plain words: what the Claude Console is, how to make an API key, and why it goes in the ANTHROPIC_API_KEY environment variable.\n" +
-            "2. Show the request with a note on each field: model (claude-opus-5-5), max_tokens, system, messages.\n" +
-            "3. Show a sample response (label it a sample) and explain content blocks, stop_reason and usage.\n" +
-            "4. List 3 common ways people leak a key by accident.";
+          return "I’m learning the Claude API and don’t code yet. Walk me through a first call asking Claude to " + s.job + ".\n" +
+            "1. In plain words: the Console, API keys, and why a key lives in an environment variable.\n" +
+            "2. The request, with a note on each field: model, max_tokens, system, messages.\n" +
+            "3. A labeled sample reply: explain content blocks, stop_reason and usage.\n" +
+            "4. Three ways people leak a key by accident.";
         }
         var sdk = s.lang === "Python" ? "anthropic (pip install anthropic)" : "@anthropic-ai/sdk (npm install @anthropic-ai/sdk)";
         return "Write the smallest correct " + s.lang + " script that calls the Claude API with the official SDK, " + sdk + ", to " + s.job + ".\n" +
-          "- Model claude-opus-5-5, max_tokens 1000, a one-line system prompt.\n" +
+          "- Model claude-opus-5-5, max_tokens 4096, a one-line system prompt. If stop_reason is \"max_tokens\", say so instead of printing nothing.\n" +
           "- Read the key from the ANTHROPIC_API_KEY environment variable. Never hardcode it.\n" +
           "- Print only the text blocks, then the usage: input and output tokens.\n" +
           "Then tell me what to do with it: the install command, the file name, how to set the key, how to run it, and what I should see.";
@@ -52,9 +52,9 @@
     game: {
       type: "tapall", title: "Which belong in your first request?", lead: "Tap all {n}.",
       options: [
-        ["model: \"claude-opus-5-5\"", true], ["max_tokens: 1000", true], ["messages: the user’s question", true],
+        ["model: \"claude-opus-5-5\"", true], ["max_tokens: 4096", true], ["messages: the user’s question", true],
         ["temperature: 0.7", false, "Current Claude models reject it. Effort is the dial now (next lesson)."],
-        ["Your API key inside the messages", false, "Never. The key travels in a header the SDK adds from your environment variable."]
+        ["Your API key inside the messages", false, "Never. The SDK sends the key separately, from your environment variable."]
       ],
       right: "Yes. Model, length limit, messages. A system prompt is optional.",
       wrong: "That one doesn’t belong on the slip.",
@@ -66,7 +66,7 @@
         ["The API forgets every order.", "Send the whole chat each time, or Claude won’t see it."],
         ["A key works like a card number.", "Anyone holding it can order on your bill."]
       ],
-      where: "A paper slip sits where you can see it. A key can leak into a screenshot, a shared repo or a web page without you noticing."
+      where: "A paper slip sits where you can see it. A key can leak into a screenshot, a shared code folder or a web page without you noticing."
     },
     quiz: [
       { term: "Usage", q: "Where do you see what a reply cost?", a: ["The usage field: input and output tokens", "The stop_reason at the end of the reply", "The model ID you put in the request"], ok: 0, why: "Right. Multiply the tokens by the price per million." },
@@ -74,7 +74,7 @@
       { term: "Messages", q: "From Level 2: what do “user” and “assistant” turns hold?", a: ["Your turns and Claude’s turns, in order", "Two different API keys", "The input price and the output price"], ok: 0, why: "Right. messages is the whole chat, resent each time." }
     ],
     say: "I made my first call: model, max_tokens, messages, and the key stays in an environment variable.",
-    keep: "A ticket that explains or writes your first API call.",
+    keep: "Your first API call, explained line by line or written for you.",
     cardLabel: "Copy my card",
     card: "FIRST ORDER BY CODE\nConsole = where you get keys and try requests\nPlayground = test a request, then copy its code\nKey lives in ANTHROPIC_API_KEY, never in code\nRequest = model · max_tokens · messages · system\nModel ID = the exact name, like claude-opus-5-5\nResponse = a list of content blocks + stop_reason\nUsage = tokens in and out: your receipt",
     real: ["Claude Platform 101", "https://academy.claude.com/courses/claude-platform-101"]

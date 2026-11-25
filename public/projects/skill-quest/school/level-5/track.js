@@ -9,7 +9,7 @@ window.BK_CONFIG = {
     { n: 4, id: "e4", stamp: "Brigade", short: "Many chefs", name: "A brigade of chefs (multi-agent)", href: "lesson-4.html", use: "someone pitches “ten agents working together”" },
     { n: 5, id: "e5", stamp: "Shifts", short: "Double shifts", name: "Double shifts (context engineering)", href: "lesson-5.html", use: "an agent gets sloppy after hours of work" },
     { n: 6, id: "e6", stamp: "Locks", short: "Locks and keys", name: "Locks and keys (agent security)", href: "lesson-6.html", use: "security asks “what can this agent reach?”" },
-    { n: 7, id: "e7", stamp: "Inspect", short: "Inspections", name: "Health inspections (governance and safety)", href: "lesson-7.html", use: "legal asks “how do we oversee it?”" },
+    { n: 7, id: "e7", stamp: "Inspect", short: "Head office", name: "Head-office checks (governance and safety)", href: "lesson-7.html", use: "legal asks “how do we oversee it?”" },
     { n: 8, id: "e8", stamp: "Plan", short: "Floor plan", name: "Draw the floor plan (capstone)", href: "lesson-8.html", use: "your boss says “send me the plan by Friday”" }
   ]
 };

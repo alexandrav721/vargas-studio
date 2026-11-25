@@ -3,7 +3,7 @@
   var L = {
     n: 6, id: "e6", mins: 7, title: "Locks and keys.", stamp: "Locks",
     seen: ["Prompt injection", "Human in the loop"], terms: ["Least privilege", "Untrusted content", "Lethal trifecta", "Network allowlist", "Vault", "Approval gate"],
-    teaser: ["LOCKS & KEYS", "agent security", "Every cook gets the key<br>to their own station.<br>Nobody gets the safe.", "Six words. Seven minutes."],
+    teaser: ["LOCKS & KEYS", "agent security", "Level 2 flagged prompt injection.<br>Now fit the locks: each cook gets<br>one key. Nobody gets the safe.", "Six words. Seven minutes."],
     lines: [
       ["Least privilege: only the keys the job needs.", "Fewer tools, fewer websites, read-only wherever you can."],
       ["Anything Claude reads can carry orders.", "Emails, web pages, files. That’s how prompt injection gets in."],
@@ -15,16 +15,16 @@
       title: "The lethal trifecta.",
       html:
         '<p class="label">Three legs <span class="sample">Simplified</span></p><div class="fridge"><span class="tag">Private data</span><span class="tag">Untrusted content</span><span class="tag">A way to send out</span></div>' +
-        '<p class="small">The name comes from developer Simon Willison’s June 2025 post. With all three, one poisoned page can leak your data. Remove any leg.</p>' +
+        '<p class="small">Developer Simon Willison named it in June 2025. With all three, one poisoned page can leak your data. Remove any leg.</p>' +
         '<p class="label" style="margin-top:14px">Locks Anthropic recommends for Managed Agents</p><div class="ticket"><div class="th"><span>LOCKS</span><span>5 settings</span></div>' +
         'Network: limited, only the hosts it needs<br>Secrets: in a vault, sandbox sees a placeholder<br>Tools: start with all off, switch on what’s needed<br>Can’t undo it? Ask first (always_ask)<br>A spend cap on every session' +
         '<div class="tf">From “Secure your Managed Agents deployment”</div></div>',
-      more: '<p class="small">Claude Code can sandbox commands at the operating-system level, so the walls hold whatever the model chose to run.</p><p class="small">A prompt that says “ignore bad instructions” steers. It isn’t a lock.</p>',
+      more: '<p class="small">Claude Code can sandbox its Bash commands at the operating-system level, so the walls hold whatever command the model chose to run.</p><p class="small">A prompt that says “ignore bad instructions” steers. It isn’t a lock.</p>',
       next: "Your turn →"
     },
     build: {
       title: "Your turn. Lock the doors.",
-      lead: "Pick an agent and what it touches. Your ticket asks Claude for a security checklist with an owner for each lock.",
+      lead: "Pick an agent and what it touches. Get a lock list with an owner on each.",
       state: { agent: "an inbox assistant", touch: ["Reads email", "Can send email"] },
       controls: function (s, esc) {
         var agents = ["an inbox assistant", "a web research agent", "a coding agent", "a finance helper"];
@@ -34,14 +34,13 @@
       },
       head: "ORDER #E06", right: "lock check", foot: "Paste it into Claude, or open it there",
       text: function (s) {
-        return "Security review for " + s.agent + ". What it touches: " + (s.touch.join(", ") || "help me list it") + ". I don't code.\n" +
-          "Make a one-page checklist:\n" +
-          "1. Does it have all three legs of the lethal trifecta (private data, untrusted content, a way to send out)? Which leg can we remove?\n" +
-          "2. Least privilege: the tools and websites it truly needs; everything else off.\n" +
-          "3. Where secrets live, so the agent never sees them.\n" +
-          "4. Which actions wait for a person (approval gates).\n" +
+        return "Security review for " + s.agent + ". What it touches: " + (s.touch.join(", ") || "help me list it") + ". I don’t code.\n" +
+          "1. Lethal trifecta check: private data, untrusted content, a way to send out. Which leg can we cut?\n" +
+          "2. Least privilege: only the tools and sites it needs.\n" +
+          "3. Where secrets live, out of the agent’s sight.\n" +
+          "4. Which actions wait for a person.\n" +
           "5. What we log, and how we stop it fast.\n" +
-          "Each line: the lock, why, and who owns it.";
+          "For each: the lock, why, and its owner.";
       },
       claude: "Open in Claude", done: "Done →"
     },
@@ -52,7 +51,7 @@
         ["Tell it in the prompt to ignore bad instructions", false, "Prompts steer. They aren’t locks. Injected text can talk around them."],
         ["Switch to a bigger model", false, "Smarter models still read injected text. Remove a leg of the trifecta."]
       ],
-      right: "Yes. Narrow the way out and add a gate. One leg down.",
+      right: "Yes. The way out is now narrow and gated. Cutting it fully (no send) is safer still.",
       wrong: "Which leg of the trifecta can you cut?", hint: "Look at the way out.",
       habitTitle: "Architect habit", habit: "For every tool, ask: what’s the worst it could do if the agent were tricked? Gate that."
     },
@@ -69,11 +68,11 @@
       { term: "Vault", q: "Why keep an API key in a Managed Agents vault?", a: ["The sandbox only sees a placeholder, not the key", "It makes the agent run faster", "So the agent can share it with users"], ok: 0, why: "Right. The real key is added on the way out, only to allowed hosts." },
       { term: "Permission policy", q: "Recall from Lesson 3: what does a tool set to always_ask do?", a: ["Pauses until a person approves", "Runs without asking", "Asks Claude to double-check itself"], ok: 0, why: "Right. That’s an approval gate in settings." }
     ],
-    say: "We give the agent only the keys it needs, treat everything it reads as untrusted, and gate what can’t be undone.",
+    say: "Fewest keys, everything it reads is untrusted, and a gate on what can’t be undone.",
     keep: "The trifecta test for any agent pitch, and a lock-by-lock checklist with owners.",
     cardLabel: "Copy my card",
-    card: "LOCKS AND KEYS (AGENT SECURITY)\nLeast privilege = only the keys the job needs\nUntrusted content = anything Claude reads can carry orders\nLethal trifecta = private data + untrusted content + a way out\nCut one leg\nNetwork allowlist = only listed hosts\nVault = secrets the sandbox never sees\nApproval gate = a person says yes first\nPrompts steer; settings lock",
-    real: ["Claude Code in action", "https://academy.claude.com/courses/claude-code-in-action"]
+    card: "LOCKS AND KEYS (AGENT SECURITY)\nLeast privilege = only the keys the job needs\nUntrusted content = anything Claude reads can carry orders\nLethal trifecta = data + untrusted content + a way out; cut one\nNetwork allowlist = only listed hosts\nVault = secrets the sandbox never sees\nApproval gate = a person says yes first\nPrompts steer; settings lock",
+    real: ["Claude Code in action (permission modes and hooks)", "https://academy.claude.com/courses/claude-code-in-action"]
   };
   document.addEventListener("DOMContentLoaded", function () { BK.run(L); });
 })();

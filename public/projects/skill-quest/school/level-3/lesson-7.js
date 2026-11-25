@@ -5,19 +5,19 @@
     terms: ["Custom skill", "Frontmatter", "Skill description", "Skill ZIP", "Shared with you"],
     teaser: ["CREW CARDS", "skills at work", "Your team’s way of doing a job,<br>written once, uploaded once,<br>picked up by Claude when it fits.", "Five words. Seven minutes."],
     lines: [
-      ["A custom skill is your team’s recipe card.", "Steps, an example, and rules for one job you do often."],
+      ["A custom skill is your team’s recipe card.", "Level 2 lesson 8 showed skills. This one holds your team’s steps and rules."],
       ["Claude reads the description first.", "If your request matches it, Claude opens the full card. Make it specific."],
-      ["Upload it once, use it anywhere.", "Customize › Skills, then Add. Free and paid plans; file creation must be on."]
+      ["Upload it once, use it anywhere.", "All plans. Customize › Skills, then + (or Add) › Upload a skill."]
     ],
     guess: { q: "Your skill never kicks in. What do you fix first?", opts: [["The description: what it does and when to use it", true], ["Make the steps longer", false], ["Rename the ZIP file", false]], reveal: "Claude decides from the description. Say what it does and the words people use when they need it." },
     startLabel: "See a card",
     example: {
       title: "A skill file for weekly status updates.",
       html:
-        '<p class="label">SKILL.md <span class="sample">Simplified</span></p><div class="ticket"><div class="th"><span>FRONTMATTER</span><span>the label</span></div>name: weekly-status<br>description: Writes our Friday status update from notes. Use when someone asks for a weekly update or status report.<div class="tf">name ≤ 64 characters · description ≤ 200</div></div>' +
-        '<div class="ticket" style="margin-top:10px"><div class="th"><span>THE CARD</span><span>instructions</span></div>1. Sections: Done, Next, Blocked.<br>2. Five bullets each, max.<br>3. Never name clients.<div class="tf">Plain markdown</div></div>' +
-        '<p class="small">Put it in a folder, zip the folder (the <b>skill ZIP</b>), then Customize › Skills › Add, and turn it on.</p>' +
-        '<p class="small">Team and Enterprise coworkers find shared skills under <b>Shared with you</b>, off until they turn them on.</p>',
+        '<p class="label">SKILL.md <span class="sample">Simplified</span></p><div class="ticket"><div class="th"><span>FRONTMATTER</span><span>the label</span></div>name: weekly-status<br>description: Writes our Friday status update from notes. Use when someone asks for a weekly update.<div class="tf">name ≤ 64 characters · description ≤ 200</div></div>' +
+        '<div class="ticket" style="margin-top:10px"><div class="th"><span>THE CARD</span><span>instructions</span></div>1. Sections: Done, Next, Blocked.<br>2. Five bullets each, max.<br>3. Never name clients.<div class="tf">A plain text file: SKILL.md</div></div>' +
+        '<p class="small">Zip its folder into one file (the <b>skill ZIP</b>); your ticket has Claude do it. Upload, then turn it on.</p>' +
+        '<p class="small">On Team and Enterprise, shared skills wait in <b>Shared with you</b>, off at first.</p>',
       next: "Your turn →"
     },
     build: {
@@ -31,14 +31,14 @@
       },
       head: "ORDER #C07", right: "crew card", foot: "Paste it into Claude, or open it there",
       text: function (s) {
-        return "Write a Claude skill for " + s.job + ", used by " + s.who + ". Ask me up to 3 questions about how we do it first.\n" +
-          "1. A folder name, lowercase-with-hyphens.\n" +
-          "2. The full SKILL.md: name (under 64 characters), description (under 200: what it does, when to use it), steps, one example, a “never do” list. No passwords or real customer names.\n" +
-          "3. If you can create files, give me the folder as a ZIP.\n" +
+        return "Write a Claude skill for " + s.job + ", used by " + s.who + ". First ask up to 3 questions about how we do it.\n" +
+          "1. A short folder name.\n" +
+          "2. The full SKILL.md: name (under 64 characters), description (under 200: what and when), steps, one example, a “never do” list. No passwords or real names.\n" +
+          "3. If you can make files, zip the folder.\n" +
           "4. Three test requests that should use it, one that shouldn’t.";
       },
       claude: "Open in Claude", done: "Done →",
-      after: "Upload: Customize › Skills › Add, choose the ZIP, then turn the skill on. Test it with the requests Claude gave you."
+      after: "Upload: Customize › Skills, then + (or Add) › Upload a skill. Choose the ZIP and turn the skill on. Code execution and file creation must be on. Test it with the requests Claude gave you."
     },
     game: {
       type: "pick", title: "Which job wants a skill, not a project?",
@@ -62,12 +62,12 @@
     quiz: [
       { term: "Skill description", q: "What does Claude use to decide when to use a skill?", a: ["Its description", "Its file size", "The day it was uploaded"], ok: 0, why: "Right. Say what it does and when to use it." },
       { term: "Frontmatter", q: "What is a skill’s frontmatter?", a: ["The label at the top: name and description", "The example at the bottom", "The ZIP file"], ok: 0, why: "Right. It sits at the top of SKILL.md." },
-      { term: "Project instructions", q: "From Lesson 2: rules for one body of work with its own files go where?", a: ["A project’s instructions", "A custom skill", "Your memory"], ok: 0, why: "Right. Projects hold one job’s files and rules." }
+      { term: "Project instructions", q: "Recall from Lesson 2: rules for one body of work with its own files go where?", a: ["A project’s instructions", "A custom skill", "Your memory"], ok: 0, why: "Right. Projects hold one job’s files and rules." }
     ],
     say: "Let’s make that a skill so the whole team writes it the same way.",
     keep: "A real skill file for a job your team repeats, with upload and test steps.",
     cardLabel: "Copy my card",
-    card: "RECIPE CARDS FOR THE CREW\nCustom skill = a folder with SKILL.md\nFrontmatter = name (≤64) + description (≤200)\nThe description decides when it’s used\nZip the folder › Customize › Skills › Add › turn on\nNeeds file creation on\nTeam shares show up under Shared with you\nSkill = how-to anywhere; project = one job’s station",
+    card: "RECIPE CARDS FOR THE CREW\nCustom skill = a folder with SKILL.md\nFrontmatter = name (≤64) + description (≤200)\nThe description decides when it’s used\nZip it › Customize › Skills › + or Add › Upload › turn on\nAll plans; code execution and file creation on\nTeam shares show up under Shared with you\nSkill = how-to anywhere; project = one job’s station",
     real: ["Introduction to agent skills", "https://academy.claude.com/courses/introduction-to-agent-skills"]
   };
   document.addEventListener("DOMContentLoaded", function () { BK.run(L); });

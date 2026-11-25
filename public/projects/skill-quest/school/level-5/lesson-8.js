@@ -3,9 +3,9 @@
   var L = {
     n: 8, id: "e8", mins: 7, title: "Draw the floor plan.", stamp: "Plan",
     seen: ["Architecture", "Start simple"], terms: ["Design doc", "Trade-off", "Cost model", "Failure mode", "Blast radius", "Approval matrix"],
-    teaser: ["FLOOR PLAN", "the capstone", "A new location opens Monday.<br>One page: stations, doors, costs,<br>and who holds which key.", "Six words. Seven minutes."],
+    teaser: ["FLOOR PLAN", "the capstone", "A new location opens Monday.<br>Level 2 picked the stations.<br>Now show the cost, the risks, the keys.", "Six words. Seven minutes."],
     lines: [
-      ["A design doc fits on one page.", "The job, the pattern, the parts, the cost, the risks, who approves."],
+      ["Sketching is done. Now defend it.", "Level 2 listed the pieces. A design doc adds trade-offs, cost, failures and approvals."],
       ["Every choice is a trade-off.", "Write down what you gave up: speed, cost, control or simplicity."],
       ["Plan for the bad night.", "How it fails, how far the damage spreads, who notices first."]
     ],
@@ -14,21 +14,18 @@
     example: {
       title: "A floor plan: the invoice checker.",
       html:
-        '<p class="label">Design doc <span class="sample">Sample</span></p><div class="ticket"><div class="th"><span>FLOOR PLAN</span><span>1 page</span></div>' +
-        '<b>Job</b>: flag invoices that don’t match orders. Test: 50 past invoices.<br>' +
-        '<b>Pattern</b>: routing, not an agent. Steps never change.<br>' +
-        '<b>Parts</b>: Haiku 5.5 sorts, Opus 5.5 checks hard ones, read-only MCP server.<br>' +
-        '<b>Fails</b>: a wrong match. A person reviews every flag.<br>' +
-        '<b>Blast radius</b>: read-only. Worst case: a wrong flag, never a payment.<br>' +
-        '<b>Approvals</b>: the finance lead pays. The AI can’t.' +
-        '<div class="tf">Trade-off: slower than full automation, far safer</div></div>' +
-        '<p class="small"><b>Cost model</b>: tokens per task × price. Anthropic’s example: one hour on Managed Agents with Opus 5.5, 50K tokens in, 15K out: about $0.58.</p>',
-      more: '<p class="small">Today’s prices per million input / output tokens: Opus 5.5 $4 / $20, Sonnet 5.5 $2 / $10, Haiku 5.5 $0.10 / $0.50 (prompts up to 100K). Check the pricing page before you quote anyone.</p>',
+        '<p class="label">Design doc <span class="sample">Sample</span></p><div class="ticket"><div class="th"><span>FLOOR PLAN</span><span>invoices</span></div>' +
+        '<b>Trade-off</b>: routing, not an agent. We gave up flexibility for the same steps every time.<br>' +
+        '<b>Cost model</b>: 1,000 invoices a month. Haiku sorts them all: about $0.40. Opus checks the hard 100: about $4.<br>' +
+        '<b>Failure mode</b>: a wrong match. Blast radius: one bad flag, never a payment.<br>' +
+        '<b>Approval matrix</b>: flag = AI alone · email supplier = clerk · pay = finance lead only.' +
+        '<div class="tf">Token counts are guesses until the pilot</div></div>',
+      more: '<p class="small">The sample assumes Haiku 5.5 reads about 3K tokens and writes 200 per invoice, and Opus 5.5 reads 5K and writes 1K on each hard one. The hard tenth costs ten times the rest.</p><p class="small">Today’s prices per million input / output tokens: Opus 5.5 $4 / $20, Sonnet 5.5 $2 / $10, Haiku 5.5 $0.10 / $0.50 (prompts up to 100K). Anthropic’s own example: one hour on Managed Agents with Opus 5.5, 50K tokens in, 15K out, costs about $0.58. Check the pricing page before you quote anyone.</p>',
       next: "Your turn →"
     },
     build: {
       title: "Your turn. Draw your floor plan.",
-      lead: "Pick a real use case and your hardest limit. Your ticket asks Claude for a one-page design doc you can defend.",
+      lead: "Pick a real use case and your hardest limit. Get a design doc you can defend.",
       state: { use: "answer customer emails", limit: "tight budget" },
       controls: function (s, esc) {
         function row(k, list) { return '<div class="fridge">' + list.map(function (v) { return '<button type="button" class="chip" data-set="' + k + '" data-v="' + esc(v) + '" aria-pressed="' + (s[k] === v) + '">' + esc(v) + "</button>"; }).join("") + "</div>"; }
@@ -37,20 +34,19 @@
       },
       head: "ORDER #E08", right: "floor plan", foot: "Paste it into Claude, or open it there",
       text: function (s) {
-        return "Act as my AI systems architect. Use case: " + s.use + ". Hardest limit: " + s.limit + ". I don't code.\n" +
-          "Ask me up to 3 questions first, then write a one-page design doc with these headings:\n" +
-          "1. Job and success test (how we'll measure it).\n" +
-          "2. Pattern: one call, workflow or agent, and the simpler option we rejected.\n" +
-          "3. Parts: models, tools or MCP servers, where it runs, what it remembers.\n" +
-          "4. Cost model: tokens per task × price, math shown. Say which prices I must confirm on Anthropic's pricing page.\n" +
-          "5. Failure modes and blast radius: top 3, and how we'd detect each.\n" +
-          "6. Approval matrix: who approves which action.\n" +
-          "7. Trade-offs we accepted.";
+        return "Use case: " + s.use + ". Hardest limit: " + s.limit + ". I don’t code.\n" +
+          "Ask up to 3 questions (if I say “skip”, label your assumptions), then write a design doc:\n" +
+          "1. The job and how we’ll test it.\n" +
+          "2. Pattern, and the simpler option we rejected.\n" +
+          "3. Cost model: tokens per task × price × volume, math shown. Flag prices to confirm.\n" +
+          "4. Top 3 failure modes, blast radius, how we’d notice.\n" +
+          "5. Approval matrix: each action, who approves.\n" +
+          "6. Trade-offs we accepted.";
       },
       claude: "Open in Claude", done: "Done →"
     },
     game: {
-      type: "tapall", title: "Which belong on the one-page floor plan?", lead: "Tap the {n} that do.",
+      type: "tapall", title: "Which belong on the floor plan?", lead: "Tap the {n} that do.",
       options: [
         ["How you’ll know it works", true], ["Cost per task, with the math", true], ["Who approves risky actions", true], ["How it fails and who notices", true],
         ["Every prompt, word for word", false, "That’s the recipe binder. The plan names the parts."],
@@ -73,10 +69,10 @@
       { term: "Approval matrix", q: "What does an approval matrix show?", a: ["Who approves which action", "Which model is cheapest", "The order of the agent’s steps"], ok: 0, why: "Right. No one should wonder who presses the button." },
       { term: "Orchestrator-workers", q: "Recall from Lesson 1: which pattern fits a job whose subtasks you can’t predict?", a: ["Orchestrator-workers", "Prompt chaining", "Routing"], ok: 0, why: "Right. The head chef splits the job once it sees it." }
     ],
-    say: "Here’s the one-page plan: the job and its test, the simplest pattern, the cost math, how it fails, and who approves what.",
+    say: "Here’s the plan: the job, its test, the cost math, what can fail, and who approves.",
     keep: "A design doc template you can defend in any meeting, filled in for your own use case.",
     cardLabel: "Copy my card",
-    card: "DRAW THE FLOOR PLAN (DESIGN DOC)\nDesign doc = one page you can defend\nJob + success test first\nTrade-off = what you gave up, written down\nCost model = tokens per task × price\nFailure mode = one way it goes wrong\nBlast radius = how far damage spreads\nApproval matrix = who approves which action\nPilot, measure, update",
+    card: "DRAW THE FLOOR PLAN (DESIGN DOC)\nDesign doc = the plan you defend; job and test first\nTrade-off = what you gave up, written down\nCost model = tokens per task × price × volume\nFailure mode = one way it goes wrong\nBlast radius = how far damage spreads\nApproval matrix = who approves which action",
     real: ["Building effective human-agent teams (beta)", "https://academy.claude.com/courses/building-effective-human-agent-teams"]
   };
   document.addEventListener("DOMContentLoaded", function () { BK.run(L); });
