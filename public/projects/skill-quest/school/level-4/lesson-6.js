@@ -16,15 +16,15 @@
       title: "Upload once, cite every time.",
       html:
         '<p class="label">1. Upload once (Files API)</p><div class="reply"><p class="who">your code</p>upload allergy-guide.pdf → file_id: file_011…</div>' +
-        '<p class="label" style="margin-top:14px">2. Point to it in a document block <span class="sample">Simplified</span></p><div class="ticket"><div class="th"><span>DOCUMENT</span><span>block</span></div>source: { type: "file", file_id }<br>citations: { enabled: true }<div class="tf">Each PDF page is read as text and as an image</div></div>' +
+        '<p class="label" style="margin-top:14px">2. Point to it in a document block <span class="sample">Simplified</span></p><div class="ticket"><div class="th"><span>DOCUMENT</span><span>block</span></div>source: { type: "file", file_id }<br>citations: { enabled: true }</div>' +
         '<p class="label" style="margin-top:14px">3. The answer, with receipts <span class="sample">Sample</span></p><div class="reply"><p class="who">assistant</p>The pesto has pine nuts. <span class="small">[cited: “Pesto: basil, pine nuts…”]</span></div>' +
-        '<p class="small">Too big to send whole? A search step fetches only the matching pages. A developer builds it with <b>Voyage AI</b>, a second service with its own account.</p>',
-      more: '<p class="small">Voyage AI makes the embeddings (Anthropic has no embedding model). <b>BM25</b> adds keyword search; a <b>reranker</b> sorts the finalists. <b>Contextual retrieval</b>: before indexing, Claude writes a 50 to 100 token note placing each chunk in its document. In Anthropic’s tests that cut failed retrievals by 35%, by 49% with BM25, and by 67% with reranking too. The 600-page limit drops to 100 when the context window is under 1M tokens.</p>',
+        '<p class="small">Too big? A search step fetches just the matching pages, built with <b>Voyage AI</b> (its own account). <b>BM25</b> adds keyword search. A <b>reranker</b> re-sorts the best matches. <b>Contextual retrieval</b> tags each chunk with its source.</p>',
+      more: '<p class="small">Each PDF page is read as text and as an image. Voyage AI makes the embeddings (Anthropic has no embedding model). For contextual retrieval, Claude writes a 50 to 100 token note placing each chunk in its document, before indexing. In Anthropic’s tests that cut failed retrievals by 35%, by 49% with BM25, and by 67% with reranking too. The 600-page limit drops to 100 when the context window is under 1M tokens.</p>',
       next: "Your turn →"
     },
     build: {
       title: "Your turn. Build the library.",
-      lead: "Pick your documents and their size. Get a build plan in plain words, or the script.",
+      lead: "Pick your documents and their size. Get a plain-words plan, or the script. Thousands of pages in code? You’ll need a Voyage AI key too.",
       state: { mode: "Explain it to me", lang: "Python", docs: "a staff handbook", size: "under 100 pages" },
       controls: function (s, esc) {
         function row(k, list) { return '<div class="fridge">' + list.map(function (v) { return '<button type="button" class="chip" data-set="' + k + '" data-v="' + esc(v) + '" aria-pressed="' + (s[k] === v) + '">' + esc(v) + "</button>"; }).join("") + "</div>"; }
@@ -72,7 +72,7 @@
     },
     quiz: [
       { term: "Contextual retrieval", q: "What does contextual retrieval add?", a: ["A short note on each chunk saying where it fits in its document", "A second model that writes the final answer", "A bigger context window for long documents"], ok: 0, why: "Right. Chunks stop being orphans." },
-      { term: "Document block", q: "Your guide is 20 pages. What do you build first?", a: ["Nothing extra: send the whole PDF as a document block", "A vector database", "A reranker"], ok: 0, why: "Right. Build retrieval only when the library outgrows the counter." },
+      { term: "RAG", q: "Your library grows to 5,000 pages. What changes?", a: ["A search step fetches only the matching pages", "Send all 5,000 pages with every question", "Ask Claude to remember the PDFs"], ok: 0, why: "Right. Past about 600 pages a request, retrieval does the fetching." },
       { term: "Citations", q: "From Level 2: what do citations give you?", a: ["The exact passage behind a claim", "A cheaper reply", "A longer answer"], ok: 0, why: "Right. Receipts you can check." }
     ],
     say: "Small libraries go in whole with citations. Big ones get retrieval: embeddings plus BM25, reranked, cited.",

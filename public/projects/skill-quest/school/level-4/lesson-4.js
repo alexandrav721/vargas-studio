@@ -15,10 +15,10 @@
     example: {
       title: "One question, two appliances at once.",
       html:
-        '<p class="label">1. The tools you offer</p><div class="ticket"><div class="th"><span>TOOLS</span><span>request</span></div>check_stock · get_price<div class="tf">Each has a name, when to use it, and its inputs</div></div>' +
+        '<p class="label">1. The tools you offer</p><div class="ticket"><div class="th"><span>TOOLS</span><span>request</span></div>check_stock · get_price<div class="tf">Each has a name, a use and inputs</div></div>' +
         '<p class="label" style="margin-top:14px">2. Claude orders both at once</p><div class="reply"><p class="who">assistant</p>Order 1: stock of salmon<br>Order 2: price of salmon<br><span class="small">stop_reason: tool_use (your code’s turn)</span></div>' +
-        '<p class="label" style="margin-top:14px">3. Your code answers both, in one message</p><div class="reply"><p class="who">your code</p>Order 1: 4 left<br>Order 2: $24<br><span class="small">Then Claude replies: “4 left, $24.”</span></div>' +
-        '<p class="small">Orders are <b>tool_use blocks</b>, answers <b>tool_result blocks</b>; two at once, <b>parallel tool calls</b>. Anthropic runs <b>server tools</b>, like web search.</p>',
+        '<p class="label" style="margin-top:14px">3. Your code answers both at once</p><div class="reply"><p class="who">your code</p>Order 1: 4 left<br>Order 2: $24<br><span class="small">Then Claude replies: “4 left, $24.”</span></div>' +
+        '<p class="small">Claude’s orders are <b>tool_use blocks</b>. Your answers are <b>tool_result blocks</b>. Two orders in one reply are <b>parallel tool calls</b>. <b>Server tools</b>, like web search, run at Anthropic.</p>',
       more: '<p class="small">Your code first adds Claude’s whole reply to the chat unchanged (thinking blocks included), then one user message with every <code>tool_result</code>, each carrying its tool_use_id. <b>tool_choice</b> is auto by default; forcing a tool returns an error on Opus 5.5, Sonnet 5.5 and Fable 5.2, so name it in your prompt instead. The SDK’s <b>Tool Runner</b> (beta) runs the loop for you.</p>',
       next: "Your turn →"
     },
@@ -69,7 +69,7 @@
       where: "A wired oven can only bake. Your tool runs whatever code sits behind it, so the safety lives in that code."
     },
     quiz: [
-      { term: "tool_result block", q: "Claude asked for two tools in one reply. How do you answer?", a: ["Both tool_result blocks in one user message", "One message per result, sent one at a time", "Only the first result; Claude asks again"], ok: 0, why: "Right. Each result carries its tool_use_id." },
+      { term: "tool_result block", q: "Who runs your “check stock” tool?", a: ["Your code, on your server", "Anthropic, on its servers", "The customer’s browser"], ok: 0, why: "Right. Claude only asks. Your code runs it and sends back the result." },
       { term: "Server tool", q: "Who runs a server tool like web search?", a: ["Anthropic, on its own servers", "Your code, on your server", "The user’s browser"], ok: 0, why: "Right. You add it to tools; Anthropic does the rest." },
       { term: "Strict tool use", q: "Recall from Lesson 3: how do you make tool inputs match your schema?", a: ["Set strict: true on the tool", "Write a longer tool description", "Set tool_choice to any"], ok: 0, why: "Right. Then every input Claude sends matches the schema." }
     ],

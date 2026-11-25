@@ -15,11 +15,11 @@
     example: {
       title: "Same order, four chefs.",
       html:
-        '<p class="label">Price per million tokens (MTok): in · out <span class="sample">Nov 2026</span></p><div class="ticket"><div class="th"><span>THE CHEFS</span><span>Claude API</span></div>Haiku 5.5 · $0.10 · $0.50 <span class="small">(prompts up to 100K)</span><br>Sonnet 5.5 · $2 · $10<br>Opus 5.5 · $4 · $20 <span class="small">(the default)</span><br>Fable 5.2 · $8 · $40<div class="tf">Output costs 5x input on every chef</div></div>' +
+        '<p class="label">Per million tokens (MTok): in · out <span class="sample">Nov 2026</span></p><div class="ticket"><div class="th"><span>THE CHEFS</span><span>API</span></div>Haiku 5.5 · $0.10 · $0.50 <span class="small">(prompts up to 100K)</span><br>Sonnet 5.5 · $2 · $10<br>Opus 5.5 · $4 · $20 <span class="small">(the default)</span><br>Fable 5.2 · $8 · $40<div class="tf">Output costs 5x input</div></div>' +
         '<p class="label" style="margin-top:14px">The dial: effort</p><div class="reply"><p class="who">your request</p>output_config: { effort: "low" }</div>' +
-        '<p class="small"><b>Adaptive thinking</b>: Claude decides how much to think on each request. On Opus 5.5 it’s always on, and effort sets the depth (default medium).</p>' +
-        '<p class="small"><b>Time to first token</b>: how soon the first word shows.</p>',
-      more: '<p class="small"><b>Fast mode</b> on Opus 5.5: up to 2.5x faster output at double the price ($8 / $40). <b>Model routing</b>: sort each request first, then send easy ones to a small chef and hard ones to a bigger chef.</p>',
+        '<p class="small"><b>Adaptive thinking</b>: Claude decides how much to think. On Opus 5.5 it’s always on; effort sets the depth.</p>' +
+        '<p class="small"><b>Time to first token</b>: how soon words appear. <b>Model routing</b>: easy jobs to a small chef, hard ones to a big one. <b>Fast mode</b>: faster Opus, double the price.</p>',
+      more: '<p class="small">Effort defaults to medium. Fast mode on Opus 5.5: up to 2.5x faster output, at $8 / $40 per MTok. Model routing: a quick first step sorts each request, then sends it on.</p>',
       next: "Your turn →"
     },
     build: {

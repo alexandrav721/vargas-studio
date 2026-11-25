@@ -72,13 +72,13 @@
     },
     quiz: [
       { term: "Strict tool use", q: "What does strict: true on a tool do?", a: ["Makes the inputs Claude sends match the tool’s schema", "Forces Claude to call that tool on every turn", "Blocks Claude from using any other tool"], ok: 0, why: "Right. Valid arguments, every time it calls." },
-      { term: "output_config", q: "Where does the schema for Claude’s final answer go?", a: ["output_config.format", "Inside the system prompt only", "In the max_tokens field"], ok: 0, why: "Right. type json_schema, plus your schema." },
+      { term: "Validation", q: "The reply matched your schema, but the total is wrong. Why?", a: ["A schema checks the shape, not the truth", "Structured outputs were turned off", "The model was too small"], ok: 0, why: "Right. Add your own check in code, like items adding up to the total." },
       { term: "Model routing", q: "Recall from Lesson 2: what is model routing?", a: ["Sending easy requests to a small model and hard ones to a bigger one", "Sending the same request to every model at once", "Moving your app to a new server"], ok: 0, why: "Right. Pay for the big chef only when you need it." }
     ],
     say: "When code reads the reply, we give Claude a JSON schema and still validate the result.",
     keep: "A schema for your own data, explained or in code.",
     cardLabel: "Copy my card",
-    card: "SAME PLATE EVERY TIME\nJSON Schema = the plate diagram: fields and types\noutput_config.format = lock the final answer’s shape\nadditionalProperties: false on every object\nStrict tool use = tool inputs match the schema\nValidation = still check it in code\nRefusal or max_tokens can break the shape\nCode reads it? Schema. A person reads it? Prose.",
+    card: "SAME PLATE EVERY TIME\nJSON Schema = the plate diagram: fields and types\noutput_config.format = lock the final answer’s shape\nNo extra fields allowed (your developer sets this)\nStrict tool use = tool inputs match the schema\nValidation = still check it in code\nRefusal or max_tokens can break the shape\nCode reads it? Schema. A person reads it? Prose.",
     real: ["Building with the Claude API", "https://academy.claude.com/courses/building-with-the-claude-api"]
   };
   document.addEventListener("DOMContentLoaded", function () { BK.run(L); });

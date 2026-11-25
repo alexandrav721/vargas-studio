@@ -11,11 +11,11 @@
       ["Every plate comes with a receipt.", "usage counts the tokens in and out."]
     ],
     guess: { q: "An API key is the password your code uses. Where should it live?", opts: [["In an environment variable on your computer or server", true], ["Pasted at the top of your code file", false], ["In the web page your customers load", false]], reveal: "An environment variable: a setting on your computer, outside your code. The SDK (Anthropic’s ready-made code kit) reads it, so it’s never in your files." },
-    startLabel: "See the slip",
+    startLabel: "See the ticket",
     example: {
-      title: "One slip, one plate, one receipt.",
+      title: "One ticket, one plate, one receipt.",
       html:
-        '<p class="label">1. The slip you send <span class="sample">Real fields</span></p><div class="ticket"><div class="th"><span>REQUEST</span><span>messages.create</span></div>model: "claude-opus-5-5"<br>max_tokens: 4096<br>system: "You write short product descriptions."<br>messages: user “Describe our cedar candle.”<div class="tf">Key read from ANTHROPIC_API_KEY</div></div>' +
+        '<p class="label">1. The ticket you send <span class="sample">Real fields</span></p><div class="ticket"><div class="th"><span>REQUEST</span><span>messages.create</span></div>model: "claude-opus-5-5"<br>max_tokens: 4096<br>system: "You write short product descriptions."<br>messages: user “Describe our cedar candle.”<div class="tf">Key read from ANTHROPIC_API_KEY</div></div>' +
         '<p class="label" style="margin-top:14px">2. The plate that comes back <span class="sample">Sample</span></p><div class="reply"><p class="who">assistant</p>content: [ text block “Hand-poured cedar soy…” ]<br>stop_reason: end_turn <span class="small">(why it stopped: end_turn means finished)</span><br><span class="small">usage: 21 input tokens · 305 output tokens</span></div>' +
         '<p class="small">It arrives as <b>JSON</b>: plain text with labels, so code can read each part. Try requests first in the <b>Console</b>’s <b>playground</b> (platform.claude.com), then copy the code.</p>',
       more: '<p class="small">Install the SDK: <code>pip install anthropic</code> or <code>npm install @anthropic-ai/sdk</code>. On Opus 5.5 thinking can’t be turned off, and thinking counts toward max_tokens, so leave room. If stop_reason says max_tokens, the reply was cut off. The reply is a list of content blocks: check each block’s type before reading its text. Older guides say Workbench; the playground replaced it.</p>',
@@ -23,7 +23,7 @@
     },
     build: {
       title: "Your turn. Send your first order.",
-      lead: "Pick a first job for your shop. Never coded? Pick Explain it to me: it works in any free chat.",
+      lead: "Never coded? Pick Explain it to me. It works in any free chat, and each lesson ends with a sheet you can hand a developer.",
       state: { mode: "Explain it to me", lang: "Python", job: "write a product description" },
       controls: function (s, esc) {
         function row(k, list) { return '<div class="fridge">' + list.map(function (v) { return '<button type="button" class="chip" data-set="' + k + '" data-v="' + esc(v) + '" aria-pressed="' + (s[k] === v) + '">' + esc(v) + "</button>"; }).join("") + "</div>"; }
@@ -34,11 +34,12 @@
       head: "ORDER #D01", right: "first call", foot: "Paste it into Claude, or open it there",
       text: function (s) {
         if (s.mode === "Explain it to me") {
-          return "I’m learning the Claude API for my business and don’t code yet. Walk me through a first call to " + s.job + ".\n" +
+          return "I don’t code yet. Walk me through a first Claude API call to " + s.job + ".\n" +
             "1. Plain words: the Console, API keys, environment variables, how keys leak.\n" +
             "2. The request: model, max_tokens, system, messages.\n" +
             "3. A labeled sample reply: content blocks, stop_reason, usage.\n" +
-            "4. Then " + s.job + " for me here (ask me for details), as my app would get it back.";
+            "4. Then " + s.job + " for me (ask me for details), as my app would get it back.\n" +
+            "5. End with a 5-line brief I could send a developer.";
         }
         var sdk = s.lang === "Python" ? "anthropic (pip install anthropic)" : "@anthropic-ai/sdk (npm install @anthropic-ai/sdk)";
         return "Write the smallest correct " + s.lang + " script that calls the Claude API with the official SDK, " + sdk + ", to " + s.job + ".\n" +
@@ -58,16 +59,16 @@
         ["Your API key inside the messages", false, "Never. The SDK sends the key separately, from your environment variable."]
       ],
       right: "Yes. Model, length limit, messages. A system prompt is optional.",
-      wrong: "That one doesn’t belong on the slip.",
+      wrong: "That one doesn’t belong on the ticket.",
       habitTitle: "Builder habit", habit: "Try a request in the playground first, then copy its code. You debug the order before you debug the program."
     },
     breaks: {
-      title: "A slip isn’t a conversation.",
+      title: "A ticket isn’t a conversation.",
       lines: [
         ["The API forgets every order.", "Send the whole chat each time, or Claude won’t see it."],
         ["A key works like a card number.", "Anyone holding it can order on your bill."]
       ],
-      where: "A paper slip sits where you can see it. A key can leak into a screenshot, a shared code folder or a web page without you noticing."
+      where: "A paper ticket sits where you can see it. A key can leak into a screenshot, a shared code folder or a web page without you noticing."
     },
     quiz: [
       { term: "Usage", q: "Where do you see what a reply cost?", a: ["The usage field: input and output tokens", "The stop_reason at the end of the reply", "The model ID you put in the request"], ok: 0, why: "Right. Multiply the tokens by the price per million." },
