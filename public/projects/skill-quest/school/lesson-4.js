@@ -37,6 +37,7 @@
       "<li><b>The chef can be sure and wrong.</b>It serves a mistake as proudly as a real dish.</li>" +
       "<li><b>So taste it first.</b>Three quick checks before you share it, send it or act on it.</li>" +
       "<li><b>Some things never go in the pot.</b>Passwords, card numbers, ID numbers, other people’s private stuff.</li></ul>" +
+      '<div class="ba"><div><p class="label">Before</p><div class="ticket"><div class="th"><span>VAGUE ORDER</span></div>How long do cooked leftovers keep in the fridge?<div class="tf">“Up to 2 weeks.” Sure, and wrong.</div></div></div><div class="ba-arrow" aria-hidden="true"></div><div><p class="label">After</p><div class="ticket"><div class="th"><span>FULL ORDER</span></div>How long do cooked leftovers keep in the fridge? Then: how sure are you, what should I double-check, and where?<div class="tf">“3 to 4 days,” plus where to check.</div></div></div></div>' +
       '<div class="btns"><button class="btn" data-next type="button">Watch a taste test</button></div>' +
       '<p class="small">Doing this with someone? Tap "Bigger text" at the top.</p>');
 

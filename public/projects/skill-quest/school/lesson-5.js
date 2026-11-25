@@ -36,6 +36,7 @@
       "<li><b>A chat forgets.</b>Every new chat, you explain the trip again.</li>" +
       "<li><b>A Project is a station for one job.</b>The family trip, your garden, your shop. In Claude it’s called a Project.</li>" +
       "<li><b>Set it up once.</b>Short instructions and a few files. Every chat inside it starts out knowing them.</li></ul>" +
+      '<div class="ba"><div><p class="label">Before</p><div class="ticket"><div class="th"><span>VAGUE ORDER</span></div>Plan day 2 of our trip.<div class="tf">“Where are you going, who’s coming?”</div></div></div><div class="ba-arrow" aria-hidden="true"></div><div><p class="label">After</p><div class="ticket"><div class="th"><span>FULL ORDER</span></div>Family trip station: 5 people, one kid, no nuts, relaxed, $3,000.<br>Then: plan day 2 of our trip.<div class="tf">A relaxed, nut-free day 2.</div></div></div></div>' +
       '<div class="btns"><button class="btn" data-next type="button">See the difference</button></div>' +
       '<p class="small">Doing this with someone? Tap "Bigger text" at the top.</p>');
 

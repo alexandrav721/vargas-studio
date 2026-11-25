@@ -185,3 +185,11 @@ details.more summary{cursor:pointer;font-weight:600;min-height:28px}
 .habits.short li a{font-size:.85em;margin:0}
 .lvl.lvl5{display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x proximity;padding-bottom:4px;margin-right:-16px;padding-right:16px}
 .lvl.lvl5 a{flex:0 0 auto;min-width:128px;scroll-snap-align:start}
+/* Level 1 first screens: a before → after pair of order tickets (stacked on phones) */
+.ba{display:grid;grid-template-columns:1fr;gap:4px;margin:6px 0 20px}
+.ba .label{margin:0 0 12px}
+.ba .ticket{font-size:13.5px;padding:14px 14px 10px;max-width:none}
+.ba .tf{color:var(--muted)}
+.ba-arrow{align-self:center;text-align:center;font:700 22px/1 var(--mono);color:var(--muted);padding:8px 0 2px}
+.ba-arrow::before{content:"↓"}
+@media (min-width:560px){.ba{grid-template-columns:1fr auto 1fr;gap:12px;align-items:start}.ba-arrow{padding:0;margin-top:40px}.ba-arrow::before{content:"→"}}

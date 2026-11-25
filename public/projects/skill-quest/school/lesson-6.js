@@ -41,6 +41,7 @@
       "<li><b>Food you can’t carry home is no use.</b>Same with a long answer you can’t print, paste or send.</li>" +
       "<li><b>Name the container.</b>A checklist, a table, a short text, a day-by-day list.</li>" +
       "<li><b>Say what to leave out.</b>“No intro, no closing line” gets you just the useful part.</li></ul>" +
+      '<div class="ba"><div><p class="label">Before</p><div class="ticket"><div class="th"><span>VAGUE ORDER</span></div>What should we pack for a beach trip?<div class="tf">A long answer you can’t paste.</div></div></div><div class="ba-arrow" aria-hidden="true"></div><div><p class="label">After</p><div class="ticket"><div class="th"><span>FULL ORDER</span></div>Packing list for a 4-day beach trip with 2 kids. A checklist with boxes, by section. No intro.<div class="tf">A checklist ready to print or paste.</div></div></div></div>' +
       '<div class="btns"><button class="btn" data-next type="button">See the difference</button></div>' +
       '<p class="small">Doing this with someone? Tap "Bigger text" at the top.</p>');
 
