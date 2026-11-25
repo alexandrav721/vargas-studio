@@ -3,8 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex">
 <title>Keep it free · AI Made EZ</title>
+<!-- og:start -->
+<link rel="canonical" href="https://vargas-studio.pages.dev/projects/skill-quest/school/support">
+<meta property="og:type" content="website"><meta property="og:site_name" content="AI Made EZ">
+<meta property="og:title" content="Keep it free · AI Made EZ"><meta property="og:description" content="AI Made EZ is free: no paywall, no secret prompts. Chip in to keep it that way.">
+<meta property="og:url" content="https://vargas-studio.pages.dev/projects/skill-quest/school/support"><meta property="og:image" content="https://vargas-studio.pages.dev/projects/skill-quest/og/level-1.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<!-- og:end -->
 <meta name="description" content="AI Made EZ is free: no paywall, no secret prompts. Chip in to keep it that way.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -42,13 +48,13 @@
 
   <section class="give-box" aria-labelledby="give-h">
     <h2 id="give-h">Keep it free for the next person</h2>
-    <p>If a lesson helped you, chip in what you like. It pays for the time to keep it up to date.</p>
-    <a class="btn" id="patreon" href="#" aria-disabled="true">Patreon page opening soon</a>
+    <p>The best way to help is free: send it to one person who thinks AI is too complicated.</p>
+    <div class="btns"><button class="btn" id="share" type="button">Send it to one friend</button></div>
+    <p class="small" style="margin-top:12px">Want to chip in money? <a id="patreon" href="#" aria-disabled="true">Patreon page opening soon</a>.</p>
   </section>
 
   <div class="btns">
-    <button class="btn ghost" id="share" type="button">Send it to a friend</button>
-    <a class="btn ghost" href="./">Back to the lessons</a>
+    <a class="btn ghost" href="../start/">Start here</a>
   </div>
 </main>
 <script src="school.js"></script>
@@ -63,7 +69,7 @@ var PATREON = "";
   } else {
     a.removeAttribute("href");
   }
-  var s = document.getElementById("share"), url = location.origin + "/projects/skill-quest/school/";
+  var s = document.getElementById("share"), url = location.origin + "/projects/skill-quest/start/?from=friend";
   s.addEventListener("click", function () {
     var text = "Free AI lessons in plain words. No secret prompts.";
     if (navigator.share) { navigator.share({ title: "AI Made EZ", text: text, url: url }).catch(function () {}); return; }
@@ -73,5 +79,7 @@ var PATREON = "";
   if (big && window.School && School.bindBig) School.bindBig(big);
 })();
 </script>
+<script src="/projects/skill-quest/smez-index.js" defer></script>
+<script src="/projects/skill-quest/smez-nav.js" data-section="about" defer></script>
 </body>
 </html>

@@ -4,6 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Templates · AI Made EZ</title>
+<!-- og:start -->
+<link rel="canonical" href="https://vargas-studio.pages.dev/projects/skill-quest/cheat-sheets/">
+<meta property="og:type" content="website"><meta property="og:site_name" content="AI Made EZ">
+<meta property="og:title" content="Templates · AI Made EZ"><meta property="og:description" content="Copy-paste AI templates with XML tags, a filled example for each, and real before-and-after answers scored by a blind judge. Free.">
+<meta property="og:url" content="https://vargas-studio.pages.dev/projects/skill-quest/cheat-sheets/"><meta property="og:image" content="https://vargas-studio.pages.dev/projects/skill-quest/og/templates.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<!-- og:end -->
 <meta name="description" content="Copy-paste AI templates with XML tags, a filled example for each, and real before-and-after answers scored by a blind judge. Free.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -158,7 +165,7 @@ pre.tpl .t{color:var(--accent);font-weight:700}
 (function () {
   var D = window.EZ_K, U = window.KITUI; if (!D || !U) return;
   document.getElementById("kitlist").innerHTML = D.kits.map(function (k) {
-    return '<a class="kcard" href="../kits/kit.html?k=' + k.id + '"><span class="ic">' + U.icon(k.icon) + "</span><span><b>" + U.esc(k.name) + "</b><p>" + U.esc(k.result) + "</p></span></a>";
+    return '<a class="kcard" href="../kits/' + k.id + '.html"><span class="ic">' + U.icon(k.icon) + "</span><span><b>" + U.esc(k.name) + "</b><p>" + U.esc(k.result) + "</p></span></a>";
   }).join("");
 })();
 </script>

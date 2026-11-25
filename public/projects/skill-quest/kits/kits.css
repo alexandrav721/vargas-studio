@@ -90,3 +90,9 @@ details.ex summary{cursor:pointer;font-weight:700;min-height:44px;display:flex;a
 .next{margin-top:30px;padding:18px;border:2px solid var(--ink);border-radius:18px;background:var(--card)}
 .next b{display:block;font:800 1.2rem var(--display)}
 .next p{margin:4px 0 12px}
+.tick{display:flex;gap:10px;align-items:center;margin-top:10px;font-weight:700;font-size:.95rem;min-height:44px;cursor:pointer}
+.tick input{width:22px;height:22px}
+.donebox{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 4px}
+.donebox input{font:inherit;font-size:16px;flex:1 1 220px;min-height:44px;padding:8px 12px;border-radius:12px;border:2px solid var(--ink)}
+.kcard .prog{font:700 11px/1 var(--text);padding:5px 8px;border-radius:99px;background:#E3F1ED;color:#155c50}
+.kprog{margin:10px 0 0;font-weight:700}

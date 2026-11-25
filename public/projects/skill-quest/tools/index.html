@@ -4,6 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Tools · AI Made EZ</title>
+<!-- og:start -->
+<link rel="canonical" href="https://vargas-studio.pages.dev/projects/skill-quest/tools/">
+<meta property="og:type" content="website"><meta property="og:site_name" content="AI Made EZ">
+<meta property="og:title" content="Tools · AI Made EZ"><meta property="og:description" content="Which AI tool should you use? Real people&#x27;s reviews of 30+ AI tools, official prices, and 3 picks for each job. No affiliate links.">
+<meta property="og:url" content="https://vargas-studio.pages.dev/projects/skill-quest/tools/"><meta property="og:image" content="https://vargas-studio.pages.dev/projects/skill-quest/og/tools.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<!-- og:end -->
 <meta name="description" content="Which AI tool should you use? Real people's reviews of 30+ AI tools, official prices, and 3 picks for each job. No affiliate links.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -63,13 +70,15 @@
   jobsEl.innerHTML = D.jobs.map(function (j) { return '<button class="job" type="button" data-job="' + j[0] + '" aria-pressed="false">' + U.icon(j[2]) + "<span>" + esc(j[1]) + "</span></button>"; }).join("");
   function pick(cls, tag, id, why) {
     var t = by[id]; if (!t) return "";
-    return '<a class="pick ' + cls + '" href="tool.html?t=' + t.id + '"><span class="ptag">' + tag + "</span><b>" + esc(t.name) + "</b>" + U.dots(t.score) +
+    return '<a class="pick ' + cls + '" href="' + t.id + '.html"><span class="ptag">' + tag + "</span><b>" + esc(t.name) + "</b>" + U.dots(t.score) +
       '<span class="why">' + esc(why || t.line) + '</span><span class="free"><b style="font:inherit;font-weight:700">Free:</b> ' + esc(t.free) + "</span></a>";
   }
   function show(job) {
     var p = D.picks[job] || {};
     jobsEl.querySelectorAll(".job").forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.job === job)); });
-    document.getElementById("picked").innerHTML = '<div class="picks">' + pick("start", "Start here", p.start, p.startWhy) + pick("up", "Step up", p.stepUp, p.stepUpWhy) + pick("skip", "Skip for now", p.skip, p.skipWhy) + "</div>";
+    var n = [p.start, p.stepUp, p.skip].filter(Boolean).length;
+    document.getElementById("picked").innerHTML = '<div class="picks">' + pick("start", "Start here", p.start, p.startWhy) + pick("up", "Step up", p.stepUp, p.stepUpWhy) + pick("skip", "Skip for now", p.skip, p.skipWhy) + "</div>" +
+      (n < 3 ? '<p class="small2">Only ' + (n === 1 ? "one tool" : "two tools") + " we’d recommend for this job right now. We’d rather say so than pad the list.</p>" : "");
     try { history.replaceState(null, "", "#" + job); } catch (e) {}
   }
   jobsEl.addEventListener("click", function (e) { var b = e.target.closest("[data-job]"); if (b) show(b.dataset.job); });
@@ -78,7 +87,7 @@
     var list = D.tools.filter(function (t) { return t.group === g[0]; }).sort(function (a, b) { return b.score - a.score; });
     return '<div class="grp"><h3>' + esc(g[1]) + '</h3><div class="tlist">' + list.map(function (t) {
       var ex = (t.examples || []).filter(function (x) { return x.kind === "image"; })[0];
-      return '<a class="tcard' + (ex ? " has" : "") + '" href="tool.html?t=' + t.id + '">' + (ex ? '<img class="th" src="' + ex.src + '" alt="" loading="lazy">' : "") + "<b>" + esc(t.name) + (t.tested ? " ✓" : "") + "</b>" + U.dots(t.score) + '<span class="l">' + esc(t.line) + "</span></a>";
+      return '<a class="tcard' + (ex ? " has" : "") + '" href="' + t.id + '.html">' + (ex ? '<img class="th" src="' + ex.src + '" alt="" loading="lazy">' : "") + "<b>" + esc(t.name) + (t.tested ? " ✓" : "") + "</b>" + U.dots(t.score) + '<span class="l">' + esc(t.line) + "</span></a>";
     }).join("") + "</div></div>";
   }).join("");
 })();

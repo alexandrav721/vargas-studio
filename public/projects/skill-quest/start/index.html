@@ -4,7 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Start here · AI Made EZ</title>
-<meta name="description" content="AI Made EZ: AI is layers. Free lessons, plain words for every AI term, a Kit maker, and the week's AI news in plain words.">
+<!-- og:start -->
+<link rel="canonical" href="https://vargas-studio.pages.dev/projects/skill-quest/start/">
+<meta property="og:type" content="website"><meta property="og:site_name" content="AI Made EZ">
+<meta property="og:title" content="Start here · AI Made EZ"><meta property="og:description" content="Free AI lessons in plain words, 6 step-by-step kits, honest reviews of 33 AI tools, and the week&#x27;s AI news. No sign-up, no secret prompts.">
+<meta property="og:url" content="https://vargas-studio.pages.dev/projects/skill-quest/start/"><meta property="og:image" content="https://vargas-studio.pages.dev/projects/skill-quest/og/start.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<!-- og:end -->
+<meta name="description" content="Free AI lessons in plain words, 6 step-by-step kits, honest reviews of 33 AI tools, and the week's AI news. No sign-up, no secret prompts.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
@@ -64,8 +71,8 @@ main{max-width:1040px}
     <p class="label">Free · no secret prompts · no coding</p>
     <h1>AI, in plain words.</h1>
     <p class="muted">AI isn't fancy. It's a kitchen: Claude is the chef, and you write the orders. Learn it here, for free.</p>
-    <div class="btns"><a class="btn" href="../school/lesson-1.html">Start Lesson 1</a><a class="btn ghost" href="../school/kitchen/glossary.html">Look up a word</a></div>
-    <p class="small" style="margin-top:10px"><a href="../about/">Why this exists →</a></p>
+    <div class="btns"><a class="btn" id="go" href="../school/lesson-1.html">Start Lesson 1</a><a class="btn ghost" href="../kits/">Make a real thing today →</a></div>
+    <p class="small" style="margin-top:10px"><a href="../school/kitchen/glossary.html">Look up a word</a> · <a href="../about/">Why this exists →</a></p>
     <h2 style="margin-top:34px">AI is layers. That's the whole secret.</h2>
     <ol class="layers" aria-label="The layers of AI, top to bottom">
       <li><b>You</b><span>Ask for what you want.</span></li>
@@ -74,19 +81,19 @@ main{max-width:1040px}
       <li><b>Chips</b><span>NVIDIA and others. A chip turns electricity into math.</span></li>
       <li><b>Electricity</b><span>Where it all starts.</span></li>
     </ol>
-    <p class="layers-note">Every layer is built on the one below, and charges for what it adds. Once you see the layers, nothing is magic. <a href="../school/kitchen/lesson-11.html">Learn the layers in 6 minutes →</a></p>
+    <p class="layers-note">Every layer is built on the one below, and charges for what it adds. Once you see the layers, nothing is magic. <a href="../school/lesson-1.html">New to AI? Start with Lesson 1 →</a></p>
   </section>
 
   <section class="part" aria-labelledby="learn-h">
     <div class="part-h"><span class="n">01</span><h2 id="learn-h">Lessons</h2></div>
     <p class="muted">About 10 minutes each. You leave every lesson with something real.</p>
-    <div class="tiles">
-      <a class="tile" href="../school/"><img src="/desk/learn-l1.jpg" alt="" loading="lazy"><div><b>Level 1: Cooking with Claude</b><span>8 lessons for everyday life. Start here.</span></div></a>
-      <a class="tile" href="../school/kitchen/"><img src="/desk/learn-l2.jpg" alt="" loading="lazy"><div><b>Level 2: Speak AI builder</b><span>API, MCP, agents, RAG. 10 lessons, no coding.</span></div></a>
-      <a class="tile" href="../school/level-3/"><img src="/desk/learn-l3.jpg" alt="" loading="lazy"><div><b>Level 3: Claude at work</b><span>The Claude apps like a pro. 8 lessons.</span></div></a>
-      <a class="tile" href="../school/level-4/"><img src="/desk/learn-l4.jpg" alt="" loading="lazy"><div><b>Level 4: Build with Claude</b><span>Your first app on the API. 8 lessons.</span></div></a>
-      <a class="tile" href="../school/level-5/"><img src="/desk/learn-l5.jpg" alt="" loading="lazy"><div><b>Level 5: Design AI systems</b><span>Agents, safety and the floor plan. 8 lessons.</span></div></a>
-    </div>
+    <ul class="ez-rows">
+      <li><a href="../school/"><b>Level 1 · Cooking with Claude</b><span>8 lessons for everyday life. Start here.</span><i id="l1-prog"></i></a></li>
+      <li><a href="../school/kitchen/"><b>Level 2 · Speak AI builder</b><span>API, MCP, agents, RAG. 10 lessons, no coding.</span></a></li>
+      <li><a href="../school/level-3/"><b>Level 3 · Claude at work</b><span>The Claude apps like a pro. 8 lessons.</span></a></li>
+      <li><a href="../school/level-4/"><b>Level 4 · Build with Claude</b><span>Your first app on the API. 8 lessons.</span></a></li>
+      <li><a href="../school/level-5/"><b>Level 5 · Design AI systems</b><span>Agents, safety and the floor plan. 8 lessons.</span></a></li>
+    </ul>
   </section>
 
   <section class="part" aria-labelledby="words-h">
@@ -125,9 +132,9 @@ main{max-width:1040px}
   </section>
 
   <section class="part" id="make" aria-labelledby="make-h">
-    <div class="part-h"><span class="n">05</span><h2 id="make-h">Kit maker</h2></div>
+    <div class="part-h"><span class="n">05</span><h2 id="make-h">App planner</h2></div>
     <p class="muted">Building an app with AI? Answer what AI would otherwise guess, room by room.</p>
-    <a class="big-tile" href="../build-kit/"><img src="/desk/learn-buildkit.jpg" alt="" loading="lazy"><div><b>Plan an app so AI stops guessing.</b><span>Start from a template like Sudsy Paws Booking, search any part of the plan, and leave with a kit your AI coding tool reads first. Every part explained the easy way, then what it really means.</span><em>Open the Kit maker →</em></div></a>
+    <a class="big-tile" href="../build-kit/"><div><b>Plan an app so AI stops guessing.</b><span>Start from a template like Sudsy Paws Booking, search any part of the plan, and leave with a kit your AI coding tool reads first. Every part explained the easy way, then what it really means.</span><em>Open the App planner →</em></div></a>
   </section>
 
   <section class="part" aria-labelledby="keep-h">
@@ -147,6 +154,20 @@ main{max-width:1040px}
   <p class="freebox" style="margin-top:44px"><b>Free, all of it.</b> If it helped, <a href="../school/support.html">help keep it free</a>.</p>
 </main>
 <script src="../school/school.js" defer></script>
+<script>
+/* returning visitors: the main button picks up where they left off (Level 1 stamps, this device only) */
+(function () {
+  var L = [1, 2, 3, 4, 5, 6, 7, 8], have = {};
+  try { have = JSON.parse(localStorage.getItem("smez-school-v1") || "{}") || {}; } catch (e) {}
+  var done = L.filter(function (n) { return have["l" + n]; }).length;
+  if (!done) return;
+  var go = document.getElementById("go"), p = document.getElementById("l1-prog");
+  var next = L.filter(function (n) { return !have["l" + n]; })[0];
+  if (next) { go.textContent = "Continue: Lesson " + next + " →"; go.href = "../school/lesson-" + next + ".html"; }
+  else { go.textContent = "Start Level 2 →"; go.href = "../school/kitchen/"; }
+  if (p) p.textContent = done + " of 8 stamps";
+})();
+</script>
 <script src="/projects/skill-quest/smez-index.js" defer></script>
 <script src="/projects/skill-quest/smez-nav.js" data-section="start" defer></script>
 </body>

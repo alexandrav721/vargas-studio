@@ -193,3 +193,16 @@ details.more summary{cursor:pointer;font-weight:600;min-height:28px}
 .ba-arrow{align-self:center;text-align:center;font:700 22px/1 var(--mono);color:var(--muted);padding:8px 0 2px}
 .ba-arrow::before{content:"↓"}
 @media (min-width:560px){.ba{grid-template-columns:1fr auto 1fr;gap:12px;align-items:start}.ba-arrow{padding:0;margin-top:40px}.ba-arrow::before{content:"→"}}
+/* Growth, 25 Nov 2026: lesson end (stamp count, next + share row) and the Start page level rows */
+.ez-count{text-align:center;font:700 13px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin:4px 0 10px}
+.ez-next .btn{flex:1 1 200px}
+.ez-rows{list-style:none;margin:16px 0 0;padding:0;border-top:2px solid var(--ink);max-width:760px}
+.ez-rows li{border-bottom:1px solid var(--line2)}
+.ez-rows a{display:grid;grid-template-columns:1fr auto;column-gap:12px;padding:14px 4px;text-decoration:none;color:var(--ink)}
+.ez-rows a::after{content:"→";grid-column:2;grid-row:1/span 3;align-self:center;font:800 1.3em var(--display);color:var(--accent)}
+.ez-rows b{font:800 1.15em/1.15 var(--display);letter-spacing:-.015em}
+.ez-rows span{color:var(--muted);font-size:.95em;margin-top:2px}
+.ez-rows i{font:700 12px var(--mono);font-style:normal;color:var(--accent);margin-top:4px}
+.ez-rows i:empty{display:none}
+.ez-rows a:hover{background:var(--track);color:var(--ink)}
+.ez-rows a>*{grid-column:1}

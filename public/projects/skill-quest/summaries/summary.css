@@ -43,3 +43,6 @@ footer.f{margin-top:8mm;padding-top:6px;border-top:1px solid var(--line);display
 .cols .col .card{margin:0 0 4mm}
 @media (min-width:640px){.cols{display:flex;gap:6mm;align-items:flex-start}.cols .col{flex:1;min-width:0}}
 @media print{.cols{display:flex;gap:6mm;align-items:flex-start}.cols .col{flex:1;min-width:0}}
+/* phones read lessons in order; print and wide screens use the balanced two columns */
+.one{display:none}
+@media screen and (max-width:639px){.cols{display:none}.one{display:block}.one .card{margin:0 0 4mm}}

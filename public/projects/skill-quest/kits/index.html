@@ -4,6 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Kits · AI Made EZ</title>
+<!-- og:start -->
+<link rel="canonical" href="https://vargas-studio.pages.dev/projects/skill-quest/kits/">
+<meta property="og:type" content="website"><meta property="og:site_name" content="AI Made EZ">
+<meta property="og:title" content="Kits · AI Made EZ"><meta property="og:description" content="6 free AI kits that end with something real: your first website, your first app, an automation, a month of posts. Step by step, no code, blind-tested.">
+<meta property="og:url" content="https://vargas-studio.pages.dev/projects/skill-quest/kits/"><meta property="og:image" content="https://vargas-studio.pages.dev/projects/skill-quest/og/kits.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<!-- og:end -->
 <meta name="description" content="6 free AI kits that end with something real: your first website, your first app, an automation, a month of posts. Step by step, no code, blind-tested.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,7 +27,7 @@
 </head>
 <body>
 <header class="top">
-  <a class="logo" href="../cheat-sheets/">Templates</a>
+  <a class="logo" href="./">Kits</a>
   <div class="tools"><a class="chip give" href="../school/support.html" aria-label="Keep it free">♥<span class="gt"> Keep it free</span></a><button class="chip" id="big" type="button" aria-pressed="false">Bigger text</button></div>
 </header>
 <main>
@@ -68,17 +75,21 @@
 (function () {
   var D = window.EZ_K, U = window.KITUI, esc = U.esc;
   document.getElementById("kits").innerHTML = D.kits.map(function (k) {
-    return '<a class="kcard" href="kit.html?k=' + k.id + '"><span class="ic">' + U.icon(k.icon) + "</span><span><b>" + esc(k.name) + "</b><p>" + esc(k.result) + '</p><span class="meta"><span class="free">' + esc(k.cost) + "</span><span>" + esc(k.time) + "</span></span></span></a>";
+    return '<a class="kcard" href="' + k.id + '.html"><span class="ic">' + U.icon(k.icon) + "</span><span><b>" + esc(k.name) + "</b><p>" + esc(k.result) + '</p><span class="meta"><span class="free">' + esc(k.cost) + "</span><span>" + esc(k.time) + "</span></span></span></a>";
   }).join("");
+  var ST = {}; try { ST = JSON.parse(localStorage.getItem("ez-kits-v1") || "{}"); } catch (e) {}
+  var doneN = D.kits.filter(function (k) { return ST[k.id] && ST[k.id].done; }).length;
+  if (doneN) { document.getElementById("kits").insertAdjacentHTML("beforebegin", '<p class="kprog">You’ve done ' + doneN + " of " + D.kits.length + " kits.</p>"); }
+  document.querySelectorAll(".kcard").forEach(function (a) { var id = (a.getAttribute("href") || "").replace(".html", ""); if (ST[id] && ST[id].done) a.querySelector(".meta").insertAdjacentHTML("beforeend", '<span class="prog">Done ✓</span>'); });
   var t = D.kits.filter(function (k) { return k.proof; }), w = t.filter(function (k) { return k.proof.winner === "template"; }).length, ti = t.filter(function (k) { return k.proof.winner === "tie"; }).length;
   document.getElementById("tally").innerHTML = '<span class="win">Kit won ' + w + " of " + t.length + "</span><span>Tied " + ti + "</span><span>Plain won " + (t.length - w - ti) + "</span>";
   document.getElementById("sample").textContent = D.sample + " Run " + D.checked + ". Each kit page shows both answers. Times on the cards are our estimates.";
-  if (window.EZChart) EZChart.pair(document.getElementById("kchart"), t.map(function (k) { return { name: k.name, a: k.proof.plainScore, b: k.proof.kitScore, tie: k.proof.winner === "tie", href: "kit.html?k=" + k.id }; }), { a: "Plain ask", b: "With the kit", title: "Kit vs plain ask, blind scores" });
+  if (window.EZChart) EZChart.pair(document.getElementById("kchart"), t.map(function (k) { return { name: k.name, a: k.proof.plainScore, b: k.proof.kitScore, tie: k.proof.winner === "tie", href: k.id + ".html" }; }), { a: "Plain ask", b: "With the kit", title: "Kit vs plain ask, blind scores" });
   U.wireForget();
 })();
 </script>
 <script src="../school/school.js" defer></script>
 <script src="/projects/skill-quest/smez-index.js" defer></script>
-<script src="/projects/skill-quest/smez-nav.js" data-section="templates" defer></script>
+<script src="/projects/skill-quest/smez-nav.js" data-section="kits" defer></script>
 </body>
 </html>

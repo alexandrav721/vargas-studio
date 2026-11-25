@@ -3,8 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex">
 <title>Keep up · AI Made EZ</title>
+<!-- og:start -->
+<link rel="canonical" href="https://vargas-studio.pages.dev/projects/skill-quest/keep-up/">
+<meta property="og:type" content="website"><meta property="og:site_name" content="AI Made EZ">
+<meta property="og:title" content="Keep up · AI Made EZ"><meta property="og:description" content="This week&#x27;s AI news in plain words: what changed and what it means for you. Free.">
+<meta property="og:url" content="https://vargas-studio.pages.dev/projects/skill-quest/keep-up/"><meta property="og:image" content="https://vargas-studio.pages.dev/projects/skill-quest/og/keep-up.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<!-- og:end -->
 <meta name="description" content="This week's AI news in plain words: what changed and what it means for you. Free.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -35,11 +41,13 @@ main{max-width:860px}
 
   <section class="sec" id="news" aria-labelledby="news-h">
     <h2 id="news-h">This week</h2>
-    <p class="muted" id="news-week"></p>
+    <p class="muted"><span id="news-week"></span> <span id="news-new" class="chip" hidden style="background:#E3F1ED;color:#155c50;border-color:#E3F1ED">New since your last visit</span></p>
     <ul class="news" id="news-list"></ul>
   </section>
 
-  <p class="freebox" style="margin-top:32px"><b>Free, all of it.</b> New news every Friday. <a href="../school/social/">See our Instagram posts</a>.</p>
+  <div class="btns" style="margin-top:24px"><button class="btn" id="remind" type="button">Remind me every Friday</button><button class="btn ghost" id="sharepage" type="button">Send this to a friend</button></div>
+  <p class="small" style="margin-top:8px">Adds a free weekly reminder to your calendar. No email, no sign-up.</p>
+  <p class="freebox" style="margin-top:24px"><b>Free, all of it.</b> New news every Friday.</p>
 </main>
 <script src="../school/school.js" defer></script>
 <script>
@@ -54,6 +62,26 @@ document.getElementById("news-week").textContent = NEWS.week;
 document.getElementById("news-list").innerHTML = NEWS.items.map(function (n) {
   return "<li><b>" + esc(n.headline) + "</b><p>" + esc(n.what) + '</p><p class="you"><b style="display:inline;font:inherit;font-weight:700">For you:</b> ' + esc(n.you) + '</p><small><a href="' + esc(n.url) + '" target="_blank" rel="noopener">' + esc(n.source) + "</a> · " + esc(n.date) + "</small></li>";
 }).join("");
+/* come back: new-this-week marker, a calendar reminder, sharing (nothing leaves this phone) */
+(function () {
+  var KEY = "ez-keepup-seen", last = ""; try { last = localStorage.getItem(KEY) || ""; } catch (e) {}
+  if (last && last !== NEWS.week) document.getElementById("news-new").hidden = false;
+  try { localStorage.setItem(KEY, NEWS.week); } catch (e) {}
+  var url = location.origin + "/projects/skill-quest/keep-up/";
+  document.getElementById("remind").onclick = function () {
+    var d = new Date(), add = (5 - d.getDay() + 7) % 7 || 7; d.setDate(d.getDate() + add);
+    var ymd = d.getFullYear() + String(d.getMonth() + 1).padStart(2, "0") + String(d.getDate()).padStart(2, "0");
+    var ics = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//AI Made EZ//Keep up//EN", "BEGIN:VEVENT", "UID:keepup-" + ymd + "@aimadeez",
+      "DTSTAMP:" + ymd + "T090000", "DTSTART:" + ymd + "T090000", "DURATION:PT10M", "RRULE:FREQ=WEEKLY;BYDAY=FR",
+      "SUMMARY:This week in AI, in plain words", "DESCRIPTION:5 minutes of AI news that matters for you: " + url, "URL:" + url, "END:VEVENT", "END:VCALENDAR"].join("\r\n");
+    var a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([ics], { type: "text/calendar" })); a.download = "ai-news-fridays.ics"; a.click();
+  };
+  document.getElementById("sharepage").onclick = function () {
+    var t = "AI news in plain words, free every Friday: " + url + "?from=keepup";
+    if (navigator.share) navigator.share({ title: "This week in AI, in plain words", text: t }).catch(function () {});
+    else if (navigator.clipboard) navigator.clipboard.writeText(t).then(function () { document.getElementById("sharepage").textContent = "Link copied"; });
+  };
+})();
 </script>
 <script src="/projects/skill-quest/smez-index.js" defer></script>
 <script src="/projects/skill-quest/smez-nav.js" data-section="keepup" defer></script>

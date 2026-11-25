@@ -74,7 +74,7 @@ function cleanEmail(v) {
 async function sendKit(env, origin, email, kit) {
   if (!env.RESEND_API_KEY || !env.FROM_EMAIL) return false;
   const name = KITS[kit];
-  const url = `${origin}/projects/skill-quest/kits/kit.html?k=${kit}`;
+  const url = `${origin}/projects/skill-quest/kits/${kit}`;
   const text = `Here's your free kit: ${name}\n\n${url}\n\nYou asked for this copy on AI Made EZ. To delete your email from our list: ${origin}/projects/skill-quest/kits/#forget`;
   const r = await fetch('https://api.resend.com/emails', {
     method: 'POST',

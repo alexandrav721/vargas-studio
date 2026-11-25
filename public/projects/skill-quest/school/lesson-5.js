@@ -27,6 +27,37 @@
     (navigator.clipboard ? navigator.clipboard.writeText(text) : Promise.reject()).then(function () { School.toast(done || "Copied"); }, function () { School.toast("Select the text and copy it"); });
   }
 
+  /* end of lesson: stamp count, next step, reminder, stamp card, signed cards (25 Nov 2026) */
+  var SIGN = "\n\nFrom AI Made EZ (free): https://vargas-studio.pages.dev/projects/skill-quest/start/?from=copy";
+  function stampCount() { var have = School.done(), n = School.LESSONS.filter(function (l) { return have[l.id]; }).length; return '<p class="ez-count">' + n + " of 8 stamps</p>"; }
+  function endBlock(n) {
+    var nx = School.LESSONS[n];
+    return '<div class="btns ez-next">' + (nx ? '<a class="btn" href="' + nx.href + '">Next: Lesson ' + nx.n + " →</a>" : '<a class="btn" href="kitchen/">Start Level 2 →</a>') +
+      '<button class="btn ghost" id="stampshare" type="button">Share my stamp</button></div>';
+  }
+  function endWire(n) {
+    var me = School.LESSONS[n - 1], nx = School.LESSONS[n];
+    document.getElementById("remind").onclick = function () {
+      /* a calendar file for tomorrow 9:00 local time; nothing leaves the device */
+      var t = new Date(); t.setDate(t.getDate() + 1); t.setHours(9, 0, 0, 0);
+      var e = new Date(t.getTime() + 10 * 60000), pad = function (v) { return ("0" + v).slice(-2); };
+      var f = function (d) { return d.getFullYear() + pad(d.getMonth() + 1) + pad(d.getDate()) + "T" + pad(d.getHours()) + pad(d.getMinutes()) + "00"; };
+      var url = location.href.replace(/[^/]*$/, "") + (nx ? nx.href : "kitchen/");
+      var what = nx ? "AI Made EZ: Lesson " + nx.n + ", " + nx.short : "AI Made EZ: start Level 2";
+      var ics = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//AI Made EZ//Level 1//EN", "BEGIN:VEVENT", "UID:" + Date.now() + "@ai-made-ez", "DTSTAMP:" + f(new Date()), "DTSTART:" + f(t), "DTEND:" + f(e), "SUMMARY:" + what, "DESCRIPTION:About 10 minutes: " + url, "URL:" + url, "BEGIN:VALARM", "TRIGGER:PT0M", "ACTION:DISPLAY", "DESCRIPTION:" + what, "END:VALARM", "END:VEVENT", "END:VCALENDAR"].join("\r\n");
+      var a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([ics], { type: "text/calendar" })); a.download = "ai-made-ez-reminder.ics"; document.body.appendChild(a); a.click(); a.remove();
+      School.toast("Open the file to add it to your calendar");
+    };
+    document.getElementById("stampshare").onclick = function () {
+      var o = { title: me.name.replace(/[“”]/g, ""), label: me.short, level: 1, lesson: n, url: location.href.split(/[?#]/)[0] + "?from=stamp" };
+      play("share");
+      if (window.EZStamp) return window.EZStamp.share(o);
+      var s = document.createElement("script"); s.src = "/projects/skill-quest/stampcard.js";
+      s.onload = function () { window.EZStamp.share(o); }; s.onerror = function () { School.toast("Could not make the picture. Try again."); };
+      document.head.appendChild(s);
+    };
+  }
+
   var render = function () {
     if (step === 0) return show(
       '<p class="label">Lesson 5 · about 12 minutes</p>' +
@@ -166,16 +197,17 @@
     app.innerHTML = '<section class="step">' +
       '<div class="stamp-wrap"><div class="stamp land" aria-hidden="true">' + School.stampSvg("Your station", 5, true) + "</div></div>" +
       '<h1 style="text-align:center">Lesson 5, stamped.</h1>' +
-      '<p class="muted" style="text-align:center">' + (first ? "Five stamps in your Chef’s passport." : "You already had this stamp. Nice refresher.") + "</p>" +
-      '<div class="kept"><p><b>You leave with:</b> a family-trip station that already knows who’s going, the budget, the pace and the never list.</p>' +
+      '<p class="muted" style="text-align:center">' + (first ? "A new stamp in your Chef’s passport." : "You already had this stamp. Nice refresher.") + "</p>" +
+      stampCount() + '<div class="kept"><p><b>You leave with:</b> a family-trip station that already knows who’s going, the budget, the pace and the never list.</p>' +
       '<p><b>Your new habits:</b> anything you keep re-explaining goes in a station. Update it when plans change.</p></div>' +
-      '<div class="btns"><button class="btn" id="save" type="button">Copy my station checklist</button><a class="btn ghost" href="./">See my Chef’s passport</a><button class="btn ghost" id="send" type="button">Send this lesson to someone</button></div>' +
-      '<div class="btns"><a class="btn ghost" href="lesson-6.html">Lesson 6: Take-home containers →</a></div></section>';
+      endBlock(5) + '<div class="btns"><button class="btn ghost" id="remind" type="button">Remind me tomorrow</button><button class="btn ghost" id="save" type="button">Copy my station checklist</button><a class="btn ghost" href="./">See my Chef’s passport</a><button class="btn ghost" id="send" type="button">Send this lesson to someone</button></div>' +
+      '</section>';
     window.scrollTo(0, 0);
     setTimeout(function () { play("stamp"); }, 260);
-    document.getElementById("save").onclick = function () { copy("STATION CHECKLIST\nOne station per job (trip, garden, shop).\nInstructions: who, budget, pace, never list, how answers should look.\nFiles: helpful ones, with booking and ID numbers taken out.\nStart those chats inside the station.\nUpdate it when plans change.\nCheck Claude's memory setting now and then.", "Station checklist copied"); };
+    document.getElementById("save").onclick = function () { copy("STATION CHECKLIST\nOne station per job (trip, garden, shop).\nInstructions: who, budget, pace, never list, how answers should look.\nFiles: helpful ones, with booking and ID numbers taken out.\nStart those chats inside the station.\nUpdate it when plans change.\nCheck Claude's memory setting now and then." + SIGN, "Station checklist copied"); };
+    endWire(5);
     document.getElementById("send").onclick = function () {
-      var url = location.href.split("#")[0];
+      var url = location.href.split(/[?#]/)[0] + "?from=share";
       if (navigator.share) navigator.share({ title: "Your own station", text: "A 12-minute lesson on setting up Claude once so it remembers your project.", url: url }).catch(function () {});
       else copy(url, "Link copied");
       play("share");
