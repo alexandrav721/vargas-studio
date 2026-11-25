@@ -18,9 +18,9 @@
         '<p class="label">Research on <span class="sample">Sample</span></p>' +
         '<div class="reply"><p class="who">claude</p>Searching… reading pricing pages… comparing…</div>' +
         '<div class="reply"><p class="who">claude</p>Tool A: $8 a seat, has text reminders [1]. Tool B: free under 10 staff [2]…</div>' +
-        '<p class="small">[1] and [2] are <b>source links</b>. Open them: is it the company’s own page, dated this year?</p>' +
-        '<p class="small">Research also uses connected apps that are on for that chat. On the phone app it searches only the web.</p>' +
-        '<p class="small">Paste a web address and Claude reads that one page: a <b>page fetch</b>. Long runs use up your <b>usage limit</b> faster.</p>',
+        '<p class="small">[1] and [2] are <b>source links</b>. Open them: the company’s own page, dated this year?</p>' +
+        '<p class="small">Research also reads apps connected to that chat (phone: web only). Paste a web address and Claude reads that page: a <b>page fetch</b>.</p>' +
+        '<p class="small">Long runs eat your <b>usage limit</b>: how much Claude you get before you wait for a reset. Free hits it first.</p>',
       next: "Your turn →"
     },
     build: {

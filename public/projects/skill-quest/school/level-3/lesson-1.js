@@ -6,7 +6,7 @@
     terms: ["Chat", "Cowork", "Claude in Chrome", "Model selector", "Desktop app"],
     teaser: ["YOUR STATION", "where the work happens", "Same chef, five stations.<br>Talk it through, look it up,<br>or hand over the whole job.", "Five words. Six minutes."],
     lines: [
-      ["Level 2 built the kitchen. Now work its stations: modes, not Level 1’s projects.", "Free plan? Chat, files and skills work. Research, Cowork and Chrome are paid."],
+      ["In Level 1, a station was a project. Here it’s a kind of work.", "Same Claude, five stations. Free: chat, files and skills. The rest are paid."],
       ["Chat talks. Research looks things up. Cowork does the job.", "Cowork works with your files and apps. You describe, Claude plans, you steer."],
       ["Claude in Chrome works in your browser.", "It reads, clicks and types on websites, in a side panel."]
     ],
@@ -54,7 +54,7 @@
         ["A plain chat with no folder connected", false, "Without a connected folder, Claude sees only what you upload. It can’t rename files on your laptop."],
         ["Research", false, "Research reads the web and your connected apps. It doesn’t change your files."]
       ],
-      right: "Yes. Cowork reads and writes files in folders you connect, in the desktop app.",
+      right: "Yes. Cowork works on folders you connect in the desktop app. On Free or a phone, upload a few files to a chat instead.",
       wrong: "Which station can touch your files?", hint: "Only one of them works on folders on your computer.",
       habitTitle: "Work habit", habit: "Before you start, ask: am I talking, looking up, or handing off? That picks the station."
     },
@@ -74,7 +74,7 @@
     say: "This one needs my files, so it’s a Cowork job.",
     keep: "Your week mapped to stations, and the first step of one real task done.",
     cardLabel: "Copy my card",
-    card: "PICK YOUR STATION\nChat = talk it through, draft, make things\nResearch = look it up across many sources\nCowork = hand off a task on your files and apps\nClaude in Chrome = work on websites in a side panel\nModel selector = click the model name by the send button\nFree: Chat, files, skills. Research, Cowork, Chrome: paid",
+    card: "PICK YOUR STATION\nChat = talk it through · Research = look it up, with sources\nCowork = hand off a task on your files and apps\nClaude in Chrome = work on websites in a side panel\nClaude Code = coding jobs, like fixing a website\nModel selector = click the model name by the send button\nFree: Chat, files, skills. Research, Cowork, Chrome: paid",
     real: ["Claude 101", "https://academy.claude.com/courses/claude-101"]
   };
   document.addEventListener("DOMContentLoaded", function () { BK.run(L); });

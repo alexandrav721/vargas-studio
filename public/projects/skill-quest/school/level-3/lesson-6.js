@@ -19,7 +19,7 @@
         '<div class="reply"><p class="who">you</p>Good. Put the sheet in a new folder. Don’t move the originals.</div>' +
         '<div class="reply"><p class="who">progress</p>Read 41 of 60… 3 receipts unreadable, flagged…</div>' +
         '<div class="reply"><p class="who">done</p>expenses-by-month.xlsx saved. 57 rows, 3 flagged for you.</div>' +
-        '<p class="small">Your note mid-task is <b>steering</b>. <b>Approval mode</b>: <b>Auto</b>, rolling out as the default on Pro, Max, Ultra and Team; <b>Manual</b> on Enterprise. Weekly? /schedule.</p>',
+        '<p class="small">Your note mid-task is <b>steering</b>. <b>Approval mode</b>, in the message box: <b>Auto</b> lets a safety check watch; <b>Manual</b> asks you first. Same job every week? Type /schedule.</p>',
       next: "Your turn →"
     },
     build: {
@@ -29,17 +29,20 @@
       controls: function (s, esc) {
         function row(k, list) { return '<div class="fridge">' + list.map(function (v) { return '<button type="button" class="chip" data-set="' + k + '" data-v="' + esc(v) + '" aria-pressed="' + (s[k] === v) + '">' + esc(v) + "</button>"; }).join("") + "</div>"; }
         return '<p class="label">The task</p>' + row("task", ["turn a folder of receipts into an expense sheet by month", "rename the files in a folder by date and client", "turn a folder of meeting notes into one action list", "research 5 suppliers and build a comparison sheet"]) +
-          '<p class="label">Approval mode</p>' + row("mode", ["Manual", "Auto"]);
+          '<p class="label">How you’ll run it</p>' + row("mode", ["Manual", "Auto", "Free or phone: photos in a chat"]);
       },
       head: "ORDER #C06", right: "handoff", foot: "Paste it into Cowork, or any chat in the newer Claude",
       text: function (s) {
-        return "Task: " + s.task + ". I’m using " + s.mode + " mode.\n" +
+        var free = s.mode.indexOf("Free") === 0;
+        return (free ? "Task: " + s.task + ". I’ll attach photos or files to this chat. Build the result here in the chat.\n"
+                     : "Task: " + s.task + ". I’m using " + s.mode + " mode.\n") +
           "First show your plan in 5 steps or fewer; wait for my OK.\n" +
-          "Rules: never delete or move my originals. Save new files in a folder called “Claude output”. Ask before anything that sends, shares, buys or deletes.\n" +
+          (free ? "Rules: work only from what I attach. Give me a file I can download.\n"
+                : "Rules: never delete or move my originals. Save new files in a folder called “Claude output”. Ask before anything that sends, shares, buys or deletes.\n") +
           "When done: 1. What you did, in 5 lines. 2. What you skipped or doubted. 3. Five items to spot-check.";
       },
       claude: "Open in Claude", done: "Done →",
-      after: "Paid plans: choose Cowork in the message box, or paste it into any chat if there’s no switch. Local folders need the desktop app open. Free plan or phone? Attach 5 receipt photos to a normal chat and paste this ticket. Claude builds the sheet right in the chat. Same rules, same spot-check."
+      after: "Paid plans: choose Cowork in the message box, or paste it into any chat if there’s no switch. Local folders need the desktop app open. Free or phone: attach the photos with the ticket. Same spot-check."
     },
     game: {
       type: "tapall", title: "Cowork says “done.” What do you check yourself?", lead: "Tap the {n} worth checking.",
@@ -61,14 +64,14 @@
       where: "You can watch a new cook at the next station. Cowork works quietly in seconds, so you read the plan and the report."
     },
     quiz: [
-      { term: "Manual mode", q: "In Manual mode, what happens before an action that needs approval?", a: ["Claude asks you: Allow or Deny", "It runs and tells you later", "It skips the action"], ok: 0, why: "Right. In Auto, tools left on Needs approval run unless the check flags them." },
+      { term: "Manual mode", q: "In Manual mode, what happens before Claude sends, moves or deletes something?", a: ["Claude asks you: Allow or Deny", "It runs and tells you later", "It skips the action"], ok: 0, why: "Right. In Auto, Claude doesn’t stop to ask; a safety check watches instead." },
       { term: "Scheduled task", q: "You want the same report built every Monday. What do you set up?", a: ["A scheduled task (/schedule)", "A new chat every Monday", "A longer prompt"], ok: 0, why: "Right. Scheduled tasks run in the cloud on a timetable." },
       { term: "Private by default", q: "Recall from Lesson 3: Claude made you an artifact in chat. Who can see it?", a: ["Only you, until you share it", "Your whole team", "Anyone with the link"], ok: 0, why: "Right. Nothing is shared until you click Share." }
     ],
     say: "I’ll hand it to Cowork in Manual mode and spot-check five rows before it goes out.",
     keep: "A handoff ticket with rules, a plan check and a report-back list.",
     cardLabel: "Copy my card",
-    card: "HAND OFF THE WHOLE TASK\nDescribe › read the plan › steer › check\nConnected folder = the only files it touches\nAuto = runs with a safety check (Always allow tools skip it)\nManual = you Allow or Deny each action that needs approval\nRules: keep originals, new folder, ask before send/share/buy/delete\n“Done” is a claim: spot-check a few\n/schedule = repeat it on a timetable",
+    card: "HAND OFF THE WHOLE TASK\nDescribe › read the plan › steer › check\nConnected folder = the only files it touches\nAuto = runs with a safety check (Always allow tools skip it)\nManual = you Allow or Deny before it acts\nRules: keep originals, new folder, ask before send/share/buy/delete\n“Done” is a claim: spot-check a few\n/schedule = repeat it on a timetable",
     real: ["Introduction to Claude Cowork", "https://academy.claude.com/courses/introduction-to-claude-cowork"]
   };
   document.addEventListener("DOMContentLoaded", function () { BK.run(L); });

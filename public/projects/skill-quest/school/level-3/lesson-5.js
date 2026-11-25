@@ -37,13 +37,14 @@
       text: function (s) {
         var a = s.apps, list = !a.length ? "a work app" : a.length < 3 ? a.join(" and ") : a.slice(0, -1).join(", ") + ", and " + a[a.length - 1];
         return "I’m connecting " + list + " to Claude for: " + s.job + ".\n" +
-          "1. Per app, list the actions this job needs (read, draft, send, share, delete).\n" +
-          "2. Mark each: Always allow (reading), Always ask (send, share, delete) or Blocked (not needed).\n" +
-          "3. Then do the job once. Stop before anything sends and show me the draft.\n" +
-          "Not connected yet? Tell me what to paste in, and do the job from that.";
+          "Personal or free account with patient, student or customer records? Stop; tell me to ask my office.\n" +
+          "1. Per app, list the actions this job needs.\n" +
+          "2. Mark each: Always allow (reading), Always ask (send, share, delete) or Blocked.\n" +
+          "3. Do the job once. Show me drafts before anything sends.\n" +
+          "Not connected? Tell me what to paste in; work from that.";
       },
       claude: "Open in Claude", done: "Done →",
-      after: "Connectors work on Free too. On Team or Enterprise, your admin may have to turn one on first, and their limits beat yours. No Always ask option yet? It’s still rolling out; Lesson 6’s Manual mode does the same job."
+      after: "Personal or free account? Don’t connect work email or files that hold patient, student or customer records. Ask your office first (Lesson 8). Connectors work on Free too. On Team or Enterprise, your admin may have to turn one on first, and their limits beat yours. No Always ask option yet? Tell Claude in the chat: ask me before you send anything."
     },
     game: {
       type: "tapall", title: "Five storeroom actions. Which ones need a yes from you?", lead: "Tap the {n} that should be Always ask.",

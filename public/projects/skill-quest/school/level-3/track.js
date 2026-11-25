@@ -1,6 +1,7 @@
 window.BK_CONFIG = {
   level: 3, key: "smez-level-3-v1", name: "Claude at work", glossary: "../kitchen/glossary.html", challenge: "challenge.html",
   doneLine: "You can run a real shift with Claude now.",
+  twins: [["Always ask", "Needs approval"], ["Always ask", "Manual mode"], ["Always allow", "Auto mode"], ["Approval mode", "Manual mode"], ["Approval mode", "Auto mode"], ["Tool permission", "Always ask"], ["Tool permission", "Approval mode"], ["Project instructions", "Instructions for Claude"], ["Memory", "Project knowledge"], ["Memory", "Chat search"], ["Share link", "Access level"], ["Source link", "Page fetch"], ["Custom skill", "Skill ZIP"], ["Skill description", "Frontmatter"], ["Training setting", "Data retention"]],
   track: [
     { n: 1, id: "c1", stamp: "Station", short: "Your station", name: "Pick your station (chat, Research, Cowork, Chrome)", href: "lesson-1.html", use: "a coworker asks “should I use Cowork for this?”" },
     { n: 2, id: "c2", stamp: "Orders", short: "Standing orders", name: "Standing orders (instructions and memory)", href: "lesson-2.html", use: "you’re tired of retyping the same request" },
