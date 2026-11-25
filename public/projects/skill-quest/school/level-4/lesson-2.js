@@ -16,10 +16,10 @@
       title: "Same order, four chefs.",
       html:
         '<p class="label">Per million tokens (MTok): in · out <span class="sample">Nov 2026</span></p><div class="ticket"><div class="th"><span>THE CHEFS</span><span>API</span></div>Haiku 5.5 · $0.10 · $0.50 <span class="small">(prompts up to 100K)</span><br>Sonnet 5.5 · $2 · $10<br>Opus 5.5 · $4 · $20 <span class="small">(the default)</span><br>Fable 5.2 · $8 · $40<div class="tf">Output costs 5x input</div></div>' +
-        '<p class="label" style="margin-top:14px">The dial: effort</p><div class="reply"><p class="who">your request</p>output_config: { effort: "low" }</div>' +
+        '<p class="label" style="margin-top:14px">The dial: effort</p><div class="reply"><p class="who">your request</p>effort: low</div>' +
         '<p class="small"><b>Adaptive thinking</b>: Claude decides how much to think. On Opus 5.5 it’s always on; effort sets the depth.</p>' +
-        '<p class="small"><b>Time to first token</b>: how soon words appear. <b>Model routing</b>: easy jobs to a small chef, hard ones to a big one. <b>Fast mode</b>: faster Opus, double the price.</p>',
-      more: '<p class="small">Effort defaults to medium. Fast mode on Opus 5.5: up to 2.5x faster output, at $8 / $40 per MTok. Model routing: a quick first step sorts each request, then sends it on.</p>',
+        '<p class="small"><b>Time to first token</b>: how soon words appear. <b>Model routing</b>: easy jobs to a small chef, hard ones to a big one.</p>',
+      more: '<p class="small"><b>Fast mode</b>: Opus 5.5 at up to 2.5x faster output, for double the price ($8 / $40 per MTok). Effort defaults to medium on Opus 5.5 and Haiku 5.5, and high on Sonnet 5.5 and Fable 5.2. In code it goes in output_config: { effort: "low" }. Model routing: a quick first step sorts each request, then sends it on.</p>',
       next: "Your turn →"
     },
     build: {

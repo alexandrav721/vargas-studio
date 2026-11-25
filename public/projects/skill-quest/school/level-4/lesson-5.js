@@ -16,10 +16,10 @@
       title: "The prep list, with prices.",
       html:
         '<p class="label">Mark the shared part</p><div class="ticket"><div class="th"><span>REQUEST</span><span>cached</span></div>system: [ the 30-page manual,<br>&nbsp;&nbsp;cache_control: { type: "ephemeral" } ]<br>messages: user “Can I return opened boxes?”<div class="tf">Stable parts first, changing parts after.</div></div>' +
-        '<p class="label" style="margin-top:14px">Second call’s receipt <span class="sample">Sample</span></p><div class="reply"><p class="who">usage</p>cache_read_input_tokens: 18,000 <span class="small">(from the prep)</span><br>input_tokens: 12</div>' +
+        '<p class="label" style="margin-top:14px">Second call’s receipt <span class="sample">Sample</span></p><div class="reply"><p class="who">usage</p>cached: 18,000 tokens<br>new: 12 tokens</div>' +
         '<p class="small">Cached reads cost a tenth to a fortieth of normal input, by model. It keeps 5 minutes (its <b>TTL</b>, time to live); an hour costs more.</p>' +
         '<p class="small"><b>Message Batches</b>: half price. Most finish within an hour; unfinished requests expire after 24 hours. Tag each with a <b>custom_id</b>.</p>',
-      more: '<p class="small">The prompt is read in order: tools, then system, then messages. Claude won’t cache a prompt shorter than its minimum up to the mark (512 tokens on most current models; some, like Sonnet 5, need 1,024), and no error tells you: cache_creation_input_tokens just reads 0. Check sizes first with token counting (count_tokens, using the same model ID). A batch holds up to 100,000 requests.</p>',
+      more: '<p class="small">On the receipt, cache reads show as cache_read_input_tokens. The prompt is read in order: tools, then system, then messages. Claude won’t cache a prompt shorter than its minimum up to the mark (512 tokens on most current models; some, like Sonnet 5, need 1,024), and no error tells you: cache_creation_input_tokens just reads 0. Check sizes first with token counting (count_tokens, using the same model ID). A batch holds up to 100,000 requests.</p>',
       next: "Your turn →"
     },
     build: {
@@ -61,7 +61,7 @@
       ],
       right: "Yes. Anything that changes the start, or the model, starts the prep over.",
       wrong: "Does that change the start of the prompt?",
-      habitTitle: "Builder habit", habit: "Stable first, changing last. Then check cache_read_input_tokens after every change to your prompt code."
+      habitTitle: "Builder habit", habit: "Stable first, changing last. Then check the receipt’s cache reads after every change to your prompt code."
     },
     breaks: {
       title: "Prep goes stale.",
@@ -72,7 +72,7 @@
       where: "Chopped onions sit where you can see them. A broken cache is invisible: no error, the bill just goes up."
     },
     quiz: [
-      { term: "Cache hit", q: "How do you know the cache worked?", a: ["cache_read_input_tokens is above zero", "The reply came back with no error", "stop_reason says end_turn"], ok: 0, why: "Right. The usage fields are the only proof." },
+      { term: "Cache hit", q: "How do you know the cache worked?", a: ["The receipt shows tokens read from the cache", "The reply came back with no error", "stop_reason says end_turn"], ok: 0, why: "Right. The usage receipt is the only proof." },
       { term: "custom_id", q: "What is custom_id for in a batch?", a: ["Matching each result to the request it answers", "Choosing which model runs each request", "Setting the price of the batch"], ok: 0, why: "Right. Results can come back in any order." },
       { term: "tool_result block", q: "Recall from Lesson 4: what must every tool_result carry?", a: ["The matching tool_use_id", "A copy of the system prompt", "The model ID"], ok: 0, why: "Right. That’s how Claude knows which order it answers." }
     ],

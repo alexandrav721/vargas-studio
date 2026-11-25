@@ -15,10 +15,10 @@
     example: {
       title: "The opening-night board.",
       html:
-        '<p class="label">Which errors to retry</p><div class="ticket"><div class="th"><span>ERRORS</span><span>what to do</span></div>429 rate_limit_error · too many: wait retry-after seconds<br>529 overloaded_error · retry with backoff<br>500 api_error · retry with backoff<br>400 · 401 · 404 · fix it, don’t retry<div class="tf">The SDK retries the busy-kitchen errors twice by default</div></div>' +
+        '<p class="label">Which errors to retry</p><div class="ticket"><div class="th"><span>ERRORS</span><span>what to do</span></div>429 · too many: wait retry-after seconds<br>529 · overloaded: retry with backoff<br>500 · server error: retry with backoff<br>400 · 401 · 404 · fix it, don’t retry<div class="tf">The SDK retries the busy-kitchen errors twice by default</div></div>' +
         '<p class="label" style="margin-top:14px">One log line per call <span class="sample">Sample</span></p><div class="reply"><p class="who">your log</p>req_018Ee… · claude-opus-5-5 · 1,204 in · 310 out · 2.1 s · 1 retry</div>' +
         '<p class="small">Every reply has a <b>request ID</b>. Log it: support asks for it. <b>Streaming</b> shows words as they arrive, so guests don’t stare at a blank screen.</p>',
-      more: '<p class="small">A 429 with no retry-after may be your tier’s monthly spend cap: retrying won’t help. Hitting your <b>own spend limit</b> returns a 400 that says “You have reached your specified API usage limits.” Call the API from your own server only: anyone can read a key in a web page.</p>',
+      more: '<p class="small">Each error also carries a type name, like rate_limit_error or overloaded_error. A 429 with no retry-after may be your tier’s monthly spend cap: retrying won’t help. Hitting your <b>own spend limit</b> returns a 400 that says “You have reached your specified API usage limits.” Call the API from your own server only: anyone can read a key in a web page.</p>',
       next: "Your turn →"
     },
     build: {

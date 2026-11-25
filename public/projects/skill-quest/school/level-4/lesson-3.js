@@ -15,11 +15,11 @@
     example: {
       title: "A receipt, plated the same way every time.",
       html:
-        '<p class="label">The schema: your plate diagram <span class="sample">Simplified</span></p><div class="ticket"><div class="th"><span>SCHEMA</span><span>json_schema</span></div>store: text<br>total: number<br>items: list of text<div class="tf">Which fields, and what kind of value each holds</div></div>' +
-        '<p class="label" style="margin-top:14px">Where it goes in the request</p><div class="reply"><p class="who">your request</p>output_config: { format: { type: "json_schema", schema: … } }</div>' +
+        '<p class="label">The schema: your plate diagram <span class="sample">Simplified</span></p><div class="ticket"><div class="th"><span>SCHEMA</span><span>fields</span></div>store: text<br>total: number<br>items: list of text<div class="tf">Which fields, and what kind of value each holds</div></div>' +
+        '<p class="label" style="margin-top:14px">Where it goes in the request</p><div class="reply"><p class="who">your request</p>output_config: { format: your schema }</div>' +
         '<p class="label" style="margin-top:14px">What comes back <span class="sample">Sample</span></p><div class="reply"><p class="who">assistant</p>{"store": "Green Grocer", "total": 23.40, "items": ["kale", "eggs"]}</div>' +
         '<p class="small">Tools or structured outputs? To shape the <b>final answer</b>, use structured outputs. When Claude must <b>call an action</b>, use a tool with <b>strict: true</b> so its inputs match too.</p>',
-      more: '<p class="small">Every object in the schema needs additionalProperties: false (no extra fields allowed). Python’s client.messages.parse() checks the reply against a Pydantic model for you; TypeScript has a Zod helper. The API doesn’t enforce limits like minimum or minLength; the Python and TypeScript SDKs check those in code. Structured outputs can’t be combined with citations.</p>',
+      more: '<p class="small">The full form is format: { type: "json_schema", schema: … }. Every object in the schema needs additionalProperties: false (no extra fields allowed). Python’s client.messages.parse() checks the reply against a Pydantic model for you; TypeScript has a Zod helper. The API doesn’t enforce limits like minimum or minLength; the Python and TypeScript SDKs check those in code. Structured outputs can’t be combined with citations.</p>',
       next: "Your turn →"
     },
     build: {
