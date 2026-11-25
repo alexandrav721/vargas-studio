@@ -234,7 +234,9 @@ window.EZ_TOOLS2 = {
 "tryIf": "you want to make your first AI video without paying.",
 "skipIf": "you need the same person or product identical in every shot.",
 "laterNote": "",
-"tested": null
+"tested": null,
+"examples": [],
+"gallery": ""
 },
 {
 "id": "higgsfield",
@@ -328,7 +330,9 @@ window.EZ_TOOLS2 = {
 "tryIf": "you make lots of short social video and want many models together.",
 "skipIf": "you're on a tight budget: no real free trial, refunds are hard.",
 "laterNote": "",
-"tested": null
+"tested": null,
+"examples": [],
+"gallery": ""
 },
 {
 "id": "kling",
@@ -420,7 +424,9 @@ window.EZ_TOOLS2 = {
 "tryIf": "you want realistic photo-to-video and will pay about $10 for a month.",
 "skipIf": "you hate fiddly billing and hard-to-find cancel buttons.",
 "laterNote": "",
-"tested": null
+"tested": null,
+"examples": [],
+"gallery": ""
 },
 {
 "id": "runway",
@@ -511,7 +517,9 @@ window.EZ_TOOLS2 = {
 "tryIf": "you already edit video and want precise control.",
 "skipIf": "you need one quick clip; Flow or Kling are cheaper.",
 "laterNote": "",
-"tested": null
+"tested": null,
+"examples": [],
+"gallery": ""
 },
 {
 "id": "midjourney",
@@ -599,7 +607,9 @@ window.EZ_TOOLS2 = {
 "tryIf": "you want beautiful style above all and $10 is fine.",
 "skipIf": "you need text in the image, privacy cheaply, or a free test.",
 "laterNote": "",
-"tested": null
+"tested": null,
+"examples": [],
+"gallery": ""
 },
 {
 "id": "ideogram",
@@ -682,7 +692,9 @@ window.EZ_TOOLS2 = {
 "tryIf": "you need a poster, flyer or logo idea with words spelled right.",
 "skipIf": "you need private work on a $0 budget.",
 "laterNote": "",
-"tested": null
+"tested": null,
+"examples": [],
+"gallery": ""
 },
 {
 "id": "canva-ai",
@@ -766,7 +778,9 @@ window.EZ_TOOLS2 = {
 "tryIf": "you already use Canva or need the finished design, not a picture.",
 "skipIf": "the image itself has to be top-tier art.",
 "laterNote": "",
-"tested": null
+"tested": null,
+"examples": [],
+"gallery": ""
 },
 {
 "id": "adobe-firefly",
@@ -855,7 +869,9 @@ window.EZ_TOOLS2 = {
 "tryIf": "you sell products and want the least copyright worry, or fix photos.",
 "skipIf": "you want the most striking art.",
 "laterNote": "",
-"tested": null
+"tested": null,
+"examples": [],
+"gallery": ""
 },
 {
 "id": "krea",
@@ -939,7 +955,9 @@ window.EZ_TOOLS2 = {
 "tryIf": "you want to compare models side by side for a few dollars.",
 "skipIf": "too many choices overwhelm you.",
 "laterNote": "",
-"tested": null
+"tested": null,
+"examples": [],
+"gallery": ""
 },
 {
 "id": "capcut",
@@ -1029,7 +1047,9 @@ window.EZ_TOOLS2 = {
 "tryIf": "you need to cut, caption and post a short video today.",
 "skipIf": "broad content licenses worry you, or you film client work.",
 "laterNote": "",
-"tested": null
+"tested": null,
+"examples": [],
+"gallery": ""
 },
 {
 "id": "google-stitch",
@@ -1098,7 +1118,9 @@ window.EZ_TOOLS2 = {
 "tryIf": "you want to see your idea on screen today, free, and show someone.",
 "skipIf": "you need a working site people can visit, or exact brand matching.",
 "laterNote": "",
-"tested": null
+"tested": null,
+"examples": [],
+"gallery": ""
 },
 {
 "id": "figma-make",
@@ -1187,7 +1209,9 @@ window.EZ_TOOLS2 = {
 "tryIf": "you or your designer already use Figma and want a clickable demo.",
 "skipIf": "you've never used Figma, or need a real app that saves data.",
 "laterNote": "",
-"tested": null
+"tested": null,
+"examples": [],
+"gallery": ""
 },
 {
 "id": "lovable",
@@ -1276,7 +1300,9 @@ window.EZ_TOOLS2 = {
 "tryIf": "you want a simple app that saves data, like a booking form or tracker.",
 "skipIf": "you only need a brochure website. A website builder is cheaper and safer.",
 "laterNote": "",
-"tested": null
+"tested": null,
+"examples": [],
+"gallery": ""
 },
 {
 "id": "bolt",
@@ -1364,7 +1390,9 @@ window.EZ_TOOLS2 = {
 "tryIf": "you want to peek at the code while you build.",
 "skipIf": "you hate surprises on your bill.",
 "laterNote": "",
-"tested": null
+"tested": null,
+"examples": [],
+"gallery": ""
 },
 {
 "id": "v0",
@@ -1449,7 +1477,9 @@ window.EZ_TOOLS2 = {
 "tryIf": "you want a slick landing page or you're learning web code.",
 "skipIf": "you want an all-in-one app with data and no code.",
 "laterNote": "",
-"tested": null
+"tested": null,
+"examples": [],
+"gallery": ""
 },
 {
 "id": "replit",
@@ -1538,7 +1568,9 @@ window.EZ_TOOLS2 = {
 "tryIf": "you need an app that runs jobs or stays online on its own.",
 "skipIf": "you're a first-timer on a tight budget.",
 "laterNote": "",
-"tested": null
+"tested": null,
+"examples": [],
+"gallery": ""
 },
 {
 "id": "base44",
@@ -1626,7 +1658,9 @@ window.EZ_TOOLS2 = {
 "tryIf": "you want a private tool for your team and are fine staying on Base44.",
 "skipIf": "you might move the app later, or want to pay yearly before testing.",
 "laterNote": "",
-"tested": null
+"tested": null,
+"examples": [],
+"gallery": ""
 },
 {
 "id": "framer",
@@ -1716,7 +1750,9 @@ window.EZ_TOOLS2 = {
 "tryIf": "you want looks first, like a portfolio, launch page or creator brand.",
 "skipIf": "you need a store, bookings, or the simplest possible editor.",
 "laterNote": "",
-"tested": null
+"tested": null,
+"examples": [],
+"gallery": ""
 },
 {
 "id": "wix",
@@ -1804,7 +1840,9 @@ window.EZ_TOOLS2 = {
 "tryIf": "you need a business website with bookings or a small store this week.",
 "skipIf": "you hate lock-in, or want the most beautiful design.",
 "laterNote": "",
-"tested": null
+"tested": null,
+"examples": [],
+"gallery": ""
 },
 {
 "id": "squarespace",
@@ -1888,7 +1926,9 @@ window.EZ_TOOLS2 = {
 "tryIf": "you want a classy site for a service business and will write your own words.",
 "skipIf": "you want to play with AI a lot, or need it free.",
 "laterNote": "",
-"tested": null
+"tested": null,
+"examples": [],
+"gallery": ""
 },
 {
 "id": "cursor-claude-code",
@@ -1923,7 +1963,9 @@ window.EZ_TOOLS2 = {
 "tryIf": "you've outgrown Lovable or Bolt and want full control.",
 "skipIf": "you're new to folders, a terminal or Git.",
 "laterNote": "For later: tools for writing code, once you've built something simple.",
-"tested": null
+"tested": null,
+"examples": [],
+"gallery": ""
 },
 {
 "id": "notebooklm",
@@ -2007,7 +2049,46 @@ window.EZ_TOOLS2 = {
 "tryIf": "you have reading to get through and want answers you can trace.",
 "skipIf": "you need current web info or heavy team collaboration.",
 "laterNote": "",
-"tested": null
+"tested": null,
+"examples": [
+{
+"src": "img/notebooklm/1.jpg",
+"kind": "image",
+"alt": "Infographic of four barriers young Wikimedians face, drawn as a winding road",
+"tool": "NotebookLM (Gemini Notebook) infographic",
+"prompt": "",
+"license": "Public domain",
+"licenseUrl": "https://commons.wikimedia.org/wiki/Template:PD-algorithm",
+"author": "NotebookLM (uploaded by Wikimedia CEE Hub volunteers)",
+"source": "https://commons.wikimedia.org/wiki/File:Wikimedia_youth_activities_in_CEECA_2025_-_Overcoming_barriers.png",
+"excerpt": false
+},
+{
+"src": "img/notebooklm/2.jpg",
+"kind": "image",
+"alt": "Spanish mind map branching out the parts of a project proposal",
+"tool": "NotebookLM mind map",
+"prompt": "",
+"license": "Public domain (PD-algorithm + CC0)",
+"licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+"author": "Notebook LM (uploaded by Jackie SMG)",
+"source": "https://commons.wikimedia.org/wiki/File:Mapa_mental_de_NotebookLM_sobre_Wikimuseum.png",
+"excerpt": false
+},
+{
+"src": "img/notebooklm/3.mp3",
+"kind": "audio",
+"alt": "First 30 seconds of an AI two-host podcast summarizing a newsletter",
+"tool": "NotebookLM Audio Overview (default settings)",
+"prompt": "Only input: the Wikidata status-updates page for 16 Sep 2024",
+"license": "Public domain (PD-algorithm, CC0)",
+"licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+"author": "Google's NotebookLM (uploaded by TiagoLubiana)",
+"source": "https://commons.wikimedia.org/wiki/File:Wikidata_Weekly_Summary_-_Sep_09,_24_-_AI_Podcast_by_Google%27s_Notebook_LM.wav",
+"excerpt": true
+}
+],
+"gallery": "https://notebooklm.google/"
 },
 {
 "id": "perplexity",
@@ -2091,7 +2172,46 @@ window.EZ_TOOLS2 = {
 "tryIf": "you want faster research with sources you can check.",
 "skipIf": "you'd paste answers without checking, or you fear subscription billing.",
 "laterNote": "",
-"tested": null
+"tested": null,
+"examples": [
+{
+"src": "img/perplexity/1.jpg",
+"kind": "image",
+"alt": "Perplexity answer page about Vilnius with numbered sources and photos",
+"tool": "Perplexity",
+"prompt": "What is Vilnius",
+"license": "Public domain (PD-ineligible)",
+"licenseUrl": "https://commons.wikimedia.org/wiki/Template:PD-ineligible",
+"author": "Småland, Sweden (Commons user)",
+"source": "https://commons.wikimedia.org/wiki/File:Screenshot_of_Perplexity_-_What_is_Vilnius_(2024).png",
+"excerpt": false
+},
+{
+"src": "img/perplexity/2.jpg",
+"kind": "image",
+"alt": "Perplexity answer about Småland with sources, sections and a map",
+"tool": "Perplexity",
+"prompt": "What is Småland?",
+"license": "CC BY 4.0",
+"licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+"author": "Småland, Sweden (Commons user)",
+"source": "https://commons.wikimedia.org/wiki/File:Screenshot_of_Perplexity_-_What_is_Sm%C3%A5land.png",
+"excerpt": false
+},
+{
+"src": "img/perplexity/3.jpg",
+"kind": "image",
+"alt": "German Perplexity Page article with sources and a table of contents",
+"tool": "Perplexity Pages",
+"prompt": "",
+"license": "CC BY-SA 4.0",
+"licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+"author": "Suppengemüse",
+"source": "https://commons.wikimedia.org/wiki/File:Ansicht_einer_Perplexity_Page.png",
+"excerpt": false
+}
+],
+"gallery": "https://www.perplexity.ai/discover"
 },
 {
 "id": "notion-ai",
@@ -2175,7 +2295,9 @@ window.EZ_TOOLS2 = {
 "tryIf": "your team already keeps its work in Notion.",
 "skipIf": "you'd adopt Notion just for the AI.",
 "laterNote": "",
-"tested": null
+"tested": null,
+"examples": [],
+"gallery": "https://www.notion.com/product/ai"
 },
 {
 "id": "gamma",
@@ -2265,7 +2387,9 @@ window.EZ_TOOLS2 = {
 "tryIf": "you need a deck by tomorrow and good enough, then tweak, is fine.",
 "skipIf": "you must match a strict company template or exact PowerPoint files.",
 "laterNote": "",
-"tested": null
+"tested": null,
+"examples": [],
+"gallery": "https://gamma.app/templates"
 },
 {
 "id": "granola",
@@ -2358,7 +2482,9 @@ window.EZ_TOOLS2 = {
 "tryIf": "you want easy notes and always announce your AI notetaker.",
 "skipIf": "you work in law, health, HR or with sensitive recordings.",
 "laterNote": "",
-"tested": null
+"tested": null,
+"examples": [],
+"gallery": "https://www.granola.ai/"
 },
 {
 "id": "otter",
@@ -2452,7 +2578,9 @@ window.EZ_TOOLS2 = {
 "tryIf": "you need exact transcripts and 300 free minutes covers you.",
 "skipIf": "you only want short action items; Fathom's free plan is bigger.",
 "laterNote": "",
-"tested": null
+"tested": null,
+"examples": [],
+"gallery": "https://otter.ai/"
 },
 {
 "id": "fathom",
@@ -2535,7 +2663,9 @@ window.EZ_TOOLS2 = {
 "tryIf": "you want free meeting notes today.",
 "skipIf": "you meet mostly in person or can't have a bot on client calls.",
 "laterNote": "",
-"tested": null
+"tested": null,
+"examples": [],
+"gallery": "https://fathom.video/"
 },
 {
 "id": "elevenlabs",
@@ -2625,7 +2755,34 @@ window.EZ_TOOLS2 = {
 "tryIf": "you need a voiceover and don't want to record yourself.",
 "skipIf": "you'd clone anyone but yourself without written permission.",
 "laterNote": "",
-"tested": null
+"tested": null,
+"examples": [
+{
+"src": "img/elevenlabs/1.wav",
+"kind": "audio",
+"alt": "AI voice switching playfully between accents, whispering and laughing",
+"tool": "ElevenLabs v3 text-to-speech",
+"prompt": "Check this out... In just a sec, I'm gonna speak with a different accent... (AUSTRALIAN ACCENT) ... (FRENCH ACCENT) My love... eez like a red, red rose.",
+"license": "Public domain (PD-algorithm)",
+"licenseUrl": "https://commons.wikimedia.org/wiki/Template:PD-algorithm",
+"author": "ElevenLabs (uploaded by Sam Sklar Eleven)",
+"source": "https://commons.wikimedia.org/wiki/File:ElevenLabs_v3_Mark_Accents.wav",
+"excerpt": false
+},
+{
+"src": "img/elevenlabs/2.ogg",
+"kind": "audio",
+"alt": "AI voice reading a Wikipedia history article aloud",
+"tool": "ElevenLabs Text-to-Speech",
+"prompt": "",
+"license": "Public domain (PD-algorithm)",
+"licenseUrl": "https://commons.wikimedia.org/wiki/Template:PD-algorithm",
+"author": "ElevenLabs Text-to-Speech (uploaded by Criswondersalot)",
+"source": "https://commons.wikimedia.org/wiki/File:En-History_of_Corpus_Christi,_Texas.ogg",
+"excerpt": false
+}
+],
+"gallery": "https://elevenlabs.io/voice-library"
 },
 {
 "id": "suno",
@@ -2715,7 +2872,34 @@ window.EZ_TOOLS2 = {
 "tryIf": "you want a birthday song or a jingle for fun.",
 "skipIf": "you need music you fully own for a big commercial project.",
 "laterNote": "",
-"tested": null
+"tested": null,
+"examples": [
+{
+"src": "img/suno/1.oga",
+"kind": "audio",
+"alt": "Upbeat J-pop rock song with nonsense lyrics made in Suno",
+"tool": "Suno",
+"prompt": "",
+"license": "Public domain (PD-algorithm)",
+"licenseUrl": "https://commons.wikimedia.org/wiki/Template:PD-algorithm",
+"author": "Suno AI; prompted by Two Scuffed",
+"source": "https://commons.wikimedia.org/wiki/File:Two_Scuffed_-_COW_BOP_(Suno_AI).oga",
+"excerpt": false
+},
+{
+"src": "img/suno/2.mp3",
+"kind": "audio",
+"alt": "AI-generated version of the song Inevitability made with Suno",
+"tool": "Suno",
+"prompt": "",
+"license": "CC BY-SA 4.0",
+"licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+"author": "Виктор Аргонов (Victor Argonov)",
+"source": "https://commons.wikimedia.org/wiki/File:Inevitability--suno-ai-1.mp3",
+"excerpt": false
+}
+],
+"gallery": "https://suno.com/explore"
 },
 {
 "id": "zapier",
@@ -2804,7 +2988,22 @@ window.EZ_TOOLS2 = {
 "tryIf": "you have one clear repeat task between two popular apps.",
 "skipIf": "you'd run thousands of tasks a month or need deep custom logic.",
 "laterNote": "",
-"tested": null
+"tested": null,
+"examples": [
+{
+"src": "img/zapier/1.jpg",
+"kind": "image",
+"alt": "Zapier editor: a webhook trigger creates an Airtable record",
+"tool": "Zapier (Zap editor: Webhooks to Airtable)",
+"prompt": "",
+"license": "CC BY 2.0",
+"licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+"author": "Tim Wilson",
+"source": "https://www.flickr.com/photos/70816538@N00/34481535912",
+"excerpt": false
+}
+],
+"gallery": "https://zapier.com/templates"
 },
 {
 "id": "n8n",
@@ -2890,7 +3089,9 @@ window.EZ_TOOLS2 = {
 "tryIf": "you outgrew Zapier's price or you enjoy tinkering.",
 "skipIf": "this is your first automation.",
 "laterNote": "",
-"tested": null
+"tested": null,
+"examples": [],
+"gallery": "https://n8n.io/workflows/"
 },
 {
 "id": "manus",
@@ -2968,7 +3169,9 @@ window.EZ_TOOLS2 = {
 "tryIf": "you want to see what an AI agent can do, on free credits only.",
 "skipIf": "you're on a tight budget or need predictable costs.",
 "laterNote": "",
-"tested": null
+"tested": null,
+"examples": [],
+"gallery": "https://manus.im/"
 }
 ]
 };
