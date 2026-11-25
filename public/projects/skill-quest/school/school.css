@@ -163,3 +163,8 @@ details.more summary{cursor:pointer;font-weight:600;min-height:28px}
 @media (max-width:440px){.chip.give{padding:6px 10px}}
 .logo{white-space:nowrap}
 @media (max-width:440px){.chip.give .gt{display:none}.chip.give{min-width:38px;justify-content:center}}
+/* Real photo at the top of a page, with its credit (AI Made EZ, 24 Nov 2026) */
+.ez-photo{margin:6px 0 20px}
+.ez-photo img{display:block;width:100%;height:auto;aspect-ratio:16/9;max-height:360px;object-fit:cover;border-radius:16px;background:var(--track)}
+.ez-photo figcaption{margin-top:6px;font-size:.75rem;color:var(--muted)}
+.ez-photo figcaption a{color:inherit}
