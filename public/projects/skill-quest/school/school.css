@@ -168,3 +168,18 @@ details.more summary{cursor:pointer;font-weight:600;min-height:28px}
 .ez-photo img{display:block;width:100%;height:auto;aspect-ratio:16/9;max-height:360px;object-fit:cover;border-radius:16px;background:var(--track)}
 .ez-photo figcaption{margin-top:6px;font-size:.75rem;color:var(--muted)}
 .ez-photo figcaption a{color:inherit}
+/* Level switch on the two course pages (24 Nov 2026) */
+.lvl{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 0 16px}
+.lvl a{display:block;padding:10px 12px;border:2px solid var(--line2);border-radius:12px;text-decoration:none;color:var(--ink);background:var(--card);line-height:1.2}
+.lvl a b{display:block;font:800 1.02em/1.15 var(--display);letter-spacing:-.01em}
+.lvl a span{display:block;font-size:.8em;color:var(--muted);margin-top:2px}
+.lvl a[aria-current="page"]{border-color:var(--ink);background:var(--ink);color:#fff}
+.lvl a[aria-current="page"] span{color:#d8d4cc}
+.habits.short li span{display:none}
+.more-courses{margin-top:14px;border:1px solid var(--line2);border-radius:12px;background:var(--card);padding:4px 16px}
+.more-courses summary{cursor:pointer;font-weight:700;min-height:44px;display:flex;align-items:center}
+.habits.short{gap:0;grid-template-columns:1fr}
+.habits.short li{display:flex;flex-direction:column;align-items:flex-start;gap:2px;border:0;border-bottom:1px solid var(--line);border-radius:0;background:none;padding:12px 0 12px 42px}
+.habits.short li::before{left:0;top:11px;width:28px;height:28px;font-size:14px}
+.habits.short li b{font-size:1.02em;display:inline}
+.habits.short li a{font-size:.85em;margin:0}
