@@ -7,6 +7,7 @@
   var KEY = CFG.key || "smez-builders-v1";
   var LEVEL = CFG.level || 2, NAME = CFG.name || "Builder’s Kitchen", GLOSS = CFG.glossary || "glossary.html", CHAL = CFG.challenge === undefined ? "challenge.html" : CFG.challenge;
   function lvl(w) { return w[6] || 2; }
+  var NEXTLV = CFG.nextLevel || (LEVEL === 2 ? ["../level-3/", "Start Level 3: Claude at work"] : null);
   var TRACK = CFG.track || [
     { n: 1, id: "b1", stamp: "Kitchen", short: "The kitchen", name: "How AI kitchens work", href: "lesson-1.html", use: "someone says “we hit the token limit”" },
     { n: 2, id: "b2", stamp: "API", short: "Order window", name: "The order window (API)", href: "lesson-2.html", use: "a vendor says “we just call the API”" },
@@ -243,6 +244,7 @@ function rec(t, ok) { if (t && window.BKM) window.BKM.record(t, ok); }
           (nxt ? '<p class="small" style="text-align:center">' + (CHAL ? "Done for today? Tomorrow: a 2-minute review, then Lesson " : "Done for today? Next time: Lesson ") + nxt.n + ".</p>" : "") +
           '<div class="btns"><button class="btn" id="save" type="button">' + esc(L.cardLabel || "Copy my card") + "</button>" +
           (nxt ? '<a class="btn ghost" href="' + nxt.href + '">Next lesson →</a>' : "") +
+          (all && NEXTLV ? '<a class="btn" href="' + NEXTLV[0] + '">' + esc(NEXTLV[1]) + " →</a>" : "") +
           '<a class="btn ghost" href="./">My passport</a><button class="btn ghost" id="send" type="button">Send this lesson</button>' + (CHAL ? '<button class="btn ghost" id="remind" type="button">Remind me tomorrow</button>' : "") + '</div>' +
           (L.real ? '<p class="small">Go deeper: <a href="' + L.real[1] + '" target="_blank" rel="noopener">' + esc(L.real[0]) + "</a> (Anthropic’s own course).</p>" : "") + "</section>";
         window.scrollTo(0, 0);

@@ -1,6 +1,6 @@
 /* AI Made EZ · Level 4 · Build with Claude. Hands-on: the real fields, the real decisions. Kitchen frame: open your own restaurant. */
 window.BK_CONFIG = {
-  level: 4, key: "smez-level-4-v1", name: "Build with Claude", glossary: "../kitchen/glossary.html", challenge: "challenge.html",
+  level: 4, key: "smez-level-4-v1", name: "Build with Claude", glossary: "../kitchen/glossary.html", challenge: "challenge.html", nextLevel: ["../level-5/", "Start Level 5: Design AI systems"],
   twins: [["tool_use block", "tool_result block"], ["Tool call", "tool_use block"], ["Server tool", "Tool Runner"], ["Strict tool use", "JSON Schema"], ["output_config", "JSON Schema"], ["Embeddings", "Voyage AI"], ["BM25", "Reranker"], ["Reranker", "Contextual retrieval"], ["Files API", "Document block"], ["Model routing", "Fast mode"], ["Tool use", "tool_use block"], ["Tool result", "tool_result block"], ["Prompt caching", "cache_control"], ["Cache hit", "Cache TTL"], ["Exponential backoff", "retry-after"], ["Grader", "Code grader"], ["LLM-as-judge", "Pairwise comparison"]],
   doneLine: "You can build a small Claude app and talk to developers as an equal.",
   track: [

@@ -86,7 +86,7 @@ document.addEventListener("DOMContentLoaded", function () {
   var nextL = T.find(function (l) { return !done[l.id]; });
   document.getElementById("cta").innerHTML = nextL
     ? '<a class="btn" href="' + nextL.href + '">' + (n ? "Next: Lesson " : "Start Lesson ") + nextL.n + ", " + nextL.name + "</a>"
-    : '<a class="btn ghost" href="lesson-10.html">Redo graduation</a>';
+    : '<a class="btn" href="../level-3/">Start Level 3: Claude at work</a><a class="btn ghost" href="lesson-10.html">Redo graduation</a>';
   var TT = BK.taught(), KN = window.BKM ? BKM.knownCount(TT) : 0, DU = window.BKM ? BKM.due(BK.pool()).length : 0;
   var ST = BK.pool().length;
   document.getElementById("wk").innerHTML = (ST ? "<b>" + (KN ? "You know " + KN + (KN === 1 ? " word" : " words") + " for good" : ST + " words started") + ".</b> " + (KN ? "" : "Get each right on 2 different days to lock it in. ") : "") + (DU ? '<a class="btn ghost" href="challenge.html?review=1">Practice ' + Math.min(DU, 15) + (DU === 1 ? " word" : " words") + (Math.min(DU, 15) <= 8 ? " (2 min)" : " (4 min)") + "</a>" : (ST ? "Nothing due today. " : "")) + (ST && !DU ? '<a class="btn ghost" href="challenge.html?n=5">1-minute practice</a>' : "") + (window.BKM && BKM.streak() > 1 ? '<span class="streak">' + BKM.streak() + " days in a row. Nice.</span>" : "");

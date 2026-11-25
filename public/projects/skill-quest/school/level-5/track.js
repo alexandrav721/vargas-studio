@@ -1,6 +1,6 @@
 /* AI Made EZ · Level 5 · Design AI systems (run a restaurant group). */
 window.BK_CONFIG = {
-  level: 5, key: "smez-level-5-v1", name: "Design AI systems", glossary: "../kitchen/glossary.html", challenge: "challenge.html",
+  level: 5, key: "smez-level-5-v1", name: "Design AI systems", glossary: "../kitchen/glossary.html", challenge: "challenge.html", nextLevel: ["../../use-ai/", "Next: Use AI well"],
   twins: [["Permission policy", "Approval gate"], ["Observability", "Trace"], ["Trace", "Audit log"], ["Multi-agent system", "Lead agent"], ["Delegation", "Orchestrator-workers"], ["Multi-agent system", "Orchestrator-workers"], ["Context isolation", "Context engineering"], ["Context rot", "Context editing"], ["Memory tool", "Structured notes"], ["Session", "Session budget"], ["Session", "Sandbox"], ["Agent harness", "Managed Agents"], ["OAuth", "Scopes"], ["stdio", "Streamable HTTP"], ["Transport", "Streamable HTTP"], ["Responsible Scaling Policy", "AI Safety Level"], ["Least privilege", "Network allowlist"], ["Cost model", "Cost multiplier"], ["Failure mode", "Blast radius"], ["Approval matrix", "Approval gate"], ["Approval matrix", "Permission policy"], ["Parallelization", "Multi-agent system"]],
   doneLine: "You can draw the plan for a real AI system and defend every choice.",
   track: [
