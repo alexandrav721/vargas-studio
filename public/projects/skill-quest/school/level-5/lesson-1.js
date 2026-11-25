@@ -9,7 +9,7 @@
       ["A free chef is an agent.", "Claude picks its own steps. Worth it when nobody can predict them."],
       ["Every cook is an augmented LLM.", "One Claude call plus tools, search and memory. Everything else is built from it."]
     ],
-    guess: { q: "A bot sorts emails into billing, tech or sales, then answers each its own way. What is that?", opts: [["Routing, a fixed workflow", true], ["An agent", false], ["A brigade of agents", false]], reveal: "Routing: sort first, then send each kind to its own prompt. Your code sets the steps, so it’s a workflow." },
+    guess: { q: "A bot sorts emails into billing, tech or sales, then answers each its own way. What is that?", opts: [["Routing, a fixed workflow", true], ["An agent", false], ["Several agents working together", false]], reveal: "Routing: sort first, then send each kind to its own prompt. Your code sets the steps, so it’s a workflow." },
     startLabel: "See the menus",
     example: {
       title: "Five set menus from Anthropic’s guide.",

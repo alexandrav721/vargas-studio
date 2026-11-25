@@ -30,7 +30,7 @@
       state: { job: "move 500 help articles to a new site", len: "a few hours" },
       controls: function (s, esc) {
         function row(k, list) { return '<div class="fridge">' + list.map(function (v) { return '<button type="button" class="chip" data-set="' + k + '" data-v="' + esc(v) + '" aria-pressed="' + (s[k] === v) + '">' + esc(v) + "</button>"; }).join("") + "</div>"; }
-        return '<p class="label">The long job</p>' + row("job", ["move 500 help articles to a new site", "a week-long research project", "clean up a big codebase", "sort a year of support tickets"]) +
+        return '<p class="label">The long job</p>' + row("job", ["move 500 help articles to a new site", "a week-long research project", "clean up a big codebase", "sort a year of support tickets", "a month of donor emails to sort"]) +
           '<p class="label">How long it runs</p>' + row("len", ["a few hours", "all day", "several days"]);
       },
       head: "ORDER #E05", right: "shift plan", foot: "Paste it into Claude, or open it there",
@@ -43,7 +43,7 @@
           "Mark API features vs. good habits. Unsure? Say so.";
       },
       claude: "Open in Claude", done: "Done →",
-      after: "Save the note templates where the job runs. Ask your developer to start the first session by reading them."
+      after: "No developer? Use the notes yourself. Save the progress template as progress.md, then start each long Cowork or Claude Code task with “Read progress.md first, and update it before you stop.”"
     },
     game: {
       type: "tapall", title: "Which moves keep the counter clean?", lead: "Tap the {n} that help.",

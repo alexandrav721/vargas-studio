@@ -14,6 +14,7 @@
     example: {
       title: "A booking outlet for every location.",
       html:
+        '<p class="small"><b>Own MCP server?</b> Most teams use existing connectors first. Just planning a pilot? Skim the wiring.</p>' +
         '<p class="label">Server design <span class="sample">Sample</span></p><div class="ticket"><div class="th"><span>MCP SERVER</span><span>booking</span></div>' +
         'transport: Streamable HTTP (web)<br>sign-in: OAuth, scope “tables:read”<br>' +
         'tools: booking_search_tables (read)<br>booking_create (writes)<br>' +
@@ -25,7 +26,7 @@
     },
     build: {
       title: "Your turn. Spec an outlet.",
-      lead: "Pick a system and who plugs in. Claude drafts the MCP spec your developer builds from.",
+      lead: "Pick a system and who plugs in. Claude first says if you need your own server at all. Most pilots use ready-made connectors.",
       state: { sys: "our booking system", who: "just my team", out: "Plan only" },
       controls: function (s, esc) {
         function row(k, list) { return '<div class="fridge">' + list.map(function (v) { return '<button type="button" class="chip" data-set="' + k + '" data-v="' + esc(v) + '" aria-pressed="' + (s[k] === v) + '">' + esc(v) + "</button>"; }).join("") + "</div>"; }
@@ -46,7 +47,7 @@
           "Unsure a feature exists? Say so; name the page (modelcontextprotocol.io).";
       },
       claude: "Open in Claude", done: "Done →",
-      after: "Send the spec to whoever would build it. Ask them to circle anything they’d change. Picked build? That part runs in Claude Code, on a computer, with a paid Claude plan or API credit."
+      after: "No developer? Ask Claude which ready-made connector already reaches this system, and try it first. Otherwise, send the spec to your builder to mark up. Picked build? That part runs in Claude Code, on a computer, with a paid Claude plan or API credit."
     },
     game: {
       type: "pick", title: "Claude keeps calling the wrong “search” tool. What do you fix first?",

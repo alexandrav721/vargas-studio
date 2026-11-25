@@ -44,7 +44,7 @@
           "Unsure a feature exists? Say so; name the page (platform.claude.com/docs).";
       },
       claude: "Open in Claude", done: "Done →",
-      after: "Save the plan next to the job’s notes. Before real work runs, check the spend cap and the stop with your developer. The test run needs Claude Code on a computer."
+      after: "Save the plan next to the job’s notes. Before real work runs, check the spend cap and the stop with your developer. No developer? Hand the job to Cowork, the desktop app’s task mode (paid plans; Level 3, lesson 6). Pick Manual so it asks before acting."
     },
     game: {
       type: "tapall", title: "Which jobs belong to the harness, not the model?", lead: "Tap the {n} the harness does.",
@@ -60,7 +60,7 @@
     breaks: {
       title: "A system is only as safe as its settings.",
       lines: [
-        ["Managed Agents’ defaults are wide open.", "Pick no tools and all eight built-ins turn on: commands, files, web. None ask."],
+        ["Managed Agents’ defaults are wide open.", "Add the built-in toolset bare: all eight tools turn on, web too. None ask."],
         ["Beta means change.", "Each session stays on one agent version. Re-test before moving to a newer one."]
       ],
       where: "A kitchen’s walls are fixed. A sandbox has walls too, but you choose where the doors go."

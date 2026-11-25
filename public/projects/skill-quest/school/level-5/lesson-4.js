@@ -41,7 +41,7 @@
           "Recommend the smallest team that works. Unsure of a number? Say so.";
       },
       claude: "Open in Claude", done: "Done →",
-      after: "Try the smallest team first, on two or three items. Grow it only if the lead’s checks pass."
+      after: "Try the smallest team first, on two or three items. No developer? Run a brigade by hand: three chats, one piece each, then paste the three summaries into a fourth to combine."
     },
     game: {
       type: "pick", title: "Two helpers report opposite facts. Who settles it?",

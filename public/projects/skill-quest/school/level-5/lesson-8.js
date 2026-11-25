@@ -3,7 +3,7 @@
   var L = {
     n: 8, id: "e8", mins: 7, title: "Draw the floor plan.", stamp: "Plan",
     seen: ["Architecture", "Start simple"], terms: ["Design doc", "Trade-off", "Cost model", "Failure mode", "Blast radius", "Approval matrix"],
-    teaser: ["FLOOR PLAN", "the capstone", "A new location opens Monday.<br>Each model has its own price (Level 4 covers this).<br>Now show the cost, the risks, the keys.", "Six words. Seven minutes."],
+    teaser: ["FLOOR PLAN", "the capstone", "A new location opens Monday.<br>Level 4 priced the chefs.<br>Now show the cost, the risks, the keys.", "Six words. Seven minutes."],
     lines: [
       ["Sketching is done. Now defend it.", "Level 2 listed the pieces. A design doc adds trade-offs, cost, failures and approvals."],
       ["Every choice is a trade-off.", "Write down what you gave up: speed, cost, control or simplicity."],
