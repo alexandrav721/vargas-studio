@@ -49,3 +49,8 @@
   };
   document.addEventListener("DOMContentLoaded", big);
 })();
+/* Level switch: show the current level in view on small screens (24 Nov 2026) */
+document.addEventListener("DOMContentLoaded", function () {
+  var cur = document.querySelector(".lvl5 [aria-current]");
+  if (cur && cur.parentNode.scrollWidth > cur.parentNode.clientWidth) cur.parentNode.scrollLeft = Math.max(0, cur.offsetLeft - cur.parentNode.offsetLeft - 16);
+});
