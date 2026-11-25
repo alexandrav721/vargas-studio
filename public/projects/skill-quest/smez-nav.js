@@ -6,7 +6,7 @@
   "use strict";
   var me = document.currentScript, section = me && me.dataset.section || "";
   var BASE = "/projects/skill-quest/";
-  var LINKS = [["start", "Start here", BASE + "start/"], ["school", "Lessons", BASE + "school/"], ["words", "Plain words", BASE + "school/kitchen/glossary.html"], ["use", "Use AI well", BASE + "use-ai/"], ["tools", "Tools", BASE + "tools/"], ["templates", "Templates", BASE + "cheat-sheets/"], ["kit", "Kit maker", BASE + "build-kit/"], ["keepup", "Keep up", BASE + "keep-up/"], ["about", "About", BASE + "about/"]];
+  var LINKS = [["start", "Start here", BASE + "start/"], ["school", "Lessons", BASE + "school/"], ["words", "Plain words", BASE + "school/kitchen/glossary.html"], ["use", "Use AI well", BASE + "use-ai/"], ["tools", "Tools", BASE + "tools/"], ["kits", "Kits", BASE + "kits/"], ["templates", "Templates", BASE + "cheat-sheets/"], ["kit", "App planner", BASE + "build-kit/"], ["keepup", "Keep up", BASE + "keep-up/"], ["about", "About", BASE + "about/"]];
   function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
   function css() { if (document.getElementById("smez-nav-css")) return; var l = document.createElement("link"); l.id = "smez-nav-css"; l.rel = "stylesheet"; l.href = BASE + "smez-nav.css"; document.head.appendChild(l); }
 
@@ -24,7 +24,10 @@
     return e + (a.length - i) + (b.length - j) <= 1;
   }
   function search(q) {
-    var words = norm(q).split(" ").filter(function (w) { return w.length > 1; });
+    var STOP = " a an the to of for and or in on with my me i how do does can what is it make get use using want need".split(" ");
+    var raw = norm(q).split(" ").filter(function (w) { return w.length > 1; });
+    var words = raw.filter(function (w) { return STOP.indexOf(w) < 0; });
+    if (!words.length) words = raw;
     if (!words.length) return [];
     return (window.SMEZ_INDEX || []).map(function (it) {
       var title = norm(it.t), kw = norm(it.k + " " + it.y), line = norm(it.d), score = 0, all = true;
@@ -35,7 +38,9 @@
         else if ((title + " " + kw).split(" ").some(function (t) { return near(w, t) || (w.length >= 4 && t.indexOf(w.slice(0, -1)) === 0); })) s = 1;
         if (!s) all = false; score += s;
       });
-      return { it: it, score: all ? score + (it.y === "Tool" || it.y === "Course" ? 0.5 : 0) : 0 };
+      var hit = words.length > 1 && !all ? score * 0.5 : score; /* partial match still shows, ranked lower */
+      if (/behind/i.test(it.y || "") || /behind/i.test(it.g || "")) hit *= 0.3;
+      return { it: it, score: (all ? score : hit) + (it.y === "Tool" || it.y === "Course" ? 0.5 : 0) };
     }).filter(function (x) { return x.score > 0; }).sort(function (a, b) { return b.score - a.score; }).slice(0, 12).map(function (x) { return x.it; });
   }
   function resultsHTML(list) {
@@ -85,7 +90,7 @@
       panel.className = "smez-search"; panel.hidden = true;
       panel.setAttribute("role", "dialog"); panel.setAttribute("aria-modal", "true"); panel.setAttribute("aria-label", "Search AI Made EZ");
       panel.innerHTML = '<div class="smez-panel"><div class="smez-box"><input type="search" id="smez-q" placeholder="Search skills, lessons, tools…" aria-label="Search AI Made EZ" autocomplete="off"><button type="button" data-close>Close</button></div>' +
-        '<p class="smez-hint" id="smez-hint">Popular right now</p><ul class="smez-res" id="smez-res"></ul><div class="smez-empty" id="smez-empty" hidden></div></div>';
+        '<p class="smez-hint" id="smez-hint">Good places to start</p><ul class="smez-res" id="smez-res"></ul><div class="smez-empty" id="smez-empty" hidden></div></div>';
       document.body.appendChild(panel);
       panel.addEventListener("click", function (e) { if (e.target === panel || e.target.closest("[data-close]")) closeSearch(); });
       panel.addEventListener("keydown", function (e) { if (e.key === "Escape") closeSearch(); });

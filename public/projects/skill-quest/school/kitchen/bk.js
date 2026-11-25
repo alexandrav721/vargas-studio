@@ -25,6 +25,7 @@
   function write(v) { try { localStorage.setItem(KEY, JSON.stringify(v)); } catch (e) {} }
   function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
   function play(n, x) { if (window.SQSound) window.SQSound.play(n, x); }
+  var SIGN = "\n\nFrom AI Made EZ (free): https://vargas-studio.pages.dev/projects/skill-quest/start/?from=copy";
   function copy(text, done) {
     (navigator.clipboard ? navigator.clipboard.writeText(text) : Promise.reject()).then(function () { School.toast(done || "Copied"); }, function () { School.toast("Select the text and copy it"); });
   }
@@ -145,7 +146,7 @@ function rec(t, ok) { if (t && window.BKM) window.BKM.record(t, ok); }
           if (B.vendor && !state.mode) { state.mode = "make"; state.aud = "business"; }
           var VQ = window.BK_VENDOR && window.BK_VENDOR[L.n];
           var vqList = function (s) { return VQ ? VQ.q.concat(VQ[s.aud] ? [VQ[s.aud]] : [], VQ[s.aud + "2"] ? [VQ[s.aud + "2"]] : []) : []; };
-          var vqText = function (s) { return "Questions for the vendor (" + B.vendor[0] + ")\n\n" + vqList(s).map(function (x, i) { return (i + 1) + ". " + x[0] + "\n   Good answer: " + x[1] + "\n   Red flag: " + x[2]; }).join("\n") + "\n\nFrom AI Made EZ, Builder’s Kitchen"; };
+          var vqText = function (s) { return "Questions for the vendor (" + B.vendor[0] + ")\n\n" + vqList(s).map(function (x, i) { return (i + 1) + ". " + x[0] + "\n   Good answer: " + x[1] + "\n   Red flag: " + x[2]; }).join("\n") + SIGN; };
           var T = function (s) {
             if (s.mode !== "vendor") return B.text(s);
             return "A vendor is pitching me a product that uses " + B.vendor[0] + ". I don't code.\n" +
@@ -243,13 +244,22 @@ function rec(t, ok) { if (t && window.BKM) window.BKM.record(t, ok); }
           "<p><b>You leave with:</b> " + L.keep + "</p></div>" +
           (nxt ? '<p class="small" style="text-align:center">' + (CHAL ? "Done for today? Tomorrow: a 2-minute review, then Lesson " : "Done for today? Next time: Lesson ") + nxt.n + ".</p>" : "") +
           '<div class="btns"><button class="btn" id="save" type="button">' + esc(L.cardLabel || "Copy my card") + "</button>" +
-          (nxt ? '<a class="btn ghost" href="' + nxt.href + '">Next lesson →</a>' : "") +
+          (nxt ? '<a class="btn ghost" href="' + nxt.href + '">Next: Lesson ' + nxt.n + ' →</a>' : "") + '<button class="btn ghost" id="stampshare" type="button">Share my stamp</button>' +
           (all && NEXTLV ? '<a class="btn" href="' + NEXTLV[0] + '">' + esc(NEXTLV[1]) + " →</a>" : "") +
           '<a class="btn ghost" href="./">My passport</a><button class="btn ghost" id="send" type="button">Send this lesson</button>' + (CHAL ? '<button class="btn ghost" id="remind" type="button">Remind me tomorrow</button>' : "") + '</div>' +
           (L.real ? '<p class="small">Go deeper: <a href="' + L.real[1] + '" target="_blank" rel="noopener">' + esc(L.real[0]) + "</a> (Anthropic’s own course).</p>" : "") + "</section>";
         window.scrollTo(0, 0);
         setTimeout(function () { play(all ? "win" : "stamp"); }, 260);
-        document.getElementById("save").onclick = function () { copy(L.card, "Card copied"); };
+        document.getElementById("save").onclick = function () { copy(L.card + SIGN, "Card copied"); };
+        /* the stamp card picture (stampcard.js, loaded on the first tap) */
+        document.getElementById("stampshare").onclick = function () {
+          var o = { title: L.title, label: L.stamp, level: LEVEL, lesson: L.n, url: location.href.split(/[?#]/)[0] + "?from=stamp" };
+          play("share");
+          if (window.EZStamp) return window.EZStamp.share(o);
+          var sc = document.createElement("script"); sc.src = "/projects/skill-quest/stampcard.js";
+          sc.onload = function () { window.EZStamp.share(o); }; sc.onerror = function () { School.toast("Could not make the picture. Try again."); };
+          document.head.appendChild(sc);
+        };
         if (CHAL) document.getElementById("remind").onclick = function () {
           /* a calendar file for tomorrow 9:00 local time; nothing leaves the device */
           var t = new Date(); t.setDate(t.getDate() + 1); t.setHours(9, 0, 0, 0);
@@ -261,7 +271,7 @@ function rec(t, ok) { if (t && window.BKM) window.BKM.record(t, ok); }
           School.toast("Open the file to add it to your calendar");
         };
         document.getElementById("send").onclick = function () {
-          var d = { title: "AI Made EZ · " + L.title, text: "A short lesson that made this make sense:", url: location.href };
+          var d = { title: "AI Made EZ · " + L.title, text: "A short lesson that made this make sense:", url: location.href.split(/[?#]/)[0] + "?from=share" };
           if (navigator.share) navigator.share(d).catch(function () {}); else copy(d.text + " " + d.url, "Link copied");
         };
       };

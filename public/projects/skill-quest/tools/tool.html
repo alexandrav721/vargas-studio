@@ -26,9 +26,10 @@
 <script>
 (function () {
   var D = window.EZ_TOOLS2, U = window.TOOLUI, esc = U.esc;
-  var id = new URLSearchParams(location.search).get("t");
+  var id = window.EZ_TOOL_ID || new URLSearchParams(location.search).get("t");
   var T = D.tools.filter(function (t) { return t.id === id; })[0];
   if (!T) { location.replace("./"); return; }
+  if (!window.EZ_TOOL_ID) { location.replace(T.id + ".html"); return; }
   document.title = T.name + " review · AI Made EZ";
   var KITS = { "google-stitch": ["first-website", "Your first website"], "lovable": ["first-app", "Your first app"], "bolt": ["first-website", "Your first website"], "zapier": ["automate-task", "Automate one boring task"] };
   var jobName = {}; D.jobs.forEach(function (j) { jobName[j[0]] = j[1]; });
@@ -65,7 +66,7 @@
   h += '<section class="sec"><p class="label">Tested by Alexandra</p>' + (X ? '<div class="tested on"><b>' + esc(X.verdict) + "</b> · " + esc(X.score) + "/5<p>" + esc(X.notes) + "</p>" + (X.img ? '<img src="' + esc(X.img) + '" alt="Screenshot from my test of ' + esc(T.name) + '">' : "") + '<p class="small2">Tested ' + esc(X.date) + "</p></div>" : '<div class="tested">Not tested by me yet. Coming as I try them.</div>') + "</section>";
   var K = KITS[T.id];
   h += '<div class="next"><b>Next</b><p>' + (K ? "Build something with it, step by step." : "See the other picks for this job.") + "</p>" +
-    (K ? '<a class="btn" href="../kits/kit.html?k=' + K[0] + '">Kit: ' + esc(K[1]) + " →</a> " : "") + '<a class="btn ghost" href="./#' + T.jobs[0] + '">Other picks</a>' +
+    (K ? '<a class="btn" href="../kits/' + K[0] + '.html">Kit: ' + esc(K[1]) + " →</a> " : "") + '<a class="btn ghost" href="./#' + T.jobs[0] + '">Other picks</a>' +
     (T.url ? ' <a class="btn ghost" href="' + esc(T.url) + '" target="_blank" rel="noopener">Official site ↗</a>' : "") + "</div>";
   document.getElementById("tool").innerHTML = h;
 })();

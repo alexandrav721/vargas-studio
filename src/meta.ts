@@ -4,7 +4,7 @@ export type Meta = { name: string; pic: string; play: string; playLabel: string;
 export const META: Record<string, Meta> = {
   nostalgia: { name: "Scrollback", pic: "/thumbs/nostalgia-website.jpg", play: "/projects/nostalgia/explore.html", playLabel: "Open Scrollback", line: "The internet and stuff of your teens." },
   "skill-quest": { name: "AI Made EZ skill tests", pic: "/thumbs/skill-quest-website.jpg", play: "/projects/skill-quest/templates/", playLabel: "See the tested skills", line: "Skills blind-tested against plain Claude. Now part of AI Made EZ." },
-  "ai-made-ez": { name: "AI Made EZ", pic: "/desk/learn-start.jpg", play: "/projects/skill-quest/start/", playLabel: "Open AI Made EZ", line: "AI is layers. Free lessons, plain words, and a Kit maker.", more: [{ href: "/projects/skill-quest/school/", label: "Level 1: Cooking with Claude" }, { href: "/projects/skill-quest/school/kitchen/", label: "Level 2: Speak AI builder" }, { href: "/projects/skill-quest/school/kitchen/glossary.html", label: "Plain words: every AI term" }, { href: "/projects/skill-quest/build-kit/", label: "Kit maker" }, { href: "/projects/skill-quest/keep-up/", label: "This week in AI" }] },
+  "ai-made-ez": { name: "AI Made EZ", pic: "/desk/learn-start.jpg", play: "/projects/skill-quest/start/", playLabel: "Open AI Made EZ", line: "AI isn’t that hard. Free lessons, kits, tool reviews and plain words.", more: [{ href: "/projects/skill-quest/school/", label: "Level 1: Cooking with Claude" }, { href: "/projects/skill-quest/school/kitchen/", label: "Level 2: Speak AI builder" }, { href: "/projects/skill-quest/school/kitchen/glossary.html", label: "Plain words: every AI term" }, { href: "/projects/skill-quest/build-kit/", label: "Kit maker" }, { href: "/projects/skill-quest/keep-up/", label: "This week in AI" }] },
   weekline: { name: "Weekline", pic: "/thumbs/weekline-v2.jpg", play: "/projects/weekline/v2/", playLabel: "Open Weekline", line: "Your best New York week, planned." },
   restitch: { name: "Restitch", pic: "/thumbs/restitch-website.jpg", play: "/restitch.html", playLabel: "Open Restitch", line: "Turn a thrift find into a flip." },
   "planner-book": { name: "Planners", pic: "/thumbs/planner-book-website.jpg", play: "/projects/planner/", playLabel: "Open the planners", line: "Printable planners that fit how you work.", extra: { href: "/projects/planner/make/", label: "New: Make yours, a planner with your name in it" } },
@@ -23,9 +23,11 @@ export const LEARN: Fresh[] = [
   { href: "/projects/skill-quest/school/level-4/", pic: "/desk/learn-l4.jpg", name: "Level 4: Build with Claude", line: "Your first app on the API" },
   { href: "/projects/skill-quest/school/level-5/", pic: "/desk/learn-l5.jpg", name: "Level 5: Design AI systems", line: "Agents, safety, the floor plan" },
   { href: "/projects/skill-quest/school/kitchen/glossary.html", pic: "/desk/learn-words.jpg", name: "Plain words", line: "Every AI term, made plain" },
+  { href: "/projects/skill-quest/kits/", pic: "/desk/learn-kits.jpg", name: "Kits", line: "Make a real thing with AI, step by step" },
+  { href: "/projects/skill-quest/tools/", pic: "/desk/learn-tools.jpg", name: "Tools", line: "Which AI tool? Real reviews, no affiliates" },
   { href: "/projects/skill-quest/cheat-sheets/", pic: "/desk/learn-templates.jpg", name: "Templates", line: "Copy, fill in, send" },
   { href: "/projects/skill-quest/use-ai/", pic: "/desk/learn-useai.jpg", name: "Use AI well", line: "8 habits and 12 tools, made easy" },
-  { href: "/projects/skill-quest/build-kit/", pic: "/desk/learn-buildkit.jpg", name: "Kit maker", line: "Plan an app so AI stops guessing" },
+  { href: "/projects/skill-quest/build-kit/", pic: "/desk/learn-buildkit.jpg", name: "App planner", line: "Plan an app so AI stops guessing" },
   { href: "/projects/skill-quest/keep-up/", pic: "/desk/learn-news.jpg", name: "This week in AI", line: "The news in plain words" },
 ];
 

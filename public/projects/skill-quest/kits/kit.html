@@ -25,9 +25,10 @@
 <script>
 (function () {
   var D = window.EZ_K, U = window.KITUI, esc = U.esc, hl = U.hl, COPY = U.COPY;
-  var id = new URLSearchParams(location.search).get("k");
+  var id = window.EZ_KIT_ID || new URLSearchParams(location.search).get("k");
   var i = D.kits.findIndex(function (k) { return k.id === id; });
   if (i < 0) { location.replace("index.html"); return; }
+  if (!window.EZ_KIT_ID) { location.replace(D.kits[i].id + ".html"); return; }
   var K = D.kits[i], next = D.kits[i + 1], P = K.proof;
   document.title = K.name + " · AI Made EZ kit";
 
@@ -55,6 +56,7 @@
     var body = "<p>" + esc(s.d) + "</p>";
     if (s.p) { COPY["s" + j] = s.p; body += '<pre class="tpl">' + hl(s.p) + '</pre><div class="copyrow"><button class="copy" type="button" data-copy="s' + j + '">Copy</button></div>'; }
     body += '<p class="ok"><b>Check:</b> ' + esc(s.ok) + "</p>";
+    body += '<label class="tick"><input type="checkbox" data-step="' + j + '"> I did this step</label>';
     return '<details class="step"' + (j === 0 ? " open" : "") + "><summary>" + esc(s.t) + '</summary><div class="body">' + body + "</div></details>";
   }).join("") + "</div>";
   COPY.ex = K.example.prompt;
@@ -74,16 +76,45 @@
   h += '<section class="sec"><p class="label">Stuck?</p><h2>Where people get stuck.</h2><div class="stuck">' + K.stuck.map(function (s) { return "<details><summary>" + esc(s[0]) + "</summary><p>" + esc(s[1]) + "</p></details>"; }).join("") + "</div></section>";
 
   /* 7. done + email + next */
-  h += '<div class="next"><b>Done?</b><p>' + esc(K.done) + "</p>" + (next ? '<a class="btn" href="kit.html?k=' + next.id + '">Next kit: ' + esc(next.name) + " →</a>" : '<a class="btn" href="index.html">All kits →</a>') + "</div>";
+  h += '<div class="next" id="finish"><b>Done?</b><p>' + esc(K.done) + "</p>" +
+    '<div class="donebox"><input type="url" id="mylink" placeholder="Paste your finished link (optional)" aria-label="Your finished link"><button class="btn" type="button" id="markdone">Mark this kit done ✓</button></div>' +
+    '<p class="small2" id="donemsg" aria-live="polite"></p>' + (next ? '<a class="btn" href="' + next.id + '.html">Next kit: ' + esc(next.name) + " →</a>" : '<a class="btn" href="index.html">All kits →</a>') + "</div>";
   h += '<p style="margin-top:14px"><a class="btn ghost" href="../summaries/kit-' + K.id + '.html">Printable version (PDF)</a></p>';
   h += U.mailBox(K.id);
 
   document.getElementById("kit").innerHTML = h;
   U.wireMail(K.id);
+  /* progress, saved on this phone only */
+  var KEY = "ez-kits-v1", st = {};
+  try { st = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch (e) { st = {}; }
+  var me = st[K.id] = st[K.id] || { steps: [], done: false, link: "" };
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(st)); } catch (e) {} }
+  document.querySelectorAll("[data-step]").forEach(function (c) {
+    c.checked = me.steps.indexOf(+c.dataset.step) > -1;
+    c.addEventListener("change", function () { var n = +c.dataset.step; me.steps = me.steps.filter(function (x) { return x !== n; }); if (c.checked) me.steps.push(n); save(); });
+  });
+  var msg = document.getElementById("donemsg"), link = document.getElementById("mylink");
+  if (me.link) link.value = me.link;
+  function showDone() {
+    var n = D.kits.filter(function (k) { return st[k.id] && st[k.id].done; }).length;
+    msg.innerHTML = "✓ Done. That’s " + n + " of " + D.kits.length + " kits. " + '<button class="btn ghost" type="button" id="sharekit">Share what I made</button>';
+    document.getElementById("sharekit").onclick = function () {
+      var url = location.origin + location.pathname + "?from=kit";
+      var text = "I made this with a free AI kit: " + K.name + (me.link ? " → " + me.link : "") + "\nTry it: " + url;
+      if (window.EZStamp) return EZStamp.share({ title: K.name, level: "Kit", lesson: K.n, url: url, text: text });
+      if (navigator.share) navigator.share({ title: K.name, text: text, url: url }).catch(function () {});
+      else if (navigator.clipboard) navigator.clipboard.writeText(text).then(function () { msg.insertAdjacentHTML("beforeend", " Copied."); });
+    };
+  }
+  if (me.done) showDone();
+  document.getElementById("markdone").onclick = function () {
+    me.done = true; me.link = (link.value || "").trim(); save(); showDone();
+    if (!window.EZStamp) { var sc = document.createElement("script"); sc.src = "/projects/skill-quest/stampcard.js"; document.head.appendChild(sc); }
+  };
 })();
 </script>
 <script src="../school/school.js" defer></script>
 <script src="/projects/skill-quest/smez-index.js" defer></script>
-<script src="/projects/skill-quest/smez-nav.js" data-section="templates" defer></script>
+<script src="/projects/skill-quest/smez-nav.js" data-section="kits" defer></script>
 </body>
 </html>
