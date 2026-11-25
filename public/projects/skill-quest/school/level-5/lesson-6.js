@@ -17,7 +17,7 @@
         '<p class="label">Three legs <span class="sample">Simplified</span></p><div class="fridge"><span class="tag">Private data</span><span class="tag">Untrusted content</span><span class="tag">A way to send out</span></div>' +
         '<p class="small">Developer Simon Willison named it in June 2025. With all three, one poisoned page can leak your data. Remove any leg.</p>' +
         '<p class="label" style="margin-top:14px">Locks Anthropic recommends for Managed Agents</p><div class="ticket"><div class="th"><span>LOCKS</span><span>5 settings</span></div>' +
-        'Network: limited, only the hosts it needs<br>Secrets: in a vault, sandbox sees a placeholder<br>Tools: built-ins on, web search and fetch off till needed<br>Can’t undo it? Always ask first<br>A spend cap on every session' +
+        'Network: only the websites it needs<br>Keys: in a vault; the agent sees a placeholder<br>Tools: web search and page reading off till needed<br>Can’t undo it? Always ask first<br>A spend cap on every session' +
         '<div class="tf">From “Secure your Managed Agents deployment”</div></div>',
       more: '<p class="small">Claude Code can sandbox its Bash commands at the operating-system level, so the walls hold whatever command the model chose to run.</p><p class="small">A prompt that says “ignore bad instructions” steers. It isn’t a lock.</p>',
       next: "Your turn →"

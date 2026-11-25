@@ -19,7 +19,7 @@
         '<div class="reply"><p class="who">3 helpers, at once</p>Each reads dozens of pages at its own counter. Each sends back a short summary.</div>' +
         '<div class="reply"><p class="who">lead agent</p>Checks the 3 summaries, removes repeats, writes the report.</div>' +
         '<p class="small"><b>Delegation</b> is the handoff; <b>synthesis</b> is the combining. In Anthropic’s 2025 research system, an Opus 4 lead with Sonnet 4 helpers scored 90.2% higher than one Opus 4 agent on Anthropic’s internal research test.</p>',
-      more: '<p class="small">Put the helpers’ reading on Haiku, the cheapest model: about a fortieth of Opus’s input price (Level 4 compares prices).</p><p class="small">In Claude Code, a subagent starts fresh: it sees its brief, not your chat. (A fork is the one exception.)</p>',
+      more: '<p class="small">Put the helpers’ reading on Haiku, the cheapest model: about a fortieth of Opus’s input price (Level 4 compares prices).</p><p class="small">In Claude Code, a subagent starts fresh: it sees its brief, not your chat. (The exception is a fork, which starts as a copy of your chat.)</p>',
       next: "Your turn →"
     },
     build: {

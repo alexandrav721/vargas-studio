@@ -15,13 +15,13 @@
       title: "What head office checks.",
       html:
         '<p class="label">Every location <span class="sample">Simplified</span></p><div class="ticket"><div class="th"><span>CLIPBOARD</span><span>3 checks</span></div>' +
-        '<b>Traces</b>: each run, step by step.<br>' +
-        '<b>Audit logs</b>: who did what, when. Ask how long they’re kept.<br>' +
-        '<b>Human oversight</b>: who reviews samples and can switch it off.' +
+        'Traces: each run, step by step.<br>' +
+        'Audit logs: who did what, when. Ask how long they’re kept.<br>' +
+        'Human oversight: who reviews samples and can switch it off.' +
         '<div class="tf">Decide all three before launch</div></div>' +
         '<p class="small">Work plans (Team, Enterprise, API) don’t train on chats by default. Free, Pro and Max have a training setting.</p>' +
         '<p class="small">Anthropic’s rulebook, the <b>Responsible Scaling Policy</b> (RSP), adds safeguards as its models grow more capable. Each safeguard set is an <b>AI Safety Level</b>, like ASL-3.</p>',
-      more: '<p class="small">Even on work plans, a chat you rate with thumbs up or down may be used for training. Admins can turn that rating button off.</p><p class="small">Developers can export traces (in beta) to monitoring dashboards like Datadog. ASL-3 safeguards have been on since May 2025.</p><p class="small">Anthropic’s Enterprise course names five admin decisions: Structure and Identity, Access, Governance, Spend, Visibility.</p><p class="small">The RSP changes often (version 3.4, July 2026). Check the date on whatever you quote.</p>',
+      more: '<p class="small">Even on work plans, a chat you rate with thumbs up or down may be used for training. Admins can turn that rating button off.</p><p class="small">Developers can export traces (in beta) to monitoring dashboards like Datadog. ASL-3 safeguards have been on since May 2025.</p><p class="small">Anthropic’s Enterprise course names five admin decisions: Structure and Identity, Access, Governance, Spend, Visibility.</p><p class="small">The RSP changes often: version 3.4 took effect 8 July 2026 (anthropic.com/responsible-scaling-policy). Check the date on whatever you quote.</p>',
       next: "Your turn →"
     },
     build: {
@@ -39,7 +39,7 @@
           "1. Traces: what each run records; who sees it.\n" +
           "2. Audit logs: which actions we keep.\n" +
           "3. Oversight: who reviews samples, how often, who can stop it.\n" +
-          "4. Private data (donors): what it sees; which plan fits; does it train on chats?\n" +
+          "4. Private data: what it sees; which plan fits; does it train on chats?\n" +
           "5. Evals: real cases re-tested after each change.\n" +
           "6. An 8-item monthly checklist.\n" +
           "Flag legal questions. Unsure? Say so.";

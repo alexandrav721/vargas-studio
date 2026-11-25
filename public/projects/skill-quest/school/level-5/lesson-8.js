@@ -15,12 +15,12 @@
       title: "A floor plan: the invoice checker.",
       html:
         '<p class="label">Design doc <span class="sample">Sample</span></p><div class="ticket"><div class="th"><span>FLOOR PLAN</span><span>invoices</span></div>' +
-        '<b>Trade-off</b>: routing, not an agent. Less flexible, same steps every time.<br>' +
-        '<b>Cost model</b>: 1,000 invoices a month. Haiku sorts them all: about $0.40. Opus checks the hard 100: about $4. As a half-price overnight batch: about $2.20.<br>' +
-        '<b>Failure mode</b>: a wrong match. Blast radius: one bad flag, never a payment.<br>' +
-        '<b>Approval matrix</b>: flag = AI alone · email supplier = clerk · pay = finance lead only.' +
+        'Trade-off: routing, not an agent. Less flexible, same steps every time.<br>' +
+        'Cost model: 1,000 invoices a month. Haiku sorts them all: about $0.40. Opus checks the hard 100: about $4. As a half-price overnight batch: about $2.20.<br>' +
+        'Failure mode: a wrong match. Blast radius: one bad flag, never a payment.<br>' +
+        'Approval matrix: flag = AI alone · email supplier = clerk · pay = finance lead only.' +
         '<div class="tf">Token counts are guesses until the pilot</div></div>',
-      more: '<p class="small">The sample assumes Haiku 5.5 reads about 3K tokens and writes 200 per invoice, and Opus 5.5 reads 5K and writes 1K on each hard one. The hard tenth costs ten times the rest.</p><p class="small">Today’s prices per million input / output tokens: Opus 5.5 $4 / $20, Sonnet 5.5 $2 / $10, Haiku 5.5 $0.10 / $0.50 (prompts up to 100K). Anthropic’s own example: one hour on Managed Agents with Opus 5.5, 50K tokens in, 15K out, costs about $0.58. Check the pricing page before you quote anyone.</p>',
+      more: '<p class="small">The sample assumes Haiku 5.5 reads about 3K tokens and writes 200 per invoice, and Opus 5.5 reads 5K and writes 1K on each hard one. The hard tenth costs ten times the rest.</p><p class="small">Prices per million input / output tokens: Opus 5.5 $4 / $20, Sonnet 5.5 $2 / $10, Haiku 5.5 $0.10 / $0.50 (prompts up to 100K). Check the pricing page before you quote anyone.</p>',
       next: "Your turn →"
     },
     build: {
@@ -29,8 +29,7 @@
       state: { use: "answer customer emails", limit: "tight budget" },
       controls: function (s, esc) {
         function row(k, list) { return '<div class="fridge">' + list.map(function (v) { return '<button type="button" class="chip" data-set="' + k + '" data-v="' + esc(v) + '" aria-pressed="' + (s[k] === v) + '">' + esc(v) + "</button>"; }).join("") + "</div>"; }
-        return '<p class="label">The use case</p>' + row("use", ["answer customer emails", "check invoices", "onboard new hires", "weekly market research", "review code changes"]) +
-          '<p class="label">Nonprofit or small team</p>' + row("use", ["thank-you emails to donors", "grant report drafts", "volunteer onboarding"]) +
+        return '<p class="label">The use case</p>' + row("use", ["answer customer emails", "check invoices", "onboard new hires", "weekly market research", "review code changes", "donor thank-you emails", "grant report drafts", "volunteer onboarding"]) +
           '<p class="label">Hardest limit</p>' + row("limit", ["tight budget", "must be accurate", "private data", "launch in 2 weeks"]);
       },
       head: "ORDER #E08", right: "floor plan", foot: "Paste it into Claude, or open it there",
@@ -42,7 +41,7 @@
           "3. Cost: per task × volume, with and without a batch, math shown.\n" +
           "4. Top 3 failures, blast radius, how we’d notice.\n" +
           "5. Who approves what.\n" +
-          "6. A 6-week pilot: which team, what we measure weekly, the go/no-go rule.";
+          "6. A 6-week pilot: which team, weekly measures, the go/no-go rule.";
       },
       claude: "Open in Claude", done: "Done →",
       after: "Share the doc with your team today. Ask each person which line worries them most."

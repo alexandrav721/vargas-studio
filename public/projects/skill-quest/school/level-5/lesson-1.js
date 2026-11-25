@@ -15,11 +15,11 @@
       title: "Five set menus from Anthropic’s guide.",
       html:
         '<p class="label">Workflow patterns <span class="sample">Simplified</span></p><div class="ticket"><div class="th"><span>SET MENUS</span><span>5 patterns</span></div>' +
-        '<b>Prompt chaining</b>: draft, check, polish. Each uses the last plate.<br>' +
-        '<b>Routing</b>: the host sends each guest to the right cook.<br>' +
-        '<b>Parallelization</b>: cooks work at once, then combine or vote.<br>' +
-        '<b>Orchestrator-workers</b>: a head chef reads the order, then decides the tasks.<br>' +
-        '<b>Evaluator-optimizer</b>: one cooks, one tastes and sends it back.' +
+        'Prompt chaining: draft, check, polish. Each uses the last plate.<br>' +
+        'Routing: the host sends each guest to the right cook.<br>' +
+        'Parallelization: cooks work at once, then combine or vote.<br>' +
+        'Orchestrator-workers: a head chef reads the order, then decides the tasks.<br>' +
+        'Evaluator-optimizer: one cooks, one tastes and sends it back.' +
         '<div class="tf">From “Building effective agents”</div></div>' +
         '<p class="small">An <b>agent</b> is the free chef: no fixed menu. Anthropic says agents cost more and run slower, for better results on open-ended jobs.</p>',
       more: '<p class="small">Anthropic’s rule: find the simplest thing that works. Start with one good call, test it, add a pattern only when the test says so.</p>',

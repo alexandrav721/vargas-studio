@@ -15,10 +15,10 @@
       title: "Four ways to keep the counter clean.",
       html:
         '<p class="label">Long-shift kit <span class="sample">Simplified</span></p><div class="ticket"><div class="th"><span>CLEAN COUNTER</span><span>4 moves</span></div>' +
-        '<b>Compaction</b>: near the limit, squeeze the old shift into one summary.<br>' +
-        '<b>Context editing</b>: clear old tool results, leave a placeholder. (API beta)<br>' +
-        '<b>Memory tool</b>: Claude keeps notes in a memory folder your app stores. They outlast the chat.<br>' +
-        '<b>Tool search</b>: 200 tools? Load just the few needed.' +
+        'Compaction: near the limit, squeeze the old shift into one summary.<br>' +
+        'Context editing: clear old tool results, leave a placeholder. (API beta)<br>' +
+        'Memory tool: Claude keeps notes in a memory folder your app stores. They outlast the chat.<br>' +
+        'Tool search: 200 tools? Load just the few needed.' +
         '<div class="tf">Claude API features</div></div>' +
         '<p class="small"><b>Structured notes</b>: Anthropic’s long-running coding setup kept a progress file, a feature list and a log of saved changes (git). Each new session read them first.</p>',
       more: '<p class="small">Tool search docs: Claude picks tools less accurately past 30 to 50 tools. Search typically loads just the 3 to 5 it needs.</p><p class="small">Skills work the same way: only a short description sits on the counter until the task needs the full recipe.</p>',
