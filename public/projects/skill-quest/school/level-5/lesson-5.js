@@ -7,7 +7,7 @@
     lines: [
       ["Context engineering is keeping the counter clean.", "Give the model the smallest set of useful tokens, not everything you have."],
       ["A crowded counter blurs.", "It’s called context rot: recall slips as the context grows."],
-      ["Long jobs need notes.", "Write progress to files. The next shift, at any location, reads them first."]
+      ["Long jobs need notes.", "Write progress to files. Each new session reads them first."]
     ],
     guess: { q: "An agent has worked for 6 hours and its answers get sloppy. Likely cause?", opts: [["Its counter is cluttered with old results", true], ["The model got tired", false], ["It ran out of tools", false]], reveal: "Models don’t tire. Old tool results crowd the counter, and recall slips. Clear it or summarize it." },
     startLabel: "Clean the counter",
@@ -17,7 +17,7 @@
         '<p class="label">Long-shift kit <span class="sample">Simplified</span></p><div class="ticket"><div class="th"><span>CLEAN COUNTER</span><span>4 moves</span></div>' +
         '<b>Compaction</b>: near the limit, squeeze the old shift into one summary.<br>' +
         '<b>Context editing</b>: clear old tool results, leave a placeholder. (API beta)<br>' +
-        '<b>Memory tool</b>: Claude keeps files in /memories, stored by your app, that outlast the chat.<br>' +
+        '<b>Memory tool</b>: Claude keeps notes in a memory folder your app stores. They outlast the chat.<br>' +
         '<b>Tool search</b>: 200 tools? Load just the few needed.' +
         '<div class="tf">Claude API features</div></div>' +
         '<p class="small"><b>Structured notes</b>: Anthropic’s long-running coding setup kept a progress file, a feature list and a log of saved changes (git). Each new session read them first.</p>',
@@ -72,7 +72,7 @@
     say: "We clear old results, compact near the limit, and leave notes for the next shift.",
     keep: "Four moves for long-running agents, and note templates any fresh session can pick up.",
     cardLabel: "Copy my card",
-    card: "DOUBLE SHIFTS (CONTEXT ENGINEERING)\nContext engineering = smallest set of useful tokens\nContext rot = recall slips as context grows\nCompaction = summarize the old shift\nContext editing = clear old tool results\nMemory tool = files in /memories your app stores\nStructured notes = progress log + checklist + git\nTool search = load tools only when needed",
+    card: "DOUBLE SHIFTS (CONTEXT ENGINEERING)\nContext engineering = smallest set of useful tokens\nContext rot = recall slips as context grows\nCompaction = summarize the old shift\nContext editing = clear old tool results\nMemory tool = notes in a folder your app stores\nStructured notes = progress log + checklist + git\nTool search = load tools only when needed",
     real: ["Claude Platform 101 (context management lesson)", "https://academy.claude.com/courses/claude-platform-101"]
   };
   document.addEventListener("DOMContentLoaded", function () { BK.run(L); });

@@ -3,7 +3,7 @@
   var L = {
     n: 8, id: "e8", mins: 7, title: "Draw the floor plan.", stamp: "Plan",
     seen: ["Architecture", "Start simple"], terms: ["Design doc", "Trade-off", "Cost model", "Failure mode", "Blast radius", "Approval matrix"],
-    teaser: ["FLOOR PLAN", "the capstone", "A new location opens Monday.<br>Level 4 priced every chef.<br>Now show the cost, the risks, the keys.", "Six words. Seven minutes."],
+    teaser: ["FLOOR PLAN", "the capstone", "A new location opens Monday.<br>Each model has its own price (Level 4 covers this).<br>Now show the cost, the risks, the keys.", "Six words. Seven minutes."],
     lines: [
       ["Sketching is done. Now defend it.", "Level 2 listed the pieces. A design doc adds trade-offs, cost, failures and approvals."],
       ["Every choice is a trade-off.", "Write down what you gave up: speed, cost, control or simplicity."],
@@ -16,7 +16,7 @@
       html:
         '<p class="label">Design doc <span class="sample">Sample</span></p><div class="ticket"><div class="th"><span>FLOOR PLAN</span><span>invoices</span></div>' +
         '<b>Trade-off</b>: routing, not an agent. Less flexible, same steps every time.<br>' +
-        '<b>Cost model</b>: 1,000 invoices a month. Haiku sorts them all: about $0.40. Opus checks the hard 100: about $4. An overnight batch (Level 4) roughly halves it.<br>' +
+        '<b>Cost model</b>: 1,000 invoices a month. Haiku sorts them all: about $0.40. Opus checks the hard 100: about $4. As a half-price overnight batch: about $2.20.<br>' +
         '<b>Failure mode</b>: a wrong match. Blast radius: one bad flag, never a payment.<br>' +
         '<b>Approval matrix</b>: flag = AI alone · email supplier = clerk · pay = finance lead only.' +
         '<div class="tf">Token counts are guesses until the pilot</div></div>',
@@ -30,17 +30,19 @@
       controls: function (s, esc) {
         function row(k, list) { return '<div class="fridge">' + list.map(function (v) { return '<button type="button" class="chip" data-set="' + k + '" data-v="' + esc(v) + '" aria-pressed="' + (s[k] === v) + '">' + esc(v) + "</button>"; }).join("") + "</div>"; }
         return '<p class="label">The use case</p>' + row("use", ["answer customer emails", "check invoices", "onboard new hires", "weekly market research", "review code changes"]) +
+          '<p class="label">Nonprofit or small team</p>' + row("use", ["thank-you emails to donors", "grant report drafts", "volunteer onboarding"]) +
           '<p class="label">Hardest limit</p>' + row("limit", ["tight budget", "must be accurate", "private data", "launch in 2 weeks"]);
       },
       head: "ORDER #E08", right: "floor plan", foot: "Paste it into Claude, or open it there",
       text: function (s) {
         return "Use case: " + s.use + ". Hardest limit: " + s.limit + ". I don’t code.\n" +
-          "Ask up to 3 questions (if I skip, label guesses). Then a design doc:\n" +
+          "Ask up to 3 questions first; label guesses. Then a design doc:\n" +
           "1. The job and its test.\n" +
-          "2. Pattern, the simpler one we rejected, and trade-offs.\n" +
-          "3. Cost model: cost per task × volume, with and without a batch, math shown; flag unsure prices.\n" +
-          "4. Top 3 failure modes, blast radius, how we’d notice.\n" +
-          "5. Approval matrix: who approves what.";
+          "2. Pattern, the simpler one rejected, trade-offs.\n" +
+          "3. Cost: per task × volume, with and without a batch, math shown.\n" +
+          "4. Top 3 failures, blast radius, how we’d notice.\n" +
+          "5. Who approves what.\n" +
+          "6. A 6-week pilot: which team, what we measure weekly, the go/no-go rule.";
       },
       claude: "Open in Claude", done: "Done →",
       after: "Share the doc with your team today. Ask each person which line worries them most."
@@ -73,7 +75,7 @@
     keep: "A design doc template you can defend in any meeting, filled in for your own use case.",
     cardLabel: "Copy my card",
     card: "DRAW THE FLOOR PLAN (DESIGN DOC)\nDesign doc = the plan you defend; job and test first\nTrade-off = what you gave up, written down\nCost model = tokens per task × price × volume\nFailure mode = one way it goes wrong\nBlast radius = how far damage spreads\nApproval matrix = who approves which action",
-    real: ["Building effective human-agent teams (beta)", "https://academy.claude.com/courses/building-effective-human-agent-teams"]
+    real: ["Building with the Claude API", "https://academy.claude.com/courses/building-with-the-claude-api"]
   };
   document.addEventListener("DOMContentLoaded", function () { BK.run(L); });
 })();

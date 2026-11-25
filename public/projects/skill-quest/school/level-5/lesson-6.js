@@ -3,10 +3,10 @@
   var L = {
     n: 6, id: "e6", mins: 7, title: "Locks and keys.", stamp: "Locks",
     seen: ["Prompt injection", "Human in the loop"], terms: ["Least privilege", "Untrusted content", "Lethal trifecta", "Network allowlist", "Vault", "Approval gate"],
-    teaser: ["LOCKS & KEYS", "agent security", "Level 3 spotted hidden instructions.<br>Now fit the locks: each cook gets<br>one key. Nobody gets the safe.", "Six words. Seven minutes."],
+    teaser: ["LOCKS & KEYS", "agent security", "Hidden orders can ride in what Claude reads.<br>Now fit the locks: each cook gets<br>one key. Nobody gets the safe.", "Six words. Seven minutes."],
     lines: [
       ["Least privilege: only the keys the job needs.", "Fewer tools, fewer websites, read-only wherever you can."],
-      ["Anything Claude reads can carry orders.", "Emails, web pages, files. That’s how prompt injection gets in."],
+      ["Anything Claude reads can carry orders.", "Emails, web pages, files. Level 2 called this prompt injection."],
       ["Lock the doors that can’t be undone.", "Sends, payments and deletes wait for a person: an approval gate."]
     ],
     guess: { q: "An agent reads customer emails and can also send email. What’s the risk?", opts: [["An email tells it to forward private data", true], ["It replies too politely", false], ["It reads too slowly", false]], reveal: "Text inside an email can act like an order. If the agent can also send, private data can walk out the door." },
@@ -17,7 +17,7 @@
         '<p class="label">Three legs <span class="sample">Simplified</span></p><div class="fridge"><span class="tag">Private data</span><span class="tag">Untrusted content</span><span class="tag">A way to send out</span></div>' +
         '<p class="small">Developer Simon Willison named it in June 2025. With all three, one poisoned page can leak your data. Remove any leg.</p>' +
         '<p class="label" style="margin-top:14px">Locks Anthropic recommends for Managed Agents</p><div class="ticket"><div class="th"><span>LOCKS</span><span>5 settings</span></div>' +
-        'Network: limited, only the hosts it needs<br>Secrets: in a vault, sandbox sees a placeholder<br>Tools: built-ins on, web search and fetch off till needed<br>Can’t undo it? Ask first (always_ask)<br>A spend cap on every session' +
+        'Network: limited, only the hosts it needs<br>Secrets: in a vault, sandbox sees a placeholder<br>Tools: built-ins on, web search and fetch off till needed<br>Can’t undo it? Always ask first<br>A spend cap on every session' +
         '<div class="tf">From “Secure your Managed Agents deployment”</div></div>',
       more: '<p class="small">Claude Code can sandbox its Bash commands at the operating-system level, so the walls hold whatever command the model chose to run.</p><p class="small">A prompt that says “ignore bad instructions” steers. It isn’t a lock.</p>',
       next: "Your turn →"
@@ -31,11 +31,12 @@
         var touch = ["Reads email", "Can send email", "Browses the web", "Sees customer data", "Can spend money", "Can delete files"];
         return '<p class="label">The agent</p><div class="fridge">' + agents.map(function (v) { return '<button type="button" class="chip" data-set="agent" data-v="' + esc(v) + '" aria-pressed="' + (s.agent === v) + '">' + esc(v) + "</button>"; }).join("") + "</div>" +
           '<p class="label">What it touches (tap any)</p><div class="fridge">' + touch.map(function (v) { return '<button type="button" class="chip" data-set="touch" data-multi="1" data-v="' + esc(v) + '" aria-pressed="' + (s.touch.indexOf(v) >= 0) + '">' + esc(v) + "</button>"; }).join("") + "</div>" +
-          '<p class="label">What you get</p><div class="fridge">' + ["Plan only", "Plan + starter file"].map(function (v) { return '<button type="button" class="chip" data-set="out" data-v="' + esc(v) + '" aria-pressed="' + (s.out === v) + '">' + esc(v) + "</button>"; }).join("") + "</div>";
+          '<p class="label">What you get</p><div class="fridge">' + ["Plan only", "Plan + starter file", "Plan + build it with Claude Code"].map(function (v) { return '<button type="button" class="chip" data-set="out" data-v="' + esc(v) + '" aria-pressed="' + (s.out === v) + '">' + esc(v) + "</button>"; }).join("") + "</div>";
       },
       head: "ORDER #E06", right: "lock check", foot: "Paste it into Claude, or open it there",
       text: function (s) {
-        var starter = s.out === "Plan + starter file" ? "\nThen a starter permission policy as JSON for my developer: each tool on or off, runs alone or asks first. Mark it a draft." : "";
+        var starter = s.out === "Plan + starter file" ? "\nThen a starter permission policy as JSON for my developer: each tool on or off, runs alone or asks first. Mark it a draft." :
+          s.out === "Plan + build it with Claude Code" ? "\nThen check my real Claude Code setup, read-only: list every tool, MCP server and connector it can reach today, mark which trifecta leg each one is, and flag any setup with all three. Change nothing. (In a chat, write this as a task I paste into Claude Code.)" : "";
         return "Security review for " + s.agent + ". It touches: " + (s.touch.join(", ") || "help me list it") + ". I don’t code.\n" +
           "1. Lethal trifecta (private data, untrusted content, a way out): which leg can we cut?\n" +
           "2. Least privilege: only tools and sites it needs.\n" +
@@ -45,7 +46,7 @@
           "For each: the lock, why, owner. Unsure a setting exists? Say so." + starter;
       },
       claude: "Open in Claude", done: "Done →",
-      after: "Give each owner their line today. A lock nobody owns stays open."
+      after: "Give each owner their line today. A lock nobody owns stays open. The setup check runs in Claude Code on a computer."
     },
     game: {
       type: "pick", title: "Your research agent reads the web and can email anyone. Best first fix?",
@@ -69,13 +70,13 @@
     quiz: [
       { term: "Lethal trifecta", q: "What are the three legs of the lethal trifecta?", a: ["Private data, untrusted content, a way to send out", "Tools, resources and prompts", "Cost, speed and accuracy"], ok: 0, why: "Right. Cut any one leg and the attack can’t finish." },
       { term: "Vault", q: "Why keep an API key in a Managed Agents vault?", a: ["The sandbox only sees a placeholder, not the key", "It makes the agent run faster", "So the agent can share it with users"], ok: 0, why: "Right. The real key is added on the way out, only to allowed hosts." },
-      { term: "Permission policy", q: "Recall from Lesson 3: what does a tool set to always_ask do?", a: ["Pauses until a person approves", "Runs without asking", "Asks Claude to double-check itself"], ok: 0, why: "Right. That’s an approval gate in settings." }
+      { term: "Permission policy", q: "Recall from Lesson 3: what does a tool set to “always ask” do?", a: ["Pauses until a person approves", "Runs without asking", "Asks Claude to double-check itself"], ok: 0, why: "Right. That’s an approval gate in settings." }
     ],
     say: "Fewest keys, everything it reads is untrusted, and a gate on what can’t be undone.",
     keep: "The trifecta test for any agent pitch, and a lock-by-lock checklist with owners.",
     cardLabel: "Copy my card",
     card: "LOCKS AND KEYS (AGENT SECURITY)\nLeast privilege = only the keys the job needs\nUntrusted content = anything Claude reads can carry orders\nLethal trifecta = data + untrusted content + a way out; cut one\nNetwork allowlist = only listed hosts\nVault = secrets the sandbox never sees\nApproval gate = a person says yes first\nPrompts steer; settings lock",
-    real: ["Claude Code in action (permission modes and hooks)", "https://academy.claude.com/courses/claude-code-in-action"]
+    real: ["Secure your Managed Agents deployment (Claude docs)", "https://platform.claude.com/docs/en/managed-agents/secure-deployment"]
   };
   document.addEventListener("DOMContentLoaded", function () { BK.run(L); });
 })();

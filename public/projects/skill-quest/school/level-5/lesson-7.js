@@ -1,9 +1,9 @@
-/* AI Made EZ · Level 5 · Lesson 7 · Head-office checks (governance and safety). Terms: observability, trace, audit log, Responsible Scaling Policy, AI Safety Level, Constitutional AI. */
+/* AI Made EZ · Level 5 · Lesson 7 · Head-office checks (governance and safety). Terms: observability, trace, audit log, Responsible Scaling Policy, AI Safety Level. */
 (function () {
   var L = {
     n: 7, id: "e7", mins: 7, title: "Head-office checks.", stamp: "Inspect",
-    seen: ["Eval", "Human in the loop"], terms: ["Observability", "Trace", "Audit log", "Responsible Scaling Policy", "AI Safety Level", "Constitutional AI"],
-    teaser: ["HEAD OFFICE", "governance and safety", "Level 4 taste-tested in code.<br>Head office checks every location<br>after opening, too.", "Six words. Seven minutes."],
+    seen: ["Eval", "Human in the loop"], terms: ["Observability", "Trace", "Audit log", "Responsible Scaling Policy", "AI Safety Level"],
+    teaser: ["HEAD OFFICE", "governance and safety", "You test before launch (Level 4 does it in code).<br>Head office keeps checking every location<br>after opening, too.", "Five words. Seven minutes."],
     lines: [
       ["You can’t inspect what you didn’t record.", "Observability: a trace of every call, tool and cost, kept searchable."],
       ["Audit logs answer “who changed that?”", "Claude Enterprise logs user actions, system events and data access."],
@@ -15,12 +15,12 @@
       title: "What head office checks.",
       html:
         '<p class="label">Every location <span class="sample">Simplified</span></p><div class="ticket"><div class="th"><span>CLIPBOARD</span><span>3 checks</span></div>' +
-        '<b>Traces</b>: each run, step by step. Developers can export them (trace export in beta) to tools like Datadog.<br>' +
+        '<b>Traces</b>: each run, step by step. Developers can export them (in beta) to monitoring dashboards like Datadog.<br>' +
         '<b>Audit logs</b>: who did what, when. Ask how long they’re kept.<br>' +
         '<b>Human oversight</b>: who reviews samples and can switch it off.' +
         '<div class="tf">Decide all three before launch</div></div>' +
         '<p class="small">Anthropic’s own rulebook, the <b>Responsible Scaling Policy</b> (RSP), adds safeguards as its models grow more capable. It names those safeguard sets by <b>AI Safety Level</b>, like ASL-3 (on since May 2025).</p>',
-      more: '<p class="small">Anthropic’s Enterprise course names five admin decisions: Structure and Identity, Access, Governance, Spend, Visibility.</p><p class="small">The RSP changes often (version 3.4 took effect in July 2026). ASL-3 safeguards switched on for some models in May 2025. Check the date on whatever you quote.</p><p class="small"><b>Constitutional AI</b> (2022): Claude is trained against a written set of principles. It critiques and revises its own answers, then learns from AI feedback. Claude’s January 2026 constitution ranks its priorities: broadly safe, broadly ethical, following Anthropic’s guidelines, genuinely helpful.</p>',
+      more: '<p class="small">Anthropic’s Enterprise course names five admin decisions: Structure and Identity, Access, Governance, Spend, Visibility.</p><p class="small">The RSP changes often (version 3.4, July 2026). Check the date on whatever you quote.</p>',
       next: "Your turn →"
     },
     build: {
@@ -34,20 +34,21 @@
       },
       head: "ORDER #E07", right: "inspection plan", foot: "Paste it into Claude, or open it there",
       text: function (s) {
-        return "Write a governance plan for " + s.proj + ". Final sign-off: " + s.who + ". I don’t code.\n" +
+        return "Governance plan for " + s.proj + ". Final sign-off: " + s.who + ". I don’t code.\n" +
           "1. Traces: what we record per run; who sees it.\n" +
-          "2. Audit logs: user and admin actions to keep.\n" +
-          "3. Oversight: who reviews samples, how often, who can switch it off.\n" +
-          "4. Evals: real cases re-tested after each change, as in Level 4.\n" +
-          "5. An 8-item monthly checklist.\n" +
-          "Flag legal questions. Unsure a feature exists? Say so.";
+          "2. Audit logs: which actions we keep.\n" +
+          "3. Oversight: who reviews samples, how often, who switches it off.\n" +
+          "4. Private data (clients, donors): what it sees; which Claude plan fits.\n" +
+          "5. Evals: real cases re-tested after each change.\n" +
+          "6. An 8-item monthly checklist.\n" +
+          "Flag legal questions. Unsure? Say so.";
       },
       claude: "Open in Claude", done: "Done →",
       after: "Put the monthly checklist in your calendar today, with the sign-off person invited."
     },
     game: {
       type: "match", title: "Match each word to the check.", lead: "Tap a word, then its kitchen.",
-      pairs: [["Observability", "Cameras on every station"], ["Trace", "The step-by-step record of one order"], ["Audit log", "The sign-in sheet: who did what, when"], ["Eval", "The taste test, repeated after every change"], ["Responsible Scaling Policy", "Stronger safety rules as the chefs get more capable"], ["Constitutional AI", "A chef trained against a written code"]],
+      pairs: [["Observability", "Cameras in every kitchen"], ["Trace", "The step-by-step record of one order"], ["Audit log", "The sign-in sheet: who did what, when"], ["Eval", "The taste test, repeated after every change"], ["Responsible Scaling Policy", "Stronger safety rules as the chefs get more capable"], ["Human in the loop", "A manager on the floor who can stop service"]],
       right: "All six. That’s head office’s whole clipboard.",
       habitTitle: "Architect habit", habit: "Decide what you’ll log on day one. You can’t go back and record last Tuesday."
     },
@@ -67,7 +68,7 @@
     say: "We trace every run, log who did what, and someone can switch it off.",
     keep: "A governance plan with owners, and plain answers about Anthropic’s own safety rules.",
     cardLabel: "Copy my card",
-    card: "HEAD-OFFICE CHECKS (GOVERNANCE)\nObservability = you can see what happened\nTrace = the step-by-step record of one run\nAudit log = who did what, when\nHuman oversight = someone reviews, and can switch it off\nRSP = Anthropic’s voluntary safety rulebook\nAI Safety Levels = Anthropic’s safeguard sets (ASL-3 safeguards since May 2025)\nConstitutional AI = trained against written principles",
+    card: "HEAD-OFFICE CHECKS (GOVERNANCE)\nObservability = you can see what happened\nTrace = the step-by-step record of one run\nAudit log = who did what, when\nHuman oversight = someone reviews, and can switch it off\nRSP = Anthropic’s voluntary safety rulebook\nAI Safety Levels = Anthropic’s safeguard sets (ASL-3 safeguards since May 2025)",
     real: ["Deploying Claude Enterprise with confidence", "https://academy.claude.com/courses/deploying-claude-enterprise-with-confidence"]
   };
   document.addEventListener("DOMContentLoaded", function () { BK.run(L); });

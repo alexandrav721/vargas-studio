@@ -7,7 +7,7 @@
     lines: [
       ["A set menu is a workflow.", "Your code fixes the steps ahead. Anthropic names five common ones."],
       ["A free chef is an agent.", "Claude picks its own steps. Worth it when nobody can predict them."],
-      ["Every station is an augmented LLM.", "One Claude call plus tools, search and memory. Everything else is built from it."]
+      ["Every cook is an augmented LLM.", "One Claude call plus tools, search and memory. Everything else is built from it."]
     ],
     guess: { q: "A bot sorts emails into billing, tech or sales, then answers each its own way. What is that?", opts: [["Routing, a fixed workflow", true], ["An agent", false], ["A brigade of agents", false]], reveal: "Routing: sort first, then send each kind to its own prompt. Your code sets the steps, so it’s a workflow." },
     startLabel: "See the menus",
@@ -16,9 +16,9 @@
       html:
         '<p class="label">Workflow patterns <span class="sample">Simplified</span></p><div class="ticket"><div class="th"><span>SET MENUS</span><span>5 patterns</span></div>' +
         '<b>Prompt chaining</b>: draft, check, polish. Each uses the last plate.<br>' +
-        '<b>Routing</b>: the host sends each guest to the right station.<br>' +
+        '<b>Routing</b>: the host sends each guest to the right cook.<br>' +
         '<b>Parallelization</b>: cooks work at once, then combine or vote.<br>' +
-        '<b>Orchestrator-workers</b>: a head chef splits a job it couldn’t plan.<br>' +
+        '<b>Orchestrator-workers</b>: a head chef reads the order, then decides the tasks.<br>' +
         '<b>Evaluator-optimizer</b>: one cooks, one tastes and sends it back.' +
         '<div class="tf">From “Building effective agents”</div></div>' +
         '<p class="small">An <b>agent</b> is the free chef: no fixed menu. Anthropic says agents cost more and run slower, for better results on open-ended jobs.</p>',
@@ -47,7 +47,7 @@
     },
     game: {
       type: "match", title: "Match each set menu to its kitchen.", lead: "Tap a pattern, then what it looks like.",
-      pairs: [["Prompt chaining", "Draft, check, then polish, in order"], ["Routing", "The host sends each guest to the right station"], ["Parallelization", "Several cooks at once, then combine"], ["Orchestrator-workers", "A head chef splits a job it couldn’t plan ahead"], ["Evaluator-optimizer", "One cooks, one tastes and sends it back"], ["Augmented LLM", "One cook with tools, a pantry and a notebook"]],
+      pairs: [["Prompt chaining", "Draft, check, then polish, in order"], ["Routing", "The host sends each guest to the right cook"], ["Parallelization", "Several cooks at once, then combine"], ["Orchestrator-workers", "A head chef decides the tasks after seeing the order"], ["Evaluator-optimizer", "One cooks, one tastes and sends it back"], ["Augmented LLM", "One cook with tools, reference books and a notebook"]],
       right: "All six. Five set menus, plus the one cook they’re all built from.",
       habitTitle: "Architect habit", habit: "Build the simplest version first. Add a pattern only when a test shows the simple one falls short."
     },
@@ -61,13 +61,13 @@
     },
     quiz: [
       { term: "Evaluator-optimizer", q: "Which pattern has one Claude call write and another grade it and send notes back?", a: ["Evaluator-optimizer", "Routing", "Parallelization"], ok: 0, why: "Right. It loops until the grade is good, so the criteria must be clear." },
-      { term: "Orchestrator-workers", q: "When does orchestrator-workers beat a fixed chain?", a: ["When you can’t predict the subtasks ahead of time", "When every input gets the same three steps", "When you want the cheapest possible setup"], ok: 0, why: "Right. The head chef decides the pieces once it sees the job." },
+      { term: "Orchestrator-workers", q: "When does orchestrator-workers beat a fixed chain?", a: ["When you can’t predict the subtasks ahead of time", "When every input gets the same three steps", "When you want the cheapest possible setup"], ok: 0, why: "Right. You can’t list the pieces ahead, so the head chef decides them once it sees the job." },
       { term: "Workflow", q: "From Level 2: what’s a workflow?", a: ["Steps set ahead by the builder", "Claude picking its own next step", "A list of tools Claude may use"], ok: 0, why: "Right. A set menu: cheaper and more predictable." }
     ],
     say: "We pick the simplest pattern that works. Agents only when steps can’t be planned.",
     keep: "Five pattern names you can sketch on a whiteboard, and a ticket that picks one for a real project.",
     cardLabel: "Copy my card",
-    card: "SET MENU OR FREE CHEF (PATTERNS)\nAugmented LLM = one call plus tools, search, memory\nPrompt chaining = steps in a row, each uses the last\nRouting = sort first, send to a specialist\nParallelization = at once, then combine or vote\nOrchestrator-workers = a lead splits an unplannable job\nEvaluator-optimizer = write, grade, revise\nAgent = Claude picks the steps (costs more)",
+    card: "SET MENU OR FREE CHEF (PATTERNS)\nAugmented LLM = one call plus tools, search, memory\nPrompt chaining = steps in a row, each uses the last\nRouting = sort first, send to a specialist\nParallelization = at once, then combine or vote\nOrchestrator-workers = a lead decides the subtasks at run time\nEvaluator-optimizer = write, grade, revise\nAgent = Claude picks the steps (costs more)",
     real: ["Building with the Claude API", "https://academy.claude.com/courses/building-with-the-claude-api"]
   };
   document.addEventListener("DOMContentLoaded", function () { BK.run(L); });

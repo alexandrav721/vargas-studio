@@ -3,7 +3,7 @@
   var L = {
     n: 3, id: "e3", mins: 7, title: "The kitchen system.", stamp: "Harness",
     seen: ["Agent SDK", "Agent loop", "Hook"], terms: ["Agent harness", "Managed Agents", "Session", "Sandbox", "Permission policy", "Session budget"],
-    teaser: ["KITCHEN SYSTEM", "the agent harness", "Level 4 wired the tool loop by hand.<br>The harness is that loop, built for you,<br>the same at every location.", "Six words. Seven minutes."],
+    teaser: ["KITCHEN SYSTEM", "the agent harness", "Claude asks, a tool runs, repeat<br>(Level 4 builds that loop by hand).<br>The harness runs it for you.", "Six words. Seven minutes."],
     lines: [
       ["The harness is everything around the model.", "The loop, the tools, the permissions, the logs. The model only decides."],
       ["Build it, or rent it.", "Agent SDK: a code kit with Claude Code’s harness. Managed Agents: Anthropic hosts it."],
@@ -30,11 +30,12 @@
         function row(k, list) { return '<div class="fridge">' + list.map(function (v) { return '<button type="button" class="chip" data-set="' + k + '" data-v="' + esc(v) + '" aria-pressed="' + (s[k] === v) + '">' + esc(v) + "</button>"; }).join("") + "</div>"; }
         return '<p class="label">The job</p>' + row("job", ["a weekly competitor report", "sort support tickets", "clean up messy spreadsheets", "review code changes"]) +
           '<p class="label">Who hosts it</p>' + row("run", ["Anthropic hosts it (Managed Agents)", "we host it (Agent SDK)", "not sure, help me pick"]) +
-          '<p class="label">What you get</p>' + row("out", ["Plan only", "Plan + starter file"]);
+          '<p class="label">What you get</p>' + row("out", ["Plan only", "Plan + starter file", "Plan + build it with Claude Code"]);
       },
       head: "ORDER #E03", right: "harness plan", foot: "Paste it into Claude, or open it there",
       text: function (s) {
-        var starter = s.out === "Plan + starter file" ? "5. A starter permission policy as JSON for my developer: each tool on or off, runs alone or asks first, plus a session budget. Mark it a draft.\n" : "";
+        var starter = s.out === "Plan + starter file" ? "5. A starter permission policy as JSON for my developer: each tool on or off, runs alone or asks first, plus a session budget. Mark it a draft.\n" :
+          s.out === "Plan + build it with Claude Code" ? "5. Then a small local test in Claude Code (same harness as the Agent SDK): a new folder, a settings file allowing only the tools above, asking before the ask-first ones, denying the rest, plus fake input files. Run it once with a turn limit; show what ran, asked or was blocked. (In a chat, write this as a task I paste into Claude Code.)\n" : "";
         return "Plan the agent harness for: " + s.job + ". Hosting: " + s.run + ". I don’t code.\n" +
           "1. Is that hosting right for this job, or would a scheduled workflow do? Why?\n" +
           "2. Tools it needs, which run alone, which wait for a yes, which built-ins go off.\n" +
@@ -43,7 +44,7 @@
           "Unsure a feature exists? Say so; name the page (platform.claude.com/docs).";
       },
       claude: "Open in Claude", done: "Done →",
-      after: "Save the plan next to the job’s notes. Before anything runs, check the spend cap and the stop with your developer."
+      after: "Save the plan next to the job’s notes. Before real work runs, check the spend cap and the stop with your developer. The test run needs Claude Code on a computer."
     },
     game: {
       type: "tapall", title: "Which jobs belong to the harness, not the model?", lead: "Tap the {n} the harness does.",
@@ -59,7 +60,7 @@
     breaks: {
       title: "A system is only as safe as its settings.",
       lines: [
-        ["Defaults can be wide open.", "Leave Managed Agents’ tools unpicked: all eight switch on and run without asking."],
+        ["Managed Agents’ defaults are wide open.", "Pick no tools and all eight built-ins turn on: commands, files, web. None ask."],
         ["Beta means change.", "Each session stays on one agent version. Re-test before moving to a newer one."]
       ],
       where: "A kitchen’s walls are fixed. A sandbox has walls too, but you choose where the doors go."

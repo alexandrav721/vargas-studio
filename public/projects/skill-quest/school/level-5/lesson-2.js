@@ -3,7 +3,7 @@
   var L = {
     n: 2, id: "e2", mins: 7, title: "Build a standard outlet.", stamp: "Outlet",
     seen: ["MCP", "MCP server", "Resources"], terms: ["Transport", "stdio", "Streamable HTTP", "OAuth", "Scopes", "Namespacing"],
-    teaser: ["STANDARD OUTLET", "for every location", "Level 3 plugged in connectors.<br>Now you design the outlet<br>every location plugs into.", "Six words. Seven minutes."],
+    teaser: ["STANDARD OUTLET", "for every location", "Connectors plug apps like Gmail into Claude<br>(Level 3 covers them). Now design<br>the outlet every location plugs into.", "Six words. Seven minutes."],
     lines: [
       ["An MCP server offers three things.", "Tools Claude uses, resources it reads (files, records), prompts people pick from a menu."],
       ["The wiring is called the transport.", "stdio for one computer. Streamable HTTP for a server many people reach."],
@@ -31,12 +31,14 @@
         function row(k, list) { return '<div class="fridge">' + list.map(function (v) { return '<button type="button" class="chip" data-set="' + k + '" data-v="' + esc(v) + '" aria-pressed="' + (s[k] === v) + '">' + esc(v) + "</button>"; }).join("") + "</div>"; }
         return '<p class="label">The system</p>' + row("sys", ["our booking system", "the company wiki", "our customer list (CRM)", "the inventory spreadsheet"]) +
           '<p class="label">Who plugs in</p>' + row("who", ["just me, on my laptop", "just my team", "every location", "outside partners"]) +
-          '<p class="label">What you get</p>' + row("out", ["Plan only", "Plan + starter file"]);
+          '<p class="label">What you get</p>' + row("out", ["Plan only", "Plan + starter file", "Plan + build it with Claude Code"]);
       },
       head: "ORDER #E02", right: "outlet spec", foot: "Paste it into Claude, or open it there",
       text: function (s) {
-        var starter = s.out === "Plan + starter file" ? "5. A starter file for my developer: the tool list as JSON (name, description, input fields, read or write), marked as a draft.\n" : "";
-        return "Design an MCP server for " + s.sys + ". Who plugs in: " + s.who + ". I don’t code; a developer builds it.\n" +
+        var build = s.out === "Plan + build it with Claude Code";
+        var starter = s.out === "Plan + starter file" ? "5. A starter file for my developer: the tool list as JSON (name, description, input fields, read or write), marked as a draft.\n" :
+          build ? "5. Then build a small test version: a local stdio server in Python with the official MCP SDK, fake data only, and two tests that pass. (In a chat, write this as a task I paste into Claude Code.) End with the one command that adds it to Claude Code and one question to try.\n" : "";
+        return "Design an MCP server for " + s.sys + ". Who plugs in: " + s.who + ". I don’t code" + (build ? "." : "; a developer builds it.") + "\n" +
           "1. MCP server, or a plain tool in one app? Why?\n" +
           "2. A few tools (namespaced name, job, read or write), plus resources and prompts.\n" +
           "3. Transport (stdio or Streamable HTTP) and sign-in (OAuth scopes), and why.\n" +
@@ -44,7 +46,7 @@
           "Unsure a feature exists? Say so; name the page (modelcontextprotocol.io).";
       },
       claude: "Open in Claude", done: "Done →",
-      after: "Send the spec to whoever would build it. Ask them to circle anything they’d change before they start."
+      after: "Send the spec to whoever would build it. Ask them to circle anything they’d change. Picked build? That part runs in Claude Code, on a computer, with a paid Claude plan or API credit."
     },
     game: {
       type: "pick", title: "Claude keeps calling the wrong “search” tool. What do you fix first?",
@@ -68,7 +70,7 @@
     quiz: [
       { term: "Transport", q: "What does the transport decide?", a: ["How messages travel between the app and the server", "Which tools the server offers", "Who is allowed to sign in"], ok: 0, why: "Right. stdio or Streamable HTTP: the wiring, not the menu." },
       { term: "Scopes", q: "What are OAuth scopes for?", a: ["Limiting what a sign-in key may do", "Naming tools so Claude can find them", "Choosing between stdio and HTTP"], ok: 0, why: "Right. Ask for the smallest scopes the job needs." },
-      { term: "Routing", q: "Recall from Lesson 1: which pattern sorts each input, then sends it to a specialist?", a: ["Routing", "Prompt chaining", "Evaluator-optimizer"], ok: 0, why: "Right. The host seats each guest at the right station." }
+      { term: "Routing", q: "Recall from Lesson 1: which pattern sorts each input, then sends it to a specialist?", a: ["Routing", "Prompt chaining", "Evaluator-optimizer"], ok: 0, why: "Right. The host seats each guest with the right cook." }
     ],
     say: "An MCP server is a standard outlet: few clear tools, the right wiring, small scopes.",
     keep: "An MCP server spec a developer can build from, and the questions that decide MCP or a plain tool.",
