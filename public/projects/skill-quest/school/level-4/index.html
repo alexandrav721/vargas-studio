@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", function () {
   var T = BK.TRACK, done = BK.done(), n = T.filter(function (l) { return done[l.id]; }).length;
   var nextL = T.find(function (l) { return !done[l.id]; });
   document.getElementById("cta").innerHTML = nextL
-    ? '<a class="btn" href="' + nextL.href + '">' + (n ? "Next: Lesson " : "Start Lesson ") + nextL.n + ", " + nextL.name + "</a>"
+    ? '<a class="btn" href="' + nextL.href + '">' + (n ? "Next: Lesson " : "Start Lesson ") + nextL.n + ": " + nextL.name.replace(/\s*\(.*\)$/, "") + "</a>"
     : (window.BK_CONFIG.nextLevel ? '<a class="btn" href="' + window.BK_CONFIG.nextLevel[0] + '">' + window.BK_CONFIG.nextLevel[1] + '</a>' : '') + '<a class="btn ghost" href="lesson-1.html">Start again</a>';
   if (n) document.getElementById("sum").textContent = n >= T.length ? (window.BK_CONFIG.doneLine || "Passport complete.") : n + " of " + T.length + " stamps. Keep going.";
   var stations = [[1, 2], [3, 4], [5, 6], [7, 8]], NAMES = ["First orders", "Reliable plates", "Cheaper and smarter", "Quality and launch"];
