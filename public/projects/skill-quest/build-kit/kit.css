@@ -288,3 +288,39 @@ pre{white-space:pre-wrap;background:var(--card);border:2px solid var(--ink);bord
 .easy summary.ez-h::before{content:"+ ";}
 .easy[open] summary.ez-h::before{content:"− ";}
 .easy[open] dl{margin-top:8px}
+
+/* ---------- clearer planner: step line, parts list, skip, mic ---------- */
+.stepline{margin:4px 0 10px;font:700 13px var(--mono);color:var(--muted)}
+.foot-in{display:flex;gap:10px;max-width:728px;margin:0 auto}
+.foot .foot-in .btn{margin:10px 0 0}
+.foot-in #next{flex:1}
+.foot-in #prev{flex:0 0 auto;width:auto;padding-left:20px;padding-right:20px}
+.foot-in #prev[hidden]{display:none}
+.parts{margin-top:8px}
+.parts summary{cursor:pointer;list-style:none;font:700 14px var(--mono);text-decoration:underline;text-underline-offset:4px;padding:6px 0;width:max-content}
+.parts summary::-webkit-details-marker{display:none}
+.parts .rail{flex-direction:column;overflow:auto;max-height:55vh;margin-top:6px}
+.parts .rr{border-radius:10px;width:100%}
+.parts .rr span{flex:1;min-width:0}
+.parts .rr b{white-space:normal}
+@media (min-width:980px){body.ws .parts .rail{max-height:calc(100vh - 200px)}}
+.qnav{align-items:center}
+.skip{border:2px solid var(--ink);border-radius:999px;background:var(--sun);color:var(--ink);font:700 15px var(--display);padding:10px 16px;cursor:pointer}
+.skip[hidden]{display:none}
+.qcard .opt{font:700 11px var(--mono);letter-spacing:.04em;text-transform:uppercase;vertical-align:middle;border:2px solid var(--ink);border-radius:5px;padding:1px 6px;margin-left:4px;color:var(--muted)}
+.qcard .qwhy{margin:-6px 0 12px;color:var(--muted);font-weight:600;line-height:1.35}
+.micwrap{position:relative;display:block;width:100%}
+.micwrap input[type=text],.micwrap textarea{padding-right:56px}
+.list-row .micwrap{flex:1;min-width:0}
+.pt-idea .micwrap{grid-row:2}
+.mic{position:absolute;right:6px;top:50%;transform:translateY(-50%);width:42px;height:42px;border:2px solid var(--ink);border-radius:10px;background:var(--card);font-size:20px;line-height:1;display:grid;place-items:center;cursor:pointer;padding:0}
+.micwrap.ta .mic{top:6px;transform:none}
+.mic.on{background:var(--accent);border-color:var(--accent);animation:micpulse 1s ease-in-out infinite}
+@keyframes micpulse{50%{box-shadow:0 0 0 6px rgba(199,57,31,.25)}}
+@media (prefers-reduced-motion:reduce){.mic.on{animation:none}}
+.qcard .qskip{display:block;margin:0 0 14px}
+.qcard .hint.pre{margin:-4px 0 12px}
+
+/* phones: only the slim header stays pinned, so the question sits near the top */
+@media (max-width:979px){.kitbar{position:static;margin:0 0 12px;padding:4px 0 10px}.top{padding:6px 16px}.foot{padding:0 16px 10px}}
+#roomFile:empty{display:none}

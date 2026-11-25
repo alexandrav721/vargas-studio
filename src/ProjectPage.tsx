@@ -17,7 +17,15 @@ type HQ = {
   live?: string[];
   next?: string[];
   waiting?: string[];
-  social?: { rhythm?: string; page?: string; pillars: { name: string; what: string; posts: string[] }[] };
+  social?: {
+    rhythm?: string;
+    page?: string;
+    pillars: { name: string; what: string; posts: string[] }[];
+    // The real posts: first slide of each, rendered to an image by review/hq_posts.py.
+    posts?: { img: string; title: string; status: string }[];
+    approve?: string;
+    weekly?: { title: string; link: string; steps: string[] };
+  };
   learns?: { steps: { name: string; line: string }[]; team?: string };
   connect?: { name: string; status: string; line: string }[];
 };
@@ -36,6 +44,22 @@ const PARTS = [
   { id: "social", label: "Social" },
   { id: "status", label: "Status" },
 ];
+
+// The real-posts row in "What we post" (only ideas whose hq.json social has posts).
+const POSTS_CSS = `
+.hq-posts{list-style:none;margin:0 -16px 10px;padding:4px 16px 12px;display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
+.hq-posts li{position:relative;flex:none;width:min(46vw,200px);scroll-snap-align:start}
+.hq-posts img{display:block;width:100%;height:auto;aspect-ratio:4/5;border-radius:10px;border:1px solid rgba(215,228,220,.15);background:var(--ink-2)}
+.hq-posts em{position:absolute;top:8px;right:8px;font:600 11px/1 var(--sans);font-style:normal;letter-spacing:.08em;text-transform:uppercase;padding:5px 8px;border-radius:999px;background:var(--paper,#fff);color:var(--ink)}
+.hq-posts em[data-s=posted]{background:var(--citrus);color:var(--ink)}
+.hq-posts-count{margin:0 0 4px;color:var(--mist);font:500 14px/1.4 var(--sans)}
+.hq-posts-btns{display:grid;gap:10px;margin:8px 0 22px}
+.hq-weekly{padding:12px 16px;border-radius:14px;background:rgba(215,228,220,.05);border:1px solid rgba(215,228,220,.1)}
+.hq-weekly summary{cursor:pointer;font:600 17px/1.3 var(--display);min-height:28px}
+.hq-weekly ol{margin:10px 0 8px;padding-left:20px;color:var(--fog);font:400 15px/1.45 var(--sans)}
+.hq-weekly li+li{margin-top:6px}
+.hq-weekly a{color:var(--citrus);font:600 15px var(--sans)}
+`;
 
 // Marketing pieces, in the order a stranger meets them.
 const MARKETING = ["landing", "meta-ads", "social", "funnel", "print", "website"];
@@ -257,6 +281,41 @@ export default function ProjectPage({ id }: { id: string }) {
           <section id="hq-social" className="hq-part" aria-labelledby="hq-social-h">
             <h2 id="hq-social-h">What we post</h2>
             {hq.social.rhythm ? <p className="hq-rhythm">{hq.social.rhythm}</p> : null}
+            {hq.social.posts?.length ? (
+              <>
+                <style>{POSTS_CSS}</style>
+                <ul className="hq-posts" aria-label="The posts, first slide of each">
+                  {hq.social.posts.map((x) => (
+                    <li key={x.img}>
+                      <img src={x.img} alt={x.title} width={600} height={750} loading="lazy" />
+                      <em data-s={x.status.toLowerCase()}>{x.status}</em>
+                    </li>
+                  ))}
+                </ul>
+                <p className="hq-posts-count">
+                  {hq.social.posts.filter((x) => x.status === "Posted").length} posted ·{" "}
+                  {hq.social.posts.filter((x) => x.status !== "Posted").length} drafts
+                </p>
+                <div className="hq-posts-btns">
+                  {hq.social.approve ? (
+                    <a className="proj-play" href={hq.social.approve}>
+                      Open the approval page
+                    </a>
+                  ) : null}
+                  {hq.social.weekly ? (
+                    <details className="hq-weekly">
+                      <summary>{hq.social.weekly.title}</summary>
+                      <ol>
+                        {hq.social.weekly.steps.map((s) => (
+                          <li key={s}>{s}</li>
+                        ))}
+                      </ol>
+                      <a href={hq.social.weekly.link}>Open Keep up →</a>
+                    </details>
+                  ) : null}
+                </div>
+              </>
+            ) : null}
             <div className="hq-pillars">
               {hq.social.pillars.map((pl) => (
                 <div key={pl.name}>

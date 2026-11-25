@@ -286,7 +286,7 @@ ${a.talk === "Just show the code" ? "Be brief: show the change and one line on w
       id: "env", file: "ENVIRONMENT.md", name: "Keys list", tier: 3, icon: "M20 12a4 4 0 1 0-4 4l-8 8v2h3v-2h2v-2h2l3-3",
       why: "Every secret setting it needs, by name only.",
       qs: [
-        { id: "svc", q: "Which services need keys?", type: "chips", opts: ["Supabase", "Stripe", "Anthropic / OpenAI", "Email (Resend…)", "Maps", "Analytics", "None"], sample: ["Supabase", "Email (Resend…)"], w: 2 },
+        { id: "svc", q: "Which outside apps does it use?", why: "Like payments or email. Each one needs a secret key.", opt: true, type: "chips", opts: ["Supabase", "Stripe", "Anthropic / OpenAI", "Email (Resend…)", "Maps", "Analytics", "None"], sample: ["Supabase", "Email (Resend…)"], w: 2 },
       ],
       md: (a) => {
         const M = { "Supabase": ["SUPABASE_URL (public)", "SUPABASE_ANON_KEY (public)", "SUPABASE_SERVICE_ROLE_KEY (secret, server only)"], "Stripe": ["STRIPE_PUBLISHABLE_KEY (public)", "STRIPE_SECRET_KEY (secret)", "STRIPE_WEBHOOK_SECRET (secret)"], "Anthropic / OpenAI": ["AI_API_KEY (secret, server only)"], "Email (Resend…)": ["EMAIL_API_KEY (secret)"], "Maps": ["MAPS_KEY (public, locked to your domain)"], "Analytics": ["ANALYTICS_ID (public)"] };

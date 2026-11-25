@@ -472,7 +472,120 @@
       "Carousel: which AI tool? 3 picks per job, real reviews, no affiliate links"
      ]
     }
-   ]
+   ],
+   "posts": [
+    {
+     "img": "/hq/ai-made-ez/kitchen.jpg",
+     "title": "Claude is just a chef: the 5 AI words people overcomplicate, explained with your kitchen",
+     "status": "Draft"
+    },
+    {
+     "img": "/hq/ai-made-ez/order.jpg",
+     "title": "Your prompt is just an order: 4 lines turn a vague AI answer into this week's dinners",
+     "status": "Draft"
+    },
+    {
+     "img": "/hq/ai-made-ez/guess.jpg",
+     "title": "ChatGPT and Claude can sound completely sure and still be wrong. Here's the 1 habit that catches it",
+     "status": "Draft"
+    },
+    {
+     "img": "/hq/ai-made-ez/prompt.jpg",
+     "title": "No DMs, no email list: the full 4-line dinner prompt people make you comment for, free",
+     "status": "Draft"
+    },
+    {
+     "img": "/hq/ai-made-ez/need.jpg",
+     "title": "To use Claude or ChatGPT you need 0 lines of code, $0 and 1 clear order",
+     "status": "Draft"
+    },
+    {
+     "img": "/hq/ai-made-ez/words.jpg",
+     "title": "API, MCP, RAG and agents: the 4 words people use to sound fancy, decoded in 1 minute",
+     "status": "Draft"
+    },
+    {
+     "img": "/hq/ai-made-ez/layers.jpg",
+     "title": "Many AI apps you pay for run on Claude, GPT or Gemini underneath. Here are all 5 layers",
+     "status": "Draft"
+    },
+    {
+     "img": "/hq/ai-made-ez/guide-dinner.jpg",
+     "title": "How to plan 5 dinners from what's in your fridge with Claude or ChatGPT in 1 message",
+     "status": "Draft"
+    },
+    {
+     "img": "/hq/ai-made-ez/news-wallet.jpg",
+     "title": "Google's AI Mode can now read your Google Wallet if you opt in, but it can't move your money",
+     "status": "Draft"
+    },
+    {
+     "img": "/hq/ai-made-ez/news-health.jpg",
+     "title": "ChatGPT Health now connects to your Android sleep and activity data, even on the free plan",
+     "status": "Draft"
+    },
+    {
+     "img": "/hq/ai-made-ez/guide-level-3.jpg",
+     "title": "You already have Claude at work. 8 free lessons show what it can actually do for you",
+     "status": "Draft"
+    },
+    {
+     "img": "/hq/ai-made-ez/guide-level-4.jpg",
+     "title": "Your shop or app can call Claude directly. 8 free lessons show how, no coding needed",
+     "status": "Draft"
+    },
+    {
+     "img": "/hq/ai-made-ez/guide-level-5.jpg",
+     "title": "Planning an AI pilot at work? 8 free lessons to plan it, price it and keep it safe",
+     "status": "Draft"
+    },
+    {
+     "img": "/hq/ai-made-ez/templates-two-ways.jpg",
+     "title": "Same email, asked two ways. A blind judge scored one 2.8 and the other 5.0",
+     "status": "Draft"
+    },
+    {
+     "img": "/hq/ai-made-ez/templates-six-boxes.jpg",
+     "title": "Nobody needs to DM you a prompt. Here's the whole template, 6 boxes",
+     "status": "Draft"
+    },
+    {
+     "img": "/hq/ai-made-ez/keep-up-friday.jpg",
+     "title": "You don't need 40 AI newsletters. Every Friday: what changed, in plain words, with the source",
+     "status": "Draft"
+    },
+    {
+     "img": "/hq/ai-made-ez/kit-first-website.jpg",
+     "title": "Your first website, free, in about an hour. Every prompt is in the post",
+     "status": "Draft"
+    },
+    {
+     "img": "/hq/ai-made-ez/kit-automate.jpg",
+     "title": "Automate one boring task this week. Free, two steps, no code",
+     "status": "Draft"
+    },
+    {
+     "img": "/hq/ai-made-ez/news-sora-closed.jpg",
+     "title": "Sora is closed. Half the “best AI tools” lists still tell you to use it",
+     "status": "Draft"
+    },
+    {
+     "img": "/hq/ai-made-ez/tools-three-picks.jpg",
+     "title": "Which AI tool should you use? 3 picks for each job, from real users' reviews",
+     "status": "Draft"
+    }
+   ],
+   "approve": "/projects/skill-quest/school/social/approve-levels.html",
+   "weekly": {
+    "title": "Your weekly 30 minutes: Keep up",
+    "link": "/projects/skill-quest/keep-up/",
+    "steps": [
+     "Pick 3 items from official sources. The top story is one people can try today.",
+     "Write 4 lines each: headline, what changed, for you, try it (or nothing to do).",
+     "Take one screenshot for the top story, 1200x630, and credit it.",
+     "Add the week to the top of keep-up/weeks.js, run keepup_weeks.py, publish."
+    ]
+   }
   }
  },
  "habit-game": {

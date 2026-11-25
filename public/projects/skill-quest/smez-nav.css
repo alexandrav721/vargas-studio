@@ -16,8 +16,7 @@
 .smez-mbtn{display:none;margin-left:6px}
 .smez-bar :focus-visible{outline:2px solid #C7391F;outline-offset:2px}
 @media (max-width:900px){.smez-links{display:none}.smez-mbtn{display:inline-flex}.smez-sbtn kbd{display:none}
-  .smez-bar.open .smez-links{display:flex;flex-direction:column;align-items:stretch;position:absolute;left:0;right:0;top:100%;background:#FBFAF7;border-bottom:1px solid #E4E0D7;padding:4px 16px 10px;box-shadow:0 14px 24px -18px rgba(0,0,0,.4)}
-  .smez-bar.open .smez-links a{padding:14px 4px;border-bottom:1px solid #E4E0D7;font-size:17px}}
+  .smez-bar.open .smez-drawer{display:block}}
 /* search panel */
 .smez-search{position:fixed;inset:0;z-index:200;background:rgba(21,20,17,.45);display:flex;justify-content:center;align-items:flex-start;padding:8vh 12px 12px}
 .smez-search[hidden]{display:none}
@@ -40,3 +39,11 @@
 .smez-empty p{margin:0 0 10px}
 .smez-doors{display:flex;flex-wrap:wrap;gap:8px}
 .smez-doors a{border:1px solid #CFCAC0;border-radius:999px;padding:8px 12px;text-decoration:none;color:#151411;font-weight:600;font-size:14.5px;background:#fff}
+.smez-drawer{display:none;position:absolute;left:0;right:0;top:100%;background:#FBFAF7;border-bottom:1px solid #E4E0D7;padding:6px 16px 14px;box-shadow:0 14px 24px -18px rgba(0,0,0,.4);max-height:calc(100vh - 120px);overflow:auto}
+.smez-gh{margin:12px 0 6px;font:700 11px/1 "Schibsted Grotesk",system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#6b665e}
+.smez-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.smez-grid a{display:block;padding:10px 12px;min-height:56px;border:1.5px solid #E4E0D7;border-radius:12px;background:#fff;color:#151411;text-decoration:none}
+.smez-grid a b{display:block;font-weight:700;font-size:16px}
+.smez-grid a span{display:block;font-size:13px;color:#6b665e;margin-top:2px}
+.smez-grid a[aria-current=page]{border-color:#C7391F}
+.smez-dfoot{margin:14px 0 0;font-size:14px;color:#6b665e}.smez-dfoot a{color:#151411}
