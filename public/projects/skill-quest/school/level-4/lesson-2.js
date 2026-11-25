@@ -2,7 +2,7 @@
 (function () {
   var L = {
     n: 2, id: "d2", mins: 6, title: "Pick the chef by job.", stamp: "Chef",
-    seen: ["Model family", "Effort", "Latency", "Cost"],
+    seen: ["Model family", "Latency", "Cost"],
     terms: ["MTok", "Adaptive thinking", "Time to first token", "Model routing", "Fast mode"],
     teaser: ["PICK THE CHEF", "by job", "Level 2 met the chefs by name.<br>Now you hire one per job, by price.<br>The best salad chef is rarely the priciest.", "Five words. Six minutes."],
     lines: [

@@ -51,7 +51,7 @@
           "- Leave tool_choice on auto (forcing a tool returns an error on this model).\n" +
           (web ? "- Handle stop_reason \"pause_turn\" by sending the assistant turn back unchanged.\n" : "") +
           "- Then show the same program with the SDK’s Tool Runner (beta) in a few lines.\n" +
-          "Then tell me what to do with it: how to run it, a test question to try, and where I'd plug in my real system.";
+          "Then tell me what to do with it: how to run it, a test question to try, and where I’d plug in my real system.";
       },
       claude: "Open in Claude", done: "Done →"
     },
