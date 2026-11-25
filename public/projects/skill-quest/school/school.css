@@ -183,3 +183,5 @@ details.more summary{cursor:pointer;font-weight:600;min-height:28px}
 .habits.short li::before{left:0;top:11px;width:28px;height:28px;font-size:14px}
 .habits.short li b{font-size:1.02em;display:inline}
 .habits.short li a{font-size:.85em;margin:0}
+.lvl.lvl5{display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x proximity;padding-bottom:4px;margin-right:-16px;padding-right:16px}
+.lvl.lvl5 a{flex:0 0 auto;min-width:128px;scroll-snap-align:start}

@@ -34,7 +34,7 @@
   <div class="tools"><a class="chip give" href="/projects/skill-quest/school/support.html" aria-label="Keep it free">♥<span class="gt"> Keep it free</span></a><button class="chip" id="big" type="button" aria-pressed="false">Bigger text</button></div>
 </header>
 <main>
-  <nav class="lvl" aria-label="Choose a level"><a href="../"><b>Level 1</b><span>Everyday AI</span></a><a href="./" aria-current="page"><b>Level 2</b><span>How AI is built</span></a></nav>
+  <nav class="lvl lvl5" aria-label="Choose a level"><a href="../"><b>Level 1</b><span>Everyday AI</span></a><a href="../kitchen/" aria-current="page"><b>Level 2</b><span>How AI is built</span></a><a href="../level-3/"><b>Level 3</b><span>Claude at work</span></a><a href="../level-4/"><b>Level 4</b><span>Build with Claude</span></a><a href="../level-5/"><b>Level 5</b><span>Design AI systems</span></a></nav>
   <figure class="ez-photo"><img src="../../img/kitchen.jpg" alt="Chefs at work in a busy restaurant kitchen" style="object-position:center 40%" width="1200" height="600" fetchpriority="high"><figcaption>Photo: Paul Keller, <a href="https://commons.wikimedia.org/wiki/File:Chefs_at_work_(8150562599).jpg">CC BY 2.0</a></figcaption></figure>
   <p class="label">Level 2 · 10 lessons, about 6 minutes each</p>
   <h1>Speak AI builder.</h1>
@@ -78,7 +78,7 @@
     </details>
   </section>
 </main>
-<footer class="foot"><a href="../">AI Made EZ · Level 1</a><a href="glossary.html">Plain words</a><span>Not affiliated with Anthropic</span><span>Made by Alexandra Vargas</span></footer>
+<footer class="foot"><a href="../">All lessons</a><a href="glossary.html">Plain words</a><span>Not affiliated with Anthropic</span><span>Made by Alexandra Vargas</span></footer>
 <script src="../school.js" defer></script><script src="bk.js" defer></script><script src="words.js" defer></script><script src="mem.js" defer></script>
 <script>
 document.addEventListener("DOMContentLoaded", function () {
@@ -86,7 +86,7 @@ document.addEventListener("DOMContentLoaded", function () {
   var nextL = T.find(function (l) { return !done[l.id]; });
   document.getElementById("cta").innerHTML = nextL
     ? '<a class="btn" href="' + nextL.href + '">' + (n ? "Next: Lesson " : "Start Lesson ") + nextL.n + ", " + nextL.name + "</a>"
-    : '<a class="btn ghost" href="lesson-10.html">Redo graduation</a>';
+    : '<a class="btn" href="../level-3/">Start Level 3: Claude at work</a><a class="btn ghost" href="lesson-10.html">Redo graduation</a>';
   var TT = BK.taught(), KN = window.BKM ? BKM.knownCount(TT) : 0, DU = window.BKM ? BKM.due(BK.pool()).length : 0;
   var ST = BK.pool().length;
   document.getElementById("wk").innerHTML = (ST ? "<b>" + (KN ? "You know " + KN + (KN === 1 ? " word" : " words") + " for good" : ST + " words started") + ".</b> " + (KN ? "" : "Get each right on 2 different days to lock it in. ") : "") + (DU ? '<a class="btn ghost" href="challenge.html?review=1">Practice ' + Math.min(DU, 15) + (DU === 1 ? " word" : " words") + (Math.min(DU, 15) <= 8 ? " (2 min)" : " (4 min)") + "</a>" : (ST ? "Nothing due today. " : "")) + (ST && !DU ? '<a class="btn ghost" href="challenge.html?n=5">1-minute practice</a>' : "") + (window.BKM && BKM.streak() > 1 ? '<span class="streak">' + BKM.streak() + " days in a row. Nice.</span>" : "");

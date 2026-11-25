@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Level 5 cheat sheet · Design AI systems · AI Made EZ</title>
+<meta name="description" content="Every Level 5 lesson on one printable page.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../school.css">
+<style>
+.sheet{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:16px}
+.sheet section{border:1px solid var(--line2);border-radius:12px;background:var(--card);padding:12px 14px;break-inside:avoid}
+.sheet h2{margin:0;font-size:1.05rem}
+.sheet pre{margin:8px 0 0;white-space:pre-wrap;font:500 .82rem/1.5 var(--mono)}
+.sheet p{margin:8px 0 0;font-size:.88rem;color:var(--muted)}
+@media (max-width:560px){.sheet{grid-template-columns:1fr}}
+@media print{.top,.foot,.btns,#site-bar,.smez-nav{display:none!important}.sheet{gap:8px}body{background:#fff}}
+</style>
+<link rel="stylesheet" href="/site-bar.css" />
+<script src="/site-bar.js" data-project="skill-quest" data-kind="piece" defer></script>
+</head>
+<body class="bk">
+<header class="top">
+  <a class="logo" href="./">Level 5 <small>Design AI systems</small></a>
+  <div class="tools"><a class="chip give" href="/projects/skill-quest/school/support.html" aria-label="Keep it free">♥<span class="gt"> Keep it free</span></a><button class="chip" id="big" type="button" aria-pressed="false">Bigger text</button></div>
+</header>
+<main>
+  <p class="label">Level 5 · cheat sheet</p>
+  <h1>Design AI systems, on one page.</h1>
+  <div class="btns"><button class="btn" type="button" onclick="window.print()">Print it</button><a class="btn ghost" href="./">Back to the passport</a></div>
+  <div class="sheet"><section><h2>1. Set menu or free chef?</h2><pre>SET MENU OR FREE CHEF (PATTERNS)
+Augmented LLM = one call plus tools, search, memory
+Prompt chaining = steps in a row, each uses the last
+Routing = sort first, send to a specialist
+Parallelization = at once, then combine or vote
+Orchestrator-workers = a lead decides the subtasks at run time
+Evaluator-optimizer = write, grade, revise
+Agent = Claude picks the steps (costs more)</pre><p>Say it: “We pick the simplest pattern that works. Agents only when steps can’t be planned.”</p></section><section><h2>2. Build a standard outlet.</h2><pre>STANDARD OUTLET (MCP SERVER DESIGN)
+Server offers tools, resources, prompts
+Transport = the wiring
+stdio = local, the app starts it
+Streamable HTTP = a web server many reach
+OAuth = sign in once; the app gets a limited key
+Scopes = what that key may do (keep small)
+Namespacing = booking_search, crm_search</pre><p>Say it: “An MCP server is a standard outlet: few clear tools, the right wiring, small scopes.”</p></section><section><h2>3. The kitchen system.</h2><pre>THE KITCHEN SYSTEM (AGENT HARNESS)
+Harness = loop, tools, permissions, logs around the model
+Agent SDK = Claude Code’s harness in your app
+Managed Agents = Anthropic hosts it (beta)
+Session = one run, in its own sandbox
+Sandbox = walled-off computer where tools run
+Permission policy = runs alone, or waits for a yes
+Session budget = spend cap; it pauses at the cap</pre><p>Say it: “The model decides. The harness runs tools in a sandbox, asks first and caps spend.”</p></section><section><h2>4. A brigade of chefs.</h2><pre>A BRIGADE OF CHEFS (MULTI-AGENT)
+Multi-agent system = a lead plus helper agents
+Lead agent = plans, hands out, checks, combines
+Delegation = the handoff, with a clear brief
+Context isolation = each helper has its own counter
+Synthesis = combining reports into one answer
+Cost multiplier = agents ~4x a chat, multi-agent ~15x
+Good for independent pieces; weak for tightly linked steps</pre><p>Say it: “A brigade pays off only when the work splits into pieces the lead can check.”</p></section><section><h2>5. Double shifts.</h2><pre>DOUBLE SHIFTS (CONTEXT ENGINEERING)
+Context engineering = smallest set of useful tokens
+Context rot = recall slips as context grows
+Compaction = summarize the old shift
+Context editing = clear old tool results
+Memory tool = notes in a folder your app stores
+Structured notes = progress log + checklist + git
+Tool search = load tools only when needed</pre><p>Say it: “We clear old results, compact near the limit, and leave notes for the next shift.”</p></section><section><h2>6. Locks and keys.</h2><pre>LOCKS AND KEYS (AGENT SECURITY)
+Least privilege = only the keys the job needs
+Untrusted content = anything Claude reads can carry orders
+Lethal trifecta = data + untrusted content + a way out; cut one
+Network allowlist = only listed hosts
+Vault = secrets the sandbox never sees
+Approval gate = a person says yes first
+Prompts steer; settings lock</pre><p>Say it: “Fewest keys, everything it reads is untrusted, and a gate on what can’t be undone.”</p></section><section><h2>7. Head-office checks.</h2><pre>HEAD-OFFICE CHECKS (GOVERNANCE)
+Observability = you can see what happened
+Trace = the step-by-step record of one run
+Audit log = who did what, when
+Human oversight = someone reviews, and can switch it off
+RSP = Anthropic’s voluntary safety rulebook
+AI Safety Levels = Anthropic’s safeguard sets (ASL-3 safeguards since May 2025)</pre><p>Say it: “We trace every run, log who did what, and someone can switch it off.”</p></section><section><h2>8. Draw the floor plan.</h2><pre>DRAW THE FLOOR PLAN (DESIGN DOC)
+Design doc = the plan you defend; job and test first
+Trade-off = what you gave up, written down
+Cost model = tokens per task × price × volume
+Failure mode = one way it goes wrong
+Blast radius = how far damage spreads
+Approval matrix = who approves which action</pre><p>Say it: “Here’s the plan: the job, its test, the cost math, what can fail, and who approves.”</p></section></div>
+</main>
+<footer class="foot"><a href="./">Level 5 passport</a><a href="../kitchen/glossary.html">Plain words</a><span>Not affiliated with Anthropic</span><span>Made by Alexandra Vargas</span></footer>
+<script src="../school.js" defer></script>
+<script src="/projects/skill-quest/smez-index.js" defer></script>
+<script src="/projects/skill-quest/smez-nav.js" data-section="school" defer></script>
+</body>
+</html>

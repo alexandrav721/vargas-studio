@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", function () {
   function shuffle(a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
   var qs, i, right, missed, seen = [], wasMissed = [];
   var U = window.BK_UNTAUGHT || [], doneL = BK.done(), REVIEW = /review=1/.test(location.search);
-  var TW = W.filter(function (w) { return U.indexOf(w[0]) < 0; });
+  var TW = W.filter(function (w) { return U.indexOf(w[0]) < 0 && (w[6] || 2) === 2; });
   var finished = BK.TRACK.filter(function (l) { return doneL[l.id]; }).map(function (l) { return l.n; });
   var POOL = finished.length ? TW.filter(function (w) { return finished.indexOf(w[4]) >= 0; }) : TW;
   var COUNTS = finished.length > 0; /* answers only count toward memory for lessons you've done */

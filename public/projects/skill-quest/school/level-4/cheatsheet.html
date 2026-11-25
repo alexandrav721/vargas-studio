@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Level 4 cheat sheet · Build with Claude · AI Made EZ</title>
+<meta name="description" content="Every Level 4 lesson on one printable page.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../school.css">
+<style>
+.sheet{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:16px}
+.sheet section{border:1px solid var(--line2);border-radius:12px;background:var(--card);padding:12px 14px;break-inside:avoid}
+.sheet h2{margin:0;font-size:1.05rem}
+.sheet pre{margin:8px 0 0;white-space:pre-wrap;font:500 .82rem/1.5 var(--mono)}
+.sheet p{margin:8px 0 0;font-size:.88rem;color:var(--muted)}
+@media (max-width:560px){.sheet{grid-template-columns:1fr}}
+@media print{.top,.foot,.btns,#site-bar,.smez-nav{display:none!important}.sheet{gap:8px}body{background:#fff}}
+</style>
+<link rel="stylesheet" href="/site-bar.css" />
+<script src="/site-bar.js" data-project="skill-quest" data-kind="piece" defer></script>
+</head>
+<body class="bk">
+<header class="top">
+  <a class="logo" href="./">Level 4 <small>Build with Claude</small></a>
+  <div class="tools"><a class="chip give" href="/projects/skill-quest/school/support.html" aria-label="Keep it free">♥<span class="gt"> Keep it free</span></a><button class="chip" id="big" type="button" aria-pressed="false">Bigger text</button></div>
+</header>
+<main>
+  <p class="label">Level 4 · cheat sheet</p>
+  <h1>Build with Claude, on one page.</h1>
+  <div class="btns"><button class="btn" type="button" onclick="window.print()">Print it</button><a class="btn ghost" href="./">Back to the passport</a></div>
+  <div class="sheet"><section><h2>1. Your first order by code.</h2><pre>FIRST ORDER BY CODE
+Console = where you get keys and try requests
+Playground = test a request, then copy its code
+Key lives in ANTHROPIC_API_KEY, never in code
+Request = model · max_tokens · messages · system
+Model ID = the exact name, like claude-opus-5-5
+Response = a list of content blocks + stop_reason
+Usage = tokens in and out: your receipt</pre><p>Say it: “I made my first call: model, max_tokens, messages, and the key stays in an environment variable.”</p></section><section><h2>2. Pick the chef by job.</h2><pre>PICK THE CHEF
+Haiku 5.5: fast, cheap, simple high-volume jobs
+Sonnet 5.5: balanced · Opus 5.5: the usual default
+Fable 5.2: the hardest, longest work
+MTok = a million tokens; output costs 5x input
+Effort = low · medium · high · xhigh · max
+Time to first token = how soon words appear
+Test on your own tasks before you switch</pre><p>Say it: “We start on Opus 5.5, then test Haiku, Sonnet and lower effort on real tasks.”</p></section><section><h2>3. Same plate every time.</h2><pre>SAME PLATE EVERY TIME
+JSON Schema = the plate diagram: fields and types
+output_config.format = lock the final answer’s shape
+No extra fields allowed (your developer sets this)
+Strict tool use = tool inputs match the schema
+Validation = still check it in code
+Refusal or max_tokens can break the shape
+Code reads it? Schema. A person reads it? Prose.</pre><p>Say it: “When code reads the reply, we give Claude a JSON schema and still validate the result.”</p></section><section><h2>4. Wire the appliances.</h2><pre>WIRE THE APPLIANCES
+tools = name · description · input_schema
+stop_reason tool_use = your code’s turn
+tool_use block = Claude’s order, with an id
+tool_result block = your answer, same id
+Parallel calls = answer all, in one message
+Server tools (web search) run at Anthropic
+Tool Runner = the SDK runs the loop for you</pre><p>Say it: “Our code runs the loop: Claude orders a tool, we run it and send the result.”</p></section><section><h2>5. Prep once, serve many.</h2><pre>PREP ONCE, SERVE MANY
+cache_control = mark the end of the shared part
+Order: tools, system, messages; stable first
+Cache TTL = 5 min default, 1 hour costs more
+Cached reads = a small fraction of normal input
+Cache hit = cache_read_input_tokens above 0
+Batches = half price, most done in an hour, expire at 24 h, tag with custom_id
+Token counting = size it before you send</pre><p>Say it: “We cache the shared start of each prompt and batch overnight jobs at half price.”</p></section><section><h2>6. The recipe library, built.</h2><pre>THE RECIPE LIBRARY, BUILT
+Files API = upload once, reuse by file_id
+Document block = hand Claude a PDF or text
+Small library: send it whole
+Big library: chunk, embed, retrieve, cite
+Voyage AI = embeddings (Anthropic has none)
+BM25 = keyword search; reranker sorts finalists
+Contextual retrieval = a note on every chunk</pre><p>Say it: “Small libraries go in whole with citations. Big ones get retrieval: embeddings plus BM25, reranked, cited.”</p></section><section><h2>7. Taste tests in code.</h2><pre>TASTE TESTS IN CODE
+Eval = cases + a way to run + a way to grade
+Code grader = exact match, schema check: free
+Pairwise comparison = judge picks the better of two
+Rubric = what a judge scores one answer on
+Baseline = today’s results, saved · Pass rate = share that pass
+Log cost, seconds, stop_reason on every case
+Check the judge against your own grades</pre><p>Say it: “Every change reruns the same cases against the baseline, logging cost and time.”</p></section><section><h2>8. Opening night.</h2><pre>OPENING NIGHT
+429 = slow down; wait retry-after seconds
+429 with no retry-after = maybe the tier spend cap
+400 “specified usage limits” = your own spend limit
+529 overloaded = backoff: longer waits, plus jitter
+Other 400 · 401 · 404 = fix it, don’t retry
+Log request ID, tokens, seconds; never the key
+Keys on the server · spend limit set · evals run</pre><p>Say it: “Before launch: a spend limit, keys on the server, retries with backoff, and request IDs logged.”</p></section></div>
+</main>
+<footer class="foot"><a href="./">Level 4 passport</a><a href="../kitchen/glossary.html">Plain words</a><span>Not affiliated with Anthropic</span><span>Made by Alexandra Vargas</span></footer>
+<script src="../school.js" defer></script>
+<script src="/projects/skill-quest/smez-index.js" defer></script>
+<script src="/projects/skill-quest/smez-nav.js" data-section="school" defer></script>
+</body>
+</html>

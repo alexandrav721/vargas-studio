@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Level 5 words challenge · Design AI systems</title>
+<meta name="description" content="Quick questions across Level 5: Design AI systems.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../school.css">
+<style>
+.qcard{margin-top:14px}
+.qcard .pic{font-size:1.25rem;font-weight:700;font-family:"Bricolage Grotesque",sans-serif;margin:6px 0 4px}
+.score{font-family:"Bricolage Grotesque",sans-serif;font-size:3.2rem;font-weight:800;text-align:center;margin:10px 0 0}
+.review{list-style:none;padding:0;margin:14px 0 0}
+.review li{padding:8px 0;border-bottom:1px solid var(--line);font-size:.92rem}
+.review a{font-weight:600}
+</style>
+<link rel="stylesheet" href="/site-bar.css" />
+<script src="/site-bar.js" data-project="skill-quest" data-kind="piece" defer></script>
+</head>
+<body class="bk">
+<header class="top">
+  <a class="logo" href="./">Level 5 <small>Design AI systems</small></a>
+  <div class="tools"><a class="chip give" href="/projects/skill-quest/school/support.html" aria-label="Keep it free">♥<span class="gt"> Keep it free</span></a><button class="chip" id="big" type="button" aria-pressed="false">Bigger text</button></div>
+</header>
+<main id="app"></main>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<footer class="foot"><a href="./">Level 5 passport</a><a href="../kitchen/glossary.html">Plain words</a><span>Not affiliated with Anthropic</span><span>Made by Alexandra Vargas</span></footer>
+<script src="../../sounds.js" defer></script>
+<script src="../school.js" defer></script><script src="track.js" defer></script><script src="../kitchen/bk.js" defer></script><script src="../kitchen/words.js" defer></script><script src="../kitchen/mem.js" defer></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  var W = window.BK_WORDS, esc = BK.esc, app = document.getElementById("app"), N = /n=5/.test(location.search) ? 5 : 15;
+  function play(n, x) { if (window.SQSound) window.SQSound.play(n, x); }
+  function shuffle(a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+  var qs, i, right, missed, seen = [], wasMissed = [];
+  var U = window.BK_UNTAUGHT || [], doneL = BK.done(), REVIEW = /review=1/.test(location.search);
+  var TW = W.filter(function (w) { return U.indexOf(w[0]) < 0 && (w[6] || 2) === BK.LEVEL; });
+  var finished = BK.TRACK.filter(function (l) { return doneL[l.id]; }).map(function (l) { return l.n; });
+  var POOL = finished.length ? TW.filter(function (w) { return finished.indexOf(w[4]) >= 0; }) : TW;
+  var COUNTS = finished.length > 0; /* answers only count toward memory for lessons you've done */
+  function start() {
+    var dueT = window.BKM ? BKM.due(POOL.map(function (w) { return w[0]; })) : [];
+    var dueW = shuffle(POOL.filter(function (w) { return dueT.indexOf(w[0]) >= 0; }));
+    var byL = {}; POOL.forEach(function (w) { (byL[w[4]] = byL[w[4]] || []).push(w); });
+    var fresh = function (w) { return seen.indexOf(w[0]) < 0; };
+    if (POOL.filter(fresh).length < N) seen = [];
+    var pick = dueW.slice(0, N);
+    if (!REVIEW || pick.length < 5) {
+      Object.keys(byL).forEach(function (k) { if (pick.length >= N) return; var c = shuffle(byL[k].filter(function (w) { return fresh(w) && pick.indexOf(w) < 0; })); if (c.length) pick.push(c[0]); });
+      var rest = shuffle(POOL.filter(function (w) { return pick.indexOf(w) < 0 && fresh(w); }));
+      pick = pick.concat(rest.slice(0, N - pick.length));
+    }
+    var dueFirst = REVIEW ? pick.filter(function (w) { return dueT.indexOf(w[0]) >= 0; }).sort(function (a, b) { var ma = (BKM.all()[a[0]] || {}).res === "miss" ? 0 : 1, mb = (BKM.all()[b[0]] || {}).res === "miss" ? 0 : 1; return ma - mb; }) : [];
+    pick = dueFirst.concat(shuffle(pick.filter(function (w) { return dueFirst.indexOf(w) < 0; }))).slice(0, N);
+    wasMissed = pick.filter(function (w) { return (BKM.all()[w[0]] || {}).res === "miss"; }).map(function (w) { return w[0]; });
+    qs = pick.map(function (w, k) {
+      var kind = [1, 2, 1, 0, 1, 2, 1, 2, 1, 0][k % 10]; // mostly real meaning (1) and meeting lines (2), some kitchen pictures (0)
+      var re = new RegExp(w[0].replace(/[.*+?^${}()|[\]\\]/g, "\\$&").replace(/ /g, "[ -]?") + "(s|ed|ing|en)?", "i");
+      var heard = w[5] && re.test(w[5]) ? "“" + w[5].replace(re, "___") + "”" : null;
+      if (kind === 2 && !heard) kind = 0;
+      if (kind === 1) { var st = (w[0].toLowerCase().split(/[^a-z]+/).filter(function (x) { return x.length > 3; })[0] || w[0].toLowerCase()); if (w[2].toLowerCase().indexOf(st.slice(0, Math.max(4, st.length - 2))) >= 0) kind = heard ? 2 : 0; }
+      var asKitchen = kind === 0;
+      var lw = w[0].toLowerCase();
+      var big = function (t) { return (t.toLowerCase().match(/[a-z]{5,}/g) || []); };
+      var TWINS = ((window.BK_CONFIG && window.BK_CONFIG.twins) || []).concat([["Grader", "LLM-as-judge"], ["Agent", "Orchestrator"], ["Eval", "Test set"], ["Eval", "Success criteria"], ["MCP client", "Host"], ["Cost", "Cost per token"], ["Request", "Messages"], ["Model", "LLM"]]);
+      var twin = function (a, b) { return TWINS.some(function (p) { return (p[0] === a && p[1] === b) || (p[1] === a && p[0] === b); }); };
+      var ok = function (o) { if (twin(o[0], w[0])) return false; var lo = o[0].toLowerCase(); if (o === w || lo.indexOf(lw) >= 0 || lw.indexOf(lo) >= 0) return false; var a = big(w[1]); return !big(o[1]).some(function (x) { return a.indexOf(x) >= 0; }); };
+      var same = shuffle(TW.filter(function (o) { return o[4] === w[4] && ok(o); })).slice(0, 1);
+      var DW = POOL.length >= 8 ? POOL : TW; var others = same.concat(shuffle(DW.filter(function (o) { return o[4] !== w[4] && ok(o); })).slice(0, 2 - same.length));
+      var meaning = /^(Large language model|Retrieval-augmented generation|Model Context Protocol): /.test(w[2]) ? w[2].slice(w[2].indexOf(": ") + 2) : w[2];
+      meaning = meaning.charAt(0).toUpperCase() + meaning.slice(1);
+      return { w: w, prompt: kind === 2 ? heard : asKitchen ? w[1] : meaning, kind: kind === 2 ? "In a meeting you hear… which word fills the gap?" : asKitchen ? "In the kitchen, this is…" : "Which word means…", opts: shuffle([w].concat(others)) };
+    });
+    pick.forEach(function (w) { seen.push(w[0]); });
+    i = 0; right = 0; missed = []; draw();
+  }
+  function draw() {
+    if (i >= qs.length) return end();
+    var q = qs[i];
+    app.innerHTML = '<div class="prog"><span>Question ' + (i + 1) + " of " + qs.length + '</span><span class="bar"><i style="width:' + Math.round((i + 1) / qs.length * 100) + '%"></i></span></div>' +
+      '<section class="qcard"><p class="label">' + q.kind + '</p><p class="pic">' + esc(q.prompt) + '</p><ul class="claims">' +
+      q.opts.map(function (o, j) { return '<li><button type="button" data-j="' + j + '">' + esc(o[0]) + "</button></li>"; }).join("") + '</ul><div id="fb"></div></section>';
+    app.querySelectorAll("[data-j]").forEach(function (b) {
+      b.onclick = function () {
+        if (app.querySelector(".fbdone")) return;
+        var o = q.opts[+b.dataset.j], ok = o === q.w, fb = document.getElementById("fb"); if (window.BKM && COUNTS) BKM.record(q.w[0], ok);
+        b.classList.add(ok ? "right" : "wrong");
+        if (ok) { right++; play("tick", right); } else { missed.push(q.w); play("pick"); app.querySelectorAll("[data-j]").forEach(function (x) { if (q.opts[+x.dataset.j] === q.w) x.classList.add("right"); }); }
+        fb.innerHTML = '<p class="fb ' + (ok ? "good" : "try") + ' fbdone">' + (ok ? "Yes. <b>" + esc(q.w[0]) + "</b>: " : "It’s <b>" + esc(q.w[0]) + "</b>: ") + esc(q.w[2]) + '</p><div class="btns"><button class="btn" id="nx" type="button">' + (i + 1 < qs.length ? "Next" : "See my score") + "</button></div>";
+        document.getElementById("nx").onclick = function () { i++; draw(); window.scrollTo(0, 0); };
+        document.getElementById("nx").focus();
+      };
+    });
+  }
+  function end() {
+    var pct = right / qs.length, line = pct === 1 ? "Perfect. You know these words." : pct >= 0.86 ? "You know these words." : pct >= 0.5 ? "Getting fluent. Review the words below." : "A good start. Each word below links to its lesson.";
+    var fixed = wasMissed.filter(function (t) { return !missed.some(function (w) { return w[0] === t; }); }).length;
+    var then = (/then=(\d+)/.exec(location.search) || [])[1], nl = then ? BK.TRACK[+then - 1] : BK.TRACK.filter(function (l) { return !doneL[l.id]; })[0];
+    try { var best = +(localStorage.getItem("smez-builders-best") || 0); if (right > best) localStorage.setItem("smez-builders-best", String(right)); } catch (e) {}
+    app.innerHTML = '<p class="label" style="text-align:center">Level 5 words challenge</p><p class="score">' + right + "/" + qs.length + '</p><h1 style="text-align:center">' + line + "</h1>" + (fixed ? '<p class="fb good" style="text-align:center">' + (fixed === wasMissed.length ? "All " + fixed + " you missed last time: right today." : fixed + " of " + wasMissed.length + " you missed last time: right today.") + "</p>" : "") +
+      (window.BKM && COUNTS ? (function () { var k = BKM.knownCount(TW.map(function (w) { return w[0]; })); return '<p class="muted" style="text-align:center">' + (k ? "You know " + k + (k === 1 ? " word" : " words") + " for good. " : "") + "Missed words come back first next time.</p>"; })() : "") +
+      (missed.length ? '<h2>Words to review</h2><ul class="review">' + missed.map(function (w) { var l = BK.TRACK[w[4] - 1]; return '<li><b>' + esc(w[0]) + "</b> = " + esc(w[1]) + ' · <a href="../kitchen/glossary.html#' + w[0].toLowerCase().replace(/[^a-z0-9]+/g, "-") + '">look it up</a> · <a href="' + l.href + '">Lesson ' + l.n + "</a></li>"; }).join("") + "</ul>" : "") +
+      '<div class="btns">' + (REVIEW && nl ? '<a class="btn" href="' + nl.href + '">Next: Lesson ' + nl.n + " →</a>" : "") + '<button class="btn' + (REVIEW && nl ? " ghost" : "") + '" id="again" type="button">New round</button><button class="btn ghost" id="copy" type="button">Copy my score</button></div>';
+    document.getElementById("again").onclick = start;
+    document.getElementById("copy").onclick = function () {
+      var t = "I got " + right + "/" + qs.length + " on the Level 5 words challenge (AI Made EZ). " + location.href;
+      (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(function () { School.toast("Score copied"); }, function () { School.toast("Select the text and copy it"); });
+    };
+  }
+  var KT = window.BKM ? BKM.knownCount(TW.map(function (w) { return w[0]; })) : 0, DUE = window.BKM ? BKM.due(POOL.map(function (w) { return w[0]; })).length : 0;
+  app.innerHTML = '<p class="label">' + (REVIEW ? "Review" : "Level 5 words challenge") + ' · up to ' + N + ' questions · about ' + (N === 5 ? "1 minute" : REVIEW && DUE && DUE <= 8 ? "2 minutes" : "4 minutes") + '</p><h1>' + (REVIEW ? "Quick review." : "How many words stuck?") + "</h1>" +
+    '<p class="muted">' + (KT ? "You know " + KT + (KT === 1 ? " word" : " words") + " for good." : "") + (function () { var all = BKM.all(), dt = BKM.due(POOL.map(function (w) { return w[0]; })), mc = dt.filter(function (t) { return (all[t] || {}).res === "miss"; }).length; return mc ? " " + mc + (mc === 1 ? " word you missed comes first." : " words you missed come first.") : DUE ? " Words due today come first." : ""; })() + (finished.length ? " Only words from lessons you’ve finished." : " Practice round: finish a lesson to start counting words.") + "</p>" +
+    '<div class="btns"><button class="btn" id="go" type="button">Start</button></div>';
+  document.getElementById("go").onclick = start;
+});
+</script>
+<script src="/projects/skill-quest/smez-index.js" defer></script>
+<script src="/projects/skill-quest/smez-nav.js" data-section="school" defer></script>
+</body>
+</html>
