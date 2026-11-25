@@ -15,7 +15,7 @@ window.EZ_T = {
 [
 "context",
 "What Claude can’t know: facts, limits, anything to read.",
-"I’m a freelance photographer. Prep is done, so the price stays. I’m free next Tuesday or Wednesday."
+"I’m a freelance photographer. Prep is done, so the price stays. I’m free next Tuesday or Wednesday. Her email: (paste it here)"
 ],
 [
 "example",
@@ -33,7 +33,7 @@ window.EZ_T = {
 "Don’t apologize. Don’t offer a discount."
 ]
 ],
-"blank6": "<goal>[what you want, in one line]</goal>\n<who_its_for>[who reads it, and what they care about]</who_its_for>\n<context>[what claude can’t know: facts, limits, anything to read]</context>\n<example>[one sample of what good looks like]</example>\n<format>[length and shape]</format>\n<rules>[what to avoid]</rules>",
+"blank6": "<goal>[what you want, in one line]</goal>\n<who_its_for>[who reads it, and what they care about]</who_its_for>\n<context>[what Claude can’t know: facts, limits, anything to read]</context>\n<example>[one sample of what good looks like]</example>\n<format>[length and shape]</format>\n<rules>[what to avoid]</rules>",
 "jobs": [
 {
 "id": "reply-email",
@@ -68,7 +68,7 @@ window.EZ_T = {
 {
 "id": "summarize",
 "name": "Summarize a long document",
-"blank": "<goal>[what you need to know from it]</goal>\n<who_its_for>[you: your role or situation]</who_its_for>\n<context>[paste the document]</context>\n<format>[bullets? how many?]</format>\n<rules>[quote dates and numbers exactly; say “not stated” if missing]</rules>",
+"blank": "<goal>[what you need to know from it]</goal>\n<who_its_for>[you: your role or situation]</who_its_for>\n<context>[paste the document]</context>\n<format>[bullets? how many?]</format>\n<rules>Quote dates and numbers exactly. Say “not stated” if something is missing.</rules>",
 "filled": "<goal>Tell me what changes for me and what I have to do.</goal>\n<who_its_for>Me: part-time (24 hours a week), I live 12 miles away, I usually drive.</who_its_for>\n<context>NEW HYBRID WORK POLICY (effective March 2, 2027)\nAll full-time staff will work in the office Tuesday, Wednesday and Thursday. Mondays and Fridays are optional remote days. Part-time staff (under 30 hours a week) must be in the office on at least two of the three core days, chosen with their manager by February 15, 2027. Desk booking moves to the Spaces app; bookings open 7 days ahead and unclaimed desks are released at 10:00 a.m. The parking stipend rises from $40 to $65 a month for staff who come in three or more days a week. Staff who live more than 50 miles away may apply for an exception through HR by February 1, 2027. Home-office equipment purchased under the old policy stays with the employee. The monthly internet allowance of $30 ends for full-time staff but continues for part-time staff. Managers will review attendance quarterly; the first review is in June 2027. Questions go to hr@example.com.</context>\n<format>5 bullets max, then “What I must do, by when”.</format>\n<rules>Quote dates and dollar amounts exactly. Say “not stated” if something isn’t in the policy.</rules>",
 "material": "NEW HYBRID WORK POLICY (effective March 2, 2027)\nAll full-time staff will work in the office Tuesday, Wednesday and Thursday. Mondays and Fridays are optional remote days. Part-time staff (under 30 hours a week) must be in the office on at least two of the three core days, chosen with their manager by February 15, 2027. Desk booking moves to the Spaces app; bookings open 7 days ahead and unclaimed desks are released at 10:00 a.m. The parking stipend rises from $40 to $65 a month for staff who come in three or more days a week. Staff who live more than 50 miles away may apply for an exception through HR by February 1, 2027. Home-office equipment purchased under the old policy stays with the employee. The monthly internet allowance of $30 ends for full-time staff but continues for part-time staff. Managers will review attendance quarterly; the first review is in June 2027. Questions go to hr@example.com.",
 "result": {
@@ -179,7 +179,7 @@ window.EZ_T = {
 "overall": 2.3
 },
 "winner": "template",
-"reason": "The boxes answer is a ready-to-post caption of about 30 words with no emoji or hashtags that includes all the required details (Saturdays from 8am, $4.50, grandmother's Swedish recipe, gone by 11), while the plain answer uses emojis and hashtags, runs long, and leaves placeholders for details that were given.",
+"reason": "The boxes answer is a ready-to-post caption of about 30 words with no emoji or hashtags that includes all the required details (Saturdays from 8am, $4.50, grandmother's Swedish recipe, gone by 11), while the plain answer uses emojis and hashtags, runs long.",
 "plainAsk": "Write an Instagram post for my bakery’s new cardamom buns.",
 "plainOut": "Here's an Instagram post you can use. I didn't have your bakery's name, prices or hours, so I left placeholders for them.\n\n---\n\n**Caption:**\n\nCardamom buns are here. 🤎\n\nSoft, buttery dough. Freshly ground cardamom. A sweet, spiced swirl in every bite. They're baked fresh each morning, and they smell as good as they taste.\n\nCome early, because they won't last long.\n\n📍 [Bakery name], [address]\n🕖 [Hours]\n💰 [Price] each, or [price] for a box of 4\n\nTag the friend you'd share one with (or don't, and keep both). 😉\n\n#cardamombuns #freshbaked #localbakery #bakerylove #pastrylover #[yourcity]eats #supportlocal #morningtreat\n\n---\n\n**Photo ideas:**\n- A close-up of a bun being pulled apart, so the swirl shows.\n- A tray of buns fresh out of the oven, with steam or morning light.\n- A hand holding one bun next to a coffee.\n\n**Shorter version (for Stories or a Reel):**\n\nNew at [Bakery name]: cardamom buns. Warm, spiced and baked fresh daily. Come get one before they sell out. 🤎\n\n---\n\nIf you give me your bakery's name, location, price, tone (cozy, playful or upscale) and whether the buns are seasonal, I can tailor this further.",
 "templateOut": "Cardamom buns, Saturdays only, from 8am. $4.50 each, made with real cardamom from my grandmother's Swedish recipe. Grab one on your way to work. They're usually gone by 11."
@@ -218,7 +218,7 @@ window.EZ_T = {
 {
 "id": "writing-feedback",
 "name": "Feedback on my writing",
-"blank": "<goal>[what the writing must do]</goal>\n<who_its_for>[who will read it]</who_its_for>\n<context>[paste your writing]</context>\n<format>[e.g. top 3 fixes, with a rewrite of the worst line]</format>\n<rules>[keep my voice; don’t rewrite the whole thing]</rules>",
+"blank": "<goal>[what the writing must do]</goal>\n<who_its_for>[who will read it]</who_its_for>\n<context>[paste your writing]</context>\n<format>[e.g. top 3 fixes, with a rewrite of the worst line]</format>\n<rules>Keep my voice. Don’t rewrite the whole thing.</rules>",
 "filled": "<goal>Get an interview for a Program Coordinator job.</goal>\n<who_its_for>A hiring manager at a nonprofit reading 100 cover letters.</who_its_for>\n<context>I am writing to apply for the Program Coordinator position. I am a hard worker and a team player who is passionate about helping people. I have worked at Riverside Food Bank for three years, where I did many things including volunteers and events. I think I would be a great fit for your organization and I hope to hear from you soon.\n\nFacts I left out: I scheduled 60 volunteers a month and ran 4 events that raised $18,000.</context>\n<format>My top 3 fixes, most important first. Then rewrite only my weakest sentence.</format>\n<rules>Keep my voice. Don’t rewrite the whole letter. Don’t invent facts.</rules>",
 "material": "I am writing to apply for the Program Coordinator position. I am a hard worker and a team player who is passionate about helping people. I have worked at Riverside Food Bank for three years, where I did many things including volunteers and events. I think I would be a great fit for your organization and I hope to hear from you soon.",
 "result": {
@@ -265,12 +265,12 @@ window.EZ_T = {
 "id": "clean-table",
 "name": "Clean up a list or table",
 "blank": "<goal>Clean up this [list or table].</goal>\n<context>[paste it]</context>\n<format>[columns you want, sort order]</format>\n<rules>Don’t guess missing values. Mark them “missing”. List every change you made.</rules>",
-"filled": "<goal>Clean up our volunteer sign-up list.</goal>\n<context>[paste the messy list]</context>\n<format>Columns: name, email, phone, shift. Sort by shift.</format>\n<rules>Don’t guess missing values. Mark them “missing”. Remove exact duplicates and list every change you made.</rules>",
+"filled": "<goal>Clean up our volunteer sign-up list.</goal>\n<context>Ana Ruiz, ana@example.com, Sat am\nana ruiz | ana@example.com | Saturday morning\nBen Cho, 520-555-0143, sun\nCarla M, carla@example.com, ?</context>\n<format>Columns: name, email, phone, shift. Sort by shift.</format>\n<rules>Don’t guess missing values. Mark them “missing”. Remove exact duplicates and list every change you made.</rules>",
 "material": "",
 "result": null
 }
 ],
-"skillBlank": "---\nname: [short-name-with-dashes]\ndescription: [What it does, and WHEN to use it: “Use when I ask to…”. Claude reads only this line to decide.]\n---\n\n# [Skill name]\n\n## Before you start\n[What to assume. When to ask one question, and when not to.]\n\n## Steps\n1. [First thing to do]\n2. [Next]\n3. [Next]\n\n## Never\n- [Mistakes plain AI makes for this job]\n\n## Output format\n[Exactly what the answer looks like: sections, length.]\n\n## Check before you answer\n- [One check, e.g. “Every number matches the source.”]",
+"skillBlank": "---\nname: [short-name-with-dashes]\ndescription: [What it does, then when to use it. Example - Polishes my emails. Use when I ask to fix or polish an email. Claude reads only this line to decide.]\n---\n\n# [Skill name]\n\n## Before you start\n[What to assume. When to ask one question, and when not to.]\n\n## Steps\n1. [First thing to do]\n2. [Next]\n3. [Next]\n\n## Never\n- [Mistakes plain AI makes for this job]\n\n## Output format\n[Exactly what the answer looks like: sections, length.]\n\n## Check before you answer\n- [One check, e.g. “Every number matches the source.”]",
 "standing": [
 {
 "id": "preferences",

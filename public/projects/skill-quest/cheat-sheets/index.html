@@ -16,6 +16,9 @@ main{max-width:900px}
 .sec h2{margin:0}
 .sec > p.muted{margin-top:4px}
 .jump{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.how3{list-style:none;counter-reset:s;margin:14px 0 0;padding:0;display:grid;gap:6px}
+.how3 li{counter-increment:s;position:relative;padding-left:38px;font-size:1.02rem}
+.how3 li::before{content:counter(s);position:absolute;left:0;top:0;width:26px;height:26px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;font:700 13px var(--mono)}
 /* the order form: XML lines with a plain label beside each */
 .form{margin-top:16px;border:2px solid var(--ink);border-radius:14px;background:#fff;overflow:hidden}
 .form .row{display:grid;grid-template-columns:1fr;gap:2px;padding:10px 14px;border-top:1px dashed var(--line2)}
@@ -75,21 +78,22 @@ pre.tpl .t{color:var(--accent);font-weight:700}
     <p class="label">Free · copy, fill in, send</p>
     <h1>The templates.</h1>
     <p class="muted">AI isn’t hard. It just can’t read your mind. Fill in six boxes and it stops guessing.</p>
+    <ol class="how3"><li><b>Copy</b> a template.</li><li><b>Paste</b> it into a new Claude or ChatGPT chat.</li><li><b>Type over</b> each [bracket] with your words.</li><li><b>Send.</b></li></ol>
     <div class="jump"><a class="btn" href="#six">The 6 boxes</a><a class="btn ghost" href="#jobs">10 job templates</a><a class="btn ghost" href="#skill">Skill template</a><a class="btn ghost" href="one-page.html">One-page cheat sheet</a></div>
   </section>
 
   <section class="sec" id="six">
     <p class="label">1 · The 6 boxes</p>
     <h2>Every good order has six boxes.</h2>
-    <p class="muted">The labels are XML tags: plain-text labels Claude is trained to read. Leave a box out if it doesn’t apply.</p>
+    <p class="muted">Keep the words in &lt;angle brackets&gt;: they tell Claude which box is which. Don’t need a box? Delete that line.</p>
     <div class="form" id="boxes"></div>
     <div class="copyrow"><button class="copy" type="button" data-copy="blank6">Copy the blank template</button><button class="copy ghost" type="button" data-copy="filled6">Copy the filled example</button></div>
   </section>
 
   <section class="sec" id="proof">
     <p class="label">2 · Before and after</p>
-    <h2>Same job. Plain ask vs the 6 boxes.</h2>
-    <p class="muted">Real answers, run separately, then scored by a judge who didn’t know which was which.</p>
+    <h2>Same job, asked two ways.</h2>
+    <p class="muted">The plain ask is what most people type. The template makes you add the facts. A separate Claude judged both answers without knowing which was which, out of 5.</p>
     <div id="hero-proof"></div>
     <div class="tally" id="tally"></div>
     <p class="small2" id="how"></p>
@@ -105,7 +109,7 @@ pre.tpl .t{color:var(--accent);font-weight:700}
   <section class="sec" id="skill">
     <p class="label">4 · The skill template</p>
     <h2>A recipe card Claude keeps.</h2>
-    <p class="muted">A skill is a file of instructions Claude saves and uses whenever your request matches its description. Write it once; it works every time. (Level 3, lesson 7 shows how to add one.)</p>
+    <p class="muted">A skill is a file of instructions Claude saves and uses whenever your request matches its description. Write it once; it works every time. (<a href="../school/level-3/lesson-7.html">Level 3, lesson 7</a> shows how to add one.)</p>
     <div class="pair">
       <div class="pane"><p class="k">Blank</p><pre class="tpl" id="skillblank"></pre><div class="copyrow"><button class="copy" type="button" data-copy="skillBlank">Copy the blank skill</button></div></div>
       <div class="pane"><p class="k">A real one that won</p><pre class="tpl" id="skillreal">Loading…</pre><div class="copyrow"><a class="copy ghost" href="../templates/" style="text-decoration:none;display:inline-flex;align-items:center">See all 8 ready-made skills</a></div></div>
@@ -145,14 +149,14 @@ pre.tpl .t{color:var(--accent);font-weight:700}
   function proof(j, open) {
     var r = j.result; if (!r) return "";
     var w = r.winner === "template" ? '<span class="w">Template won</span>' : r.winner === "tie" ? '<span class="w tie">Tie</span>' : '<span class="w tie">Plain won</span>';
-    return '<div class="proof">' + bar("Plain ask", r.plainScore, "p") + bar("With the boxes", r.templateScore, "t") +
+    return '<div class="proof">' + bar("Plain ask", r.plainScore, "p") + bar("With a template", r.templateScore, "t") +
       '<p class="verdict">' + w + esc(r.reason) + "</p>" +
-      '<details' + (open ? " open" : "") + '><summary>Read both answers</summary><div class="pair"><div class="pane"><p class="k">Plain ask: “' + esc(r.plainAsk.split("\n")[0]) + '”</p><div class="out">' + esc(r.plainOut) + '</div></div><div class="pane"><p class="k">With the boxes</p><div class="out">' + esc(r.templateOut) + "</div></div></div></details></div>";
+      '<details' + (open ? " open" : "") + '><summary>Read both answers</summary><div class="pair"><div class="pane"><p class="k">Plain ask: “' + esc(r.plainAsk.split("\n")[0]) + '”</p><div class="out">' + esc(r.plainOut) + '</div></div><div class="pane"><p class="k">With a template</p><div class="out">' + esc(r.templateOut) + "</div></div></div></details></div>";
   }
   document.getElementById("hero-proof").innerHTML = proof(hero, false);
   var tested = T.jobs.filter(function (j) { return j.result; }), wins = tested.filter(function (j) { return j.result.winner === "template"; }).length, ties = tested.filter(function (j) { return j.result.winner === "tie"; }).length, losses = tested.length - wins - ties;
   document.getElementById("tally").innerHTML = '<span class="win">Template won ' + wins + " of " + tested.length + "</span><span>Tied " + ties + "</span><span>Plain won " + losses + "</span>";
-  document.getElementById("how").textContent = T.sample + " Each answer came from a separate run of Claude Sonnet. A separate judge scored them blind (correct, complete, useful, clear) against what the person needed. Run 25 Nov 2026.";
+  document.getElementById("how").textContent = T.sample + " Each answer came from a separate Claude run. A separate Claude judge scored them blind (correct, complete, useful, clear) against what the person needed. Run 25 Nov 2026.";
   var cur = 0;
   document.getElementById("jobtabs").innerHTML = T.jobs.map(function (j, i) { return '<button class="chip" type="button" data-j="' + i + '" aria-pressed="' + (i === 0) + '">' + esc(j.name) + (j.result ? " ✓" : "") + "</button>"; }).join("");
   function job() {
@@ -174,7 +178,7 @@ pre.tpl .t{color:var(--accent);font-weight:700}
     var b = e.target.closest("[data-copy]"); if (!b) return;
     var t = COPY[b.dataset.copy], lbl = b.textContent;
     function ok() { b.textContent = "Copied"; b.classList.add("done"); setTimeout(function () { b.textContent = lbl; b.classList.remove("done"); }, 1600); }
-    if (navigator.clipboard) navigator.clipboard.writeText(t).then(ok, ok); else ok();
+    function fail() { b.textContent = "Press and hold the text to copy"; setTimeout(function () { b.textContent = lbl; }, 2600); } if (navigator.clipboard) navigator.clipboard.writeText(t).then(ok, fail); else fail();
   });
 })();
 </script>
