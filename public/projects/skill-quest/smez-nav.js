@@ -6,7 +6,17 @@
   "use strict";
   var me = document.currentScript, section = me && me.dataset.section || "";
   var BASE = "/projects/skill-quest/";
-  var LINKS = [["start", "Start here", BASE + "start/"], ["school", "Lessons", BASE + "school/"], ["words", "Plain words", BASE + "school/kitchen/glossary.html"], ["use", "Use AI well", BASE + "use-ai/"], ["tools", "Tools", BASE + "tools/"], ["kits", "Kits", BASE + "kits/"], ["templates", "Templates", BASE + "cheat-sheets/"], ["kit", "App planner", BASE + "build-kit/"], ["keepup", "Keep up", BASE + "keep-up/"], ["about", "About", BASE + "about/"]];
+  var LINKS = [["start", "Start here", BASE + "start/"], ["school", "Lessons", BASE + "school/"], ["words", "Plain words", BASE + "school/kitchen/glossary.html"], ["use", "Use AI well", BASE + "use-ai/"], ["tools", "Tools", BASE + "tools/"], ["templates", "Templates", BASE + "cheat-sheets/"], ["kit", "App planner", BASE + "build-kit/"], ["keepup", "Keep up", BASE + "keep-up/"], ["about", "About", BASE + "about/"]];
+  /* the phone menu: a few groups instead of one long list */
+  var GROUPS = [["Learn", ["start", "school", "words"]], ["Make", ["templates", "kit"]], ["Choose", ["tools", "use"]], ["Stay current", ["keepup"]]];
+  var SUB = { start: "New? Begin here", school: "5 levels, short lessons", words: "Every AI term, plainly", templates: "Fill in, download", kit: "Plan an app", tools: "Which AI tool?", use: "8 habits that work", keepup: "This week in AI" };
+  function drawerHTML() {
+    var by = {}; LINKS.forEach(function (l) { by[l[0]] = l; });
+    return '<div class="smez-drawer">' + GROUPS.map(function (g) {
+      return '<p class="smez-gh">' + g[0] + '</p><div class="smez-grid">' + g[1].map(function (k) { var l = by[k]; if (!l) return "";
+        return '<a href="' + l[2] + '"' + (k === section ? ' aria-current="page"' : "") + "><b>" + l[1] + "</b><span>" + (SUB[k] || "") + "</span></a>"; }).join("") + "</div>";
+    }).join("") + '<p class="smez-dfoot"><a href="' + BASE + 'about/">About</a> · <a href="' + BASE + 'school/support.html">Keep it free</a></p></div>';
+  }
   function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
   function css() { if (document.getElementById("smez-nav-css")) return; var l = document.createElement("link"); l.id = "smez-nav-css"; l.rel = "stylesheet"; l.href = BASE + "smez-nav.css"; document.head.appendChild(l); }
 
@@ -113,7 +123,7 @@
     var nav = document.createElement("nav");
     nav.className = "smez-bar"; nav.setAttribute("aria-label", "AI Made EZ");
     nav.innerHTML = '<div class="smez-in"><a class="smez-logo" href="' + BASE + 'start/">AI Made <b>EZ</b></a>' +
-      '<ul class="smez-links">' + LINKS.map(function (l) { return '<li><a href="' + l[2] + '"' + (l[0] === section ? ' aria-current="page"' : "") + ">" + l[1] + "</a></li>"; }).join("") + "</ul>" +
+      '<ul class="smez-links">' + LINKS.map(function (l) { return '<li><a href="' + l[2] + '"' + (l[0] === section ? ' aria-current="page"' : "") + ">" + l[1] + "</a></li>"; }).join("") + "</ul>" + drawerHTML() +
       '<button type="button" class="smez-sbtn"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5l5 5"/></svg>Search<kbd>/</kbd></button>' +
       '<button type="button" class="smez-mbtn" aria-expanded="false">Menu</button></div>';
     document.body.insertBefore(nav, document.body.firstChild);

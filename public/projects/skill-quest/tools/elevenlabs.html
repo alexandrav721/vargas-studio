@@ -5,13 +5,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ElevenLabs review: free plan, price, real complaints · AI Made EZ</title>
-<!-- og:start -->
-<link rel="canonical" href="https://vargas-studio.pages.dev/projects/skill-quest/tools/elevenlabs">
-<meta property="og:type" content="website"><meta property="og:site_name" content="AI Made EZ">
-<meta property="og:title" content="ElevenLabs review: free plan, price, real complaints · AI Made EZ"><meta property="og:description" content="Turns text into natural-sounding speech and can clone voices. Free plan: 10,000 credits a month. No commercial license. What real users like and complain…">
-<meta property="og:url" content="https://vargas-studio.pages.dev/projects/skill-quest/tools/elevenlabs"><meta property="og:image" content="https://vargas-studio.pages.dev/projects/skill-quest/og/tools.jpg">
-<meta name="twitter:card" content="summary_large_image">
-<!-- og:end -->
 <meta name="ez-og-image" content="https://vargas-studio.pages.dev/projects/skill-quest/og/tools.jpg">
 <meta name="description" content="Turns text into natural-sounding speech and can clone voices. Free plan: 10,000 credits a month. No commercial license. What real users like and complain…">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -42,13 +35,18 @@
   if (!window.EZ_TOOL_ID) { location.replace(T.id + ".html"); return; }
   var KITS = { "google-stitch": ["first-website", "Your first website"], "lovable": ["first-app", "Your first app"], "bolt": ["first-website", "Your first website"], "zapier": ["automate-task", "Automate one boring task"] };
   var jobName = {}; D.jobs.forEach(function (j) { jobName[j[0]] = j[1]; });
+  function paidChip(p) { /* "From $25/mo (Pro...)" -> "From $25/mo" */
+    if (/^no paid/i.test(p)) return "No paid plan";
+    var m = String(p).match(/[$€£][\d.,]+(\s?\/\s?[a-z]+)?/i);
+    return m ? "Paid from " + m[0].replace(/\s/g, "") : "Paid plan: see below";
+  }
   function rv(list, cls) {
     return '<ul class="rv ' + cls + '">' + list.map(function (r) {
       return "<li>" + esc(r.t) + "<small>" + (r.url ? '<a href="' + esc(r.url) + '" target="_blank" rel="noopener nofollow">' + esc(r.src) + "</a>" : esc(r.src)) + (r.date ? " · " + esc(r.date) : "") + "</small></li>";
     }).join("") + "</ul>";
   }
   var h = '<section class="hero"><p class="label">' + esc(T.jobs.map(function (j) { return jobName[j]; }).join(" · ")) + "</p><h1>" + esc(T.name) + '</h1><p class="muted">' + esc(T.line) + "</p>" +
-    '<div class="meta"><span>' + esc(T.maker) + "</span><span>Beginner-friendly " + T.score + '/5</span><span class="free">' + esc(U.freeBadge(T)) + "</span></div>" +
+    '<div class="meta"><span>Easy for beginners ' + T.score + '/5</span><span class="free">' + esc(U.freeBadge(T)) + "</span><span>" + esc(paidChip(T.paid)) + "</span><span>By " + esc(T.maker) + "</span></div>" +
     (T.laterNote ? '<p class="note">' + esc(T.laterNote) + "</p>" : "") + "</section>";
   var EXs = T.examples || [];
   function credit(x) { return (x.tool ? "Made with " + esc(x.tool) : "") + (x.prompt ? " · prompt: “" + esc(x.prompt.length > 120 ? x.prompt.slice(0, 117) + "…" : x.prompt) + "”" : "") +
@@ -59,13 +57,15 @@
     }).join("") + '</div><p class="small2">Real outputs people shared under free-to-reuse licenses. Not made by us, not chosen by the company.</p>'
     : '') +
     (T.gallery ? '<p style="margin-top:10px"><a class="btn ghost" href="' + esc(T.gallery) + '" target="_blank" rel="noopener">See their examples ↗</a></p>' : "") + "</section>";
-  h += '<section class="sec"><div class="facts">' +
-    '<div class="fact"><p class="k">Best at</p><p>' + esc(T.bestAt) + "</p></div>" +
-    '<div class="fact"><p class="k">Who it’s for</p><p>' + esc(T.whoFor) + "</p></div>" +
-    '<div class="fact"><p class="k">Free plan</p><p>' + esc(T.free) + "</p></div>" +
-    '<div class="fact"><p class="k">Cheapest paid</p><p>' + esc(T.paid) + "</p></div></div>" +
+  h += '<section class="sec"><div class="duo">' +
+    '<div><p class="k">Best at</p><p>' + esc(T.bestAt) + "</p></div>" +
+    '<div><p class="k">Who it’s for</p><p>' + esc(T.whoFor) + "</p></div></div>" +
+    '<div class="duo price"><div><p class="k">Free</p><p>' + esc(T.free) + "</p></div>" +
+    '<div><p class="k">Cheapest paid</p><p>' + esc(T.paid) + "</p></div></div>" +
     '<p class="checked">' + (T.confirmed ? "From the official page, " : "Not confirmed on the official page. Check before you pay. Seen ") + esc(D.checked) + (T.priceSource ? ' · <a href="' + esc(T.priceSource) + '" target="_blank" rel="noopener">pricing page</a>' : "") + "</p></section>";
-  h += '<section class="sec"><p class="label">What real users say</p><h2>Likes</h2>' + rv(T.likes || [], "good") + '<h2 style="margin-top:18px">Complaints</h2>' + rv(T.complaints || [], "bad");
+  h += '<section class="sec" id="say"><p class="label">What real users say</p>' +
+    '<div class="tabs2" role="tablist"><button type="button" role="tab" aria-selected="true" data-tab="good">✓ Likes</button><button type="button" role="tab" aria-selected="false" data-tab="bad">✗ Complaints</button></div>' +
+    '<div class="vs"><div class="col good"><p class="k">✓ Likes</p>' + rv(T.likes || [], "good") + '</div><div class="col bad"><p class="k">✗ Complaints</p>' + rv(T.complaints || [], "bad") + "</div></div>";
   if (T.ratings && T.ratings.length) h += '<div class="rates">' + T.ratings.map(function (r) { return '<a href="' + esc(r.url) + '" target="_blank" rel="noopener nofollow">' + esc(r.site) + " " + esc(r.score) + (r.count ? " · " + esc(r.count) : "") + "</a>"; }).join("") + "</div>";
   if (T.ratingsNote) h += '<p class="small2">' + esc(T.ratingsNote) + "</p>";
   h += "</section>";
@@ -78,6 +78,9 @@
     (K ? '<a class="btn" href="../kits/' + K[0] + '.html">Kit: ' + esc(K[1]) + " →</a> " : "") + '<a class="btn ghost" href="./#' + T.jobs[0] + '">Other picks</a>' +
     (T.url ? ' <a class="btn ghost" href="' + esc(T.url) + '" target="_blank" rel="noopener">Official site ↗</a>' : "") + "</div>";
   document.getElementById("tool").innerHTML = h;
+  var say = document.getElementById("say");
+  if (say) say.addEventListener("click", function (e) { var b = e.target.closest("[data-tab]"); if (!b) return;
+    say.querySelectorAll("[data-tab]").forEach(function (x) { x.setAttribute("aria-selected", String(x === b)); }); say.dataset.show = b.dataset.tab; });
 })();
 </script>
 <script src="../school/school.js" defer></script>
