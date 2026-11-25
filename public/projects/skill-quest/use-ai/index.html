@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Use AI well · AI Made EZ</title>
+<meta name="description" content="Seven habits that work in any AI tool, and the 12 AI tools people talk about, in plain words. Free, no affiliate links.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../school/school.css">
+<style>
+main{max-width:900px}
+.hero h1{font-size:clamp(40px,8vw,64px);margin-bottom:6px}
+.stack{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:18px 0 6px;font:700 14px var(--text)}
+.stack span{padding:7px 11px;border-radius:999px;border:2px solid var(--ink);background:var(--card)}
+.stack span.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.stack i{font-style:normal;color:var(--muted)}
+.stack-note{margin:6px 0 0;color:var(--muted);max-width:46ch}
+.jump{display:flex;gap:8px;margin-top:18px}
+.sec{margin-top:46px;scroll-margin-top:70px}
+.sec h2{margin:0}
+.sec > p.muted{margin-top:4px}
+.habits{list-style:none;margin:18px 0 0;padding:0;display:grid;gap:14px;counter-reset:h}
+.habit{counter-increment:h;border:1px solid var(--line2);border-radius:16px;background:var(--card);padding:18px}
+.habit h3{margin:0;display:flex;gap:10px;align-items:baseline;font:800 1.25em/1.15 var(--display);letter-spacing:-.02em}
+.habit h3::before{content:counter(h);flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:#fff;font:700 15px/30px var(--mono);text-align:center;transform:translateY(-2px)}
+.habit .kl{margin:6px 0 0 40px;color:var(--muted)}
+.pair{display:grid;gap:10px;margin-top:14px}
+@media (min-width:720px){.pair{grid-template-columns:1fr 1.25fr}}
+.say{border-radius:10px;padding:12px 14px;font:500 14.5px/1.55 var(--mono)}
+.say small{display:block;font:700 11px/1 var(--text);letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px}
+.say.no{border:2px dashed var(--line2);color:var(--muted)}
+.say.yes{background:#fff;border:2px solid var(--ink)}
+.say.yes small{color:var(--accent)}
+.hrow{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:10px;flex-wrap:wrap}
+.hrow a{font-size:.85rem;color:var(--muted)}
+.copy{font:inherit;font-weight:700;font-size:.95rem;padding:10px 16px;min-height:44px;border-radius:999px;border:2px solid var(--ink);background:var(--ink);color:#fff;cursor:pointer}
+.copy.done{background:var(--ok);border-color:var(--ok)}
+.filters{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.filters .chip[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.tlist{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:12px}
+@media (min-width:720px){.tlist{grid-template-columns:1fr 1fr}}
+.tool{border:1px solid var(--line2);border-radius:16px;background:var(--card);scroll-margin-top:70px}
+.tool:target,.tool.hit{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent)}
+.tool summary{list-style:none;cursor:pointer;padding:16px 18px;display:grid;gap:4px}
+.tool summary::-webkit-details-marker{display:none}
+.tool .nm{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.tool .nm b{font:800 1.35em/1.1 var(--display);letter-spacing:-.02em}
+.tool .nm em{font-style:normal;font-size:.85rem;color:var(--muted);white-space:nowrap}
+.tool .bf{font-weight:600}
+.tool .meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.tool .meta span{font-size:.8rem;padding:4px 9px;border-radius:999px;background:var(--track)}
+.tool .meta span.layer{background:#FBE3DC;color:#7a2413;font-weight:700}
+.tool .more{font-size:.88rem;font-weight:700;color:var(--accent);margin-top:6px}
+.tool[open] .more{display:none}
+.tool .body{padding:0 18px 16px;border-top:1px dashed var(--line2);animation:op .25s ease-out}
+@keyframes op{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.tool .body h4{margin:14px 0 6px;font:700 11px/1 var(--text);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.tool .body ul{margin:0;padding-left:20px}
+.tool .body li{margin:3px 0}
+.tool .body p{margin:0}
+.tool .src{margin-top:12px;font-size:.82rem;color:var(--muted)}
+.tool .visit{display:inline-flex;margin-top:12px;font-weight:700}
+.end{margin-top:46px;padding:22px;border-radius:18px;background:var(--ink);color:#fff}
+.end b{display:block;font:800 1.5em/1.15 var(--display);letter-spacing:-.02em}
+.end p{margin:8px 0 0;color:#d8d4cc}
+.end .links{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.end .links a{color:#fff;border:2px solid #fff;border-radius:999px;padding:9px 14px;text-decoration:none;font-weight:700}
+@media (prefers-reduced-motion:reduce){.tool .body{animation:none}}
+@media print{.top,.jump,.filters,.copy,.end,.foot{display:none}.tool .body{display:block}}
+</style>
+<link rel="stylesheet" href="/site-bar.css" />
+<script src="/site-bar.js" data-project="ai-made-ez" data-kind="piece" defer></script>
+</head>
+<body>
+<header class="top">
+  <a class="logo" href="./">Use AI well</a>
+  <div class="tools"><a class="chip give" href="../school/support.html" aria-label="Keep it free">♥<span class="gt"> Keep it free</span></a><button class="chip" id="big" type="button" aria-pressed="false">Bigger text</button></div>
+</header>
+<main>
+  <section class="hero">
+    <p class="label">Free · no prompt packs · no affiliate links</p>
+    <h1>Use AI well.</h1>
+    <div class="stack" aria-label="AI is layers: you, apps, models, chips"><span>You</span><i>→</i><span class="on">Apps</span><i>→</i><span>Models</span><i>→</i><span>Chips</span></div>
+    <p class="stack-note">Every tool below is an app on top of a few models. The habits work in all of them.</p>
+    <div class="jump"><a class="btn" href="#habits">7 habits</a><a class="btn ghost" href="#tools">12 tools</a></div>
+  </section>
+
+  <section class="sec" id="habits">
+    <p class="label">Part 1</p>
+    <h2>7 habits that work in any AI</h2>
+    <ol class="habits" id="hlist"></ol>
+  </section>
+
+  <section class="sec" id="tools">
+    <p class="label">Part 2</p>
+    <h2>The AI tools, made easy</h2>
+    <p class="muted">The 12 people talk about. Tap one for how to use it well.</p>
+    <div class="filters" id="tf" role="group" aria-label="Show tools for"></div>
+    <ul class="tlist" id="tlist"></ul>
+    <p class="small" id="checked"></p>
+  </section>
+
+  <section class="end">
+    <b>Same models underneath.</b>
+    <p>Start with the one you already have, and use the 7 habits.</p>
+    <div class="links"><a href="../school/lesson-1.html">Lesson 1</a><a href="../school/kitchen/glossary.html">Plain words</a><a href="../school/support.html">♥ Keep it free</a></div>
+  </section>
+</main>
+<footer class="foot"><a href="../start/">Start here</a><a href="../school/">Lessons</a><span>Not affiliated with any tool listed</span><span>Made by Alexandra Vargas</span></footer>
+<script src="rules.js"></script>
+<script src="tools.js"></script>
+<script>
+(function () {
+  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+  function slug(t) { return t.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""); }
+  var H = window.EZ_HABITS || [], T = window.EZ_TOOLS || [], CATS = window.EZ_TOOL_CATS || [];
+  document.getElementById("hlist").innerHTML = H.map(function (h, i) {
+    return '<li class="habit"><h3>' + esc(h[0]) + '</h3><p class="kl">' + esc(h[1]) + '</p>' +
+      '<div class="pair"><div class="say no"><small>Instead of</small>' + esc(h[2]) + '</div><div class="say yes"><small>Try</small><span id="h' + i + '">' + esc(h[3]) + "</span></div></div>" +
+      '<div class="hrow"><a href="' + esc(h[5]) + '" target="_blank" rel="noopener">Source: ' + esc(h[4]) + '</a><button class="copy" type="button" data-c="h' + i + '">Copy the better order</button></div></li>';
+  }).join("");
+  document.getElementById("hlist").onclick = function (e) {
+    var b = e.target.closest("[data-c]"); if (!b) return;
+    var t = document.getElementById(b.dataset.c).textContent;
+    function ok() { b.textContent = "Copied"; b.classList.add("done"); setTimeout(function () { b.textContent = "Copy the better order"; b.classList.remove("done"); }, 1800); }
+    if (navigator.clipboard) navigator.clipboard.writeText(t).then(ok, ok); else ok();
+  };
+  var cat = "all";
+  document.getElementById("tf").innerHTML = [["all", "All"]].concat(CATS).map(function (c) { return '<button class="chip" type="button" data-f="' + c[0] + '" aria-pressed="' + (c[0] === "all") + '">' + esc(c[1]) + "</button>"; }).join("");
+  function card(t) {
+    return '<li><details class="tool" id="' + slug(t.name) + '"><summary>' +
+      '<span class="nm"><b>' + esc(t.name) + "</b><em>by " + esc(t.maker) + "</em></span>" +
+      '<span class="bf">' + esc(t.bestFor) + "</span>" +
+      '<span class="meta"><span class="layer">Runs on: ' + esc(t.runsOn) + "</span><span>" + esc(t.price) + "</span></span>" +
+      '<span class="more">Use it well +</span></summary><div class="body">' +
+      "<h4>Use it well</h4><ul>" + t.tips.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + "</ul>" +
+      "<h4>Watch out</h4><p>" + esc(t.watch) + "</p>" +
+      (t.privacy ? "<h4>Privacy</h4><p>" + esc(t.privacy) + "</p>" : "") +
+      '<a class="visit" href="' + esc(t.url) + '" target="_blank" rel="noopener">Visit ' + esc(t.name) + " ↗</a>" +
+      '<p class="src">Checked on the official site, ' + esc(t.checked) + ". Prices change.</p></div></details></li>";
+  }
+  function draw() { document.getElementById("tlist").innerHTML = T.filter(function (t) { return cat === "all" || t.cats.indexOf(cat) >= 0; }).map(card).join(""); }
+  document.getElementById("tf").onclick = function (e) {
+    var b = e.target.closest("[data-f]"); if (!b) return; cat = b.dataset.f;
+    this.querySelectorAll("[data-f]").forEach(function (x) { x.setAttribute("aria-pressed", String(x === b)); }); draw();
+  };
+  draw();
+  if (T[0]) document.getElementById("checked").textContent = "No affiliate links. Nobody paid to be here. Checked " + T[0].checked + ".";
+  function openHash() {
+    var id = location.hash.slice(1), el = id && document.getElementById(id);
+    if (!el && id && T.some(function (t) { return slug(t.name) === id; })) { cat = "all"; document.querySelectorAll("[data-f]").forEach(function (x) { x.setAttribute("aria-pressed", String(x.dataset.f === "all")); }); draw(); el = document.getElementById(id); }
+    if (el && el.tagName === "DETAILS") { el.open = true; el.scrollIntoView({ block: "start" }); }
+  }
+  addEventListener("hashchange", openHash); openHash();
+})();
+</script>
+<script src="../school/school.js" defer></script>
+<script src="/projects/skill-quest/smez-index.js" defer></script>
+<script src="/projects/skill-quest/smez-nav.js" data-section="use" defer></script>
+</body>
+</html>
