@@ -22,7 +22,7 @@
     },
     build: {
       title: "Your turn. Write your standing orders.",
-      lead: "Pick your role, one job that repeats, and a tone. Out come both layers, ready to paste.",
+      lead: "Pick your role, one job that repeats, and a tone. After a few questions, both layers come back ready to paste.",
       state: { role: "an office manager", job: "a weekly status report", tone: "plain and short" },
       controls: function (s, esc) {
         function row(k, list) { return '<div class="fridge">' + list.map(function (v) { return '<button type="button" class="chip" data-set="' + k + '" data-v="' + esc(v) + '" aria-pressed="' + (s[k] === v) + '">' + esc(v) + "</button>"; }).join("") + "</div>"; }
@@ -34,7 +34,7 @@
       text: function (s) {
         return "Set up Claude for my work. I’m " + s.role + ". Tone: " + s.tone + ". Ask up to 3 short questions first.\n" +
           "1. Account-wide Instructions for Claude, under 100 words: only what fits every chat.\n" +
-          "2. Project instructions for a “" + s.job + "” project: goal, reader, format, checks, never-dos.\n" +
+          "2. Project instructions for a project called “" + s.job.replace(/^a /, "") + "”: goal, reader, format, checks, never-dos.\n" +
           "3. Five files to add as project knowledge, and what to strip first (names, account numbers).\n" +
           "4. Where to paste each part.";
       },
@@ -51,7 +51,7 @@
       title: "The crew can remember wrong.",
       lines: [
         ["Memory is a summary Claude writes.", "It can be stale or wrong. Read it sometimes and delete what’s off."],
-        ["Incognito chats skip memory.", "Click the ghost icon in a new chat. Nothing goes to history or memory."]
+        ["Project files go stale.", "Claude reads the files you added, old ones too. Delete last year’s version."]
       ],
       where: "A line cook remembers you or forgets you. Claude’s memory is a written note you can open, edit and erase."
     },

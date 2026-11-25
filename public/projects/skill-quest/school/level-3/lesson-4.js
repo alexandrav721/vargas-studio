@@ -33,11 +33,12 @@
       },
       head: "ORDER #C04", right: "research brief", foot: "Paste it into Claude, or open it there",
       text: function (s) {
-        return "Use Research, or web search if it’s off. My question: " + s.q + ". Ask me 2 questions first.\n" +
+        return "Use Research, or web search if it’s off. Question: " + s.q + ".\n" +
+          "Before you search, ask me 2 questions (what exactly, and my budget or limits), then wait for my answers.\n" +
           "Sources: " + s.strict + ".\n" +
-          "Brief: 1. The answer in 3 lines. 2. Five findings, each with link and date.\n" +
-          "3. Which come from the original source (company, law, study). 4. Where sources disagree or you couldn’t confirm.\n" +
-          "5. Three things to check myself before I use it.";
+          "Brief: 1. A 3-line answer. 2. Five findings, each linked and dated.\n" +
+          "3. Which come from the original source. 4. Where sources disagree or are unconfirmed.\n" +
+          "5. Three things to check myself.";
       },
       claude: "Open in Claude", done: "Done →",
       after: "Research is on paid plans. Tap + at the bottom left, then Research. A blue marker shows it’s on. In the newer Claude you can also type /deep-research."

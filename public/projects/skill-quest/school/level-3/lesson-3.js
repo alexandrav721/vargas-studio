@@ -36,7 +36,8 @@
           "1. Use sample content marked [EXAMPLE]. Use formulas for every total.\n" +
           "2. Add a short “how to use this” note at the top.\n" +
           "3. After the file, list 3 things to check before I share it.\n" +
-          "4. Suggest 2 edits to ask for next.";
+          "4. Two edits to ask for next.\n" +
+          "Can’t make files here? Name the setting to turn on.";
       },
       claude: "Open in Claude", done: "Done →"
     },

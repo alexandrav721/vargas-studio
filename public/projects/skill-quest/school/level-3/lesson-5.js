@@ -6,20 +6,21 @@
     teaser: ["THE PANTRY", "connectors", "Your email, calendar and files.<br>Claude can reach in and cook with them.<br>You decide which shelves it touches.", "Six words. Seven minutes."],
     lines: [
       ["Connectors open your work apps to Claude.", "Level 2 lesson 5 wired them with MCP. Now just pick Gmail or Drive."],
-      ["Claude sees only what you can see.", "It signs in as you and works inside your own access."],
+      ["Claude sees only what you can see.", "With directory connectors it signs in as you, inside your own access."],
       ["Each action gets a permission.", "Always allow, Needs approval, Always ask or Blocked. Sending gets Always ask."]
     ],
-    guess: { q: "Gmail sending is set to Needs approval. Will Claude always ask before it sends?", opts: [["Not always. In Auto mode it may not", true], ["Yes, every time", false], ["It can’t send email at all", false]], reveal: "Needs approval asks in Manual mode. In Auto, the default on most plans, it runs unless a safety check flags it." },
+    guess: { q: "You connect Gmail. Which action should always wait for your OK?", opts: [["Sending an email as you", true], ["Searching your inbox", false], ["Reading one thread", false]], reveal: "Sending. Set it to Always ask, the one setting that asks in every mode. Not there yet? Use Manual mode, where Claude asks first." },
     startLabel: "Open a shelf",
     example: {
       title: "“Prep me for tomorrow’s meetings.”",
       html:
         '<p class="label">Connected: Calendar, Gmail <span class="sample">Sample</span></p>' +
         '<div class="reply"><p class="who">calendar · read</p>3 meetings tomorrow: 9:00 vendor, 11:30 team, 2:00 client.</div>' +
-        '<div class="reply"><p class="who">gmail · read</p>Found the vendor’s last 2 emails about the late order.</div>' +
-        '<div class="reply"><p class="who">ask you</p>Reply drafted. Send it to the vendor? <b>Allow / Deny</b></div>' +
-        '<p class="small">Add one: tap + (or type /), hover Connectors, then Manage connectors. Or go to Customize › Connectors.</p>' +
-        '<p class="small">Set <b>tool permissions</b> on the connector’s Permissions tab: <b>Always allow</b>, <b>Needs approval</b>, <b>Always ask</b> or <b>Blocked</b>. Only Always ask is sure to stop and ask, in every mode.</p>',
+        '<div class="reply"><p class="who">gmail · read</p>Found the vendor’s 2 emails on the late order.</div>' +
+        '<div class="reply"><p class="who">ask you</p>Reply drafted. Send to the vendor? <b>Allow / Deny</b></div>' +
+        '<p class="small">Add one: Customize › Connectors.</p>' +
+        '<p class="small">Set <b>tool permissions</b> on the connector’s Permissions tab: <b>Always allow</b>, <b>Needs approval</b>, <b>Always ask</b> or <b>Blocked</b>. Only Always ask stops to ask in every mode.</p>' +
+        '<p class="small">Always ask is still rolling out; on work plans your admin’s settings come first. Don’t see it? Use Manual mode.</p>',
       next: "Your turn →"
     },
     build: {
@@ -34,17 +35,19 @@
       },
       head: "ORDER #C05", right: "pantry check", foot: "Paste it into Claude, or open it there",
       text: function (s) {
-        return "I’m about to connect " + (s.apps.length ? s.apps.join(", ") : "a work app") + " to Claude for: " + s.job + ".\n" +
-          "Make a plain-words permission checklist:\n" +
-          "1. Per app, the actions this job needs (read, draft, send, share, delete).\n" +
-          "2. A setting for each: Always allow, Needs approval, Always ask or Blocked. Sends, shares and deletes get Always ask (Needs approval can run unasked in Auto mode).\n" +
-          "3. What Claude can’t do. 4. Warning signs. 5. How to switch it off.";
+        var a = s.apps, list = !a.length ? "a work app" : a.length < 3 ? a.join(" and ") : a.slice(0, -1).join(", ") + ", and " + a[a.length - 1];
+        return "I’m connecting " + list + " to Claude for: " + s.job + ".\n" +
+          "Write a plain-words permission checklist:\n" +
+          "1. Per app, the actions needed (read, draft, send, share, delete).\n" +
+          "2. Each gets: Always allow, Needs approval, Always ask or Blocked. Sends, shares and deletes get Always ask (Manual mode if it’s missing).\n" +
+          "3. What Claude can’t do. 4. Warning signs. 5. How to switch it off.\n" +
+          "Unsure of a menu name? Say so.";
       },
       claude: "Open in Claude", done: "Done →",
-      after: "On a Team or Enterprise plan, your admin may have to turn a connector on first, and their limits beat yours."
+      after: "On a Team or Enterprise plan, your admin may have to turn a connector on first, and their limits beat yours. No Always ask option yet? It’s still rolling out, so use Manual mode for jobs that send."
     },
     game: {
-      type: "tapall", title: "Which actions should wait for your OK?", lead: "Tap the {n} that should be Always ask.",
+      type: "tapall", title: "Five pantry actions. Which ones need a yes from you?", lead: "Tap the {n} that should be Always ask.",
       options: [
         ["Send an email as you", true], ["Share a Drive file outside the company", true], ["Delete a calendar event", true],
         ["Search your inbox for an invoice", false, "Reading for the job you asked is low risk. Always allow is fine if you trust it."],
@@ -70,7 +73,7 @@
     say: "Reading can be Always allow. Anything that sends or deletes is Always ask.",
     keep: "A permission checklist for the apps you’re about to connect.",
     cardLabel: "Copy my card",
-    card: "OPEN THE PANTRY\nConnector = a work app Claude uses as you, seeing only what you see\nAdd: + › Connectors › Manage connectors\nAlways allow = reading, low risk\nAlways ask = send, share, change, delete (asks in every mode)\nNeeds approval = asks in Manual mode only\nBlocked = this job never needs it\nEmails can carry hidden orders: check before it acts",
+    card: "OPEN THE PANTRY\nConnector = a work app Claude uses as you, seeing only what you see\nAdd: + › Connectors › Manage connectors\nAlways allow = reading, low risk\nAlways ask = send, share, delete; asks in every mode (rolling out)\nNeeds approval = asks in Manual mode only\nBlocked = this job never needs it\nEmails can carry hidden orders: check before it acts",
     real: ["Claude 101", "https://academy.claude.com/courses/claude-101"]
   };
   document.addEventListener("DOMContentLoaded", function () { BK.run(L); });

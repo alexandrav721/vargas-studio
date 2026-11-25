@@ -51,7 +51,7 @@
       ],
       right: "Yes. Sample the output, check the originals, and read what it flagged.",
       wrong: "Would that catch a wrong total?",
-      habitTitle: "Work habit", habit: "Most new chats start in Auto. For a new kind of task, switch to Manual in the message box. Go back to Auto once you’ve checked it a few times."
+      habitTitle: "Work habit", habit: "New kind of task? Switch to Manual in the message box. Go back to Auto once it’s proven."
     },
     breaks: {
       title: "A fast cook can make fast mistakes.",
@@ -64,7 +64,7 @@
     quiz: [
       { term: "Manual mode", q: "In Manual mode, what happens before an action that needs approval?", a: ["Claude asks you: Allow or Deny", "It runs and tells you later", "It skips the action"], ok: 0, why: "Right. Tools you set to Always allow still run without asking." },
       { term: "Scheduled task", q: "You want the same report built every Monday. What do you set up?", a: ["A scheduled task (/schedule)", "A new chat every Monday", "A longer prompt"], ok: 0, why: "Right. Scheduled tasks run in the cloud on a timetable." },
-      { term: "Private by default", q: "Recall from Lesson 3: Cowork made you a new artifact. Who can see it?", a: ["Only you, until you share it", "Your whole team", "Anyone with the link"], ok: 0, why: "Right. Nothing is shared until you click Share." }
+      { term: "Private by default", q: "Recall from Lesson 3: Claude made you an artifact in chat. Who can see it?", a: ["Only you, until you share it", "Your whole team", "Anyone with the link"], ok: 0, why: "Right. Nothing is shared until you click Share." }
     ],
     say: "I’ll hand it to Cowork in Manual mode and spot-check five rows before it goes out.",
     keep: "A handoff ticket with rules, a plan check and a report-back list.",

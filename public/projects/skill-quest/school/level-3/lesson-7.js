@@ -31,11 +31,12 @@
       },
       head: "ORDER #C07", right: "crew card", foot: "Paste it into Claude, or open it there",
       text: function (s) {
-        return "Write a Claude skill for " + s.job + ", used by " + s.who + ". First ask up to 3 questions about how we do it.\n" +
+        return "Write a Claude skill for " + s.job + ", used by " + s.who + ". First ask 3 questions about how we do it.\n" +
           "1. A short folder name.\n" +
-          "2. The full SKILL.md: name (under 64 characters), description (under 200: what and when), steps, one example, a “never do” list. No passwords or real names.\n" +
+          "2. The SKILL.md: name (under 64 characters), description (under 200: what and when), steps, one example, never-dos. No passwords or real names.\n" +
           "3. If you can make files, zip the folder.\n" +
-          "4. Three test requests that should use it, one that shouldn’t.";
+          "4. Three test requests that should use it, one that shouldn’t.\n" +
+          "5. Upload steps for claude.ai.";
       },
       claude: "Open in Claude", done: "Done →",
       after: "Upload: Customize › Skills, then + (or Add) › Upload a skill. Choose the ZIP and turn the skill on. Code execution and file creation must be on. Test it with the requests Claude gave you."

@@ -9,7 +9,7 @@
       ["Cowork works with your files and apps.", "You describe the task, Claude plans it, you steer. Paid plans."],
       ["Claude in Chrome works in your browser.", "It reads, clicks and types on websites, in a side panel."]
     ],
-    guess: { q: "You need 40 receipts in a folder turned into a spreadsheet. Where?", opts: [["Cowork, which works with your files", true], ["A normal chat, one receipt at a time", false], ["Research, since it reads things", false]], reveal: "Cowork, or any chat in the newer Claude, works with folders you connect in the desktop app. Without one, Claude sees only what you upload." },
+    guess: { q: "You need 40 receipts in a folder turned into a spreadsheet. Where?", opts: [["Cowork, which works with your files", true], ["A normal chat, one receipt at a time", false], ["Research, since it reads things", false]], reveal: "Cowork, with folders connected in the desktop app. Some accounts have the newer Claude: one box, no Chat or Cowork switch. Any chat there can." },
     startLabel: "Walk the line",
     example: {
       title: "Monday at work. Five jobs, five stations.",
@@ -19,8 +19,9 @@
         '<div class="reply"><p class="who">research</p>“Compare 3 payroll tools, with sources.”</div>' +
         '<div class="reply"><p class="who">cowork</p>“Rename and sort the files in my Invoices folder.”</div>' +
         '<div class="reply"><p class="who">claude in chrome</p>“Fill in this supplier form from my order list.”</div>' +
-        '<p class="small">The <b>model selector</b> sits next to the send button. Haiku is fastest; Opus and Fable take the hardest jobs.</p>' +
-        '<p class="small">Cowork on folders on your computer needs the <b>desktop app</b>. No Chat or Cowork switch? Type any of these in the one box.</p>',
+        '<div class="reply"><p class="who">claude code</p>“Fix the broken link on our website.”</div>' +
+        '<p class="small">The <b>model selector</b> sits by the send button. Haiku is fastest; Opus and Fable take the hardest jobs.</p>' +
+        '<p class="small">Cowork on your computer’s folders needs the <b>desktop app</b>. One box only? Type any of these there.</p>',
       next: "Your turn →"
     },
     build: {
@@ -37,7 +38,7 @@
       text: function (s) {
         return "I work as " + s.job + ". My week is mostly: " + (s.tasks.length ? s.tasks.join(", ") : "a mix of things") + ".\n" +
           "Make a one-screen cheat sheet: a table of 6 real tasks from a week like mine.\n" +
-          "For each: the best Claude station (Chat, Research, Cowork, Claude in Chrome or Claude Code), why, and a model (Haiku, Sonnet or Opus).\n" +
+          "For each: the best Claude station (Chat, Research, Cowork, Claude in Chrome or Claude Code), why, and a model (Haiku, Sonnet, Opus or Fable).\n" +
           "Mark what needs a paid plan or the desktop app. If you’re unsure a feature exists on my plan, say so. Plain words.";
       },
       claude: "Open in Claude", done: "Done →"
@@ -59,7 +60,7 @@
         ["Your app may have just one box.", "No Chat or Cowork switch? Type any job there. The stations still apply."],
         ["Menus change often.", "If a button isn’t where a lesson says, search Claude’s help center."]
       ],
-      where: "A real kitchen’s stations stay put for years. Claude’s app rearranges itself every few months."
+      where: "A cook at one station can’t reach the next. Claude is the same cook everywhere; the station only decides what it can touch."
     },
     quiz: [
       { term: "Cowork", q: "What is Cowork?", a: ["Claude working with your files, folders and apps on a task", "A shared chat room for your whole team", "A faster version of the normal chat"], ok: 0, why: "Right. You describe the task, it plans and works, you steer." },
