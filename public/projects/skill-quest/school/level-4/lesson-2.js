@@ -28,7 +28,7 @@
       state: { mode: "Explain it to me", lang: "Python", job: "sort support emails into 5 labels", care: "lowest cost" },
       controls: function (s, esc) {
         function row(k, list) { return '<div class="fridge">' + list.map(function (v) { return '<button type="button" class="chip" data-set="' + k + '" data-v="' + esc(v) + '" aria-pressed="' + (s[k] === v) + '">' + esc(v) + "</button>"; }).join("") + "</div>"; }
-        return '<p class="label">How you want help</p>' + row("mode", ["Explain it to me", "Write the code"]) +
+        return '<p class="label">How you want help</p>' + row("mode", ["Explain it to me", "Write the code (for a developer)"]) +
           '<p class="label">Language (for code)</p>' + row("lang", ["Python", "TypeScript"]) +
           '<p class="label">The job</p>' + row("job", ["sort support emails into 5 labels", "write product descriptions", "answer questions about a long contract", "plan a multi-step research task"]) +
           '<p class="label">What matters most</p>' + row("care", ["lowest cost", "fastest reply", "best quality"]);
@@ -39,15 +39,14 @@
           return "Pick a Claude model for: " + s.job + ". What matters most: " + s.care + ". I don’t code yet.\n" +
             "1. Compare Haiku 5.5, Sonnet 5.5, Opus 5.5 and Fable 5.2 with current prices (say if they come from memory).\n" +
             "2. Recommend one model and effort level.\n" +
-            "3. A cheap test: 10 real examples, and what result means I switch.\n" +
-            "End with one Console playground request to try (model, system, message), and what to check.";
+            "3. What test result means I switch.\n" +
+            "End with a 10-row test sheet for my job (input, expected answer) as a table I can paste into a spreadsheet.";
         }
-        return "Write a small " + s.lang + " script with the official Claude SDK that runs the same 10 sample inputs for this job (" + s.job + "), each labeled with the answer I expect, on claude-haiku-5-5, claude-sonnet-5-5 and claude-opus-5-5.\n" +
-          "- Set output_config effort to \"low\" for the first run, in one place I can change.\n" +
-          "- Read the key from ANTHROPIC_API_KEY.\n" +
-          "- For each model, print the answer, input and output tokens, the cost from a price table I can edit (say if the prices come from memory), how many seconds the call took, and how many of the 10 it got right.\n" +
+        return "Write a small " + s.lang + " script with the official Claude SDK that runs 10 sample inputs for this job (" + s.job + "), each with the answer I expect, on claude-haiku-5-5, claude-sonnet-5-5 and claude-opus-5-5.\n" +
+          "- output_config effort \"low\" to start, set in one place. Key from ANTHROPIC_API_KEY.\n" +
+          "- Per model, print the answers, input and output tokens, cost from a price table I can edit (say if prices come from memory), seconds, and how many of the 10 it got right.\n" +
           "What matters most to me: " + s.care + ".\n" +
-          "Then tell me what to do with it: how to run it, how to swap in my own 10 inputs, and how to read the results.";
+          "Then tell me how to run it, swap in my own 10 inputs, and read the results.";
       },
       claude: "Open in Claude", done: "Done →"
     },

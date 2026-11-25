@@ -7,7 +7,7 @@
     teaser: ["PREP AHEAD", "caching · batches", "Level 2 named prompt caching.<br>Now you chop the onions once<br>and cook big orders overnight, half price.", "Five words. Six minutes."],
     lines: [
       ["Caching reuses the same start of your prompt.", "Mark it with cache_control. Repeat calls read it cheaply."],
-      ["One changed letter spoils the prep.", "A timestamp at the top means nothing after it caches."],
+      ["One changed letter spoils the prep.", "Put the time at the very top and the cache never matches."],
       ["Batches trade speed for half price.", "Send many requests at once. Most finish within an hour."]
     ],
     guess: { q: "Your app sends the same 30-page manual with every question. Cheapest fix?", opts: [["Cache the manual with cache_control", true], ["Shorten every customer question", false], ["Switch to a bigger model", false]], reveal: "Cache it. Reading the cached manual costs a small fraction of normal input, so every repeat question gets cheaper." },
@@ -28,7 +28,7 @@
       state: { mode: "Explain it to me", lang: "Python", rep: "a long product manual", job: "answer questions live" },
       controls: function (s, esc) {
         function row(k, list) { return '<div class="fridge">' + list.map(function (v) { return '<button type="button" class="chip" data-set="' + k + '" data-v="' + esc(v) + '" aria-pressed="' + (s[k] === v) + '">' + esc(v) + "</button>"; }).join("") + "</div>"; }
-        return '<p class="label">How you want help</p>' + row("mode", ["Explain it to me", "Write the code"]) +
+        return '<p class="label">How you want help</p>' + row("mode", ["Explain it to me", "Write the code (for a developer)"]) +
           '<p class="label">Language (for code)</p>' + row("lang", ["Python", "TypeScript"]) +
           '<p class="label">What repeats</p>' + row("rep", ["a long product manual", "the same long instructions", "a big set of examples", "a long chat history"]) +
           '<p class="label">The job</p>' + row("job", ["answer questions live", "process 5,000 reviews overnight"]);
@@ -40,16 +40,15 @@
           return "My app sends " + s.rep + " on every Claude API call, to " + s.job + ". I don’t code yet.\n" +
             "1. Prompt caching, plainly, and 3 things that break it.\n" +
             "2. Do Message Batches fit? (Most finish within an hour; unfinished requests expire after 24 hours.)\n" +
-            "3. Cost of 1,000 requests, cached or not (say if prices come from memory).\n" +
-            "End with one Console playground request to try (model, system, message), and what to check.";
+            "End with a cost table for 1,000 requests, cached vs. not, that I can paste into a spreadsheet (say if prices come from memory).";
         }
-        return "Write a small " + s.lang + " script with the official Claude SDK. My app sends " + s.rep + " (use a placeholder text file of at least 600 tokens, about 2 pages; make one for me) and needs to " + s.job + ".\n" +
+        return "Write a small " + s.lang + " script with the official Claude SDK. My app sends " + s.rep + " (make me a 2-page placeholder file, at least 600 tokens) and needs to " + s.job + ".\n" +
           "- Model claude-opus-5-5. Key from ANTHROPIC_API_KEY.\n" +
-          "- First count the shared part’s tokens with the token counting endpoint, and warn me if it’s under the model’s minimum (512 tokens on most current models; some, like Sonnet 5, need 1,024).\n" +
-          "- Put the shared part first with cache_control {type: \"ephemeral\"}, and the changing question after it.\n" +
-          "- Make two calls and print cache_creation_input_tokens and cache_read_input_tokens, to prove the second call hit the cache.\n" +
-          (batch ? "- Then send the job as a Message Batch with a custom_id per item, poll until it ends, and print each result by custom_id.\n" : "") +
-          "Then tell me what to do with it: how to run it, and which numbers mean the cache is working.";
+          "- Count the shared part’s tokens first; warn me if it’s under the model’s cache minimum.\n" +
+          "- Shared part first with cache_control {type: \"ephemeral\"}, the changing question after it.\n" +
+          "- Make two calls; print cache_creation_input_tokens and cache_read_input_tokens for each.\n" +
+          (batch ? "- Then run the job as a Message Batch: a custom_id per item, poll until done, print results by custom_id.\n" : "") +
+          "Then: how to run it, and which numbers prove the cache works.";
       },
       claude: "Open in Claude", done: "Done →"
     },

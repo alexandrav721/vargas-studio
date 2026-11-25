@@ -28,7 +28,7 @@
       state: { mode: "Explain it to me", lang: "Python", feat: "an email sorter", out: "a label from a list" },
       controls: function (s, esc) {
         function row(k, list) { return '<div class="fridge">' + list.map(function (v) { return '<button type="button" class="chip" data-set="' + k + '" data-v="' + esc(v) + '" aria-pressed="' + (s[k] === v) + '">' + esc(v) + "</button>"; }).join("") + "</div>"; }
-        return '<p class="label">How you want help</p>' + row("mode", ["Explain it to me", "Write the code"]) +
+        return '<p class="label">How you want help</p>' + row("mode", ["Explain it to me", "Write the code (for a developer)"]) +
           '<p class="label">Language (for code)</p>' + row("lang", ["Python", "TypeScript"]) +
           '<p class="label">The feature</p>' + row("feat", ["an email sorter", "a reply writer", "a receipt extractor", "a FAQ bot"]) +
           '<p class="label">Its output</p>' + row("out", ["a label from a list", "JSON fields", "free text for people"]);
@@ -38,18 +38,17 @@
         if (s.mode === "Explain it to me") {
           return "Plan a test for " + s.feat + " on the Claude API. Its output: " + s.out + ". I don’t code yet.\n" +
             "1. Recommend a grader: code check, pairwise comparison, rubric judge or a person.\n" +
-            "2. 10 test cases with expected answers: 3 tricky, 1 to flag.\n" +
-            "3. What to record per case; how to rerun it before every change.\n" +
-            "End with one Console playground request to try (model, system, message), and what to check.";
+            "2. What to record per case; how to rerun it before every change.\n" +
+            "End with 10 test cases (3 tricky, 1 to flag) as a table I can paste into a spreadsheet: input, expected, how to grade.";
         }
-        var grade = s.out === "free text for people" ? "a pairwise judge call (claude-opus-5-5) that compares each answer to a saved baseline answer, shows the two in random order, and saves the judge’s pick and reasons. On the first run, save the answers as the baseline instead of grading" : "code: an exact match for labels, a schema check for JSON";
+        var grade = s.out === "free text for people" ? "a pairwise judge (claude-opus-5-5): each answer vs. a saved baseline, random order, saving its pick and reasons; the first run only saves the baseline" : "code: an exact match for labels, a schema check for JSON";
         return "Write a small " + s.lang + " eval script with the official Claude SDK for " + s.feat + " (output: " + s.out + ").\n" +
-          "- A cases file with 10 inputs and expected answers (make them up and label them samples).\n" +
-          "- Run each case on claude-opus-5-5, with my prompt in one place I can edit. Key from ANTHROPIC_API_KEY.\n" +
+          "- A cases file: 10 made-up sample inputs with expected answers.\n" +
+          "- Run each on claude-opus-5-5, my prompt in one editable place. Key from ANTHROPIC_API_KEY.\n" +
           "- Grade with " + grade + ".\n" +
-          "- Record per case: pass or fail, input and output tokens, cost from an editable price table, seconds, stop_reason.\n" +
-          "- Print the failing cases (input, expected, got), the pass rate, total cost and median seconds, and save results to a file the next run can compare against.\n" +
-          "Then tell me what to do with it: how to run it, how to add cases, and how to compare two runs.";
+          "- Per case: pass or fail, tokens, cost (editable price table), seconds, stop_reason.\n" +
+          "- Print failures, pass rate, total cost and median seconds; save results for the next run.\n" +
+          "Then tell me how to run it, add cases and compare two runs.";
       },
       claude: "Open in Claude", done: "Done →"
     },

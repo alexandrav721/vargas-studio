@@ -8,7 +8,7 @@
     lines: [
       ["Code needs the same shape every time.", "A schema is the plate diagram: which fields, which types."],
       ["One setting locks the shape.", "output_config.format: the reply comes back as JSON matching your schema."],
-      ["Still check the plate.", "Validate in code. A refusal (Claude declines) or a cut-off breaks it."]
+      ["Still check the plate.", "Your code double-checks it. A refusal (Claude declines) or a cut-off breaks it."]
     ],
     guess: { q: "Your app saves Claude’s reply into a spreadsheet. Safest way to get clean columns?", opts: [["Give a schema with structured outputs", true], ["Ask nicely: “reply only in JSON”", false], ["Use a bigger model", false]], reveal: "A schema. Structured outputs make the reply match it. Asking nicely works most of the time, and “most” breaks spreadsheets." },
     startLabel: "See the plate",
@@ -28,7 +28,7 @@
       state: { mode: "Explain it to me", lang: "Python", src: "receipts" },
       controls: function (s, esc) {
         function row(k, list) { return '<div class="fridge">' + list.map(function (v) { return '<button type="button" class="chip" data-set="' + k + '" data-v="' + esc(v) + '" aria-pressed="' + (s[k] === v) + '">' + esc(v) + "</button>"; }).join("") + "</div>"; }
-        return '<p class="label">How you want help</p>' + row("mode", ["Explain it to me", "Write the code"]) +
+        return '<p class="label">How you want help</p>' + row("mode", ["Explain it to me", "Write the code (for a developer)"]) +
           '<p class="label">Language (for code)</p>' + row("lang", ["Python", "TypeScript"]) +
           '<p class="label">Pull data from</p>' + row("src", ["receipts", "customer emails", "job applications", "product reviews"]);
       },
@@ -37,10 +37,9 @@
         if (s.mode === "Explain it to me") {
           return "My app will pull data from " + s.src + " with the Claude API. I don’t code yet.\n" +
             "1. 4 to 6 fields, each with a type, in a table.\n" +
-            "2. Show the JSON Schema, a note on each line.\n" +
-            "3. Structured outputs or a strict tool: which fits?\n" +
-            "4. Three ways it can still go wrong, and how to check each.\n" +
-            "End with one Console playground request to try (model, system, message), and what to check.";
+            "2. Structured outputs or a strict tool: which fits?\n" +
+            "3. Three ways it can still go wrong, and how to check each.\n" +
+            "End with the finished JSON Schema as one block, a note on each field, and 3 sample inputs to test it on.";
         }
         var how = s.lang === "Python" ? "client.messages.parse() with a Pydantic model" : "client.messages.parse() with the SDK’s zodOutputFormat helper";
         return "Write a small " + s.lang + " script using the official Claude SDK that extracts data from one made-up sample " + s.src.replace(/s$/, "") + " (label it as a sample).\n" +
