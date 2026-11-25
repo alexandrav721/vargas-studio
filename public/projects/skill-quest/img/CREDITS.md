@@ -9,3 +9,4 @@ Web copies (1200px) of photos downloaded 24 Nov 2026 from Wikimedia Commons. Ori
 - need.jpg (Level 3): Person working from home on a laptop. Microbiz Mag, CC BY 2.0. https://commons.wikimedia.org/wiki/File:Working_from_home_laptop_and_notepad.jpg
 - guess.jpg (Level 4): A plate served to a judge at a cooking competition. Lance Cpl. Unique B. Roberts, U.S. Marine Corps, public domain. https://commons.wikimedia.org/wiki/File:Cherry_Point_Marines_compete_for_the_Chef_of_the_Quarter_competition_140529-M-GY210-052.jpg
 - layers.jpg (Level 5): Nvidia Turing GPU chip dies. Fritzchens Fritz, CC0. https://commons.wikimedia.org/wiki/File:Stacked_Turing_Chips_TU104_TU106_TU116_DSC08577-DSC08577_(50891015413).jpg
+- Level 5 page now uses order.jpg (head chef reading orders to the line; USDA, public domain) instead of layers.jpg.

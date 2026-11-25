@@ -48,14 +48,14 @@
       claude: "Open in Claude", done: "Done →"
     },
     game: {
-      type: "pick", title: "You need 200 files in a folder on your laptop renamed by date. Which station?",
+      type: "pick", title: "You need 5 payroll tools compared, with a link for every claim. Which station?",
       options: [
-        ["Cowork, with that folder connected", true],
-        ["A plain chat with no folder connected", false, "Without a connected folder, Claude sees only what you upload. It can’t rename files on your laptop."],
-        ["Research", false, "Research reads the web and your connected apps. It doesn’t change your files."]
+        ["Research", true],
+        ["A plain chat", false, "A chat can search a little. Research reads many sources and links each one."],
+        ["Cowork", false, "Cowork works on your files and apps. Many-source questions are Research."]
       ],
-      right: "Yes. Cowork works on folders you connect in the desktop app. On Free or a phone, upload a few files to a chat instead.",
-      wrong: "Which station can touch your files?", hint: "Only one of them works on folders on your computer.",
+      right: "Yes. Many sources, one answer, a receipt for each.",
+      wrong: "Which station reads many sources and links each one?", hint: "You’re looking things up, not handing off files.",
       habitTitle: "Work habit", habit: "Before you start, ask: am I talking, looking up, or handing off? That picks the station."
     },
     breaks: {

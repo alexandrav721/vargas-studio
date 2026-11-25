@@ -39,7 +39,7 @@
           "4. Where to paste each part.";
       },
       claude: "Open in Claude", done: "Done →",
-      after: "Account instructions: Settings › Your Claude › Instructions. Project instructions: open the project and edit its instructions. Free plan? All three layers work, with up to 5 projects."
+      after: "Account instructions: Settings › Your Claude › Instructions. Project instructions: open the project and edit its instructions. Free plan? You get up to 5 projects. If project instructions don’t show, put the rules in your account instructions."
     },
     game: {
       type: "match", title: "Match each standing order to its kitchen.", lead: "Tap a word, then its kitchen.",

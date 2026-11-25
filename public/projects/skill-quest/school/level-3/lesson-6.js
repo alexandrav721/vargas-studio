@@ -7,7 +7,7 @@
     lines: [
       ["Describe the task. Read the plan. Steer.", "Level 2’s agent loop, with you at the pass. Change course mid-task."],
       ["It works on folders you connect.", "In the desktop app, Claude reads and writes files only in those folders."],
-      ["You choose how often it asks.", "Auto works with a safety check. Manual asks first. Pick in the message box."]
+      ["You choose how often it asks.", "Auto keeps going; a check reviews risky steps. Manual asks before each one."]
     ],
     guess: { q: "Cowork says “Done: 60 receipts sorted.” What now?", opts: [["Spot-check a few rows against the real receipts", true], ["Send it to finance right away", false], ["Ask it to say done again", false]], reveal: "“Done” is a claim. Check a sample yourself before anyone else relies on it." },
     startLabel: "Watch a handoff",
@@ -19,7 +19,7 @@
         '<div class="reply"><p class="who">you</p>Good. Put the sheet in a new folder. Don’t move the originals.</div>' +
         '<div class="reply"><p class="who">progress</p>Read 41 of 60… 3 receipts unreadable, flagged…</div>' +
         '<div class="reply"><p class="who">done</p>expenses-by-month.xlsx saved. 57 rows, 3 flagged for you.</div>' +
-        '<p class="small">Your note mid-task is <b>steering</b>. <b>Approval mode</b>, in the message box: <b>Auto</b> lets a safety check watch; <b>Manual</b> asks you first. Same job every week? Type /schedule.</p>',
+        '<p class="small">Your note mid-task is <b>steering</b>. <b>Approval mode</b>, in the message box: <b>Auto</b> runs, checking risky steps; <b>Manual</b> asks you first. Same job every week? Type /schedule.</p>',
       next: "Your turn →"
     },
     build: {
@@ -31,7 +31,7 @@
         return '<p class="label">The task</p>' + row("task", ["turn a folder of receipts into an expense sheet by month", "rename the files in a folder by date and client", "turn a folder of meeting notes into one action list", "research 5 suppliers and build a comparison sheet"]) +
           '<p class="label">How you’ll run it</p>' + row("mode", ["Manual", "Auto", "Free or phone: photos in a chat"]);
       },
-      head: "ORDER #C06", right: "handoff", foot: "Paste it into Cowork, or any chat in the newer Claude",
+      head: "ORDER #C06", right: "handoff", foot: "Paste it into Cowork, or a normal chat if you see no Cowork switch",
       text: function (s) {
         var free = s.mode.indexOf("Free") === 0;
         return (free ? "Task: " + s.task + ". I’ll attach photos or files to this chat. Build the result here in the chat.\n"
@@ -71,7 +71,7 @@
     say: "I’ll hand it to Cowork in Manual mode and spot-check five rows before it goes out.",
     keep: "A handoff ticket with rules, a plan check and a report-back list.",
     cardLabel: "Copy my card",
-    card: "HAND OFF THE WHOLE TASK\nDescribe › read the plan › steer › check\nConnected folder = the only files it touches\nAuto = runs with a safety check (Always allow tools skip it)\nManual = you Allow or Deny before it acts\nRules: keep originals, new folder, ask before send/share/buy/delete\n“Done” is a claim: spot-check a few\n/schedule = repeat it on a timetable",
+    card: "HAND OFF THE WHOLE TASK\nDescribe › read the plan › steer › check\nConnected folder = the only files it touches\nAuto = keeps going; an automatic check reviews risky steps\nManual = you Allow or Deny before it acts\nRules: keep originals, new folder, ask before send/share/buy/delete\n“Done” is a claim: spot-check a few\n/schedule = repeat it on a timetable",
     real: ["Introduction to Claude Cowork", "https://academy.claude.com/courses/introduction-to-claude-cowork"]
   };
   document.addEventListener("DOMContentLoaded", function () { BK.run(L); });

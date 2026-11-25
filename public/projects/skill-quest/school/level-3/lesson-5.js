@@ -44,7 +44,7 @@
           "Not connected? Tell me what to paste in; work from that.";
       },
       claude: "Open in Claude", done: "Done →",
-      after: "Personal or free account? Don’t connect work email or files that hold patient, student or customer records. Ask your office first (Lesson 8). Connectors work on Free too. On Team or Enterprise, your admin may have to turn one on first, and their limits beat yours. No Always ask option yet? Tell Claude in the chat: ask me before you send anything."
+      after: "Personal or free account? Don’t connect work email or files with patient, student or customer records; ask your office first (Lesson 8). On Team or Enterprise, your admin may need to turn the connector on. No Always ask option? Tell Claude: ask me before you send anything."
     },
     game: {
       type: "tapall", title: "Five storeroom actions. Which ones need a yes from you?", lead: "Tap the {n} that should be Always ask.",

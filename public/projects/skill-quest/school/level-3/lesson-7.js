@@ -40,7 +40,7 @@
           "5. Upload steps for claude.ai.";
       },
       claude: "Open in Claude", done: "Done →",
-      after: "On your phone? Skip the ZIP. Paste the steps into a project’s instructions (Lesson 2). That project will use them today. Upload the skill from a computer later. Upload: Customize › Skills, then + (or Add) › Upload a skill. Choose the ZIP and turn the skill on. Code execution and file creation must be on. Test it with the requests Claude gave you."
+      after: "Upload: Customize › Skills › + (or Add) › Upload a skill, choose the ZIP, turn it on, then try the test requests. On a phone? Paste the steps into a project’s instructions (Lesson 2) and upload from a computer later."
     },
     game: {
       type: "pick", title: "Which job wants a skill, not a project?",
