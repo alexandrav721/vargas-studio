@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
 <title>Plain words · AI Made EZ</title>
-<meta name="description" content="Every AI builder word in one page: a kitchen picture, the real meaning in plain words, and what it’s not.">
+<meta name="description" content="Every AI builder word in one page: a kitchen picture, the meaning in plain words, what it’s not, and the real definition engineers use.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
@@ -25,8 +25,24 @@
 .dict .got{display:inline-block;margin-left:6px;font-size:.75rem;color:var(--ok)}
 .dict .due{display:inline-block;margin-left:6px;font-size:.75rem;color:var(--accent);font-weight:700}
 .dict .lrn{color:var(--muted)}
+.mode{display:flex;align-items:center;gap:6px;margin-top:12px;flex-wrap:wrap}
+.mode span{font-size:.88rem;color:var(--muted);margin-right:2px}
+.mode .chip[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.dict details.real{margin-top:10px;border-top:1px dashed var(--line2);padding-top:8px}
+.dict details.real summary{cursor:pointer;font-weight:700;font-size:.92rem;color:var(--accent);list-style:none;display:flex;justify-content:space-between;align-items:center;min-height:44px}
+.dict details.real summary::-webkit-details-marker{display:none}
+.dict details.real summary::after{content:"+";font-size:1.3rem;line-height:1}
+.dict details.real[open] summary::after{content:"\2212"}
+.dict .rl{margin:8px 0 2px;font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.dict .rd{margin:0}
+.dict pre.see{margin:0;padding:9px 11px;background:var(--track);border:1px solid var(--line);border-radius:8px;font:500 .8rem/1.5 var(--mono);white-space:pre-wrap;word-break:break-word}
+.dict p.see{margin:0;font-size:.92rem}
+.dict .rel{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
+.dict .rel a{font-size:.82rem;padding:5px 10px;border:1px solid var(--line2);border-radius:999px;text-decoration:none;color:var(--ink);background:var(--paper)}
+.dict .src{margin:10px 0 0;font-size:.82rem;color:var(--muted)}
+.dict .src a{color:var(--ink)}
 .count{font-size:.88rem;color:var(--muted);margin-top:10px}
-@media print{.top,.search,.filters,.foot,.btns{display:none}.dict li{break-inside:avoid;border-color:#999}}
+@media print{.top,.search,.filters,.mode,.foot,.btns{display:none}.dict details.real summary::after{content:""}.dict li{break-inside:avoid;border-color:#999}}
 </style>
 <link rel="stylesheet" href="/site-bar.css" />
 <script src="/site-bar.js" data-project="skill-quest" data-kind="piece" defer></script>
@@ -40,38 +56,63 @@
   <p class="label">Plain words · the AI dictionary</p>
   <h1>Every AI word, in plain words.</h1>
   <input class="search" id="q" type="search" placeholder="Find a word: token, MCP, agent…" aria-label="Find a word">
+  <div class="mode" role="group" aria-label="Read every word as"><span>Read every word as</span><button class="chip" type="button" data-m="plain" aria-pressed="true">Plain</button><button class="chip" type="button" data-m="real" aria-pressed="false">Real</button></div>
   <div class="filters" id="filters"></div>
   <p class="count" id="count" aria-live="polite"></p>
   <ul class="dict" id="dict"></ul>
   <div class="btns"><button class="btn ghost" type="button" onclick="window.print()">Print it</button><a class="btn ghost" href="./">Back to the passport</a></div>
-  <p class="small" style="margin-top:12px">Checked against Anthropic’s docs on 24 Nov 2026. AI changes fast; model names and prices especially.</p>
+  <p class="small" style="margin-top:12px">Plain words first; tap “The real definition” for how engineers say it. Checked against Anthropic’s docs and each linked source on 24 Nov 2026. AI changes fast; model names and prices especially.</p>
 </main>
 <footer class="foot"><a href="./">Builder’s passport</a><a href="../">AI Made EZ · Level 1</a><span>Not affiliated with Anthropic</span><span>Made by Alexandra Vargas</span></footer>
-<script src="../school.js" defer></script><script src="bk.js" defer></script><script src="words.js" defer></script><script src="mem.js" defer></script>
+<script src="../school.js" defer></script><script src="bk.js" defer></script><script src="words.js" defer></script><script src="real.js" defer></script><script src="mem.js" defer></script>
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-  var W = window.BK_WORDS, esc = BK.esc, T = BK.TRACK, done = BK.done(), list = document.getElementById("dict"), q = document.getElementById("q"), lesson = 0;
+  var W = window.BK_WORDS, R = window.BK_REAL || {}, esc = BK.esc, T = BK.TRACK, done = BK.done(), list = document.getElementById("dict"), q = document.getElementById("q");
+  var qs = new URLSearchParams(location.search), lesson = +qs.get("lesson") || 0, real = qs.get("real") === "1";
+  if (!qs.has("real")) { try { real = localStorage.getItem("ezWordsMode") === "real"; } catch (e) {} }
   function slug(t) { return t.toLowerCase().replace(/[^a-z0-9]+/g, "-"); }
-  document.getElementById("filters").innerHTML = '<button class="chip" type="button" data-l="0" aria-pressed="true">All</button>' +
-    T.map(function (l) { return '<button class="chip" type="button" data-l="' + l.n + '" aria-pressed="false">' + l.n + ". " + esc(l.short) + "</button>"; }).join("");
+  function realHTML(w, open) {
+    var r = R[w[0]]; if (!r) return "";
+    var see = r[1].charAt(0) === "`" ? '<pre class="see">' + esc(r[1].slice(1)) + "</pre>" : '<p class="see">' + esc(r[1]) + "</p>";
+    var rel = r[2].length ? '<p class="rl">Related</p><div class="rel">' + r[2].map(function (x) { return '<a href="#' + slug(x) + '" data-go="' + esc(x) + '">' + esc(x) + "</a>"; }).join("") + "</div>" : "";
+    return '<details class="real"' + (open ? " open" : "") + '><summary>The real definition</summary>' +
+      '<p class="rl">How engineers say it</p><p class="rd">' + esc(r[0]) + '</p><p class="rl">Where you’ll see it</p>' + see + rel +
+      '<p class="src">Source: <a href="' + esc(r[3][1]) + '"' + (r[3][1].charAt(0) === "/" ? "" : ' target="_blank" rel="noopener"') + ">" + esc(r[3][0]) + "</a> · checked 24 Nov 2026</p></details>";
+  }
+  document.getElementById("filters").innerHTML = '<button class="chip" type="button" data-l="0" aria-pressed="' + !lesson + '">All</button>' +
+    T.map(function (l) { return '<button class="chip" type="button" data-l="' + l.n + '" aria-pressed="' + (lesson === l.n) + '">' + l.n + ". " + esc(l.short) + "</button>"; }).join("");
+  function setMode() { document.querySelectorAll("[data-m]").forEach(function (b) { b.setAttribute("aria-pressed", String((b.dataset.m === "real") === real)); }); }
   function draw() {
-    var s = q.value.trim().toLowerCase();
-    var rows = W.filter(function (w) { return (!lesson || w[4] === lesson) && (!s || (w[0] + " " + w[1] + " " + w[2] + " " + (w[5] || "")).toLowerCase().indexOf(s) >= 0); });
+    var s = q.value.trim().toLowerCase(), target = location.hash.slice(1);
+    var rows = W.filter(function (w) { var r = R[w[0]] || []; return (!lesson || w[4] === lesson) && (!s || (w[0] + " " + w[1] + " " + w[2] + " " + (w[5] || "") + " " + (r[0] || "") + " " + (r[1] || "")).toLowerCase().indexOf(s) >= 0); });
     list.innerHTML = rows.map(function (w) {
       var l = T[w[4] - 1], got = done[l.id], M = window.BKM;
       var mark = M && M.known(w[0]) ? '<span class="got">✓ known</span>' : M && got && M.due([w[0]]).length ? '<span class="due">practice</span>' : got ? '<span class="got lrn">learning</span>' : "";
       return '<li id="' + slug(w[0]) + '"><h3><span>' + esc(w[0]) + mark + '</span><a href="' + l.href + '">Lesson ' + l.n + "</a></h3>" +
-        '<p class="k">' + esc(w[1]) + '</p><p class="r">' + esc(w[2]) + "</p>" + (w[5] ? '<p class="heard">You might hear: “' + esc(w[5]) + '”</p>' : "") + (w[3] ? '<p class="no">' + esc(w[3]) + "</p>" : "") + "</li>";
+        '<p class="k">' + esc(w[1]) + '</p><p class="r">' + esc(w[2]) + "</p>" + (w[5] ? '<p class="heard">You might hear: “' + esc(w[5]) + '”</p>' : "") + (w[3] ? '<p class="no">' + esc(w[3]) + "</p>" : "") +
+        realHTML(w, real || slug(w[0]) === target) + "</li>";
     }).join("") || '<li>No word matches. Try “token” or “agent”.</li>';
     document.getElementById("count").textContent = rows.length + " of " + W.length + " words";
+  }
+  function go(id) {
+    var el = document.getElementById(id);
+    if (!el) { lesson = 0; q.value = ""; document.querySelectorAll("[data-l]").forEach(function (x) { x.setAttribute("aria-pressed", String(x.dataset.l === "0")); }); history.replaceState(null, "", "#" + id); draw(); el = document.getElementById(id); }
+    if (el) { var d = el.querySelector("details.real"); if (d) d.open = true; el.scrollIntoView({ block: "start" }); }
   }
   q.oninput = draw;
   document.getElementById("filters").onclick = function (e) {
     var b = e.target.closest("[data-l]"); if (!b) return; lesson = +b.dataset.l;
     this.querySelectorAll("[data-l]").forEach(function (x) { x.setAttribute("aria-pressed", String(x === b)); }); draw();
   };
-  draw();
-  if (location.hash) { var el = document.getElementById(location.hash.slice(1)); if (el) el.scrollIntoView(); }
+  document.querySelector(".mode").onclick = function (e) {
+    var b = e.target.closest("[data-m]"); if (!b) return; real = b.dataset.m === "real";
+    try { localStorage.setItem("ezWordsMode", real ? "real" : "plain"); } catch (x) {}
+    setMode(); list.querySelectorAll("details.real").forEach(function (d) { d.open = real; });
+  };
+  list.onclick = function (e) { var a = e.target.closest("[data-go]"); if (!a) return; e.preventDefault(); history.pushState(null, "", "#" + slug(a.dataset.go)); go(slug(a.dataset.go)); };
+  addEventListener("hashchange", function () { if (location.hash) go(location.hash.slice(1)); });
+  setMode(); draw();
+  if (location.hash) go(location.hash.slice(1));
 });
 </script>
 <script src="/projects/skill-quest/smez-index.js" defer></script>
