@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Approve posts · AI Made EZ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Schibsted+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../school.css">
+<link rel="stylesheet" href="engine.css">
+<style>
+main{max-width:1180px}
+.row{display:grid;gap:18px;padding:26px 0;border-top:2px solid var(--ink)}
+@media (min-width:980px){.row{grid-template-columns:180px 1fr 340px}}
+.row h2{margin:0;font-size:26px}
+.meta{font-size:14px;color:var(--muted);margin-top:6px}
+.before{max-width:180px}
+.before img{width:100%;border-radius:8px;display:block;opacity:.9}
+.before p{font-size:13px;color:var(--muted);margin:6px 0 0}
+.new{display:grid;place-items:center;aspect-ratio:4/5;border:2px dashed var(--line2);border-radius:8px;color:var(--muted);font-weight:700}
+.strip{display:flex;gap:12px;overflow-x:auto;padding-bottom:8px;scroll-snap-type:x mandatory}
+.strip .ez-frame{flex:none;width:260px;scroll-snap-align:start}
+.side .cap{white-space:pre-line;font-size:14.5px;line-height:1.5;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px;max-height:340px;overflow:auto}
+.checks{list-style:none;padding:0;margin:10px 0 0;font-size:13.5px;display:grid;gap:3px}
+.checks li::before{content:"✓ ";color:var(--ok);font-weight:800}
+.checks li.no::before{content:"⚠ ";color:var(--accent)}
+.checks li.no{color:var(--accent);font-weight:600}
+.chip{font-size:13px}
+body.solo{margin:0;background:#000}
+body.solo > *:not(#solo){display:none!important}
+</style>
+</head>
+<body>
+<header class="top"><a class="logo" href="./">Approve posts</a><div class="tools"><span class="chip">Drafts · Levels 3–5</span></div></header>
+<main>
+  <p class="label">Instagram · drafts, not posted</p>
+  <h1>Launch posts: Levels 3, 4 and 5</h1>
+  <p class="muted">Same frame on every post: a real picture, a black fade, a red label, a white headline. Tell me in chat which to approve, like "approve 1, 3, 4; change 2: …".</p>
+  <div id="rows"></div>
+</main>
+<div id="solo"></div>
+<script type="module">
+import { slideHTML, fit, esc } from "./engine.js";
+import { FOLLOW } from "./posts.js";
+import { DRAFTS as POSTS } from "./drafts-levels.js";
+const q = new URLSearchParams(location.search);
+const words = (s) => String(s).trim().split(/\s+/).filter(Boolean).length;
+const EMOJI = /[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/u;
+function checks(p) {
+  const cover = p.slides[0], cap = p.caption.join("\n\n"), hw = words(cover.head);
+  const isNews = p.label.startsWith("AI NEWS");
+  const out = [
+    [hw >= 9 && hw <= 20, `Headline ${hw} words (9–20)`],
+    [!EMOJI.test(cover.head) && !/(^|\s)#[A-Za-z]/.test(cap) && !EMOJI.test(cap), "No emoji or hashtags"],
+    [/\d/.test(cover.head) || /\byou(r)?\b/i.test(cover.head), "A number or a 'you' stake in the headline"],
+    [/However/.test(cap), "Caption has the 'However' caveat"],
+    [/In plain words:/.test(cap), "Caption has the 'In plain words' line"],
+    [cap.includes(FOLLOW) || /Link in bio/.test(cap), "One call to action"],
+    [/Source:/.test(cap) || p.id.startsWith("guide"), "Source named"],
+    [!!cover.img || !!cover.typeOk, cover.img ? "Real image, credited" : cover.typeOk ? "Type-only cover (on purpose)" : "Image: type-only for now (licensed photo pending)"],
+    [p.slides.length < 5 || p.slides[p.slides.length - 1].t === "offer", "Long carousel ends on the offer slide"],
+  ];
+  if (isNews) out.push([words(cap) >= 90 && words(cap) <= 170, `News caption ${words(cap)} words (90–160)`], [!!p.checked, "Source opened and date checked"]);
+  return out;
+}
+if (q.get("post")) {
+  const p = POSTS.find((x) => x.id === q.get("post")), i = Number(q.get("slide") || 0);
+  document.body.classList.add("solo");
+  document.getElementById("solo").innerHTML = p ? slideHTML(p.slides[i], i, p) : "";
+} else {
+  document.getElementById("rows").innerHTML = POSTS.map((p, n) => `<section class="row">
+    <div><h2>${n + 1}. ${esc(p.id)}</h2><p class="meta">${esc(p.label)} · ${p.slides.length > 1 ? p.slides.length + " slides" : "single"}<br>Hook: ${esc(p.formula)}<br>Image: ${esc(p.image)}</p>
+      <div class="before" style="margin-top:10px">${p.before ? `<img src="before/${p.before}.jpg" alt="Before"><p>Before</p>` : `<div class="new">New</div>`}</div></div>
+    <div><p class="label" style="margin-top:0">After</p><div class="strip">${p.slides.map((s, i) => `<div class="ez-frame">${slideHTML(s, i, p)}</div>`).join("")}</div></div>
+    <div class="side"><p class="label" style="margin-top:0">Caption</p><div class="cap">${esc(p.caption.join("\n\n"))}</div>
+      <ul class="checks">${checks(p).map(([ok, t]) => `<li class="${ok ? "" : "no"}">${esc(t)}</li>`).join("")}</ul></div>
+  </section>`).join("");
+  const go = () => fit(); go(); addEventListener("resize", go); document.fonts && document.fonts.ready.then(go);
+}
+</script>
+</body>
+</html>
