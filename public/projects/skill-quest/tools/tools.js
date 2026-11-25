@@ -682,18 +682,6 @@ window.EZ_TOOLS2 = {
 "author": "Chikorita",
 "source": "https://commons.wikimedia.org/wiki/File:Midjourney_-_Sleigh_Ride_Watercolor.png",
 "excerpt": false
-},
-{
-"src": "img/midjourney/3.jpg",
-"kind": "image",
-"alt": "Cute fluffy little polar bear illustration",
-"tool": "Midjourney v4",
-"prompt": "Gismo die flauschige Kartoffel --v 4",
-"license": "CC BY-SA 4.0",
-"licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
-"author": "Chikorita",
-"source": "https://commons.wikimedia.org/wiki/File:Midjourney_-_Little_Icebear.png",
-"excerpt": false
 }
 ],
 "gallery": "https://www.midjourney.com/explore"
@@ -1317,18 +1305,6 @@ window.EZ_TOOLS2 = {
 "licenseUrl": "https://github.com/DeepakNegi13/CalcLens/blob/main/LICENSE",
 "author": "Deepak Negi",
 "source": "https://github.com/DeepakNegi13/CalcLens",
-"excerpt": false
-},
-{
-"src": "img/google-stitch/3.jpg",
-"kind": "image",
-"alt": "Dark security dashboard with stat cards, blocked-action alert and log table",
-"tool": "Google Stitch (README: web console designed with Google Stitch; file named stitch-ui.png)",
-"prompt": "",
-"license": "Apache-2.0",
-"licenseUrl": "https://github.com/h4rsh740/SENTINEL/blob/main/LICENSE",
-"author": "h4rsh740",
-"source": "https://github.com/h4rsh740/SENTINEL",
 "excerpt": false
 }
 ],
