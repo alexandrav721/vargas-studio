@@ -3,8 +3,11 @@
    Uses school.js for the stamp drawing and toast; keeps its own passport (this device only). */
 (function () {
   "use strict";
-  var KEY = "smez-builders-v1";
-  var TRACK = [
+  var CFG = window.BK_CONFIG || {};
+  var KEY = CFG.key || "smez-builders-v1";
+  var LEVEL = CFG.level || 2, NAME = CFG.name || "Builder’s Kitchen", GLOSS = CFG.glossary || "glossary.html", CHAL = CFG.challenge === undefined ? "challenge.html" : CFG.challenge;
+  function lvl(w) { return w[6] || 2; }
+  var TRACK = CFG.track || [
     { n: 1, id: "b1", stamp: "Kitchen", short: "The kitchen", name: "How AI kitchens work", href: "lesson-1.html", use: "someone says “we hit the token limit”" },
     { n: 2, id: "b2", stamp: "API", short: "Order window", name: "The order window (API)", href: "lesson-2.html", use: "a vendor says “we just call the API”" },
     { n: 3, id: "b3", stamp: "Rules", short: "House rules", name: "House rules (prompting)", href: "lesson-3.html", use: "you set up a bot’s instructions" },
@@ -28,15 +31,15 @@
     return '<div class="ticket"' + (id ? ' id="' + id + '"' : "") + '><div class="th"><span>' + esc(head) + "</span><span>" + esc(right || "") + "</span></div>" + body + (foot ? '<div class="tf">' + esc(foot) + "</div>" : "") + "</div>";
   }
   function termChips(terms) {
-    return '<div class="terms">' + terms.map(function (t) { return '<a class="term" href="glossary.html#' + esc(t.toLowerCase().replace(/[^a-z0-9]+/g, "-")) + '">' + esc(t) + "</a>"; }).join("") + "</div>";
+    return '<div class="terms">' + terms.map(function (t) { return '<a class="term" href="' + GLOSS + '#' + esc(t.toLowerCase().replace(/[^a-z0-9]+/g, "-")) + '">' + esc(t) + "</a>"; }).join("") + "</div>";
   }
 
 function rec(t, ok) { if (t && window.BKM) window.BKM.record(t, ok); }
   function taught() { var W = window.BK_WORDS || [], U = window.BK_UNTAUGHT || []; return W.map(function (w) { return w[0]; }).filter(function (t) { return U.indexOf(t) < 0; }); }
   /* taught words from lessons this device has finished: the only words reviewed or counted as due */
-  function pool() { var W = window.BK_WORDS || [], U = window.BK_UNTAUGHT || [], d = read(); var fin = TRACK.filter(function (l) { return d[l.id]; }).map(function (l) { return l.n; }); return W.filter(function (w) { return U.indexOf(w[0]) < 0 && fin.indexOf(w[4]) >= 0; }).map(function (w) { return w[0]; }); }
+  function pool() { var W = window.BK_WORDS || [], U = window.BK_UNTAUGHT || [], d = read(); var fin = TRACK.filter(function (l) { return d[l.id]; }).map(function (l) { return l.n; }); return W.filter(function (w) { return U.indexOf(w[0]) < 0 && lvl(w) === LEVEL && fin.indexOf(w[4]) >= 0; }).map(function (w) { return w[0]; }); }
   window.BK = {
-    TRACK: TRACK, KEY: KEY, done: read, taught: taught, pool: pool, esc: esc, ticket: ticket, termChips: termChips,
+    TRACK: TRACK, KEY: KEY, LEVEL: LEVEL, NAME: NAME, GLOSS: GLOSS, done: read, taught: taught, pool: pool, esc: esc, ticket: ticket, termChips: termChips,
     mark: function (id) { var s = read(); var first = !s[id]; if (first) { s[id] = new Date().toISOString().slice(0, 10); write(s); } return first; },
     run: function (L) {
       document.body.classList.add("bk");
@@ -185,7 +188,7 @@ function rec(t, ok) { if (t && window.BKM) window.BKM.record(t, ok); }
         if (step === 4) return show("<h2>" + esc(L.breaks.title) + "</h2>" +
           '<ul class="lines">' + L.breaks.lines.map(function (x) { return "<li><b>" + x[0] + "</b>" + x[1] + "</li>"; }).join("") + "</ul>" +
           '<div class="breaks"><b>Where the kitchen idea breaks</b>' + L.breaks.where + "</div>" +
-          (L.terms ? '<p class="small" style="margin-top:14px">Want to go deeper? <a href="glossary.html?lesson=' + L.n + '&amp;real=1">See the technical definitions</a></p>' : "") + nextBtn("Take the quiz"));
+          (L.terms ? '<p class="small" style="margin-top:14px">Want to go deeper? <a href="' + GLOSS + '?level=' + LEVEL + '&amp;lesson=' + L.n + '&amp;real=1">See the technical definitions</a></p>' : "") + nextBtn("Take the quiz"));
 
         if (step === 5) {
           if (!L._gen && window.BK_WORDS) {
@@ -229,27 +232,27 @@ function rec(t, ok) { if (t && window.BKM) window.BKM.record(t, ok); }
         var all = count === CORE.length && !L.bonus;
         app.innerHTML = '<section class="step">' +
           '<div class="stamp-wrap"><div class="stamp land" aria-hidden="true">' + School.stampSvg(L.stamp, L.n, true) + "</div></div>" +
-          '<h1 style="text-align:center">' + (all ? "Builder’s passport complete." : "Lesson " + L.n + ", stamped.") + "</h1>" +
-          '<p class="muted" style="text-align:center">' + (L.bonus ? "A bonus stamp. It sits next to your " + CORE.length + " Builder’s Kitchen stamps." : all ? "All " + CORE.length + " stamps. You can follow a builder conversation now." : (first ? count + " of " + CORE.length + " Builder’s Kitchen stamps." : "You already had this stamp. Nice refresher.")) + "</p>" +
+          '<h1 style="text-align:center">' + (all ? NAME + " passport complete." : "Lesson " + L.n + ", stamped.") + "</h1>" +
+          '<p class="muted" style="text-align:center">' + (L.bonus ? "A bonus stamp. It sits next to your " + CORE.length + " " + NAME + " stamps." : all ? "All " + CORE.length + " stamps. " + (CFG.doneLine || "You can follow a builder conversation now.") : (first ? count + " of " + CORE.length + " " + NAME + " stamps." : "You already had this stamp. Nice refresher.")) + "</p>" +
           '<div class="kept"><p><b>Words from this lesson:</b></p>' + termChips(L.terms) +
           (window.BKM ? (function () { var T = taught(), k = window.BKM.knownCount(T), due = window.BKM.due(pool()).length; var lw = L.terms.filter(function (t) { return T.indexOf(t) >= 0; }).length;
-            return "<p><b>" + lw + " new words today.</b> Lock them in tomorrow with a 2-minute review." + (k ? " You already know " + k + (k === 1 ? " word" : " words") + " for good." : "") + (due ? ' <a href="challenge.html?review=1">Practice: ' + window.BKM.due(pool()).slice(0, 4).join(", ") + (due > 4 ? " and " + (due - 4) + " more" : "") + "</a>." : "") + "</p>"; })() : "") +
+            return "<p><b>" + lw + " new words today.</b> Lock them in tomorrow with a 2-minute review." + (k ? " You already know " + k + (k === 1 ? " word" : " words") + " for good." : "") + (due && CHAL ? ' <a href="' + CHAL + '?review=1">Practice: ' + window.BKM.due(pool()).slice(0, 4).join(", ") + (due > 4 ? " and " + (due - 4) + " more" : "") + "</a>." : "") + "</p>"; })() : "") +
           (L.say ? '<p><b>Say it in a meeting:</b> “' + esc(L.say) + '”</p>' : "") +
           "<p><b>You leave with:</b> " + L.keep + "</p></div>" +
           (nxt ? '<p class="small" style="text-align:center">Done for today? Tomorrow: a 2-minute review, then Lesson ' + nxt.n + ".</p>" : "") +
           '<div class="btns"><button class="btn" id="save" type="button">' + esc(L.cardLabel || "Copy my card") + "</button>" +
           (nxt ? '<a class="btn ghost" href="' + nxt.href + '">Next lesson →</a>' : "") +
-          '<a class="btn ghost" href="./">My passport</a><button class="btn ghost" id="send" type="button">Send this lesson</button><button class="btn ghost" id="remind" type="button">Remind me tomorrow</button></div>' +
+          '<a class="btn ghost" href="./">My passport</a><button class="btn ghost" id="send" type="button">Send this lesson</button>' + (CHAL ? '<button class="btn ghost" id="remind" type="button">Remind me tomorrow</button>' : "") + '</div>' +
           (L.real ? '<p class="small">Go deeper: <a href="' + L.real[1] + '" target="_blank" rel="noopener">' + esc(L.real[0]) + "</a> (Anthropic’s own course).</p>" : "") + "</section>";
         window.scrollTo(0, 0);
         setTimeout(function () { play(all ? "win" : "stamp"); }, 260);
         document.getElementById("save").onclick = function () { copy(L.card, "Card copied"); };
-        document.getElementById("remind").onclick = function () {
+        if (CHAL) document.getElementById("remind").onclick = function () {
           /* a calendar file for tomorrow 9:00 local time; nothing leaves the device */
           var t = new Date(); t.setDate(t.getDate() + 1); t.setHours(9, 0, 0, 0);
           var e = new Date(t.getTime() + 5 * 60000), pad = function (n) { return ("0" + n).slice(-2); };
           var f = function (d) { return d.getFullYear() + pad(d.getMonth() + 1) + pad(d.getDate()) + "T" + pad(d.getHours()) + pad(d.getMinutes()) + "00"; };
-          var url = location.href.replace(/[^/]*$/, "") + "challenge.html?review=1";
+          var url = location.href.replace(/[^/]*$/, "") + CHAL + "?review=1";
           var ics = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//AI Made EZ//Builder's Kitchen//EN", "BEGIN:VEVENT", "UID:" + Date.now() + "@ai-made-ez", "DTSTAMP:" + f(new Date()), "DTSTART:" + f(t), "DTEND:" + f(e), "SUMMARY:2-minute AI words review", "DESCRIPTION:Lock in yesterday’s words: " + url, "URL:" + url, "BEGIN:VALARM", "TRIGGER:PT0M", "ACTION:DISPLAY", "DESCRIPTION:2-minute AI words review", "END:VALARM", "END:VEVENT", "END:VCALENDAR"].join("\r\n");
           var a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([ics], { type: "text/calendar" })); a.download = "ai-words-review.ics"; document.body.appendChild(a); a.click(); a.remove();
           School.toast("Open the file to add it to your calendar");
