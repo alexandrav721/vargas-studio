@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
 <title>Plain words · AI Made EZ</title>
-<meta name="description" content="Every AI builder word in one page: a kitchen picture, the meaning in plain words, what it’s not, and the real definition engineers use.">
+<meta name="description" content="Every AI builder word in one page: a kitchen picture, the meaning in plain words, what it’s not, and the technical definition.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
@@ -56,12 +56,12 @@
   <p class="label">Plain words · the AI dictionary</p>
   <h1>Every AI word, in plain words.</h1>
   <input class="search" id="q" type="search" placeholder="Find a word: token, MCP, agent…" aria-label="Find a word">
-  <div class="mode" role="group" aria-label="Read every word as"><span>Read every word as</span><button class="chip" type="button" data-m="plain" aria-pressed="true">Plain</button><button class="chip" type="button" data-m="real" aria-pressed="false">Real</button></div>
+  <div class="mode" role="group" aria-label="Read every word as"><span>Read every word as</span><button class="chip" type="button" data-m="plain" aria-pressed="true">Plain</button><button class="chip" type="button" data-m="real" aria-pressed="false">Technical</button></div>
   <div class="filters" id="filters"></div>
   <p class="count" id="count" aria-live="polite"></p>
   <ul class="dict" id="dict"></ul>
   <div class="btns"><button class="btn ghost" type="button" onclick="window.print()">Print it</button><a class="btn ghost" href="./">Back to the passport</a></div>
-  <p class="small" style="margin-top:12px">Plain words first; tap “The real definition” for how engineers say it. Checked against Anthropic’s docs and each linked source on 24 Nov 2026. AI changes fast; model names and prices especially.</p>
+  <p class="small" style="margin-top:12px">Plain words first; tap “The technical definition” to go one step deeper. Checked against Anthropic’s docs and each linked source on 24 Nov 2026. AI changes fast; model names and prices especially.</p>
 </main>
 <footer class="foot"><a href="./">Builder’s passport</a><a href="../">AI Made EZ · Level 1</a><span>Not affiliated with Anthropic</span><span>Made by Alexandra Vargas</span></footer>
 <script src="../school.js" defer></script><script src="bk.js" defer></script><script src="words.js" defer></script><script src="real.js" defer></script><script src="mem.js" defer></script>
@@ -75,8 +75,8 @@ document.addEventListener("DOMContentLoaded", function () {
     var r = R[w[0]]; if (!r) return "";
     var see = r[1].charAt(0) === "`" ? '<pre class="see">' + esc(r[1].slice(1)) + "</pre>" : '<p class="see">' + esc(r[1]) + "</p>";
     var rel = r[2].length ? '<p class="rl">Related</p><div class="rel">' + r[2].map(function (x) { return '<a href="#' + slug(x) + '" data-go="' + esc(x) + '">' + esc(x) + "</a>"; }).join("") + "</div>" : "";
-    return '<details class="real"' + (open ? " open" : "") + '><summary>The real definition</summary>' +
-      '<p class="rl">How engineers say it</p><p class="rd">' + esc(r[0]) + '</p><p class="rl">Where you’ll see it</p>' + see + rel +
+    return '<details class="real"' + (open ? " open" : "") + '><summary>The technical definition</summary>' +
+      '<p class="rl">In technical terms</p><p class="rd">' + esc(r[0]) + '</p><p class="rl">Where you’ll see it</p>' + see + rel +
       '<p class="src">Source: <a href="' + esc(r[3][1]) + '"' + (r[3][1].charAt(0) === "/" ? "" : ' target="_blank" rel="noopener"') + ">" + esc(r[3][0]) + "</a> · checked 24 Nov 2026</p></details>";
   }
   document.getElementById("filters").innerHTML = '<button class="chip" type="button" data-l="0" aria-pressed="' + !lesson + '">All</button>' +

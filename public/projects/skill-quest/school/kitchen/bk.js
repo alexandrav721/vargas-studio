@@ -185,7 +185,7 @@ function rec(t, ok) { if (t && window.BKM) window.BKM.record(t, ok); }
         if (step === 4) return show("<h2>" + esc(L.breaks.title) + "</h2>" +
           '<ul class="lines">' + L.breaks.lines.map(function (x) { return "<li><b>" + x[0] + "</b>" + x[1] + "</li>"; }).join("") + "</ul>" +
           '<div class="breaks"><b>Where the kitchen idea breaks</b>' + L.breaks.where + "</div>" +
-          (L.terms ? '<p class="small" style="margin-top:14px">Ready for the real words? <a href="glossary.html?lesson=' + L.n + '&amp;real=1">See how engineers define them</a></p>' : "") + nextBtn("Take the quiz"));
+          (L.terms ? '<p class="small" style="margin-top:14px">Want to go deeper? <a href="glossary.html?lesson=' + L.n + '&amp;real=1">See the technical definitions</a></p>' : "") + nextBtn("Take the quiz"));
 
         if (step === 5) {
           if (!L._gen && window.BK_WORDS) {
