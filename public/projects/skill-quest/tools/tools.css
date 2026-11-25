@@ -6,9 +6,9 @@
 .job[aria-pressed="true"] svg{color:#fff}
 .picks{display:grid;gap:10px;margin-top:16px}
 .pick{display:grid;grid-template-columns:1fr auto;gap:4px 10px;padding:14px 16px;border:2px solid var(--ink);border-radius:16px;background:#fff;color:var(--ink);text-decoration:none}
-.pick .tag{grid-column:1/-1;font:700 11px/1 var(--text);letter-spacing:.12em;text-transform:uppercase}
+.pick .ptag{grid-column:1/-1;font:700 11px/1 var(--text);letter-spacing:.12em;text-transform:uppercase}
 .pick.start{border-color:var(--accent)}
-.pick.start .tag{color:var(--accent)}
+.pick.start .ptag{color:var(--accent)}
 .pick.skip{background:var(--card);border-color:var(--line2)}
 .pick b{font:800 1.2rem/1.2 var(--display)}
 .pick .why{grid-column:1/-1;font-size:.95rem;color:var(--muted)}

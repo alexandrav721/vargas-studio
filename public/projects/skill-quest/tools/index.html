@@ -63,7 +63,7 @@
   jobsEl.innerHTML = D.jobs.map(function (j) { return '<button class="job" type="button" data-job="' + j[0] + '" aria-pressed="false">' + U.icon(j[2]) + "<span>" + esc(j[1]) + "</span></button>"; }).join("");
   function pick(cls, tag, id, why) {
     var t = by[id]; if (!t) return "";
-    return '<a class="pick ' + cls + '" href="tool.html?t=' + t.id + '"><span class="tag">' + tag + "</span><b>" + esc(t.name) + "</b>" + U.dots(t.score) +
+    return '<a class="pick ' + cls + '" href="tool.html?t=' + t.id + '"><span class="ptag">' + tag + "</span><b>" + esc(t.name) + "</b>" + U.dots(t.score) +
       '<span class="why">' + esc(why || t.line) + '</span><span class="free"><b style="font:inherit;font-weight:700">Free:</b> ' + esc(t.free) + "</span></a>";
   }
   function show(job) {
