@@ -236,10 +236,10 @@ function rec(t, ok) { if (t && window.BKM) window.BKM.record(t, ok); }
           '<p class="muted" style="text-align:center">' + (L.bonus ? "A bonus stamp. It sits next to your " + CORE.length + " " + NAME + " stamps." : all ? "All " + CORE.length + " stamps. " + (CFG.doneLine || "You can follow a builder conversation now.") : (first ? count + " of " + CORE.length + " " + NAME + " stamps." : "You already had this stamp. Nice refresher.")) + "</p>" +
           '<div class="kept"><p><b>Words from this lesson:</b></p>' + termChips(L.terms) +
           (window.BKM ? (function () { var T = taught(), k = window.BKM.knownCount(T), due = window.BKM.due(pool()).length; var lw = L.terms.filter(function (t) { return T.indexOf(t) >= 0; }).length;
-            return "<p><b>" + lw + " new words today.</b> Lock them in tomorrow with a 2-minute review." + (k ? " You already know " + k + (k === 1 ? " word" : " words") + " for good." : "") + (due && CHAL ? ' <a href="' + CHAL + '?review=1">Practice: ' + window.BKM.due(pool()).slice(0, 4).join(", ") + (due > 4 ? " and " + (due - 4) + " more" : "") + "</a>." : "") + "</p>"; })() : "") +
+            return "<p><b>" + lw + " new words today.</b> " + (CHAL ? "Lock them in tomorrow with a 2-minute review." : "Find them any time in Plain words.") + (k ? " You already know " + k + (k === 1 ? " word" : " words") + " for good." : "") + (due && CHAL ? ' <a href="' + CHAL + '?review=1">Practice: ' + window.BKM.due(pool()).slice(0, 4).join(", ") + (due > 4 ? " and " + (due - 4) + " more" : "") + "</a>." : "") + "</p>"; })() : "") +
           (L.say ? '<p><b>Say it in a meeting:</b> “' + esc(L.say) + '”</p>' : "") +
           "<p><b>You leave with:</b> " + L.keep + "</p></div>" +
-          (nxt ? '<p class="small" style="text-align:center">Done for today? Tomorrow: a 2-minute review, then Lesson ' + nxt.n + ".</p>" : "") +
+          (nxt ? '<p class="small" style="text-align:center">' + (CHAL ? "Done for today? Tomorrow: a 2-minute review, then Lesson " : "Done for today? Next time: Lesson ") + nxt.n + ".</p>" : "") +
           '<div class="btns"><button class="btn" id="save" type="button">' + esc(L.cardLabel || "Copy my card") + "</button>" +
           (nxt ? '<a class="btn ghost" href="' + nxt.href + '">Next lesson →</a>' : "") +
           '<a class="btn ghost" href="./">My passport</a><button class="btn ghost" id="send" type="button">Send this lesson</button>' + (CHAL ? '<button class="btn ghost" id="remind" type="button">Remind me tomorrow</button>' : "") + '</div>' +
