@@ -1,0 +1,13 @@
+# Photo credits (AI Made EZ Instagram)
+
+Downloaded 24 Nov 2026 from Wikimedia Commons (1920px versions, resized to 1600px). CC BY-SA images: the edited post stays under CC BY-SA.
+
+- **kitchen.jpg**: Busy restaurant kitchen / chefs at work (tonkatsu restaurant kitchen, Tokyo). Photo: Paul Keller, CC BY 2.0, via Wikimedia Commons. License: CC BY 2.0. Source: https://commons.wikimedia.org/wiki/File:Chefs_at_work_(8150562599).jpg
+- **order.jpg**: Chef reading lunch orders to line cooks (Inspiration Kitchens, Chicago). Photo: USDA, public domain, via Wikimedia Commons. License: Public domain (USDA, U.S. federal government work). Source: https://commons.wikimedia.org/wiki/File:20120608-OSEC-RBN-2579_(7170155123).jpg
+- **guess.jpg**: A plate being served to a judge for tasting at a cooking competition. Photo: Lance Cpl. Unique B. Roberts, U.S. Marine Corps, public domain, via Wikimedia Commons. License: Public domain (U.S. Marine Corps, federal government work). Source: https://commons.wikimedia.org/wiki/File:Cherry_Point_Marines_compete_for_the_Chef_of_the_Quarter_competition_140529-M-GY210-052.jpg
+- **prompt.jpg**: Well-organized home refrigerator with food. Photo: Lance Cheung, USDA, public domain, via Wikimedia Commons. License: Public domain (USDA, U.S. federal government work). Source: https://commons.wikimedia.org/wiki/File:Food_Safety_-_Cut_Waste_in_Refrigerators_(20200605-FSIS-LSC-0059).jpg
+- **need.jpg**: Person typing on a laptop at home (coffee table, not a kitchen table). Photo: Microbiz Mag (microbizmag.co.uk), CC BY 2.0, via Wikimedia Commons. License: CC BY 2.0. Source: https://commons.wikimedia.org/wiki/File:Working_from_home_laptop_and_notepad.jpg
+- **words.jpg**: Dictionary close-up (thumb-index letter tabs). Photo: Till Niermann, CC BY-SA 3.0, via Wikimedia Commons. License: CC BY-SA 3.0. Source: https://commons.wikimedia.org/wiki/File:Dictionary_indents_headon.jpg
+- **layers.jpg**: Nvidia Turing GPU chip dies (TU104, TU106, TU116). Photo: Fritzchens Fritz, CC0, via Wikimedia Commons. License: CC0. Source: https://commons.wikimedia.org/wiki/File:Stacked_Turing_Chips_TU104_TU106_TU116_DSC08577-DSC08577_(50891015413).jpg
+- **news-wallet.jpg**: For news story 1 (Google Wallet in AI Mode): phone paying at a mobile payment terminal. Photo: HLundgaard, CC BY-SA 3.0, via Wikimedia Commons. License: CC BY-SA 3.0. Source: https://commons.wikimedia.org/wiki/File:Mobile_payment_03.JPG
+- **news-health.jpg**: For news story 2 (ChatGPT Health on Android): smartphone with the ChatGPT app. Photo: Jernej Furman, CC BY 2.0, via Wikimedia Commons. License: CC BY 2.0. Source: https://commons.wikimedia.org/wiki/File:Smartphone_with_ChatGPT_app_(52917381673).jpg

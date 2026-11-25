@@ -52,13 +52,13 @@ function checks(p) {
   const isNews = p.label.startsWith("AI NEWS");
   const out = [
     [hw >= 9 && hw <= 20, `Headline ${hw} words (9–20)`],
-    [!EMOJI.test(cover.head) && !/#\w/.test(cap) && !EMOJI.test(cap), "No emoji or hashtags"],
+    [!EMOJI.test(cover.head) && !/(^|\s)#[A-Za-z]/.test(cap) && !EMOJI.test(cap), "No emoji or hashtags"],
     [/\d/.test(cover.head) || /\byou(r)?\b/i.test(cover.head), "A number or a 'you' stake in the headline"],
     [/However/.test(cap), "Caption has the 'However' caveat"],
     [/In plain words:/.test(cap), "Caption has the 'In plain words' line"],
     [cap.includes(FOLLOW) || /Link in bio/.test(cap), "One call to action"],
     [/Source:/.test(cap) || p.id.startsWith("guide"), "Source named"],
-    [!!cover.img || !!cover.typeOk, cover.img ? "Real image, credited" : "Image: type-only for now (licensed photo pending)"],
+    [!!cover.img || !!cover.typeOk, cover.img ? "Real image, credited" : cover.typeOk ? "Type-only cover (on purpose)" : "Image: type-only for now (licensed photo pending)"],
     [p.slides.length < 5 || p.slides[p.slides.length - 1].t === "offer", "Long carousel ends on the offer slide"],
   ];
   if (isNews) out.push([words(cap) >= 90 && words(cap) <= 170, `News caption ${words(cap)} words (90–160)`], [!!p.checked, "Source opened and date checked"]);
