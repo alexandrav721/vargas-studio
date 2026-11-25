@@ -437,34 +437,34 @@
    "Decide the brand name"
   ],
   "social": {
-   "rhythm": "3 posts a week: Mon AI made easy, Wed no gatekeeping, Fri AI news",
+   "rhythm": "1 to 2 posts a day, one fixed frame, one link: the free lessons",
    "page": "/projects/skill-quest/school/social/",
    "pillars": [
     {
-     "name": "AI, made easy",
-     "what": "One AI word a week, explained with a kitchen you already know.",
+     "name": "AI news, made EZ",
+     "what": "What changed this week, with the official source and what it means for you.",
      "posts": [
-      "Post: AI isn't fancy, it's a kitchen",
-      "Post: your prompt is your order, vague vs clear",
-      "Post: hallucination is a confident wrong plate"
+      "Carousel: Google's AI Mode can now read your Wallet, but can't move money",
+      "Carousel: ChatGPT Health on Android, even on the free plan",
+      "Carousel: the receipt slide quotes the official source"
      ]
     },
     {
-     "name": "No gatekeeping",
-     "what": "The whole prompt in the post. Never \"comment PROMPT and I'll DM you.\"",
+     "name": "Plain words",
+     "what": "The jargon, decoded with a kitchen you already know.",
      "posts": [
-      "Post: the full dinner prompt, copy it",
-      "Post: you don't need code, a course or a secret prompt",
-      "Post: words people use to sound fancy, in plain words"
+      "Carousel: Claude is just a chef, 5 words explained",
+      "Carousel: API, MCP, RAG and agents in 1 minute",
+      "Carousel: it's all wrappers, the 5 layers of AI"
      ]
     },
     {
-     "name": "AI news, plain words",
-     "what": "Every Friday: what changed this week and what it means for you.",
+     "name": "No gatekeeping and guides",
+     "what": "The whole prompt in the post, and step-by-step how-tos.",
      "posts": [
-      "Post: this week in AI, 3 items, real sources",
-      "Story: one scam to watch for this week",
-      "Reel: one new feature, tried on screen"
+      "Post: the full dinner prompt, no DMs",
+      "Post: you need 0 lines of code and $0",
+      "Guide, 7 slides: plan 5 dinners from your fridge"
      ]
     }
    ]
