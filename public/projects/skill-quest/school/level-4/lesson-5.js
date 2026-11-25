@@ -17,9 +17,9 @@
       html:
         '<p class="label">Mark the shared part</p><div class="ticket"><div class="th"><span>REQUEST</span><span>cached</span></div>system: [ the 30-page manual,<br>&nbsp;&nbsp;cache_control: { type: "ephemeral" } ]<br>messages: user “Can I return opened boxes?”<div class="tf">Stable parts first, changing parts after.</div></div>' +
         '<p class="label" style="margin-top:14px">Second call’s receipt <span class="sample">Sample</span></p><div class="reply"><p class="who">usage</p>cache_read_input_tokens: 18,000 <span class="small">(from the prep)</span><br>input_tokens: 12</div>' +
-        '<p class="small">Cached reads cost a small fraction of normal input, between a tenth and a fortieth depending on the model. It keeps 5 minutes (its <b>TTL</b>, time to live); an hour costs more.</p>' +
-        '<p class="small"><b>Message Batches</b>: half price, done within 24 hours. Label each request with a <b>custom_id</b>.</p>',
-      more: '<p class="small">The prompt is read in order: tools, then system, then messages. Current models won’t cache a prompt shorter than 512 tokens up to the mark, and no error tells you: cache_creation_input_tokens just reads 0. Check sizes first with token counting (count_tokens, using the same model ID). A batch holds up to 100,000 requests.</p>',
+        '<p class="small">Cached reads cost a tenth to a fortieth of normal input, by model. It keeps 5 minutes (its <b>TTL</b>, time to live); an hour costs more.</p>' +
+        '<p class="small"><b>Message Batches</b>: half price. Most finish within an hour; unfinished requests expire after 24 hours. Tag each with a <b>custom_id</b>.</p>',
+      more: '<p class="small">The prompt is read in order: tools, then system, then messages. Claude won’t cache a prompt shorter than its minimum up to the mark (512 tokens on most current models; some, like Sonnet 5, need 1,024), and no error tells you: cache_creation_input_tokens just reads 0. Check sizes first with token counting (count_tokens, using the same model ID). A batch holds up to 100,000 requests.</p>',
       next: "Your turn →"
     },
     build: {
@@ -37,15 +37,15 @@
       text: function (s) {
         var batch = s.job !== "answer questions live";
         if (s.mode === "Explain it to me") {
-          return "My app sends " + s.rep + " with every Claude API request and needs to " + s.job + ". I don’t code yet.\n" +
-            "1. Explain prompt caching in plain words, and 3 things that quietly break it.\n" +
-            "2. When does a 1-hour cache beat 5 minutes?\n" +
-            "3. Do Message Batches (half price, results within 24 hours) fit my job?\n" +
-            "4. A rough cost for 1,000 requests, with and without caching. Look up current prices; mark estimates.";
+          return "My app sends " + s.rep + " on every Claude API call, to " + s.job + ". I don’t code yet.\n" +
+            "1. Prompt caching, plainly, and 3 things that break it.\n" +
+            "2. Do Message Batches fit? (Most finish within an hour; unfinished requests expire after 24 hours.)\n" +
+            "3. Cost of 1,000 requests, cached or not (say if prices come from memory).\n" +
+            "End with one Console playground request to try (model, system, message), and what to check.";
         }
-        return "Write a small " + s.lang + " script with the official Claude SDK. My app sends " + s.rep + " (use a placeholder text file) and needs to " + s.job + ".\n" +
+        return "Write a small " + s.lang + " script with the official Claude SDK. My app sends " + s.rep + " (use a placeholder text file of at least 600 tokens, about 2 pages; make one for me) and needs to " + s.job + ".\n" +
           "- Model claude-opus-5-5. Key from ANTHROPIC_API_KEY.\n" +
-          "- First count the shared part’s tokens with the token counting endpoint, and warn me if it’s under 512 tokens (too short to cache).\n" +
+          "- First count the shared part’s tokens with the token counting endpoint, and warn me if it’s under the model’s minimum (512 tokens on most current models; some, like Sonnet 5, need 1,024).\n" +
           "- Put the shared part first with cache_control {type: \"ephemeral\"}, and the changing question after it.\n" +
           "- Make two calls and print cache_creation_input_tokens and cache_read_input_tokens, to prove the second call hit the cache.\n" +
           (batch ? "- Then send the job as a Message Batch with a custom_id per item, poll until it ends, and print each result by custom_id.\n" : "") +
@@ -80,7 +80,7 @@
     say: "We cache the shared start of each prompt and batch overnight jobs at half price.",
     keep: "A cost sheet for caching and batches on your own app.",
     cardLabel: "Copy my card",
-    card: "PREP ONCE, SERVE MANY\ncache_control = mark the end of the shared part\nOrder: tools, system, messages; stable first\nCache TTL = 5 min default, 1 hour costs more\nCached reads = a small fraction of normal input\nCache hit = cache_read_input_tokens above 0\nBatches = half price, within 24 h, tag with custom_id\nToken counting = size it before you send",
+    card: "PREP ONCE, SERVE MANY\ncache_control = mark the end of the shared part\nOrder: tools, system, messages; stable first\nCache TTL = 5 min default, 1 hour costs more\nCached reads = a small fraction of normal input\nCache hit = cache_read_input_tokens above 0\nBatches = half price, most done in an hour, expire at 24 h, tag with custom_id\nToken counting = size it before you send",
     real: ["Building with the Claude API", "https://academy.claude.com/courses/building-with-the-claude-api"]
   };
   document.addEventListener("DOMContentLoaded", function () { BK.run(L); });

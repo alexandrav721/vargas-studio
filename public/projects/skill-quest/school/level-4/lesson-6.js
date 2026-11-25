@@ -38,15 +38,15 @@
         var small = s.size === "under 100 pages";
         if (s.mode === "Explain it to me") {
           return "I want the Claude API to answer questions from " + s.docs + " (" + s.size + "). I don’t code yet.\n" +
-            "1. Should I send the documents whole, or build retrieval? Why, for my size?\n" +
-            "2. If retrieval, explain each step in plain words: chunk, embed, store, search, rerank, answer with citations.\n" +
-            "3. Explain contextual retrieval in two sentences.\n" +
-            "4. Give me 5 test questions, including one the documents can’t answer.";
+            "1. Send the documents whole, or build retrieval? Why, for my size?\n" +
+            "2. If retrieval, each step in plain words: chunk, embed, store, search, rerank, answer with citations.\n" +
+            "3. 5 test questions, one the documents can’t answer.\n" +
+            "End with one Console playground request to try (model, system, message), and what to check.";
         }
         return "Write a small " + s.lang + " script with the official Claude SDK that answers a question from " + s.docs + ".\n" +
           "- Model claude-opus-5-5. Key from ANTHROPIC_API_KEY.\n" +
           (small
-            ? "- Upload a PDF once with the Files API, then send it as a document block with citations enabled.\n- Print the answer, then each citation’s cited text.\n"
+            ? "- Upload a PDF once with the Files API as the current SDK does (no beta header; name the SDK version you assume), then send it as a document block with citations enabled.\n- Print the answer, then each citation’s cited text.\n"
             : "- Split my text files into chunks of a few hundred tokens.\n- Embed the chunks with Voyage AI (model voyage-4, input_type \"document\" for chunks and \"query\" for the question), key from VOYAGE_API_KEY.\n- Retrieve the top 5 chunks by similarity, send them to Claude as plain-text document blocks with citations enabled, and print the answer with its sources.\n") +
           "Then tell me what to do with it: the install commands, where my files go, how to run it, and how to tell a good answer from a lucky one.";
       },

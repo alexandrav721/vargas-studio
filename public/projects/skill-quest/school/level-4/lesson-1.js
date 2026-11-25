@@ -34,19 +34,20 @@
       head: "ORDER #D01", right: "first call", foot: "Paste it into Claude, or open it there",
       text: function (s) {
         if (s.mode === "Explain it to me") {
-          return "I’m learning the Claude API and don’t code yet. Walk me through a first call asking Claude to " + s.job + ".\n" +
-            "1. In plain words: the Console, API keys, and why a key lives in an environment variable.\n" +
-            "2. The request, with a note on each field: model, max_tokens, system, messages.\n" +
-            "3. A labeled sample reply: explain content blocks, stop_reason and usage.\n" +
-            "4. Three ways people leak a key by accident.";
+          return "I’m learning the Claude API and don’t code yet. Walk me through a first call to " + s.job + ".\n" +
+            "1. Plain words: the Console, API keys, why a key lives in an environment variable, how keys leak.\n" +
+            "2. The request, field by field: model, max_tokens, system, messages.\n" +
+            "3. A labeled sample reply: content blocks, stop_reason, usage.\n" +
+            "4. What to paste into the Console playground (system line, message), and what its usage numbers mean.";
         }
         var sdk = s.lang === "Python" ? "anthropic (pip install anthropic)" : "@anthropic-ai/sdk (npm install @anthropic-ai/sdk)";
         return "Write the smallest correct " + s.lang + " script that calls the Claude API with the official SDK, " + sdk + ", to " + s.job + ".\n" +
-          "- Model claude-opus-5-5, max_tokens 4096, a one-line system prompt. If stop_reason is \"max_tokens\", say so instead of printing nothing.\n" +
+          "- Model claude-opus-5-5, max_tokens 4096, a one-line system prompt. If stop_reason is \"max_tokens\", say it was cut off; if \"refusal\", say Claude declined.\n" +
           "- Read the key from the ANTHROPIC_API_KEY environment variable. Never hardcode it.\n" +
           "- Print only the text blocks, then the usage: input and output tokens.\n" +
           "Then tell me what to do with it: the install command, the file name, how to set the key, how to run it, and what I should see.";
       },
+      after: "No code needed: open the Console playground (platform.claude.com/playground), pick the model, paste the system line and the message, and press Run. The API is billed separately from your chat plan, so add a little prepaid credit in the Console first (Max, Ultra and Team plans include some monthly API credit).",
       claude: "Open in Claude", done: "Done →"
     },
     game: {

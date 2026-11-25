@@ -35,18 +35,19 @@
       head: "ORDER #D03", right: "same plate", foot: "Paste it into Claude, or open it there",
       text: function (s) {
         if (s.mode === "Explain it to me") {
-          return "My app will pull data out of " + s.src + " with the Claude API. I don’t code yet.\n" +
-            "1. Suggest 4 to 6 fields and a type for each, in a table.\n" +
+          return "My app will pull data from " + s.src + " with the Claude API. I don’t code yet.\n" +
+            "1. 4 to 6 fields, each with a type, in a table.\n" +
             "2. Show the JSON Schema, a note on each line.\n" +
-            "3. Structured outputs or a tool with strict: true: which fits, and why?\n" +
-            "4. Three ways it can still go wrong (a refusal, a cut-off reply, a wrong value), and how to check each.";
+            "3. Structured outputs or a strict tool: which fits?\n" +
+            "4. Three ways it can still go wrong, and how to check each.\n" +
+            "End with one Console playground request to try (model, system, message), and what to check.";
         }
         var how = s.lang === "Python" ? "client.messages.parse() with a Pydantic model" : "client.messages.parse() with the SDK’s zodOutputFormat helper";
-        return "Write a small " + s.lang + " script using the official Claude SDK that extracts data from one sample of " + s.src + " (make up the sample and label it).\n" +
+        return "Write a small " + s.lang + " script using the official Claude SDK that extracts data from one made-up sample " + s.src.replace(/s$/, "") + " (label it as a sample).\n" +
           "- Model claude-opus-5-5. Key from ANTHROPIC_API_KEY.\n" +
-          "- Use structured outputs: " + how + ", with additionalProperties: false on every object.\n" +
+          "- Use structured outputs: " + how + ". The SDK builds the strict schema for you.\n" +
           "- Check stop_reason first: handle \"refusal\" and \"max_tokens\" before reading the data.\n" +
-          "- Validate the result and print it.\n" +
+          "- After parsing, add one check the schema can’t make (for example, items add up to the total), then print the result.\n" +
           "Then tell me what to do with it: the install command, how to run it, and how to change the fields.";
       },
       claude: "Open in Claude", done: "Done →"

@@ -37,10 +37,10 @@
       text: function (s) {
         if (s.mode === "Explain it to me") {
           return "Plan a test for " + s.feat + " on the Claude API. Its output: " + s.out + ". I don’t code yet.\n" +
-            "1. Recommend a grader (a code check, a pairwise comparison, a rubric judge or a person), and why.\n" +
-            "2. Draft 10 test cases with expected answers: 3 tricky, 1 it should refuse or flag.\n" +
-            "3. What should I record per case besides the grade?\n" +
-            "4. How do I rerun it before every change?";
+            "1. Recommend a grader: code check, pairwise comparison, rubric judge or a person.\n" +
+            "2. 10 test cases with expected answers: 3 tricky, 1 to flag.\n" +
+            "3. What to record per case; how to rerun it before every change.\n" +
+            "End with one Console playground request to try (model, system, message), and what to check.";
         }
         var grade = s.out === "free text for people" ? "a pairwise judge call (claude-opus-5-5) that compares each answer to a saved baseline answer, shows the two in random order, and saves the judge’s pick and reasons. On the first run, save the answers as the baseline instead of grading" : "code: an exact match for labels, a schema check for JSON";
         return "Write a small " + s.lang + " eval script with the official Claude SDK for " + s.feat + " (output: " + s.out + ").\n" +
@@ -48,7 +48,7 @@
           "- Run each case on claude-opus-5-5, with my prompt in one place I can edit. Key from ANTHROPIC_API_KEY.\n" +
           "- Grade with " + grade + ".\n" +
           "- Record per case: pass or fail, input and output tokens, cost from an editable price table, seconds, stop_reason.\n" +
-          "- Print the pass rate, total cost and median seconds, and save results to a file the next run can compare against.\n" +
+          "- Print the failing cases (input, expected, got), the pass rate, total cost and median seconds, and save results to a file the next run can compare against.\n" +
           "Then tell me what to do with it: how to run it, how to add cases, and how to compare two runs.";
       },
       claude: "Open in Claude", done: "Done →"

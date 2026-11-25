@@ -6,7 +6,7 @@
     terms: ["Overloaded error", "Exponential backoff", "retry-after", "Spend limit", "Request ID"],
     teaser: ["OPENING NIGHT", "going live", "Seven lessons built the kitchen.<br>Now the doors open.<br>Plan the rush before the first guest.", "Five words. Seven minutes."],
     lines: [
-      ["Some errors mean wait. Some mean fix it.", "429, 529: retry later. 400, 401: fix it, unless it’s your spend limit."],
+      ["Some errors mean wait. Some mean fix it.", "Busy errors (429, 529): wait, then retry. Your errors (400, 401): fix the request."],
       ["Wait longer each time you retry.", "The SDK retries twice by default, waiting longer each time."],
       ["Cap the bill before the rush.", "Set a spend limit in the Console. Keep keys on your server."]
     ],
@@ -36,16 +36,17 @@
       text: function (s) {
         if (s.mode === "Explain it to me") {
           return "I’m about to launch " + s.app + " on the Claude API. My biggest worry: " + s.worry + ". I don’t code yet.\n" +
-            "1. A launch checklist in plain words: keys, spend limits, rate limits, retries, streaming, logging, and an eval before every change.\n" +
+            "1. A plain-words launch checklist: keys, spend limits, rate limits, retries, streaming, logging, evals.\n" +
             "2. A small table: which errors to retry, which to fix.\n" +
-            "3. The 3 checks that matter most for my worry, and how to test each before launch.";
+            "3. The 3 checks that matter most for my worry.\n" +
+            "End with one Console playground request to try (model, system, message), and what to check.";
         }
         var live = s.app !== "a nightly report job";
         return "Write a small " + s.lang + " module for " + s.app + " that wraps every Claude API call, using the official SDK.\n" +
           "- Model claude-opus-5-5. Key only from ANTHROPIC_API_KEY on the server, never in browser code.\n" +
-          "- Use the SDK’s built-in retries (set max_retries) and a timeout. Tell apart: a 429 with retry-after, a 429 tier spend cap (error_code enforced_spend_limit_reached, no retry-after: don’t retry), a 400 whose message starts \"You have reached your specified\" (my own spend limit: don’t retry, alert me), and a 529 overloaded_error.\n" +
+          "- Use the SDK’s built-in retries (set max_retries) and a timeout. Tell apart: a 429 with retry-after, a 429 tier spend cap (error_code enforced_spend_limit_reached, no retry-after: don’t retry), a 400 (status 400, error type invalid_request_error) that mentions my API usage limits (my own spend limit: match loosely, log the full message, don’t retry, alert me), and a 529 overloaded_error.\n" +
           (live ? "- Stream the reply for live users. The SDK doesn’t retry an error that arrives mid-stream, so catch it and show a ready-made message.\n" : "- Consider Message Batches for the nightly job, at half price.\n") +
-          "- Log one line per call: request ID, model, input and output tokens, seconds. Never log the key.\n" +
+          "- Log one line per call: the request ID (from the request-id response header, which the SDK exposes; not the message ID), model, input and output tokens, seconds. Never log the key.\n" +
           "My biggest worry: " + s.worry + ".\n" +
           "Then tell me what to do with it: where it goes in my app, how to trigger a failure on purpose to test it, and which Console settings to set before launch (spend limit, key expiry).";
       },

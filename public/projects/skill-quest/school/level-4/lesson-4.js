@@ -40,9 +40,9 @@
         if (s.mode === "Explain it to me") {
           return "I’m planning " + s.app + " on the Claude API with one tool: “" + s.tool + "”" + (web ? ", plus Anthropic’s web search tool" : "") + ". I don’t code yet.\n" +
             "1. Write the tool definition and explain each part.\n" +
-            "2. Walk one example through the loop in plain words, showing where stop_reason changes.\n" +
-            "3. Explain parallel tool calls, and which tools Anthropic runs versus my code.\n" +
-            "4. Name one action this tool should never take without a person’s yes.";
+            "2. Walk one example through the loop, showing where stop_reason changes.\n" +
+            "3. Parallel tool calls, and which tools Anthropic runs versus my code.\n" +
+            "End with one Console playground request to try (model, system, message), and what to check.";
         }
         return "Write a small " + s.lang + " program with the official Claude SDK for " + s.app + " with one tool: “" + s.tool + "” (fake the data with a small lookup table)" + (web ? ", plus Anthropic’s web search server tool (type web_search_20260209)" : "") + ".\n" +
           "- Model claude-opus-5-5. Key from ANTHROPIC_API_KEY.\n" +

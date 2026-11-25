@@ -8,7 +8,7 @@
     lines: [
       ["Start on Opus. Switch when tests say so.", "Opus 5.5 is the usual default. Try cheaper chefs on real tasks."],
       ["Prices are per million tokens.", "Input: Haiku $0.10, Sonnet $2, Opus $4, Fable $8."],
-      ["Effort sets how hard it thinks.", "low, medium, high, xhigh, max. Lower is faster and cheaper."]
+      ["Effort sets how hard it thinks.", "Five steps, low to max (xhigh means extra high). Lower is faster, cheaper."]
     ],
     guess: { q: "An app sorts 50,000 emails a day into 5 labels. Which chef?", opts: [["Haiku 5.5, the fast, low-cost one", true], ["Fable 5.2, the most capable one", false], ["Whichever one is newest", false]], reveal: "Haiku. Sorting into fixed labels is simple, high-volume work. Prove it on real emails first." },
     startLabel: "Meet the chefs",
@@ -36,17 +36,18 @@
       head: "ORDER #D02", right: "hire a chef", foot: "Paste it into Claude, or open it there",
       text: function (s) {
         if (s.mode === "Explain it to me") {
-          return "I’m choosing a Claude model for this job: " + s.job + ". What matters most: " + s.care + ". I don’t code yet.\n" +
-            "1. Compare Haiku 5.5, Sonnet 5.5, Opus 5.5 and Fable 5.2 for it in plain words, with current prices (look them up).\n" +
-            "2. Recommend one model and an effort level, and say why.\n" +
-            "3. Plan a cheap test: 10 real examples, what to measure, and what result means I switch.";
+          return "Pick a Claude model for: " + s.job + ". What matters most: " + s.care + ". I don’t code yet.\n" +
+            "1. Compare Haiku 5.5, Sonnet 5.5, Opus 5.5 and Fable 5.2 with current prices (say if they come from memory).\n" +
+            "2. Recommend one model and effort level.\n" +
+            "3. A cheap test: 10 real examples, and what result means I switch.\n" +
+            "End with one Console playground request to try (model, system, message), and what to check.";
         }
-        return "Write a small " + s.lang + " script with the official Claude SDK that runs the same 3 sample inputs for this job (" + s.job + ") on claude-haiku-5-5, claude-sonnet-5-5 and claude-opus-5-5.\n" +
+        return "Write a small " + s.lang + " script with the official Claude SDK that runs the same 10 sample inputs for this job (" + s.job + "), each labeled with the answer I expect, on claude-haiku-5-5, claude-sonnet-5-5 and claude-opus-5-5.\n" +
           "- Set output_config effort to \"low\" for the first run, in one place I can change.\n" +
           "- Read the key from ANTHROPIC_API_KEY.\n" +
-          "- For each model, print the answer, input and output tokens, the cost from a price table I can edit, and how many seconds the call took.\n" +
+          "- For each model, print the answer, input and output tokens, the cost from a price table I can edit (say if the prices come from memory), how many seconds the call took, and how many of the 10 it got right.\n" +
           "What matters most to me: " + s.care + ".\n" +
-          "Then tell me what to do with it: how to run it, how to swap in my own 3 inputs, and how to read the results.";
+          "Then tell me what to do with it: how to run it, how to swap in my own 10 inputs, and how to read the results.";
       },
       claude: "Open in Claude", done: "Done →"
     },
