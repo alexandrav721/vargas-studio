@@ -30,7 +30,6 @@
   if (i < 0) { location.replace("index.html"); return; }
   if (!window.EZ_KIT_ID) { location.replace(D.kits[i].id + ".html"); return; }
   var K = D.kits[i], next = D.kits[i + 1], P = K.proof;
-  document.title = K.name + " · AI Made EZ kit";
 
   function bar(label, v, cls) { return '<div class="score"><span>' + label + '</span><span class="bar ' + cls + '"><i style="width:' + Math.round(v / 5 * 100) + '%"></i></span><b>' + Number(v).toFixed(1) + "</b></div>"; }
   function excerpt(s, n) { var l = s.split("\n"); return l.slice(0, n).join("\n") + (l.length > n ? "\n…" : ""); }
@@ -106,9 +105,9 @@
       else if (navigator.clipboard) navigator.clipboard.writeText(text).then(function () { msg.insertAdjacentHTML("beforeend", " Copied."); });
     };
   }
-  if (me.done) showDone();
+  if (me.done) { showDone(); document.getElementById("markdone").textContent = "Update my link"; }
   document.getElementById("markdone").onclick = function () {
-    me.done = true; me.link = (link.value || "").trim(); save(); showDone();
+    me.done = true; me.link = (link.value || "").trim(); save(); showDone(); this.textContent = "Update my link";
     if (!window.EZStamp) { var sc = document.createElement("script"); sc.src = "/projects/skill-quest/stampcard.js"; document.head.appendChild(sc); }
   };
 })();
