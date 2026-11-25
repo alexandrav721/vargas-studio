@@ -19,6 +19,9 @@ export type Fresh = { href: string; pic: string; name: string; line: string; ext
 export const LEARN: Fresh[] = [
   { href: "/projects/skill-quest/school/", pic: "/desk/learn-l1.jpg", name: "Level 1: Cooking with Claude", line: "8 short lessons" },
   { href: "/projects/skill-quest/school/kitchen/", pic: "/desk/learn-l2.jpg", name: "Level 2: Speak AI builder", line: "10 lessons, no coding" },
+  { href: "/projects/skill-quest/school/level-3/", pic: "/desk/learn-l3.jpg", name: "Level 3: Claude at work", line: "The Claude apps like a pro" },
+  { href: "/projects/skill-quest/school/level-4/", pic: "/desk/learn-l4.jpg", name: "Level 4: Build with Claude", line: "Your first app on the API" },
+  { href: "/projects/skill-quest/school/level-5/", pic: "/desk/learn-l5.jpg", name: "Level 5: Design AI systems", line: "Agents, safety, the floor plan" },
   { href: "/projects/skill-quest/school/kitchen/glossary.html", pic: "/desk/learn-words.jpg", name: "Plain words", line: "Every AI term, made plain" },
   { href: "/projects/skill-quest/use-ai/", pic: "/desk/learn-useai.jpg", name: "Use AI well", line: "8 habits and 12 tools, made easy" },
   { href: "/projects/skill-quest/build-kit/", pic: "/desk/learn-buildkit.jpg", name: "Kit maker", line: "Plan an app so AI stops guessing" },
