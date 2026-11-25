@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Use AI well · AI Made EZ</title>
-<meta name="description" content="Seven habits that work in any AI tool, and the 12 AI tools people talk about, in plain words. Free, no affiliate links.">
+<meta name="description" content="Eight habits that work in any AI tool, and the 12 AI tools people talk about, in plain words. Free, no affiliate links.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
@@ -27,14 +27,16 @@ main{max-width:900px}
 .habit h3::before{content:counter(h);flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:#fff;font:700 15px/30px var(--mono);text-align:center;transform:translateY(-2px)}
 .habit .kl{margin:6px 0 0 40px;color:var(--muted)}
 .pair{display:grid;gap:10px;margin-top:14px}
-@media (min-width:720px){.pair{grid-template-columns:1fr 1.25fr}}
+
 .say{border-radius:10px;padding:12px 14px;font:500 14.5px/1.55 var(--mono)}
 .say small{display:block;font:700 11px/1 var(--text);letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px}
-.say.no{border:2px dashed var(--line2);color:var(--muted)}
+.say.no{border:0;padding:0 2px;font-size:13px;color:var(--muted)}
+.say.no s{text-decoration-color:rgba(199,57,31,.55)}
+.say.no small{text-decoration:none;display:inline;margin:0 6px 0 0}
 .say.yes{background:#fff;border:2px solid var(--ink)}
 .say.yes small{color:var(--accent)}
 .hrow{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:10px;flex-wrap:wrap}
-.hrow a{font-size:.85rem;color:var(--muted)}
+.hrow .lk{font-size:.85rem;color:var(--muted)}.hrow a{color:var(--muted)}.hrow .lk a:first-child{color:var(--ink);font-weight:700}
 .copy{font:inherit;font-weight:700;font-size:.95rem;padding:10px 16px;min-height:44px;border-radius:999px;border:2px solid var(--ink);background:var(--ink);color:#fff;cursor:pointer}
 .copy.done{background:var(--ok);border-color:var(--ok)}
 .filters{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
@@ -80,16 +82,17 @@ main{max-width:900px}
 </header>
 <main>
   <section class="hero">
+    <figure class="ez-photo"><img src="../img/order.jpg" alt="A chef reading the orders out to the cooks" style="object-position:center 35%" width="1200" height="600" fetchpriority="high"><figcaption>Photo: USDA, <a href="https://commons.wikimedia.org/wiki/File:20120608-OSEC-RBN-2579_(7170155123).jpg">public domain</a></figcaption></figure>
     <p class="label">Free · no prompt packs · no affiliate links</p>
     <h1>Use AI well.</h1>
     <div class="stack" aria-label="AI is layers: you, apps, models, chips"><span>You</span><i>→</i><span class="on">Apps</span><i>→</i><span>Models</span><i>→</i><span>Chips</span></div>
     <p class="stack-note">Every tool below is an app on top of a few models. The habits work in all of them.</p>
-    <div class="jump"><a class="btn" href="#habits">7 habits</a><a class="btn ghost" href="#tools">12 tools</a></div>
+    <div class="jump"><a class="btn" href="#habits">8 habits</a><a class="btn ghost" href="#tools">12 tools</a></div>
   </section>
 
   <section class="sec" id="habits">
     <p class="label">Part 1</p>
-    <h2>7 habits that work in any AI</h2>
+    <h2>8 habits that work with any AI</h2>
     <ol class="habits" id="hlist"></ol>
   </section>
 
@@ -104,7 +107,7 @@ main{max-width:900px}
 
   <section class="end">
     <b>Same models underneath.</b>
-    <p>Start with the one you already have, and use the 7 habits.</p>
+    <p>Start with the one you already have, and use the 8 habits.</p>
     <div class="links"><a href="../school/lesson-1.html">Lesson 1</a><a href="../school/kitchen/glossary.html">Plain words</a><a href="../school/support.html">♥ Keep it free</a></div>
   </section>
 </main>
@@ -118,8 +121,8 @@ main{max-width:900px}
   var H = window.EZ_HABITS || [], T = window.EZ_TOOLS || [], CATS = window.EZ_TOOL_CATS || [];
   document.getElementById("hlist").innerHTML = H.map(function (h, i) {
     return '<li class="habit"><h3>' + esc(h[0]) + '</h3><p class="kl">' + esc(h[1]) + '</p>' +
-      '<div class="pair"><div class="say no"><small>Instead of</small>' + esc(h[2]) + '</div><div class="say yes"><small>Try</small><span id="h' + i + '">' + esc(h[3]) + "</span></div></div>" +
-      '<div class="hrow"><a href="' + esc(h[5]) + '" target="_blank" rel="noopener">Source: ' + esc(h[4]) + '</a><button class="copy" type="button" data-c="h' + i + '">Copy the better order</button></div></li>';
+      '<div class="pair"><div class="say no"><small>Instead of</small><s>' + esc(h[2]) + '</s></div><div class="say yes"><small>Try</small><span id="h' + i + '">' + esc(h[3]) + "</span></div></div>" +
+      '<div class="hrow"><span class="lk"><a href="' + esc(h[6]) + '">Learn it: ' + esc(h[7]) + '</a> · <a href="' + esc(h[5]) + '" target="_blank" rel="noopener">Source</a></span><button class="copy" type="button" data-c="h' + i + '">Copy the better order</button></div></li>';
   }).join("");
   document.getElementById("hlist").onclick = function (e) {
     var b = e.target.closest("[data-c]"); if (!b) return;
