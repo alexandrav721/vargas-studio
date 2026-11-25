@@ -112,6 +112,7 @@ pre.tpl .t{color:var(--accent);font-weight:700}
     <p class="muted">The plain ask is what most people type. The template makes you add the facts. A separate Claude judged both answers without knowing which was which, out of 5.</p>
     <div id="hero-proof"></div>
     <div class="tally" id="tally"></div>
+    <div id="tchart"></div>
     <p class="small2" id="how"></p>
   </section>
 
@@ -152,6 +153,7 @@ pre.tpl .t{color:var(--accent);font-weight:700}
 <script src="templates.js"></script>
 <script src="../kits/kits.js"></script>
 <script src="../kits/kits-ui.js"></script>
+<script src="../ezchart.js"></script>
 <script>
 (function () {
   var D = window.EZ_K, U = window.KITUI; if (!D || !U) return;
@@ -182,6 +184,7 @@ pre.tpl .t{color:var(--accent);font-weight:700}
   document.getElementById("hero-proof").innerHTML = proof(hero, false);
   var tested = T.jobs.filter(function (j) { return j.result; }), wins = tested.filter(function (j) { return j.result.winner === "template"; }).length, ties = tested.filter(function (j) { return j.result.winner === "tie"; }).length, losses = tested.length - wins - ties;
   document.getElementById("tally").innerHTML = '<span class="win">Template won ' + wins + " of " + tested.length + "</span><span>Tied " + ties + "</span><span>Plain won " + losses + "</span>";
+  if (window.EZChart) EZChart.pair(document.getElementById("tchart"), tested.map(function (j) { return { name: j.name, a: j.result.plainScore, b: j.result.templateScore, tie: j.result.winner === "tie" }; }), { a: "Plain ask", b: "With a template", title: "Template vs plain ask, blind scores" });
   document.getElementById("how").textContent = T.sample + " Each answer came from a separate Claude run. A separate Claude judge scored them blind (correct, complete, useful, clear) against what the person needed. Run 25 Nov 2026.";
   var cur = 0;
   document.getElementById("jobtabs").innerHTML = T.jobs.map(function (j, i) { return '<button class="chip" type="button" data-j="' + i + '" aria-pressed="' + (i === 0) + '">' + esc(j.name) + (j.result ? " ✓" : "") + "</button>"; }).join("");

@@ -35,6 +35,7 @@
     <p class="label">Tested</p>
     <h2>Kit vs. a plain ask.</h2>
     <p class="muted">For each kit, a separate Claude did the same job twice: once from a plain ask, once from the kit. Another Claude scored both without knowing which was which.</p>
+    <div id="kchart"></div>
     <div class="tally" id="tally"></div>
     <p class="small2" id="sample"></p>
   </section>
@@ -62,6 +63,7 @@
 <footer class="foot"><a href="../about/">About</a><a href="../cheat-sheets/">Templates</a><a href="../start/">Start here</a><a href="../use-ai/">Use AI well</a><span>Not affiliated with Anthropic</span><span>Made by Alexandra Vargas</span></footer>
 <script src="kits.js"></script>
 <script src="kits-ui.js"></script>
+<script src="../ezchart.js"></script>
 <script>
 (function () {
   var D = window.EZ_K, U = window.KITUI, esc = U.esc;
@@ -71,6 +73,7 @@
   var t = D.kits.filter(function (k) { return k.proof; }), w = t.filter(function (k) { return k.proof.winner === "template"; }).length, ti = t.filter(function (k) { return k.proof.winner === "tie"; }).length;
   document.getElementById("tally").innerHTML = '<span class="win">Kit won ' + w + " of " + t.length + "</span><span>Tied " + ti + "</span><span>Plain won " + (t.length - w - ti) + "</span>";
   document.getElementById("sample").textContent = D.sample + " Run " + D.checked + ". Each kit page shows both answers. Times on the cards are our estimates.";
+  if (window.EZChart) EZChart.pair(document.getElementById("kchart"), t.map(function (k) { return { name: k.name, a: k.proof.plainScore, b: k.proof.kitScore, tie: k.proof.winner === "tie", href: "kit.html?k=" + k.id }; }), { a: "Plain ask", b: "With the kit", title: "Kit vs plain ask, blind scores" });
   U.wireForget();
 })();
 </script>
