@@ -1,4 +1,4 @@
-/* DRAFTS, not posted: launch posts for AI Made EZ Levels 3-5 (all-nighter 25 Nov 2026). Shown only on approve-levels.html. */
+/* DRAFTS, not posted: launch posts for AI Made EZ Levels 3-5 plus Templates and Keep up (25 Nov 2026). Shown only on approve-levels.html. */
 import { FOLLOW } from "./posts.js";
 const rows = (items) => `<ul class="ez-rows">${items.map(([b, s]) => `<li><b>${b}</b><span>${s}</span></li>`).join("")}</ul>`;
 export const DRAFTS = [
@@ -51,6 +51,58 @@ export const DRAFTS = [
       "In plain words: Level 5 is running a restaurant group. Same recipes, more kitchens, and somebody checks each one.",
       FOLLOW,
       "Source: AI Made EZ Level 5 (free). Photo: Fritzchens Fritz, CC0, via Wikimedia Commons",
+    ],
+  },
+  {
+    id: "templates-two-ways", before: null, label: "NO GATEKEEPING", formula: "Number first + proof", image: "Real photo: kitchen (licensed)",
+    slides: [
+      { t: "card", label: "No gatekeeping", head: "Same email, asked two ways. A blind judge scored one 2.8 and the other 5.0", img: "/projects/skill-quest/img/kitchen.jpg" },
+      { t: "inner", label: "The test", title: "Same job, two asks.", html: rows([["Plain ask", "2.8 out of 5"], ["Six-box template", "5.0 out of 5"], ["Judge", "a separate Claude, blind"], ["7 jobs tested", "template won 6, tied 1"]]) },
+      { t: "inner", label: "Why", title: "It can't read your mind.", html: rows([["Plain ask", "Claude guesses the facts"], ["Template", "you give the facts"], ["The trick", "there isn't one"]]) },
+      { t: "offer" },
+    ],
+    caption: [
+      "We asked Claude to reply to the same email twice: once the way most people type it, once with a six-box template.",
+      "A separate Claude judged both answers without knowing which was which. The plain ask scored 2.8 out of 5. The template scored 5.0.",
+      "We ran 7 everyday jobs this way. The template won 6 and tied 1. Every answer is on the page, the tie included.",
+      "However, the template didn't make Claude smarter. It just made you say what you needed.",
+      "In plain words: a chef can't cook your order if you only say “something nice”.",
+      FOLLOW,
+      "Source: AI Made EZ Templates, blind tests run 25 Nov 2026 (free).",
+    ],
+  },
+  {
+    id: "templates-six-boxes", before: null, label: "NO GATEKEEPING", formula: "Free thing, whole thing", image: "Type-only card",
+    slides: [
+      { t: "card", label: "No gatekeeping", head: "Nobody needs to DM you a prompt. Here's the whole template, 6 boxes", img: "/projects/skill-quest/img/order.jpg" },
+      { t: "inner", label: "The 6 boxes", title: "Copy. Fill in. Send.", html: rows([["Goal", "what you want, one line"], ["Who it's for", "who reads it"], ["Context", "facts Claude can't know"], ["Example", "one sample of good"], ["Format", "length and shape"], ["Rules", "what to avoid"]]) },
+      { t: "offer" },
+    ],
+    caption: [
+      "Influencers sell “the prompt”. Here it is, free: six boxes you fill in and paste into Claude or ChatGPT.",
+      "Goal, who it's for, context, one example, format, rules. Leave a box out if it doesn't apply.",
+      "There are 10 ready templates on the page (emails, summaries, meeting notes, plans, posts) and a one-page cheat sheet you can print.",
+      "However, a template only works with your real facts in it. Brackets left empty get guessed.",
+      "In plain words: it's an order slip. Fill it in and the kitchen stops guessing.",
+      FOLLOW,
+      "Source: AI Made EZ Templates (free).",
+    ],
+  },
+  {
+    id: "keep-up-friday", before: null, label: "AI NEWS, MADE EZ", formula: "Your stakes", image: "Real photo: words (licensed)",
+    slides: [
+      { t: "card", label: "AI news, made EZ", head: "You don't need 40 AI newsletters. Every Friday: what changed, in plain words, with the source", img: "/projects/skill-quest/img/words.jpg" },
+      { t: "inner", label: "How we keep up", title: "Every Friday.", html: rows([["Read", "official pages only"], ["Cut", "the hype"], ["Say", "what it means for you"], ["Link", "the source, always"]]) },
+      { t: "offer" },
+    ],
+    caption: [
+      "AI news feels like a full-time job. It isn't, if someone reads the official pages and tells you what matters.",
+      "Every Friday we post what changed that week, what it means for you, and a link to the source so you can check it.",
+      "No “this changes everything”. If it doesn't change anything for you, we say so.",
+      "However, we skip rumors and leaks. If there's no official source, it waits.",
+      "In plain words: we read the supplier notes so you can just cook.",
+      FOLLOW,
+      "Source: AI Made EZ Keep up (free, new every Friday).",
     ],
   },
 ];

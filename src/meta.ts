@@ -23,6 +23,7 @@ export const LEARN: Fresh[] = [
   { href: "/projects/skill-quest/school/level-4/", pic: "/desk/learn-l4.jpg", name: "Level 4: Build with Claude", line: "Your first app on the API" },
   { href: "/projects/skill-quest/school/level-5/", pic: "/desk/learn-l5.jpg", name: "Level 5: Design AI systems", line: "Agents, safety, the floor plan" },
   { href: "/projects/skill-quest/school/kitchen/glossary.html", pic: "/desk/learn-words.jpg", name: "Plain words", line: "Every AI term, made plain" },
+  { href: "/projects/skill-quest/cheat-sheets/", pic: "/desk/learn-templates.jpg", name: "Templates", line: "Copy, fill in, send" },
   { href: "/projects/skill-quest/use-ai/", pic: "/desk/learn-useai.jpg", name: "Use AI well", line: "8 habits and 12 tools, made easy" },
   { href: "/projects/skill-quest/build-kit/", pic: "/desk/learn-buildkit.jpg", name: "Kit maker", line: "Plan an app so AI stops guessing" },
   { href: "/projects/skill-quest/keep-up/", pic: "/desk/learn-news.jpg", name: "This week in AI", line: "The news in plain words" },

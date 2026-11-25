@@ -1,12 +1,12 @@
 /* AI Made EZ top bar + search, shared by every page. Add:
    <script src="/projects/skill-quest/smez-index.js" defer></script>
    <script src="/projects/skill-quest/smez-nav.js" data-section="ready" defer></script>
-   data-section: start | school | words | use | make | kit | keepup (highlights the current place). */
+   data-section: start | school | words | use | templates | make | kit | keepup (highlights the current place). */
 (function () {
   "use strict";
   var me = document.currentScript, section = me && me.dataset.section || "";
   var BASE = "/projects/skill-quest/";
-  var LINKS = [["start", "Start here", BASE + "start/"], ["school", "Lessons", BASE + "school/"], ["words", "Plain words", BASE + "school/kitchen/glossary.html"], ["use", "Use AI well", BASE + "use-ai/"], ["kit", "Kit maker", BASE + "build-kit/"], ["keepup", "Keep up", BASE + "keep-up/"]];
+  var LINKS = [["start", "Start here", BASE + "start/"], ["school", "Lessons", BASE + "school/"], ["words", "Plain words", BASE + "school/kitchen/glossary.html"], ["use", "Use AI well", BASE + "use-ai/"], ["templates", "Templates", BASE + "cheat-sheets/"], ["kit", "Kit maker", BASE + "build-kit/"], ["keepup", "Keep up", BASE + "keep-up/"]];
   function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
   function css() { if (document.getElementById("smez-nav-css")) return; var l = document.createElement("link"); l.id = "smez-nav-css"; l.rel = "stylesheet"; l.href = BASE + "smez-nav.css"; document.head.appendChild(l); }
 

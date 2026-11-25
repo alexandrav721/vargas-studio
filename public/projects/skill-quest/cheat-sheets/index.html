@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Templates · AI Made EZ</title>
+<meta name="description" content="Copy-paste AI templates with XML tags, a filled example for each, and real before-and-after answers scored by a blind judge. Free.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../school/school.css">
+<style>
+main{max-width:900px}
+.hero h1{font-size:clamp(40px,8vw,64px);margin-bottom:6px}
+.sec{margin-top:44px;scroll-margin-top:70px}
+.sec h2{margin:0}
+.sec > p.muted{margin-top:4px}
+.jump{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.how3{list-style:none;counter-reset:s;margin:14px 0 0;padding:0;display:grid;gap:6px}
+.how3 li{counter-increment:s;position:relative;padding-left:38px;font-size:1.02rem}
+.how3 li::before{content:counter(s);position:absolute;left:0;top:0;width:26px;height:26px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;font:700 13px var(--mono)}
+/* the order form: XML lines with a plain label beside each */
+.form{margin-top:16px;border:2px solid var(--ink);border-radius:14px;background:#fff;overflow:hidden}
+.form .row{display:grid;grid-template-columns:1fr;gap:2px;padding:10px 14px;border-top:1px dashed var(--line2)}
+.form .row:first-child{border-top:0}
+@media (min-width:700px){.form .row{grid-template-columns:150px 1fr}}
+.form .tag{font:700 13px var(--mono);color:var(--accent)}
+.form .what{font-size:.86rem;color:var(--muted)}
+.form .val{font:500 14.5px/1.5 var(--mono);color:var(--ink);word-break:break-word}
+pre.tpl{margin:0;white-space:pre-wrap;word-break:break-word;font:500 13.5px/1.55 var(--mono);background:#fff;border:1px solid var(--line2);border-radius:12px;padding:12px 14px;max-height:340px;overflow:auto}
+pre.tpl .t{color:var(--accent);font-weight:700}
+.copyrow{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.copy{font:inherit;font-weight:700;font-size:.92rem;padding:9px 14px;min-height:44px;border-radius:999px;border:2px solid var(--ink);background:var(--ink);color:#fff;cursor:pointer}
+.copy.ghost{background:transparent;color:var(--ink)}
+.copy.done{background:var(--ok);border-color:var(--ok);color:#fff}
+.tabs{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.tabs .chip[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.pair{display:grid;gap:12px;margin-top:14px}
+@media (min-width:760px){.pair{grid-template-columns:1fr 1fr}}
+.pane h3{margin:0 0 6px;font:800 1.05rem var(--display)}
+.pane .k{font:700 11px/1 var(--text);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+/* proof */
+.proof{margin-top:14px;border:1px solid var(--line2);border-radius:14px;background:var(--card);padding:14px 16px}
+.score{display:grid;grid-template-columns:118px 1fr 40px;gap:8px;align-items:center;margin:6px 0;font-size:.92rem}
+.bar{height:12px;border-radius:99px;background:var(--track);overflow:hidden}
+.bar i{display:block;height:100%;border-radius:99px}
+.bar.p i{background:#b9b2a6}.bar.t i{background:var(--accent)}
+.score b{font-variant-numeric:tabular-nums;text-align:right}
+.verdict{margin:10px 0 0;font-size:.95rem}
+.verdict .w{display:inline-block;font:700 12px var(--text);letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:999px;background:#E3F1ED;color:#155c50;margin-right:6px}
+.verdict .w.tie{background:var(--track);color:var(--ink)}
+.proof details{margin-top:10px;border-top:1px dashed var(--line2);padding-top:6px}
+.proof summary{cursor:pointer;font-weight:700;min-height:40px;display:flex;align-items:center}
+.out{white-space:pre-wrap;word-break:break-word;font-size:.9rem;line-height:1.5;background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 12px;max-height:320px;overflow:auto}
+.tally{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+.tally span{padding:8px 12px;border-radius:12px;background:var(--track);font-weight:700}
+.tally span.win{background:#E3F1ED;color:#155c50}
+.small2{font-size:.82rem;color:var(--muted);margin-top:8px}
+.fol{list-style:none;padding:0;margin:14px 0 0;display:grid;gap:8px}
+.fol li{display:flex;justify-content:space-between;align-items:center;gap:10px;border:1px solid var(--line2);border-radius:12px;background:var(--card);padding:8px 8px 8px 14px;font:500 15px var(--mono)}
+.fol .copy{min-height:40px;padding:7px 12px}
+.sheet-cta{margin-top:44px;padding:20px;border-radius:18px;background:var(--ink);color:#fff}
+.sheet-cta b{display:block;font:800 1.45em/1.15 var(--display)}
+.sheet-cta p{color:#d8d4cc;margin:6px 0 12px}
+.sheet-cta a{display:inline-flex;color:var(--ink);background:#fff;border-radius:999px;padding:10px 16px;text-decoration:none;font-weight:700}
+@media print{.top,.foot,.jump,.copyrow,.tabs,.sheet-cta,#site-bar{display:none!important}}
+</style>
+<link rel="stylesheet" href="/site-bar.css" />
+<script src="/site-bar.js" data-project="skill-quest" data-kind="piece" defer></script>
+</head>
+<body>
+<header class="top">
+  <a class="logo" href="./">Templates</a>
+  <div class="tools"><a class="chip give" href="../school/support.html" aria-label="Keep it free">♥<span class="gt"> Keep it free</span></a><button class="chip" id="big" type="button" aria-pressed="false">Bigger text</button></div>
+</header>
+<main>
+  <section class="hero">
+    <p class="label">Free · copy, fill in, send</p>
+    <h1>The templates.</h1>
+    <p class="muted">AI isn’t hard. It just can’t read your mind. Fill in six boxes and it stops guessing.</p>
+    <ol class="how3"><li><b>Copy</b> a template.</li><li><b>Paste</b> it into a new Claude or ChatGPT chat.</li><li><b>Type over</b> each [bracket] with your words.</li><li><b>Send.</b></li></ol>
+    <div class="jump"><a class="btn" href="#six">The 6 boxes</a><a class="btn ghost" href="#jobs">10 job templates</a><a class="btn ghost" href="#skill">Skill template</a><a class="btn ghost" href="one-page.html">One-page cheat sheet</a></div>
+  </section>
+
+  <section class="sec" id="six">
+    <p class="label">1 · The 6 boxes</p>
+    <h2>Every good order has six boxes.</h2>
+    <p class="muted">Keep the words in &lt;angle brackets&gt;: they tell Claude which box is which. Don’t need a box? Delete that line.</p>
+    <div class="form" id="boxes"></div>
+    <div class="copyrow"><button class="copy" type="button" data-copy="blank6">Copy the blank template</button><button class="copy ghost" type="button" data-copy="filled6">Copy the filled example</button></div>
+  </section>
+
+  <section class="sec" id="proof">
+    <p class="label">2 · Before and after</p>
+    <h2>Same job, asked two ways.</h2>
+    <p class="muted">The plain ask is what most people type. The template makes you add the facts. A separate Claude judged both answers without knowing which was which, out of 5.</p>
+    <div id="hero-proof"></div>
+    <div class="tally" id="tally"></div>
+    <p class="small2" id="how"></p>
+  </section>
+
+  <section class="sec" id="jobs">
+    <p class="label">3 · Job templates</p>
+    <h2>Pick a job. Copy. Fill in.</h2>
+    <div class="tabs" id="jobtabs" role="group" aria-label="Pick a job"></div>
+    <div id="job"></div>
+  </section>
+
+  <section class="sec" id="skill">
+    <p class="label">4 · The skill template</p>
+    <h2>A recipe card Claude keeps.</h2>
+    <p class="muted">A skill is a file of instructions Claude saves and uses whenever your request matches its description. Write it once; it works every time. (<a href="../school/level-3/lesson-7.html">Level 3, lesson 7</a> shows how to add one.)</p>
+    <div class="pair">
+      <div class="pane"><p class="k">Blank</p><pre class="tpl" id="skillblank"></pre><div class="copyrow"><button class="copy" type="button" data-copy="skillBlank">Copy the blank skill</button></div></div>
+      <div class="pane"><p class="k">A real one that won</p><pre class="tpl" id="skillreal">Loading…</pre><div class="copyrow"><a class="copy ghost" href="../templates/" style="text-decoration:none;display:inline-flex;align-items:center">See all 8 ready-made skills</a></div></div>
+    </div>
+    <div class="proof"><div class="score"><span>Plain Claude</span><span class="bar p"><i style="width:70%"></i></span><b>3.5</b></div><div class="score"><span>With this skill</span><span class="bar t"><i style="width:96%"></i></span><b>4.8</b></div>
+      <p class="verdict">All 8 of our ready-made skills beat plain Claude in blind tests. One only won after we fixed it. So: always test yours.</p></div>
+  </section>
+
+  <section class="sec" id="standing">
+    <p class="label">5 · Standing orders</p>
+    <h2>Say it once, not every chat.</h2>
+    <div id="standinglist"></div>
+  </section>
+
+  <section class="sec" id="better">
+    <p class="label">6 · Make it better</p>
+    <h2>5 lines to send after any answer.</h2>
+    <ul class="fol" id="fol"></ul>
+  </section>
+
+  <div class="sheet-cta"><b>All of it on one page.</b><p>The 6 boxes, the skill recipe and the 5 follow-ups. Print it or save it.</p><a href="one-page.html">Open the cheat sheet →</a></div>
+</main>
+<footer class="foot"><a href="../start/">Start here</a><a href="../use-ai/">Use AI well</a><span>Not affiliated with Anthropic</span><span>Made by Alexandra Vargas</span></footer>
+<script src="templates.js"></script>
+<script>
+(function () {
+  var T = window.EZ_T;
+  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+  function hl(s) { return esc(s).replace(/&lt;(\/?)([a-z_]+)&gt;/g, '<span class="t">&lt;$1$2&gt;</span>'); }
+  var COPY = { blank6: T.blank6, skillBlank: T.skillBlank };
+  var hero = T.jobs.filter(function (j) { return j.id === "reply-email"; })[0];
+  COPY.filled6 = hero.filled;
+  document.getElementById("boxes").innerHTML = T.boxes.map(function (b) {
+    return '<div class="row"><div><div class="tag">&lt;' + b[0] + '&gt;</div><div class="what">' + esc(b[1]) + '</div></div><div class="val">' + esc(b[2]) + "</div></div>";
+  }).join("");
+  function bar(label, v, cls) { return '<div class="score"><span>' + label + '</span><span class="bar ' + cls + '"><i style="width:' + Math.round(v / 5 * 100) + '%"></i></span><b>' + Number(v).toFixed(1) + "</b></div>"; }
+  function proof(j, open) {
+    var r = j.result; if (!r) return "";
+    var w = r.winner === "template" ? '<span class="w">Template won</span>' : r.winner === "tie" ? '<span class="w tie">Tie</span>' : '<span class="w tie">Plain won</span>';
+    return '<div class="proof">' + bar("Plain ask", r.plainScore, "p") + bar("With a template", r.templateScore, "t") +
+      '<p class="verdict">' + w + esc(r.reason) + "</p>" +
+      '<details' + (open ? " open" : "") + '><summary>Read both answers</summary><div class="pair"><div class="pane"><p class="k">Plain ask: “' + esc(r.plainAsk.split("\n")[0]) + '”</p><div class="out">' + esc(r.plainOut) + '</div></div><div class="pane"><p class="k">With a template</p><div class="out">' + esc(r.templateOut) + "</div></div></div></details></div>";
+  }
+  document.getElementById("hero-proof").innerHTML = proof(hero, false);
+  var tested = T.jobs.filter(function (j) { return j.result; }), wins = tested.filter(function (j) { return j.result.winner === "template"; }).length, ties = tested.filter(function (j) { return j.result.winner === "tie"; }).length, losses = tested.length - wins - ties;
+  document.getElementById("tally").innerHTML = '<span class="win">Template won ' + wins + " of " + tested.length + "</span><span>Tied " + ties + "</span><span>Plain won " + losses + "</span>";
+  document.getElementById("how").textContent = T.sample + " Each answer came from a separate Claude run. A separate Claude judge scored them blind (correct, complete, useful, clear) against what the person needed. Run 25 Nov 2026.";
+  var cur = 0;
+  document.getElementById("jobtabs").innerHTML = T.jobs.map(function (j, i) { return '<button class="chip" type="button" data-j="' + i + '" aria-pressed="' + (i === 0) + '">' + esc(j.name) + (j.result ? " ✓" : "") + "</button>"; }).join("");
+  function job() {
+    var j = T.jobs[cur]; COPY.jb = j.blank; COPY.jf = j.filled;
+    document.getElementById("job").innerHTML = '<div class="pair"><div class="pane"><p class="k">Fill in the [brackets]</p><pre class="tpl">' + hl(j.blank) + '</pre><div class="copyrow"><button class="copy" type="button" data-copy="jb">Copy template</button></div></div>' +
+      '<div class="pane"><p class="k">Filled example</p><pre class="tpl">' + hl(j.filled) + '</pre><div class="copyrow"><button class="copy ghost" type="button" data-copy="jf">Copy example</button></div></div></div>' +
+      (j.result ? proof(j, false) : '<p class="small2">Not tested yet. ✓ marks the jobs with a blind before-and-after.</p>');
+  }
+  document.getElementById("jobtabs").onclick = function (e) { var b = e.target.closest("[data-j]"); if (!b) return; cur = +b.dataset.j; this.querySelectorAll("[data-j]").forEach(function (x) { x.setAttribute("aria-pressed", String(x === b)); }); job(); };
+  job();
+  document.getElementById("skillblank").innerHTML = esc(T.skillBlank);
+  fetch("../templates/polish-email/skill/polish-email/SKILL.md").then(function (r) { return r.ok ? r.text() : Promise.reject(); }).then(function (t) { document.getElementById("skillreal").textContent = t; }, function () { document.getElementById("skillreal").textContent = "See it on the ready-made skills page."; });
+  document.getElementById("standinglist").innerHTML = T.standing.map(function (s, i) {
+    COPY["sb" + i] = s.blank; COPY["sf" + i] = s.filled;
+    return '<h3 style="margin:16px 0 0;font:800 1.1rem var(--display)">' + esc(s.name) + '</h3><p class="small2" style="margin-top:2px">Where: ' + esc(s.where) + '</p><div class="pair"><div class="pane"><pre class="tpl">' + hl(s.blank) + '</pre><div class="copyrow"><button class="copy" type="button" data-copy="sb' + i + '">Copy template</button></div></div><div class="pane"><pre class="tpl">' + hl(s.filled) + '</pre><div class="copyrow"><button class="copy ghost" type="button" data-copy="sf' + i + '">Copy example</button></div></div></div>';
+  }).join("");
+  document.getElementById("fol").innerHTML = T.followups.map(function (f, i) { COPY["f" + i] = f; return "<li><span>" + esc(f) + '</span><button class="copy" type="button" data-copy="f' + i + '">Copy</button></li>'; }).join("");
+  document.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-copy]"); if (!b) return;
+    var t = COPY[b.dataset.copy], lbl = b.textContent;
+    function ok() { b.textContent = "Copied"; b.classList.add("done"); setTimeout(function () { b.textContent = lbl; b.classList.remove("done"); }, 1600); }
+    function fail() { b.textContent = "Press and hold the text to copy"; setTimeout(function () { b.textContent = lbl; }, 2600); } if (navigator.clipboard) navigator.clipboard.writeText(t).then(ok, fail); else fail();
+  });
+})();
+</script>
+<script src="../school/school.js" defer></script>
+<script src="/projects/skill-quest/smez-index.js" defer></script>
+<script src="/projects/skill-quest/smez-nav.js" data-section="templates" defer></script>
+</body>
+</html>
