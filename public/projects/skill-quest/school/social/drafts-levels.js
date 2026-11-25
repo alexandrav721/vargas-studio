@@ -105,4 +105,39 @@ export const DRAFTS = [
       "Source: AI Made EZ Keep up (free, new every Friday).",
     ],
   },
+  {
+    id: "kit-first-website", before: null, label: "NO GATEKEEPING", formula: "Number first + proof", image: "Real screenshot: the site the kit built",
+    slides: [
+      { t: "card", label: "No gatekeeping", head: "Your first website, free, in about an hour. Every prompt is in the post", img: "/projects/skill-quest/kits/img/first-website-template.jpg" },
+      { t: "inner", label: "The test", title: "Same ask, two ways.", html: rows([["“Make me a website for my bakery”", "1.5 out of 5"], ["The free kit", "5.0 out of 5"], ["Why", "the plain ask made up a bakery"], ["Judge", "a separate Claude, blind"]]) },
+      { t: "inner", label: "The kit", title: "5 steps.", html: rows([["1", "fill in the site sheet"], ["2", "paste it into a free builder"], ["3", "fix the words"], ["4", "check it on a phone"], ["5", "publish, text the link"]]) },
+      { t: "offer" },
+    ],
+    caption: [
+      "A website builder can make you a site from one sentence. It just makes the rest up: the name, the prices, the hours, even the reviews.",
+      "Our free kit has you fill in a short sheet first. In a blind test, the plain ask scored 1.5 out of 5. The kit scored 5.0.",
+      "Free path: Lovable or Google AI Studio. No code, and you end with a real link.",
+      "However, free plans have daily limits. The kit tells you what to do when you hit one.",
+      "In plain words: a chef can't cook your order if you only say “something nice”.",
+      FOLLOW,
+      "Source: AI Made EZ Kits, blind tests run 25 Nov 2026 (free). Sample bakery is made up.",
+    ],
+  },
+  {
+    id: "kit-automate", before: null, label: "AI MADE EZ GUIDES", formula: "Your stakes", image: "Real photo: laptop at home (CC BY 2.0)",
+    slides: [
+      { t: "card", label: "AI Made EZ guides", head: "Automate one boring task this week. Free, two steps, no code", img: "/projects/skill-quest/img/need.jpg" },
+      { t: "inner", label: "The kit", title: "Start small.", html: rows([["Pick", "a task you repeat every week"], ["Plan", "AI writes the steps for you"], ["Build", "Zapier Free, one trigger, one action"], ["Test", "one real example"], ["Rule", "it drafts, you send"]]) },
+      { t: "offer" },
+    ],
+    caption: [
+      "Automation sounds technical. It's mostly two sentences: when this happens, do that.",
+      "Our free kit has AI pick the task, write the plan and the exact request to paste into Zapier's free plan.",
+      "In a blind test, the kit's plan scored 4.0 out of 5 and a plain ask scored 2.3. The judge also flagged one weak spot in ours, and the page shows it.",
+      "However, start with automations that draft, not send. You stay the last click.",
+      "In plain words: it's a kitchen timer. You set it once, and it rings without you.",
+      FOLLOW,
+      "Source: AI Made EZ Kits, blind tests run 25 Nov 2026 (free). Photo: Microbiz Mag, CC BY 2.0, via Wikimedia Commons",
+    ],
+  },
 ];

@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kit · AI Made EZ</title>
+<meta name="description" content="A free step-by-step AI kit that ends with a real result. Copy-paste prompts, a free tool path, and a blind-judged before and after.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../school/school.css">
+<link rel="stylesheet" href="kits.css">
+<link rel="stylesheet" href="/site-bar.css" />
+<script src="/site-bar.js" data-project="skill-quest" data-kind="piece" defer></script>
+</head>
+<body>
+<header class="top">
+  <a class="logo" href="index.html">All kits</a>
+  <div class="tools"><a class="chip give" href="../school/support.html" aria-label="Keep it free">♥<span class="gt"> Keep it free</span></a><button class="chip" id="big" type="button" aria-pressed="false">Bigger text</button></div>
+</header>
+<main id="kit"><p>Loading the kit…</p></main>
+<footer class="foot"><a href="index.html">All kits</a><a href="../cheat-sheets/">Templates</a><a href="../start/">Start here</a><span>Not affiliated with Anthropic</span><span>Made by Alexandra Vargas</span></footer>
+<script src="kits.js"></script>
+<script src="kits-ui.js"></script>
+<script>
+(function () {
+  var D = window.EZ_K, U = window.KITUI, esc = U.esc, hl = U.hl, COPY = U.COPY;
+  var id = new URLSearchParams(location.search).get("k");
+  var i = D.kits.findIndex(function (k) { return k.id === id; });
+  if (i < 0) { location.replace("index.html"); return; }
+  var K = D.kits[i], next = D.kits[i + 1], P = K.proof;
+  document.title = K.name + " · AI Made EZ kit";
+
+  function bar(label, v, cls) { return '<div class="score"><span>' + label + '</span><span class="bar ' + cls + '"><i style="width:' + Math.round(v / 5 * 100) + '%"></i></span><b>' + Number(v).toFixed(1) + "</b></div>"; }
+  function excerpt(s, n) { var l = s.split("\n"); return l.slice(0, n).join("\n") + (l.length > n ? "\n…" : ""); }
+
+  var h = "";
+  /* 1. what you'll have */
+  h += '<section class="hero"><p class="label">Kit ' + K.n + " of " + D.kits.length + "</p><h1>" + esc(K.name) + '</h1><p class="muted">' + esc(K.result) + "</p>" +
+    '<div class="meta"><span class="free">' + esc(K.cost) + "</span><span>About " + esc(K.time) + " (our estimate)</span><span>No code</span></div>";
+  if (P && P.kitImg) h += '<figure class="shot"><img src="' + P.kitImg + '" alt="Phone screenshot of the ' + esc(K.name.toLowerCase()) + ' result we built by following this kit" loading="lazy"><figcaption>Built by following this kit. ' + esc(D.sample) + "</figcaption></figure>";
+  else if (P && P.kitOut) h += '<p class="label" style="margin-top:18px">What you get (our test run)</p><div class="outcard">' + esc(excerpt(P.kitOut, 18)) + '</div><p class="small2">' + esc(D.sample) + "</p>";
+  h += "</section>";
+
+  /* 2. what you need */
+  h += '<section class="sec"><p class="label">Before you start</p><h2>What you need.</h2><ul class="ticks">' + K.prep.map(function (p) { return "<li>" + esc(p) + "</li>"; }).join("") + '</ul><p class="note"><b>Keep it private:</b> ' + esc(K.privacy) + "</p></section>";
+
+  /* 3. pick your tool */
+  h += '<section class="sec"><p class="label">Pick your tool</p><h2>Use one. Free works.</h2><div class="toollist">' + K.tools.map(function (t) {
+    return '<div class="tool"><b>' + esc(t[0]) + '</b><span class="badge' + (/^free/i.test(t[1]) ? " free" : "") + '">' + esc(t[1]) + '</span><span class="d">' + esc(t[2]) + "</span></div>";
+  }).join("") + '</div><p class="checked">Plans and limits checked on official pages, ' + esc(D.checked) + ". They change; if a step looks different, the idea still works.</p></section>";
+
+  /* 4. steps */
+  h += '<section class="sec" id="steps"><p class="label">Step by step</p><h2>Do this.</h2><div class="steps">' + K.steps.map(function (s, j) {
+    var body = "<p>" + esc(s.d) + "</p>";
+    if (s.p) { COPY["s" + j] = s.p; body += '<pre class="tpl">' + hl(s.p) + '</pre><div class="copyrow"><button class="copy" type="button" data-copy="s' + j + '">Copy</button></div>'; }
+    body += '<p class="ok"><b>Check:</b> ' + esc(s.ok) + "</p>";
+    return '<details class="step"' + (j === 0 ? " open" : "") + "><summary>" + esc(s.t) + '</summary><div class="body">' + body + "</div></details>";
+  }).join("") + "</div>";
+  COPY.ex = K.example.prompt;
+  h += '<details class="ex"><summary>See it filled in (made-up bakery example)</summary><pre class="tpl">' + hl(K.example.prompt) + '</pre><div class="copyrow"><button class="copy ghost" type="button" data-copy="ex">Copy the example</button></div></details></section>';
+
+  /* 5. proof */
+  if (P) {
+    var w = P.winner === "template" ? '<span class="w">Kit won</span>' : P.winner === "tie" ? '<span class="w tie">Tie</span>' : '<span class="w tie">Plain won</span>';
+    var both = P.kitImg
+      ? '<div class="pair"><div class="pane"><p class="k">Plain ask: “' + esc(P.plainAsk) + '”</p><img src="' + P.plainImg + '" alt="Phone screenshot of the plain-ask result" loading="lazy"></div><div class="pane"><p class="k">With this kit</p><img src="' + P.kitImg + '" alt="Phone screenshot of the kit result" loading="lazy"></div></div>'
+      : '<details class="ex"><summary>Read both answers</summary><div class="pair"><div class="pane"><p class="k">Plain ask: “' + esc(P.plainAsk) + '”</p><div class="out">' + esc(P.plainOut) + '</div></div><div class="pane"><p class="k">With this kit</p><div class="out">' + esc(P.kitOut) + "</div></div></div></details>";
+    h += '<section class="sec" id="proof"><p class="label">Does it work?</p><h2>Same job, asked two ways.</h2><div class="proof">' + bar("Plain ask", P.plainScore, "p") + bar("With this kit", P.kitScore, "t") +
+      '<p class="verdict">' + w + esc(P.reason) + "</p>" + both + '</div><p class="small2">' + esc(D.sample) + " A separate Claude made each answer. Another Claude scored them out of 5 without knowing which was which. Run " + esc(D.checked) + ".</p></section>";
+  }
+
+  /* 6. stuck */
+  h += '<section class="sec"><p class="label">Stuck?</p><h2>Where people get stuck.</h2><div class="stuck">' + K.stuck.map(function (s) { return "<details><summary>" + esc(s[0]) + "</summary><p>" + esc(s[1]) + "</p></details>"; }).join("") + "</div></section>";
+
+  /* 7. done + email + next */
+  h += '<div class="next"><b>Done?</b><p>' + esc(K.done) + "</p>" + (next ? '<a class="btn" href="kit.html?k=' + next.id + '">Next kit: ' + esc(next.name) + " →</a>" : '<a class="btn" href="index.html">All kits →</a>') + "</div>";
+  h += U.mailBox(K.id);
+
+  document.getElementById("kit").innerHTML = h;
+  U.wireMail(K.id);
+})();
+</script>
+<script src="../school/school.js" defer></script>
+<script src="/projects/skill-quest/smez-index.js" defer></script>
+<script src="/projects/skill-quest/smez-nav.js" data-section="templates" defer></script>
+</body>
+</html>

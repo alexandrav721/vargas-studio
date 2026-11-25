@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kits · AI Made EZ</title>
+<meta name="description" content="6 free AI kits that end with something real: your first website, your first app, an automation, a month of posts. Step by step, no code, blind-tested.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../school/school.css">
+<link rel="stylesheet" href="kits.css">
+<style>
+#forget form{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+#forget input{font:inherit;font-size:16px;padding:10px 12px;border-radius:12px;border:2px solid var(--ink);min-height:44px;flex:1 1 220px}
+#forget button{font:inherit;font-weight:700;min-height:44px;border-radius:999px;border:2px solid var(--ink);background:transparent;padding:0 16px;cursor:pointer}
+</style>
+<link rel="stylesheet" href="/site-bar.css" />
+<script src="/site-bar.js" data-project="skill-quest" data-kind="piece" defer></script>
+</head>
+<body>
+<header class="top">
+  <a class="logo" href="../cheat-sheets/">Templates</a>
+  <div class="tools"><a class="chip give" href="../school/support.html" aria-label="Keep it free">♥<span class="gt"> Keep it free</span></a><button class="chip" id="big" type="button" aria-pressed="false">Bigger text</button></div>
+</header>
+<main>
+  <section class="hero">
+    <p class="label">Free kits · no code · no catch</p>
+    <h1>Make a real thing with AI.</h1>
+    <p class="muted">Each kit ends with something you can use: a website, an app, an automation. Every prompt is here. Nothing to unlock.</p>
+    <div class="kits" id="kits"></div>
+  </section>
+
+  <section class="sec" id="proof">
+    <p class="label">Tested</p>
+    <h2>Kit vs. a plain ask.</h2>
+    <p class="muted">For each kit, a separate Claude did the same job twice: once from a plain ask, once from the kit. Another Claude scored both without knowing which was which.</p>
+    <div class="tally" id="tally"></div>
+    <p class="small2" id="sample"></p>
+  </section>
+
+  <section class="sec">
+    <p class="label">Just one prompt?</p>
+    <h2>Quick templates.</h2>
+    <p class="muted">For a single email, summary or plan: the 6-box template and 10 job templates.</p>
+    <p><a class="btn ghost" href="../cheat-sheets/">Open the templates →</a></p>
+  </section>
+
+  <section class="sec" id="forget">
+    <p class="label">Your email · privacy</p>
+    <h2>What we keep, and how to delete it.</h2>
+    <ul class="ticks">
+      <li><b>Only if you ask for a copy:</b> your email, which kit, and whether you ticked “new kits”. Nothing else.</li>
+      <li><b>Why:</b> to send you that kit, and new kits only if you ticked the box.</li>
+      <li><b>Where:</b> stored with Cloudflare, which runs this site. When email sending opens, an email service sends it for us. We never sell or share it.</li>
+      <li><b>How long:</b> until you delete it below.</li>
+    </ul>
+    <form id="forgetform"><input type="email" name="email" required autocomplete="email" placeholder="you@example.com" aria-label="Email to delete"><button type="submit">Delete</button></form>
+    <p class="small2" id="forgetmsg" role="status" aria-live="polite"></p>
+  </section>
+</main>
+<footer class="foot"><a href="../cheat-sheets/">Templates</a><a href="../start/">Start here</a><a href="../use-ai/">Use AI well</a><span>Not affiliated with Anthropic</span><span>Made by Alexandra Vargas</span></footer>
+<script src="kits.js"></script>
+<script src="kits-ui.js"></script>
+<script>
+(function () {
+  var D = window.EZ_K, U = window.KITUI, esc = U.esc;
+  document.getElementById("kits").innerHTML = D.kits.map(function (k) {
+    return '<a class="kcard" href="kit.html?k=' + k.id + '"><span class="ic">' + U.icon(k.icon) + "</span><span><b>" + esc(k.name) + "</b><p>" + esc(k.result) + '</p><span class="meta"><span class="free">' + esc(k.cost) + "</span><span>" + esc(k.time) + "</span></span></span></a>";
+  }).join("");
+  var t = D.kits.filter(function (k) { return k.proof; }), w = t.filter(function (k) { return k.proof.winner === "template"; }).length, ti = t.filter(function (k) { return k.proof.winner === "tie"; }).length;
+  document.getElementById("tally").innerHTML = '<span class="win">Kit won ' + w + " of " + t.length + "</span><span>Tied " + ti + "</span><span>Plain won " + (t.length - w - ti) + "</span>";
+  document.getElementById("sample").textContent = D.sample + " Run " + D.checked + ". Each kit page shows both answers.";
+  U.wireForget();
+})();
+</script>
+<script src="../school/school.js" defer></script>
+<script src="/projects/skill-quest/smez-index.js" defer></script>
+<script src="/projects/skill-quest/smez-nav.js" data-section="templates" defer></script>
+</body>
+</html>
