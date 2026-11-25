@@ -1119,8 +1119,45 @@ window.EZ_TOOLS2 = {
 "skipIf": "you need a working site people can visit, or exact brand matching.",
 "laterNote": "",
 "tested": null,
-"examples": [],
-"gallery": ""
+"examples": [
+{
+"src": "img/google-stitch/1.jpg",
+"kind": "image",
+"alt": "Board game tracker app home screen with stats and quick actions",
+"tool": "Google Stitch (README: visual design created in Google Stitch, built with Claude Code)",
+"prompt": "",
+"license": "MIT",
+"licenseUrl": "https://github.com/OskarGosk/BoardGame/blob/master/LICENSE",
+"author": "Oskar Gosk",
+"source": "https://github.com/OskarGosk/BoardGame",
+"excerpt": false
+},
+{
+"src": "img/google-stitch/2.jpg",
+"kind": "image",
+"alt": "Dark calculus app with equation input panel and empty graph area",
+"tool": "Google Stitch (README: Designed with Google Stitch, built with Antigravity)",
+"prompt": "",
+"license": "MIT",
+"licenseUrl": "https://github.com/DeepakNegi13/CalcLens/blob/main/LICENSE",
+"author": "Deepak Negi",
+"source": "https://github.com/DeepakNegi13/CalcLens",
+"excerpt": false
+},
+{
+"src": "img/google-stitch/3.jpg",
+"kind": "image",
+"alt": "Dark security dashboard with stat cards, blocked-action alert and log table",
+"tool": "Google Stitch (README: web console designed with Google Stitch; file named stitch-ui.png)",
+"prompt": "",
+"license": "Apache-2.0",
+"licenseUrl": "https://github.com/h4rsh740/SENTINEL/blob/main/LICENSE",
+"author": "h4rsh740",
+"source": "https://github.com/h4rsh740/SENTINEL",
+"excerpt": false
+}
+],
+"gallery": "https://stitch.withgoogle.com/"
 },
 {
 "id": "figma-make",
@@ -1210,8 +1247,33 @@ window.EZ_TOOLS2 = {
 "skipIf": "you've never used Figma, or need a real app that saves data.",
 "laterNote": "",
 "tested": null,
-"examples": [],
-"gallery": ""
+"examples": [
+{
+"src": "img/figma-make/1.jpg",
+"kind": "image",
+"alt": "Desktop lab workflow app with colorful 3D lanes and side menu",
+"tool": "Figma Make (README: Built with Figma Make (Claude Opus 5.5) and ChatGPT/Codex)",
+"prompt": "",
+"license": "MIT",
+"licenseUrl": "https://github.com/driftframestudios/source-of-truth-systems/blob/main/LICENSE",
+"author": "Vikrant Varun Kudesia / Driftframe Studios, LLC",
+"source": "https://github.com/driftframestudios/source-of-truth-systems",
+"excerpt": false
+},
+{
+"src": "img/figma-make/2.jpg",
+"kind": "image",
+"alt": "Same lab workflow app on a phone screen with touch controls",
+"tool": "Figma Make (README: Built with Figma Make (Claude Opus 5.5) and ChatGPT/Codex)",
+"prompt": "",
+"license": "MIT",
+"licenseUrl": "https://github.com/driftframestudios/source-of-truth-systems/blob/main/LICENSE",
+"author": "Vikrant Varun Kudesia / Driftframe Studios, LLC",
+"source": "https://github.com/driftframestudios/source-of-truth-systems",
+"excerpt": false
+}
+],
+"gallery": "https://www.figma.com/make/"
 },
 {
 "id": "lovable",
@@ -1301,8 +1363,21 @@ window.EZ_TOOLS2 = {
 "skipIf": "you only need a brochure website. A website builder is cheaper and safer.",
 "laterNote": "",
 "tested": null,
-"examples": [],
-"gallery": ""
+"examples": [
+{
+"src": "img/lovable/1.jpg",
+"kind": "image",
+"alt": "Clean landing page for a database browser with feature cards and buttons",
+"tool": "Lovable (README: UI built with lovable.dev)",
+"prompt": "",
+"license": "Apache-2.0",
+"licenseUrl": "https://github.com/ankitsultana/keeper-ui/blob/main/LICENSE",
+"author": "Ankit Sultana",
+"source": "https://github.com/ankitsultana/keeper-ui",
+"excerpt": false
+}
+],
+"gallery": "https://lovable.dev/templates"
 },
 {
 "id": "bolt",
@@ -1392,7 +1467,7 @@ window.EZ_TOOLS2 = {
 "laterNote": "",
 "tested": null,
 "examples": [],
-"gallery": ""
+"gallery": "https://bolt.new/~/discover"
 },
 {
 "id": "v0",
@@ -1478,8 +1553,45 @@ window.EZ_TOOLS2 = {
 "skipIf": "you want an all-in-one app with data and no code.",
 "laterNote": "",
 "tested": null,
-"examples": [],
-"gallery": ""
+"examples": [
+{
+"src": "img/v0/1.jpg",
+"kind": "image",
+"alt": "Phone booking app prototype in v0 preview, choosing a sauna room",
+"tool": "v0 (README: a working prototype generated with v0; screenshot shows v0.app preview)",
+"prompt": "",
+"license": "MIT",
+"licenseUrl": "https://github.com/shinpr/ai-business-planner-demo/blob/main/LICENSE",
+"author": "Shinsuke Kagawa",
+"source": "https://github.com/shinpr/ai-business-planner-demo",
+"excerpt": false
+},
+{
+"src": "img/v0/2.jpg",
+"kind": "image",
+"alt": "Same booking prototype showing the My Booking screen",
+"tool": "v0 (README: a working prototype generated with v0; screenshot shows v0.app preview)",
+"prompt": "",
+"license": "MIT",
+"licenseUrl": "https://github.com/shinpr/ai-business-planner-demo/blob/main/LICENSE",
+"author": "Shinsuke Kagawa",
+"source": "https://github.com/shinpr/ai-business-planner-demo",
+"excerpt": false
+},
+{
+"src": "img/v0/3.jpg",
+"kind": "image",
+"alt": "Dark to-do app with a task form and four tasks in Portuguese",
+"tool": "v0.dev (README: frontend UI developed with assistance from v0.dev)",
+"prompt": "",
+"license": "MIT",
+"licenseUrl": "https://github.com/lucasfdcampos/fullstack-todoapp/blob/master/LICENSE",
+"author": "Lucas Campos",
+"source": "https://github.com/lucasfdcampos/fullstack-todoapp",
+"excerpt": false
+}
+],
+"gallery": "https://v0.app/templates"
 },
 {
 "id": "replit",
@@ -1570,7 +1682,7 @@ window.EZ_TOOLS2 = {
 "laterNote": "",
 "tested": null,
 "examples": [],
-"gallery": ""
+"gallery": "https://replit.com/gallery"
 },
 {
 "id": "base44",
@@ -1660,7 +1772,7 @@ window.EZ_TOOLS2 = {
 "laterNote": "",
 "tested": null,
 "examples": [],
-"gallery": ""
+"gallery": "https://base44.com/"
 },
 {
 "id": "framer",
@@ -1752,7 +1864,7 @@ window.EZ_TOOLS2 = {
 "laterNote": "",
 "tested": null,
 "examples": [],
-"gallery": ""
+"gallery": "https://www.framer.com/community/gallery/"
 },
 {
 "id": "wix",
@@ -1842,7 +1954,7 @@ window.EZ_TOOLS2 = {
 "laterNote": "",
 "tested": null,
 "examples": [],
-"gallery": ""
+"gallery": "https://www.wix.com/website/templates"
 },
 {
 "id": "squarespace",
@@ -1928,7 +2040,7 @@ window.EZ_TOOLS2 = {
 "laterNote": "",
 "tested": null,
 "examples": [],
-"gallery": ""
+"gallery": "https://www.squarespace.com/templates"
 },
 {
 "id": "cursor-claude-code",
@@ -1965,7 +2077,7 @@ window.EZ_TOOLS2 = {
 "laterNote": "For later: tools for writing code, once you've built something simple.",
 "tested": null,
 "examples": [],
-"gallery": ""
+"gallery": "https://cursor.com/showcase"
 },
 {
 "id": "notebooklm",
