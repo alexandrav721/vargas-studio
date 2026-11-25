@@ -140,4 +140,38 @@ export const DRAFTS = [
       "Source: AI Made EZ Kits, blind tests run 25 Nov 2026 (free). Photo: Microbiz Mag, CC BY 2.0, via Wikimedia Commons",
     ],
   },
+  {
+    id: "news-sora-closed", before: null, label: "AI NEWS, MADE EZ", formula: "Number first + pain point", image: "Type-only card",
+    slides: [
+      { t: "card", label: "AI news, made EZ", head: "Sora is closed. Half the “best AI tools” lists still tell you to use it", img: "/projects/skill-quest/img/layers.jpg" },
+      { t: "inner", label: "Short video instead", title: "Start here.", html: rows([["Start", "Google Flow, 50 free credits a day"], ["Step up", "Kling, if faces must match"], ["Captions", "CapCut"]]) },
+      { t: "offer" },
+    ],
+    caption: [
+      "OpenAI closed the Sora app in April 2026, and its API in September. A lot of “best AI tools” lists never updated.",
+      "For a short video, start with Google Flow: 50 free credits a day. If the same face or product must look identical in every shot, try Kling.",
+      "Every pick on our Tools page shows the real free plan, what real users like and complain about, and the date we checked.",
+      "However, prices and free plans change often. Check the official page before you pay.",
+      "In plain words: the oven you were told to buy was discontinued. Here's what's on the shelf now.",
+      FOLLOW,
+      "Source: AI Made EZ Tools, checked 25 Nov 2026 (free). No affiliate links.",
+    ],
+  },
+  {
+    id: "tools-three-picks", before: null, label: "NO GATEKEEPING", formula: "Your stakes", image: "Real photo: laptop at home (CC BY 2.0)",
+    slides: [
+      { t: "card", label: "No gatekeeping", head: "Which AI tool should you use? 3 picks for each job, from real users' reviews", img: "/projects/skill-quest/img/need.jpg" },
+      { t: "inner", label: "Example: a slide deck", title: "One job, 3 answers.", html: rows([["Start here", "the easiest free one"], ["Step up", "when you outgrow it"], ["Skip for now", "and why"]]) },
+      { t: "offer" },
+    ],
+    caption: [
+      "There are hundreds of AI tools. You need one per job.",
+      "Our free Tools page asks what you want to do (pictures, video, a website, slides, meeting notes) and gives 3 picks: start here, step up, skip for now.",
+      "Each tool shows its real free plan, what real users like and complain about, and what to watch out for. No affiliate links. Nobody paid to be listed.",
+      "However, reviews online are lopsided: billing fights go to Trustpilot, happy users rate in app stores. We show both.",
+      "In plain words: one good knife beats a drawer full of gadgets.",
+      FOLLOW,
+      "Source: AI Made EZ Tools, checked 25 Nov 2026 (free). Photo: Microbiz Mag, CC BY 2.0, via Wikimedia Commons",
+    ],
+  },
 ];

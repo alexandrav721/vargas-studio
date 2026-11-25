@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Tool test sheet · AI Made EZ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../school/school.css">
+<link rel="stylesheet" href="../kits/kits.css">
+<style>main{max-width:760px} textarea{width:100%;box-sizing:border-box;min-height:260px;font:500 14px/1.5 var(--mono);padding:12px;border-radius:12px;border:2px solid var(--ink)} table{width:100%;border-collapse:collapse;margin-top:10px;font-size:.95rem} td,th{border-top:1px solid var(--line2);padding:8px 6px;text-align:left;vertical-align:top}</style>
+</head>
+<body>
+<header class="top"><a class="logo" href="./">Tools</a></header>
+<main>
+  <p class="label">For Alexandra · not in the menu</p>
+  <h1>10-minute tool test</h1>
+  <p class="muted">Free plan only. Don’t buy anything to test. Use made-up details, never client info.</p>
+  <h2 style="margin-top:24px">1. Do the same small task</h2>
+  <table>
+    <tr><th>Job</th><th>Task</th></tr>
+    <tr><td>Pictures</td><td>A product photo of a candle on a wooden table, warm light.</td></tr>
+    <tr><td>Short video</td><td>5–10 seconds: steam rising from a coffee cup by a window.</td></tr>
+    <tr><td>Screens / website / app</td><td>Use the matching kit’s sheet (website or app kit).</td></tr>
+    <tr><td>Documents</td><td>Upload one long PDF and ask 3 questions you know the answers to.</td></tr>
+    <tr><td>Meetings</td><td>A 5-minute test call with a friend who agreed to be recorded.</td></tr>
+    <tr><td>Slides</td><td>“5 slides on why AI isn’t that hard, for beginners.”</td></tr>
+    <tr><td>Voice / music</td><td>Read one paragraph aloud / a 30-second upbeat jingle about Monday.</td></tr>
+    <tr><td>Automate</td><td>Follow the automate kit with a test form.</td></tr>
+  </table>
+  <h2 style="margin-top:24px">2. Fill this in and paste it to Claude</h2>
+  <textarea id="t">Tool:
+Date:
+Job I tested:
+Minutes to first usable result:
+Credits/free uses it took:
+What worked:
+What broke or annoyed me:
+Watermark or catch I noticed:
+Would I pay? (yes/no, how much):
+My verdict in one line:
+My score (1-5):
+Screenshot attached? (yes/no)</textarea>
+  <p><button class="copy" type="button" id="c">Copy the sheet</button></p>
+  <p class="small2">Send the filled sheet and a screenshot. It becomes the “Tested by Alexandra” box on that tool’s page.</p>
+</main>
+<script>document.getElementById("c").onclick=function(){var b=this,t=document.getElementById("t").value;if(navigator.clipboard)navigator.clipboard.writeText(t).then(function(){b.textContent="Copied";},function(){b.textContent="Select the text and copy";});};</script>
+</body>
+</html>

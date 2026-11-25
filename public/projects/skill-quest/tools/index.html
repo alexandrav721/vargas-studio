@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tools · AI Made EZ</title>
+<meta name="description" content="Which AI tool should you use? Real people's reviews of 30+ AI tools, official prices, and 3 picks for each job. No affiliate links.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../school/school.css">
+<link rel="stylesheet" href="../kits/kits.css">
+<link rel="stylesheet" href="tools.css">
+<link rel="stylesheet" href="/site-bar.css" />
+<script src="/site-bar.js" data-project="skill-quest" data-kind="piece" defer></script>
+</head>
+<body>
+<header class="top">
+  <a class="logo" href="./">Tools</a>
+  <div class="tools"><a class="chip give" href="../school/support.html" aria-label="Keep it free">♥<span class="gt"> Keep it free</span></a><button class="chip" id="big" type="button" aria-pressed="false">Bigger text</button></div>
+</header>
+<main>
+  <section class="hero">
+    <p class="label">No affiliate links. Nobody paid to be here.</p>
+    <h1>Pick the job. Get 3 tools.</h1>
+    <p class="muted">Tap what you want to do. Get 3 picks, with what real users say.</p>
+    <div class="jobs" id="jobs" role="group" aria-label="What do you want to do?"></div>
+    <div id="picked" aria-live="polite"></div>
+  </section>
+
+  <section class="sec" id="all">
+    <p class="label">All the tools</p>
+    <h2>All <span id="count"></span> tools, with real reviews.</h2>
+    <p class="muted">Dots = how easy it is for a beginner (our estimate). Prices from each official page, <span id="checked"></span>.</p>
+    <div id="groups"></div>
+  </section>
+
+  <section class="sec">
+    <p class="label">Gone</p>
+    <h2>Sora is closed.</h2>
+    <p class="muted">OpenAI closed the Sora app in April 2026 and its API in September (<a href="https://help.openai.com/en/articles/20001152" target="_blank" rel="noopener">OpenAI</a>). Lists that still recommend it are out of date. For short videos, start with Google Flow.</p>
+  </section>
+
+  <section class="sec">
+    <p class="label">How we review</p>
+    <ul class="ticks">
+      <li>Likes and complaints come from real users on Trustpilot, app stores, Product Hunt and forums, each with its source and date.</li>
+      <li>Ratings often disagree: billing fights land on Trustpilot, happy users rate in app stores. We show both.</li>
+      <li>“Tested by Alexandra” means I used it myself. More coming.</li>
+    </ul>
+  </section>
+</main>
+<footer class="foot"><a href="../about/">About</a><a href="../kits/">Kits</a><a href="../cheat-sheets/">Templates</a><a href="../use-ai/">Use AI well</a><span>Not affiliated with any tool listed</span><span>Made by Alexandra Vargas</span></footer>
+<script src="tools.js"></script>
+<script src="tools-ui.js"></script>
+<script>
+(function () {
+  var D = window.EZ_TOOLS2, U = window.TOOLUI, esc = U.esc;
+  var by = {}; D.tools.forEach(function (t) { by[t.id] = t; });
+  document.getElementById("count").textContent = D.tools.length;
+  document.getElementById("checked").textContent = D.checked;
+  var jobsEl = document.getElementById("jobs");
+  jobsEl.innerHTML = D.jobs.map(function (j) { return '<button class="job" type="button" data-job="' + j[0] + '" aria-pressed="false">' + U.icon(j[2]) + "<span>" + esc(j[1]) + "</span></button>"; }).join("");
+  function pick(cls, tag, id, why) {
+    var t = by[id]; if (!t) return "";
+    return '<a class="pick ' + cls + '" href="tool.html?t=' + t.id + '"><span class="ptag">' + tag + "</span><b>" + esc(t.name) + "</b>" + U.dots(t.score) +
+      '<span class="why">' + esc(why || t.line) + '</span><span class="free"><b style="font:inherit;font-weight:700">Free:</b> ' + esc(t.free) + "</span></a>";
+  }
+  function show(job) {
+    var p = D.picks[job] || {};
+    jobsEl.querySelectorAll(".job").forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.job === job)); });
+    document.getElementById("picked").innerHTML = '<div class="picks">' + pick("start", "Start here", p.start, p.startWhy) + pick("up", "Step up", p.stepUp, p.stepUpWhy) + pick("skip", "Skip for now", p.skip, p.skipWhy) + "</div>";
+    try { history.replaceState(null, "", "#" + job); } catch (e) {}
+  }
+  jobsEl.addEventListener("click", function (e) { var b = e.target.closest("[data-job]"); if (b) show(b.dataset.job); });
+  var h = location.hash.slice(1); if (D.picks[h]) show(h);
+  document.getElementById("groups").innerHTML = D.groups.map(function (g) {
+    var list = D.tools.filter(function (t) { return t.group === g[0]; }).sort(function (a, b) { return b.score - a.score; });
+    return '<div class="grp"><h3>' + esc(g[1]) + '</h3><div class="tlist">' + list.map(function (t) {
+      return '<a class="tcard" href="tool.html?t=' + t.id + '"><b>' + esc(t.name) + (t.tested ? " ✓" : "") + "</b>" + U.dots(t.score) + '<span class="l">' + esc(t.line) + "</span></a>";
+    }).join("") + "</div></div>";
+  }).join("");
+})();
+</script>
+<script src="../school/school.js" defer></script>
+<script src="/projects/skill-quest/smez-index.js" defer></script>
+<script src="/projects/skill-quest/smez-nav.js" data-section="tools" defer></script>
+</body>
+</html>
