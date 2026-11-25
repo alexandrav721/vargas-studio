@@ -8,7 +8,7 @@ window.EZ_TPL = {
 "id": "website",
 "name": "Your website",
 "icon": "web",
-"promise": "How you build a one-page website with a real link.",
+"promise": "Build a one-page website with a real link.",
 "covers": [
 [
 "who",
@@ -249,14 +249,14 @@ window.EZ_TPL = {
 "id": "app",
 "name": "Your app",
 "icon": "app",
-"promise": "How you plan a small app, room by room.",
+"promise": "Plan a small app, room by room.",
 "href": "../build-kit/"
 },
 {
 "id": "month-of-posts",
 "name": "A month of posts",
 "icon": "posts",
-"promise": "How you write a month of posts in your voice.",
+"promise": "Write a month of posts in your voice.",
 "covers": [
 [
 "when",
@@ -436,7 +436,7 @@ window.EZ_TPL = {
 "id": "sounds-like-me",
 "name": "Sounds like me",
 "icon": "voice",
-"promise": "How you get AI to write like you, plus 3 ready replies.",
+"promise": "Get AI to write like you, plus 3 ready replies.",
 "covers": [
 [
 "msgs",
@@ -584,7 +584,7 @@ window.EZ_TPL = {
 "id": "memo-to-handbook",
 "name": "Voice memo → handbook",
 "icon": "memo",
-"promise": "How you turn “let me explain” into a checklist anyone can follow.",
+"promise": "Turn “let me explain” into a checklist anyone can follow.",
 "covers": [
 [
 "task",
@@ -727,7 +727,7 @@ window.EZ_TPL = {
 "id": "automate-task",
 "name": "Automate a task",
 "icon": "auto",
-"promise": "How you get one boring task to run on its own.",
+"promise": "Get one boring task to run on its own.",
 "covers": [
 [
 "tasks",
@@ -890,7 +890,7 @@ window.EZ_TPL = {
 "id": "reply-emails",
 "name": "Reply to emails",
 "icon": "mail",
-"promise": "How you answer a tricky email in 5 minutes, in your voice.",
+"promise": "Answer a tricky email in 5 minutes, in your voice.",
 "covers": [
 [
 "from",

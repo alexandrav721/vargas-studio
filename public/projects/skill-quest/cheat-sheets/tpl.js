@@ -17,7 +17,13 @@
   function brief(t, a) {
     var lab = {}; t.fields.forEach(function (f) { lab[f.key] = f.label; });
     return t.brief.map(function (b) {
-      var v = b[1].replace(/\{(\w+)\}/g, function (_, k) { return has(a[k]) ? String(a[k]).trim() : "[" + (lab[k] || k).toLowerCase() + "]"; });
+      var v = b[1].replace(/\{(\w+)\}/g, function (_, k, at, all) {
+        if (!has(a[k])) return "[" + (lab[k] || k).toLowerCase() + "]";
+        var x = String(a[k]).trim(), pre = all.slice(0, at).replace(/\s+$/, "");
+        /* mid-sentence: "should Order a cake" -> "should order a cake" (keeps names and acronyms) */
+        if (/\b(should|to|can|will|must|please)$/i.test(pre) && /^[A-Z][a-z]/.test(x) && !/^(I|I'm|I’m)\b/.test(x)) x = x.charAt(0).toLowerCase() + x.slice(1);
+        return x;
+      });
       return "<" + b[0] + ">" + v + "</" + b[0] + ">";
     }).join("\n");
   }
@@ -73,8 +79,8 @@
   h += '</div><p class="small2">' + esc(T.sample || D.sample) + " Saved on this phone only.</p></section>";
 
   h += '<section class="sec brief" id="brief"><p class="label">Step 2</p><h2>Your brief.</h2><p class="muted" id="where"></p><pre class="tpl" id="preview"></pre>' +
-    '<div class="dl"><button class="btn" type="button" id="dlmd">Download .md</button><button class="copy ghost" type="button" data-copy="brief">Copy the brief</button></div>' +
-    '<p class="small2">One file: your brief and the next steps. Paste it into Claude, ChatGPT, Lovable or Bolt.</p></section>';
+    '<div class="dl"><button class="btn" type="button" id="dlmd">Download the file</button><button class="copy ghost" type="button" data-copy="brief">Copy the brief</button></div>' +
+    '<p class="small2">One text file: your brief plus the next steps. Opens on any phone.</p></section>';
 
   h += '<section class="sec" id="then"><p class="label">Step 3</p><h2>Then do this.</h2>';
   h += '<details class="ex"><summary>Pick a tool (free works)</summary><div class="toollist">' + T.tools.map(function (t) {
@@ -108,10 +114,12 @@
 
   var pv = document.getElementById("preview"), cv = document.getElementById("covers"), wh = document.getElementById("where");
   function paint() {
-    var on = coversOn(T, A), n = on.filter(Boolean).length, m = on.length;
-    cv.innerHTML = '<div class="top2"><b>What this covers</b><span class="n">' + n + " of " + m + ' covered</span></div><div class="meter" role="progressbar" aria-valuemin="0" aria-valuemax="' + m + '" aria-valuenow="' + n + '" aria-label="Covered"><i style="width:' + Math.round(n / m * 100) + '%"></i></div><ul>' +
-      T.covers.map(function (c, i) { return '<li class="' + (on[i] ? "on" : "") + '">' + esc(c[1]) + "</li>"; }).join("") + "</ul>";
-    var b = brief(T, A); pv.innerHTML = hl(b); U.COPY.brief = b;
+    var on = coversOn(T, A), n = filledN(T, A), m = T.fields.length;
+    var part = T.covers.map(function (c) { return T.fields.some(function (f) { return f.covers === c[0] && has(A[f.key]); }); });
+    cv.innerHTML = '<div class="top2"><b>What this covers</b><span class="n">' + n + " of " + m + ' answered</span></div><div class="meter" role="progressbar" aria-valuemin="0" aria-valuemax="' + m + '" aria-valuenow="' + n + '" aria-label="Answered"><i style="width:' + Math.round(n / m * 100) + '%"></i></div><ul>' +
+      T.covers.map(function (c, i) { return '<li class="' + (on[i] ? "on" : part[i] ? "part" : "") + '">' + esc(c[1]) + "</li>"; }).join("") + "</ul>";
+    var b = brief(T, A); U.COPY.brief = b;
+    pv.innerHTML = b.split("\n").map(function (line) { var m = line.match(/^<(\w+)>([\s\S]*)<\/\1>$/); if (!m) return esc(line); var t = ({ who_its_for: "Who it’s for" })[m[1]] || m[1].replace(/_/g, " "); return "<b>" + esc(t.charAt(0).toUpperCase() + t.slice(1)) + "</b>\n" + esc(m[2]).replace(/\[([^\]]+)\]/g, '<span class="gap">[$1]</span>'); }).join("\n\n");
     wh.textContent = "Paste it into " + whereTo(T, A) + ".";
     document.querySelectorAll(".fld").forEach(function (el) { el.classList.toggle("done", has(A[el.dataset.f])); });
   }
@@ -136,8 +144,8 @@
   document.getElementById("fillall").onclick = function () { T.fields.forEach(function (f) { if (!has(A[f.key])) put(f.key, f.ex); }); };
   document.getElementById("clearall").onclick = function () { if (!confirm("Clear everything you typed here?")) return; T.fields.forEach(function (f) { put(f.key, ""); }); };
   document.getElementById("dlmd").onclick = function () {
-    var blob = new Blob([md(T, A)], { type: "text/markdown;charset=utf-8" }), a = document.createElement("a");
-    a.href = URL.createObjectURL(blob); a.download = T.id + "-brief.md"; document.body.appendChild(a); a.click();
+    var blob = new Blob([md(T, A)], { type: "text/plain;charset=utf-8" }), a = document.createElement("a");
+    a.href = URL.createObjectURL(blob); a.download = T.id + "-brief.txt"; document.body.appendChild(a); a.click();
     setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 500);
   };
   /* Talk: speech to text, added to the end of the field. Only shown where the browser supports it. */

@@ -28,7 +28,7 @@
 
   /* ---------- sound (AI Made EZ signature: snap–ding) ---------- */
   let ctx, master, muted = false, noiseBuf;
-  try { muted = localStorage.getItem(KEY + "-mute") === "1"; } catch (e) {}
+  muted = true; try { muted = localStorage.getItem(KEY + "-mute") !== "0"; } catch (e) {}
   function audio() { if (!ctx) { ctx = new (window.AudioContext || window.webkitAudioContext)(); const c = ctx.createDynamicsCompressor(); c.threshold.value = -14; c.ratio.value = 4; master = ctx.createGain(); master.gain.value = muted ? 0 : 0.5; master.connect(c).connect(ctx.destination); } if (ctx.state === "suspended") ctx.resume(); return ctx; }
   function noise() { if (!noiseBuf) { noiseBuf = ctx.createBuffer(1, ctx.sampleRate * 0.5, ctx.sampleRate); const d = noiseBuf.getChannelData(0); for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1; } const s = ctx.createBufferSource(); s.buffer = noiseBuf; return s; }
   function env(g, t, p, a, d) { g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(p, t + a); g.gain.exponentialRampToValueAtTime(0.0001, t + a + d); }
@@ -95,7 +95,7 @@
   function popFx(txt) {
     const m = $("meter").getBoundingClientRect(); if (!m.width) return;
     const el = document.createElement("span"); el.className = "pop"; el.textContent = txt + " guess" + (txt === "−1" ? "" : "es");
-    el.style.left = Math.max(8, m.left) + "px"; el.style.top = m.bottom + 6 + "px"; $("fx").appendChild(el); setTimeout(() => el.remove(), 1000);
+    el.style.left = Math.max(8, m.left) + "px"; el.style.top = m.bottom + 14 + "px"; $("fx").appendChild(el); setTimeout(() => el.remove(), 1000);
   }
   function toast(t) { const el = $("toast"); el.textContent = t; el.classList.add("on"); clearTimeout(toast.t); toast.t = setTimeout(() => el.classList.remove("on"), 1600); }
 
@@ -151,12 +151,12 @@
     const rs = rooms(); const nm = (S.a.prd && S.a.prd.name) || "Your app";
     const sample = / \(sample\)$/.test(nm); $("planTitle").textContent = nm.replace(/ \(sample\)$/, "") + " blueprint";
     const nDone = rs.filter((r) => S.done.includes(r.id)).length;
-    $("planSub").textContent = S.starter && S.starter === nm && nDone < rs.length ? "Starter plan: every room is filled in. Tap one to make it yours, or get your kit." : (sample ? "Sample idea. " : "") + (nDone === rs.length ? "Every room planned. Get your kit." : nDone ? `${nDone} of ${rs.length} rooms planned. Keep going.` : "Tap a room. Each answer is one less guess.");
+    $("planSub").textContent = S.starter && S.starter === nm && nDone < rs.length ? "Starter plan: every part is filled in. Tap one to make it yours, or get your kit." : (sample ? "Sample idea. " : "") + (nDone === rs.length ? "Every part planned. Get your kit." : nDone ? `${nDone} of ${rs.length} parts planned. Keep going.` : "Pick a part below. Each answer is one less thing AI guesses.");
     const nextId = (rs.find((r) => !S.done.includes(r.id)) || {}).id;
     $("blueprint").innerHTML = rs.map((r) => {
       const wide = r.id === "prd" || r.id === "agents";
       return `<button role="listitem" class="room${wide ? " wide" : ""}${S.done.includes(r.id) ? " done" : ""}${r.id === nextId ? " next-up" : ""}" data-r="${r.id}" aria-label="${esc(r.name)}${S.done.includes(r.id) ? ", planned" : ""}">
-        <span class="fog"></span>${icon(r.icon)}<span><span class="rn">${esc(r.name)}</span><br><span class="rf">${r.file}</span>
+        <span class="fog"></span>${icon(r.icon)}<span><span class="rn">${esc(r.name)}</span>
         <span class="rp"><i style="width:${Math.round(roomPct(r) * 100)}%"></i></span></span><span class="ok">PLANNED</span></button>`;
     }).join("");
     $("rulesLabel").textContent = `Rules ${S.rules.length}/${RULES.length}`;
@@ -215,7 +215,7 @@
     if (id === "design" && !a.colors) a.colors = { main: "#2F6B4F", bg: "#FBF7EF", text: "#1C1B19", touched: false };
     save();
     qi = room.qs.findIndex((q) => !answered(q, a[q.id])); if (qi < 0) qi = 0;
-    $("roomIcon").innerHTML = icon(room.icon); $("roomName").textContent = room.name; $("roomFile").textContent = room.file; $("roomWhy").textContent = room.why;
+    $("roomIcon").innerHTML = icon(room.icon); $("roomName").textContent = room.name; $("roomFile").textContent = ""; $("roomWhy").textContent = room.why;
     const ez = EASY[id];
     $("roomEasy").hidden = !ez; $("roomEasy").open = matchMedia("(min-width: 980px)").matches;
     $("roomEasy").innerHTML = ez ? `<summary class="ez-h">Made easy: what this really means</summary><dl><div><dt>The easy way</dt><dd>${esc(ez[0])}</dd></div><div><dt>What it really means</dt><dd>${esc(ez[1])}</dd></div><div><dt>Best practice</dt><dd>${esc(ez[2])}</dd></div></dl>` : "";
@@ -245,7 +245,7 @@
     if (!room) return show("plan");
     stopMic(); drawRail();
     const q = room.qs[qi], a = ans(room.id), val = a[q.id];
-    $("stepLine").textContent = `Step ${qi + 1} of ${room.qs.length} · ${room.name}`;
+    $("stepLine").textContent = `${room.name} · question ${qi + 1} of ${room.qs.length}`;
     let body = "";
     if (q.type === "text") body = `<input type="text" id="qin" data-mic autocomplete="off" placeholder="${esc(q.ph || "")}" value="${esc(val || "")}" aria-label="${esc(q.q)}">`;
     if (q.type === "list") { const arr = (val && val.length ? val : [""]).slice(0, q.max); if (arr.length < q.max && arr[arr.length - 1]) arr.push(""); body = `<div id="qlist">${arr.map((x, i) => `<div class="list-row"><input type="text" data-mic data-i="${i}" placeholder="${esc(q.ph || "")}" value="${esc(x)}" aria-label="${esc(q.q)} ${i + 1}">${i < arr.length - 1 || x ? `<button data-del="${i}" aria-label="Remove">×</button>` : ""}</div>`).join("")}</div>`; }
@@ -255,7 +255,7 @@
     const note = preNote(q, val);
     $("qcard").innerHTML = `<p class="q" id="qq">${esc(q.q)}${q.opt ? ' <span class="opt">Optional</span>' : ""}</p>${q.why ? `<p class="qwhy">${esc(q.why)}</p>` : ""}${note ? `<p class="hint pre">${esc(note)}</p>` : ""}${q.opt ? `<button class="skip qskip" id="qskip">Skip: AI will ask me</button>` : ""}${body}${q.hint ? `<p class="hint">${esc(q.hint)}</p>` : ""}${q.sample !== undefined && !answered(q, val) ? `<button class="link example" id="qex">Show me an example</button>` : ""}`;
     $("qcard").style.animation = "none"; void $("qcard").offsetWidth; $("qcard").style.animation = "";
-    $("next").textContent = qi === room.qs.length - 1 ? "Finish this room" : "Next";
+    $("next").textContent = qi === room.qs.length - 1 ? "Finish this part" : "Next";
     $("skipQ").hidden = skipHidden(q, val);
     wireQ(q); addMics($("qcard"));
     if (q.type === "colors") swatch();
@@ -287,7 +287,7 @@
   }
   function nextQ() { if (qi < room.qs.length - 1) { qi++; drawQ(); } else finishRoom(); }
   $("skipQ").onclick = () => { play("even"); const q = room.qs[qi]; if (q.opt && answered(q, ans(room.id)[q.id])) setVal(q, []); nextQ(); };
-  $("peek").onclick = () => { play("tap"); sheet(room.file + ": what AI reads", `<pre>${esc(mdFor(room))}</pre>`); };
+  $("peek").onclick = () => { play("tap"); sheet(room.name + ": what AI reads", `<pre>${esc(mdFor(room))}</pre>`); };
 
   async function finishRoom() {
     const id = room.id; if (!S.done.includes(id)) S.done.push(id); save();

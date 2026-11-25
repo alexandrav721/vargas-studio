@@ -3,7 +3,7 @@
    Every Friday (about 30 minutes):
    1. Pick 3 items from official sources (release notes, the FTC, attorney-general pages, company newsrooms).
       The top story is the one a normal person can try today.
-   2. Write headline (8 words or fewer), what (25 or fewer), you (20 or fewer), a try link to OUR page or null ("Nothing to do"), and cat: Tools, Safety, Money or Rules.
+   2. Write headline (8 words or fewer), what (25 or fewer), you (20 or fewer), a try link to OUR page or null (no button), and cat: Tools, Safety, Money or Rules.
    3. Take our own screenshot for the top story, crop to 1200x630, save keep-up/img/<slug>.jpg, add a line to img/CREDITS.md.
    4. Add the new week at the TOP of this list, run review/keepup_weeks.py, deploy. */
 window.EZ_WEEKS = [
@@ -18,7 +18,7 @@ window.EZ_WEEKS = [
       "cat": "Tools",
       "img": "/projects/skill-quest/keep-up/img/2026-11-17.jpg",
       "alt": "The ChatGPT App Store page: three phone screens of the app, two with a mic button next to Ask ChatGPT.",
-      "credit": "Our screenshot of the ChatGPT page on Apple's App Store (OpenAI), 25 Nov 2026",
+      "credit": "Our screenshot of the ChatGPT page on Apple's App Store (OpenAI), taken 25 Nov 2026",
       "source": "OpenAI",
       "url": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
       "date": "Nov 18"

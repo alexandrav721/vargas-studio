@@ -56,8 +56,9 @@
     '<div class="meta"><span>Easy for beginners ' + T.score + '/5</span><span class="free">' + esc(U.freeBadge(T)) + "</span><span>" + esc(paidChip(T.paid)) + "</span><span>By " + esc(T.maker) + "</span></div>" +
     (T.laterNote ? '<p class="note">' + esc(T.laterNote) + "</p>" : "") + "</section>";
   var EXs = T.examples || [];
-  function credit(x) { return (x.tool ? "Made with " + esc(x.tool) : "") + (x.prompt ? " · prompt: “" + esc(x.prompt.length > 120 ? x.prompt.slice(0, 117) + "…" : x.prompt) + "”" : "") +
-    '<br><a href="' + esc(x.source) + '" target="_blank" rel="noopener">' + esc(x.author || "Source") + "</a> · " + (x.licenseUrl ? '<a href="' + esc(x.licenseUrl) + '" target="_blank" rel="noopener">' + esc(x.license) + "</a>" : esc(x.license)) + (x.excerpt ? " · 30-second excerpt" : ""); }
+  function plain(v) { return String(v || "").replace(/\s*\([^)]*\)/g, "").trim(); }
+  function credit(x) { return (x.tool ? "Made with " + esc(plain(x.tool)) : "") + (x.prompt ? " · prompt: “" + esc(x.prompt.length > 120 ? x.prompt.slice(0, 117) + "…" : x.prompt) + "”" : "") +
+    '<br><a href="' + esc(x.source) + '" target="_blank" rel="noopener">' + esc(plain(x.author) || "Source") + "</a> · " + (x.licenseUrl ? '<a href="' + esc(x.licenseUrl) + '" target="_blank" rel="noopener">' + esc(x.license) + "</a>" : esc(x.license)) + (x.excerpt ? " · 30-second excerpt" : ""); }
   if (EXs.length || T.gallery) h += '<section class="sec" id="examples"><p class="label">Real examples</p><h2>What it made.</h2>' + (EXs.length ?
     '<div class="exs">' + EXs.map(function (x) {
       return '<figure class="ex">' + (x.kind === "audio" ? '<audio controls preload="none" src="' + esc(x.src) + '"></audio>' : '<img src="' + esc(x.src) + '" alt="' + esc(x.alt) + '" loading="lazy">') + "<figcaption>" + credit(x) + "</figcaption></figure>";

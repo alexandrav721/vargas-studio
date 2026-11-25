@@ -46,3 +46,9 @@
 .tcard .chips span.go{background:#E3F1ED;color:#155c50}
 .more{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
 .more .chip{text-decoration:none}
+
+/* readable brief preview + half-done ticks */
+#preview{white-space:pre-wrap}
+#preview b{font-family:inherit;color:var(--accent,#C7391F)}
+#preview .gap{color:#8a8173;font-style:italic}
+.covers li.part::before{border-color:var(--ok);background:linear-gradient(90deg,var(--ok) 50%,#fff 50%)}

@@ -17,7 +17,7 @@
   function words(w) { return stories(w).map(function (s) { return [s.headline, s.what, s.you].join(" "); }).join(" ").split(/\s+/).length; }
   function chip(cat) { return '<span class="ku-cat" data-c="' + (CATS[cat] || "tools") + '">' + esc(cat) + "</span>"; }
   function tryIt(s, big) {
-    if (!s.try) return '<p class="ku-none">Nothing to do</p>';
+    if (!s.try) return "";
     return '<a class="' + (big ? "btn" : "ku-try") + '" href="' + esc(s.try.url) + '">' + esc(s.try.label) + " →</a>";
   }
   function src(s) { return '<p class="ku-src"><a href="' + esc(s.url) + '" target="_blank" rel="noopener">' + esc(s.source) + "</a> · " + esc(s.date) + "</p>"; }
@@ -48,6 +48,7 @@
   var cbox = $("ku-cats"), list = $("ku-catlist"), on = "";
   cbox.innerHTML = Object.keys(CATS).map(function (c) {
     var k = all.filter(function (x) { return x.s.cat === c; }).length;
+    if (!k) return "";
     return '<button type="button" class="ku-cbtn" data-c="' + CATS[c] + '" data-cat="' + c + '" aria-pressed="false">' + c + " <small>" + k + "</small></button>";
   }).join("");
   cbox.onclick = function (e) {
@@ -120,7 +121,7 @@
     x.fillStyle = "#151411"; x.font = "800 36px " + D; x.fillText("AI Made EZ · Keep up", 92, 968);
     return c;
   }
-  function shareText() { return "This week in AI, in plain words: " + W.top.headline + ". " + pageUrl + "?from=keepup"; }
+  function shareText() { return "AI news, in plain words: " + W.top.headline + ". " + pageUrl + "?from=keepup"; }
   $("ku-send").onclick = function () {
     var btn = this, im = new Image();
     var go = function (ok) {
@@ -149,7 +150,7 @@
   };
   $("sharepage").onclick = function () {
     var t = "AI news in plain words, free every Friday: " + url + "?from=keepup";
-    if (navigator.share) navigator.share({ title: "This week in AI, in plain words", text: t }).catch(function () {});
+    if (navigator.share) navigator.share({ title: "AI news, in plain words", text: t }).catch(function () {});
     else if (navigator.clipboard) navigator.clipboard.writeText(t).then(function () { $("sharepage").textContent = "Link copied"; });
   };
 })();

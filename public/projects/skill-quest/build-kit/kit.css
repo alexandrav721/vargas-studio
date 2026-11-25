@@ -320,3 +320,7 @@ pre{white-space:pre-wrap;background:var(--card);border:2px solid var(--ink);bord
 @media (prefers-reduced-motion:reduce){.mic.on{animation:none}}
 .qcard .qskip{display:block;margin:0 0 14px}
 .qcard .hint.pre{margin:-4px 0 12px}
+
+/* phones: only the slim header stays pinned, so the question sits near the top */
+@media (max-width:979px){.kitbar{position:static;margin:0 0 12px;padding:4px 0 10px}.top{padding:6px 16px}.foot{padding:0 16px 10px}}
+#roomFile:empty{display:none}
