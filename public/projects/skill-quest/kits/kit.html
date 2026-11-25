@@ -75,6 +75,7 @@
 
   /* 7. done + email + next */
   h += '<div class="next"><b>Done?</b><p>' + esc(K.done) + "</p>" + (next ? '<a class="btn" href="kit.html?k=' + next.id + '">Next kit: ' + esc(next.name) + " →</a>" : '<a class="btn" href="index.html">All kits →</a>') + "</div>";
+  h += '<p style="margin-top:14px"><a class="btn ghost" href="../summaries/kit-' + K.id + '.html">Printable version (PDF)</a></p>';
   h += U.mailBox(K.id);
 
   document.getElementById("kit").innerHTML = h;
