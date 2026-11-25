@@ -36,7 +36,7 @@
       <input type="search" id="kq" placeholder="Search the plan: payments, sign in, delete…" aria-label="Search the plan" autocomplete="off">
       <ul class="kres" id="kres" hidden></ul>
     </div>
-    <nav class="rail" id="rail" aria-label="Every room in your plan"></nav>
+    <details class="parts" id="parts"><summary>See all parts</summary><nav class="rail" id="rail" aria-label="Every part of your plan"></nav></details>
   </div>
 
   <!-- intro: the problem, felt -->
@@ -58,9 +58,9 @@
   <section id="s-idea" class="screen">
     <h2>What are you building?</h2>
     <label class="ql" for="ideaName">Name</label>
-    <input id="ideaName" type="text" autocomplete="off" placeholder="Walkies">
+    <input id="ideaName" type="text" data-mic autocomplete="off" placeholder="Walkies">
     <label class="ql" for="ideaOne">In one sentence</label>
-    <textarea id="ideaOne" rows="3" placeholder="Book a trusted dog walker who lives in your building."></textarea>
+    <textarea id="ideaOne" data-mic rows="3" placeholder="Book a trusted dog walker who lives in your building."></textarea>
     <button class="link" id="useSample">Use a sample idea</button>
   </section>
 
@@ -73,9 +73,9 @@
     <div class="plan-tools">
       <div class="pt-idea">
         <label class="ql" for="pName">Name</label>
-        <input id="pName" type="text" autocomplete="off" placeholder="Sudsy Paws Booking">
+        <input id="pName" type="text" data-mic autocomplete="off" placeholder="Sudsy Paws Booking">
         <label class="ql" for="pOne">In one sentence</label>
-        <input id="pOne" type="text" autocomplete="off" placeholder="Book a dog grooming slot in under a minute.">
+        <input id="pOne" type="text" data-mic autocomplete="off" placeholder="Book a dog grooming slot in under a minute.">
       </div>
       <p class="ql">How big?</p>
       <div class="choice" id="pSize" role="group" aria-label="How big"></div>
@@ -97,10 +97,10 @@
     </div>
     <p class="sub" id="roomWhy"></p>
     <details class="easy" id="roomEasy"></details>
-    <div class="qdots" id="qdots" aria-hidden="true"></div>
+    <p class="stepline" id="stepLine" aria-live="polite"></p>
     <div class="qcard" id="qcard"></div>
     <div class="qnav">
-      <button class="link" id="skipQ">Skip: AI will ask me</button>
+      <button class="skip" id="skipQ">Skip: AI will ask me</button>
       <button class="link" id="peek">See what AI reads</button>
     </div>
   </section>
@@ -136,7 +136,7 @@
         <div class="checks-box" id="checksBox"></div>
         <label class="ql" for="changeIn">Change something</label>
         <div class="chips" id="changeChips"></div>
-        <textarea id="changeIn" rows="2" maxlength="600" placeholder="e.g. Make the book button bigger and add a cancel option"></textarea>
+        <textarea id="changeIn" data-mic rows="2" maxlength="600" placeholder="e.g. Make the book button bigger and add a cancel option"></textarea>
         <button class="btn" id="changeBtn">Make the change</button>
       </div>
       <p class="note" id="buildNote"></p>
@@ -161,7 +161,7 @@
   </section>
 </main>
 
-<div class="foot" id="foot"><button class="btn" id="next">Stop the guessing</button></div>
+<div class="foot" id="foot"><div class="foot-in"><button class="btn ghost" id="prev" hidden>Back</button><button class="btn" id="next">Stop the guessing</button></div></div>
 
 <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
   <div class="sheet-in">
