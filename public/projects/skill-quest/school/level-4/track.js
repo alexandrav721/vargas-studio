@@ -1,6 +1,6 @@
 /* AI Made EZ · Level 4 · Build with Claude. Hands-on: the real fields, the real decisions. Kitchen frame: open your own restaurant. */
 window.BK_CONFIG = {
-  level: 4, key: "smez-level-4-v1", name: "Build with Claude", glossary: "../kitchen/glossary.html", challenge: null,
+  level: 4, key: "smez-level-4-v1", name: "Build with Claude", glossary: "../kitchen/glossary.html", challenge: "challenge.html",
   doneLine: "You can build a small Claude app and talk to developers as an equal.",
   track: [
     { n: 1, id: "d1", stamp: "Order", short: "First order", name: "Your first order by code", href: "lesson-1.html", use: "a developer says “just call the Messages API”" },

@@ -1,6 +1,6 @@
 /* AI Made EZ · Level 5 · Design AI systems (run a restaurant group). */
 window.BK_CONFIG = {
-  level: 5, key: "smez-level-5-v1", name: "Design AI systems", glossary: "../kitchen/glossary.html", challenge: null,
+  level: 5, key: "smez-level-5-v1", name: "Design AI systems", glossary: "../kitchen/glossary.html", challenge: "challenge.html",
   doneLine: "You can draw the plan for a real AI system and defend every choice.",
   track: [
     { n: 1, id: "e1", stamp: "Patterns", short: "Set menu", name: "Set menu or free chef? (workflow patterns)", href: "lesson-1.html", use: "a colleague says “let’s just build an agent for it”" },

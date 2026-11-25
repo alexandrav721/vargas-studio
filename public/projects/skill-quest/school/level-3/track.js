@@ -1,5 +1,5 @@
 window.BK_CONFIG = {
-  level: 3, key: "smez-level-3-v1", name: "Claude at work", glossary: "../kitchen/glossary.html", challenge: null,
+  level: 3, key: "smez-level-3-v1", name: "Claude at work", glossary: "../kitchen/glossary.html", challenge: "challenge.html",
   doneLine: "You can run a real shift with Claude now.",
   track: [
     { n: 1, id: "c1", stamp: "Station", short: "Your station", name: "Pick your station (chat, Research, Cowork, Chrome)", href: "lesson-1.html", use: "a coworker asks “should I use Cowork for this?”" },
