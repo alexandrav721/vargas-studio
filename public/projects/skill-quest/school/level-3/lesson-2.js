@@ -3,10 +3,10 @@
   var L = {
     n: 2, id: "c2", mins: 6, title: "Standing orders.", stamp: "Orders",
     terms: ["Instructions for Claude", "Project instructions", "Project knowledge", "Memory", "Chat search"],
-    teaser: ["STANDING ORDERS", "set once, used every shift", "House order on every ticket.<br>Station orders for one job.<br>A crew that remembers you.", "Five words. Six minutes."],
+    teaser: ["STANDING ORDERS", "set once, used every shift", "House order on every ticket.<br>Project orders for one job.<br>A crew that remembers you.", "Five words. Six minutes."],
     lines: [
-      ["Standing orders come in layers.", "Like Level 2’s house rules: some cover every chat, some one project."],
-      ["Instructions for Claude go on every ticket.", "How you like answers, for all your work. Set them once in Settings."],
+      ["You set up one project in Level 1. Now stack the layers.", "One layer for every chat, one per project, plus what Claude remembers."],
+      ["Instructions for Claude go on every ticket.", "Like Level 1’s preferences, now for work. Set them once in Settings."],
       ["Project instructions are for one job.", "The weekly report, the client account. Only chats in that project use them."]
     ],
     guess: { q: "You want your weekly report in one fixed layout, every week. Where does that go?", opts: [["Project instructions in a “Weekly report” project", true], ["Your account-wide instructions", false], ["Retype it every Monday", false]], reveal: "One job, one project. Account-wide instructions are for things true of every chat." },
@@ -26,7 +26,7 @@
       state: { role: "an office manager", job: "a weekly status report", tone: "plain and short" },
       controls: function (s, esc) {
         function row(k, list) { return '<div class="fridge">' + list.map(function (v) { return '<button type="button" class="chip" data-set="' + k + '" data-v="' + esc(v) + '" aria-pressed="' + (s[k] === v) + '">' + esc(v) + "</button>"; }).join("") + "</div>"; }
-        return '<p class="label">Your role</p>' + row("role", ["an office manager", "a teacher", "a nurse", "a sales rep", "a freelancer"]) +
+        return '<p class="label">Your role</p>' + row("role", ["an office manager", "a receptionist", "a teacher", "a nurse", "a sales rep", "a freelancer"]) +
           '<p class="label">A job that repeats</p>' + row("job", ["a weekly status report", "customer email replies", "meeting notes", "lesson plans", "client proposals"]) +
           '<p class="label">Tone</p>' + row("tone", ["plain and short", "warm and friendly", "formal and careful"]);
       },
@@ -35,15 +35,15 @@
         return "Set up Claude for my work. I’m " + s.role + ". Tone: " + s.tone + ". Ask up to 3 short questions first.\n" +
           "1. Account-wide Instructions for Claude, under 100 words: only what fits every chat.\n" +
           "2. Project instructions for a project called “" + s.job.replace(/^a /, "") + "”: goal, reader, format, checks, never-dos.\n" +
-          "3. Five files to add as project knowledge, and what to strip first (names, account numbers).\n" +
+          "3. Five files to add as project knowledge, and what to strip first (names, account numbers, patient or student details).\n" +
           "4. Where to paste each part.";
       },
       claude: "Open in Claude", done: "Done →",
-      after: "Account instructions: Settings › Your Claude › Instructions. Project instructions: open the project and edit its instructions."
+      after: "Account instructions: Settings › Your Claude › Instructions. Project instructions: open the project and edit its instructions. Free plan? All three layers work, with up to 5 projects."
     },
     game: {
       type: "match", title: "Match each standing order to its kitchen.", lead: "Tap a word, then its kitchen.",
-      pairs: [["Instructions for Claude", "The house order on every ticket"], ["Project instructions", "The order for one station"], ["Project knowledge", "The binder kept at that station"], ["Memory", "What the crew remembers about you"], ["Chat search", "Flipping back through old tickets"]],
+      pairs: [["Instructions for Claude", "The house order on every ticket"], ["Project instructions", "The order for one job"], ["Project knowledge", "The binder kept for that job"], ["Memory", "What the crew remembers about you"], ["Chat search", "Flipping back through old tickets"]],
       right: "All five. Every-chat rules go in Settings; one-job rules go in the project.",
       habitTitle: "Work habit", habit: "If you type the same request twice, it’s a standing order. Move it to instructions or a project."
     },

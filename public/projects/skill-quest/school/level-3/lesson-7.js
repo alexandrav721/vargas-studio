@@ -2,6 +2,7 @@
 (function () {
   var L = {
     n: 7, id: "c7", mins: 7, title: "Recipe cards for the crew.", stamp: "Cards",
+    seen: ["Skill"],
     terms: ["Custom skill", "Frontmatter", "Skill description", "Skill ZIP", "Shared with you"],
     teaser: ["CREW CARDS", "skills at work", "Your team’s way of doing a job,<br>written once, uploaded once,<br>picked up by Claude when it fits.", "Five words. Seven minutes."],
     lines: [
@@ -39,7 +40,7 @@
           "5. Upload steps for claude.ai.";
       },
       claude: "Open in Claude", done: "Done →",
-      after: "Upload: Customize › Skills, then + (or Add) › Upload a skill. Choose the ZIP and turn the skill on. Code execution and file creation must be on. Test it with the requests Claude gave you."
+      after: "On your phone? Save the skill text in Notes and upload it from a computer later. Upload: Customize › Skills, then + (or Add) › Upload a skill. Choose the ZIP and turn the skill on. Code execution and file creation must be on. Test it with the requests Claude gave you."
     },
     game: {
       type: "pick", title: "Which job wants a skill, not a project?",
@@ -48,7 +49,7 @@
         ["A six-month client account with its own files", false, "That’s a project: one body of work, its own files and instructions."],
         ["One-off: a birthday card for a coworker", false, "Just ask. A one-time job needs no card."]
       ],
-      right: "Yes. A skill is a how-to Claude picks up anywhere. A project is a station for one body of work.",
+      right: "Yes. A skill is a how-to Claude picks up anywhere. A project is the home for one body of work.",
       wrong: "Is this a how-to you repeat, or a place where one job lives?", hint: "Skills travel. Projects stay put.",
       habitTitle: "Work habit", habit: "If you paste the same steps into different chats, make it a skill. If you keep the same files together, make it a project."
     },
@@ -68,7 +69,7 @@
     say: "Let’s make that a skill so the whole team writes it the same way.",
     keep: "A real skill file for a job your team repeats, with upload and test steps.",
     cardLabel: "Copy my card",
-    card: "RECIPE CARDS FOR THE CREW\nCustom skill = a folder with SKILL.md\nFrontmatter = name (≤64) + description (≤200)\nThe description decides when it’s used\nZip it › Customize › Skills › + or Add › Upload › turn on\nAll plans; code execution and file creation on\nTeam shares show up under Shared with you\nSkill = how-to anywhere; project = one job’s station",
+    card: "RECIPE CARDS FOR THE CREW\nCustom skill = a folder with SKILL.md\nFrontmatter = name (≤64) + description (≤200)\nThe description decides when it’s used\nZip it › Customize › Skills › + or Add › Upload › turn on\nAll plans; code execution and file creation on\nTeam shares show up under Shared with you\nSkill = how-to anywhere; project = one job’s home",
     real: ["Introduction to agent skills", "https://academy.claude.com/courses/introduction-to-agent-skills"]
   };
   document.addEventListener("DOMContentLoaded", function () { BK.run(L); });

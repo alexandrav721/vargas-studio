@@ -34,7 +34,7 @@ window.SMEZ_INDEX = [
   { t: "Level 3 lesson 2: Standing orders (instructions and memory)", y: "Lesson", g: "learn", u: "/projects/skill-quest/school/level-3/lesson-2.html", d: "Level 3, lesson 2.", k: "standing orders orders" },
   { t: "Level 3 lesson 3: Plates you keep (files and sharing)", y: "Lesson", g: "learn", u: "/projects/skill-quest/school/level-3/lesson-3.html", d: "Level 3, lesson 3.", k: "plates you keep files" },
   { t: "Level 3 lesson 4: Do the research (Research and sources)", y: "Lesson", g: "learn", u: "/projects/skill-quest/school/level-3/lesson-4.html", d: "Level 3, lesson 4.", k: "do the research research" },
-  { t: "Level 3 lesson 5: Open the pantry (connectors)", y: "Lesson", g: "learn", u: "/projects/skill-quest/school/level-3/lesson-5.html", d: "Level 3, lesson 5.", k: "open the pantry pantry" },
+  { t: "Level 3 lesson 5: Open the storeroom (connectors)", y: "Lesson", g: "learn", u: "/projects/skill-quest/school/level-3/lesson-5.html", d: "Level 3, lesson 5.", k: "open the storeroom storeroom" },
   { t: "Level 3 lesson 6: Hand off the whole task (Cowork)", y: "Lesson", g: "learn", u: "/projects/skill-quest/school/level-3/lesson-6.html", d: "Level 3, lesson 6.", k: "hand it off handoff" },
   { t: "Level 3 lesson 7: Recipe cards for the crew (skills)", y: "Lesson", g: "learn", u: "/projects/skill-quest/school/level-3/lesson-7.html", d: "Level 3, lesson 7.", k: "crew cards cards" },
   { t: "Level 3 lesson 8: A safe kitchen at work (privacy and safety)", y: "Lesson", g: "learn", u: "/projects/skill-quest/school/level-3/lesson-8.html", d: "Level 3, lesson 8.", k: "safe kitchen safety" },

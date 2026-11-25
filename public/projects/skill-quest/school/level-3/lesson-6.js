@@ -7,7 +7,7 @@
     lines: [
       ["Describe the task. Read the plan. Steer.", "Level 2’s agent loop, with you at the pass. Change course mid-task."],
       ["It works on folders you connect.", "In the desktop app, Claude reads and writes files only in those folders."],
-      ["You choose how often it asks.", "Auto, the default on most plans, runs with a safety check. Manual asks first."]
+      ["You choose how often it asks.", "Auto works with a safety check. Manual asks first. Pick in the message box."]
     ],
     guess: { q: "Cowork says “Done: 60 receipts sorted.” What now?", opts: [["Spot-check a few rows against the real receipts", true], ["Send it to finance right away", false], ["Ask it to say done again", false]], reveal: "“Done” is a claim. Check a sample yourself before anyone else relies on it." },
     startLabel: "Watch a handoff",
@@ -19,8 +19,7 @@
         '<div class="reply"><p class="who">you</p>Good. Put the sheet in a new folder. Don’t move the originals.</div>' +
         '<div class="reply"><p class="who">progress</p>Read 41 of 60… 3 receipts unreadable, flagged…</div>' +
         '<div class="reply"><p class="who">done</p>expenses-by-month.xlsx saved. 57 rows, 3 flagged for you.</div>' +
-        '<p class="small">Your note mid-task is <b>steering</b>. <b>Approval mode</b>, in the message box: <b>Auto</b> (the default on most plans) or <b>Manual</b> (you Allow or Deny).</p>' +
-        '<p class="small">Every week? Type /schedule.</p>',
+        '<p class="small">Your note mid-task is <b>steering</b>. <b>Approval mode</b>: <b>Auto</b>, rolling out as the default on Pro, Max, Ultra and Team; <b>Manual</b> on Enterprise. Weekly? /schedule.</p>',
       next: "Your turn →"
     },
     build: {
@@ -40,7 +39,7 @@
           "When done: 1. What you did, in 5 lines. 2. What you skipped or doubted. 3. Five items to spot-check.";
       },
       claude: "Open in Claude", done: "Done →",
-      after: "In Claude, choose Cowork in the message box (paid plans). No Chat or Cowork switch? You have the newer Claude: paste it into any chat. Local folders need the desktop app open. On the Free plan, paste it into a chat and ask Claude to explain the plan."
+      after: "Paid plans: choose Cowork in the message box, or paste it into any chat if there’s no switch. Local folders need the desktop app open. Free plan or phone? Attach 5 receipt photos to a normal chat and paste this ticket. Claude builds the sheet right in the chat. Same rules, same spot-check."
     },
     game: {
       type: "tapall", title: "Cowork says “done.” What do you check yourself?", lead: "Tap the {n} worth checking.",
@@ -62,14 +61,14 @@
       where: "You can watch a new cook at the next station. Cowork works quietly in seconds, so you read the plan and the report."
     },
     quiz: [
-      { term: "Manual mode", q: "In Manual mode, what happens before an action that needs approval?", a: ["Claude asks you: Allow or Deny", "It runs and tells you later", "It skips the action"], ok: 0, why: "Right. Tools you set to Always allow still run without asking." },
+      { term: "Manual mode", q: "In Manual mode, what happens before an action that needs approval?", a: ["Claude asks you: Allow or Deny", "It runs and tells you later", "It skips the action"], ok: 0, why: "Right. In Auto, tools left on Needs approval run unless the check flags them." },
       { term: "Scheduled task", q: "You want the same report built every Monday. What do you set up?", a: ["A scheduled task (/schedule)", "A new chat every Monday", "A longer prompt"], ok: 0, why: "Right. Scheduled tasks run in the cloud on a timetable." },
       { term: "Private by default", q: "Recall from Lesson 3: Claude made you an artifact in chat. Who can see it?", a: ["Only you, until you share it", "Your whole team", "Anyone with the link"], ok: 0, why: "Right. Nothing is shared until you click Share." }
     ],
     say: "I’ll hand it to Cowork in Manual mode and spot-check five rows before it goes out.",
     keep: "A handoff ticket with rules, a plan check and a report-back list.",
     cardLabel: "Copy my card",
-    card: "HAND OFF THE WHOLE TASK\nDescribe › read the plan › steer › check\nConnected folder = the only files it touches\nAuto = the default: runs, with a safety check (skipped for Always allow tools)\nManual = you Allow or Deny each action that needs approval\nRules: keep originals, new folder, ask before send/share/buy/delete\n“Done” is a claim: spot-check a few\n/schedule = repeat it on a timetable",
+    card: "HAND OFF THE WHOLE TASK\nDescribe › read the plan › steer › check\nConnected folder = the only files it touches\nAuto = runs with a safety check (Always allow tools skip it)\nManual = you Allow or Deny each action that needs approval\nRules: keep originals, new folder, ask before send/share/buy/delete\n“Done” is a claim: spot-check a few\n/schedule = repeat it on a timetable",
     real: ["Introduction to Claude Cowork", "https://academy.claude.com/courses/introduction-to-claude-cowork"]
   };
   document.addEventListener("DOMContentLoaded", function () { BK.run(L); });

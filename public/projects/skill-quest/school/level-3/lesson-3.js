@@ -39,7 +39,8 @@
           "4. Two edits to ask for next.\n" +
           "Can’t make files here? Name the setting to turn on.";
       },
-      claude: "Open in Claude", done: "Done →"
+      claude: "Open in Claude", done: "Done →",
+      after: "Works on Free and on the phone app. On a phone, tap Download: the file opens in a preview or another app. No Share button on Free? Download it and send it yourself."
     },
     game: {
       type: "pick", title: "You made a launch plan artifact on a Pro plan. Who can see it right now?",

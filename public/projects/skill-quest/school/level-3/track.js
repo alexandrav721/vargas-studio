@@ -6,7 +6,7 @@ window.BK_CONFIG = {
     { n: 2, id: "c2", stamp: "Orders", short: "Standing orders", name: "Standing orders (instructions and memory)", href: "lesson-2.html", use: "you’re tired of retyping the same request" },
     { n: 3, id: "c3", stamp: "Files", short: "Plates you keep", name: "Plates you keep (files and sharing)", href: "lesson-3.html", use: "your boss says “just send me the spreadsheet”" },
     { n: 4, id: "c4", stamp: "Research", short: "Do the research", name: "Do the research (Research and sources)", href: "lesson-4.html", use: "someone asks “where did that number come from?”" },
-    { n: 5, id: "c5", stamp: "Pantry", short: "Open the pantry", name: "Open the pantry (connectors)", href: "lesson-5.html", use: "Claude asks to connect your Gmail" },
+    { n: 5, id: "c5", stamp: "Storeroom", short: "Open the storeroom", name: "Open the storeroom (connectors)", href: "lesson-5.html", use: "Claude asks to connect your Gmail" },
     { n: 6, id: "c6", stamp: "Handoff", short: "Hand it off", name: "Hand off the whole task (Cowork)", href: "lesson-6.html", use: "you have a folder of work nobody wants to sort" },
     { n: 7, id: "c7", stamp: "Cards", short: "Crew cards", name: "Recipe cards for the crew (skills)", href: "lesson-7.html", use: "your team says “we all do this differently”" },
     { n: 8, id: "c8", stamp: "Safety", short: "Safe kitchen", name: "A safe kitchen at work (privacy and safety)", href: "lesson-8.html", use: "IT asks “what are people pasting into AI?”" }
