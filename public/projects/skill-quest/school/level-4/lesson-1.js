@@ -1,0 +1,83 @@
+/* AI Made EZ · Level 4 · Lesson 1 · Your first order by code. Terms: Console, Playground, Environment variable, Model ID, Content block, Usage. */
+(function () {
+  var L = {
+    n: 1, id: "d1", mins: 6, title: "Your first order by code.", stamp: "Order",
+    seen: ["API key", "Request", "Response", "Messages"],
+    terms: ["Console", "Playground", "Environment variable", "Model ID", "Content block", "Usage"],
+    teaser: ["FIRST ORDER", "by code", "You watched the order window.<br>Now you run it yourself:<br>four fields and a secret key.", "Six words. Six minutes."],
+    lines: [
+      ["You run the restaurant now.", "No app in between. Your code writes the order slip."],
+      ["Four fields do most of the work.", "model, max_tokens, messages, and an optional system prompt."],
+      ["Every plate comes with a receipt.", "usage counts the tokens in and out."]
+    ],
+    guess: { q: "Where should your API key live?", opts: [["In an environment variable on your computer or server", true], ["Pasted at the top of your code file", false], ["In the web page your customers load", false]], reveal: "An environment variable. The SDK reads ANTHROPIC_API_KEY by itself, so the key never sits in your code." },
+    startLabel: "See the slip",
+    example: {
+      title: "One slip, one plate, one receipt.",
+      html:
+        '<p class="label">1. The slip you send <span class="sample">Real fields</span></p><div class="ticket"><div class="th"><span>REQUEST</span><span>messages.create</span></div>model: "claude-opus-5-5"<br>max_tokens: 1000<br>system: "You write short menu blurbs."<br>messages: user “Describe our tomato soup.”<div class="tf">Key read from ANTHROPIC_API_KEY</div></div>' +
+        '<p class="label" style="margin-top:14px">2. The plate that comes back <span class="sample">Sample</span></p><div class="reply"><p class="who">assistant</p>content: [ text block “Slow-roasted tomatoes, basil…” ]<br>stop_reason: end_turn<br><span class="small">usage: 21 input tokens · 305 output tokens</span></div>' +
+        '<p class="small">Practice first in the <b>Console</b> (platform.claude.com). Its <b>playground</b> runs a request, and the code toggle copies it. Older guides call it Workbench; it’s retired.</p>',
+      more: '<p class="small">Install the SDK: <code>pip install anthropic</code> or <code>npm install @anthropic-ai/sdk</code>. The reply is a list of content blocks, so check each block’s type before reading its text. The model ID is the exact name, like claude-opus-5-5.</p>',
+      next: "Your turn →"
+    },
+    build: {
+      title: "Your turn. Send your first order.",
+      lead: "Pick a job and how you want help. Your ticket gets a plain explanation or working code.",
+      state: { mode: "Explain it to me", lang: "Python", job: "write a menu blurb" },
+      controls: function (s, esc) {
+        function row(k, list) { return '<div class="fridge">' + list.map(function (v) { return '<button type="button" class="chip" data-set="' + k + '" data-v="' + esc(v) + '" aria-pressed="' + (s[k] === v) + '">' + esc(v) + "</button>"; }).join("") + "</div>"; }
+        return '<p class="label">How you want help</p>' + row("mode", ["Explain it to me", "Write the code"]) +
+          '<p class="label">Language (for code)</p>' + row("lang", ["Python", "TypeScript"]) +
+          '<p class="label">The first job</p>' + row("job", ["write a menu blurb", "answer a customer question", "summarize a review", "name a new dish"]);
+      },
+      head: "ORDER #D01", right: "first call", foot: "Paste it into Claude, or open it there",
+      text: function (s) {
+        if (s.mode === "Explain it to me") {
+          return "I'm learning the Claude API and don't code yet. Walk me through a first API call that asks Claude to " + s.job + ".\n" +
+            "1. In plain words: what the Claude Console is, how to make an API key, and why it goes in the ANTHROPIC_API_KEY environment variable.\n" +
+            "2. Show the request with a note on each field: model (claude-opus-5-5), max_tokens, system, messages.\n" +
+            "3. Show a sample response (label it a sample) and explain content blocks, stop_reason and usage.\n" +
+            "4. List 3 common ways people leak a key by accident.";
+        }
+        var sdk = s.lang === "Python" ? "anthropic (pip install anthropic)" : "@anthropic-ai/sdk (npm install @anthropic-ai/sdk)";
+        return "Write the smallest correct " + s.lang + " script that calls the Claude API with the official SDK, " + sdk + ", to " + s.job + ".\n" +
+          "- Model claude-opus-5-5, max_tokens 1000, a one-line system prompt.\n" +
+          "- Read the key from the ANTHROPIC_API_KEY environment variable. Never hardcode it.\n" +
+          "- Print only the text blocks, then the usage: input and output tokens.\n" +
+          "Then tell me what to do with it: the install command, the file name, how to set the key, how to run it, and what I should see.";
+      },
+      claude: "Open in Claude", done: "Done →"
+    },
+    game: {
+      type: "tapall", title: "Which belong in your first request?", lead: "Tap all {n}.",
+      options: [
+        ["model: \"claude-opus-5-5\"", true], ["max_tokens: 1000", true], ["messages: the user’s question", true],
+        ["temperature: 0.7", false, "Current Claude models reject it. Effort is the dial now (next lesson)."],
+        ["Your API key inside the messages", false, "Never. The key travels in a header the SDK adds from your environment variable."]
+      ],
+      right: "Yes. Model, length limit, messages. A system prompt is optional.",
+      wrong: "That one doesn’t belong on the slip.",
+      habitTitle: "Builder habit", habit: "Try a request in the playground first, then copy its code. You debug the order before you debug the program."
+    },
+    breaks: {
+      title: "A slip isn’t a conversation.",
+      lines: [
+        ["The API forgets every order.", "Send the whole chat each time, or Claude won’t see it."],
+        ["A key works like a card number.", "Anyone holding it can order on your bill."]
+      ],
+      where: "A paper slip sits where you can see it. A key can leak into a screenshot, a shared repo or a web page without you noticing."
+    },
+    quiz: [
+      { term: "Usage", q: "Where do you see what a reply cost?", a: ["The usage field: input and output tokens", "The stop_reason at the end of the reply", "The model ID you put in the request"], ok: 0, why: "Right. Multiply the tokens by the price per million." },
+      { term: "Environment variable", q: "Why keep the key in an environment variable?", a: ["It keeps the secret out of your code and the files you share", "It makes every request faster", "Claude reads it and remembers who you are"], ok: 0, why: "Right. The SDK finds it there by itself." },
+      { term: "Messages", q: "From Level 2: what do “user” and “assistant” turns hold?", a: ["Your turns and Claude’s turns, in order", "Two different API keys", "The input price and the output price"], ok: 0, why: "Right. messages is the whole chat, resent each time." }
+    ],
+    say: "I made my first call: model, max_tokens, messages, and the key stays in an environment variable.",
+    keep: "A ticket that explains or writes your first API call.",
+    cardLabel: "Copy my card",
+    card: "FIRST ORDER BY CODE\nConsole = where you get keys and try requests\nPlayground = test a request, then copy its code\nKey lives in ANTHROPIC_API_KEY, never in code\nRequest = model · max_tokens · messages · system\nModel ID = the exact name, like claude-opus-5-5\nResponse = a list of content blocks + stop_reason\nUsage = tokens in and out: your receipt",
+    real: ["Claude Platform 101", "https://academy.claude.com/courses/claude-platform-101"]
+  };
+  document.addEventListener("DOMContentLoaded", function () { BK.run(L); });
+})();
