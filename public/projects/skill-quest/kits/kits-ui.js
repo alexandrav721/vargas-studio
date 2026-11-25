@@ -6,7 +6,8 @@
     app: '<rect x="6" y="2" width="12" height="20" rx="3"/><path d="M10 18h4M9 7h6M9 11h6"/>',
     auto: '<path d="M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3"/><path d="M18 3v4h-4M6 21v-4h4"/>',
     posts: '<rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4M7 13h3M14 13h3M7 17h3"/>',
-    memo: '<path d="M6 2h9l5 5v15H6z"/><path d="M15 2v5h5M9 12h8M9 16h8"/>'
+    memo: '<path d="M6 2h9l5 5v15H6z"/><path d="M15 2v5h5M9 12h8M9 16h8"/>',
+    mail: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>'
   };
   function icon(n) { return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + (ICON[n] || "") + "</svg>"; }
   function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
@@ -15,6 +16,7 @@
   document.addEventListener("click", function (e) {
     var b = e.target.closest("[data-copy]"); if (!b) return;
     var t = COPY[b.dataset.copy], lbl = b.textContent;
+    if (t == null) return; /* another script on the page owns this copy button */
     function ok() { b.textContent = "Copied"; b.classList.add("done"); setTimeout(function () { b.textContent = lbl; b.classList.remove("done"); }, 1600); }
     function fail() { b.textContent = "Press and hold the text to copy"; setTimeout(function () { b.textContent = lbl; }, 2600); }
     if (navigator.clipboard) navigator.clipboard.writeText(t).then(ok, fail); else fail();
