@@ -38,7 +38,7 @@
           "1. MCP server, or a plain tool in one app? Why?\n" +
           "2. A few tools (namespaced name, what it does, read or write), plus resources and prompts.\n" +
           "3. Transport (stdio or Streamable HTTP) and sign-in (OAuth scopes), with reasons.\n" +
-          "Unsure a feature exists today? Say so, and name the page to check (modelcontextprotocol.io).";
+          "Unsure a feature exists? Say so and name the docs page (modelcontextprotocol.io).";
       },
       claude: "Open in Claude", done: "Done →"
     },

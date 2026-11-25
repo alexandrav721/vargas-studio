@@ -34,13 +34,13 @@
       },
       head: "ORDER #E06", right: "lock check", foot: "Paste it into Claude, or open it there",
       text: function (s) {
-        return "Security review for " + s.agent + ". What it touches: " + (s.touch.join(", ") || "help me list it") + ". I don’t code.\n" +
-          "1. Lethal trifecta check: private data, untrusted content, a way to send out. Which leg can we cut?\n" +
-          "2. Least privilege: only the tools and sites it needs.\n" +
+        return "Security review for " + s.agent + ". It touches: " + (s.touch.join(", ") || "help me list it") + ". I don’t code.\n" +
+          "1. Lethal trifecta: private data, untrusted content, a way to send out. Which leg can we cut?\n" +
+          "2. Least privilege: only tools and sites it needs.\n" +
           "3. Where secrets live, out of the agent’s sight.\n" +
           "4. Which actions wait for a person.\n" +
           "5. What we log, and how we stop it fast.\n" +
-          "For each: the lock, why, and its owner.";
+          "For each: the lock, why, owner.";
       },
       claude: "Open in Claude", done: "Done →"
     },

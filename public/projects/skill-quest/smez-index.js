@@ -54,7 +54,7 @@ window.SMEZ_INDEX = [
   { t: "Level 5 lesson 4: A brigade of chefs (multi-agent)", y: "Lesson", g: "learn", u: "/projects/skill-quest/school/level-5/lesson-4.html", d: "Level 5, lesson 4.", k: "many chefs brigade" },
   { t: "Level 5 lesson 5: Double shifts (context engineering)", y: "Lesson", g: "learn", u: "/projects/skill-quest/school/level-5/lesson-5.html", d: "Level 5, lesson 5.", k: "double shifts shifts" },
   { t: "Level 5 lesson 6: Locks and keys (agent security)", y: "Lesson", g: "learn", u: "/projects/skill-quest/school/level-5/lesson-6.html", d: "Level 5, lesson 6.", k: "locks and keys locks" },
-  { t: "Level 5 lesson 7: Health inspections (governance and safety)", y: "Lesson", g: "learn", u: "/projects/skill-quest/school/level-5/lesson-7.html", d: "Level 5, lesson 7.", k: "inspections inspect" },
+  { t: "Level 5 lesson 7: Head-office checks (governance and safety)", y: "Lesson", g: "learn", u: "/projects/skill-quest/school/level-5/lesson-7.html", d: "Level 5, lesson 7.", k: "head office inspect" },
   { t: "Level 5 lesson 8: Draw the floor plan (capstone)", y: "Lesson", g: "learn", u: "/projects/skill-quest/school/level-5/lesson-8.html", d: "Level 5, lesson 8.", k: "floor plan plan" },
   { t: "Lesson 11: Everything is a wrapper", y: "Lesson", g: "learn", u: "/projects/skill-quest/school/kitchen/lesson-11.html", d: "AI is layers: you, apps, models, chips, electricity. What every AI product is made of.", k: "wrapper wrappers layers nvidia chips model app lovable cursor chatgpt how ai works what is ai made of" },
   { t: "Chef's passport", y: "Your stamps", g: "learn", u: "/projects/skill-quest/school/", d: "A stamp for every lesson, plus your Maker stamps.", k: "passport stamps progress badges collect" },

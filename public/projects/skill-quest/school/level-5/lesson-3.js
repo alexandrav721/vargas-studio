@@ -34,11 +34,11 @@
       head: "ORDER #E03", right: "harness plan", foot: "Paste it into Claude, or open it there",
       text: function (s) {
         return "Plan the agent harness for: " + s.job + ". Hosting: " + s.run + ". I don’t code.\n" +
-          "1. Agent SDK, Managed Agents, or a simple workflow? Why, in 3 lines.\n" +
-          "2. Tools it needs, which run alone, which wait for a person, and built-in tools we switch off.\n" +
+          "1. Agent SDK, Managed Agents, or a simple workflow? Why?\n" +
+          "2. Tools it needs, which run alone, which wait for a person, which built-ins go off.\n" +
           "3. What the sandbox can and can’t reach.\n" +
-          "4. A spend cap, and how we stop it mid-run.\n" +
-          "Unsure a feature exists today? Say so, and name the page to check (platform.claude.com/docs).";
+          "4. A spend cap and a quick stop.\n" +
+          "Unsure a feature exists? Say so and name the docs page (platform.claude.com/docs).";
       },
       claude: "Open in Claude", done: "Done →"
     },

@@ -35,12 +35,12 @@
       head: "ORDER #E08", right: "floor plan", foot: "Paste it into Claude, or open it there",
       text: function (s) {
         return "Use case: " + s.use + ". Hardest limit: " + s.limit + ". I don’t code.\n" +
-          "Ask up to 3 questions (if I say “skip”, label your assumptions), then write a design doc:\n" +
-          "1. The job and how we’ll test it.\n" +
-          "2. Pattern, and the simpler option we rejected.\n" +
-          "3. Cost model: tokens per task × price × volume, math shown. Flag prices to confirm.\n" +
+          "Ask up to 3 questions (if I skip, label your guesses), then write a design doc:\n" +
+          "1. The job and its test.\n" +
+          "2. Pattern, and the simpler one we rejected.\n" +
+          "3. Cost model: cost per task × volume, math shown; flag prices to confirm.\n" +
           "4. Top 3 failure modes, blast radius, how we’d notice.\n" +
-          "5. Approval matrix: each action, who approves.\n" +
+          "5. Approval matrix: who approves what.\n" +
           "6. Trade-offs we accepted.";
       },
       claude: "Open in Claude", done: "Done →"
