@@ -236,7 +236,7 @@ window.EZ_TOOLS2 = {
 "laterNote": "",
 "tested": null,
 "examples": [],
-"gallery": ""
+"gallery": "https://labs.google/flow/tv"
 },
 {
 "id": "higgsfield",
@@ -332,7 +332,7 @@ window.EZ_TOOLS2 = {
 "laterNote": "",
 "tested": null,
 "examples": [],
-"gallery": ""
+"gallery": "https://higgsfield.ai/explore"
 },
 {
 "id": "kling",
@@ -425,8 +425,45 @@ window.EZ_TOOLS2 = {
 "skipIf": "you hate fiddly billing and hard-to-find cancel buttons.",
 "laterNote": "",
 "tested": null,
-"examples": [],
-"gallery": ""
+"examples": [
+{
+"src": "img/kling/1.jpg",
+"kind": "image",
+"alt": "Bright white skyline by a lake with a leaping dolphin",
+"tool": "Kling AI",
+"prompt": "",
+"license": "Public Domain Mark 1.0",
+"licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+"author": "Adam N (Flickr rymvuvvn10)",
+"source": "https://www.flickr.com/photos/202434116@N06/54391319185",
+"excerpt": false
+},
+{
+"src": "img/kling/2.jpg",
+"kind": "image",
+"alt": "Retro music player splashing underwater with two goldfish",
+"tool": "Kling AI",
+"prompt": "",
+"license": "Public Domain Mark 1.0",
+"licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+"author": "Adam N (Flickr rymvuvvn10)",
+"source": "https://www.flickr.com/photos/202434116@N06/54391177693",
+"excerpt": false
+},
+{
+"src": "img/kling/3.jpg",
+"kind": "image",
+"alt": "Airy white shopping mall with glass roof and potted trees",
+"tool": "Kling AI",
+"prompt": "",
+"license": "Public Domain Mark 1.0",
+"licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+"author": "Adam N (Flickr rymvuvvn10)",
+"source": "https://www.flickr.com/photos/202434116@N06/54391319120",
+"excerpt": false
+}
+],
+"gallery": "https://app.klingai.com/global/community"
 },
 {
 "id": "runway",
@@ -518,8 +555,21 @@ window.EZ_TOOLS2 = {
 "skipIf": "you need one quick clip; Flow or Kling are cheaper.",
 "laterNote": "",
 "tested": null,
-"examples": [],
-"gallery": ""
+"examples": [
+{
+"src": "img/runway/1.jpg",
+"kind": "image",
+"alt": "Still from AI video of a cowboy riding in the desert",
+"tool": "Runway Gen-3 Alpha",
+"prompt": "",
+"license": "CC BY 4.0 / Public domain (PD-algorithm)",
+"licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+"author": "Runway ML (uploaded by Oronbb)",
+"source": "https://commons.wikimedia.org/wiki/File:Gen-3_Alpha_3480943356,_A_cowboy_riding_his_,_pikaso_texttoimage_C_(1).webm",
+"excerpt": false
+}
+],
+"gallery": "https://runwayml.com/research"
 },
 {
 "id": "midjourney",
@@ -608,8 +658,45 @@ window.EZ_TOOLS2 = {
 "skipIf": "you need text in the image, privacy cheaply, or a free test.",
 "laterNote": "",
 "tested": null,
-"examples": [],
-"gallery": ""
+"examples": [
+{
+"src": "img/midjourney/1.jpg",
+"kind": "image",
+"alt": "Product-style photo of a green apple on a brown cloth",
+"tool": "Midjourney v6",
+"prompt": "green granny smith apple on a brown tablecloth, hasselblad still life photograph --v 6.0 --style raw",
+"license": "Public domain (PD-algorithm)",
+"licenseUrl": "",
+"author": "Midjourney; prompted by The masketta man",
+"source": "https://commons.wikimedia.org/wiki/File:Green_apple_gen.png",
+"excerpt": false
+},
+{
+"src": "img/midjourney/2.jpg",
+"kind": "image",
+"alt": "Watercolor painting of a horse-drawn sleigh ride",
+"tool": "Midjourney v4",
+"prompt": "sleigh ride, watercolor painting --ar 16:9 --v 4",
+"license": "CC BY-SA 4.0",
+"licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+"author": "Chikorita",
+"source": "https://commons.wikimedia.org/wiki/File:Midjourney_-_Sleigh_Ride_Watercolor.png",
+"excerpt": false
+},
+{
+"src": "img/midjourney/3.jpg",
+"kind": "image",
+"alt": "Cute fluffy little polar bear illustration",
+"tool": "Midjourney v4",
+"prompt": "Gismo die flauschige Kartoffel --v 4",
+"license": "CC BY-SA 4.0",
+"licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+"author": "Chikorita",
+"source": "https://commons.wikimedia.org/wiki/File:Midjourney_-_Little_Icebear.png",
+"excerpt": false
+}
+],
+"gallery": "https://www.midjourney.com/explore"
 },
 {
 "id": "ideogram",
@@ -693,8 +780,33 @@ window.EZ_TOOLS2 = {
 "skipIf": "you need private work on a $0 budget.",
 "laterNote": "",
 "tested": null,
-"examples": [],
-"gallery": ""
+"examples": [
+{
+"src": "img/ideogram/1.jpg",
+"kind": "image",
+"alt": "Neon cyberpunk poster reading Welcome to the Simulated Universe",
+"tool": "Ideogram 3.0",
+"prompt": "A striking cyberpunk-inspired poster that welcomes viewers into the Simulated Universe. The central text, \"Welcome to The Simulated Universe,\" is displayed in bold, neon purple and white lettering (excerpt; full prompt on file page)",
+"license": "Public domain (PD-algorithm)",
+"licenseUrl": "",
+"author": "VulcanSphere",
+"source": "https://commons.wikimedia.org/wiki/File:Welcome_to_the_Simulated_Universe_(Ideogram_3.0).webp",
+"excerpt": false
+},
+{
+"src": "img/ideogram/2.jpg",
+"kind": "image",
+"alt": "Colorful block-letter grid spelling MAU BIKIN APA on red",
+"tool": "Ideogram",
+"prompt": "Bold red background with the word IDEOGRAM; colorful letter grid spelling MAU BIKIN APA (summary; full prompt on file page)",
+"license": "CC0 / Public domain (PD-algorithm)",
+"licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+"author": "Generated with Ideogram (uploader on file page)",
+"source": "https://commons.wikimedia.org/wiki/File:Tipografi_Generatif_Ideogram.jpg",
+"excerpt": false
+}
+],
+"gallery": "https://ideogram.ai/t/explore"
 },
 {
 "id": "canva-ai",
@@ -779,8 +891,33 @@ window.EZ_TOOLS2 = {
 "skipIf": "the image itself has to be top-tier art.",
 "laterNote": "",
 "tested": null,
-"examples": [],
-"gallery": ""
+"examples": [
+{
+"src": "img/canva-ai/1.jpg",
+"kind": "image",
+"alt": "Misty forest with glowing blue will-o'-the-wisps",
+"tool": "Canva AI (Magic Media)",
+"prompt": "",
+"license": "Public domain (PD-algorithm)",
+"licenseUrl": "",
+"author": "AI-generated work (uploader on file page)",
+"source": "https://commons.wikimedia.org/wiki/File:Fuochi_fatui_in_una_foresta.png",
+"excerpt": false
+},
+{
+"src": "img/canva-ai/2.jpg",
+"kind": "image",
+"alt": "Glowing eagle radiating streams of light",
+"tool": "Canva AI (Magic Media)",
+"prompt": "",
+"license": "Public domain (PD-algorithm)",
+"licenseUrl": "",
+"author": "AI-generated work (uploader on file page)",
+"source": "https://commons.wikimedia.org/wiki/File:Emanazioni_dell'Aquila.png",
+"excerpt": false
+}
+],
+"gallery": "https://www.canva.com/ai-image-generator/"
 },
 {
 "id": "adobe-firefly",
@@ -870,8 +1007,33 @@ window.EZ_TOOLS2 = {
 "skipIf": "you want the most striking art.",
 "laterNote": "",
 "tested": null,
-"examples": [],
-"gallery": ""
+"examples": [
+{
+"src": "img/adobe-firefly/1.jpg",
+"kind": "image",
+"alt": "Drone view of snowy mountains with sun on the peak",
+"tool": "Adobe Firefly Image 3",
+"prompt": "Paradise looking, but believable mountain landscape from drone perspective, sun is shining right over the edge of the highest mountain with snow on top",
+"license": "Public domain (PD-US, PD-algorithm)",
+"licenseUrl": "",
+"author": "Adobe Firefly Image 3, prompted by Jiri Vedral",
+"source": "https://commons.wikimedia.org/wiki/File:Adobe_Firefly_generated_landscape_photography.jpg",
+"excerpt": false
+},
+{
+"src": "img/adobe-firefly/2.jpg",
+"kind": "image",
+"alt": "Real photo of a 1927 vintage car, background cars removed",
+"tool": "Adobe Firefly AI (retouch: parked cars beside it removed)",
+"prompt": "",
+"license": "CC BY-SA 4.0",
+"licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+"author": "Thilo Parg",
+"source": "https://commons.wikimedia.org/wiki/File:Bentley_4.5_Litre_1927_YU_5837_2a.jpg",
+"excerpt": false
+}
+],
+"gallery": "https://firefly.adobe.com/gallery"
 },
 {
 "id": "krea",
@@ -957,7 +1119,7 @@ window.EZ_TOOLS2 = {
 "laterNote": "",
 "tested": null,
 "examples": [],
-"gallery": ""
+"gallery": "https://www.krea.ai/"
 },
 {
 "id": "capcut",
@@ -1048,8 +1210,21 @@ window.EZ_TOOLS2 = {
 "skipIf": "broad content licenses worry you, or you film client work.",
 "laterNote": "",
 "tested": null,
-"examples": [],
-"gallery": ""
+"examples": [
+{
+"src": "img/capcut/1.jpg",
+"kind": "image",
+"alt": "Holiday commuter train arriving at a station, edited photo",
+"tool": "CapCut (photo edit; shot on Canon EOS R50)",
+"prompt": "",
+"license": "CC BY 4.0",
+"licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+"author": "HistorySports",
+"source": "https://commons.wikimedia.org/wiki/File:METX211_roars_into_Downers_Grove's_Main_Street_Station.jpg",
+"excerpt": false
+}
+],
+"gallery": "https://www.capcut.com/"
 },
 {
 "id": "google-stitch",
@@ -2870,7 +3045,7 @@ window.EZ_TOOLS2 = {
 "tested": null,
 "examples": [
 {
-"src": "img/elevenlabs/1.wav",
+"src": "img/elevenlabs/1.mp3",
 "kind": "audio",
 "alt": "AI voice switching playfully between accents, whispering and laughing",
 "tool": "ElevenLabs v3 text-to-speech",
@@ -2879,10 +3054,10 @@ window.EZ_TOOLS2 = {
 "licenseUrl": "https://commons.wikimedia.org/wiki/Template:PD-algorithm",
 "author": "ElevenLabs (uploaded by Sam Sklar Eleven)",
 "source": "https://commons.wikimedia.org/wiki/File:ElevenLabs_v3_Mark_Accents.wav",
-"excerpt": false
+"excerpt": true
 },
 {
-"src": "img/elevenlabs/2.ogg",
+"src": "img/elevenlabs/2.mp3",
 "kind": "audio",
 "alt": "AI voice reading a Wikipedia history article aloud",
 "tool": "ElevenLabs Text-to-Speech",
@@ -2891,7 +3066,7 @@ window.EZ_TOOLS2 = {
 "licenseUrl": "https://commons.wikimedia.org/wiki/Template:PD-algorithm",
 "author": "ElevenLabs Text-to-Speech (uploaded by Criswondersalot)",
 "source": "https://commons.wikimedia.org/wiki/File:En-History_of_Corpus_Christi,_Texas.ogg",
-"excerpt": false
+"excerpt": true
 }
 ],
 "gallery": "https://elevenlabs.io/voice-library"
@@ -2987,7 +3162,7 @@ window.EZ_TOOLS2 = {
 "tested": null,
 "examples": [
 {
-"src": "img/suno/1.oga",
+"src": "img/suno/1.mp3",
 "kind": "audio",
 "alt": "Upbeat J-pop rock song with nonsense lyrics made in Suno",
 "tool": "Suno",
@@ -2996,7 +3171,7 @@ window.EZ_TOOLS2 = {
 "licenseUrl": "https://commons.wikimedia.org/wiki/Template:PD-algorithm",
 "author": "Suno AI; prompted by Two Scuffed",
 "source": "https://commons.wikimedia.org/wiki/File:Two_Scuffed_-_COW_BOP_(Suno_AI).oga",
-"excerpt": false
+"excerpt": true
 },
 {
 "src": "img/suno/2.mp3",
@@ -3008,7 +3183,7 @@ window.EZ_TOOLS2 = {
 "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
 "author": "Виктор Аргонов (Victor Argonov)",
 "source": "https://commons.wikimedia.org/wiki/File:Inevitability--suno-ai-1.mp3",
-"excerpt": false
+"excerpt": true
 }
 ],
 "gallery": "https://suno.com/explore"
