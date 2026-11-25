@@ -38,6 +38,7 @@
       "<li><b>Your pantry is what’s always on the shelf.</b>Things that are true for every order: how you like answers, plain words, short.</li>" +
       "<li><b>Claude has a place for it.</b>A personal preferences box in its settings. Every chat uses it.</li>" +
       "<li><b>Meal kits are ready-made skills.</b>Someone already wrote and tested the recipe. You just use it.</li></ul>" +
+      '<div class="ba"><div><p class="label">Before</p><div class="ticket"><div class="th"><span>VAGUE ORDER</span></div>How do I back up my phone photos?<div class="tf">Jargon about “hybrid strategies.”</div></div></div><div class="ba-arrow" aria-hidden="true"></div><div><p class="label">After</p><div class="ticket"><div class="th"><span>FULL ORDER</span></div>Pantry: plain words, short answers, ask me first when it’s unclear.<br>Then: how do I back up my phone photos?<div class="tf">Short, plain steps. It asks first.</div></div></div></div>' +
       '<div class="btns"><button class="btn" data-next type="button">See the difference</button></div>' +
       '<p class="small">Doing this with someone? Tap "Bigger text" at the top.</p>');
 

@@ -37,6 +37,7 @@
       "<li><b>“Friendly but professional” means a hundred things.</b>One example means one.</li>" +
       "<li><b>Show the chef a dish you like.</b>Paste something you wrote. It copies the flavor, not the words.</li>" +
       "<li><b>Your example is your style.</b>Your emails start sounding like you, not like a robot.</li></ul>" +
+      '<div class="ba"><div><p class="label">Before</p><div class="ticket"><div class="th"><span>VAGUE ORDER</span></div>Email my manager for Friday off. Friendly but professional.<div class="tf">A stiff “Dear Manager” email.</div></div></div><div class="ba-arrow" aria-hidden="true"></div><div><p class="label">After</p><div class="ticket"><div class="th"><span>FULL ORDER</span></div>Email my manager asking for Friday off. Write it like this: “Hi Jo! Quick one: can we push Thursday to 3? Thanks so much. A.”<div class="tf">An email that sounds like you.</div></div></div></div>' +
       '<div class="btns"><button class="btn" data-next type="button">See it work</button></div>' +
       '<p class="small">Doing this with someone? Tap "Bigger text" at the top.</p>');
 

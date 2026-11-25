@@ -32,6 +32,7 @@
       "<li><b>Claude is your chef.</b>It has read millions of recipes and cooks anything you order, fast.</li>" +
       "<li><b>It has never tasted food.</b>It cooks from memory of what recipes usually look like.</li>" +
       "<li><b>So once in a while, it invents a dish.</b>And serves it just as proudly as a real one.</li></ul>" +
+      '<div class="ba"><div><p class="label">Before</p><div class="ticket"><div class="th"><span>VAGUE ORDER</span></div>Plan 5 dinners.<div class="tf">The chef guesses the rest.</div></div></div><div class="ba-arrow" aria-hidden="true"></div><div><p class="label">After</p><div class="ticket"><div class="th"><span>FULL ORDER</span></div>Plan 5 dinners for 2 people.<br>Fridge: eggs, spinach, rice, cheese.<br>Never use: mushrooms.<br>30 minutes or less.<div class="tf">5 dinners from your own fridge.</div></div></div></div>' +
       '<div class="btns"><button class="btn" data-next type="button">Watch one order</button></div>' +
       '<p class="small">Doing this with your mom or a friend? Tap "Bigger text" at the top.</p>');
 

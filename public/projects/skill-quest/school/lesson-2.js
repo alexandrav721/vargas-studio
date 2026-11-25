@@ -40,6 +40,7 @@
       "<li><b>A vague order gets a vague dish.</b>Ask for “a birthday message” and you get one from a gas-station card.</li>" +
       "<li><b>Details are flavor.</b>Who it’s for, one true memory, the tone, how long.</li>" +
       "<li><b>You can send it back.</b>“Make it shorter” is a normal thing to tell this chef.</li></ul>" +
+      '<div class="ba"><div><p class="label">Before</p><div class="ticket"><div class="th"><span>VAGUE ORDER</span></div>Write a birthday message.<div class="tf">A gas-station card message.</div></div></div><div class="ba-arrow" aria-hidden="true"></div><div><p class="label">After</p><div class="ticket"><div class="th"><span>FULL ORDER</span></div>Birthday message for my sister Ana, turning 40. Mention the road trip when the car died in Ohio. Funny. 3 lines.<div class="tf">A message that sounds like you.</div></div></div></div>' +
       '<div class="btns"><button class="btn" data-next type="button">Taste the difference</button></div>' +
       '<p class="small">Doing this with someone? Tap "Bigger text" at the top.</p>');
 

@@ -39,6 +39,7 @@
       "<li><b>A recipe card is a skill.</b>Everything you’ve learned, written down once for a job you do often.</li>" +
       "<li><b>Four parts.</b>When to use it, what to ask first, the steps, one great example.</li>" +
       "<li><b>Then taste-test it.</b>Does it beat Claude without the card? That’s how you know it works.</li></ul>" +
+      '<div class="ba"><div><p class="label">Before</p><div class="ticket"><div class="th"><span>VAGUE ORDER</span></div>Write a thank-you note for Maria.<div class="tf">“Thank you for your kindness and generosity.”</div></div></div><div class="ba-arrow" aria-hidden="true"></div><div><p class="label">After</p><div class="ticket"><div class="th"><span>FULL ORDER</span></div>Recipe card: ask who it’s for and what they did.<br>1. One specific thing. 2. How it helped. 3. End warm.<div class="tf">“Maria, the lasagna got us through moving day.”</div></div></div></div>' +
       '<div class="btns"><button class="btn" data-next type="button">See a recipe card</button></div>' +
       '<p class="small">Doing this with someone? Tap "Bigger text" at the top.</p>');
 
