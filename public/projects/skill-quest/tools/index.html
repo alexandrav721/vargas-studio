@@ -77,7 +77,8 @@
   document.getElementById("groups").innerHTML = D.groups.map(function (g) {
     var list = D.tools.filter(function (t) { return t.group === g[0]; }).sort(function (a, b) { return b.score - a.score; });
     return '<div class="grp"><h3>' + esc(g[1]) + '</h3><div class="tlist">' + list.map(function (t) {
-      return '<a class="tcard" href="tool.html?t=' + t.id + '"><b>' + esc(t.name) + (t.tested ? " ✓" : "") + "</b>" + U.dots(t.score) + '<span class="l">' + esc(t.line) + "</span></a>";
+      var ex = (t.examples || []).filter(function (x) { return x.kind === "image"; })[0];
+      return '<a class="tcard' + (ex ? " has" : "") + '" href="tool.html?t=' + t.id + '">' + (ex ? '<img class="th" src="' + ex.src + '" alt="" loading="lazy">' : "") + "<b>" + esc(t.name) + (t.tested ? " ✓" : "") + "</b>" + U.dots(t.score) + '<span class="l">' + esc(t.line) + "</span></a>";
     }).join("") + "</div></div>";
   }).join("");
 })();

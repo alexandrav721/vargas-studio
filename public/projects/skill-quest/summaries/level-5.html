@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Level 5 summary · AI Made EZ</title>
+<meta name="description" content="Everything from AI Made EZ Level 5 (Design AI systems) on one page: the ideas, the words and prompts to try. Free PDF.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Schibsted+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="summary.css"></head>
+<body>
+<nav class="bar" aria-label="Summary"><a class="ghost" href="../school/level-5/">← Level 5</a><a href="../downloads/ai-made-ez-level-5.pdf" download>Download PDF</a></nav>
+<main class="sheet">
+<header class="h"><p class="k">AI Made EZ · Level 5 summary</p><h1>Design AI systems</h1><p>8 lessons · about 56 minutes in all · free</p></header>
+<div class="map"><span><b>01</b> Set menu or free chef?</span> <span><b>02</b> Build a standard outlet</span> <span><b>03</b> The kitchen system</span> <span><b>04</b> A brigade of chefs</span> <span><b>05</b> Double shifts</span> <span><b>06</b> Locks and keys</span> <span><b>07</b> Head-office checks</span> <span><b>08</b> Draw the floor plan</span></div>
+<div class="cols"><div class="col"><section class="card"><h2><span class="n">01</span>Set menu or free chef?</h2><ul><li>A set menu is a workflow.</li><li>A free chef is an agent.</li><li>Every cook is an augmented LLM.</li></ul><div class="w"><div><b>Augmented LLM</b> = one call plus tools, search, memory</div><div><b>Prompt chaining</b> = steps in a row, each uses the last</div><div><b>Routing</b> = sort first, send to a specialist</div><div><b>Parallelization</b> = at once, then combine or vote</div><div><b>Orchestrator-workers</b> = a lead decides the subtasks at run time</div></div><p class="say">Say it: “We pick the simplest pattern that works. Agents only when steps can’t be planned.”</p></section><section class="card"><h2><span class="n">04</span>A brigade of chefs.</h2><ul><li>A brigade is a kitchen’s crew, run by a lead agent.</li><li>Clean counters are the point.</li><li>A brigade eats tokens.</li></ul><div class="w"><div><b>Multi-agent system</b> = a lead plus helper agents</div><div><b>Lead agent</b> = plans, hands out, checks, combines</div><div><b>Delegation</b> = the handoff, with a clear brief</div><div><b>Context isolation</b> = each helper has its own counter</div><div><b>Synthesis</b> = combining reports into one answer</div></div><p class="say">Say it: “A brigade pays off only when the work splits into pieces the lead can check.”</p></section><section class="card"><h2><span class="n">06</span>Locks and keys.</h2><ul><li>Least privilege: only the keys the job needs.</li><li>Anything Claude reads can carry orders.</li><li>Lock the doors that can’t be undone.</li></ul><div class="w"><div><b>Least privilege</b> = only the keys the job needs</div><div><b>Untrusted content</b> = anything Claude reads can carry orders</div><div><b>Lethal trifecta</b> = data + untrusted content + a way out; cut one</div><div><b>Network allowlist</b> = only listed hosts</div><div><b>Vault</b> = secrets the sandbox never sees</div></div><p class="say">Say it: “Fewest keys, everything it reads is untrusted, and a gate on what can’t be undone.”</p></section><section class="card"><h2><span class="n">08</span>Draw the floor plan.</h2><ul><li>Sketching is done. Now defend it.</li><li>Every choice is a trade-off.</li><li>Plan for the bad night.</li></ul><div class="w"><div><b>Design doc</b> = the plan you defend; job and test first</div><div><b>Trade-off</b> = what you gave up, written down</div><div><b>Cost model</b> = tokens per task × price × volume</div><div><b>Failure mode</b> = one way it goes wrong</div><div><b>Blast radius</b> = how far damage spreads</div></div><p class="say">Say it: “Here’s the plan: the job, its test, the cost math, what can fail, and who approves.”</p></section></div><div class="col"><section class="card"><h2><span class="n">02</span>Build a standard outlet.</h2><ul><li>An MCP server offers three things.</li><li>The wiring is called the transport.</li><li>Labels are how Claude picks a tool.</li></ul><div class="w"><div>Server offers tools, resources, prompts</div><div><b>Transport</b> = the wiring</div><div><b>stdio</b> = local, the app starts it</div><div><b>Streamable HTTP</b> = a web server many reach</div><div><b>OAuth</b> = sign in once; the app gets a limited key</div></div><p class="say">Say it: “An MCP server is a standard outlet: few clear tools, the right wiring, small scopes.”</p></section><section class="card"><h2><span class="n">03</span>The kitchen system.</h2><ul><li>The harness is everything around the model.</li><li>Build it, or rent it.</li><li>Tools run in a sandbox.</li></ul><div class="w"><div><b>Harness</b> = loop, tools, permissions, logs around the model</div><div><b>Agent SDK</b> = Claude Code’s harness in your app</div><div><b>Managed Agents</b> = Anthropic hosts it (beta)</div><div><b>Session</b> = one run, in its own sandbox</div><div><b>Sandbox</b> = walled-off computer where tools run</div></div><p class="say">Say it: “The model decides. The harness runs tools in a sandbox, asks first and caps spend.”</p></section><section class="card"><h2><span class="n">05</span>Double shifts.</h2><ul><li>Context engineering is keeping the counter clean.</li><li>A crowded counter blurs.</li><li>Long jobs need notes.</li></ul><div class="w"><div><b>Context engineering</b> = smallest set of useful tokens</div><div><b>Context rot</b> = recall slips as context grows</div><div><b>Compaction</b> = summarize the old shift</div><div><b>Context editing</b> = clear old tool results</div><div><b>Memory tool</b> = notes in a folder your app stores</div></div><p class="say">Say it: “We clear old results, compact near the limit, and leave notes for the next shift.”</p></section><section class="card"><h2><span class="n">07</span>Head-office checks.</h2><ul><li>You can’t inspect what you didn’t record.</li><li>Audit logs answer “who changed that?”</li><li>A person stays on the floor.</li></ul><div class="w"><div><b>Observability</b> = you can see what happened</div><div><b>Trace</b> = the step-by-step record of one run</div><div><b>Audit log</b> = who did what, when</div><div><b>Human oversight</b> = someone reviews, and can switch it off</div><div><b>RSP</b> = Anthropic’s voluntary safety rulebook</div></div><p class="say">Say it: “We trace every run, log who did what, and someone can switch it off.”</p></section></div></div>
+<h2 class="sec pb">Prompts to try</h2><p class="say" style="margin-bottom:4mm">Change the parts in [brackets] to fit you. One a day is plenty.</p><div class="grid"><div><p class="say" style="margin:0 0 2px"><b>01 · Set menu or free chef?</b></p><div class="ticket"><div class="th"><span>ORDER #001</span><span>copy · paste · send</span></div><pre>I’m planning an AI project: answer customer emails. What matters most: low cost. I don’t code.
+1. Which fits best: one Claude call, a workflow (prompt chaining, routing, parallelization, orchestrator-workers or evaluator-optimizer) or an agent? Why, in 3 lines.
+2. The steps, as a short numbered list.
+3. The simpler option you rejected, and what would make us switch to an agent.
+4. One way it could fail, and how we’d notice.</pre></div></div><div><p class="say" style="margin:0 0 2px"><b>02 · Build a standard outlet.</b></p><div class="ticket"><div class="th"><span>ORDER #002</span><span>copy · paste · send</span></div><pre>Design an MCP server for our booking system. Who plugs in: just my team. I don’t code; a developer builds it.
+1. MCP server, or a plain tool in one app? Why?
+2. A few tools (namespaced name, job, read or write), plus resources and prompts.
+3. Transport (stdio or Streamable HTTP) and sign-in (OAuth scopes), and why.
+4. Two tests before anyone uses it.
+Unsure a feature exists? Say so; name the page (modelcontextprotocol.io).</pre></div></div><div><p class="say" style="margin:0 0 2px"><b>03 · The kitchen system.</b></p><div class="ticket"><div class="th"><span>ORDER #003</span><span>copy · paste · send</span></div><pre>Plan the agent harness for: a weekly competitor report. Hosting: Anthropic hosts it (Managed Agents). I don’t code.
+1. Is that hosting right for this job, or would a scheduled workflow do? Why?
+2. Tools it needs, which run alone, which wait for a yes, which built-ins go off.
+3. What the sandbox can and can’t reach.
+4. A spend cap and a quick stop.
+Unsure a feature exists? Say so; name the page (platform.claude.com/docs).</pre></div></div><div><p class="say" style="margin:0 0 2px"><b>04 · A brigade of chefs.</b></p><div class="ticket"><div class="th"><span>ORDER #004</span><span>copy · paste · send</span></div><pre>Job: research 12 competitors. Proposed team: a lead + 3 helpers. I don’t code.
+1. Does it split into independent pieces? Why or why not?
+2. If yes: each helper’s brief, tools, model and output.
+3. Rough cost, 1 agent vs this team (Anthropic: agents use about 4x a chat’s tokens, multi-agent about 15x).
+4. How the lead catches a wrong helper.
+Recommend the smallest team that works. Unsure of a number? Say so.</pre></div></div><div><p class="say" style="margin:0 0 2px"><b>05 · Double shifts.</b></p><div class="ticket"><div class="th"><span>ORDER #005</span><span>copy · paste · send</span></div><pre>An AI agent for a long job: move 500 help articles to a new site, running a few hours. I don’t code. Write a context plan:
+1. What it loads first, what it fetches later.
+2. When to compact or clear old tool results; what must never be lost.
+3. Its note files, with a short template each.
+4. How a fresh session picks up.
+Mark API features vs. good habits. Unsure? Say so.</pre></div></div><div><p class="say" style="margin:0 0 2px"><b>06 · Locks and keys.</b></p><div class="ticket"><div class="th"><span>ORDER #006</span><span>copy · paste · send</span></div><pre>Security review for an inbox assistant. It touches: Reads email, Can send email. I don’t code.
+1. Lethal trifecta (private data, untrusted content, a way out): which leg can we cut?
+2. Least privilege: only tools and sites it needs.
+3. Where secrets live, out of its sight.
+4. What waits for a person.
+5. What we log; how we stop it fast.
+For each: the lock, why, owner. Unsure a setting exists? Say so.</pre></div></div><div><p class="say" style="margin:0 0 2px"><b>07 · Head-office checks.</b></p><div class="ticket"><div class="th"><span>ORDER #007</span><span>copy · paste · send</span></div><pre>Governance plan for a customer support agent. Sign-off: our team lead. I don’t code.
+1. Traces: what each run records; who sees it.
+2. Audit logs: which actions we keep.
+3. Oversight: who reviews samples, how often, who can stop it.
+4. Private data: what it sees; which plan fits; does it train on chats?
+5. Evals: real cases re-tested after each change.
+6. An 8-item monthly checklist.
+Flag legal questions. Unsure? Say so.</pre></div></div><div><p class="say" style="margin:0 0 2px"><b>08 · Draw the floor plan.</b></p><div class="ticket"><div class="th"><span>ORDER #008</span><span>copy · paste · send</span></div><pre>Use case: answer customer emails. Hardest limit: tight budget. I don’t code.
+Ask up to 3 questions first; label guesses. Then a design doc:
+1. The job and its test.
+2. Pattern, the simpler one rejected, trade-offs.
+3. Cost: per task × volume, with and without a batch, math shown.
+4. Top 3 failures, blast radius, how we’d notice.
+5. Who approves what.
+6. A 6-week pilot: which team, weekly measures, the go/no-go rule.</pre></div></div></div>
+<p class="try">You can draw the plan for a real AI system and defend every choice.</p>
+<footer class="f"><span>vargas-studio.pages.dev/projects/skill-quest · free, no sign-up</span><span>Made by Alexandra Vargas · not affiliated with Anthropic</span></footer>
+</main></body></html>
