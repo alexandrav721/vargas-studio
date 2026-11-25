@@ -25,7 +25,7 @@
 </header>
 <main>
   <section class="hero">
-    <p class="label">Free kits · no code · no catch</p>
+    <p class="label">Free. Every prompt is on this page.</p>
     <h1>Make a real thing with AI.</h1>
     <p class="muted">Each kit ends with something you can use: a website, an app, an automation. Every prompt is here. Nothing to unlock.</p>
     <div class="kits" id="kits"></div>
@@ -70,7 +70,7 @@
   }).join("");
   var t = D.kits.filter(function (k) { return k.proof; }), w = t.filter(function (k) { return k.proof.winner === "template"; }).length, ti = t.filter(function (k) { return k.proof.winner === "tie"; }).length;
   document.getElementById("tally").innerHTML = '<span class="win">Kit won ' + w + " of " + t.length + "</span><span>Tied " + ti + "</span><span>Plain won " + (t.length - w - ti) + "</span>";
-  document.getElementById("sample").textContent = D.sample + " Run " + D.checked + ". Each kit page shows both answers.";
+  document.getElementById("sample").textContent = D.sample + " Run " + D.checked + ". Each kit page shows both answers. Times on the cards are our estimates.";
   U.wireForget();
 })();
 </script>

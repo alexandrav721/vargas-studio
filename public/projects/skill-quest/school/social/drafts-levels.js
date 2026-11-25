@@ -133,7 +133,7 @@ export const DRAFTS = [
     caption: [
       "Automation sounds technical. It's mostly two sentences: when this happens, do that.",
       "Our free kit has AI pick the task, write the plan and the exact request to paste into Zapier's free plan.",
-      "In a blind test, the kit's plan scored 4.0 out of 5 and a plain ask scored 2.3. The judge also flagged one weak spot in ours, and the page shows it.",
+      "In a blind test, a plain ask scored 2.3 out of 5. Our first kit scored 4.0, because it picked a step Google Forms already does. We fixed it, tested again: 4.8.",
       "However, start with automations that draft, not send. You stay the last click.",
       "In plain words: it's a kitchen timer. You set it once, and it rings without you.",
       FOLLOW,

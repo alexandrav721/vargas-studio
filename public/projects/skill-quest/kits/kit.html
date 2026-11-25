@@ -37,7 +37,7 @@
   var h = "";
   /* 1. what you'll have */
   h += '<section class="hero"><p class="label">Kit ' + K.n + " of " + D.kits.length + "</p><h1>" + esc(K.name) + '</h1><p class="muted">' + esc(K.result) + "</p>" +
-    '<div class="meta"><span class="free">' + esc(K.cost) + "</span><span>About " + esc(K.time) + " (our estimate)</span><span>No code</span></div>";
+    '<div class="meta"><span class="free">' + esc(K.cost) + "</span><span>About " + esc(K.time) + "</span><span>No code</span></div>";
   if (P && P.kitImg) h += '<figure class="shot"><img src="' + P.kitImg + '" alt="Phone screenshot of the ' + esc(K.name.toLowerCase()) + ' result we built by following this kit" loading="lazy"><figcaption>Built by following this kit. ' + esc(D.sample) + "</figcaption></figure>";
   else if (P && P.kitOut) h += '<p class="label" style="margin-top:18px">What you get (our test run)</p><div class="outcard">' + esc(excerpt(P.kitOut, 18)) + '</div><p class="small2">' + esc(D.sample) + "</p>";
   h += "</section>";
@@ -51,7 +51,7 @@
   }).join("") + '</div><p class="checked">Plans and limits checked on official pages, ' + esc(D.checked) + ". They change; if a step looks different, the idea still works.</p></section>";
 
   /* 4. steps */
-  h += '<section class="sec" id="steps"><p class="label">Step by step</p><h2>Do this.</h2><div class="steps">' + K.steps.map(function (s, j) {
+  h += '<section class="sec" id="steps"><p class="label">Step by step</p><h2>Do this.</h2><p class="note"><b>How the prompts work:</b> leave the words in &lt;pointy brackets&gt;. They’re labels so the AI knows which part is which. It’s not code. Type over everything in [square brackets].</p><div class="steps">' + K.steps.map(function (s, j) {
     var body = "<p>" + esc(s.d) + "</p>";
     if (s.p) { COPY["s" + j] = s.p; body += '<pre class="tpl">' + hl(s.p) + '</pre><div class="copyrow"><button class="copy" type="button" data-copy="s' + j + '">Copy</button></div>'; }
     body += '<p class="ok"><b>Check:</b> ' + esc(s.ok) + "</p>";
@@ -64,10 +64,10 @@
   if (P) {
     var w = P.winner === "template" ? '<span class="w">Kit won</span>' : P.winner === "tie" ? '<span class="w tie">Tie</span>' : '<span class="w tie">Plain won</span>';
     var both = P.kitImg
-      ? '<div class="pair"><div class="pane"><p class="k">Plain ask: “' + esc(P.plainAsk) + '”</p><img src="' + P.plainImg + '" alt="Phone screenshot of the plain-ask result" loading="lazy"></div><div class="pane"><p class="k">With this kit</p><img src="' + P.kitImg + '" alt="Phone screenshot of the kit result" loading="lazy"></div></div>'
+      ? '<div class="pair"><div class="pane"><p class="k">Plain ask: “' + esc(P.plainAsk) + '”</p><img src="' + P.plainImg + '" alt="Phone screenshot of the plain-ask result"></div><div class="pane"><p class="k">With this kit</p><img src="' + P.kitImg + '" alt="Phone screenshot of the kit result"></div></div>'
       : '<details class="ex"><summary>Read both answers</summary><div class="pair"><div class="pane"><p class="k">Plain ask: “' + esc(P.plainAsk) + '”</p><div class="out">' + esc(P.plainOut) + '</div></div><div class="pane"><p class="k">With this kit</p><div class="out">' + esc(P.kitOut) + "</div></div></div></details>";
-    h += '<section class="sec" id="proof"><p class="label">Does it work?</p><h2>Same job, asked two ways.</h2><div class="proof">' + bar("Plain ask", P.plainScore, "p") + bar("With this kit", P.kitScore, "t") +
-      '<p class="verdict">' + w + esc(P.reason) + "</p>" + both + '</div><p class="small2">' + esc(D.sample) + " A separate Claude made each answer. Another Claude scored them out of 5 without knowing which was which. Run " + esc(D.checked) + ".</p></section>";
+    h += '<section class="sec" id="proof"><p class="label">Does it work?</p><h2>Same job, asked two ways.</h2><p class="muted">Scored 1 to 5 by a separate AI that didn’t know which answer was which. Mira’s bakery is a made-up sample business.</p><div class="proof">' + bar("Plain ask", P.plainScore, "p") + bar("With this kit", P.kitScore, "t") +
+      '<p class="verdict">' + w + esc(P.reason) + "</p>" + (P.note ? '<p class="small2">' + esc(P.note) + "</p>" : "") + both + '</div><p class="small2">' + esc(D.sample) + " A separate Claude made each answer. Another Claude scored them out of 5 without knowing which was which. Run " + esc(D.checked) + ".</p></section>";
   }
 
   /* 6. stuck */

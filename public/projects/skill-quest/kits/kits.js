@@ -8,14 +8,14 @@ window.EZ_K = {
 "n": 1,
 "name": "Sounds like me",
 "icon": "voice",
-"result": "A saved voice profile, so every AI answer sounds like you, plus 3 reply templates.",
+"result": "A saved voice profile, so AI writes closer to how you talk, plus 3 reply templates.",
 "time": "20–30 min",
 "cost": "Free",
 "tools": [
 [
 "Claude",
 "Free",
-"Save it in a Project (Free plan includes up to 5)."
+"Make a Project (Free includes up to 5), then Set project instructions, paste, Save."
 ],
 [
 "ChatGPT",
@@ -25,12 +25,11 @@ window.EZ_K = {
 [
 "Gemini",
 "Free",
-"Save it as a Gem."
+"Customize → Skills → Create → Create manually. (Gems closed to new ones on 17 Nov 2026.)"
 ]
 ],
 "prep": [
-"3 to 5 messages you actually wrote (texts, emails, posts).",
-"Take out names, phone numbers and anything private first."
+"3 to 5 messages you actually wrote: texts, emails or posts."
 ],
 "steps": [
 {
@@ -42,12 +41,12 @@ window.EZ_K = {
 {
 "t": "Save it",
 "d": "Copy the profile into the place your app keeps instructions (see the tool list above).",
-"ok": "Open a new chat and ask “What do you know about how I write?”"
+"ok": "Open a new chat (in Claude, inside your Project) and ask “What do you know about how I write?”"
 },
 {
 "t": "Make 3 reply templates",
-"d": "In the same chat, list the 3 messages you answer most.",
-"p": "<goal>Write reply templates for the 3 messages I answer most.</goal>\n<context>Use my voice profile. The 3 messages: [1] [2] [3]</context>\n<format>For each: the template with [brackets] for the parts that change. Under 60 words each.</format>\n<rules>Sound like my profile. No apologies unless I’d apologize.</rules>",
+"d": "In a new chat with your profile saved, list the 3 messages you answer most and what you usually say back.",
+"p": "<goal>Write reply templates for the 3 messages I answer most.</goal>\n<context>Use my voice profile. The 3 messages, and what I usually say back: [1] … [2] … [3] …</context>\n<format>For each: the template with [brackets] for the parts that change. Under 60 words each.</format>\n<rules>Sound like my profile. No apologies unless I’d apologize.</rules>",
 "ok": "Read one out loud. If you wouldn’t send it, say what’s off."
 }
 ],
@@ -65,7 +64,7 @@ window.EZ_K = {
 "Say “Use my style, not my sentences.”"
 ]
 ],
-"done": "Every later kit asks for this profile. Keep it handy.",
+"done": "Keep it handy: the posts kit uses it too.",
 "privacy": "Take out names, phone numbers and anything private before you paste.",
 "example": {
 "prompt": "<goal>Write a voice profile of how I write, then 3 reply templates in that voice.</goal>\n<context>My real messages:\n1) To a customer: \"Hi Jen! Yes, we can do the lemon cake for Saturday. 8 inch, serves 12, $48. Pick up after 10. See you then!\"\n2) To a supplier: \"Hey Tom, can we bump the flour order to 6 bags this week? Holiday rush. Thanks!\"\n3) To a customer: \"So sorry, we're sold out of cardamom buns today. They're back Saturday from 8. Come early, they go fast.\"\n4) Instagram: \"Rye loaves are back. Crusty outside, soft inside, gone by noon. See you at 7.\"\nThe 3 messages I answer most: 1) “Can I order a custom cake?” 2) “Are you open on holidays?” 3) “Do you have gluten-free options?” (Answers: custom cakes need 3 days’ notice, from $48; closed Christmas and New Year’s Day; no gluten-free, our kitchen uses wheat all day.)</context>\n<format>Voice profile under 150 words (Tone, Words I use, Length, How I start, How I end, Never). Then the 3 templates, under 60 words each, with [brackets] for the parts that change.</format>\n<rules>Only describe what you can see in my messages. Quote my real phrases. Don’t make me sound fancier than I am.</rules>",
@@ -91,30 +90,31 @@ window.EZ_K = {
 "cost": "Free",
 "tools": [
 [
-"Lovable",
+"Bolt (bolt.new)",
 "Free",
-"5 build credits a day. Publish to a free lovable.app link."
+"Start here. Sign up free, paste the sheet into the chat box. Publish gives a free public link. A free allowance that refills daily."
 ],
 [
 "Google AI Studio",
 "Free",
-"Build mode. Eligible accounts can publish up to 2 apps without billing."
+"Personal Google accounts can publish up to 2 apps free (not work or school accounts)."
 ],
 [
-"Claude",
-"Paid to share",
-"Builds it on Free. A public link for a new artifact needs Pro."
+"Lovable",
+"Free",
+"5 build credits a day. Free sites are invite-only: up to 10 people by email."
 ],
 [
-"ChatGPT",
-"Paid to publish",
-"Code blocks have Preview. Publishing (Sites) needs Plus or higher."
+"Claude or ChatGPT",
+"Paid for a link",
+"Both can build it on Free. A public link needs Claude Pro, or ChatGPT Plus (build it as a Site, Deploy, Share)."
 ]
 ],
 "prep": [
 "Who the site is for, and the one thing they should do (order, book, call).",
 "Your real words: what you offer, prices, hours, address.",
-"2 or 3 real photos. Finding photos is where an hour becomes three."
+"2 or 3 real photos. Finding photos is where an hour becomes three.",
+"A laptop is easier than a phone for this one."
 ],
 "steps": [
 {
@@ -124,8 +124,8 @@ window.EZ_K = {
 "ok": "No empty [brackets] left."
 },
 {
-"t": "Paste it into your tool",
-"d": "Open one tool from the list and paste the whole sheet as your first message.",
+"t": "Paste it into Bolt",
+"d": "Go to bolt.new, sign up free, and paste the whole sheet into the chat box. (Any tool from the list works.)",
 "ok": "You see a page with your headline and your prices."
 },
 {
@@ -142,18 +142,18 @@ window.EZ_K = {
 },
 {
 "t": "Add your photos and publish",
-"d": "Upload your photos into the boxes, then use the tool’s Publish or Share button.",
+"d": "Attach a photo in the chat and say “Put this in photo box 1.” Repeat. Then click Publish.",
 "ok": "Open the link on your phone. Text it to one person."
 }
 ],
 "stuck": [
 [
-"It keeps breaking when I click Fix",
-"Stop clicking Fix. Undo to the last version that worked (version history), paste the exact error, and ask “Explain this first, don’t change code yet.”"
+"It broke after a change",
+"Stop clicking Fix (each try uses up your free allowance). Go back to the last version that worked, describe what you see in plain words, and add “Explain what went wrong first. Don’t change anything yet.”"
 ],
 [
-"I ran out of credits",
-"Free credits come back daily. Come back tomorrow, or switch to the backup tool."
+"I ran out of free credits",
+"They come back daily, up to a monthly cap. Come back tomorrow, or switch to Google AI Studio."
 ],
 [
 "I want my own .com",
@@ -165,9 +165,9 @@ window.EZ_K = {
 ]
 ],
 "done": "You have a live link. Next: the app kit uses the same steps.",
-"privacy": "Lovable says content on Free and Pro may be used to train models unless you turn it off in settings. Don’t paste private customer details into any builder.",
+"privacy": "Don’t paste private customer details into any builder. Lovable says Free and Pro content may train its models unless you turn that off.",
 "example": {
-"prompt": "<goal>Build a one-page website for Mira’s Bakery. Visitors should come in on Saturday or order a custom cake.</goal>\n<who_its_for>Neighbors who walk by on the way to work, and parents planning birthdays. They want hours, prices and how to order, fast.</who_its_for>\n<context>Sections, in this order: 1) Headline: Bread and buns, baked at 6, gone by noon. 2) What we sell: sourdough $8, rye loaf $7, cardamom buns $4.50 (Saturdays only), custom cakes from $48 (3 days’ notice). 3) About: I’m Mira. I bake everything here, using my grandmother’s Swedish recipes. 4) Hours: Tue–Sat 7am–2pm. 14 Elm Street. 5) Contact button: Order a cake (opens email to orders@example.com). Photos: leave clearly marked photo boxes, I’ll add mine.</context>\n<example>The feel I want: warm, lots of space, big photos, like a neighborhood shop.</example>\n<format>One page, a single HTML file with inline CSS. Designed for a phone first. One big button for Order a cake. Easy-to-read text.</format>\n<rules>Use only the facts I gave. No made-up reviews, prices or awards. No stock photos of people. Don’t add pages.</rules>",
+"prompt": "<goal>Build a one-page website for Mira’s Bakery. Visitors should come in on Saturday or order a custom cake.</goal>\n<who_its_for>Neighbors who walk by on the way to work, and parents planning birthdays. They want hours, prices and how to order, fast.</who_its_for>\n<context>Sections, in this order: 1) Headline: Bread and buns, baked at 6, gone by noon. 2) What we sell: sourdough $8, rye loaf $7, cardamom buns $4.50 (Saturdays only), custom cakes from $48 (3 days’ notice). 3) About: I’m Mira. I bake everything here, using my grandmother’s Swedish recipes. 4) Hours: Tue–Sat 7am–2pm. 14 Elm Street. 5) Contact button: Order a cake (opens email to orders@example.com). Photos: leave clearly marked photo boxes, I’ll add mine.</context>\n<example>The feel I want: warm, lots of space, big photos, like a neighborhood shop.</example>\n<format>One page. Designed for a phone first. One big button for Order a cake. Easy-to-read text.</format>\n<rules>Use only the facts I gave. No made-up reviews, prices or awards. No stock photos of people. Don’t add pages.</rules>",
 "html": true
 },
 "proof": {
@@ -192,22 +192,22 @@ window.EZ_K = {
 [
 "Google AI Studio",
 "Free",
-"Build mode. Apps are private until you share them."
+"Start here: aistudio.google.com, then Build. Your app stays private until you share it."
+],
+[
+"Bolt (bolt.new)",
+"Free",
+"Free public link. Each “Attempt fix” uses some of your daily allowance."
 ],
 [
 "Lovable",
 "Free",
-"Built-in database and logins when you need them later."
-],
-[
-"Bolt",
-"Free",
-"300K tokens a day. Each “Attempt fix” spends tokens."
+"Free apps are invite-only: up to 10 people by email."
 ],
 [
 "Claude",
-"Paid to share",
-"Builds small tools on Free. A public link needs Pro."
+"Paid to save and share",
+"Builds small tools on Free. Saving between visits and a public link need Pro."
 ]
 ],
 "prep": [
@@ -218,7 +218,7 @@ window.EZ_K = {
 {
 "t": "Fill in the app sheet",
 "d": "Small wins. Logins and payments are a later kit.",
-"p": "<goal>Build a small app that [does one job] for [who].</goal>\n<context>On the screen: [the inputs, with choices]. It shows: [the result, with your real rules or prices]. It saves: [what to keep, for example a list of past quotes].</context>\n<format>One screen, phone first. Big inputs. Show the result as soon as something changes.</format>\n<rules>Use exactly my rules and prices. No logins, no payments. Saved items must still be there after I refresh the page.</rules>",
+"p": "<goal>Build a small app that [does one job] for [who].</goal>\n<context>On the screen: [the inputs, with choices]. It shows: [the result, with your real rules or prices]. It saves: [what to keep, for example a list of past quotes].</context>\n<format>One screen, phone first. Big inputs. Show the result as soon as something changes.</format>\n<rules>Use exactly my rules and prices. No logins, no payments. Saved items must still be there after I refresh the page. They can stay on this one device.</rules>",
 "ok": "Your real rules and prices are in the sheet."
 },
 {
@@ -235,12 +235,12 @@ window.EZ_K = {
 "t": "Try to break it",
 "d": "Paste:",
 "p": "Test this app like a picky customer: empty boxes, huge numbers, the wrong order of steps. Fix what breaks, and tell me what you changed.",
-"ok": "Nothing shows NaN, $0 for a real order, or an error."
+"ok": "Nothing shows a blank, $0 for a real order, or an error."
 },
 {
 "t": "Share it",
-"d": "Use the tool’s Publish or Share button, then open the link on a friend’s phone.",
-"ok": "Your friend adds one item."
+"d": "Click Share or Publish, then send the link to a friend.",
+"ok": "Your friend opens it and gets a price. (Saved items stay on each person’s own device.)"
 }
 ],
 "stuck": [
@@ -250,7 +250,7 @@ window.EZ_K = {
 ],
 [
 "It works for me but not my friend",
-"The app is still private. Look for Share or Publish, or invite them."
+"The app is still private. Click Share or Publish. On Lovable Free, invite them by email."
 ],
 [
 "It keeps getting bigger",
@@ -261,10 +261,10 @@ window.EZ_K = {
 "Give it a worked example: “6-inch, 2 layers, delivery should be $43.”"
 ]
 ],
-"done": "You built software. Next: automate one boring task.",
-"privacy": "Never paste passwords or secret keys into a builder. In AI Studio, a shared app uses your own free quota.",
+"done": "You made a working tool. Next: automate one boring task.",
+"privacy": "Never paste passwords or secret keys into a builder. In AI Studio, people using your shared app use up your free allowance.",
 "example": {
-"prompt": "<goal>Build a small app that prices custom cake orders for Mira’s Bakery, for Mira to use at the counter.</goal>\n<context>On the screen: size (6 inch $36, 8 inch $48, 10 inch $64), layers (1 or 2; 2 layers add $10), flavor (lemon, chocolate, cardamom), delivery (yes adds $15), pickup date. It shows: the total price, and a warning if the date is less than 3 days away (we need 3 days’ notice). It saves: a list of past quotes with customer name, cake and total.</context>\n<format>One screen, a single HTML file. Phone first. Big inputs. Show the total as soon as something changes.</format>\n<rules>Use exactly my prices. No logins, no payments. Saved quotes must still be there after I refresh the page (save them in this browser).</rules>",
+"prompt": "<goal>Build a small app that prices custom cake orders for Mira’s Bakery, for Mira to use at the counter.</goal>\n<context>On the screen: size (6 inch $36, 8 inch $48, 10 inch $64), layers (1 or 2; 2 layers add $10), flavor (lemon, chocolate, cardamom), delivery (yes adds $15), pickup date. It shows: the total price, and a warning if the date is less than 3 days away (we need 3 days’ notice). It saves: a list of past quotes with customer name, cake and total.</context>\n<format>One screen. Phone first. Big inputs. Show the total as soon as something changes.</format>\n<rules>Use exactly my prices. No logins, no payments. Saved quotes must still be there after I refresh the page.</rules>",
 "html": true
 },
 "proof": {
@@ -287,36 +287,32 @@ window.EZ_K = {
 "cost": "Free",
 "tools": [
 [
-"Zapier",
+"Zapier Free",
 "Free",
-"100 tasks a month, 2 steps (one trigger, one action), checks every 15 minutes. Copilot builds it from plain words."
+"Use this one. A Zap is “when this happens” + “do this”. Copilot is Zapier’s chat box: type what you want and it builds the Zap. 100 tasks (runs) a month, checks every 15 minutes."
 ],
 [
-"Zapier trial",
+"Zapier’s 14-day trial",
 "Free 14 days",
-"Pro trial, no card: lets you add more steps, like an AI step."
-],
-[
-"Make",
-"Free",
-"1,000 credits a month. More steps allowed."
+"Starts on its own when you sign up, no card. Allows extra steps, which stop when it ends."
 ],
 [
 "Claude Cowork",
 "Paid",
-"Scheduled tasks in plain words. Start with tasks that only read and draft."
+"Does it from plain words on a schedule. Start with tasks that only read and draft."
 ]
 ],
 "prep": [
 "A list of what you do every week.",
-"Pick one task: 10+ minutes, same steps every time, harmless if it goes wrong."
+"Pick one task: 10+ minutes, same steps every time, harmless if it goes wrong.",
+"No Google Form yet? forms.google.com → Blank. Add the questions (name, what they need, date). Then Responses → Link to Sheets, and Send to get the link."
 ],
 "steps": [
 {
 "t": "Let AI pick the task and plan it",
-"d": "Paste this into any free chat.",
-"p": "<goal>Help me automate one boring task, starting small.</goal>\n<context>My weekly tasks: [list]. My apps: [for example Gmail, Google Sheets, Google Forms]. I’m on Zapier Free: one trigger and one action, 100 tasks a month.</context>\n<format>1) The best task to start with, and why. 2) Trigger → action in plain words. 3) The exact request to paste into Zapier Copilot. 4) How to test it.</format>\n<rules>Read and draft only: never send, pay or delete on its own. If my task needs more than 2 steps, say so and give me the 2-step version.</rules>",
-"ok": "You get one trigger and one action, in plain words."
+"d": "Paste this into Claude, ChatGPT or Gemini (free is fine).",
+"p": "<goal>Help me automate one boring task, starting small.</goal>\n<context>My weekly tasks: [list]. My apps: [for example Gmail, Google Sheets, Google Forms]. I’m on Zapier Free: one trigger and one action, 100 tasks a month.</context>\n<format>1) The best task to start with, and why. 2) “When this happens” → “do this”, in plain words. 3) The exact request to paste into Zapier Copilot. 4) How to test it.</format>\n<rules>It may only read or write drafts (like a Gmail draft I check). Never send, pay or delete on its own. Skip anything my apps already do by themselves (Google Forms already saves answers to a sheet). If it needs more than 2 steps, give me the 2-step version.</rules>",
+"ok": "You get one “when this happens” and one “do this”, in plain words."
 },
 {
 "t": "Build it with Copilot",
@@ -326,7 +322,7 @@ window.EZ_K = {
 {
 "t": "Test with one real example",
 "d": "Send one real test (fill in your form once, or send yourself the email).",
-"ok": "Zapier’s test shows your data. Then switch it on."
+"ok": "Zapier’s test shows your data. Then click Publish."
 },
 {
 "t": "Watch the first run",
@@ -345,27 +341,28 @@ window.EZ_K = {
 ],
 [
 "It says I need more steps",
-"Use the 2-step version from step 1, or the 14-day trial."
+"Use the 2-step version from step 1. (A new account’s 14-day trial allows more, until it ends.)"
 ],
 [
 "Nothing happened",
-"Wait 15 minutes. Then check Zap history for errors."
+"Wait 15 minutes. Then open Zap history (Zapier’s list of every run) and look for errors."
 ]
 ],
 "done": "Something now happens without you. Next: a month of posts.",
 "privacy": "Start with automations that draft, not send. Check what you connect: only the accounts this task needs.",
 "example": {
-"prompt": "<goal>Help me automate one boring task, starting small.</goal>\n<context>My weekly tasks: answering cake order requests from my website’s Google Form (about 10 a week, 15 minutes each: I copy the details into my order sheet and email back to confirm), ordering flour every Monday, posting on Instagram. My apps: Gmail, Google Sheets, Google Forms. I’m on Zapier Free: one trigger and one action, 100 tasks a month.</context>\n<format>1) The best task to start with, and why. 2) Trigger → action in plain words. 3) The exact request to paste into Zapier Copilot. 4) How to test it.</format>\n<rules>Read and draft only: never send, pay or delete on its own. If my task needs more than 2 steps, say so and give me the 2-step version.</rules>",
+"prompt": "<goal>Help me automate one boring task, starting small.</goal>\n<context>My weekly tasks: answering cake order requests from my website’s Google Form (about 10 a week, 15 minutes each: I copy the details into my order sheet and email back to confirm), ordering flour every Monday, posting on Instagram. My apps: Gmail, Google Sheets, Google Forms. I’m on Zapier Free: one trigger and one action, 100 tasks a month.</context>\n<format>1) The best task to start with, and why. 2) “When this happens” → “do this”, in plain words. 3) The exact request to paste into Zapier Copilot. 4) How to test it.</format>\n<rules>It may only read or write drafts (like a Gmail draft I check). Never send, pay or delete on its own. Skip anything my apps already do by themselves (Google Forms already saves answers to a sheet). If it needs more than 2 steps, give me the 2-step version.</rules>",
 "html": false
 },
 "proof": {
-"kitScore": 4.0,
+"kitScore": 4.8,
 "plainScore": 2.3,
 "winner": "template",
-"reason": "The kit answer gives a concrete Zapier Free plan with a Copilot request and a real test, though it picks a redundant form-to-sheet action instead of the Gmail draft; the plain answer is a generic multi-step bakery overview that ignores the one-trigger, one-action limit and has no paste-ready request.",
+"reason": "The kit answer gives the specific Zapier Free plan the person needed (form response to Gmail draft, a paste-ready Copilot request, a real test) while the plain answer is a generic multi-step bakery automation guide that ignores the one-trigger, one-action free limit.",
 "plainAsk": "How do I automate my bakery cake orders with AI?",
 "plainOut": "# Automating bakery cake orders with AI\n\nCake orders usually follow the same loop: a customer asks, you reply with details and a price, they pay a deposit, you remember the date, and you bake. AI can take over most of the typing and tracking. Here is a practical way to set it up.\n\n## 1. Map your current process first\n\nWrite down what happens from the first message to pickup:\n\n1. Customer asks (Instagram DM, text, email, website form, phone)\n2. You collect details: date, size or servings, flavor, design, allergies, pickup or delivery\n3. You quote a price\n4. They pay a deposit\n5. You schedule the bake and decoration\n6. You send a reminder, then they pick up\n\nMark the steps where you repeat yourself. Those are the ones to automate.\n\n## 2. Put every request into one intake form\n\nMessy DMs are the biggest time sink. Send everyone to a single order form (Google Forms, Jotform, Tally, or Shopify, Square or Wix if you have a site). Ask for:\n\n- Name, phone, email\n- Event date and pickup or delivery\n- Servings or size\n- Flavor, filling and frosting (use dropdowns)\n- Design notes and a reference photo upload\n- Allergies or dietary needs\n- Message on the cake\n\nPut the link in your Instagram bio, Facebook page, Google Business profile and your auto-replies. Dropdowns keep orders consistent, and the form tells you which details are missing before you start.\n\n## 3. Use AI to answer and quote\n\n- **Auto-replies:** Set up an Instagram or Facebook auto-response (Meta Business Suite has this built in). It sends the form link and your lead time.\n- **Reply drafts:** Give an AI assistant (Claude or ChatGPT) your menu, pricing rules, lead times, delivery area and policies. Paste in a customer message and it drafts the reply. You review it and send.\n- **Quote calculator:** Write your pricing rules out, for example \"6-inch serves 8-10, $55 base, fondant +$20, custom topper +$15, delivery $X per mile\". AI can turn a form entry into a quote. Or build the same math in a spreadsheet.\n- **Photo reference:** AI can describe a customer's inspiration photo, which helps you judge how complex it is and how long it will take.\n\n## 4. Connect the pieces with an automation tool\n\nZapier, Make or Airtable Automations can link the form to the rest of your workflow with no code. A typical chain:\n\n1. A new form entry is added to an Airtable or Google Sheets order tracker\n2. An AI step reads the entry and drafts a quote and confirmation email\n3. A deposit link (Stripe, Square or PayPal invoice) is sent\n4. When the deposit is paid, the order is marked \"Confirmed\" and a calendar event is created on the event date\n5. A reminder goes out one week and one day before pickup\n6. A thank-you and review request goes out after pickup\n\n## 5. Protect your capacity\n\nLimit orders so you don't overbook:\n\n- Set a maximum number of cakes per day in your calendar or form tool, and block dates automatically when you reach it\n- Set a minimum lead time (for example 7 days for custom cakes)\n- Flag rush or large orders so they come to you for manual approval\n\n## 6. Automate the baking-side admin\n\n- **Production list:** Have the tracker produce a weekly view sorted by date, with flavors, sizes and allergies.\n- **Ingredient and shopping lists:** Give AI your recipes and the week's orders, and it can total the flour, butter, eggs and so on.\n- **Labels and tickets:** Generate a printable order ticket for each cake.\n\n## What to keep human\n\n- Final pricing on complex designs\n- Allergy confirmation (always double-check this yourself)\n- Anything emotional, such as weddings, memorials or complaints\n- Reviewing AI drafts before they go out, at least at first\n\n## A simple starter plan\n\n**Week 1:** Build the order form and put it everywhere. Create a tracker spreadsheet.\n**Week 2:** Write your pricing rules and FAQ. Use an AI assistant to draft replies. Turn on auto-replies.\n**Week 3:** Add deposit links and calendar events using Zapier or Make.\n**Week 4:** Add reminders, review requests and the weekly production list.\n\n## Tools to consider\n\n- Forms: Google Forms, Tally, Jotform\n- Tracker: Airtable, Google Sheets, Notion\n- Automation: Zapier, Make\n- Payments: Square, Stripe, PayPal\n- All-in-one bakery options: Square Online, Shopify, or bakery software such as Bakesmart or Cakesmart. Check current pricing.\n- AI: Claude or ChatGPT for drafting and quotes\n\n## Tips\n\n- Start small. A form plus a tracker already saves hours.\n- Always take a deposit to cut down no-shows.\n- Keep a written policy page (cancellations, allergens, pickup) and link to it in every confirmation.\n\nIf you tell me where most of your orders come from (Instagram, phone, website), how many cakes you do per week, and which tools you already use, I can suggest a specific setup. I can also help write your pricing rules, the AI reply prompt, or the order form questions.",
-"kitOut": "## 1) The best task to start with, and why\n\n**Start with the cake order requests.** They're your biggest weekly time cost (about 10 a week x 15 minutes = roughly 2.5 hours). They're also the same steps every time, and your data is already in Google Forms, Sheets and Gmail. Flour ordering involves paying, and Instagram posts need your creative judgment, so both are poor first picks.\n\n## 2) Trigger → action in plain words\n\n**Heads-up:** the full job has 3 steps: (1) a form response arrives, (2) the details go into your order sheet, (3) a confirmation email goes out. Zapier Free allows only one trigger and one action, so here is the **2-step version**:\n\n- **Trigger:** a new response comes in on your cake order Google Form.\n- **Action:** add a new row to your order sheet in Google Sheets with the details (name, email, cake type, date, notes).\n\nThis removes the copy-and-paste part of the 15 minutes. You still write the confirmation email yourself, but the sheet row is already filled in, so it takes about a minute. You could also add a Gmail **draft** as a second Zap, but on the Free plan that would take a second Zap, which may not be available. Keep it to this one for now.\n\nYour volume is about 10 orders a week, or around 40 a month. That's well under the 100 tasks a month limit.\n\n## 3) The exact request to paste into Zapier Copilot\n\n> When a new response is submitted in my Google Form \"[your cake order form name]\", add a new row to my Google Sheet \"[your order sheet name]\", worksheet \"[tab name]\". Map each form answer to its matching column: name, email, phone, cake type, size, flavor, date needed, and notes. Only add a row. Do not send emails, do not edit or delete any existing rows, and do not take any other action.\n\nReplace the parts in brackets with your real names. If a column in your sheet has a different name, tell Copilot the match, for example \"Date needed goes in column Pickup Date.\"\n\n## 4) How to test it\n\n1. Before you turn it on, use Zapier's **Test trigger** step. It pulls in a real recent form response.\n2. Run **Test action**. Open your order sheet and check that one new row appeared with every detail in the right column.\n3. Submit one fake order yourself on the form, such as \"Test Order, my own email\". Wait a few minutes (on Free, Zapier checks about every 15 minutes) and confirm the row appears.\n4. Delete the test row yourself, and don't let Zapier do it.\n5. Turn the Zap **On**. For the first week, compare the sheet with your form responses to make sure nothing was missed or put in the wrong column.\n6. Later, when you're ready for more, upgrading to a paid plan lets you add the third step: a **Gmail draft** confirmation. It would be a draft only, so you read it and press Send yourself."
+"kitOut": "## 1) Best task to start with\n\n**Confirming cake order requests.** It's your biggest time cost: about 10 a week at 15 minutes each, which is roughly 2.5 hours a week. It's the same steps every time. It also fits your free plan, because 10 orders a week is about 40 tasks a month, well under the 100 limit.\n\nI'd skip the other two for now:\n- **Flour:** it's only one task a week, and ordering means paying, which this setup can't do.\n- **Instagram:** it needs your creative input each time.\n\n## 2) \"When this happens\" → \"do this\"\n\n**When this happens:** a new answer arrives in your cake order Google Form. (Zapier watches the form's response sheet in Google Sheets, so the trigger is \"New Spreadsheet Row\" in Google Sheets.)\n\n**Do this:** create a **Gmail draft** to that customer. It confirms their order using the details they entered, and it waits in your Drafts folder for you to check and send.\n\nYou don't need a step that copies details into your order sheet. Google Forms already saves each answer to a sheet, so you can use that sheet as your order sheet. Zapier never sends the email. You read each draft, fix anything, and press Send yourself. That takes about 1 minute instead of 15.\n\n## 3) Paste this into Zapier Copilot\n\n> When a new row is added in my Google Sheet \"Cake Orders (Form responses 1)\", create a draft in Gmail. Do not send it. Address the draft to the email in the customer's email column. Use the subject \"Your cake order request: [cake type/date]\". The body should say: \"Hi [name], thanks for your order request! Here is what I have: [cake type], [flavor], [servings], [pickup/delivery date], [notes]. I'll confirm the price and availability shortly. Thank you! [My name]\". Use the matching columns from the sheet for each bracket.\n\nBefore you paste it, change the sheet name and the bracket labels to match your form's real column headings. Also swap in your own name and wording.\n\n## 4) How to test it\n\n1. In Zapier, turn the Zap on only after the test step below works.\n2. Submit your own cake form with your own email address and made-up details, such as \"Test Cake, vanilla, 12 servings\".\n3. Open the Zap's trigger step and click **Test trigger**. Zapier should find your test row. If it doesn't, wait a minute and try again.\n4. Click **Test action** on the Gmail step. Then open Gmail → **Drafts**. You should see a draft addressed to you with all the details filled in correctly.\n5. Check that nothing was sent. The message should still be a draft, and your Sent folder should be unchanged.\n6. If a detail is blank or in the wrong place, edit the draft template in the Zap so the field matches the right column. Then run the test again.\n7. Delete the test row and the test draft by hand, then turn the Zap on.\n8. For the first week, read every draft before you send it. Zapier Free may check for new rows only every 15 minutes, so a draft can show up a bit late. That's normal.\n\n**Later, if it works well:** you could add a second step that tags the row as \"confirmed\". On the Free plan, though, you only get one action, so stay with the draft for now.",
+"note": "Our first version scored 4.0: it picked a step Google Forms already does. We fixed the prompt and tested again."
 }
 },
 {
@@ -378,23 +375,13 @@ window.EZ_K = {
 "cost": "Free",
 "tools": [
 [
-"Claude",
+"Claude, ChatGPT or Gemini",
 "Free",
-"Paste your voice profile from kit 1."
-],
-[
-"ChatGPT",
-"Free",
-"Same prompt works."
-],
-[
-"Gemini",
-"Free",
-"Same prompt works."
+"Any of them. The prompt is the same."
 ]
 ],
 "prep": [
-"Your voice profile (kit 1).",
+"Your voice profile from kit 1. No profile? Paste 2 captions you wrote instead.",
 "What’s happening this month: dates, new things, prices.",
 "1 or 2 past posts that did well."
 ],
@@ -427,7 +414,7 @@ window.EZ_K = {
 "Say “Remove anything not on my list.”"
 ]
 ],
-"done": "A month done in under an hour. Next: turn a voice memo into a handbook.",
+"done": "12 captions written. The photos are still yours to take. Next: turn a voice memo into a handbook.",
 "privacy": "Take out names, phone numbers and anything private before you paste.",
 "example": {
 "prompt": "<goal>Write 12 Instagram posts for March: 3 a week (Tue, Thu, Sat).</goal>\n<who_its_for>Locals who stop by on the way to work, and parents planning birthdays.</who_its_for>\n<context>My voice: short, warm, plain words, a little dry; I say “See you at 7” and “gone by noon”; no emojis. This month: cardamom buns every Saturday ($4.50, sell out by 11); new hot cross buns from March 17 ($3.75, until Easter); closed Tuesday March 3 for an oven repair; custom cakes need 3 days’ notice, from $48. Two posts that did well: “Rye loaves are back. Crusty outside, soft inside, gone by noon. See you at 7.” and “We’re out of flour dust and into spring. Open 7am.”</context>\n<format>A table: date, post, photo idea. Each post under 40 words.</format>\n<rules>Use only my facts and dates. No hashtags. No emojis. Don’t say “indulge”, “mouthwatering” or “treat yourself”.</rules>",
