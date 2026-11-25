@@ -69,19 +69,19 @@ window.EZ_TOOLS2 = {
 ],
 "picks": {
 "pictures": {
-"start": "adobe-firefly",
-"stepUp": "canva-ai",
+"start": "canva-ai",
+"stepUp": "adobe-firefly",
 "skip": "midjourney",
-"startWhy": "Free daily images; fixes real product photos with commercially safe models.",
-"stepUpWhy": "Move your best image into Canva to add fonts, colors and details.",
+"startWhy": "You may already use it. Free to try, and the design is ready to post.",
+"stepUpWhy": "Better AI photos. For selling, pick Adobe’s own Firefly model.",
 "skipWhy": "No free trial, and Basic plan images can be public."
 },
 "video": {
 "start": "google-flow",
 "stepUp": "kling",
 "skip": "runway",
-"startWhy": "50 free credits a day, and failed clips refund.",
-"stepUpWhy": "Pay about $10 for one month when shots must match.",
+"startWhy": "Free every day with a Google account. Check Google’s terms before using a clip in an ad.",
+"stepUpWhy": "A paid month if your product must look the same in every shot. Billing complaints are common: set a reminder to cancel.",
 "skipWhy": "For one quick clip, Flow or Kling get you there cheaper."
 },
 "screens": {
@@ -90,7 +90,7 @@ window.EZ_TOOLS2 = {
 "skip": "v0",
 "startWhy": "Free, type one sentence, and get screens to share in minutes.",
 "stepUpWhy": "If your designer uses Figma, make the design clickable there.",
-"skipWhy": "Don't pay at this stage; v0's credits are dollars and developer-flavored."
+"skipWhy": "Don’t pay at this stage. v0 charges in dollars of credit and is built for developers."
 },
 "website": {
 "start": "wix",
@@ -113,7 +113,7 @@ window.EZ_TOOLS2 = {
 "stepUp": "perplexity",
 "skip": "notion-ai",
 "startWhy": "Free, and answers only from your files, so you can check it.",
-"stepUpWhy": "For answers not in your files; always click its sources.",
+"stepUpWhy": "When you also need answers from the web, with sources to click.",
 "skipWhy": "Full AI needs a $20 Business seat; skip unless you live in Notion."
 },
 "meetings": {
@@ -121,14 +121,14 @@ window.EZ_TOOLS2 = {
 "stepUp": "granola",
 "skip": "otter",
 "startWhy": "Free, unlimited, and its visible bot reminds everyone they're recorded.",
-"stepUpWhy": "No bot and notes that feel like yours; you must announce it.",
+"stepUpWhy": "No bot joins, so you must say out loud that AI is taking notes. Read its lawsuit note first.",
 "skipWhy": "Only worth it for word-for-word transcripts; Fathom's free plan is bigger."
 },
 "slides": {
 "start": "gamma",
 "stepUp": null,
 "skip": null,
-"startWhy": "Write your key points, generate a draft, then fix it yourself.",
+"startWhy": "Paste your key points, get a draft deck, fix it, then check it before you present.",
 "stepUpWhy": "",
 "skipWhy": ""
 },
@@ -146,7 +146,7 @@ window.EZ_TOOLS2 = {
 "skip": "manus",
 "startWhy": "Free plan covers one simple task between two apps you use.",
 "stepUpWhy": "Only once Zapier gets pricey and you enjoy tinkering.",
-"skipWhy": "Looks magic, but costs are unpredictable; an experiment, not automation."
+"skipWhy": "Looks like magic, but costs are hard to predict. Fine to play with, not to run your business on."
 }
 },
 "tools": [
@@ -177,7 +177,7 @@ window.EZ_TOOLS2 = {
 "date": "Oct 2026"
 },
 {
-"t": "A reviewer touched up a video on the go with Nano Banana.",
+"t": "A reviewer touched up a video on the go with Google’s image editor.",
 "src": "App Store",
 "url": "https://apps.apple.com/us/app/google-flow/id6751294549?see-all=reviews",
 "date": "Sep 2026"
@@ -224,7 +224,7 @@ window.EZ_TOOLS2 = {
 "url": "https://support.google.com/flow/answer/16526234?hl=en"
 },
 {
-"t": "A visible watermark is on by default; you can switch it off in settings in most countries. Google's invisible SynthID mark always stays.",
+"t": "Videos get a small Google logo. You can turn it off in settings in most countries. A hidden “made with AI” tag always stays.",
 "url": "https://support.google.com/flow/answer/16353333?hl=en"
 },
 {
@@ -232,7 +232,7 @@ window.EZ_TOOLS2 = {
 }
 ],
 "tryIf": "you want to make your first AI video without paying.",
-"skipIf": "You need the same person or product identical in every shot.",
+"skipIf": "you need the same person or product identical in every shot.",
 "laterNote": "",
 "tested": null
 },
@@ -326,7 +326,7 @@ window.EZ_TOOLS2 = {
 }
 ],
 "tryIf": "you make lots of short social video and want many models together.",
-"skipIf": "You're on a tight budget: no real free trial, refunds are hard.",
+"skipIf": "you're on a tight budget: no real free trial, refunds are hard.",
 "laterNote": "",
 "tested": null
 },
@@ -418,7 +418,7 @@ window.EZ_TOOLS2 = {
 }
 ],
 "tryIf": "you want realistic photo-to-video and will pay about $10 for a month.",
-"skipIf": "You hate fiddly billing and hard-to-find cancel buttons.",
+"skipIf": "you hate fiddly billing and hard-to-find cancel buttons.",
 "laterNote": "",
 "tested": null
 },
@@ -509,7 +509,7 @@ window.EZ_TOOLS2 = {
 }
 ],
 "tryIf": "you already edit video and want precise control.",
-"skipIf": "You need one quick clip; Flow or Kling are cheaper.",
+"skipIf": "you need one quick clip; Flow or Kling are cheaper.",
 "laterNote": "",
 "tested": null
 },
@@ -597,7 +597,7 @@ window.EZ_TOOLS2 = {
 }
 ],
 "tryIf": "you want beautiful style above all and $10 is fine.",
-"skipIf": "You need text in the image, privacy cheaply, or a free test.",
+"skipIf": "you need text in the image, privacy cheaply, or a free test.",
 "laterNote": "",
 "tested": null
 },
@@ -680,7 +680,7 @@ window.EZ_TOOLS2 = {
 }
 ],
 "tryIf": "you need a poster, flyer or logo idea with words spelled right.",
-"skipIf": "You need private work on a $0 budget.",
+"skipIf": "you need private work on a $0 budget.",
 "laterNote": "",
 "tested": null
 },
@@ -764,7 +764,7 @@ window.EZ_TOOLS2 = {
 }
 ],
 "tryIf": "you already use Canva or need the finished design, not a picture.",
-"skipIf": "The image itself has to be top-tier art.",
+"skipIf": "the image itself has to be top-tier art.",
 "laterNote": "",
 "tested": null
 },
@@ -842,7 +842,7 @@ window.EZ_TOOLS2 = {
 "url": "https://helpx.adobe.com/creative-cloud/apps/generative-ai/generative-credits-faq.html"
 },
 {
-"t": "Only Adobe's own models are called commercially safe, not the partner models."
+"t": "Selling what you make? Choose Adobe’s own Firefly model, not the Google or OpenAI ones inside Firefly. Adobe only vouches for its own."
 },
 {
 "t": "Adobe says Firefly isn't trained on subscribers' personal content.",
@@ -853,7 +853,7 @@ window.EZ_TOOLS2 = {
 }
 ],
 "tryIf": "you sell products and want the least copyright worry, or fix photos.",
-"skipIf": "You want the most striking art.",
+"skipIf": "you want the most striking art.",
 "laterNote": "",
 "tested": null
 },
@@ -870,12 +870,12 @@ window.EZ_TOOLS2 = {
 "line": "Dozens of image and video models, plus live draw-and-update images.",
 "bestAt": "Trying many models fast and sketching ideas live.",
 "whoFor": "Curious creators and designers who like to experiment.",
-"free": "100 units / day. Commercial use on free is unclear.",
+"free": "100 free uses a day. Commercial use on free is unclear.",
 "paid": "From $9/mo, or $5/mo billed yearly (Basic)",
 "priceSource": "https://www.krea.ai/pricing",
 "confirmed": true,
 "score": 3,
-"scoreWhy": "Generous free units, but the model menu overwhelms first-timers.",
+"scoreWhy": "Generous free use, but the menu of models overwhelms first-timers.",
 "likes": [
 {
 "t": "“The generation speed is impressive”",
@@ -927,7 +927,7 @@ window.EZ_TOOLS2 = {
 "ratingsNote": "",
 "watch": [
 {
-"t": "Units vary a lot by model. Video models can use a day's 100 free units fast."
+"t": "Each model uses a different amount of your daily allowance. Video can use it up fast."
 },
 {
 "t": "Krea's own page contradicts itself on commercial use for free. Treat free as personal use."
@@ -937,7 +937,7 @@ window.EZ_TOOLS2 = {
 }
 ],
 "tryIf": "you want to compare models side by side for a few dollars.",
-"skipIf": "Too many choices overwhelm you.",
+"skipIf": "too many choices overwhelm you.",
 "laterNote": "",
 "tested": null
 },
@@ -1027,7 +1027,7 @@ window.EZ_TOOLS2 = {
 }
 ],
 "tryIf": "you need to cut, caption and post a short video today.",
-"skipIf": "Broad content licenses worry you, or you film client work.",
+"skipIf": "broad content licenses worry you, or you film client work.",
 "laterNote": "",
 "tested": null
 },
@@ -1051,12 +1051,6 @@ window.EZ_TOOLS2 = {
 "scoreWhy": "Free, type one sentence, results look good right away.",
 "likes": [
 {
-"t": "Gets first layouts done fast.",
-"src": "X",
-"url": "https://x.com/hakanturinay/status/2064746904584339459",
-"date": "Jun 2026"
-},
-{
 "t": "Made a much stronger design, closer to what the user pictured.",
 "src": "X",
 "url": "https://x.com/Kole_Sam/status/2065147579357352019",
@@ -1077,12 +1071,6 @@ window.EZ_TOOLS2 = {
 "date": "Feb 2026"
 },
 {
-"t": "Blamed for making AI-built apps look generic.",
-"src": "X",
-"url": "https://x.com/ManasCodeXart/status/2061709390433091893",
-"date": "Jun 2026"
-},
-{
 "t": "Hard to make small tweaks like fonts and backgrounds.",
 "src": "X",
 "url": "https://x.com/Geekvineeth/status/2059635204361486616",
@@ -1093,7 +1081,7 @@ window.EZ_TOOLS2 = {
 "ratingsNote": "No review-site ratings yet. Product Hunt's main Stitch page had no reviews on 25 Nov 2026.",
 "watch": [
 {
-"t": "It's a design, not a live website. You need another tool to make it work."
+"t": "You get a design to show people. To make it a working website, use another tool."
 },
 {
 "t": "It's a Google Labs experiment. It can change, add prices or shut down."
@@ -1233,7 +1221,7 @@ window.EZ_TOOLS2 = {
 "date": "about 5 months ago"
 },
 {
-"t": "The highest-rated builder on Trustpilot, with 70% five-star reviews.",
+"t": "70% of its Trustpilot reviews are five stars (Nov 2026).",
 "src": "Trustpilot",
 "url": "https://www.trustpilot.com/review/lovable.dev",
 "date": "Nov 2026"
@@ -1253,7 +1241,7 @@ window.EZ_TOOLS2 = {
 "date": "about 3 months ago"
 },
 {
-"t": "Only an AI bot answers support requests.",
+"t": "A reviewer says only an AI bot answered their support request.",
 "src": "Trustpilot",
 "url": "https://www.trustpilot.com/review/lovable.dev",
 "date": "Nov 2026"
@@ -1307,7 +1295,7 @@ window.EZ_TOOLS2 = {
 "priceSource": "https://bolt.new/pricing",
 "confirmed": true,
 "score": 3,
-"scoreWhy": "Easy chat, but code-heavy screens and token burn confuse beginners.",
+"scoreWhy": "Easy chat, but code-heavy screens and fast-draining allowance confuse beginners.",
 "likes": [
 {
 "t": "A non-developer said it changed what is possible for someone like him.",
@@ -1356,7 +1344,7 @@ window.EZ_TOOLS2 = {
 "url": "https://www.trustpilot.com/review/bolt.new"
 }
 ],
-"ratingsNote": "78% of Trustpilot reviews are one-star, mostly about token burn and billing.",
+"ratingsNote": "78% of Trustpilot reviews are one star, mostly about the allowance running out and billing.",
 "watch": [
 {
 "t": "Bigger projects use more tokens per message. Free daily limits run out fast on real apps."
@@ -1369,7 +1357,7 @@ window.EZ_TOOLS2 = {
 "url": "https://vibetierlist.com/research/ai-training-opt-out/"
 },
 {
-"t": "AI-built apps on Bolt and similar tools have been found exposing data.",
+"t": "In May 2026, researchers reported apps built with Bolt and similar tools exposing data.",
 "url": "https://pranava0x0.github.io/vibe-coding-security/advisories/ongoing-vibe-platform-exposure.html"
 }
 ],
@@ -1396,7 +1384,7 @@ window.EZ_TOOLS2 = {
 "priceSource": "https://v0.app/pricing",
 "confirmed": true,
 "score": 3,
-"scoreWhy": "Great-looking output, but developer-flavored and credits are pricey.",
+"scoreWhy": "Great-looking output, but built for developers and credits are pricey.",
 "likes": [
 {
 "t": "Turns a rough idea into a working screen in minutes.",
@@ -1515,7 +1503,7 @@ window.EZ_TOOLS2 = {
 "date": "Nov 2026"
 },
 {
-"t": "Three weeks of work was deleted.",
+"t": "A reviewer says three weeks of their work was deleted.",
 "src": "Trustpilot",
 "url": "https://www.trustpilot.com/review/replit.com",
 "date": "Nov 2026"
@@ -2009,7 +1997,7 @@ window.EZ_TOOLS2 = {
 "t": "Answers only come from your files, so it knows nothing you didn't upload."
 },
 {
-"t": "Check Google's terms before uploading client or confidential files."
+"t": "Ask before uploading client, donor or staff files. A personal Google account may not be covered by your workplace’s rules."
 },
 {
 "t": "Google renamed NotebookLM to Gemini Notebook in July 2026. Old links still work.",
@@ -2017,7 +2005,7 @@ window.EZ_TOOLS2 = {
 }
 ],
 "tryIf": "you have reading to get through and want answers you can trace.",
-"skipIf": "You need current web info or heavy team collaboration.",
+"skipIf": "you need current web info or heavy team collaboration.",
 "laterNote": "",
 "tested": null
 },
@@ -2101,7 +2089,7 @@ window.EZ_TOOLS2 = {
 }
 ],
 "tryIf": "you want faster research with sources you can check.",
-"skipIf": "You'd paste answers without checking, or you fear subscription billing.",
+"skipIf": "you'd paste answers without checking, or you fear subscription billing.",
 "laterNote": "",
 "tested": null
 },
@@ -2185,7 +2173,7 @@ window.EZ_TOOLS2 = {
 }
 ],
 "tryIf": "your team already keeps its work in Notion.",
-"skipIf": "You'd adopt Notion just for the AI.",
+"skipIf": "you'd adopt Notion just for the AI.",
 "laterNote": "",
 "tested": null
 },
@@ -2275,7 +2263,7 @@ window.EZ_TOOLS2 = {
 }
 ],
 "tryIf": "you need a deck by tomorrow and good enough, then tweak, is fine.",
-"skipIf": "You must match a strict company template or exact PowerPoint files.",
+"skipIf": "you must match a strict company template or exact PowerPoint files.",
 "laterNote": "",
 "tested": null
 },
@@ -2368,7 +2356,7 @@ window.EZ_TOOLS2 = {
 }
 ],
 "tryIf": "you want easy notes and always announce your AI notetaker.",
-"skipIf": "You work in law, health, HR or with sensitive recordings.",
+"skipIf": "you work in law, health, HR or with sensitive recordings.",
 "laterNote": "",
 "tested": null
 },
@@ -2462,7 +2450,7 @@ window.EZ_TOOLS2 = {
 }
 ],
 "tryIf": "you need exact transcripts and 300 free minutes covers you.",
-"skipIf": "You only want short action items; Fathom's free plan is bigger.",
+"skipIf": "you only want short action items; Fathom's free plan is bigger.",
 "laterNote": "",
 "tested": null
 },
@@ -2477,7 +2465,7 @@ window.EZ_TOOLS2 = {
 ],
 "line": "A free meeting recorder for Zoom, Meet and Teams, with summaries.",
 "bestAt": "Free, unlimited meeting recording with quick summaries.",
-"whoFor": "Small business owners and salespeople on many video calls.",
+"whoFor": "Anyone with regular Zoom, Meet or Teams calls who wants notes without typing.",
 "free": "Unlimited recordings and transcriptions, instant AI summaries; some AI features are limited use.",
 "paid": "Premium $20/mo, or $16/mo billed yearly",
 "priceSource": "https://www.fathom.ai/pricing",
@@ -2535,7 +2523,7 @@ window.EZ_TOOLS2 = {
 "ratingsNote": "Recent visible reviews were all positive; these complaints come from inside 5-star reviews.",
 "watch": [
 {
-"t": "Tell everyone before you record; some US states require everyone's consent."
+"t": "Ask your manager or IT before connecting a work calendar; some workplaces ban AI notetakers. Then tell everyone before you record."
 },
 {
 "t": "Its bot joins your call so people see it, but consent laws still apply."
@@ -2545,7 +2533,7 @@ window.EZ_TOOLS2 = {
 }
 ],
 "tryIf": "you want free meeting notes today.",
-"skipIf": "You meet mostly in person or can't have a bot on client calls.",
+"skipIf": "you meet mostly in person or can't have a bot on client calls.",
 "laterNote": "",
 "tested": null
 },
@@ -2635,7 +2623,7 @@ window.EZ_TOOLS2 = {
 }
 ],
 "tryIf": "you need a voiceover and don't want to record yourself.",
-"skipIf": "You'd clone anyone but yourself without written permission.",
+"skipIf": "you'd clone anyone but yourself without written permission.",
 "laterNote": "",
 "tested": null
 },
@@ -2725,7 +2713,7 @@ window.EZ_TOOLS2 = {
 }
 ],
 "tryIf": "you want a birthday song or a jingle for fun.",
-"skipIf": "You need music you fully own for a big commercial project.",
+"skipIf": "you need music you fully own for a big commercial project.",
 "laterNote": "",
 "tested": null
 },
@@ -2814,7 +2802,7 @@ window.EZ_TOOLS2 = {
 }
 ],
 "tryIf": "you have one clear repeat task between two popular apps.",
-"skipIf": "You'd run thousands of tasks a month or need deep custom logic.",
+"skipIf": "you'd run thousands of tasks a month or need deep custom logic.",
 "laterNote": "",
 "tested": null
 },
@@ -2900,14 +2888,14 @@ window.EZ_TOOLS2 = {
 }
 ],
 "tryIf": "you outgrew Zapier's price or you enjoy tinkering.",
-"skipIf": "This is your first automation.",
+"skipIf": "this is your first automation.",
 "laterNote": "",
 "tested": null
 },
 {
 "id": "manus",
 "name": "Manus",
-"maker": "Manus (owned by Meta)",
+"maker": "Manus (Meta agreed to buy it, Dec 2025)",
 "url": "https://manus.im",
 "group": "work",
 "jobs": [
@@ -2927,12 +2915,6 @@ window.EZ_TOOLS2 = {
 "t": "Praised for research and multi-step tasks that save time.",
 "src": "G2 (search summary)",
 "url": "https://www.g2.com/products/manus/reviews",
-"date": "date not shown"
-},
-{
-"t": "A reviewer liked the replay that shows what the agent did (secondhand, treat with caution).",
-"src": "Zemith (competitor page)",
-"url": "https://www.zemith.com/en/learn/manus-review",
 "date": "date not shown"
 }
 ],
@@ -2984,7 +2966,7 @@ window.EZ_TOOLS2 = {
 }
 ],
 "tryIf": "you want to see what an AI agent can do, on free credits only.",
-"skipIf": "You're on a tight budget or need predictable costs.",
+"skipIf": "you're on a tight budget or need predictable costs.",
 "laterNote": "",
 "tested": null
 }
