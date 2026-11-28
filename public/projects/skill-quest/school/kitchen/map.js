@@ -39,6 +39,6 @@
   function zoneOf(term) { for (var i = 0; i < Z.length; i++) if (Z[i].words.indexOf(term) >= 0) return Z[i]; return null; }
   function all() { return Z.reduce(function (a, z) { return a.concat(z.words); }, []).filter(get); }
   /* 0 new, 1 seen or learning, 2 known */
-  function state(term) { var M = window.BKM; if (!M) return 0; return M.known(term) ? 2 : M.seen(term) ? 1 : 0; }
+  function state(term) { var M = window.BKM; if (!M) return 0; if (M.known(term)) return 2; var w = M.all()[term]; return w && w.okDays && w.okDays.length ? 1 : 0; }
   window.EZMAP = { zones: Z, flow: FLOW, get: get, zoneOf: zoneOf, all: all, state: state };
 })();

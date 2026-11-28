@@ -12,6 +12,7 @@
   function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
   function shuffle(a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
   function slug(t) { return t.toLowerCase().replace(/[^a-z0-9]+/g, "-"); }
+  function short(t) { t = String(t || ""); var m = t.match(/^[^.:]*[.:]/); var s = (m ? m[0] : t).replace(/[.:]$/, ""); return s.length > 140 ? s.slice(0, 137) + "…" : s + "."; }
   function lessonHref(w) { var lv = w[6] || 2; return lv === 2 ? "../school/kitchen/lesson-" + w[4] + ".html" : "../school/level-" + lv + "/lesson-" + w[4] + ".html"; }
 
   /* ---------- sound (Web Audio only, off until you turn it on) ---------- */
@@ -46,46 +47,66 @@
   function mask(text, term) {
     var out = String(text), parts = [term].concat(term === "LLM" ? ["Large language model"] : []);
     parts.forEach(function (p) { out = out.replace(new RegExp(p.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "s?", "gi"), "\u0000"); });
-    return out;
+    return out.replace(/\b(a|an) \u0000/gi, function (m, a) { return (a.charAt(0) === "A" ? "A(n)" : "a(n)") + " \u0000"; });
   }
-  function render(text) { return esc(text).replace(/\u0000/g, '<span class="blank" aria-label="blank"></span>'); }
+  function render(text) { return esc(text).replace(/\u0000/g, '<span class="blank"><span class="sr">blank</span></span>'); }
+  var SITU = window.EZ_SITU || {};
   function kinds(w) {
-    var k = ["meaning", "kitchen"];
+    var k = [];
+    if (SITU[w[0]]) k.push("situ", "situ");
     if (w[5] && mask(w[5], w[0]).indexOf("\u0000") >= 0) k.push("blank");
+    if (B.seen(w[0])) k.push("kitchen");
+    if (!k.length) k.push("meaning");
     return k;
   }
+  var FKEY = "ez.pass.focus";
+  function focusList() { try { return JSON.parse(localStorage.getItem(FKEY) || "[]"); } catch (e) { return []; } }
   var BEGIN = ["Model", "Prompt", "Token", "Context window", "Hallucination", "LLM", "System prompt", "Tool use", "Agent", "RAG", "Temperature", "Examples"];
   function roundRobin() { var Z = M.zones, out = [], i = 0, more = true; while (more) { more = false; Z.forEach(function (z) { if (z.words[i]) { out.push(z.words[i]); more = true; } }); i++; } return out; }
   function pickWords() {
-    var all = B.all(), due = B.due(POOL), missFirst = due.filter(function (t) { return (all[t] || {}).res === "miss"; });
-    var learning = shuffle(POOL.filter(function (t) { return B.seen(t) && !B.known(t) && due.indexOf(t) < 0; }));
+    var due = B.due(POOL), all = B.all();
+    var review = [], add = function (t) { if (review.length < 8 && review.indexOf(t) < 0 && B.seen(t) && POOL.indexOf(t) >= 0) review.push(t); };
+    focusList().forEach(add);
+    due.filter(function (t) { return (all[t] || {}).res === "miss"; }).forEach(add);
+    shuffle(due).forEach(add);
+    shuffle(POOL.filter(function (t) { return B.seen(t) && !B.known(t); })).forEach(add);
     var fresh = BEGIN.concat(roundRobin()).filter(function (t, i, a) { return a.indexOf(t) === i && POOL.indexOf(t) >= 0 && !B.seen(t); });
-    fresh = shuffle(fresh.slice(0, 4)).concat(fresh.slice(4)); /* basics first, from different stations */
-    var pick = [], add = function (t) { if (pick.length < N_WORDS && pick.indexOf(t) < 0) pick.push(t); };
-    missFirst.forEach(add); shuffle(due).forEach(add);
-    var nNew = 0; fresh.forEach(function (t) { if (nNew < MAX_NEW && pick.length < N_WORDS - 1) { add(t); nNew++; } });
-    learning.forEach(add);
-    shuffle(POOL.filter(function (t) { return B.known(t); })).forEach(add);
-    fresh.forEach(add);
-    return pick;
+    var nNew = review.length >= 8 ? 2 : 4, news = fresh.slice(0, nNew);
+    var room = 12 - news.length * 2;
+    if (review.length < room) shuffle(POOL.filter(function (t) { return B.known(t); })).forEach(add);
+    review = review.slice(0, Math.max(0, room));
+    if (!news.length && review.length < 6) news = fresh.slice(0, 2);
+    return { news: news, review: review };
   }
-  function buildQueue(words) {
-    var first = [], second = [];
-    words.forEach(function (t) {
-      var w = M.get(t), ks = shuffle(kinds(w));
-      if (!B.seen(t)) { first.push({ t: t, kind: "new" }); second.push({ t: t, kind: ks[0] }); }
-      else { first.push({ t: t, kind: ks[0] }); second.push({ t: t, kind: ks[1] || ks[0] }); }
-    });
-    first = shuffle(first); second = shuffle(second);
-    if (second[0] && first[first.length - 1] && second[0].t === first[first.length - 1].t) second.push(second.shift());
-    return first.concat(second);
+  /* each word's tickets, spread so the same word never appears twice within 2 orders */
+  function buildQueue(pk) {
+    var lists = {};
+    pk.news.forEach(function (t) { var ks = shuffle(kinds(M.get(t))); lists[t] = [{ t: t, kind: "new" }, { t: t, kind: ks[0] }]; });
+    pk.review.forEach(function (t) { lists[t] = [{ t: t, kind: shuffle(kinds(M.get(t)))[0] }]; });
+    var q = [], last = {}, words = Object.keys(lists), first = true;
+    while (words.some(function (t) { return lists[t].length; })) {
+      var i = q.length;
+      var ok = words.filter(function (t) { return lists[t].length && (last[t] == null || i - last[t] >= 2); });
+      var any = ok.length ? ok : words.filter(function (t) { return lists[t].length; });
+      /* open with a review or a new word, then keep new-word intros from bunching up */
+      var intros = any.filter(function (t) { return lists[t][0].kind === "new"; }), tests = any.filter(function (t) { return lists[t][0].kind !== "new"; });
+      var lastNew = q.length && q[q.length - 1].kind === "new";
+      var pool = lastNew && tests.length ? tests : (first && intros.length ? intros : any);
+      pool.sort(function (a, b) { return lists[b].length - lists[a].length; });
+      var top = pool.filter(function (t) { return lists[t].length === lists[pool[0]].length; });
+      var t = top[Math.floor(Math.random() * top.length)];
+      q.push(lists[t].shift()); last[t] = i; first = false;
+    }
+    var vs = {};
+    q.forEach(function (tk) { if (tk.kind === "situ") { vs[tk.t] = vs[tk.t] == null ? Math.floor(Math.random() * 2) : 1 - vs[tk.t]; tk.v = vs[tk.t]; } });
+    return q;
   }
 
   /* ---------- state ---------- */
   var S = null;
   function newService() {
-    var words = pickWords();
-    S = { words: words, q: buildQueue(words), i: 0, served: 0, tips: 0, combo: 0, best: 0, missed: {}, requeued: {}, total: 0, busy: false, cur: null, tries: 0, before: {} };
+    var pk = pickWords(), words = pk.news.concat(pk.review);
+    S = { words: words, q: buildQueue(pk), firstRight: 0, i: 0, served: 0, tips: 0, combo: 0, best: 0, missed: {}, requeued: {}, total: 0, busy: false, cur: null, tries: 0, before: {} };
     words.forEach(function (t) { S.before[t] = M.state(t); });
     S.total = S.q.length;
   }
@@ -104,15 +125,16 @@
 
   /* ---------- tickets ---------- */
   var rail = $("rail"), tray = $("tray"), say = $("say");
-  var LABEL = { meaning: "What it means", kitchen: "In the kitchen", blank: "Fill the blank", "new": "New on the menu" };
+  var LABEL = { meaning: "What it means", situ: "What’s happening", kitchen: "In the kitchen", blank: "Fill the blank", "new": "New on the menu" };
   function ticketHTML(tk, n) {
     var w = M.get(tk.t), q;
-    if (tk.kind === "new") q = '<span class="term">' + esc(tk.t) + '</span>' + esc(w[2]);
+    if (tk.kind === "new") q = '<span class="term">' + esc(tk.t) + '</span>' + esc(w[2]) + '<span class="kit">In the kitchen: ' + esc(w[1].charAt(0).toLowerCase() + w[1].slice(1)) + "</span>";
     else if (tk.kind === "kitchen") q = "“" + render(mask(w[1], tk.t)) + "”";
     else if (tk.kind === "blank") q = "“" + render(mask(w[5], tk.t)) + "”";
+    else if (tk.kind === "situ") q = esc(SITU[tk.t][tk.v || 0]);
     else q = render(mask(w[2], tk.t));
     return '<div class="tk"><span>Order ' + n + '</span><span class="ty">' + LABEL[tk.kind] + '</span></div><p class="q">' + q + "</p>" +
-      (tk.kind === "new" ? '<p class="hint">Serve it to add it to your map. It comes back later in this service.</p>' : "") + '<span class="stamp">SERVED</span>';
+      (tk.kind === "new" ? '<p class="hint">Serve it to add it to your map. You’ll see it again in a minute.</p>' : "") + '<p class="why"></p>' + '<span class="stamp">SERVED</span>';
   }
   function drawRail(enter) {
     rail.querySelectorAll(".ticket").forEach(function (t) { if (!t.classList.contains("leave")) t.remove(); });
@@ -124,14 +146,21 @@
       if (k === 0) { el.id = "front"; el.setAttribute("aria-label", "Order " + (S.i + 1) + " of " + S.total); }
       rail.appendChild(el);
     });
-    var tk = S.q[S.i], w = M.get(tk.t);
+    var tk = S.q[S.i], w = M.get(tk.t), z = M.zoneOf(tk.t), st = $("station");
+    if (z && st.dataset.z !== z.id) {
+      st.dataset.z = z.id; st.style.setProperty("--hue", z.hue);
+      st.innerHTML = '<span class="sic"><svg viewBox="0 0 24 24">' + z.icon + '</svg></span><span><small>This order is from</small><b>' + esc(z.name) + "</b><em>" + esc(z.sub) + "</em></span>";
+      if (!reduce) { st.classList.remove("swap"); void st.offsetWidth; st.classList.add("swap"); }
+    }
     say.textContent = "Order " + (S.i + 1) + ". " + LABEL[tk.kind] + ": " + (tk.kind === "new" ? tk.t + ". " + w[2] : $("front").querySelector(".q").textContent.replace(/\s+/g, " "));
     $("clock").style.width = Math.round(S.i / S.total * 100) + "%";
   }
+  var TWINS = [["Tool use", "Tool call"], ["Agent", "Agent loop"], ["Orchestrator", "Subagent"], ["Grader", "Eval"], ["LLM", "Model"], ["Model", "Model family"]];
+  function clash(a, b) { var A = a.toLowerCase(), Bb = b.toLowerCase(); if (A.indexOf(Bb) >= 0 || Bb.indexOf(A) >= 0) return true; return TWINS.some(function (p) { return (p[0] === a && p[1] === b) || (p[0] === b && p[1] === a); }); }
   function distractors(t) {
-    var z = M.zoneOf(t), same = z ? z.words.filter(function (x) { return x !== t && M.get(x); }) : [];
-    var known = POOL.filter(function (x) { return x !== t && same.indexOf(x) < 0 && (B.seen(x) || S.words.indexOf(x) >= 0); });
-    var rest = POOL.filter(function (x) { return x !== t && same.indexOf(x) < 0 && known.indexOf(x) < 0; });
+    var z = M.zoneOf(t), same = z ? z.words.filter(function (x) { return x !== t && M.get(x) && !clash(t, x); }) : [];
+    var known = POOL.filter(function (x) { return x !== t && !clash(t, x) && same.indexOf(x) < 0 && (B.seen(x) || S.words.indexOf(x) >= 0); });
+    var rest = POOL.filter(function (x) { return x !== t && !clash(t, x) && same.indexOf(x) < 0 && known.indexOf(x) < 0; });
     var out = shuffle(same).slice(0, 2).concat(shuffle(known)).concat(shuffle(rest));
     return out.filter(function (x, i) { return out.indexOf(x) === i; }).slice(0, 3);
   }
@@ -144,7 +173,7 @@
   }
   function start() {
     newService(); show("s-play"); play("tap");
-    $("tips").querySelector("b").textContent = "0"; setCombo(0);
+    $("tips").querySelector("b").textContent = "0"; $("tips").querySelector("span").textContent = "/" + S.total; setCombo(0);
     drawRail(true); drawTray();
   }
 
@@ -152,14 +181,14 @@
   function setCombo(n) {
     S.combo = n; S.best = Math.max(S.best, n);
     var c = $("combo");
-    if (n >= 2) { c.innerHTML = "Rush <b>×" + Math.min(n, 9) + "</b>"; c.classList.add("on"); if (!reduce) { c.classList.remove("bump"); void c.offsetWidth; c.classList.add("bump"); } }
+    if (n >= 2) { c.innerHTML = "<b>" + n + "</b> in a row"; c.classList.add("on"); if (!reduce) { c.classList.remove("bump"); void c.offsetWidth; c.classList.add("bump"); } }
     else c.classList.remove("on");
     document.body.classList.toggle("rush", n >= 3);
   }
   function addTips(n, x, y) {
-    S.tips += n; var b = $("tips").querySelector("b"); b.textContent = S.tips;
+    S.tips += n; var b = $("tips").querySelector("b"); b.textContent = S.served;
     if (!reduce) { b.classList.remove("pop"); void b.offsetWidth; b.classList.add("pop"); }
-    var f = document.createElement("span"); f.className = "float"; f.textContent = "+" + n; f.style.left = x + "px"; f.style.top = y + "px";
+    var f = document.createElement("span"); f.className = "float"; f.textContent = "✓"; f.style.left = x + "px"; f.style.top = y + "px";
     $("fx").appendChild(f); setTimeout(function () { f.remove(); }, 750);
   }
   function burst(x, y, color, n) {
@@ -187,19 +216,20 @@
     S.busy = true;
     if (ok) {
       var first = S.tries === 0;
-      if (tk.kind === "new") B.touch([tk.t]); else if (first) B.record(tk.t, true);
-      setCombo(first ? S.combo + 1 : 0);
+      if (tk.kind === "new") B.touch([tk.t]); else if (first) { B.record(tk.t, true); S.firstRight++; }
+      if (tk.kind !== "new") setCombo(first ? S.combo + 1 : 0);
       var fr = front.getBoundingClientRect(), tr = tile.getBoundingClientRect(), cx = fr.left + fr.width / 2, cy = fr.top + fr.height * 0.55;
       var zone = M.zoneOf(tk.t), hue = zone ? zone.hue : "#C7391F";
       var land = function () {
+        var why = front.querySelector(".why"), wd = M.get(tk.t);
+        if (why && tk.kind !== "new") { why.innerHTML = "<b>" + esc(tk.t) + ":</b> " + esc(short(wd[2])); }
         front.classList.add("served"); play("right"); if (S.combo >= 2) play("step", S.combo - 1); buzz(12);
         burst(cx, cy, hue, S.combo >= 5 ? 10 : 7);
-        var mult = 1 + Math.min(Math.floor(S.combo / 3), 4) * 0.5;
-        addTips(first ? Math.round(10 * mult) : 4, cx, fr.top + 20);
-        if (S.combo && S.combo % 5 === 0) shakeRail();
         S.served++;
-        say.textContent = "Served: " + tk.t + (S.combo >= 3 ? ". Rush times " + S.combo + "." : ".");
-        setTimeout(next, reduce ? 300 : 460);
+        addTips(1, cx, fr.top + 20);
+        if (S.combo && S.combo % 5 === 0) shakeRail();
+        say.textContent = "Served: " + tk.t + ". " + (tk.kind !== "new" ? short(wd[2]) : "");
+        setTimeout(next, tk.kind === "new" ? (reduce ? 300 : 520) : (reduce ? 1200 : 1350));
       };
       if (reduce) { tile.classList.add("glow"); land(); return; }
       setTimeout(function () { /* 40 ms hit pause, then the tile flies onto the ticket */
@@ -216,8 +246,9 @@
       if (!reduce) { tile.classList.add("shake"); front.classList.remove("wob"); void front.offsetWidth; front.classList.add("wob"); }
       setTimeout(function () { tile.classList.remove("shake"); tile.classList.add("miss"); }, reduce ? 0 : 320);
       var w = M.get(tk.t), pw = M.get(tile.dataset.t), h = front.querySelector(".hint");
-      var look = tk.kind === "kitchen" ? w[2] : w[1].charAt(0).toLowerCase() + w[1].slice(1);
-      var msg = "<b>That’s " + esc(tile.dataset.t) + "</b>" + (pw ? ": " + esc(pw[1].charAt(0).toLowerCase() + pw[1].slice(1)) : "") + ". Look for: " + esc(mask(look, tk.t).replace(/\u0000/g, "…")) + ".";
+      var picked = pw ? esc(mask(short(pw[2]), tk.t).replace(/\u0000/g, "…")) : "";
+      var contrast = w[3] && w[3].toLowerCase().indexOf(tile.dataset.t.toLowerCase()) >= 0 ? " " + esc(mask(w[3], tk.t).replace(/\u0000/g, "…")) : "";
+      var msg = "<b>That’s " + esc(tile.dataset.t) + ":</b> " + picked + contrast + (S.tries >= 2 ? " <b>The right one is glowing.</b>" : " Try another.");
       if (!h) { h = document.createElement("p"); h.className = "hint"; front.insertBefore(h, front.querySelector(".stamp")); }
       h.innerHTML = msg;
       if (S.tries >= 2) tray.querySelectorAll(".tile").forEach(function (b) { if (b.dataset.t === tk.t) b.classList.add("glow"); });
@@ -227,8 +258,9 @@
   }
   function requeue(tk) {
     if (S.requeued[tk.t]) return; S.requeued[tk.t] = 1;
+    for (var j = S.i + 1; j < S.q.length; j++) if (S.q[j].t === tk.t) { if (j < S.i + 3) S.q.splice(Math.min(S.i + 3, S.q.length - 1), 0, S.q.splice(j, 1)[0]); return; }
     var w = M.get(tk.t), ks = kinds(w).filter(function (k) { return k !== tk.kind; });
-    S.q.splice(Math.min(S.i + 3, S.q.length), 0, { t: tk.t, kind: shuffle(ks)[0] || tk.kind });
+    S.q.splice(Math.min(S.i + 3, S.q.length), 0, { t: tk.t, kind: shuffle(ks)[0] || tk.kind, v: tk.v == null ? 0 : 1 - tk.v });
     S.total = S.q.length;
   }
   function next() {
@@ -282,19 +314,29 @@
   }
   function end() {
     show("s-end"); play("end");
-    var missN = Object.keys(S.missed).length;
-    $("endTitle").textContent = !missN ? "Clean service, chef." : S.served >= S.total - 2 ? "Nice work, chef." : "Good service.";
-    countUp($("eServed"), S.served); countUp($("eTips"), S.tips); $("eBest").textContent = "×" + S.best;
+    var miss = Object.keys(S.missed).sort(function (a, b) { return S.missed[b] - S.missed[a]; });
+    $("endTitle").textContent = !miss.length ? "Clean service, chef." : "Service done.";
+    var tests = S.q.filter(function (t) { return t.kind !== "new"; }).length;
+    countUp($("eServed"), S.served); countUp($("eTips"), S.firstRight); $("eTipsOf").textContent = "right first time, of " + tests;
+    var onMap = POOL.filter(function (t) { return M.state(t) > 0; }).length;
+    countUp($("eBest"), onMap); $("eBest").nextElementSibling.textContent = onMap === 1 ? "word on your map" : "words on your map";
     var up = S.words.filter(function (t) { return M.state(t) > S.before[t]; });
-    var onMap = S.words.filter(function (t) { return M.state(t) > 0; });
+    /* the mini map: every station, every word a dot; the ones this service moved light up */
+    var mm = '<div class="mini" aria-label="Your AI kitchen map">' + M.zones.map(function (z) {
+      return '<div class="mz" style="--hue:' + z.hue + '"><span class="mzn">' + esc(z.name) + "</span><span class=\"mzd\">" + z.words.filter(M.get).map(function (t) {
+        var st = M.state(t), lit = up.indexOf(t) >= 0;
+        return '<i class="d' + st + (lit ? " lit" : "") + '" title="' + esc(t) + '"></i>';
+      }).join("") + "</span></div>";
+    }).join("") + "</div>";
     $("eLit").className = "lit up";
-    $("eLit").innerHTML = "<h2>" + (up.length ? "New on your map" : "On your map") + '</h2><div class="chips">' + (up.length ? up : onMap).map(chip).join("") + "</div>" +
-      "<p>A word turns solid on your map after you get it right on 2 different days.</p>";
-    var miss = Object.keys(S.missed).sort(function (a, b) { return S.missed[b] - S.missed[a]; }).slice(0, 3);
+    $("eLit").innerHTML = "<h2>" + (up.length ? up.length + (up.length === 1 ? " word" : " words") + " lit up on your map" : "Your map") + "</h2>" + mm +
+      (up.length ? '<div class="chips">' + up.map(chip).join("") + "</div>" : "") + "<p>Half-lit means learning. A word goes solid after you get it right on 2 different days.</p>";
+    var top = miss.slice(0, 3);
     $("eMiss").className = "lit";
-    $("eMiss").innerHTML = miss.length ? "<h2>Worth another look</h2><div class=\"chips\">" + miss.map(chip).join("") + "</div><p>These come first in your next service.</p>" : "";
+    $("eMiss").innerHTML = top.length ? "<h2>Worth another look</h2><div class=\"chips\">" + top.map(chip).join("") + "</div><p>These open your next service.</p>" : "";
+    try { localStorage.setItem("ez.pass.focus", JSON.stringify(top)); } catch (e) {}
     var ends = document.querySelector(".ends"), old = ends.querySelector(".learn"); if (old) old.remove();
-    if (miss.length) { var w = M.get(miss[0]), a = document.createElement("a"); a.className = "go ghost learn"; a.href = lessonHref(w); a.textContent = "Learn “" + miss[0] + "” in its lesson"; ends.insertBefore(a, ends.children[1]); }
+    if (top.length) { var w = M.get(top[0]), a = document.createElement("a"); a.className = "go ghost learn"; a.href = lessonHref(w); a.textContent = "Learn “" + top[0] + "” in its lesson"; ends.insertBefore(a, ends.children[1]); }
     try { localStorage.setItem("ez.pass.last", JSON.stringify({ d: B.today(), served: S.served })); } catch (e) {}
     setTimeout(function () { $("again").focus(); }, 50);
   }

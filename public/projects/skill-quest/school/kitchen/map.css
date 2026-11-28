@@ -64,3 +64,9 @@
 /* print: chips become a word list with meanings */
 .kprint{display:none}
 @media print{.kflow,.kbar,.kchips,.kpop{display:none!important}.kprint{display:block;margin:0;font-size:9.5pt;line-height:1.3}.kprint dt{font-weight:700;margin-top:3px}.kprint dd{margin:0}.kgrid{grid-template-columns:1fr 1fr}.kst{opacity:1!important;transform:none!important;break-inside:avoid;box-shadow:none;border-top:5px solid var(--hue)}}
+
+/* real fills: learning = tint, known = solid */
+.kw.s1{background:color-mix(in srgb,var(--hue) 14%,#fff);border-color:color-mix(in srgb,var(--hue) 45%,#fff)}
+.kw.s2{background:var(--hue);color:#fff;border-color:var(--hue)}
+.kw.s2::before{background:#fff;border-color:#fff}
+.kw.s2:hover,.kw.s2.on{background:var(--hue);color:#fff}

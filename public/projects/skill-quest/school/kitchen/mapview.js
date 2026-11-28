@@ -25,7 +25,7 @@
     }).join("") + "</div>";
     h += '<div class="kpop" id="kpop" role="dialog" aria-modal="false" hidden></div>';
     root.innerHTML = h;
-    if (!reduce && "IntersectionObserver" in window) {
+    if (false) {
       var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }); }, { threshold: 0.15 });
       root.querySelectorAll(".kst").forEach(function (s, i) { s.style.setProperty("--d", (i % 4) * 60 + "ms"); io.observe(s); });
       root.querySelector(".kflow").classList.add("go");
