@@ -15,6 +15,8 @@
   var pid = me && me.getAttribute("data-project");
   var kind = (me && me.getAttribute("data-kind")) || "piece";
   if (!pid || !NAMES[pid]) return;
+  // on AI Made EZ's own address (ai-made-ez.pages.dev) there is no studio bar
+  if (/^ai-made-ez\./.test(location.hostname)) return;
   // inside an idea HQ (the deck shown in a frame), the HQ page already has the bar
   try { if (window.self !== window.top) return; } catch (e) { return; }
 
