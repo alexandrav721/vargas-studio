@@ -29,7 +29,7 @@
   }
   function whereTo(t, a) { return t.where && has(a[t.where]) ? String(a[t.where]).trim() : (t.lead || "Claude, ChatGPT, Lovable or Bolt"); }
   function md(t, a) {
-    var L = ["# " + t.name + ": my brief", "", t.promise + " Paste the brief below into " + whereTo(t, a) + ".", "", "## The brief", "", brief(t, a), "", "## Next steps", ""];
+    var L = ["# " + t.name + ": my brief", "", t.promise + " Paste the brief below into " + whereTo(t, a) + ".", "", "## The brief", "", (t.fields.some(function (f) { return !has(a[f.key]); }) ? "Anything in [brackets] I haven't decided yet. Ask me about those first, one at a time.\n\n" : "") + brief(t, a), "", "## Next steps", ""];
     t.steps.forEach(function (s, i) {
       L.push((i + 1) + ". **" + s.t + ".** " + s.d);
       if (s.p) { L.push(""); s.p.split("\n").forEach(function (x) { L.push("   > " + x); }); L.push(""); }
@@ -86,7 +86,7 @@
     '<article class="doc" id="doc">' +
     T.brief.map(function (b) { return '<p class="sec"><b>' + esc(LBL[b[0]] || b[0].replace(/_/g, " ")) + "</b>" + fill(b[1]) + "</p>"; }).join("") +
     extra.map(function (f) { return '<p class="sec"><b>' + esc(f.label) + "</b>" + blank(f.key) + "</p>"; }).join("") +
-    '</article><p class="small2">' + esc(T.sample || D.sample) + " Saved on this phone only.</p></div>" +
+    '</article><p class="small2" id="note"></p></div>' +
     '<aside class="side" id="side">' +
     '<div class="helper" id="helper" aria-live="polite"></div>' +
     '<div class="dl" id="dl"><button class="btn" type="button" id="dlmd">Download the file</button><button class="copy ghost" type="button" data-copy="brief">Copy</button>' +
@@ -124,7 +124,7 @@
   root.innerHTML = h;
 
   var doc = document.getElementById("doc"), side = document.getElementById("side"), helper = document.getElementById("helper");
-  var cv = document.getElementById("covers"), cnt = document.getElementById("cnt"), wh = document.getElementById("where");
+  var note = document.getElementById("note"), cv = document.getElementById("covers"), cnt = document.getElementById("cnt"), wh = document.getElementById("where");
   var blanks = [].slice.call(doc.querySelectorAll(".blank")), cur = null;
   var wide = window.matchMedia("(min-width:900px)");
   function val(el) { return (el.innerText || el.textContent || "").replace(/ /g, " ").replace(/\n{3,}/g, "\n\n"); }
@@ -135,7 +135,11 @@
       T.covers.map(function (c, i) { return '<li class="' + (on[i] ? "on" : part[i] ? "part" : "") + '">' + esc(c[1]) + "</li>"; }).join("") + "</ul>";
     cnt.innerHTML = n + " of " + m + ' filled<span class="meter" role="progressbar" aria-valuemin="0" aria-valuemax="' + m + '" aria-valuenow="' + n + '" aria-label="Filled"><i style="width:' + Math.round(n / m * 100) + '%"></i></span>';
     U.COPY.brief = brief(T, A);
-    wh.textContent = "One text file: your brief plus the steps. Paste it into " + whereTo(T, A) + ".";
+    var empty = m - n;
+    wh.innerHTML = (empty ? "<b>" + empty + (empty === 1 ? " blank" : " blanks") + " still empty.</b> Fine: AI will ask you about " + (empty === 1 ? "it" : "them") + '. <button class="linkbtn" type="button" id="toempty">Fill the next one</button><br>' : "") +
+      "One text file: your brief plus the steps. Paste it into " + esc(whereTo(T, A)) + ".";
+    var used = T.fields.some(function (f) { return A[f.key] === f.ex; });
+    note.textContent = (used ? "The sample business is made up. " : "") + "Saved on this phone only.";
     blanks.forEach(function (el) { el.classList.toggle("has", has(A[el.dataset.k])); });
   }
   function set(k, v, from) {
@@ -164,8 +168,10 @@
       '<button class="mini go" type="button" data-h="next">Next blank →</button></div>';
   }
   function place() {
+    var before = cur ? cur.getBoundingClientRect().top : 0;
     if (cur && !wide.matches) { var sec = cur.closest(".sec"); if (sec.nextSibling !== helper) sec.parentNode.insertBefore(helper, sec.nextSibling); }
     else if (helper.parentNode !== side) side.insertBefore(helper, side.firstChild);
+    if (cur) { var shift = cur.getBoundingClientRect().top - before; if (Math.abs(shift) > 2) window.scrollBy(0, shift); }
   }
   function focusBlank(el) { el.focus(); var r = document.createRange(); r.selectNodeContents(el); r.collapse(false); var s = getSelection(); s.removeAllRanges(); s.addRange(r); }
   doc.addEventListener("focusin", function (e) { var el = e.target.closest(".blank"); if (!el) return; if (cur !== el) { stop(); exOpen = false; } cur = el; place(); drawHelper(); });
@@ -173,8 +179,8 @@
   doc.addEventListener("input", function (e) { var el = e.target.closest(".blank"); if (el) set(el.dataset.k, val(el), el); });
   doc.addEventListener("keydown", function (e) {
     var el = e.target.closest(".blank"); if (!el || e.key !== "Enter") return;
-    if (!F[el.dataset.k].multi || e.metaKey || e.ctrlKey) { e.preventDefault(); next(); }
-    else if (CE !== "plaintext-only") { e.preventDefault(); document.execCommand("insertText", false, "\n"); }
+    e.preventDefault();
+    if (e.shiftKey && F[el.dataset.k].multi) document.execCommand("insertText", false, "\n"); else next();
   });
   doc.addEventListener("paste", function (e) {
     if (CE === "plaintext-only" || !e.target.closest(".blank")) return;
@@ -190,7 +196,7 @@
   /* keep the blank focused while using the helper */
   helper.addEventListener("mousedown", function (e) { if (e.target.closest("[data-h]")) e.preventDefault(); });
   helper.addEventListener("click", function (e) {
-    var b = e.target.closest("[data-h]"); if (!b || !cur) return;
+    var b = e.target.closest("[data-h]"); if (!b || !cur) return; if (document.activeElement !== cur && b.dataset.h !== "next") focusBlank(cur);
     var k = cur.dataset.k, f = F[k], a = b.dataset.h;
     if (a === "see") { exOpen = true; drawHelper(); return; }
     if (a === "use") { cur.textContent = f.ex; set(k, f.ex, cur); exOpen = false; focusBlank(cur); drawHelper(); return; }
@@ -198,10 +204,11 @@
     if (a === "talk") return talk(k);
   });
   document.addEventListener("focusout", function () {
-    setTimeout(function () { var a = document.activeElement; if (a && (a.closest && (a.closest(".blank") || a.closest("#helper")))) return; if (rec) return; cur = null; place(); drawHelper(); }, 150);
+    setTimeout(function () { var a = document.activeElement; if (a && (a.closest && (a.closest(".blank") || a.closest("#helper")))) return; if (rec || !wide.matches) return; cur = null; place(); drawHelper(); }, 150);
   });
   wide.addEventListener && wide.addEventListener("change", place);
 
+  side.addEventListener("click", function (e) { if (!e.target.closest("#toempty")) return; var nx = blanks.filter(function (b) { return !has(A[b.dataset.k]); })[0]; if (nx) { nx.scrollIntoView({ block: "center" }); focusBlank(nx); } });
   document.getElementById("fillall").onclick = function () { T.fields.forEach(function (f) { if (!has(A[f.key])) set(f.key, f.ex); }); };
   document.getElementById("clearall").onclick = function () { if (!confirm("Clear everything you typed here?")) return; T.fields.forEach(function (f) { set(f.key, ""); }); };
   document.getElementById("dlmd").onclick = function () {

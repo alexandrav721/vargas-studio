@@ -20,7 +20,7 @@
 </head>
 <body>
 <header class="top">
-  <button class="back" id="back" aria-label="Back" hidden><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+  <button class="back" id="back" aria-label="All parts" hidden><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
   <div class="brand"><span>App planner</span><small>AI Made <b>EZ</b></small></div>
   <div class="meter" id="meter" hidden aria-live="polite">
     <div class="meter-text"><b id="guessN">0</b> AI guesses</div>
@@ -79,13 +79,13 @@
       </div>
       <p class="ql">How big?</p>
       <div class="choice" id="pSize" role="group" aria-label="How big"></div>
-      <details class="tpl" id="startersBox" hidden>
-        <summary>Start from a template</summary>
-        <p class="sub">Every room already filled in for a common app. Make it yours.</p>
-        <div class="starter-grid" id="starters"></div>
-      </details>
     </div>
     <div class="blueprint" id="blueprint" role="list"></div>
+      <details class="tpl" id="startersBox" hidden>
+        <summary>Start from a template</summary>
+        <p class="sub">Every part already filled in for a common app. Make it yours.</p>
+        <div class="starter-grid" id="starters"></div>
+      </details>
     <div class="rules-row"><span id="rulesLabel"></span><div class="rules-strip" id="rulesStrip" aria-label="Rules collected"></div></div>
   </section>
 
@@ -141,9 +141,9 @@
       </div>
       <p class="note" id="buildNote"></p>
     </section>
-    <button class="btn" id="download">Download my kit (.zip)</button>
-    <button class="btn ghost" id="copyKick">Copy the first prompt</button>
-    <p class="note">Want to keep building in your own tool? Unzip the kit into your project folder. Works with Claude, Cursor, Lovable, Replit, Bolt and others.</p>
+    <button class="btn" id="copyKick">Copy my plan for ChatGPT or Claude</button>
+    <button class="btn ghost" id="download">Download the plan folder</button>
+    <p class="note">Copy works anywhere. The download is a folder for app-building tools like Lovable or Cursor: put it in your project.</p>
 
     <h3 class="sec">Then build in a loop</h3>
     <ol class="loop" id="loop"></ol>

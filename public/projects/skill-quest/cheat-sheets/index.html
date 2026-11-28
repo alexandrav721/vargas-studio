@@ -75,6 +75,16 @@ pre.tpl .t{color:var(--accent);font-weight:700}
 </style>
 <link rel="stylesheet" href="/site-bar.css" />
 <script src="/site-bar.js" data-project="skill-quest" data-kind="piece" defer></script>
+<style>
+.fold{border:2px solid var(--ink);border-radius:14px;background:#fff;padding:0 16px;margin-top:10px}
+.fold>summary{list-style:none;cursor:pointer;padding:14px 28px 14px 0;position:relative}
+.fold>summary::-webkit-details-marker{display:none}
+.fold>summary::after{content:"+";position:absolute;right:0;top:50%;transform:translateY(-50%);font:800 1.5rem var(--display)}
+.fold[open]>summary::after{content:"−"}
+.fold>summary .label{display:block;margin:0}
+.fold>summary .h2{display:block;font:800 1.15rem/1.25 var(--display)}
+.fold[open]{padding-bottom:16px}
+</style>
 </head>
 <body>
 <header class="top">
@@ -94,37 +104,34 @@ pre.tpl .t{color:var(--accent);font-weight:700}
     <h2>Just one prompt?</h2>
     <p class="muted">AI isn’t hard. It just can’t read your mind. Fill in six boxes and it stops guessing.</p>
     <ol class="how3"><li><b>Copy</b> a template.</li><li><b>Paste</b> it into a new Claude or ChatGPT chat.</li><li><b>Type over</b> each [bracket] with your words.</li><li><b>Send.</b></li></ol>
-    <div class="jump"><a class="btn ghost" href="#six">The 6 boxes</a><a class="btn ghost" href="#jobs">10 job templates</a><a class="btn ghost" href="#skill">Skill template</a><a class="btn ghost" href="one-page.html">One-page cheat sheet</a><a class="btn ghost" href="../summaries/toolkit.html">Full toolkit (PDF)</a></div>
+    <div class="jump"><a class="btn ghost" href="one-page.html">One-page cheat sheet</a><a class="btn ghost" href="../summaries/toolkit.html">Full toolkit (PDF)</a></div>
+    <p class="label" style="margin-top:18px">Tap to open</p>
   </section>
 
-  <section class="sec" id="six">
-    <p class="label">1 · The 6 boxes</p>
-    <h2>Every good order has six boxes.</h2>
+  <details class="sec fold" id="six">
+    <summary><span class="label">The 6 boxes</span><span class="h2">Every good order has six boxes.</span></summary>
     <p class="muted">Keep the words in &lt;angle brackets&gt;: they tell Claude which box is which. Don’t need a box? Delete that line.</p>
     <div class="form" id="boxes"></div>
     <div class="copyrow"><button class="copy" type="button" data-copy="blank6">Copy the blank template</button><button class="copy ghost" type="button" data-copy="filled6">Copy the filled example</button></div>
-  </section>
+  </details>
 
-  <section class="sec" id="proof">
-    <p class="label">2 · Before and after</p>
-    <h2>Same job, asked two ways.</h2>
+  <details class="sec fold" id="proof">
+    <summary><span class="label">Before and after</span><span class="h2">Same job, asked two ways.</span></summary>
     <p class="muted">The plain ask is what most people type. The template makes you add the facts. A separate Claude judged both answers without knowing which was which, out of 5.</p>
     <div id="hero-proof"></div>
     <div class="tally" id="tally"></div>
     <div id="tchart"></div>
     <p class="small2" id="how"></p>
-  </section>
+  </details>
 
-  <section class="sec" id="jobs">
-    <p class="label">3 · Job templates</p>
-    <h2>Pick a job. Copy. Fill in.</h2>
+  <details class="sec fold" id="jobs">
+    <summary><span class="label">Job templates</span><span class="h2">Pick a job. Copy. Fill in.</span></summary>
     <div class="tabs" id="jobtabs" role="group" aria-label="Pick a job"></div>
     <div id="job"></div>
-  </section>
+  </details>
 
-  <section class="sec" id="skill">
-    <p class="label">4 · The skill template</p>
-    <h2>A recipe card Claude keeps.</h2>
+  <details class="sec fold" id="skill">
+    <summary><span class="label">The skill template</span><span class="h2">A recipe card Claude keeps.</span></summary>
     <p class="muted">A skill is a file of instructions Claude saves and uses whenever your request matches its description. Write it once; it works every time. (<a href="../school/level-3/lesson-7.html">Level 3, lesson 7</a> shows how to add one.)</p>
     <div class="pair">
       <div class="pane"><p class="k">Blank</p><pre class="tpl" id="skillblank"></pre><div class="copyrow"><button class="copy" type="button" data-copy="skillBlank">Copy the blank skill</button></div></div>
@@ -132,22 +139,22 @@ pre.tpl .t{color:var(--accent);font-weight:700}
     </div>
     <div class="proof"><div class="score"><span>Plain Claude</span><span class="bar p"><i style="width:70%"></i></span><b>3.5</b></div><div class="score"><span>With this skill</span><span class="bar t"><i style="width:96%"></i></span><b>4.8</b></div>
       <p class="verdict">All 8 of our ready-made skills beat plain Claude in blind tests. One only won after we fixed it. So: always test yours.</p></div>
-  </section>
+  </details>
 
-  <section class="sec" id="standing">
-    <p class="label">5 · Standing orders</p>
-    <h2>Say it once, not every chat.</h2>
+  <details class="sec fold" id="standing">
+    <summary><span class="label">Standing orders</span><span class="h2">Say it once, not every chat.</span></summary>
     <div id="standinglist"></div>
-  </section>
+  </details>
 
-  <section class="sec" id="better">
-    <p class="label">6 · Make it better</p>
-    <h2>5 lines to send after any answer.</h2>
+  <details class="sec fold" id="better">
+    <summary><span class="label">Make it better</span><span class="h2">5 lines to send after any answer.</span></summary>
     <ul class="fol" id="fol"></ul>
-  </section>
+  </details>
 
   <div class="sheet-cta"><b>All of it on one page.</b><p>The 6 boxes, the skill recipe and the 5 follow-ups. Print it or save it.</p><a href="one-page.html">Open the cheat sheet →</a></div>
 </main>
+<script>/* open a folded guide when a link points at it */
+(function(){function o(){var h=location.hash.slice(1),d=h&&document.getElementById(h);if(d&&d.tagName==="DETAILS"){d.open=true;d.scrollIntoView();}}addEventListener("hashchange",o);o();})();</script>
 <footer class="foot"><a href="../about/">About</a><a href="../start/">Start here</a><a href="../use-ai/">Use AI well</a><span>Not affiliated with Anthropic</span><span>Made by Alexandra Vargas</span></footer>
 <script src="templates.js"></script>
 <script src="tpl-data.js"></script>

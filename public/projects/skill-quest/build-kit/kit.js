@@ -55,7 +55,7 @@
   setMute(muted);
 
   /* ---------- navigation ---------- */
-  let screen = "intro", room = null, qi = 0;
+  let screen = "intro", room = null, qi = 0, moveTok = 0;
   const NEXT = { intro: "Stop the guessing", size: "Next", idea: "Open my blueprint", plan: "Get my kit", room: "Next", done: null };
   function show(name) {
     screen = name; stopMic();
@@ -72,9 +72,9 @@
     ({ intro: drawIntro, size: drawSizes, idea: drawIdea, plan: drawPlan, room: drawQ, done: drawDone }[name])();
     meter(false);
   }
-  $("back").onclick = () => { play("tap"); if (screen === "room") { if (qi > 0) { qi--; drawQ(); } else show("plan"); } else if (screen === "plan") show("idea"); else if (screen === "idea") show("size"); else if (screen === "size") show("intro"); else if (screen === "done") show("plan"); };
-  $("prev").onclick = () => $("back").click();
-  $("next").onclick = () => {
+  $("back").onclick = () => { play("tap"); if (screen === "room") show("plan"); else if (screen === "plan") show("idea"); else if (screen === "idea") show("size"); else if (screen === "size") show("intro"); else if (screen === "done") show("plan"); };
+  $("prev").onclick = () => { play("tap"); if (qi > 0) { qi--; drawQ(); } else show("plan"); };
+  $("next").onclick = () => { moveTok++;
     play("tap");
     if (screen === "intro") { if (!S.rules.includes(0)) { S.rules.push(0); save(); } show(S.tier ? (S.a.prd && S.a.prd.name ? "plan" : "idea") : "size"); }
     else if (screen === "size") show("idea");
@@ -147,7 +147,7 @@
     if (document.activeElement !== $("pOne")) $("pOne").value = p0.one || "";
     $("pSize").innerHTML = SIZES.map((z) => `<button class="chip" data-t="${z.tier}" aria-pressed="${S.tier === z.tier}">${esc(z.name)} · ${z.rooms} rooms</button>`).join("");
     drawRail();
-    if (!p0.name && !$("startersBox").dataset.seen) { $("startersBox").open = true; $("startersBox").dataset.seen = 1; }
+    
     const rs = rooms(); const nm = (S.a.prd && S.a.prd.name) || "Your app";
     const sample = / \(sample\)$/.test(nm); $("planTitle").textContent = nm.replace(/ \(sample\)$/, "") + " blueprint";
     const nDone = rs.filter((r) => S.done.includes(r.id)).length;
@@ -294,7 +294,8 @@
     show("plan");
     const el = document.querySelector(`.room[data-r="${id}"]`);
     if (el) { el.classList.remove("done"); await wait(260); el.classList.add("done"); play("stamp"); el.scrollIntoView({ block: "center" }); }
-    await wait(700);
+    const tok = ++moveTok; await wait(700);
+    if (tok !== moveTok || screen !== "plan") return;
     const t = TRAPS[id];
     if (t && !S.traps.includes(id)) return trap(id, t);
     afterRoom();
@@ -386,7 +387,9 @@ ${RULES.map((r) => `- **${r.t}:** ${r.d}`).join("\n")}
   }
   $("loop").onclick = (e) => { const b = e.target.closest("[data-i]"); if (b) copy(LOOP[+b.dataset.i].p(S.a.prd || {}), "Prompt copied"); };
   $("download").onclick = () => { play("tap"); download(); if (window.SMEZ) SMEZ.stamp("kit"); };
-  $("copyKick").onclick = () => copy(LOOP[0].p(S.a.prd || {}), "First prompt copied");
+  $("copyKick").onclick = () => { const n = S.a.prd || {};
+    const plan = rooms().filter((r) => r.id !== "agents").map((r) => mdFor(r)).join("\n\n---\n\n");
+    copy(`I'm building ${n.name || "an app"}${n.one ? ": " + n.one : ""}. Here is my whole plan.\n\n${plan}\n\n---\n\nBefore writing any code: tell me in 5 bullets what you understood, and list anything missing or contradicting. Anything marked "Not decided yet", ask me instead of guessing. Don't write code until I say the plan is right.`, "Plan copied. Paste it into ChatGPT or Claude"); };
   $("backToPlan").onclick = () => { play("tap"); show("plan"); };
   $("startOver").onclick = () => { if (!confirm("Start a new plan? This clears your answers on this device.")) return; S = fresh(); save(); introRan = false; lastLeft = null; show("intro"); };
 

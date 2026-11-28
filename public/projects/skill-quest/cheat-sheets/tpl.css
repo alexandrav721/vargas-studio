@@ -67,3 +67,7 @@
 @media (max-width:899px){.doc .helper{font-size:.95rem}.work .side .helper.idle{display:none}}
 @media (prefers-reduced-motion:reduce){.cnt .meter i{transition:none}}
 .blank:empty{display:inline-block;min-height:1.5em;vertical-align:baseline}
+
+/* phones: compact summary so the first blank shows sooner */
+@media (max-width:899px){.tpl-hero .covers{margin-top:12px;padding:10px 12px;border-width:1px}.tpl-hero .covers .top2 b{font-size:1rem}.tpl-hero .covers ul{gap:6px;margin-top:6px}.tpl-hero .covers li{padding:4px 9px 4px 6px;font-size:.82rem;gap:5px}.tpl-hero .covers li::before{width:14px;height:14px}.tpl-hero .ic{width:44px;height:44px;border-radius:12px}.tpl-hero .ic svg{width:24px;height:24px}.work{margin-top:14px}}
+#where b{color:var(--ink)}
