@@ -116,7 +116,7 @@
       : '<details class="ex"><summary>Read both answers</summary><div class="pair"><div class="pane"><p class="k">Plain ask: “' + esc(P.plainAsk) + '”</p><div class="out">' + esc(P.plainOut) + '</div></div><div class="pane"><p class="k">With this template</p><div class="out">' + esc(P.kitOut) + "</div></div></div></details>";
     h += '<section class="sec" id="proof"><p class="label">Does it work?</p><h2>Same job, asked two ways.</h2><div class="proof">' +
       bar("Plain ask", P.plainScore, "p") + bar("With this", P.kitScore, "t") + '<p class="verdict">' + w + esc(P.reason) + "</p>" + (P.note ? '<p class="small2">' + esc(P.note) + "</p>" : "") + both +
-      '</div><p class="small2">Scored 1 to 5 by a separate AI that didn’t know which was which. ' + esc(T.sample || D.sample) + " Run " + esc(D.checked) + ".</p></section>";
+      '</div><p class="small2">Scored 1 to 5 by a separate AI that didn’t know which was which, using a made-up business. Run ' + esc(D.checked) + ".</p></section>";
   }
   h += '<section class="sec"><p class="label">More templates</p><div class="more">' + D.templates.filter(function (t) { return t.id !== T.id; }).map(function (t) {
     return '<a class="chip" href="' + (t.href || t.id + ".html") + '">' + esc(t.name) + "</a>";
@@ -138,7 +138,7 @@
     var empty = m - n;
     wh.innerHTML = (empty ? "<b>" + empty + (empty === 1 ? " blank" : " blanks") + " still empty.</b> Fine: AI will ask you about " + (empty === 1 ? "it" : "them") + '. <button class="linkbtn" type="button" id="toempty">Fill the next one</button><br>' : "") +
       "One text file: your brief plus the steps. Paste it into " + esc(whereTo(T, A)) + ".";
-    var used = T.fields.some(function (f) { return A[f.key] === f.ex; });
+    var used = !!A._sample;
     note.textContent = (used ? "The sample business is made up. " : "") + "Saved on this phone only.";
     blanks.forEach(function (el) { el.classList.toggle("has", has(A[el.dataset.k])); });
   }
@@ -209,8 +209,8 @@
   wide.addEventListener && wide.addEventListener("change", place);
 
   side.addEventListener("click", function (e) { if (!e.target.closest("#toempty")) return; var nx = blanks.filter(function (b) { return !has(A[b.dataset.k]); })[0]; if (nx) { nx.scrollIntoView({ block: "center" }); focusBlank(nx); } });
-  document.getElementById("fillall").onclick = function () { T.fields.forEach(function (f) { if (!has(A[f.key])) set(f.key, f.ex); }); };
-  document.getElementById("clearall").onclick = function () { if (!confirm("Clear everything you typed here?")) return; T.fields.forEach(function (f) { set(f.key, ""); }); };
+  document.getElementById("fillall").onclick = function () { A._sample = 1; T.fields.forEach(function (f) { if (!has(A[f.key])) set(f.key, f.ex); }); };
+  document.getElementById("clearall").onclick = function () { if (!confirm("Clear everything you typed here?")) return; delete A._sample; T.fields.forEach(function (f) { set(f.key, ""); }); };
   document.getElementById("dlmd").onclick = function () {
     var blob = new Blob([md(T, A)], { type: "text/plain;charset=utf-8" }), a = document.createElement("a");
     a.href = URL.createObjectURL(blob); a.download = T.id + "-brief.txt"; document.body.appendChild(a); a.click();

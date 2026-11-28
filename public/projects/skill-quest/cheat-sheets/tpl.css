@@ -71,3 +71,6 @@
 /* phones: compact summary so the first blank shows sooner */
 @media (max-width:899px){.tpl-hero .covers{margin-top:12px;padding:10px 12px;border-width:1px}.tpl-hero .covers .top2 b{font-size:1rem}.tpl-hero .covers ul{gap:6px;margin-top:6px}.tpl-hero .covers li{padding:4px 9px 4px 6px;font-size:.82rem;gap:5px}.tpl-hero .covers li::before{width:14px;height:14px}.tpl-hero .ic{width:44px;height:44px;border-radius:12px}.tpl-hero .ic svg{width:24px;height:24px}.work{margin-top:14px}}
 #where b{color:var(--ink)}
+
+/* phones: get the first blank onto the first screen */
+@media (max-width:899px){.tpl-hero .meta{display:none}.tpl-hero h1{margin-bottom:4px}.tpl-hero .covers ul{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}.tpl-hero .covers ul::-webkit-scrollbar{display:none}.tpl-hero .covers li{flex:none}.dochead h2{font-size:1.35rem}.how{margin:4px 0 8px}}

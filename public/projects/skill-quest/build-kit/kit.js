@@ -58,7 +58,7 @@
   let screen = "intro", room = null, qi = 0, moveTok = 0;
   const NEXT = { intro: "Stop the guessing", size: "Next", idea: "Open my blueprint", plan: "Get my kit", room: "Next", done: null };
   function show(name) {
-    screen = name; stopMic();
+    screen = name; stopMic(); if ($("trapBox") && name !== "plan") { $("trapBox").hidden = true; $("trapBox").innerHTML = ""; }
     document.querySelectorAll(".screen").forEach((s) => s.classList.toggle("on", s.id === "s-" + name));
     $("back").hidden = name === "intro" || name === "plan";
     $("prev").hidden = name !== "room";
@@ -294,8 +294,6 @@
     show("plan");
     const el = document.querySelector(`.room[data-r="${id}"]`);
     if (el) { el.classList.remove("done"); await wait(260); el.classList.add("done"); play("stamp"); el.scrollIntoView({ block: "center" }); }
-    const tok = ++moveTok; await wait(700);
-    if (tok !== moveTok || screen !== "plan") return;
     const t = TRAPS[id];
     if (t && !S.traps.includes(id)) return trap(id, t);
     afterRoom();
@@ -312,7 +310,9 @@
   /* ---------- traps ---------- */
   function trap(id, t) {
     const opts = Math.random() < 0.5 ? [["bad", t.bad], ["good", t.good]] : [["good", t.good], ["bad", t.bad]];
-    sheet("AI did something", `<div class="trap-say">${esc(t.say)}</div><div class="trap-opts" id="trapOpts">${opts.map(([k, l]) => `<button data-k="${k}">${esc(l)}</button>`).join("")}</div><p class="sub" id="trapLesson" style="margin-top:12px" hidden></p><div class="rule-card" id="ruleCard"><small>Rule collected</small><b>${esc(RULES[t.rule].t)}</b>${esc(RULES[t.rule].d)}</div>`, true);
+    const box = $("trapBox"); box.hidden = false;
+    box.innerHTML = `<p class="trap-h">AI did something. What do you say?</p><div class="trap-say">${esc(t.say)}</div><div class="trap-opts" id="trapOpts">${opts.map(([k, l]) => `<button data-k="${k}">${esc(l)}</button>`).join("")}</div><p class="sub" id="trapLesson" style="margin-top:12px" hidden></p><div class="rule-card" id="ruleCard"><small>Rule collected</small><b>${esc(RULES[t.rule].t)}</b>${esc(RULES[t.rule].d)}</div>`;
+    box.scrollIntoView({ block: "center", behavior: "smooth" });
     $("trapOpts").onclick = async (e) => {
       const b = e.target.closest("button"); if (!b || $("trapOpts").dataset.done) return; $("trapOpts").dataset.done = 1;
       const good = b.dataset.k === "good";
@@ -321,7 +321,7 @@
       $("trapLesson").hidden = false; $("trapLesson").textContent = (good ? "Exactly. " : "Easy mistake. ") + t.lesson;
       S.traps.push(id); if (!S.rules.includes(t.rule)) S.rules.push(t.rule); save();
       await wait(500); $("ruleCard").classList.add("on"); play("card");
-      $("sheetClose").hidden = false; $("sheetClose").textContent = "Keep building";
+      afterRoom();
     };
   }
 
@@ -388,7 +388,7 @@ ${RULES.map((r) => `- **${r.t}:** ${r.d}`).join("\n")}
   $("loop").onclick = (e) => { const b = e.target.closest("[data-i]"); if (b) copy(LOOP[+b.dataset.i].p(S.a.prd || {}), "Prompt copied"); };
   $("download").onclick = () => { play("tap"); download(); if (window.SMEZ) SMEZ.stamp("kit"); };
   $("copyKick").onclick = () => { const n = S.a.prd || {};
-    const plan = rooms().filter((r) => r.id !== "agents").map((r) => mdFor(r)).join("\n\n---\n\n");
+    const plan = rooms().filter((r) => r.id !== "agents").map((r) => mdFor(r)).join("\n\n---\n\n").replace(/\b([A-Z]+)\.md\b/g, "the $1 section").replace(/\/docs\b/g, "this plan");
     copy(`I'm building ${n.name || "an app"}${n.one ? ": " + n.one : ""}. Here is my whole plan.\n\n${plan}\n\n---\n\nBefore writing any code: tell me in 5 bullets what you understood, and list anything missing or contradicting. Anything marked "Not decided yet", ask me instead of guessing. Don't write code until I say the plan is right.`, "Plan copied. Paste it into ChatGPT or Claude"); };
   $("backToPlan").onclick = () => { play("tap"); show("plan"); };
   $("startOver").onclick = () => { if (!confirm("Start a new plan? This clears your answers on this device.")) return; S = fresh(); save(); introRan = false; lastLeft = null; show("intro"); };
