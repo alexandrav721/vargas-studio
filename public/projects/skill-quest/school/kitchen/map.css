@@ -1,0 +1,66 @@
+/* The AI kitchen map (cheat sheet infographic). Builds on school.css tokens. */
+#kmap{position:relative;margin-top:14px}
+/* how one answer gets made */
+.kflow{list-style:none;margin:0 0 14px;padding:14px 12px;display:grid;grid-template-columns:repeat(5,1fr);gap:6px;border:2px solid var(--ink);border-radius:14px;background:#fff;position:relative;overflow:hidden}
+.kflow li{position:relative;text-align:center;padding:0 4px}
+.kflow li+li::before{content:"→";position:absolute;left:-9px;top:2px;font:700 14px var(--mono);color:var(--line2)}
+.kflow b{display:block;font:800 .98rem/1.15 var(--display)}
+.kflow span{display:block;font-size:.78rem;color:var(--muted);line-height:1.25;margin-top:3px}
+.kdot{position:absolute;left:0;bottom:6px;width:22px;height:6px;border-radius:9px;background:var(--accent);opacity:0}
+.kflow.go .kdot{animation:kdot 2.2s cubic-bezier(.45,0,.2,1) .4s 1 both}
+@keyframes kdot{0%{left:2%;opacity:0}8%{opacity:1}92%{opacity:1}100%{left:calc(98% - 22px);opacity:0}}
+.kflow.go li{animation:klit .3s ease-out both;animation-delay:calc(.45s + var(--i) * .42s)}
+@keyframes klit{from{opacity:.35}to{opacity:1}}
+@media (max-width:560px){.kflow{grid-template-columns:1fr;gap:2px;padding:10px 14px}.kflow li{display:flex;gap:8px;align-items:baseline;text-align:left;padding:4px 0}.kflow li+li::before{content:"↓";position:static;margin-right:2px}.kflow span{margin:0}.kdot{display:none}}
+/* bar: legend + count + play */
+.kbar{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;margin:0 0 12px}
+.klegend{display:flex;gap:12px;margin:0;font:700 12px var(--mono);color:var(--muted)}
+.klegend span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;vertical-align:-1px;border:2px solid var(--ink)}
+.klegend .s1::before{background:linear-gradient(90deg,var(--ink) 50%,#fff 50%)}
+.klegend .s2::before{background:var(--ink)}
+.kcount{margin:0;font-size:.95rem;color:var(--muted)}
+.kcount b{color:var(--ink);font:800 1.1rem var(--display)}
+.kplay{margin:0 0 0 auto;min-height:44px}
+@media (max-width:560px){.kplay{margin:0;width:100%;text-align:center}}
+/* stations */
+.kgrid{display:grid;gap:10px;grid-template-columns:1fr}
+@media (min-width:560px){.kgrid{grid-template-columns:1fr 1fr}}
+@media (min-width:900px){.kgrid{grid-template-columns:repeat(4,1fr)}}
+.kst{border:2px solid var(--ink);border-radius:14px;background:#fff;padding:12px;box-shadow:inset 0 5px 0 var(--hue)}
+.kst header{display:flex;gap:10px;align-items:center;margin:4px 0 10px}
+.kic{flex:none;width:36px;height:36px;border-radius:10px;background:var(--hue);color:#fff;display:grid;place-items:center}
+.kic svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.kst h2{margin:0;font:800 1.05rem/1.1 var(--display)}
+.kst header p{margin:2px 0 0;font-size:.8rem;color:var(--muted)}
+.kchips{display:flex;flex-wrap:wrap;gap:6px}
+.kw{position:relative;font:600 .9rem/1.2 var(--text);padding:6px 10px 6px 22px;border-radius:999px;border:1.5px solid var(--line2);background:var(--paper);color:var(--ink);cursor:pointer;transition:transform .12s ease-out,border-color .12s,background .12s}
+.kw::before{content:"";position:absolute;left:8px;top:50%;width:8px;height:8px;margin-top:-4px;border-radius:50%;border:1.5px solid var(--hue)}
+.kw.s1::before{background:linear-gradient(90deg,var(--hue) 50%,transparent 50%)}
+.kw.s2{border-color:var(--hue)}
+.kw.s2::before{background:var(--hue)}
+.kw:hover,.kw.on{border-color:var(--hue);background:#fff}
+.kw:active{transform:scale(.96)}
+.kw.on{box-shadow:0 0 0 2px var(--hue)}
+.kw:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+/* stations rise in once */
+.kst{opacity:1}
+@media (prefers-reduced-motion:no-preference){.kst:not(.in){opacity:0;transform:translateY(12px)}.kst.in{transition:opacity .28s ease-out var(--d,0ms),transform .36s cubic-bezier(.2,.8,.2,1) var(--d,0ms)}}
+/* definition popover */
+.kpop{position:absolute;z-index:40;width:320px;max-width:calc(100vw - 32px);background:#fff;border:2px solid var(--ink);border-radius:14px;padding:14px 16px 12px;box-shadow:0 18px 40px -18px rgba(21,20,17,.45),inset 0 5px 0 var(--hue)}
+.kpop::before{content:"";position:absolute;top:-8px;left:calc(var(--ax,50%) - 7px);width:12px;height:12px;background:#fff;border-left:2px solid var(--ink);border-top:2px solid var(--ink);transform:rotate(45deg)}
+.kpop.sheet{position:fixed;left:8px;right:8px;bottom:8px;top:auto;width:auto;max-width:none;border-radius:18px;padding:18px 18px 16px;max-height:46vh;overflow:auto}
+.kpop.sheet::before{display:none}
+.kpop .kz{margin:4px 0 0;font:700 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--hue)}
+.kpop h3{margin:2px 0 6px;font:800 1.35rem/1.1 var(--display)}
+.kpop p{margin:0 0 8px;font-size:.95rem;line-height:1.45}
+.kpop .kk{font-style:italic;color:var(--muted)}
+.kpop .kn{background:var(--track);border-radius:8px;padding:6px 9px;font-size:.88rem}
+.kpop .ke{font-size:.88rem;color:var(--muted)}
+.kpop a{font-weight:700;color:var(--ink);font-size:.92rem}
+.kx{position:absolute;right:8px;top:8px;width:36px;height:36px;border-radius:50%;border:0;background:var(--track);font:700 20px/1 var(--text);cursor:pointer}
+@media (prefers-reduced-motion:no-preference){.kpop.show{animation:kpop .17s cubic-bezier(.2,.9,.3,1.15) both;transform-origin:var(--ax,50%) 0}.kpop.sheet.show{animation:ksheet .24s cubic-bezier(.2,.8,.2,1) both}}
+@keyframes kpop{from{opacity:0;transform:translateY(-4px) scale(.96)}to{opacity:1;transform:none}}
+@keyframes ksheet{from{transform:translateY(24px);opacity:.4}to{transform:none;opacity:1}}
+/* print: chips become a word list with meanings */
+.kprint{display:none}
+@media print{.kflow,.kbar,.kchips,.kpop{display:none!important}.kprint{display:block;margin:0;font-size:9.5pt;line-height:1.3}.kprint dt{font-weight:700;margin-top:3px}.kprint dd{margin:0}.kgrid{grid-template-columns:1fr 1fr}.kst{opacity:1!important;transform:none!important;break-inside:avoid;box-shadow:none;border-top:5px solid var(--hue)}}
