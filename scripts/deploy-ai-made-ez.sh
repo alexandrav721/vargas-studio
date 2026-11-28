@@ -28,5 +28,7 @@ cat >> "$OUT/_redirects" <<'R'
 /keep-up    /projects/skill-quest/keep-up/      302
 /words      /projects/skill-quest/school/kitchen/glossary.html 302
 /about      /projects/skill-quest/about/        302
+/game       /projects/skill-quest/the-pass/     302
+/map        /projects/skill-quest/cheat-sheets/one-page.html 302
 R
 ~/Claude/celebrateloop-site/node_modules/.bin/wrangler pages deploy "$OUT" --project-name ai-made-ez --branch main --commit-dirty=true

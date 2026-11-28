@@ -8,10 +8,10 @@
   var BASE = "/projects/skill-quest/";
   var LINKS = [["start", "Start here", BASE + "start/"], ["school", "Lessons", BASE + "school/"], ["words", "Plain words", BASE + "school/kitchen/glossary.html"], ["use", "Use AI well", BASE + "use-ai/"], ["tools", "Tools", BASE + "tools/"], ["templates", "Templates", BASE + "cheat-sheets/"], ["kit", "App planner", BASE + "build-kit/"], ["keepup", "Keep up", BASE + "keep-up/"], ["about", "About", BASE + "about/"]];
   /* the phone menu: a few groups instead of one long list */
-  var GROUPS = [["Learn", ["start", "school", "words"]], ["Make", ["templates", "kit"]], ["Choose", ["tools", "use"]], ["Stay current", ["keepup"]]];
-  var SUB = { start: "New? Begin here", school: "5 levels, short lessons", words: "Every AI term, plainly", templates: "Fill in, download", kit: "Plan an app", tools: "Which AI tool?", use: "8 habits that work", keepup: "This week in AI" };
+  var GROUPS = [["Learn", ["start", "school", "words", "game"]], ["Make", ["templates", "kit"]], ["Choose", ["tools", "use"]], ["Stay current", ["keepup"]]];
+  var SUB = { start: "New? Begin here", school: "5 levels, short lessons", words: "Every AI term, plainly", game: "Learn the words by playing", templates: "Fill in, download", kit: "Plan an app", tools: "Which AI tool?", use: "8 habits that work", keepup: "This week in AI" };
   function drawerHTML() {
-    var by = {}; LINKS.forEach(function (l) { by[l[0]] = l; });
+    var by = { game: ["game", "Word game", BASE + "the-pass/"] }; LINKS.forEach(function (l) { by[l[0]] = l; });
     return '<div class="smez-drawer">' + GROUPS.map(function (g) {
       return '<p class="smez-gh">' + g[0] + '</p><div class="smez-grid">' + g[1].map(function (k) { var l = by[k]; if (!l) return "";
         return '<a href="' + l[2] + '"' + (k === section ? ' aria-current="page"' : "") + "><b>" + l[1] + "</b><span>" + (SUB[k] || "") + "</span></a>"; }).join("") + "</div>";

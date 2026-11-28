@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Pass: a game to learn AI words · AI Made EZ</title>
+<!-- og:start -->
+<link rel="canonical" href="https://vargas-studio.pages.dev/projects/skill-quest/the-pass/">
+<meta property="og:type" content="website"><meta property="og:site_name" content="AI Made EZ">
+<meta property="og:title" content="The Pass: a game to learn AI words · AI Made EZ"><meta property="og:description" content="Orders come in. Serve the right AI word. A free 90-second game that teaches 52 AI words in plain English and fills in your AI kitchen map.">
+<meta property="og:url" content="https://vargas-studio.pages.dev/projects/skill-quest/the-pass/"><meta property="og:image" content="https://vargas-studio.pages.dev/projects/skill-quest/og/words.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<!-- og:end -->
+<meta name="description" content="Orders come in. Serve the right AI word. A free 90-second game that teaches 52 AI words in plain English and fills in your AI kitchen map.">
+<meta name="ez-og-image" content="https://vargas-studio.pages.dev/projects/skill-quest/og/words.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="pass.css">
+</head>
+<body>
+<header class="hud" id="hud">
+  <a class="back" href="../cheat-sheets/one-page.html" aria-label="Back to the AI kitchen map">‹ Map</a>
+  <div class="clock" aria-hidden="true"><i id="clock"></i></div>
+  <p class="tips" id="tips" aria-live="off"><b>0</b><span>/12</span></p>
+  <button class="snd" id="snd" type="button" aria-pressed="false" aria-label="Sound off. Turn sound on"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z"/><path class="w" d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/><path class="x" d="M17 9l5 6M22 9l-5 6"/></svg></button>
+</header>
+
+<main id="game">
+  <!-- start -->
+  <section class="screen on" id="s-start">
+    <p class="kick">AI Made EZ · a 2-minute game</p>
+    <h1>The Pass</h1>
+    <p class="lede">Orders come in. Serve the right AI word.</p>
+    <ol class="flow" aria-label="How one AI answer gets made"><li><b>You</b> ask</li><li><b>Your order</b> the prompt</li><li><b>The counter</b> all it can see</li><li><b>The chef</b> the model</li><li><b>The plate</b> the answer</li></ol>
+    <div class="demo" aria-hidden="true">
+      <div class="dticket"><small>ORDER · WHAT’S HAPPENING</small><p>You paste a 300-page report and it still sees all of it at once.</p></div>
+      <div class="dtiles"><span>Token</span><span class="hit">Context window</span><span>Memory</span></div>
+    </div>
+    <ul class="how">
+      <li><b>Tap</b> the word that fits the order, or drag it up.</li>
+      <li><b>Wrong?</b> You get a hint. Nothing is taken away.</li>
+      <li><b>Every word</b> you get right lights up on your AI kitchen map.</li>
+    </ul>
+    <p class="mapline" id="mapline"></p>
+    <button class="go" id="start" type="button">Start service</button>
+    <p class="skip"><a href="../school/kitchen/glossary.html">Just read the words instead</a></p>
+  </section>
+
+  <!-- service -->
+  <section class="screen" id="s-play" aria-label="Service">
+    <div class="station" id="station" aria-hidden="true"></div>
+    <div class="rail" id="rail">
+      <div class="combo" id="combo" aria-hidden="true"></div>
+    </div>
+    <p class="sr" id="say" role="status" aria-live="polite"></p>
+    <div class="tray" id="tray" role="group" aria-label="Your words"></div>
+  </section>
+
+  <!-- end -->
+  <section class="screen" id="s-end" aria-labelledby="endTitle">
+    <p class="kick">Service over</p>
+    <h1 id="endTitle">Nice work, chef.</h1>
+    <div class="stats"><div><b id="eServed">0</b><span>orders served</span></div><div><b id="eTips">0</b><span id="eTipsOf">right first time</span></div><div><b id="eBest">0</b><span>words on your map</span></div></div>
+    <div class="lit" id="eLit"></div>
+    <div class="lit" id="eMiss"></div>
+    <div class="ends">
+      <button class="go" id="again" type="button">Next service</button>
+      <a class="go ghost" href="../cheat-sheets/one-page.html">See your map</a>
+    </div>
+    <p class="skip"><a href="../school/kitchen/glossary.html">All the words in Plain words</a></p>
+  </section>
+</main>
+<div class="fx" id="fx" aria-hidden="true"></div>
+<div class="peek" id="peek" role="dialog" aria-modal="false" hidden></div>
+
+<script src="../school/kitchen/words.js"></script>
+<script src="../school/kitchen/mem.js"></script>
+<script src="../school/kitchen/map.js"></script>
+<script src="situations.js"></script>
+<script src="pass.js"></script>
+</body>
+</html>

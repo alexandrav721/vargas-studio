@@ -7,17 +7,20 @@
 <!-- og:start -->
 <link rel="canonical" href="https://vargas-studio.pages.dev/projects/skill-quest/cheat-sheets/one-page">
 <meta property="og:type" content="website"><meta property="og:site_name" content="AI Made EZ">
-<meta property="og:title" content="AI cheat sheet · AI Made EZ"><meta property="og:description" content="The 6 boxes, the skill recipe and 5 follow-up lines on one printable page. Free.">
+<meta property="og:title" content="AI cheat sheet · AI Made EZ"><meta property="og:description" content="Every AI word on one map: tap a word to see what it means in plain English. Plus the 6 boxes and 5 follow-up lines. Free and printable.">
 <meta property="og:url" content="https://vargas-studio.pages.dev/projects/skill-quest/cheat-sheets/one-page"><meta property="og:image" content="https://vargas-studio.pages.dev/projects/skill-quest/og/templates.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <!-- og:end -->
-<meta name="description" content="The 6 boxes, the skill recipe and 5 follow-up lines on one printable page. Free.">
+<meta name="description" content="Every AI word on one map: tap a word to see what it means in plain English. Plus the 6 boxes and 5 follow-up lines. Free and printable.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../school/school.css">
+<link rel="stylesheet" href="../school/kitchen/map.css">
 <style>
-main{max-width:900px}
+main{max-width:1100px}
+.lead{margin:4px 0 0;font-size:1.05rem}
+.sh2{margin:28px 0 0;font:800 1.5rem var(--display)}
 .sheet{display:grid;gap:12px;margin-top:14px}
 @media (min-width:720px){.sheet{grid-template-columns:1.15fr 1fr}}
 .card{border:2px solid var(--ink);border-radius:14px;background:#fff;padding:14px 16px;break-inside:avoid}
@@ -40,6 +43,9 @@ main{max-width:900px}
 <main>
   <p class="label">AI Made EZ · cheat sheet</p>
   <h1>AI, on one page.</h1>
+  <p class="muted lead">Every AI word, where it lives in the kitchen. Tap one to see what it means.</p>
+  <div id="kmap"></div>
+  <h2 class="sh2">How to ask</h2>
   <div class="btns"><button class="btn" type="button" onclick="window.print()">Print it</button><a class="btn ghost" href="./">All templates</a></div>
   <div class="sheet">
     <div class="card"><h2>The 6 boxes</h2><pre id="six"></pre><p class="muted">Leave a box out if it doesn’t apply.</p></div>
@@ -50,6 +56,10 @@ main{max-width:900px}
   </div>
 </main>
 <footer class="foot"><a href="./">Templates</a><a href="../start/">Start here</a><span>Not affiliated with Anthropic</span><span>Made by Alexandra Vargas</span></footer>
+<script src="../school/kitchen/words.js"></script>
+<script src="../school/kitchen/mem.js"></script>
+<script src="../school/kitchen/map.js"></script>
+<script src="../school/kitchen/mapview.js"></script>
 <script src="templates.js"></script>
 <script>
 (function () {
