@@ -162,3 +162,7 @@ body.rush .rail::before{display:none}
 .station em{display:block;font-style:normal;font-size:.9rem;color:var(--muted)}
 @media (prefers-reduced-motion:no-preference){.station.swap{animation:swap .36s var(--spring)}}
 @keyframes swap{from{opacity:0;transform:translateY(-8px) scale(.98)}to{opacity:1;transform:none}}
+
+.fx{overflow:hidden}
+@media (prefers-reduced-motion:reduce){.ticket.served .stamp{animation:none}}
+@media (min-width:700px){.rail{flex:0 0 330px}#s-play{justify-content:center}}

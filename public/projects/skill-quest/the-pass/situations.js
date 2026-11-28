@@ -21,7 +21,7 @@ window.EZ_SITU = {
   "Inference": ["The AI is working out its reply to your question right now.", "Running a trained AI to get an answer, as opposed to training it."],
   "Training cutoff": ["It doesn't know about last week's news because it learned from older data.", "The date its learning stopped."],
   "Thinking": ["It works through a hard problem step by step before it answers.", "Extra reasoning time before the reply, useful for tricky questions."],
-  "Temperature": ["A dial that makes answers more predictable or more varied.", "Turned down for a contract, turned up for brainstorming names."],
+  "Temperature": ["An older dial that made answers more predictable or more varied. Newer Claude models don't take it.", "Old tutorials say: set it to 0 for a contract, higher for brainstorming names."],
   "Hallucination": ["It confidently quotes a book that doesn't exist.", "A made-up fact said as if it were true."],
   "Tool use": ["The AI can reach for a calculator, a search or your calendar to get the job done.", "Giving the AI actions it can ask your app to run."],
   "Tool call": ["The AI asks: “run the weather lookup for Paris.”", "One request from the AI to use a specific tool, with the details filled in."],

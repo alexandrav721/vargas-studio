@@ -12,7 +12,12 @@
   function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
   function shuffle(a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
   function slug(t) { return t.toLowerCase().replace(/[^a-z0-9]+/g, "-"); }
-  function short(t) { t = String(t || ""); var m = t.match(/^[^.:]*[.:]/); var s = (m ? m[0] : t).replace(/[.:]$/, ""); return s.length > 140 ? s.slice(0, 137) + "…" : s + "."; }
+  function short(t) {
+    t = String(t || ""); var parts = t.match(/[^.]+\.?/g) || [t], s = parts[0].trim();
+    if (s.length < 40 && parts[1]) s += " " + parts[1].trim();
+    s = s.replace(/\.$/, "");
+    return s.length > 150 ? s.slice(0, 147).replace(/\s+\S*$/, "") + "…" : s + ".";
+  }
   function lessonHref(w) { var lv = w[6] || 2; return lv === 2 ? "../school/kitchen/lesson-" + w[4] + ".html" : "../school/level-" + lv + "/lesson-" + w[4] + ".html"; }
 
   /* ---------- sound (Web Audio only, off until you turn it on) ---------- */
@@ -76,7 +81,7 @@
     if (review.length < room) shuffle(POOL.filter(function (t) { return B.known(t); })).forEach(add);
     review = review.slice(0, Math.max(0, room));
     if (!news.length && review.length < 6) news = fresh.slice(0, 2);
-    return { news: news, review: review };
+    return { news: news, review: review, focus: focusList().filter(function (t) { return review.indexOf(t) >= 0; }) };
   }
   /* each word's tickets, spread so the same word never appears twice within 2 orders */
   function buildQueue(pk) {
@@ -84,6 +89,7 @@
     pk.news.forEach(function (t) { var ks = shuffle(kinds(M.get(t))); lists[t] = [{ t: t, kind: "new" }, { t: t, kind: ks[0] }]; });
     pk.review.forEach(function (t) { lists[t] = [{ t: t, kind: shuffle(kinds(M.get(t)))[0] }]; });
     var q = [], last = {}, words = Object.keys(lists), first = true;
+    (pk.focus || []).forEach(function (t) { if (lists[t] && lists[t].length && lists[t][0].kind !== "new") { last[t] = q.length; q.push(lists[t].shift()); first = false; } });
     while (words.some(function (t) { return lists[t].length; })) {
       var i = q.length;
       var ok = words.filter(function (t) { return lists[t].length && (last[t] == null || i - last[t] >= 2); });
@@ -118,7 +124,7 @@
     window.scrollTo(0, 0);
   }
   function mapLine() {
-    var k = POOL.filter(B.known).length, l = POOL.filter(function (t) { return B.seen(t) && !B.known(t); }).length;
+    var k = POOL.filter(function (t) { return M.state(t) === 2; }).length, l = POOL.filter(function (t) { return M.state(t) === 1; }).length;
     $("mapline").textContent = "Your map: " + k + " of " + POOL.length + " words known" + (l ? " · " + l + " learning" : "");
     $("start").textContent = k || l ? "Start service" : "Start your first service";
   }
@@ -147,13 +153,15 @@
       rail.appendChild(el);
     });
     var tk = S.q[S.i], w = M.get(tk.t), z = M.zoneOf(tk.t), st = $("station");
-    if (z && st.dataset.z !== z.id) {
+    if (tk.kind === "kitchen") { if (st.dataset.z !== "?") { st.dataset.z = "?"; st.style.setProperty("--hue", "#5d5952"); st.innerHTML = '<span class="sic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M10 9.5a2 2 0 1 1 3 1.7c-.7.4-1 1-1 1.8M12 16h.01"/></svg></span><span><small>This order is from</small><b>Which station?</b><em>The order names its kitchen job</em></span>'; } }
+    else if (z && st.dataset.z !== z.id) {
       st.dataset.z = z.id; st.style.setProperty("--hue", z.hue);
       st.innerHTML = '<span class="sic"><svg viewBox="0 0 24 24">' + z.icon + '</svg></span><span><small>This order is from</small><b>' + esc(z.name) + "</b><em>" + esc(z.sub) + "</em></span>";
       if (!reduce) { st.classList.remove("swap"); void st.offsetWidth; st.classList.add("swap"); }
     }
     say.textContent = "Order " + (S.i + 1) + ". " + LABEL[tk.kind] + ": " + (tk.kind === "new" ? tk.t + ". " + w[2] : $("front").querySelector(".q").textContent.replace(/\s+/g, " "));
     $("clock").style.width = Math.round(S.i / S.total * 100) + "%";
+    $("tips").querySelector("span").textContent = "/" + S.total;
   }
   var TWINS = [["Tool use", "Tool call"], ["Agent", "Agent loop"], ["Orchestrator", "Subagent"], ["Grader", "Eval"], ["LLM", "Model"], ["Model", "Model family"]];
   function clash(a, b) { var A = a.toLowerCase(), Bb = b.toLowerCase(); if (A.indexOf(Bb) >= 0 || Bb.indexOf(A) >= 0) return true; return TWINS.some(function (p) { return (p[0] === a && p[1] === b) || (p[0] === b && p[1] === a); }); }
@@ -161,8 +169,9 @@
     var z = M.zoneOf(t), same = z ? z.words.filter(function (x) { return x !== t && M.get(x) && !clash(t, x); }) : [];
     var known = POOL.filter(function (x) { return x !== t && !clash(t, x) && same.indexOf(x) < 0 && (B.seen(x) || S.words.indexOf(x) >= 0); });
     var rest = POOL.filter(function (x) { return x !== t && !clash(t, x) && same.indexOf(x) < 0 && known.indexOf(x) < 0; });
-    var out = shuffle(same).slice(0, 2).concat(shuffle(known)).concat(shuffle(rest));
-    return out.filter(function (x, i) { return out.indexOf(x) === i; }).slice(0, 3);
+    var out = shuffle(same).slice(0, 2).concat(shuffle(known)).concat(shuffle(rest)), pick = [];
+    out.forEach(function (x) { if (pick.length < 3 && pick.indexOf(x) < 0 && !pick.some(function (y) { return clash(x, y); })) pick.push(x); });
+    return pick;
   }
   function drawTray() {
     var tk = S.q[S.i], opts = shuffle([tk.t].concat(distractors(tk.t)));
@@ -188,6 +197,7 @@
   function addTips(n, x, y) {
     S.tips += n; var b = $("tips").querySelector("b"); b.textContent = S.served;
     if (!reduce) { b.classList.remove("pop"); void b.offsetWidth; b.classList.add("pop"); }
+    if (reduce) return;
     var f = document.createElement("span"); f.className = "float"; f.textContent = "✓"; f.style.left = x + "px"; f.style.top = y + "px";
     $("fx").appendChild(f); setTimeout(function () { f.remove(); }, 750);
   }
