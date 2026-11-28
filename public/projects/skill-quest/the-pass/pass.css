@@ -166,3 +166,4 @@ body.rush .rail::before{display:none}
 .fx{overflow:hidden}
 @media (prefers-reduced-motion:reduce){.ticket.served .stamp{animation:none}}
 @media (min-width:700px){.rail{flex:0 0 330px}#s-play{justify-content:center}}
+@media (min-width:700px){.rail{flex:0 0 300px}.ticket{bottom:auto;top:44px}}
