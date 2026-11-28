@@ -16,7 +16,7 @@
       return '<li style="--i:' + i + '"><b>' + esc(f[0]) + "</b><span>" + esc(f[1]) + "</span></li>";
     }).join("") + '<i class="kdot" aria-hidden="true"></i></ol>';
     h += '<div class="kbar"><p class="klegend"><span class="s0">new</span><span class="s1">learning</span><span class="s2">known</span></p>' +
-      '<p class="kcount"><b>' + known + "</b> of " + all.length + " words known" + (lrn ? " · " + lrn + " learning" : "") + "</p><a class="btn kplay" href="' + GAME + '">' + (known || lrn ? "Keep playing The Pass →" : "Play The Pass →") + '</a></div>';
+      '<p class="kcount"><b>' + known + "</b> of " + all.length + " words known" + (lrn ? " · " + lrn + " learning" : "") + '</p><a class="btn kplay" href="' + GAME + '">' + (known || lrn ? "Keep playing The Pass →" : "Play The Pass →") + '</a></div>';
     h += '<div class="kgrid">' + M.zones.map(function (z) {
       return '<section class="kst" style="--hue:' + z.hue + '"><header><span class="kic">' + svg(z.icon) + "</span><div><h2>" + esc(z.name) + "</h2><p>" + esc(z.sub) + '</p></div></header><div class="kchips">' +
         z.words.filter(M.get).map(function (t) {
