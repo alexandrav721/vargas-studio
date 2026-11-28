@@ -11,6 +11,7 @@ export const META: Record<string, Meta> = {
   scrolll: { name: "Get Paid to Scroll", pic: "/thumbs/scrolll-product-ui.jpg", play: "/projects/scrolll/app.html", playLabel: "Try the app", line: "Get paid for your attention." },
   "habit-game": { name: "Lumen", pic: "/thumbs/habit-game-product-ui.jpg", play: "/projects/lumen/product.html", playLabel: "Open Lumen", line: "Keep going on big goals after a bad day." },
   "shelf-paid": { name: "Shelf Paid", pic: "/desk/shelf-paid.jpg", play: "https://shelfpaid.pages.dev/", playLabel: "See a sample week ↗", line: "Your Amazon storefront, turned into a week of posts.", external: true },
+  "glow-squares": { name: "Glow Squares", pic: "/desk/glow-squares.jpg", play: "/projects/glow-squares/play.html", playLabel: "Play", line: "Your 9 pm chocolate, with a joke under the foil." },
   loop: { name: "Loop", pic: "/desk/loop.jpg", play: "https://celebrateloop.com", playLabel: "Visit Loop ↗", line: "Borrow from friends before you buy.", external: true },
 };
 

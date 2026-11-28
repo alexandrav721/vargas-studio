@@ -11,6 +11,7 @@
     loop: "Loop", "planner-book": "Planners", "habit-game": "Lumen", "skill-quest": "AI Made EZ",
     "ai-made-ez": "AI Made EZ", "shelf-paid": "Shelf Paid"
   };
+  NAMES["glow-squares"] = "Glow Squares";
   var me = document.currentScript;
   var pid = me && me.getAttribute("data-project");
   var kind = (me && me.getAttribute("data-kind")) || "piece";

@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Glow Squares · Print pieces</title>
+<meta name="description" content="The printed pieces inside a Glow Squares box at real size, on US Letter: door hanger, progress card, insert card, reorder card and six tray notes." />
+<meta name="robots" content="noindex" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap" />
+<style>
+:root{
+  --linen:#f4ece3; --card:#fffaf4; --cocoa:#2a1712; --rose:#e8a6b8; --accent:#b8475f; --gold:#d9b276;
+  --dim:#6b4a40; --line:#e3d5c8; --line2:#d6c4b4; --cut:#9a8576;
+  --display:"Instrument Serif", Georgia, serif; --body:"Manrope", system-ui, sans-serif;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--linen);color:var(--cocoa);font:16px/1.55 var(--body)}
+a{color:var(--accent)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+.wrap{max-width:1120px;margin:0 auto;padding:24px 16px 72px}
+@media (min-width:700px){.wrap{padding:32px 28px 96px}}
+
+.pnav{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:baseline;font-size:14px;margin-bottom:40px}
+.pnav b{font:400 22px var(--display);margin-right:6px}
+.pnav a{color:var(--dim);text-decoration:none;padding:4px 0}
+.pnav a:hover{color:var(--accent)}
+.pnav a[aria-current]{color:var(--cocoa);border-bottom:1px solid var(--accent)}
+
+.intro{display:grid;gap:20px;align-items:end;margin-bottom:28px}
+@media (min-width:860px){.intro{grid-template-columns:1.4fr 1fr}}
+h1{font:400 clamp(40px,8vw,72px)/.98 var(--display);margin:0;max-width:13ch}
+h1 em{color:var(--accent)}
+.lede{margin:0 0 14px;max-width:42ch}
+.actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.btn{display:inline-block;background:var(--accent);color:#fff;border:0;cursor:pointer;text-decoration:none;font:700 15px var(--body);padding:13px 20px;border-radius:999px}
+.btn:hover{background:#9c3a50}
+.btn.ghost{background:none;color:var(--accent);border:1.5px solid var(--accent);padding:11.5px 18px}
+.fine{font-size:13px;color:var(--dim)}
+.toc{list-style:none;padding:0;margin:0 0 8px;display:flex;flex-wrap:wrap;gap:6px 18px;font-size:14px}
+.toc a{color:var(--dim)}
+
+/* a sheet = one US Letter page */
+.page{padding:40px 0;border-top:1px solid var(--line2)}
+.page>header{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:baseline;margin-bottom:22px}
+.page h2{font:400 32px/1.05 var(--display);margin:0}
+.page>header p{margin:0;font-size:14px;color:var(--dim);max-width:60ch}
+.pieces{display:flex;flex-wrap:wrap;gap:28px 32px;align-items:flex-start}
+figure{margin:0;min-width:0;max-width:100%}
+figure:has(.hanger){width:3.5in}
+figure:has(.card){width:6in}
+.hanger,.card{width:100%!important}
+figcaption{font-size:13px;color:var(--dim);margin-top:10px;max-width:42ch}
+.draft{display:inline-block;font:700 11px var(--body);letter-spacing:.06em;text-transform:uppercase;color:var(--accent);border:1.5px solid var(--accent);padding:3px 8px;margin-bottom:8px;background:var(--card)}
+.slug{display:none}
+
+/* ---------- pieces: sized in real inches, everything inside scales with cqw ---------- */
+.piece{position:relative;container-type:inline-size;overflow:hidden;-webkit-print-color-adjust:exact;print-color-adjust:exact;outline:1px dashed var(--cut);outline-offset:4px}
+
+/* door hanger 3.5 x 8.5 in (1 in = 28.571cqw) */
+.hanger{width:min(3.5in,100%);aspect-ratio:3.5/8.5;border-radius:12px}
+.hanger svg.hole{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.hanger .in{position:absolute;left:10cqw;right:10cqw;top:62cqw;bottom:12cqw;display:flex;flex-direction:column}
+.hanger .mark{margin-top:auto;text-align:center}
+.wm{font:400 9cqw/1 var(--display)} .wm span{color:var(--accent)}
+.svc{font:600 2.9cqw/1.2 var(--body);letter-spacing:.24em;text-transform:uppercase;margin-top:2.4cqw}
+
+.h-front{background:var(--cocoa);color:var(--card)}
+.h-front .wm span{color:var(--rose)} .h-front .svc{color:var(--rose)}
+.dnd{font:800 13.6cqw/1.02 var(--body);letter-spacing:.06em;text-transform:uppercase;text-align:center;margin-top:16cqw}
+.dnd span{display:block}
+.rule{width:22cqw;height:0;border-top:.5cqw solid var(--gold);margin:9cqw auto 0}
+.h-front .quiet{font:400 italic 7cqw/1.2 var(--display);text-align:center;color:#e9d9cc;margin-top:8cqw}
+
+.h-back{background:var(--card);color:var(--cocoa);border:1px solid var(--line)}
+.pmr{font:800 8.2cqw/1.12 var(--body);letter-spacing:.05em;text-transform:uppercase;margin-top:12cqw}
+.pmr+p{font:400 italic 12cqw/1.06 var(--display);margin:9cqw 0 0;color:var(--accent)}
+.h-back .svc{color:var(--dim)}
+
+.h-gift{background:var(--card);color:var(--cocoa);border:1px solid var(--line)}
+.tab{font:400 13cqw/1 var(--display);margin-top:22cqw}
+.tab em{color:var(--accent)}
+.blank{border-bottom:.45cqw solid var(--cocoa);height:16cqw;margin-top:4cqw}
+.blank+.blank{height:13cqw}
+.h-gift .who{font:600 3cqw/1.3 var(--body);letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin-top:3cqw}
+
+/* 4 x 6 cards, landscape 6 x 4 in (1 in = 16.667cqw) */
+.card{width:min(6in,100%);aspect-ratio:3/2;border-radius:6px;background:var(--card);border:1px solid var(--line);padding:5% 6% 4.5%}
+.card .wm{font-size:5cqw}
+.card .k{font:600 1.75cqw/1.3 var(--body);letter-spacing:.22em;text-transform:uppercase;color:var(--dim)}
+
+/* progress card */
+.prog{display:flex;flex-direction:column}
+.prog .top{display:flex;justify-content:space-between;align-items:baseline;gap:3cqw}
+.prog h3{font:400 8.4cqw/1 var(--display);margin:0} .prog h3 em{color:var(--accent)}
+.prog .top p{margin:0;font-size:2.2cqw;color:var(--dim);text-align:right;max-width:28cqw;line-height:1.35}
+.dots{display:grid;grid-template-columns:repeat(10,1fr);gap:2.2cqw 1.4cqw;margin:5cqw 0 0;padding:0;list-style:none}
+.dots li{display:flex;flex-direction:column;align-items:center;gap:.9cqw;font:600 1.55cqw/1 var(--body);letter-spacing:.08em;color:var(--dim)}
+.dots li::before{content:"";width:5.6cqw;height:5.6cqw;border-radius:50%;border:.32cqw solid var(--cocoa)}
+.dots li.g::before{border-color:var(--gold);border-width:.6cqw}
+.prog .fin{margin-top:auto;display:flex;align-items:flex-end;gap:2cqw;font:400 italic 4.4cqw/1 var(--display)}
+.prog .fin span{flex:1;border-bottom:.25cqw solid var(--cocoa);height:3.2cqw}
+.prog .fin small{font:600 1.7cqw/1 var(--body);font-style:normal;letter-spacing:.18em;text-transform:uppercase;color:var(--dim)}
+
+/* insert card */
+.ins{display:grid;grid-template-columns:1.05fr 1fr;gap:5%}
+.ins h3{font:400 6.2cqw/1 var(--display);margin:0 0 3cqw}
+.ins ol{list-style:none;margin:0;padding:0;counter-reset:s}
+.ins ol li{display:grid;grid-template-columns:auto 1fr;gap:.2cqw 2cqw;margin-bottom:2.4cqw;font-size:2.15cqw;line-height:1.35}
+.ins ol b{font:400 4.6cqw/1 var(--display);grid-row:span 2;align-self:start;min-width:14cqw}
+.ins ol li:nth-child(2) b{color:var(--accent)}
+.ins .store{font-size:2.05cqw;line-height:1.4;color:var(--dim);margin:3cqw 0 0;border-top:1px solid var(--line);padding-top:2.4cqw}
+.ins .right{border-left:1px solid var(--line);padding-left:4.5cqw;display:flex;flex-direction:column}
+.ins .right p{margin:0 0 2.4cqw;font-size:2.1cqw;line-height:1.42}
+.ins .dose{font:400 3.7cqw/1.18 var(--display)!important}
+.ins .kids{margin-top:auto!important;font-weight:700;font-size:2.1cqw}
+.ins .stampd{position:absolute;right:3cqw;top:2.6cqw;font:700 1.5cqw/1 var(--body);letter-spacing:.12em;text-transform:uppercase;color:var(--accent);border:.25cqw solid var(--accent);padding:.8cqw 1.4cqw;transform:rotate(2deg);background:var(--card)}
+
+/* reorder card */
+.ro-front{background:var(--cocoa);color:var(--card);border-color:var(--cocoa);display:flex;flex-direction:column}
+.ro-front .k{color:var(--rose)}
+.ro-front h3{font:400 15cqw/.95 var(--display);margin:auto 0 0}
+.ro-front h3 em{color:var(--rose)}
+.ro-front p{margin:3.6cqw 0 0;font-size:2.6cqw;color:#e9d9cc;max-width:44cqw;line-height:1.4}
+.ro-front .wm{position:absolute;right:6cqw;bottom:5cqw;font-size:4.4cqw} .ro-front .wm span{color:var(--rose)}
+.ro-back{display:grid;grid-template-columns:1fr 34%;gap:6%;align-items:stretch}
+.ro-back h3{font:400 5.6cqw/1.05 var(--display);margin:0 0 3.4cqw}
+.opt{border-top:1px solid var(--line);padding:2.2cqw 0;display:grid;grid-template-columns:1fr auto;gap:0 2cqw;align-items:baseline}
+.opt b{font:400 3.6cqw/1.1 var(--display)}
+.opt span{font:700 2.6cqw/1 var(--body)}
+.opt small{grid-column:1/-1;font-size:1.9cqw;color:var(--dim);line-height:1.35;margin-top:.6cqw}
+.qr{border:.3cqw dashed var(--cut);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:1.4cqw;padding:2cqw}
+.qr i{width:18cqw;height:18cqw;background:
+  linear-gradient(var(--cocoa),var(--cocoa)) 0 0/6cqw 6cqw no-repeat,
+  linear-gradient(var(--cocoa),var(--cocoa)) 100% 0/6cqw 6cqw no-repeat,
+  linear-gradient(var(--cocoa),var(--cocoa)) 0 100%/6cqw 6cqw no-repeat;opacity:.18}
+.qr span{font-size:1.8cqw;color:var(--dim);line-height:1.3}
+.qr b{font:700 2.1cqw var(--body)}
+
+/* tray-note cards 3.5 x 3 in (1 in = 28.571cqw) */
+.notes{display:grid;grid-template-columns:repeat(2,min(3.5in,100%));gap:.2in;justify-content:start}
+@media (max-width:760px){.notes{grid-template-columns:min(3.5in,100%)}}
+.nt{width:100%;aspect-ratio:3.5/3;background:var(--card);border:1px solid var(--line);padding:8% 8% 7%;display:flex;flex-direction:column;text-align:center}
+.nt .rm{font:700 3.3cqw/1 var(--body);letter-spacing:.26em;color:var(--dim)}
+.nt.gold{border-top:8px solid var(--gold)}
+.nt p{margin:auto 0;font:400 9cqw/1.12 var(--display)}
+.nt .ask{font:400 italic 4.4cqw/1 var(--display);color:var(--accent);margin-bottom:2cqw}
+.nt .gs{font:400 4.6cqw/1 var(--display)} .nt .gs span{color:var(--accent)}
+
+.end{border-top:1px solid var(--line2);padding-top:28px;font-size:14px;color:var(--dim);max-width:66ch}
+.end a{font-weight:600}
+
+/* ---------- print: US Letter, one sheet per .page ---------- */
+@page{size:letter;margin:.4in}
+@media print{
+  html,body{background:#fff}
+  .site-bar,.pnav,.intro,.page>header,figcaption,.end,.noprint{display:none!important}
+  .wrap{max-width:none;padding:0;margin:0}
+  .page{border:0;padding:0;width:7.7in;height:10.1in;display:flex;flex-direction:column;justify-content:center;align-items:center;break-after:page;page-break-after:always;break-inside:avoid}
+  .page:last-of-type{break-after:auto;page-break-after:auto}
+  .pieces{justify-content:center;gap:.35in .5in;flex-wrap:nowrap}
+  .pieces.stack{flex-direction:column;align-items:center}
+  .notes{grid-template-columns:repeat(2,3.5in);gap:.2in}
+  .nt{width:3.5in}
+  .piece{outline:.5pt dashed #8a7869;outline-offset:0}
+  .hanger,.card,.nt{border-color:transparent}
+  .draft{display:inline-block}
+  .slug{display:block;font:500 7.5pt var(--body);color:#8a7869;margin-top:.18in;text-align:center}
+}
+@media (prefers-reduced-motion:no-preference){.btn{transition:background .15s}}
+</style>
+<link rel="stylesheet" href="/site-bar.css" />
+<script src="/site-bar.js" data-project="glow-squares" data-kind="piece" defer></script>
+</head>
+<body>
+<div class="wrap">
+  <nav class="pnav" aria-label="Glow Squares">
+    <b>Glow Squares</b>
+    <a href="landing.html">Landing</a>
+    <a href="store.html">Store</a>
+    <a href="packaging.html">Packaging</a>
+    <a href="funnel.html">Funnel</a>
+    <a href="print.html" aria-current="page">Print</a>
+  </nav>
+
+  <header class="intro">
+    <h1>What she finds <em>in the box</em></h1>
+    <div>
+      <p class="lede">Every printed piece, at real size on desktop. Five US Letter sheets: print at 100%, cut on the dashed lines. Sizes are estimates until the box maker confirms them.</p>
+      <div class="actions">
+        <button class="btn" type="button" onclick="window.print()">Print all 5 sheets</button>
+        <a class="btn ghost" href="/projects/glow-squares/packaging.html">See the packaging board</a>
+      </div>
+    </div>
+  </header>
+  <ul class="toc noprint" aria-label="Sheets">
+    <li><a href="#p1">1 · Door hanger</a></li>
+    <li><a href="#p2">2 · Gift back</a></li>
+    <li><a href="#p3">3 · Progress and insert cards</a></li>
+    <li><a href="#p4">4 · Reorder card</a></li>
+    <li><a href="#p5">5 · Six tray notes</a></li>
+  </ul>
+  <p class="fine noprint">On a phone the pieces shrink to fit the screen; the printed sheets stay real size.</p>
+
+  <!-- Sheet 1: door hanger -->
+  <section class="page" id="p1" aria-labelledby="t1">
+    <header><h2 id="t1">Do Not Disturb door hanger</h2><p>3.5 × 8.5 in, 350 to 400 gsm card. Slips over a knob or a lever. Bands the lid through a slot. No claims on it.</p></header>
+    <div class="pieces">
+      <figure>
+        <div class="piece hanger h-front" role="img" aria-label="Door hanger front: DO NOT DISTURB, on cocoa card">
+          <svg class="hole" viewBox="0 0 350 850" aria-hidden="true"><circle cx="175" cy="118" r="70" fill="#fff" stroke="#9a8576" stroke-width="1.4" stroke-dasharray="5 4"/><path d="M226 70 L268 0" stroke="#9a8576" stroke-width="1.4" stroke-dasharray="5 4" fill="none"/></svg>
+          <div class="in">
+            <p class="dnd" style="margin-bottom:0"><span>Do not</span><span>disturb</span></p>
+            <div class="rule"></div>
+            <p class="quiet" style="margin-bottom:0">Your evening has been prepared.</p>
+            <div class="mark"><div class="wm">Glow <span>Squares</span></div><div class="svc">Turndown service</div></div>
+          </div>
+        </div>
+        <figcaption>Front. The hole and slit are cut lines, not print.</figcaption>
+      </figure>
+      <figure>
+        <div class="piece hanger h-back" role="img" aria-label="Door hanger back: PLEASE MAKE UP THE ROOM. Someone else. Ideally not you.">
+          <svg class="hole" viewBox="0 0 350 850" aria-hidden="true"><circle cx="175" cy="118" r="70" fill="#fff" stroke="#9a8576" stroke-width="1.4" stroke-dasharray="5 4"/><path d="M124 70 L82 0" stroke="#9a8576" stroke-width="1.4" stroke-dasharray="5 4" fill="none"/></svg>
+          <div class="in">
+            <p class="pmr" style="margin-bottom:0">Please make up the room.</p>
+            <p>Someone else. Ideally not you.</p>
+            <div class="mark"><div class="wm">Glow <span>Squares</span></div><div class="svc">Turndown service</div></div>
+          </div>
+        </div>
+        <figcaption>Back, for every box. The slit mirrors the front so both sides line up.</figcaption>
+      </figure>
+    </div>
+    <p class="slug">Glow Squares · Door hanger, front and back · 3.5 × 8.5 in · cut on the dashed line · draft</p>
+  </section>
+
+  <!-- Sheet 2: gift back -->
+  <section class="page" id="p2" aria-labelledby="t2">
+    <header><h2 id="t2">Gift back</h2><p>Replaces the standard back on gift orders. The buyer signs the line; prices never appear.</p></header>
+    <div class="pieces">
+      <figure>
+        <div class="piece hanger h-gift" role="img" aria-label="Door hanger gift back: Turndown arranged by, with a blank line to sign">
+          <svg class="hole" viewBox="0 0 350 850" aria-hidden="true"><circle cx="175" cy="118" r="70" fill="#fff" stroke="#9a8576" stroke-width="1.4" stroke-dasharray="5 4"/><path d="M124 70 L82 0" stroke="#9a8576" stroke-width="1.4" stroke-dasharray="5 4" fill="none"/></svg>
+          <div class="in">
+            <p class="tab" style="margin-bottom:0">Turndown <em>arranged</em> by</p>
+            <div class="blank"></div>
+            <div class="blank"></div>
+            <p class="who" style="margin-bottom:0">Your name, or "a friend"</p>
+            <div class="mark"><div class="wm">Glow <span>Squares</span></div><div class="svc">Turndown service</div></div>
+          </div>
+        </div>
+        <figcaption>Gift back. Two lines, room for a first name and a short note.</figcaption>
+      </figure>
+    </div>
+    <p class="slug">Glow Squares · Door hanger, gift back · 3.5 × 8.5 in · cut on the dashed line · draft</p>
+  </section>
+
+  <!-- Sheet 3: progress + insert -->
+  <section class="page" id="p3" aria-labelledby="t3">
+    <header><h2 id="t3">Progress card and insert card</h2><p>4 × 6 in each, on top of the tray. The dots match the tray rim, RM 01 to 30; the gold rings are the gold-foil nights.</p></header>
+    <div class="pieces stack">
+      <figure>
+        <div class="piece card prog" role="img" aria-label="Progress card: 30 dots in three rows of ten, RM 01 to RM 30, and a line that reads I finished something">
+          <div class="top">
+            <h3>30 <em>nights</em></h3>
+            <p>Mark a dot after each square. Missed one? The squares don't keep score.</p>
+          </div>
+          <ol class="dots">
+            <li class="g">01</li><li>02</li><li>03</li><li>04</li><li>05</li><li>06</li><li>07</li><li>08</li><li>09</li><li>10</li>
+            <li>11</li><li>12</li><li>13</li><li>14</li><li class="g">15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li>
+            <li>21</li><li>22</li><li>23</li><li>24</li><li>25</li><li>26</li><li>27</li><li>28</li><li>29</li><li class="g">30</li>
+          </ol>
+          <p class="fin" style="margin-bottom:0">I finished something. <span></span><small>Date</small></p>
+        </div>
+        <figcaption>Progress card. The finished card is the photo people take.</figcaption>
+      </figure>
+      <figure>
+        <span class="draft">Draft, before attorney review</span>
+        <div class="piece card ins" role="img" aria-label="Insert card: how to enjoy, snap, unwrap, read; what's inside; the honesty line; not a children's product">
+          <span class="stampd">Draft · before attorney review</span>
+          <div>
+            <h3>How to enjoy</h3>
+            <ol>
+              <li><b>Snap.</b>Break the square along the line in the middle.</li>
+              <li><b>Unwrap.</b>One square a night, after dinner.</li>
+              <li><b>Read.</b>Tonight's note is printed under its spot in the tray. Then mark a dot.</li>
+            </ol>
+            <p class="store">Keep the box somewhere cool, away from the stove and out of the sun.</p>
+          </div>
+          <div class="right">
+            <p class="k">What's inside</p>
+            <p class="dose">2.5 g Verisol® collagen peptides per square, the amount used in clinical studies on skin elasticity.</p>
+            <p>The studies ran 8 to 12 weeks, results vary, and most were funded by ingredient makers.</p>
+            <p>Chocolate candy, not a supplement. Nutrition Facts and allergens are on the bottom of the box.</p>
+            <p class="kids">Not a children's product. Keep out of reach of children.</p>
+          </div>
+        </div>
+        <figcaption>Insert card. The attorney reviews this card with the box as one piece, since the dose line and the honesty line sit side by side.</figcaption>
+      </figure>
+    </div>
+    <p class="slug">Glow Squares · Progress card and insert card · 6 × 4 in each · insert card: draft, before attorney review</p>
+  </section>
+
+  <!-- Sheet 4: reorder -->
+  <section class="page" id="p4" aria-labelledby="t4">
+    <header><h2 id="t4">Reorder card</h2><p>4 × 6 in, under Night 30. The only piece in the box that sells. Front and back; glue or print double-sided.</p></header>
+    <div class="pieces stack">
+      <figure>
+        <div class="piece card ro-front" role="img" aria-label="Reorder card front: Extend your stay.">
+          <p class="k" style="margin:0">RM 30 · Checkout is whenever you like</p>
+          <h3>Extend <em>your</em> stay.</h3>
+          <p>Volume 2 has all-new notes. The laundry may or may not return.</p>
+          <div class="wm">Glow <span>Squares</span></div>
+        </div>
+        <figcaption>Front.</figcaption>
+      </figure>
+      <figure>
+        <div class="piece card ro-back" role="img" aria-label="Reorder card back: monthly $49, one more box $59, or send one as a gift; space for a QR code">
+          <div>
+            <h3>When you'd like more evenings</h3>
+            <div class="opt"><b>Monthly</b><span>$49 a box</span><small>A new box every 30 days. Skip or cancel online anytime.</small></div>
+            <div class="opt"><b>One more box</b><span>$59</span><small>Thirty nights, no renewal.</small></div>
+            <div class="opt" style="border-bottom:1px solid var(--line)"><b>Send one</b><span>$59 · $147</span><small>One box, or three months prepaid. Gifts never renew.</small></div>
+          </div>
+          <div class="qr"><i></i><span>QR code goes here</span><b>glowsquares.com</b></div>
+        </div>
+        <figcaption>Back. The QR square is a placeholder until the store link exists.</figcaption>
+      </figure>
+    </div>
+    <p class="slug">Glow Squares · Reorder card, front and back · 6 × 4 in · draft</p>
+  </section>
+
+  <!-- Sheet 5: six notes -->
+  <section class="page" id="p5" aria-labelledby="t5">
+    <header><h2 id="t5">Six tray notes</h2><p>Six of the thirty from Volume 1, as cards for testing with real people before the tray prints. Gold bar = gold-foil night. In the box these print on the tray floor.</p></header>
+    <div class="notes">
+      <div class="piece nt gold" role="img" aria-label="Note for Night 1"><span class="rm">RM 01</span><p>Night 1 of 30. There's a joke inside every one. This was not the joke.</p><span class="ask">What did yours say?</span><span class="gs">Glow <span>Squares</span></span></div>
+      <div class="piece nt" role="img" aria-label="Note for Night 3"><span class="rm">RM 03</span><p>The laundry can't see you. Stay very still.</p><span class="gs">Glow <span>Squares</span></span></div>
+      <div class="piece nt" role="img" aria-label="Note for Night 11"><span class="rm">RM 11</span><p>Light the good candle. Yes, the one still in the plastic. Yes, tonight.</p><span class="gs">Glow <span>Squares</span></span></div>
+      <div class="piece nt gold" role="img" aria-label="Note for Night 15"><span class="rm">RM 15</span><p>Halfway. If this were a book club, you'd be the only one who read this far.</p><span class="ask">What did yours say?</span><span class="gs">Glow <span>Squares</span></span></div>
+      <div class="piece nt" role="img" aria-label="Note for Night 23"><span class="rm">RM 23</span><p>Breaking news: local woman sits down. More at eleven.</p><span class="ask">What did yours say?</span><span class="gs">Glow <span>Squares</span></span></div>
+      <div class="piece nt gold" role="img" aria-label="Note for Night 30"><span class="rm">RM 30</span><p>Night 30. The laundry never found you. We'd throw a parade, but you're sitting down. Correctly.</p><span class="ask">What did yours say?</span><span class="gs">Glow <span>Squares</span></span></div>
+    </div>
+    <p class="slug">Glow Squares · Tray notes, Volume 1 (6 of 30) · 3.5 × 3 in each · draft</p>
+  </section>
+
+  <footer class="end">
+    <p>The box, lid, tray and wrappers are on the <a href="/projects/glow-squares/packaging.html">packaging board</a>. The emails that point to these pieces are on the <a href="funnel.html">funnel page</a>.</p>
+  </footer>
+</div>
+</body>
+</html>

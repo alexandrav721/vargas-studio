@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Glow Squares · Thirty nights in one minute</title>
+<meta name="description" content="Open a month of Glow Squares one square at a time: snap, unwrap, read the joke underneath.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="/site-bar.css" />
+<script src="/site-bar.js" data-project="glow-squares" data-kind="game" defer></script>
+<style>
+/* The game: a month of evenings in a minute. One tap per night, the snap, the note. Night 30 stays sealed. */
+:root{--linen:#f4ece3;--card:#fffaf4;--cocoa:#2a1712;--dim:#6b4a40;--line:#e0d2c4;--rose:#e8a6b8;--accent:#b8475f;--gold:#d9b276;
+  --display:"Instrument Serif",Georgia,serif;--body:"Manrope",system-ui,sans-serif;color-scheme:light}
+*{box-sizing:border-box} html,body{margin:0}
+body{background:var(--cocoa);color:var(--linen);font:16px/1.5 var(--body);min-height:100vh}
+.wrap{max-width:760px;margin:0 auto;padding:24px max(18px,env(safe-area-inset-left)) 40px max(18px,env(safe-area-inset-right));display:grid;gap:18px}
+.top{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.brand{font:400 24px var(--display)} .brand span{color:var(--rose)}
+.count{font:700 12px var(--body);letter-spacing:.16em;text-transform:uppercase;color:var(--rose)}
+h1{font:400 clamp(34px,7vw,56px)/1.02 var(--display);margin:0}
+.lede{margin:0;color:#e3d2c7}
+.tray{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;background:#1b0e0a;border-radius:16px;padding:14px;box-shadow:inset 0 3px 14px rgba(0,0,0,.6)}
+.sq{position:relative;aspect-ratio:1;border:0;border-radius:6px;padding:0;font:700 11px var(--body);color:#5a2d3a;cursor:default;
+  background:linear-gradient(115deg,#f6cad6,#e7a3b6 30%,#fbe3ea 45%,#d98aa2 65%,#f2bfcd);box-shadow:inset 0 0 0 1px rgba(255,255,255,.35),0 3px 4px rgba(0,0,0,.4);transition:transform .3s}
+.sq.gold{background:linear-gradient(115deg,#f6e2b9,#d9b276 35%,#fbeed2 50%,#c89d5c 70%,#efd6a6)}
+.sq.next{cursor:pointer;outline:2px solid var(--card);outline-offset:2px}
+@media (prefers-reduced-motion:no-preference){.sq.next{animation:bob 1.6s ease-in-out infinite}@keyframes bob{50%{transform:translateY(-3px)}}}
+.sq.done{animation:none;background:radial-gradient(120% 90% at 30% 20%,#6a3a2a,#3a1d14 60%,#2a130d);color:#c9a99a;box-shadow:inset 0 0 0 1px #5a3a30;outline:none}
+.note{background:var(--card);color:var(--cocoa);border-radius:14px;padding:18px 20px;min-height:132px}
+.note .n{font:700 12px var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.note p{font:400 italic clamp(24px,4.6vw,34px)/1.12 var(--display);margin:6px 0 0}
+.dots{display:grid;grid-template-columns:repeat(15,1fr);gap:6px}
+.dots i{aspect-ratio:1;border-radius:50%;border:1.5px solid var(--rose)}
+.dots i.f{background:var(--rose)}
+.end{display:none;background:var(--card);color:var(--cocoa);border-radius:14px;padding:20px}
+.end.show{display:block}
+.end h2{font:400 34px/1.05 var(--display);margin:0 0 6px}
+.btn{display:inline-block;background:var(--cocoa);color:var(--linen);border-radius:999px;padding:14px 22px;font:700 15px var(--body);text-decoration:none;margin-top:12px}
+.small{font-size:13px;color:#cdb8ab;margin:0}
+:focus-visible{outline:3px solid var(--rose);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="top"><div class="brand">Glow <span>Squares</span></div><div class="count" id="count">Night 1 of 30</div></div>
+  <h1>Thirty nights in one minute.</h1>
+  <p class="lede">Tap tonight's square. It snaps, you unwrap it, you read the note under it. Then tomorrow comes a little faster than usual.</p>
+  <div class="tray" id="tray" role="group" aria-label="A box of 30 squares"></div>
+  <div class="note" aria-live="polite"><div class="n" id="nn">Night 1</div><p id="np">Tap the square with the outline.</p></div>
+  <div class="dots" id="dots" aria-hidden="true"></div>
+  <div class="end" id="end">
+    <h2>That's a month of evenings.</h2>
+    <p style="margin:0">Night 30's note only comes in the real box. 2.5 g of collagen in every square, $1.63 a night on the $49 monthly box.</p>
+    <a class="btn" href="/projects/glow-squares/landing.html">See Glow Squares</a>
+  </div>
+  <p class="small">A game for the idea. These notes are website extras; the 30 in the box are a separate set.</p>
+</main>
+<script>
+const WEB = ["Congratulations. You sat down. That's the whole plan tonight.","Tonight's to-do list: 1. Unwrap. 2. There is no 2.","The laundry can't see you. Stay very still.","Somewhere a sock is waiting for its partner. It can wait one more night.","Tonight's agenda has been moved to tomorrow's agenda. Tomorrow's agenda declined.","You don't have to reply \"haha\" to that. Silence is also a reply.","The mail can stay on the counter. It's mostly coupons and threats.","That email can be answered by a version of you who has slept.","Somebody else can find the scissors tonight.","Ten nights. At a bar, they'd know your usual by now.","Tonight's weather: a 100% chance of sweatpants.","The good blanket is not just for guests.","The pile of shoes by the door is an art installation now.","The internet will still be arguing tomorrow. You don't have to RSVP.","Halfway. If this were a book club, you'd be the only one who read this far.","That one cabinet door can stay open. It's not going anywhere.","The calendar says tomorrow is busy. The calendar can say whatever it wants.","\"Resting my eyes\" is a complete sentence.","The work thing will still be a work thing at 9 am. Promise.","Twenty nights. You're officially more reliable than the Wi-Fi.","The car has been making that noise for weeks. It can make it tomorrow too.","Tonight's dress code is whatever you're already wearing.","Breaking news: local woman sits down. More at eleven.","The to-do list is just a suggestion with a pen.","Five left. Start being slightly mysterious about where you keep the box.","Your inbox misses you. Let it.","You're allowed to answer \"how was your day?\" with \"chocolate.\"","Three left. If anyone asks, there were never any.","Tomorrow's the last one. Act casual."];
+const tray = document.getElementById('tray'), dots = document.getElementById('dots');
+const nn = document.getElementById('nn'), np = document.getElementById('np'), count = document.getElementById('count');
+let night = 1; const cells = [];
+for (let i = 1; i <= 30; i++) {
+  const b = document.createElement('button'); b.type = 'button'; b.className = 'sq' + ((i===1||i===15||i===30)?' gold':'');
+  b.textContent = 'RM ' + String(i).padStart(2,'0'); b.tabIndex = -1; b.setAttribute('aria-label','Night ' + i);
+  b.addEventListener('click', () => { if (i === night) openNight(); else if (i > night) { nn.textContent = 'Night ' + i; np.textContent = 'Sealed till its night.'; } });
+  tray.appendChild(b); cells.push(b); dots.appendChild(document.createElement('i'));
+}
+let ctx;
+function snap(){ try { ctx = ctx || new (window.AudioContext||window.webkitAudioContext)();
+  const len=Math.floor(ctx.sampleRate*.09), buf=ctx.createBuffer(1,len,ctx.sampleRate), d=buf.getChannelData(0);
+  for (let i=0;i<len;i++) d[i]=(Math.random()*2-1)*Math.pow(1-i/len,6);
+  const s=ctx.createBufferSource(); s.buffer=buf; const f=ctx.createBiquadFilter(); f.type='bandpass'; f.frequency.value=2600; f.Q.value=1.2;
+  s.connect(f).connect(ctx.destination); s.start(); } catch(_){} }
+function mark(){ cells.forEach((c,i) => { c.classList.toggle('next', i+1 === night); c.tabIndex = i+1 === night ? 0 : -1; }); count.textContent = 'Night ' + Math.min(night,30) + ' of 30'; }
+function openNight(){
+  const c = cells[night-1]; snap(); c.classList.add('done'); c.classList.remove('next'); dots.children[night-1].classList.add('f');
+  nn.textContent = 'Room ' + String(night).padStart(2,'0') + ' · Night ' + night;
+  np.textContent = night === 30 ? 'Sealed. Night 30’s note only comes in the real box.' : night === 15 ? WEB[14] + ' (Gold square: there’s a report card under this one.)' : WEB[night-1];
+  if (night === 30) { document.getElementById('end').classList.add('show'); count.textContent = 'Night 30 of 30'; night = 31; mark(); return; }
+  night++; mark(); cells[night-1].focus({preventScroll:true});
+}
+mark();
+</script>
+</body>
+</html>
