@@ -324,3 +324,5 @@ pre{white-space:pre-wrap;background:var(--card);border:2px solid var(--ink);bord
 /* phones: only the slim header stays pinned, so the question sits near the top */
 @media (max-width:979px){.kitbar{position:static;margin:0 0 12px;padding:4px 0 10px}.top{padding:6px 16px}.foot{padding:0 16px 10px}}
 #roomFile:empty{display:none}
+.trapbox{margin:4px 0 16px;border:var(--border);border-radius:var(--r);background:var(--card);padding:14px;box-shadow:var(--shadow)}
+.trap-h{margin:0;font:800 13px var(--mono);letter-spacing:.04em;text-transform:uppercase;color:var(--accent)}
